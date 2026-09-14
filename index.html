@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="Rebocl Brank — desenvolvimento de jogos e aplicativos.">
+<title>Rebocl Brank — Jogos e Aplicativos</title>
+<style>
+  /* ============================================================
+     REBOCL BRANK — site oficial
+     Tema: preto e dourado, minimalista, responsivo.
+     Arquivo único, sem dependências externas.
+     ============================================================ */
+  :root{
+    --preto:#0a0a0a;
+    --preto-2:#0f0e0c;
+    --preto-3:#14120e;
+    --dourado:#d4af37;
+    --dourado-claro:#f0d97a;
+    --dourado-escuro:#9c7a24;
+    --texto:#e8e6e1;
+    --texto-suave:#9d9a93;
+    --borda-ouro:rgba(212,175,55,.32);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--preto);
+    color:var(--texto);
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:rgba(212,175,55,.35)}
+  .container{width:min(1020px,88%);margin:0 auto}
+
+  /* ---------- animações de entrada ---------- */
+  @keyframes subir{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes brilho{0%,100%{opacity:.55}50%{opacity:1}}
+
+  /* ---------- tipografia de seção ---------- */
+  .sobrelinha{
+    display:block;
+    text-align:center;
+    font-size:.78rem;
+    letter-spacing:.55em;
+    text-transform:uppercase;
+    color:var(--dourado-escuro);
+    margin-bottom:14px;
+    padding-left:.55em;
+  }
+  h2{
+    text-align:center;
+    font-size:clamp(1.45rem,3.6vw,1.9rem);
+    font-weight:300;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--texto);
+    margin-bottom:18px;
+    padding-left:.32em;
+  }
+  .fio{width:56px;height:1px;background:var(--dourado);margin:0 auto 54px;opacity:.8}
+
+  section{padding:96px 0}
+  section:nth-of-type(even){background:var(--preto-2)}
+
+  /* ============ 1. CAPA ============ */
+  .capa{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:56px 20px;
+    position:relative;
+    background:
+      radial-gradient(ellipse 60% 42% at 50% 30%, rgba(212,175,55,.10) 0%, transparent 70%),
+      var(--preto);
+  }
+  .logo-rb{
+    width:158px;height:158px;
+    margin-bottom:40px;
+    filter:drop-shadow(0 0 34px rgba(212,175,55,.16));
+    animation:subir .9s ease-out both;
+  }
+  .capa h1{
+    font-size:clamp(2.1rem,6vw,3.5rem);
+    font-weight:300;
+    letter-spacing:.38em;
+    text-transform:uppercase;
+    padding-left:.38em;
+    color:var(--dourado);
+    animation:subir .9s .15s ease-out both;
+  }
+  @supports ((-webkit-background-clip:text) or (background-clip:text)){
+    .capa h1{
+      background:linear-gradient(180deg,var(--dourado-claro) 0%,var(--dourado) 55%,var(--dourado-escuro) 100%);
+      -webkit-background-clip:text;background-clip:text;
+      color:transparent;
+    }
+  }
+  .capa .subtitulo{
+    margin-top:16px;
+    font-size:clamp(.9rem,2.4vw,1.15rem);
+    letter-spacing:.52em;
+    text-transform:uppercase;
+    color:var(--texto-suave);
+    padding-left:.52em;
+    animation:subir .9s .3s ease-out both;
+  }
+  .capa .divisor{
+    width:78px;height:1px;
+    margin:38px auto 0;
+    background:linear-gradient(90deg,transparent,var(--dourado),transparent);
+    animation:subir .9s .45s ease-out both;
+  }
+  .capa .descer{
+    position:absolute;
+    bottom:28px;left:50%;
+    transform:translateX(-50%);
+    color:var(--dourado-escuro);
+    font-size:1.3rem;
+    text-decoration:none;
+    animation:brilho 2.6s ease-in-out infinite;
+  }
+
+  /* ============ 2. SOBRE ============ */
+  .sobre p{
+    text-align:center;
+    font-size:clamp(1.1rem,2.6vw,1.35rem);
+    font-weight:300;
+    color:var(--texto);
+    max-width:660px;
+    margin:0 auto;
+  }
+  .sobre p strong{color:var(--dourado);font-weight:600}
+
+  /* ============ 3. PRÓXIMOS LANÇAMENTOS ============ */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+  }
+  .card{
+    position:relative;
+    border:1px solid var(--borda-ouro);
+    border-radius:12px;
+    background:linear-gradient(180deg,var(--preto-3) 0%,var(--preto) 100%);
+    padding:60px 24px 48px;
+    text-align:center;
+    transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";
+    position:absolute;inset:0 0 auto 0;
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--dourado),transparent);
+    opacity:0;transition:opacity .35s ease;
+  }
+  .card:hover{
+    transform:translateY(-6px);
+    border-color:var(--dourado);
+    box-shadow:0 18px 44px rgba(0,0,0,.5),0 0 30px rgba(212,175,55,.08);
+  }
+  .card:hover::before{opacity:1}
+  .card .rotulo{
+    display:block;
+    font-size:.78rem;
+    letter-spacing:.34em;
+    text-transform:uppercase;
+    color:var(--texto-suave);
+    margin-bottom:20px;
+    padding-left:.34em;
+  }
+  .card .status{
+    display:block;
+    font-size:1.25rem;
+    font-weight:300;
+    letter-spacing:.34em;
+    text-transform:uppercase;
+    color:var(--dourado);
+    padding-left:.34em;
+  }
+  .card .barra{
+    display:block;
+    width:34px;height:1px;
+    background:var(--borda-ouro);
+    margin:22px auto 0;
+  }
+
+  /* ============ 4. CONTATO ============ */
+  .contato{text-align:center}
+  .contato a.email{
+    display:inline-block;
+    margin-top:6px;
+    color:var(--dourado);
+    font-size:clamp(1.05rem,3vw,1.4rem);
+    font-weight:300;
+    letter-spacing:.08em;
+    text-decoration:none;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--borda-ouro);
+    transition:color .3s ease,border-color .3s ease,letter-spacing .3s ease;
+    word-break:break-all;
+  }
+  .contato a.email:hover{
+    color:var(--dourado-claro);
+    border-color:var(--dourado);
+    letter-spacing:.12em;
+  }
+
+  /* ---------- rodapé ---------- */
+  footer{
+    text-align:center;
+    padding:34px 16px;
+    border-top:1px solid rgba(212,175,55,.14);
+    color:var(--texto-suave);
+    font-size:.75rem;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    padding-left:calc(16px + .3em);
+  }
+
+  /* ---------- responsivo ---------- */
+  @media (max-width:760px){
+    section{padding:72px 0}
+    .cards{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+    .logo-rb{width:126px;height:126px}
+  }
+
+  /* ---------- acessibilidade: sem animações ---------- */
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ 1. CAPA ============ -->
+  <header class="capa" id="capa">
+    <svg class="logo-rb" viewBox="0 0 240 240" role="img" aria-label="Monograma RB da Rebocl Brank">
+      <defs>
+        <linearGradient id="ouro" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f0d97a"/>
+          <stop offset=".5" stop-color="#d4af37"/>
+          <stop offset="1" stop-color="#9c7a24"/>
+        </linearGradient>
+        <radialGradient id="fundoLogo" cx=".5" cy=".36" r=".85">
+          <stop offset="0" stop-color="#16120a"/>
+          <stop offset="1" stop-color="#0a0a0a"/>
+        </radialGradient>
+      </defs>
+      <rect x="8" y="8" width="224" height="224" rx="36" fill="url(#fundoLogo)" stroke="url(#ouro)" stroke-width="3"/>
+      <rect x="22" y="22" width="196" height="196" rx="26" fill="none" stroke="url(#ouro)" stroke-opacity=".35" stroke-width="1"/>
+      <text x="122" y="123" text-anchor="middle" dominant-baseline="central"
+            font-family="Georgia,'Times New Roman',serif" font-size="92" font-weight="bold"
+            letter-spacing="2" fill="url(#ouro)">RB</text>
+    </svg>
+    <h1>Rebocl Brank</h1>
+    <p class="subtitulo">Jogos e Aplicativos</p>
+    <div class="divisor"></div>
+    <a class="descer" href="#sobre" aria-label="Rolar para a próxima seção">&#8595;</a>
+  </header>
+
+  <!-- ============ 2. SOBRE ============ -->
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <span class="sobrelinha">01</span>
+      <h2>Sobre</h2>
+      <div class="fio"></div>
+      <p><strong>Rebocl Brank</strong> desenvolve jogos e aplicativos.</p>
+    </div>
+  </section>
+
+  <!-- ============ 3. PRÓXIMOS LANÇAMENTOS ============ -->
+  <section id="lancamentos">
+    <div class="container">
+      <span class="sobrelinha">02</span>
+      <h2>Próximos Lançamentos</h2>
+      <div class="fio"></div>
+      <div class="cards">
+        <article class="card">
+          <span class="rotulo">Projeto 01</span>
+          <span class="status">Em breve</span>
+          <span class="barra"></span>
+        </article>
+        <article class="card">
+          <span class="rotulo">Projeto 02</span>
+          <span class="status">Em breve</span>
+          <span class="barra"></span>
+        </article>
+        <article class="card">
+          <span class="rotulo">Projeto 03</span>
+          <span class="status">Em breve</span>
+          <span class="barra"></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. CONTATO ============ -->
+  <section class="contato" id="contato">
+    <div class="container">
+      <span class="sobrelinha">03</span>
+      <h2>Contato</h2>
+      <div class="fio"></div>
+      <a class="email" href="mailto:reboclbrank@gmail.com">reboclbrank@gmail.com</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Rebocl Brank &mdash; Jogos e Aplicativos
+  </footer>
+
+</body>
+</html>
