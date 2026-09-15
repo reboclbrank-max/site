@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 	<head>
+
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
-		<title>Ceifalume</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<meta name="description" content="Rascunho de teste do jogo de fazenda noturna da Rebocl Brank.">
+		<meta name="theme-color" content="#0a0a0a">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="apple-mobile-web-app-title" content="Ceifalume">
+		<link rel="manifest" href="manifest.webmanifest">
+		<!-- Gerado por ceifalume/web/gerar-pagina.py — não editar à mão -->		<title>Ceifalume</title>
 		<style>
 html, body, #canvas {
 	margin: 0;
@@ -75,9 +83,266 @@ body {
 	text-align: center;
 	z-index: 1;
 }
-		</style>
-		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
-<link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
+	
+/* Ceifalume — camada mobile da página de teste.
+   Aplicada dentro do index.html exportado pelo Godot (ver gerar-pagina.py).
+   Nada aqui toca no jogo: é só a volta dele no navegador do celular. */
+
+html, body, #canvas {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+html, body {
+	height: 100%;
+	background-color: #0a0a0a;
+	/* corpo fixo: mata o "puxar para atualizar" e o elástico do iOS */
+	position: fixed;
+	inset: 0;
+	overflow: hidden;
+	overscroll-behavior: none;
+	touch-action: none;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+#canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	touch-action: none;
+	-webkit-tap-highlight-color: transparent;
+	/* área segura (entalhe/câmera) não come o canvas */
+	padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ---- tela de carregamento (existe dentro de #status, some junto com ele) ---- */
+#status {
+	background-color: #0a0a0a;
+}
+
+#status-splash {
+	display: none; /* o splash padrão do Godot sai de cena */
+}
+
+progress#status-progress,
+#status-progress {
+	accent-color: #d4af37;
+	height: 12px;
+	width: min(70%, 420px);
+	margin: 18px auto 0;
+}
+
+.rd-carga {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	color: #e8e6e1;
+	padding: 0 24px;
+}
+
+.rd-carga svg {
+	width: 96px;
+	height: 96px;
+	margin-bottom: 22px;
+}
+
+.rd-carga h1 {
+	font-size: 26px;
+	font-weight: 300;
+	letter-spacing: .22em;
+	text-transform: uppercase;
+	margin: 0 0 10px;
+	color: #d4af37;
+}
+
+.rd-carga p {
+	font-size: 19px;
+	line-height: 1.45;
+	margin: 6px 0;
+}
+
+.rd-carga .rd-dica {
+	font-size: 16px;
+	color: #9d9a93;
+	max-width: 30em;
+}
+
+/* ---- controles flutuantes ---- */
+.rd-ui {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	z-index: 5;
+}
+
+.rd-botao {
+	pointer-events: auto;
+	position: absolute;
+	top: calc(10px + env(safe-area-inset-top));
+	right: calc(10px + env(safe-area-inset-right));
+	min-height: 48px;
+	min-width: 48px;
+	padding: 12px 16px;
+	font-size: 17px;
+	line-height: 1;
+	color: #f0d97a;
+	background: rgba(10, 10, 10, .78);
+	border: 1px solid rgba(212, 175, 55, .55);
+	border-radius: 12px;
+	backdrop-filter: blur(2px);
+}
+
+.rd-botao:active {
+	background: rgba(212, 175, 55, .18);
+}
+
+.rd-botao[hidden] {
+	display: none;
+}
+
+.rd-instalar {
+	top: auto;
+	bottom: calc(14px + env(safe-area-inset-bottom));
+	right: calc(10px + env(safe-area-inset-right));
+}
+
+.rd-selo {
+	pointer-events: none;
+	position: absolute;
+	left: calc(12px + env(safe-area-inset-left));
+	bottom: calc(10px + env(safe-area-inset-bottom));
+	font-size: 14px;
+	letter-spacing: .04em;
+	color: #6f6a5c;
+	background: rgba(10, 10, 10, .55);
+	padding: 6px 9px;
+	border-radius: 8px;
+	opacity: .95;
+	transition: opacity .6s ease;
+}
+
+.rd-selo.rd-sumida {
+	opacity: .28;
+}
+
+/* ---- aviso de virar o celular ---- */
+.rd-vire {
+	pointer-events: auto;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: min(88vw, 420px);
+	padding: 26px 22px;
+	text-align: center;
+	background: rgba(12, 11, 9, .96);
+	border: 1px solid rgba(212, 175, 55, .45);
+	border-radius: 18px;
+	color: #e8e6e1;
+}
+
+.rd-vire[hidden] {
+	display: none;
+}
+
+.rd-vire h2 {
+	margin: 0 0 10px;
+	font-size: 22px;
+	font-weight: 500;
+	color: #d4af37;
+}
+
+.rd-vire p {
+	margin: 0 0 18px;
+	font-size: 18px;
+	line-height: 1.45;
+}
+
+.rd-vire svg {
+	width: 54px;
+	height: 54px;
+	margin-bottom: 10px;
+}
+
+/* ---- erro legível (sem DevTools no celular) ---- */
+.rd-erro {
+	pointer-events: auto;
+	position: absolute;
+	left: 50%;
+	bottom: calc(18px + env(safe-area-inset-bottom));
+	transform: translateX(-50%);
+	width: min(94vw, 560px);
+	padding: 16px 18px;
+	background: rgba(48, 20, 24, .96);
+	border: 1px solid #9b3943;
+	border-radius: 14px;
+	color: #f3dede;
+	font-size: 17px;
+	line-height: 1.45;
+}
+
+.rd-erro[hidden] {
+	display: none;
+}
+
+.rd-erro strong {
+	display: block;
+	font-size: 19px;
+	margin-bottom: 6px;
+	color: #ffb4b4;
+}
+
+.rd-erro code {
+	display: block;
+	font-size: 15px;
+	opacity: .9;
+	margin: 8px 0;
+	word-break: break-word;
+}
+
+.rd-erro button {
+	font-size: 17px;
+	padding: 10px 14px;
+	margin-top: 6px;
+	margin-right: 8px;
+	background: transparent;
+	color: #ffd7d7;
+	border: 1px solid #9b3943;
+	border-radius: 10px;
+}
+
+/* em paisagem no celular, menos ruído na tela */
+@media (orientation: landscape) and (max-height: 560px) {
+	.rd-carga svg {
+		width: 64px;
+		height: 64px;
+		margin-bottom: 12px;
+	}
+
+	.rd-carga h1 {
+		font-size: 22px;
+	}
+
+	.rd-vire {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		transition: none !important;
+		animation: none !important;
+	}
+}
+	</style>
+		<link id="-gd-engine-icon" rel="icon" type="image/png" href="icone-marca-32.png" />
+<link rel="apple-touch-icon" href="icone-marca-192.png"/>
 
 	</head>
 	<body>
@@ -97,7 +362,7 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":30128,"index.wasm":35376909},"focusCanvas":true,"gdextensionLibs":[]};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":1,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":30128,"index.wasm":35376909},"focusCanvas":true,"gdextensionLibs":[]};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -194,6 +459,228 @@ const engine = new Engine(GODOT_CONFIG);
 	}
 }());
 		</script>
+
+	<script>
+/* Ceifalume — camada mobile da página de teste.
+   Tudo aqui é em torno do jogo, não dentro dele. Se alguma função falhar no
+   navegador, ela se cala sozinha: nada pode impedir o jogo de abrir. */
+(function () {
+	'use strict';
+
+	var config = {
+		// Carimbão do build: é o que diz ao dono qual rascunho ele está jogando.
+		selo: 'rascunho 2026-09-15 · Semana 6 · build de teste',
+	};
+
+	function $(id) { return document.getElementById(id); }
+
+	function criar(tag, id, classe, html) {
+		var el = document.createElement(tag);
+		if (id) el.id = id;
+		if (classe) el.className = classe;
+		if (html != null) el.innerHTML = html;
+		return el;
+	}
+
+	/* ---------- 1. tela de carregamento com porcentagem grande ---------- */
+	(function carga() {
+		var status = $('status');
+		if (!status) return;
+
+		var monograma =
+			'<svg viewBox="0 0 240 240" aria-hidden="true" focusable="false">' +
+			'<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+			'<stop offset="0" stop-color="#f0d97a"/><stop offset=".5" stop-color="#d4af37"/>' +
+			'<stop offset="1" stop-color="#9c7a24"/></linearGradient></defs>' +
+			'<text x="120" y="150" text-anchor="middle" font-family="Georgia,\'Times New Roman\',serif" ' +
+			'font-size="118" font-weight="bold" fill="url(#g)">RB</text></svg>';
+
+		var bloco = criar('div', 'rd-carga', 'rd-carga',
+			monograma +
+			'<h1>Ceifalume</h1>' +
+			'<p id="rd-carga-texto">preparando a fazenda…</p>' +
+			'<p class="rd-dica">s\u00e3o uns 35&nbsp;MB de cada vez — em Wi-Fi vai bem mais r\u00e1pido</p>');
+		status.insertBefore(bloco, status.firstChild);
+
+		var barra = $('status-progress');
+		var texto = $('rd-carga-texto');
+		if (!barra || !texto) return;
+
+		function atualizar() {
+			var atual = Number(barra.value) || 0;
+			var total = Number(barra.max) || 0;
+			if (atual > 0 && total > 0) {
+				var mb = (atual / 1048576).toFixed(1);
+				var totalMb = (total / 1048576).toFixed(1);
+				var pct = Math.min(99, Math.round((atual / total) * 100));
+				texto.textContent = 'baixando o motor… ' + pct + '% (' + mb + ' de ' + totalMb + ' MB)';
+			} else {
+				texto.textContent = 'preparando a fazenda…';
+			}
+		}
+
+		if (window.MutationObserver) {
+			new MutationObserver(atualizar).observe(barra, {
+				attributes: true,
+				attributeFilter: ['value', 'max'],
+			});
+		}
+		atualizar();
+	}());
+
+	/* ---------- 2. camada de interface (botões, selo, avisos) ---------- */
+	var ui = $('rd-ui') || criar('div', 'rd-ui', 'rd-ui');
+	if (!ui.parentNode) document.body.appendChild(ui);
+
+	/* 2a. tela cheia — no Android é o que tira a barra do navegador da frente */
+	var botaoCheio = $('rd-tela-cheia');
+	if (!botaoCheio && (document.documentElement.requestFullscreen ||
+		document.documentElement.webkitRequestFullscreen)) {
+		botaoCheio = criar('button', 'rd-tela-cheia', 'rd-botao', '⛶ Tela cheia');
+		botaoCheio.type = 'button';
+		ui.appendChild(botaoCheio);
+
+		function cheio() {
+			return document.fullscreenElement || document.webkitFullscreenElement;
+		}
+		function trocar() {
+			var alvo = document.documentElement;
+			try {
+				if (cheio()) {
+					(document.exitFullscreen || document.webkitExitFullscreen).call(document);
+				} else {
+					(alvo.requestFullscreen || alvo.webkitRequestFullscreen).call(alvo, { navigationUI: 'hide' });
+				}
+			} catch (e) { /* navegador não deixou, tudo bem */ }
+		}
+		botaoCheio.addEventListener('click', trocar);
+
+		function atualizarBotao() {
+			botaoCheio.textContent = cheio() ? '✕ Sair da tela cheia' : '⛶ Tela cheia';
+			// o canvas precisa ser refeito no tamanho novo
+			window.dispatchEvent(new Event('resize'));
+			setTimeout(function () { window.dispatchEvent(new Event('resize')); }, 350);
+		}
+		['fullscreenchange', 'webkitfullscreenchange'].forEach(function (n) {
+			document.addEventListener(n, atualizarBotao);
+		});
+	}
+
+	/* 2b. virar o celular — só um toque de aviso, o jogo continua jogável */
+	(function avisoOrientacao() {
+		var painel = $('rd-vire');
+		if (!painel) {
+			painel = criar('div', 'rd-vire', 'rd-vire',
+				'<svg viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.6" aria-hidden="true">' +
+				'<rect x="7.5" y="2.5" width="9" height="19" rx="2"/><path d="M3 12a9 9 0 0 1 3-6.7M2 12.5 4.6 12 3.4 9.4"/></svg>' +
+				'<h2>Vire o celular deitado</h2>' +
+				'<p>a fazenda foi desenhada para tela larga</p>');
+			var ok = criar('button', null, 'rd-botao', 'ok, continuo assim');
+			ok.type = 'button';
+			ok.style.position = 'static';
+			painel.appendChild(ok);
+			ui.appendChild(painel);
+			ok.addEventListener('click', function () {
+				painel.setAttribute('hidden', '');
+				try { sessionStorage.setItem('ceifalume-ja-virei', '1'); } catch (e) {}
+			});
+		}
+		function checar() {
+			var retrato = window.matchMedia('(orientation: portrait)').matches;
+			var estreito = Math.min(window.innerWidth, window.innerHeight) < 820;
+			var viu = false;
+			try { viu = sessionStorage.getItem('ceifalume-ja-virei') === '1'; } catch (e) {}
+			painel.toggleAttribute('hidden', !(retrato && estreito) || viu);
+		}
+		window.addEventListener('orientationchange', function () { setTimeout(checar, 250); });
+		window.addEventListener('resize', checar);
+		checar();
+	}());
+
+	/* 2c. instalar na tela inicial (vira "app" sem loja) */
+	(function instalar() {
+		var atrasado = null;
+		var botao = $('rd-instalar');
+		window.addEventListener('beforeinstallprompt', function (e) {
+			e.preventDefault();
+			atrasado = e;
+			if (!botao) {
+				botao = criar('button', 'rd-instalar', 'rd-botao rd-instalar', '↓ Instalar no celular');
+				botao.type = 'button';
+				botao.addEventListener('click', function () {
+					if (!atrasado) return;
+					atrasado.prompt();
+					atrasado.userChoice.then(function () {
+						botao.setAttribute('hidden', '');
+						atrasado = null;
+					});
+				});
+				ui.appendChild(botao);
+			}
+			botao.removeAttribute('hidden');
+		});
+	}());
+
+	/* 2d. carimbo de qual rascunho é este */
+	var selo = $('rd-selo');
+	if (!selo) {
+		selo = criar('div', 'rd-selo', 'rd-selo', config.selo);
+		ui.appendChild(selo);
+		setTimeout(function () { selo.classList.add('rd-sumida'); }, 6000);
+	}
+
+	/* ---------- 3. erro em texto grande (no celular não há console à mão) ---------- */
+	(function erros() {
+		var caixa = $('rd-erro');
+		function mostrar(titulo, detalhe) {
+			if (!caixa) {
+				caixa = criar('div', 'rd-erro', 'rd-erro');
+				ui.appendChild(caixa);
+			}
+			caixa.innerHTML = '<strong>' + titulo + '</strong>';
+			caixa.appendChild(criar('code', null, null, String(detalhe || 'sem detalhes')));
+			var recomecar = criar('button', null, null, 'Tentar de novo');
+			recomecar.type = 'button';
+			recomecar.addEventListener('click', function () { location.reload(); });
+			var fechar = criar('button', null, null, 'Fechar aviso');
+			fechar.type = 'button';
+			fechar.addEventListener('click', function () { caixa.setAttribute('hidden', ''); });
+			caixa.appendChild(recomecar);
+			caixa.appendChild(fechar);
+		}
+		window.addEventListener('unhandledrejection', function (e) {
+			mostrar('Algo quebrou ao abrir o jogo', (e.reason && e.reason.message) || e.reason);
+		});
+		window.addEventListener('error', function (e) {
+			// ignora ruído de recurso (favicon ausente etc.), que não impede nada
+			if (e && e.target && e.target !== window && e.target.tagName) return;
+			mostrar('Erro no jogo', (e && e.message) || 'desconhecido');
+		});
+	}());
+
+	/* ---------- 4. não deixar o celular dormir no meio do teste ---------- */
+	(function vela() {
+		var guarda = null;
+		function pedir() {
+			if (!navigator.wakeLock || document.hidden) return;
+			navigator.wakeLock.request('screen').then(function (s) { guarda = s; }).catch(function () {});
+		}
+		document.addEventListener('visibilitychange', function () {
+			if (document.hidden) {
+				if (guarda) { try { guarda.release(); } catch (e) {} guarda = null; }
+			} else {
+				pedir();
+			}
+		});
+		pedir();
+	}());
+
+	/* ---------- 5. girou o aparelho → reenvia o tamanho ao motor ---------- */
+	window.addEventListener('orientationchange', function () {
+		setTimeout(function () { window.dispatchEvent(new Event('resize')); }, 300);
+	});
+}());
+	</script>
 	</body>
 </html>
 
