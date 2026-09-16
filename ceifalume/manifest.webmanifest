@@ -1,12 +1,12 @@
 {
-  "name": "Ceifalume — rascunho de teste",
+  "name": "Ceifalume",
   "short_name": "Ceifalume",
-  "description": "Jogo de fazenda noturna da Rebocl Brank: plante, colha e negocie com os preços mudando a cada dia. Esta é a versão de teste.",
+  "description": "Jogo de fazenda noturna da Rebocl Brank: plante, colha e negocie com os preços mudando a cada dia.",
   "lang": "pt-BR",
   "start_url": "./index.html",
   "scope": "./",
   "display": "fullscreen",
-  "orientation": "any",
+  "orientation": "landscape",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",
   "icons": [

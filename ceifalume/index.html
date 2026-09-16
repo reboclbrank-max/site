@@ -4,7 +4,7 @@
 
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-		<meta name="description" content="Rascunho de teste do jogo de fazenda noturna da Rebocl Brank.">
+		<meta name="description" content="Ceifalume — a fazenda não dorme: plante, colha e negocie à luz da lanterna.">
 		<meta name="theme-color" content="#0a0a0a">
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -436,7 +436,7 @@ progress#status-progress,
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":3767184,"index.wasm":38047590},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":3564384,"index.wasm":38047590},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -549,8 +549,8 @@ const engine = new Engine(GODOT_CONFIG);
 	'use strict';
 
 	var config = {
-		// Carimbão do build: é o que diz ao dono qual rascunho ele está jogando.
-		selo: 'Ceifalume C.17 · 2026-09-16',
+		// Carimbão do build: é o que diz ao dono qual versão está no ar.
+		selo: 'Ceifalume 0.1',
 	};
 
 	function $(id) { return document.getElementById(id); }
@@ -741,7 +741,7 @@ const engine = new Engine(GODOT_CONFIG);
 		});
 	}());
 
-	/* 2d. carimbo de qual rascunho é este */
+	/* 2d. carimbo de qual versão é esta */
 	var selo = $('rd-selo');
 	if (!selo) {
 		selo = criar('div', 'rd-selo', 'rd-selo', config.selo);
