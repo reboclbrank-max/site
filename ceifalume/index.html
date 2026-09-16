@@ -262,6 +262,13 @@ progress#status-progress,
 	right: calc(10px + env(safe-area-inset-right));
 }
 
+.rd-apk {
+	top: calc(122px + env(safe-area-inset-top));
+	right: calc(10px + env(safe-area-inset-right));
+	text-decoration: none;
+	display: inline-block;
+}
+
 .rd-instalar {
 	bottom: calc(14px + env(safe-area-inset-bottom));
 	right: calc(10px + env(safe-area-inset-right));
@@ -720,6 +727,14 @@ const engine = new Engine(GODOT_CONFIG);
 		});
 	}());
 
+
+	/* 2c2. baixar o APK direto (Android, sem loja) */
+	(function apk() {
+		var a = criar('a', 'rd-apk', 'rd-botao rd-apk', '\u2193 Baixar APK (Android)');
+		a.href = 'https://github.com/reboclbrank-max/ceifalume/releases/download/apk-c12/ceifalume.apk';
+		a.download = 'ceifalume.apk';
+		ui.appendChild(a);
+	}());
 	/* 2d. carimbo de qual rascunho é este */
 	var selo = $('rd-selo');
 	if (!selo) {
