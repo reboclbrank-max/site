@@ -4,7 +4,7 @@
 
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-		<meta name="description" content="Rascunho de teste do jogo de fazenda noturna da Rebocl Brank.">
+		<meta name="description" content="Ceifalume — a fazenda noturna da Rebocl Brank. Plante, colha e negocie a luz da lanterna. Jogue no navegador ou baixe o APK.">
 		<meta name="theme-color" content="#0a0a0a">
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -274,6 +274,14 @@ progress#status-progress,
 	right: calc(10px + env(safe-area-inset-right));
 }
 
+.rd-priv {
+	bottom: calc(14px + env(safe-area-inset-bottom));
+	left: calc(12px + env(safe-area-inset-left));
+	font-size: 12px;
+	opacity: .75;
+	text-decoration: underline;
+}
+
 .rd-selo {
 	pointer-events: none;
 	position: absolute;
@@ -535,8 +543,8 @@ const engine = new Engine(GODOT_CONFIG);
 	'use strict';
 
 	var config = {
-		// Carimbão do build: é o que diz ao dono qual rascunho ele está jogando.
-		selo: 'rascunho 2026-09-15 · rev C.14 · Semana 8',
+		// Carimbão do build: identifica a versão publicada.
+		selo: 'Ceifalume · C.14 · Rebocl Brank',
 	};
 
 	function $(id) { return document.getElementById(id); }
@@ -735,7 +743,16 @@ const engine = new Engine(GODOT_CONFIG);
 		a.download = 'ceifalume.apk';
 		ui.appendChild(a);
 	}());
-	/* 2d. carimbo de qual rascunho é este */
+
+	/* 2c3. privacidade (link exigido pela loja e pelo AdMob) */
+	(function priv() {
+		var p = criar('a', 'rd-priv', 'rd-botao rd-priv', 'Privacidade');
+		p.href = '../../privacidade.html';
+		p.target = '_blank';
+		p.rel = 'noopener';
+		ui.appendChild(p);
+	}());
+	/* 2d. carimbo da versao (some sozinho em 6 s) */
 	var selo = $('rd-selo');
 	if (!selo) {
 		selo = criar('div', 'rd-selo', 'rd-selo', config.selo);
