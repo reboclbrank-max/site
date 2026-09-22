@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://reboclbrank-max.github.io/site/sitemap.xml
