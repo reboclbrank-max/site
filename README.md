@@ -17,3 +17,10 @@ Nunca commitar a remoção: o wasm pertence ao HEAD (o site ao vivo usa ele).
 da página da itch.io (via `<img>`): GIF de 14 s (640×360) e screenshot.
 Regra: URL pública e estável — **não apagar/renomear** arquivo que a
 descrição da itch aponte (se precisar, atualizar a descrição da itch antes).
+
+## Downloads ativos (30/09/2026)
+
+- **Prancheta 0.1 / versionCode 4:** `prancheta/baixar.html`.
+- **Prancheta Android 1.1:** `Prancheta/baixar.html` (instala separadamente do APK 1.0 legado, pois o pacote mudou).
+- **Prancheta web:** `Prancheta/`; o arquivo PCK e cache PWA estão alinhados ao build atual.
+- Redirecionamento antigo do manager mantido em `prancheta/`.
