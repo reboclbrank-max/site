@@ -20,4 +20,3 @@ descrição da itch aponte (se precisar, atualizar a descrição da itch antes).
 
 ## Download ativo
 
-- **Prancheta 0.1, versionCode 4:** `prancheta/baixar.html`.
