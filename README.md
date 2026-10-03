@@ -14,7 +14,9 @@ Nunca commitar a remoção: o wasm pertence ao HEAD (o site ao vivo usa ele).
 
 ## Pasta media/ (2026-09-18)
 `media/ceifalume/` hospeda as imagens de divulgação hotlinkadas na descrição
-da página da itch.io (via `<img>`): GIF de 14 s (640×360) e screenshot.
+da página da itch.io (via `<img>`) e usadas nos posts. Inclui o GIF de 14 s
+(640×360), a screenshot principal e a captura de gameplay do Post 6
+(`shot-dia9-chuva-1280x720.png`).
 Regra: URL pública e estável — **não apagar/renomear** arquivo que a
 descrição da itch aponte (se precisar, atualizar a descrição da itch antes).
 
