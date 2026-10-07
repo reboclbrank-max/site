@@ -16,6 +16,10 @@ A [release pública `v0.1`](https://github.com/reboclbrank-max/site/releases/tag
 
 No estado de `main` auditado em **2026-10-05**, `ceifalume/index.wasm` tem **38.047.590 bytes** no repositório (tamanho bruto; o tamanho transferido pode ser diferente por compressão HTTP). Se o arquivo não estiver na cópia de trabalho local, restaure-o do Git com `git checkout -- ceifalume/index.wasm`; **não comite sua remoção**. Para medir o download real, confira a resposta HTTP atual em vez de inferi-lo pelo tamanho do arquivo bruto.
 
+## Prancheta 0.1
+
+`jogos/prancheta/` é a página informativa do **Prancheta 0.1**, lançado em **06/10/2026** — o jogo (Web/HTML5 e APK Android) é hospedado na página pública do itch.io (https://rebocl-brank.itch.io/prancheta); o site apenas apresenta e aponta para lá. Capa e ícone usados na página ficam em `media/prancheta/`. Não substitua nem remova esses arquivos sem atualizar os links que os usam.
+
 ## Mídia de divulgação
 
 `media/ceifalume/` hospeda imagens estáveis hotlinkadas na página da itch.io e usadas nos posts. A captura `shot-dia9-chuva-1280x720.png`, correspondente ao Post 6, foi adicionada em **2026-10-03**. URLs públicas podem estar embutidas em páginas e posts: não apague nem renomeie os arquivos sem atualizar primeiro os links dependentes.
@@ -25,6 +29,8 @@ No estado de `main` auditado em **2026-10-05**, `ceifalume/index.wasm` tem **38.
 - `index.html` — home do site.
 - `ceifalume/` — export web gerado.
 - `media/ceifalume/` — assets estáveis de divulgação.
+- `jogos/prancheta/` — página informativa do Prancheta (jogo hospedado no itch.io).
+- `media/prancheta/` — capa e ícone da página do Prancheta.
 - `privacidade.html`, `app-ads.txt`, `sitemap.xml`, `robots.txt` — arquivos de suporte do site.
 
 O README é documentação do repositório; não é uma alteração do conteúdo da página. Mudanças em `index.html`, na exportação do jogo, em releases ou em mídia pública precisam de verificação própria e autorização explícita.

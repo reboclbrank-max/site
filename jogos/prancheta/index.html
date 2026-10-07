@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prancheta — simulador de gestão de futebol grátis (navegador e Android) | Rebocl Brank</title>
+<meta name="description" content="Prancheta é um simulador de gestão de futebol em português do Brasil: monte o elenco, defina a semana de treinos e decida na prancheta. Partida ao vivo com trocas e instrução aos 45'. Grátis e offline, no navegador ou Android.">
+<meta name="keywords" content="simulador de futebol grátis, jogo de gestão de futebol, jogo de técnico de futebol, manager de futebol, jogo de futebol android, godot, jogo brasileiro, offline, prancheta">
+<link rel="canonical" href="https://reboclbrank-max.github.io/site/jogos/prancheta/">
+<link rel="alternate" hreflang="pt-BR" href="https://reboclbrank-max.github.io/site/jogos/prancheta/">
+<link rel="icon" href="https://reboclbrank-max.github.io/site/media/prancheta/icone-192.png">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rebocl Brank">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Prancheta — simulador de gestão de futebol">
+<meta property="og:description" content="Você é o técnico: decide sem jogar. Elenco, treinos, prancheta tática e partida ao vivo com intervenção aos 45'. Grátis e offline, no navegador ou Android.">
+<meta property="og:url" content="https://reboclbrank-max.github.io/site/jogos/prancheta/">
+<meta property="og:image" content="https://reboclbrank-max.github.io/site/media/prancheta/capa-630x500.png">
+<meta property="og:image:width" content="630"><meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="Prancheta: capa do jogo com a prancheta de giz e o quadro verde">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Prancheta — simulador de gestão de futebol">
+<meta name="twitter:description" content="Você é o técnico: monta o elenco, treina a semana e decide a partida. Grátis, no navegador ou Android.">
+<meta name="twitter:image" content="https://reboclbrank-max.github.io/site/media/prancheta/capa-630x500.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Prancheta", "alternateName": "Prancheta — simulador de gestão de futebol", "url": "https://reboclbrank-max.github.io/site/jogos/prancheta/", "description": "Simulador de gestão de futebol em português do Brasil: elenco, treinos, prancheta tática e partida ao vivo com trocas e instrução. Mundo fictício gerado por semente; grátis e offline, no navegador ou Android.", "image": "https://reboclbrank-max.github.io/site/media/prancheta/capa-630x500.png", "screenshot": "https://reboclbrank-max.github.io/site/media/prancheta/capa-630x500.png", "trailer": {"@type": "VideoObject", "name": "Prancheta 0.1 — trailer", "embedUrl": "https://www.youtube.com/embed/pRwGAeNrtrY", "uploadDate": "2026-10-06", "description": "Trailer do Prancheta 0.1"}, "genre": ["Sports", "Simulation", "Strategy", "Management"], "gamePlatform": ["Web browser", "Android"], "operatingSystem": ["Android", "Web"], "applicationCategory": "Game", "inLanguage": "pt-BR", "author": {"@type": "Organization", "name": "Rebocl Brank", "url": "https://reboclbrank-max.github.io/site"}, "publisher": {"@type": "Organization", "name": "Rebocl Brank"}, "softwareVersion": "0.1", "datePublished": "2026-10-06", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "BRL", "availability": "https://schema.org/InStock", "url": "https://rebocl-brank.itch.io/prancheta"}, "playMode": "SinglePlayer", "sameAs": ["https://rebocl-brank.itch.io/prancheta", "https://www.youtube.com/watch?v=pRwGAeNrtrY"]}</script>
+<style>
+:root{--preto:#0a0a0a;--dourado:#d4af37;--dourado-claro:#f0d97a;--texto:#e8e6e1;--suave:#9d9a93;--borda:rgba(212,175,55,.32)}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--preto);color:var(--texto);font-family:"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.c{width:min(900px,90%);margin:0 auto}header{padding:2.2rem 0 1rem}header a{color:var(--suave);text-decoration:none;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(2rem,6vw,3.2rem);color:var(--dourado-claro);line-height:1.1;margin:.6rem 0 .3rem}.sub{color:var(--suave);font-size:1.15rem;margin-bottom:1.4rem}
+.acoes{display:flex;gap:.8rem;flex-wrap:wrap;margin:1.2rem 0 2rem}.acoes a{padding:.85rem 1.4rem;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid var(--dourado);color:var(--preto);background:var(--dourado)}.acoes a.sec{background:transparent;color:var(--dourado-claro)}
+.midia{border:1px solid var(--borda);border-radius:12px;overflow:hidden;margin:1rem auto 2rem;background:#000;max-width:630px}.midia img{display:block;width:100%;height:auto}
+h2{color:var(--dourado);font-size:1.35rem;margin:2rem 0 .6rem;letter-spacing:.02em}ul{padding-left:1.2rem}li{margin:.35rem 0}p{margin:.5rem 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}.box{border:1px solid var(--borda);border-radius:10px;padding:1rem}.box b{color:var(--dourado-claro)}
+footer{color:var(--suave);font-size:.85rem;padding:3rem 0 2rem;border-top:1px solid var(--borda);margin-top:3rem}footer a{color:var(--dourado-claro)}
+</style>
+</head>
+<body>
+<div class="c">
+<header><a href="../../">← Rebocl Brank</a></header>
+<main>
+<h1>Prancheta</h1>
+<p class="sub">Simulador de gestão de futebol: você é o técnico — decide sem jogar.</p>
+<div class="acoes">
+  <a href="https://rebocl-brank.itch.io/prancheta" rel="noopener">▶ Jogar no navegador</a>
+  <a class="sec" href="https://rebocl-brank.itch.io/prancheta" rel="noopener">📱 Baixar APK (Android)</a>
+  <a class="sec" href="https://www.youtube.com/watch?v=pRwGAeNrtrY" rel="noopener">🎬 Trailer no YouTube</a>
+</div>
+<div class="midia"><img src="../../media/prancheta/capa-630x500.png" width="630" height="500" alt="Capa do Prancheta: a prancheta de giz sobre o quadro verde com o desenho da jogada"></div>
+
+<h2>O que é o Prancheta</h2>
+<p><strong>Prancheta</strong> é um <strong>simulador de gestão de futebol</strong> em português do Brasil. Você não controla os jogadores em campo: escolhe o elenco, define a semana de treinos e decide como o time vai jogar. A partida é simulada diante de você — com momentos para trocar atletas e dar uma instrução tática aos 45'.</p>
+<p>Comece uma carreira numa liga de duas divisões e conduza seu clube por temporada após temporada: escalação manual, contratos e empréstimos, finanças, copa nacional, conquistas e a prancheta para escolher sistema, estilo e padrões de jogo. Tudo num <strong>mundo fictício gerado por semente</strong> para cada carreira — sem clubes, jogadores ou escudos reais.</p>
+
+<div class="grid">
+  <div class="box"><b>Decida sem jogar</b><p>Narração lance a lance, placar ao vivo e janelas de decisão: até 5 trocas na partida e uma instrução tática.</p></div>
+  <div class="box"><b>Grátis e offline</b><p>Sem conta, sem compra e sem internet para jogar. No navegador ou no APK Android, com save local.</p></div>
+  <div class="box"><b>Carreira completa</b><p>Duas divisões, copa, Data FIFA, mercado com contratos e empréstimos, finanças, conquistas e recordes.</p></div>
+  <div class="box"><b>Feito para o celular</b><p>Texto ajustável (16/18/20), modo daltônico e alvos de toque grandes. A primeira semana é um guia do primeiro jogo.</p></div>
+</div>
+
+<h2>Como jogar</h2>
+<ul>
+  <li><strong>No navegador:</strong> clique em <em>Jogar no navegador</em> acima (na página do itch.io, é o botão <em>Run game</em>). O som começa depois do primeiro toque — regra dos navegadores.</li>
+  <li><strong>No Android:</strong> baixe o APK na página do itch.io e toque para instalar; o sistema pede para permitir a instalação de apps de fora da Play Store — é normal, o jogo não está em loja. Depois é só abrir "Prancheta".</li>
+  <li><strong>Primeira vez:</strong> a semana inicial funciona como um guia do primeiro jogo, com quatro passos e atalhos de treino e prancheta. Se algo travar ou confundir, escreva nos comentários da página do itch.io — o retorno muda o jogo.</li>
+</ul>
+
+<h2>Ficha</h2>
+<ul>
+  <li><strong>Versão:</strong> 0.1 (lançada em 06/10/2026)</li>
+  <li><strong>Gênero:</strong> futebol · gestão · simulação</li>
+  <li><strong>Plataformas:</strong> HTML5 (navegador) e Android (APK)</li>
+  <li><strong>Idioma:</strong> português do Brasil</li>
+  <li><strong>Motor:</strong> Godot 4.5 · <strong>Preço:</strong> grátis</li>
+  <li><strong>Privacidade:</strong> <a href="../../privacidade.html">política de privacidade</a></li>
+</ul>
+
+<h2>Acompanhe</h2>
+<ul>
+  <li>itch.io (comentários e feedback): <a href="https://rebocl-brank.itch.io/prancheta" rel="noopener">rebocl-brank.itch.io/prancheta</a></li>
+  <li>YouTube: <a href="https://www.youtube.com/channel/UCQdxKtfRnqNLd1ZOs9B6eaQ" rel="noopener">canal Rebocl Brank</a> · <a href="https://www.youtube.com/watch?v=pRwGAeNrtrY" rel="noopener">trailer</a></li>
+  <li>Bluesky: <a href="https://bsky.app/profile/reboclbrank.bsky.social" rel="me noopener">@reboclbrank.bsky.social</a></li>
+  <li>Mastodon: <a href="https://mastodon.social/@ReboclBrank" rel="me noopener">@ReboclBrank@mastodon.social</a></li>
+  <li>Discord (comunidade e feedback): <a href="https://discord.gg/AnJr5nqx4K" rel="noopener">discord.gg/AnJr5nqx4K</a></li>
+</ul>
+</main>
+<footer>© 2026 Rebocl Brank · <a href="mailto:reboclbrank@gmail.com">reboclbrank@gmail.com</a></footer>
+</div>
+</body>
+</html>
