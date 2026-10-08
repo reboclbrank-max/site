@@ -1,8 +1,23 @@
 {
- "atualizado": "2026-10-08T02:11:08+00:00",
+ "atualizado": "2026-10-08T23:02:38+00:00",
  "piloto": {
   "ligado": false,
-  "ultimo_post": null
+  "ultimo_post": {
+   "jogo": "prancheta",
+   "em": "2026-10-08T23:02:38+00:00"
+  },
+  "historico": [
+   {
+    "jogo": "ceifalume",
+    "em": "2026-10-08T23:02:38+00:00",
+    "canais_ok": 6
+   },
+   {
+    "jogo": "prancheta",
+    "em": "2026-10-08T23:02:38+00:00",
+    "canais_ok": 6
+   }
+  ]
  },
  "fila_publicacao": [],
  "motores": [
@@ -49,16 +64,14 @@
  },
  "metricas": {
   "ceifalume": {
-   "itch_views": 108,
+   "itch_views": 110,
    "itch_downloads": 39,
-   "apk": 66,
-   "yt_views": 7
+   "apk": 66
   },
   "prancheta": {
-   "itch_views": 14,
+   "itch_views": 16,
    "itch_downloads": 2,
-   "apk": 12,
-   "yt_views": 2
+   "apk": 12
   }
  },
  "avisos": {
