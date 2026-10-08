@@ -1,0 +1,69 @@
+{
+ "atualizado": "2026-10-08T02:11:08+00:00",
+ "piloto": {
+  "ligado": false,
+  "ultimo_post": null
+ },
+ "fila_publicacao": [],
+ "motores": [
+  {
+   "nome": "Pollinations (sem chave)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "Pollinations 2 (sem chave)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (GLM, sem chave)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  }
+ ],
+ "cerebro": {
+  "cache_respostas": 0,
+  "ultimas": []
+ },
+ "metricas": {
+  "ceifalume": {
+   "itch_views": 108,
+   "itch_downloads": 39,
+   "apk": 66,
+   "yt_views": 7
+  },
+  "prancheta": {
+   "itch_views": 14,
+   "itch_downloads": 2,
+   "apk": 12,
+   "yt_views": 2
+  }
+ },
+ "avisos": {
+  "ativos": 1,
+  "lembretes_pendentes": 0
+ },
+ "nota": "estado inicial publicado antes da 1ª execução do piloto — a cada 3 h o agente atualiza sozinho"
+}
