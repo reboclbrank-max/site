@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-09T19:29:34+00:00",
+ "atualizado": "2026-10-09T22:11:30+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -43,8 +43,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 19,
-   "falhas_total": 15,
+   "ok_total": 36,
+   "falhas_total": 107,
    "ms_medio": 0
   },
   {
@@ -55,17 +55,21 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 29,
-   "falhas_total": 17,
-   "ms_medio": 11061
+   "ok_total": 35,
+   "falhas_total": 112,
+   "ms_medio": 0
   }
  ],
  "cerebro": {
-  "cache_respostas": 1,
+  "cache_respostas": 2,
   "ultimas": [
    {
     "p": "Você é a Assistente Rebocl. Tarefa CONCRETA, sem moleza:\n\n1. Leia o `ESTADO-GERAL.md` no repositório `base` (arquivo na raiz) — é o manifesto de retomada.\n2. Confira no repositório `agente` (privado): `MEMORIA/PILOTO.txt` está \"ligado\"? `MEMORIA/app-ceifalume.nacl` e `MEMORIA/senha-ceifalume.nacl` e",
     "em": "2026-10-09 19:28"
+   },
+   {
+    "p": "Dados reais medidos agora (19:40 BRT, coletados por mim no mundo real — você analisa):\n\n**O ESTADO-GERAL.md (snapshot 07:00) afirma:**\n1. Registro da base: entradas 1–64, commit `e7985090ee21`\n2. Piloto: \"2 posts/dia (gate 9h)\"\n3. @ceifalume: \"95% — travou em 429; rodar finalizar_ceifalume.py quando",
+    "em": "2026-10-09 19:32"
    }
   ]
  },
@@ -76,7 +80,7 @@
    "apk": 66
   },
   "prancheta": {
-   "itch_views": 16,
+   "itch_views": 17,
    "itch_downloads": 2
   }
  },
