@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="Diário de bordo da Rebocl Brank — bastidores do Ceifalume e do Prancheta, direto do estúdio.">
+<title>Diário de bordo — Rebocl Brank</title>
+<link rel="canonical" href="https://reboclbrank-max.github.io/site/blog/">
+<style>
+  :root{
+    --preto:#0a0a0a; --preto-2:#0f0e0c; --preto-3:#14120e;
+    --dourado:#d4af37; --dourado-claro:#f0d97a; --dourado-escuro:#9c7a24;
+    --texto:#e8e6e1; --texto-suave:#9d9a93; --borda-ouro:rgba(212,175,55,.32);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--preto); color:var(--texto);
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:rgba(212,175,55,.35)}
+  .container{width:min(760px,88%);margin:0 auto}
+  header.topo{
+    padding:64px 0 40px; text-align:center;
+    border-bottom:1px solid var(--borda-ouro);
+  }
+  .sobrelinha{
+    display:block; font-size:.78rem; letter-spacing:.55em; text-transform:uppercase;
+    color:var(--dourado-escuro); margin-bottom:14px; padding-left:.55em;
+  }
+  h1{
+    font-size:clamp(1.7rem,5vw,2.4rem); font-weight:300;
+    letter-spacing:.28em; text-transform:uppercase; color:var(--dourado);
+  }
+  .divisor{width:64px;height:1px;background:var(--dourado);margin:22px auto 0;opacity:.6}
+  .voltar{
+    display:inline-block; margin-top:18px; color:var(--texto-suave);
+    text-decoration:none; font-size:.9rem; letter-spacing:.12em;
+  }
+  .voltar:hover{color:var(--dourado-claro)}
+  article{
+    padding:44px 0; border-bottom:1px solid var(--borda-ouro);
+  }
+  article time{
+    font-size:.78rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--dourado-escuro);
+  }
+  article h2{
+    font-size:clamp(1.2rem,3.4vw,1.5rem); font-weight:400; color:var(--dourado-claro);
+    margin:10px 0 14px;
+  }
+  article p{color:var(--texto); margin-bottom:12px}
+  article p.destaque{color:var(--texto-suave)}
+  .palcos{
+    padding:44px 0; text-align:center;
+  }
+  .palcos h2{
+    font-size:.78rem; letter-spacing:.55em; text-transform:uppercase;
+    color:var(--dourado-escuro); font-weight:400; margin-bottom:22px;
+  }
+  .palcos a{
+    display:inline-block; margin:6px 8px; padding:9px 18px;
+    border:1px solid var(--borda-ouro); border-radius:999px;
+    color:var(--texto); text-decoration:none; font-size:.92rem;
+  }
+  .palcos a:hover{border-color:var(--dourado); color:var(--dourado-claro)}
+  footer{
+    padding:34px 0 44px; text-align:center; color:var(--texto-suave); font-size:.85rem;
+    border-top:1px solid var(--borda-ouro);
+  }
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="container">
+    <span class="sobrelinha">Rebocl Brank</span>
+    <h1>Diário de bordo</h1>
+    <div class="divisor"></div>
+    <a class="voltar" href="../">&#8592; voltar ao site</a>
+  </div>
+</header>
+
+<main class="container">
+  <article>
+    <time datetime="2026-10-09">09 · outubro · 2026</time>
+    <h2>O robô que divulga enquanto você dorme</h2>
+    <p class="destaque">Bastidores: como este estúdio de uma pessoa só mantém presença diária em seis redes sem gastar um centavo.</p>
+    <p>O Ceifalume e o Prancheta têm um vigia: um robô próprio que estuda, escreve, publica e responde. Ele alterna os dois jogos a cada dia, mede o que deu certo e tenta de novo o que falhou — com novas tentativas em fila, não com teimosia burra.</p>
+    <p>Nesta semana o robô ganhou camadas novas de defesa: recuperação automática de credenciais expiradas e tentativas com rotação de rede. O princípio é o mesmo do jogo: falhou, plantou de novo.</p>
+  </article>
+
+  <article>
+    <time datetime="2026-10-08">08 · outubro · 2026</time>
+    <h2>Prancheta: o placar não conta a história</h2>
+    <p class="destaque">Por que um simulador de gestão precisa de análise de expectativa de gol.</p>
+    <p>No futebol real, um time pode vencer jogando mal. O Prancheta registra o pós-jogo com expectativa de gol (xG) para separar o resultado da atuação — e o gestor que olha só o placar contrata errado na rodada seguinte.</p>
+    <p>Grátis, no navegador, em português: <a href="../jogos/prancheta/" style="color:var(--dourado-claro)">jogar Prancheta</a>.</p>
+  </article>
+
+  <article>
+    <time datetime="2026-10-07">07 · outubro · 2026</time>
+    <h2>Ceifalume: plante, contrate, desligue a luz</h2>
+    <p class="destaque">Um idle de fazenda que vira terror quando a noite chega — e o diário de desenvolvimento conta como ele foi feito.</p>
+    <p>O Ceifalume começou como experimento de ritmo: o que acontece quando o loop de fazenda é interrompido por algo que você não controla? O resultado virou o primeiro jogo do estúdio, com diário de desenvolvimento dentro do próprio jogo.</p>
+    <p>Jogue no navegador ou baixe o APK: <a href="../jogos/ceifalume/" style="color:var(--dourado-claro)">página do Ceifalume</a>.</p>
+  </article>
+
+  <section class="palcos">
+    <h2>Onde encontrar</h2>
+    <a href="https://www.reboclpress..." rel="noopener" hidden></a>
+    <a href="https://rentry.co/rebocl-press" rel="noopener">Press kit</a>
+    <a href="https://gist.github.com/reboclbrank-max/09b4671aada2b78bcfed252efc3844ac" rel="noopener">Changelog vivo</a>
+    <a href="https://bsky.app/profile/reboclbrank.bsky.social" rel="noopener">Bluesky</a>
+    <a href="https://mastodon.social/@ReboclBrank" rel="noopener">Mastodon</a>
+    <a href="https://rebocl-brank.itch.io/prancheta" rel="noopener">Itch.io</a>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 Rebocl Brank &mdash; Jogos e Aplicativos
+</footer>
+</body>
+</html>
