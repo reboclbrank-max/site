@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-09T23:58:55+00:00",
+ "atualizado": "2026-10-09T23:59:41+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -23,7 +23,7 @@
     "canais_ok": 4
    }
   ],
-  "mencoes_hoje": 1,
+  "mencoes_hoje": 3,
   "canais": {
    "bluesky": "ok",
    "mastodon": "ok",
@@ -55,9 +55,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 36,
+   "ok_total": 38,
    "falhas_total": 116,
-   "ms_medio": 0
+   "ms_medio": 11801
   }
  ],
  "cerebro": {
