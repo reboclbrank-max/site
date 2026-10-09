@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-09T22:11:30+00:00",
+ "atualizado": "2026-10-09T22:13:25+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -23,7 +23,7 @@
     "canais_ok": 4
    }
   ],
-  "mencoes_hoje": 0,
+  "mencoes_hoje": 1,
   "canais": {
    "bluesky": "ok",
    "mastodon": "ok",
@@ -44,7 +44,7 @@
     "criativa": 50.0
    },
    "ok_total": 36,
-   "falhas_total": 107,
+   "falhas_total": 111,
    "ms_medio": 0
   },
   {
@@ -55,8 +55,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 35,
-   "falhas_total": 112,
+   "ok_total": 36,
+   "falhas_total": 116,
    "ms_medio": 0
   }
  ],
