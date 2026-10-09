@@ -1,10 +1,10 @@
 {
- "atualizado": "2026-10-09T16:09:47+00:00",
+ "atualizado": "2026-10-09T16:13:34+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
-   "jogo": "prancheta",
-   "em": "2026-10-08T23:02:13+00:00"
+   "jogo": "ceifalume",
+   "em": "2026-10-09T16:11:20+00:00"
   },
   "historico": [
    {
@@ -16,12 +16,36 @@
     "jogo": "prancheta",
     "em": "2026-10-08T23:02:13+00:00",
     "canais_ok": 6
+   },
+   {
+    "jogo": "ceifalume",
+    "em": "2026-10-09T16:11:20+00:00",
+    "canais_ok": 4
    }
   ],
   "mencoes_hoje": 0,
-  "canais": {}
+  "canais": {
+   "bluesky": "ok",
+   "mastodon": "ok",
+   "telegram": "ok",
+   "discord": "ok",
+   "threads": "ok",
+   "tumblr": "erro"
+  }
  },
- "fila_publicacao": [],
+ "fila_publicacao": [
+  {
+   "jogo": "ceifalume",
+   "texto": "**Angulo: Gameplay**\n\n\"O Ceifalume está ganhando vida! 🌟 Estamos ajustando o coyote time e o jump buffer para um game feel perfeito. Cada pulo conta, cada movimento importa. O bastidor está cheio de testes e ajustes. Prepare-se para a melhor experiência de plataforma que você já viu! #ReboclBrank #Ceifalume https://rebocl-brank.itch.io/ceifalume",
+   "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/ceifalume/devlog-1-1280x720.png",
+   "tentativas": 0,
+   "criado": "2026-10-09T16:10:54+00:00",
+   "pendente": [
+    "bluesky",
+    "tumblr"
+   ]
+  }
+ ],
  "motores": [
   {
    "nome": "Pollinations (último recurso)",
@@ -31,9 +55,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 1,
-   "falhas_total": 2,
-   "ms_medio": 19140
+   "ok_total": 3,
+   "falhas_total": 5,
+   "ms_medio": 27618
   },
   {
    "nome": "LLM7 (GLM, sem chave)",
@@ -43,8 +67,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 11,
-   "falhas_total": 3,
+   "ok_total": 15,
+   "falhas_total": 6,
    "ms_medio": 0
   }
  ],
