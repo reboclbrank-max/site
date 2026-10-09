@@ -1,40 +1,16 @@
 {
- "atualizado": "2026-10-08T23:02:38+00:00",
+ "atualizado": "2026-10-09T00:56:38+00:00",
  "piloto": {
   "ligado": false,
-  "ultimo_post": {
-   "jogo": "prancheta",
-   "em": "2026-10-08T23:02:38+00:00"
-  },
-  "historico": [
-   {
-    "jogo": "ceifalume",
-    "em": "2026-10-08T23:02:38+00:00",
-    "canais_ok": 6
-   },
-   {
-    "jogo": "prancheta",
-    "em": "2026-10-08T23:02:38+00:00",
-    "canais_ok": 6
-   }
-  ]
+  "ultimo_post": null,
+  "historico": [],
+  "mencoes_hoje": 0,
+  "canais": {}
  },
  "fila_publicacao": [],
  "motores": [
   {
-   "nome": "Pollinations (sem chave)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "Pollinations 2 (sem chave)",
+   "nome": "Pollinations (último recurso)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -70,13 +46,11 @@
   },
   "prancheta": {
    "itch_views": 16,
-   "itch_downloads": 2,
-   "apk": 12
+   "itch_downloads": 2
   }
  },
  "avisos": {
-  "ativos": 1,
+  "ativos": 0,
   "lembretes_pendentes": 0
- },
- "nota": "estado inicial publicado antes da 1ª execução do piloto — a cada 3 h o agente atualiza sozinho"
+ }
 }
