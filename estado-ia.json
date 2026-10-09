@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-09T16:13:34+00:00",
+ "atualizado": "2026-10-09T17:53:31+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -55,9 +55,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 3,
-   "falhas_total": 5,
-   "ms_medio": 27618
+   "ok_total": 10,
+   "falhas_total": 6,
+   "ms_medio": 17126
   },
   {
    "nome": "LLM7 (GLM, sem chave)",
@@ -67,9 +67,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 15,
-   "falhas_total": 6,
-   "ms_medio": 0
+   "ok_total": 18,
+   "falhas_total": 7,
+   "ms_medio": 5882
   }
  ],
  "cerebro": {
