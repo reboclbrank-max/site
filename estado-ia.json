@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-10T11:50:45+00:00",
+ "atualizado": "2026-10-10T14:40:39+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -48,8 +48,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 0,
-   "falhas_total": 6,
+   "ok_total": 2,
+   "falhas_total": 13,
    "ms_medio": 0
   },
   {
@@ -61,7 +61,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 3,
+   "falhas_total": 8,
    "ms_medio": 0
   },
   {
@@ -72,9 +72,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 80,
-   "falhas_total": 195,
-   "ms_medio": 18970
+   "ok_total": 98,
+   "falhas_total": 200,
+   "ms_medio": 23606
   },
   {
    "nome": "LLM7 (GLM, sem chave)",
@@ -85,7 +85,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 210,
+   "falhas_total": 217,
    "ms_medio": 0
   }
  ],
