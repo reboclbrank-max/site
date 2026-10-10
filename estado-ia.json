@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-10T21:07:56+00:00",
+ "atualizado": "2026-10-10T22:54:08+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -54,7 +54,7 @@
     "criativa": 50.0
    },
    "ok_total": 4,
-   "falhas_total": 121,
+   "falhas_total": 157,
    "ms_medio": 0
   },
   {
@@ -65,8 +65,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 6,
-   "falhas_total": 116,
+   "ok_total": 7,
+   "falhas_total": 152,
    "ms_medio": 0
   },
   {
@@ -78,7 +78,19 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 70,
+   "falhas_total": 106,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 extra (DeepSeek-V4-Flash-0731)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
    "ms_medio": 0
   },
   {
@@ -90,19 +102,7 @@
     "criativa": 50.0
    },
    "ok_total": 98,
-   "falhas_total": 309,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (DeepSeek-V4-Flash-0731)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
+   "falhas_total": 345,
    "ms_medio": 0
   },
   {
@@ -250,18 +250,6 @@
    "ms_medio": 0
   },
   {
-   "nome": "LLM7 (claude-opus-4-8)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
    "nome": "LLM7 (claude-opus-5)",
    "notas": {
     "codigo": 50.0,
@@ -275,30 +263,6 @@
   },
   {
    "nome": "LLM7 (claude-opus-5-5)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (claude-sonnet-4-6)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (claude-sonnet-5)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -846,7 +810,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 325,
+   "falhas_total": 361,
    "ms_medio": 0
   }
  ],
@@ -874,7 +838,7 @@
    "apk": 68
   },
   "prancheta": {
-   "itch_views": 18,
+   "itch_views": 21,
    "itch_downloads": 2
   }
  },
