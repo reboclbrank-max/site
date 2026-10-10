@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-10T11:50:20+00:00",
+ "atualizado": "2026-10-10T11:50:45+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -28,7 +28,7 @@
     "canais_ok": 6
    }
   ],
-  "mencoes_hoje": 0,
+  "mencoes_hoje": 1,
   "canais": {
    "bluesky": "ok",
    "mastodon": "ok",
@@ -72,9 +72,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 79,
+   "ok_total": 80,
    "falhas_total": 195,
-   "ms_medio": 19120
+   "ms_medio": 18970
   },
   {
    "nome": "LLM7 (GLM, sem chave)",
