@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-10T19:29:48+00:00",
+ "atualizado": "2026-10-10T19:30:56+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -33,7 +33,7 @@
     "canais_ok": 6
    }
   ],
-  "mencoes_hoje": 1,
+  "mencoes_hoje": 2,
   "canais": {
    "bluesky": "ok",
    "mastodon": "ok",
@@ -54,7 +54,7 @@
     "criativa": 50.0
    },
    "ok_total": 4,
-   "falhas_total": 85,
+   "falhas_total": 86,
    "ms_medio": 0
   },
   {
@@ -65,9 +65,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 6,
-   "falhas_total": 80,
-   "ms_medio": 3117
+   "ok_total": 7,
+   "falhas_total": 81,
+   "ms_medio": 849
   },
   {
    "nome": "LLM7 extra (mistral-Nemo-Instruct-2407)",
@@ -78,7 +78,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 34,
+   "falhas_total": 35,
    "ms_medio": 0
   },
   {
@@ -90,7 +90,7 @@
     "criativa": 50.0
    },
    "ok_total": 98,
-   "falhas_total": 273,
+   "falhas_total": 274,
    "ms_medio": 0
   },
   {
@@ -846,7 +846,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 289,
+   "falhas_total": 290,
    "ms_medio": 0
   }
  ],
