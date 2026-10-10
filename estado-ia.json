@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-10T16:54:44+00:00",
+ "atualizado": "2026-10-10T19:29:48+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -54,8 +54,8 @@
     "criativa": 50.0
    },
    "ok_total": 4,
-   "falhas_total": 51,
-   "ms_medio": 3858
+   "falhas_total": 85,
+   "ms_medio": 0
   },
   {
    "nome": "LLM7 extra (codestral-latest)",
@@ -65,9 +65,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 3,
-   "falhas_total": 46,
-   "ms_medio": 3027
+   "ok_total": 6,
+   "falhas_total": 80,
+   "ms_medio": 3117
   },
   {
    "nome": "LLM7 extra (mistral-Nemo-Instruct-2407)",
@@ -78,7 +78,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 0,
+   "falhas_total": 34,
    "ms_medio": 0
   },
   {
@@ -90,7 +90,7 @@
     "criativa": 50.0
    },
    "ok_total": 98,
-   "falhas_total": 239,
+   "falhas_total": 273,
    "ms_medio": 0
   },
   {
@@ -682,6 +682,162 @@
    "ms_medio": 0
   },
   {
+   "nome": "Kilo auto-free",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "OVH Qwen-397B",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "OVH Llama-70B",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "OVH gpt-oss-120b",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "OVH Qwen3.6-27B",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "OVH Mistral-24B",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "OVH Qwen3.5-9B",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "OVH gpt-oss-20b",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "Gaia llama8b",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "Gaia qwen72b",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "TypeGPT",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "g4f",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "HackClub",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
    "nome": "LLM7 (GLM, sem chave)",
    "notas": {
     "codigo": 50.0,
@@ -690,7 +846,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 255,
+   "falhas_total": 289,
    "ms_medio": 0
   }
  ],
