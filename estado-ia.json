@@ -1,10 +1,10 @@
 {
- "atualizado": "2026-10-10T14:40:39+00:00",
+ "atualizado": "2026-10-10T14:42:10+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
-   "jogo": "prancheta",
-   "em": "2026-10-10T04:09:27+00:00"
+   "jogo": "ceifalume",
+   "em": "2026-10-10T14:41:55+00:00"
   },
   "historico": [
    {
@@ -25,6 +25,11 @@
    {
     "jogo": "prancheta",
     "em": "2026-10-10T04:09:27+00:00",
+    "canais_ok": 6
+   },
+   {
+    "jogo": "ceifalume",
+    "em": "2026-10-10T14:41:55+00:00",
     "canais_ok": 6
    }
   ],
@@ -48,8 +53,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 2,
-   "falhas_total": 13,
+   "ok_total": 3,
+   "falhas_total": 14,
    "ms_medio": 0
   },
   {
@@ -61,7 +66,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 8,
+   "falhas_total": 9,
    "ms_medio": 0
   },
   {
@@ -73,8 +78,8 @@
     "criativa": 50.0
    },
    "ok_total": 98,
-   "falhas_total": 200,
-   "ms_medio": 23606
+   "falhas_total": 202,
+   "ms_medio": 0
   },
   {
    "nome": "LLM7 (GLM, sem chave)",
@@ -85,7 +90,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 217,
+   "falhas_total": 218,
    "ms_medio": 0
   }
  ],
