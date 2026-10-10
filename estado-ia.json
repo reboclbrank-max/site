@@ -1,10 +1,10 @@
 {
- "atualizado": "2026-10-10T04:07:35+00:00",
+ "atualizado": "2026-10-10T04:10:14+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
-   "jogo": "ceifalume",
-   "em": "2026-10-09T16:11:20+00:00"
+   "jogo": "prancheta",
+   "em": "2026-10-10T04:09:27+00:00"
   },
   "historico": [
    {
@@ -21,6 +21,11 @@
     "jogo": "ceifalume",
     "em": "2026-10-09T16:11:20+00:00",
     "canais_ok": 4
+   },
+   {
+    "jogo": "prancheta",
+    "em": "2026-10-10T04:09:27+00:00",
+    "canais_ok": 6
    }
   ],
   "mencoes_hoje": 0,
@@ -30,7 +35,7 @@
    "telegram": "ok",
    "discord": "ok",
    "threads": "ok",
-   "tumblr": "erro"
+   "tumblr": "ok"
   }
  },
  "fila_publicacao": [],
@@ -43,9 +48,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 36,
-   "falhas_total": 183,
-   "ms_medio": 0
+   "ok_total": 39,
+   "falhas_total": 184,
+   "ms_medio": 28421
   },
   {
    "nome": "LLM7 (GLM, sem chave)",
@@ -55,9 +60,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 39,
+   "ok_total": 42,
    "falhas_total": 188,
-   "ms_medio": 40272
+   "ms_medio": 37499
   }
  ],
  "cerebro": {
@@ -80,7 +85,7 @@
    "apk": 67
   },
   "prancheta": {
-   "itch_views": 17,
+   "itch_views": 18,
    "itch_downloads": 2
   }
  },
