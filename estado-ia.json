@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-10T07:42:21+00:00",
+ "atualizado": "2026-10-10T11:50:20+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -41,6 +41,30 @@
  "fila_publicacao": [],
  "motores": [
   {
+   "nome": "LLM7 extra (codestral-latest)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 6,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 extra (mistral-Nemo-Instruct-2407)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 3,
+   "ms_medio": 0
+  },
+  {
    "nome": "Pollinations (último recurso)",
    "notas": {
     "codigo": 50.0,
@@ -48,9 +72,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 57,
-   "falhas_total": 186,
-   "ms_medio": 34439
+   "ok_total": 79,
+   "falhas_total": 195,
+   "ms_medio": 19120
   },
   {
    "nome": "LLM7 (GLM, sem chave)",
@@ -61,20 +85,24 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 193,
+   "falhas_total": 210,
    "ms_medio": 0
   }
  ],
  "cerebro": {
-  "cache_respostas": 2,
+  "cache_respostas": 5,
   "ultimas": [
    {
-    "p": "Você é a Assistente Rebocl. Tarefa CONCRETA, sem moleza:\n\n1. Leia o `ESTADO-GERAL.md` no repositório `base` (arquivo na raiz) — é o manifesto de retomada.\n2. Confira no repositório `agente` (privado): `MEMORIA/PILOTO.txt` está \"ligado\"? `MEMORIA/app-ceifalume.nacl` e `MEMORIA/senha-ceifalume.nacl` e",
-    "em": "2026-10-09 19:28"
+    "p": "Teste dos órgãos novos (responde usando-os de verdade): 1) [[REPO: agente/MEMORIA/PILOTO.txt]] — o piloto está ligado? 2) [[ACOES:]] — qual robô correu por último e como foi? Resuma em 3 linhas, sem enrolação.",
+    "em": "2026-10-10 10:12"
    },
    {
-    "p": "Dados reais medidos agora (19:40 BRT, coletados por mim no mundo real — você analisa):\n\n**O ESTADO-GERAL.md (snapshot 07:00) afirma:**\n1. Registro da base: entradas 1–64, commit `e7985090ee21`\n2. Piloto: \"2 posts/dia (gate 9h)\"\n3. @ceifalume: \"95% — travou em 429; rodar finalizar_ceifalume.py quando",
-    "em": "2026-10-09 19:32"
+    "p": "🎯 **MISSÃO: CAÇA DE MOTORES** (sua parte da guerra)\n\nOs motores estão em crise e o dono mandou caçar MAIS. Você tem internet livre — use [[PESQUISAR:]] e [[ABRIR:]] de verdade e volte com **pistas verificáveis** de endpoints de LLM **sem chave** (keyless/anônimos) que aceitem `POST /chat/completions",
+    "em": "2026-10-10 10:26"
+   },
+   {
+    "p": "🔧 **Suas ferramentas novas estão NO AR agora:** [[TESTAR: https://base/v1 | modelo]], [[PLANTAR: ...]] e [[GHSEARCH: termo]]. Use-as DE VERDADE nesta missão: 1) [[GHSEARCH: free llm api no key]] p/ achar repos com endpoints · 2) abra os docs com [[ABRIR:]] · 3) [[TESTAR: ...]] cada candidato · 4) [[",
+    "em": "2026-10-10 10:51"
    }
   ]
  },
