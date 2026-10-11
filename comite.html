@@ -56,6 +56,13 @@
     📱 Este comitê é um APP: menu do navegador → <b style="color:var(--dourado-claro)">Adicionar à tela inicial</b> — abre tela cheia e funciona até offline. <span id="fechar-dica" style="cursor:pointer;color:var(--dourado)">✕</span>
   </div>
   <textarea id="pergunta" placeholder="Sua pergunta para o comitê…"></textarea>
+  <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
+    <button onclick="rapida(&quot;Quem é você?&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">Quem é você?</button>
+    <button onclick="rapida(&quot;Me dê 3 ideias de jogo&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">3 ideias de jogo</button>
+    <button onclick="rapida(&quot;Explique IA como se eu tivesse 10 anos&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">IA pra criança</button>
+    <button onclick="rapida(&quot;Qual o melhor motor da casa hoje?&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">Melhor motor hoje</button>
+    <span style="color:var(--suave);font-size:.72rem;align-self:center">atalho: Ctrl+Enter</span>
+  </div>
   <details style="margin-top:18px;background:var(--preto-3);border:1px solid var(--borda);border-radius:12px;padding:12px 14px">
     <summary style="cursor:pointer;color:var(--dourado-claro);font-size:.95rem">🔑 Robôs turbo com SUA chave (opcional · a chave fica só neste aparelho)</summary>
     <p style="color:var(--suave);font-size:.82rem;margin-top:6px">Atualização 11/10: OVH e Kilo passaram a EXIGIR token — os robôs OVH mudaram pra cá. Com token da OVH (grátis em console.ovh.ai) eles voltam a atirar.</p>
@@ -74,6 +81,7 @@
   <div id="historico"></div>
   <div id="placar"></div>
   <button id="copiar-tudo" onclick="copiarTudo()" style="display:none;background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);margin-top:10px">📋 COPIAR TODAS AS RESPOSTAS</button>
+  <button id="baixar-tudo" onclick="baixarTudo()" style="display:none;background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);margin-top:10px">💾 BAIXAR .MD</button>
   <div id="saidas"></div>
 </main>
 <footer>
@@ -237,6 +245,7 @@ async function disparar() {
     if (melhor.txt.length > 200) escreve(melhor.nome, melhor.txt.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"), "vencedor");
     const nProva = ativos.filter(x => x.prova).length;
   document.getElementById("copiar-tudo").style.display = respostas.length ? "block" : "none";
+  document.getElementById("baixar-tudo").style.display = respostas.length ? "block" : "none";
   if (respostas.length) salvarHist(pergunta, respostas.length);
   placar.textContent = "🏛 " + respostas.length + "/" + ativos.length + " robôs responderam em " + ((Date.now() - t0) / 1000).toFixed(1) + "s";
   } else {
@@ -310,16 +319,31 @@ function falar(d) {
     speechSynthesis.speak(u);
   } catch (e) {}
 }
-function copiarTudo() {
+function juntarTudo() {
   const caixas = [...document.querySelectorAll(".robo")];
   const partes = caixas.map(c => {
     const nome = c.querySelector("h3 span").textContent.replace(" ★ MELHOR", "");
     const txt = c.querySelector("p").textContent.trim();
     return "—" + nome + "—\n" + txt;
   }).filter(p => p.length > 12);
-  navigator.clipboard.writeText("🏛 Comitê no Bolso\n\n" + partes.join("\n\n")).then(() => {
+  return "🏛 Comitê no Bolso\n\n" + partes.join("\n\n");
+}
+function baixarTudo() {
+  const txt = juntarTudo();
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([txt], {type: "text/markdown"}));
+  a.download = "comite-respostas.md";
+  a.click();
+  const b = document.getElementById("baixar-tudo");
+  b.textContent = "✅ BAIXADO";
+  setTimeout(() => { b.textContent = "💾 BAIXAR .MD"; }, 1200);
+}
+function copiarTudo() {
+  const partes = juntarTudo();
+  navigator.clipboard.writeText(partes).then(() => {
     const b = document.getElementById("copiar-tudo");
-    b.textContent = "✅ COPIADO (" + partes.length + " respostas)";
+    const n = partes.split("\n\n").length - 1;
+    b.textContent = "✅ COPIADO (" + n + " respostas)";
     setTimeout(() => { b.textContent = "📋 COPIAR TODAS AS RESPOSTAS"; }, 1200);
   }).catch(() => {});
 }
@@ -356,6 +380,9 @@ if ("serviceWorker" in navigator) {
     if (v) document.getElementById(par[0]).value = v;
   }
   atualizarChaves();
+  function rapida(t) { document.getElementById("pergunta").value = t; perguntar(); }
+  window.rapida = rapida;
+  document.getElementById("pergunta").addEventListener("keydown", (e) => { if (e.ctrlKey && e.key === "Enter") perguntar(); });
   const qq = new URLSearchParams(location.search).get("q");
   if (qq) { document.getElementById("pergunta").value = qq; perguntar(); }
 })();
