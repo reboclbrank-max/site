@@ -60,6 +60,7 @@
     <input id="co" type="password" placeholder="chave OpenRouter (sk-or-…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <input id="ch" type="password" placeholder="token HuggingFace (hf_…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <input id="cov" type="password" placeholder="token OVH (opcional · endpoints.ai.cloud.ovh.net → Get your free token)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="cl7" type="password" placeholder="token llm7 (opcional · token.llm7.io — sobe seus limites e tenta os grandões)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <button onclick="salvarChaves()" style="margin-top:10px">GUARDAR NESTE APARELHO</button>
     <p id="status-chaves" style="color:var(--suave);font-size:.85rem;margin-top:8px"></p>
   </details>
@@ -74,7 +75,7 @@
 <script>
 const LLM7 = ["GLM-5.3-Flash","glm-5.3","gpt-oss:20b","nemotron-3-nano:30b","mistral-Nemo-Instruct-2407",
   "codestral-latest","DeepSeek-V4-Flash-0731","gemma4:31b","minimax-m3","kimi-k2.6",
-  "L3-8B-Lunaris-v1-Turbo","mistral-Small-24B-Instruct-2501", "chroma-v.46-flash", "jev-latest", "dark-beast-krea2", "gemini-omni-flash", "default", "fast"];
+  "L3-8B-Lunaris-v1-Turbo","mistral-Small-24B-Instruct-2501", "chroma-v.46-flash", "jev-latest", "dark-beast-krea2", "gemini-omni-flash", "default", "fast", "DeepSeek-V4.1-Flash", "anthropic/claude-opus-4-6", "anthropic/claude-opus-4-7", "anthropic/claude-opus-4-8", "anthropic/claude-sonnet-4-6", "anthropic/claude-sonnet-5", "anthropic/claude-sonnet-5-5", "claude-fable-5", "claude-fable-5-1", "claude-haiku-5-5", "claude-opus-4-8", "claude-opus-5", "claude-opus-5-5", "claude-sonnet-4-6", "claude-sonnet-5", "deepseek-v4-flash:0731", "deepseek-v4-pro", "gemini-3-flash", "gemini-3.1-flash-lite", "gemini-3.6-flash-high", "gemini-3.7-flash", "gemini-3.8-flash-high", "glm-5.2", "gpt-5.6-luna", "gpt-5.6-sol", "gpt-5.6-terra", "gpt-6-astra", "gpt-6-sol", "gpt-6.1-sol", "grok-4.5", "grok-4.6", "kimi-k2.7-code", "kimi-k3", "llama-4-maverick", "mistral-large-3:675b", "seed-2.0-mini"];
 const ROBOS = [
   ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
 ,
@@ -83,7 +84,10 @@ const ROBOS = [
       ["hackclub", "HackClub 🔎", "openai"],
       ["ovh", "Prova · OVH Qwen-397B 🔎", "Qwen3.5-397B-A17B"], ["ovh", "Prova · OVH Llama-70B 🔎", "Meta-Llama-3_3-70B-Instruct"],
       ["ovh", "Prova · OVH gpt-oss-120b 🔎", "gpt-oss-120b"], ["ovh", "Prova · OVH Qwen3.8 🔎", "Qwen3.8-27B"],
-      ["ovh", "Prova · OVH Qwen-32B 🔎", "Qwen3-32B"], ["ovh", "Prova · OVH Mistral-7B 🔎", "Mistral-7B-Instruct-v0.3"]
+      ["ovh", "Prova · OVH Qwen-32B 🔎", "Qwen3-32B"], ["ovh", "Prova · OVH Mistral-7B 🔎", "Mistral-7B-Instruct-v0.3"],
+      ["ovh", "Prova · OVH Nemo 🔎", "Mistral-Nemo-Instruct-2407"], ["ovh", "Prova · OVH Qwen3.5-9B 🔎", "Qwen3.5-9B"],
+      ["ovh", "Prova · OVH gpt-oss-20b 🔎", "gpt-oss-20b"], ["ovh", "Prova · OVH Qwen3.6-27B 🔎", "Qwen3.6-27B"],
+      ["ovh", "Prova · OVH Qwen-VL-72B 🔎 (visão)", "Qwen2.5-VL-72B-Instruct"], ["ovh", "Prova · OVH Mistral-24B 🔎", "Mistral-Small-3.2-24B-Instruct-2506"]
   ].map(([tipo, nome, modelo]) => ({nome, tipo, modelo, prova: true}))];
 const BASES = {gaia8: "https://llama8b.gaia.domains/v1", gaia72: "https://qwen72b.gaia.domains/v1",
   typegpt: "https://chat.typegpt.net/v1", g4f: "https://api.g4f.dev/v1", hackclub: "https://ai.hackclub.com/v1",
@@ -99,6 +103,10 @@ const KEYED = [
   {tipo: "groq", nome: "Groq · Llama-3.1-8B ⚡", modelo: "llama-3.1-8b-instant"},
   {tipo: "groq", nome: "Groq · GPT-OSS-120B ⚡", modelo: "openai/gpt-oss-120b"},
   {tipo: "groq", nome: "Groq · GPT-OSS-20B ⚡", modelo: "openai/gpt-oss-20b"},
+  {tipo: "groq", nome: "Groq · Gemma-2-9B (beta)", modelo: "gemma2-9b-it"},
+  {tipo: "groq", nome: "Groq · Llama-3.2-3B (beta)", modelo: "llama-3.2-3b"},
+  {tipo: "groq", nome: "Groq · Llama-4-Scout (beta)", modelo: "meta-llama/llama-4-scout-17b-16e-instruct"},
+  {tipo: "groq", nome: "Groq · Qwen3-32B (beta)", modelo: "qwen/qwen3-32b"},
   {tipo: "or", nome: "OpenRouter · Nemotron-550B", modelo: "nvidia/nemotron-3-ultra-550b-a55b:free"},
   {tipo: "or", nome: "OpenRouter · Nemotron-Super-120B", modelo: "nvidia/nemotron-3-super-120b-a12b:free"},
   {tipo: "or", nome: "OpenRouter · Nemotron-3.5-Lightning ⚡", modelo: "nvidia/nemotron-3.5-lightning:free"},
@@ -135,7 +143,7 @@ async function um(robo, pergunta, t0) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 90000);
   try {
-    const cab = {"Content-Type": "application/json", "Authorization": "Bearer " + (robo.chave || localStorage.getItem("bolso_chave_" + robo.tipo) || "unused")};
+    const cab = {"Content-Type": "application/json", "Authorization": "Bearer " + (robo.chave || localStorage.getItem("bolso_chave_" + robo.tipo) || localStorage.getItem("bolso_chave_llm7") || "unused")};
     if (robo.tipo === "or") { cab["HTTP-Referer"] = "https://reboclbrank-max.github.io/site/"; cab["X-Title"] = "Comite no Bolso"; }
     const r = await fetch(BASES[robo.tipo] + "/chat/completions", {
       method: "POST", signal: ctrl.signal,
@@ -188,7 +196,7 @@ async function disparar() {
   btn.disabled = false;
 }
 function salvarChaves() {
-  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"]]) {
+  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"], ["cl7", "llm7"]]) {
     const v = document.getElementById(par[0]).value.trim();
     if (v) localStorage.setItem("bolso_chave_" + par[1], v); else localStorage.removeItem("bolso_chave_" + par[1]);
   }
@@ -218,7 +226,7 @@ document.addEventListener("pointerdown", (e) => {
   document.addEventListener("pointerup", () => { clearTimeout(_timer); _timer = null; }, {once: true});
 });
 function atualizarChaves() {
-  const n = ["groq", "or", "hf", "ovh"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
+  const n = ["groq", "or", "hf", "ovh", "llm7"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
   document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — " + KEYED.filter(k => localStorage.getItem("bolso_chave_" + k.tipo)).length + " robôs turbo na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
 }
 (function () {
@@ -246,7 +254,7 @@ if ("serviceWorker" in navigator) {
   try { navigator.serviceWorker.register("sw.js").catch(() => {}); } catch (e) {}
 }
 (function () {
-  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"]]) {
+  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"], ["cl7", "llm7"]]) {
     const v = localStorage.getItem("bolso_chave_" + par[1]);
     if (v) document.getElementById(par[0]).value = v;
   }
