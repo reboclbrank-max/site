@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T13:57:20+00:00",
+ "atualizado": "2026-10-11T13:58:39+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -43,7 +43,7 @@
     "canais_ok": 5
    }
   ],
-  "mencoes_hoje": 1,
+  "mencoes_hoje": 2,
   "canais": {
    "bluesky": "ok",
    "mastodon": "ok",
@@ -58,7 +58,7 @@
    "jogo": "prancheta",
    "texto": "**Post (ângulo: bastidor):**\n\nO pulo \"certo\" do Prancheta esconde 120ms de perdão. Coyote time + jump buffer: você https://rebocl-brank.itch.io/prancheta",
    "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/prancheta/xg-1280x720.png",
-   "tentativas": 5,
+   "tentativas": 6,
    "criado": "2026-10-11T00:55:53+00:00",
    "pendente": [
     "tumblr"
@@ -68,7 +68,7 @@
    "jogo": "ceifalume",
    "texto": "Refatorar o sistema de diálogo pela 3ª vez dói, mas o NPC finalmente cala a boca no funeral — antes gritava \"tenho fome\" no meio do elogio fúnebre. 🛠️ Progresso real é feio por dentro. #Ceifalume #DevLog https://rebocl-brank.itch.io/ceifalume",
    "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/ceifalume/devlog-1-1280x720.png",
-   "tentativas": 0,
+   "tentativas": 1,
    "criado": "2026-10-11T12:04:10+00:00",
    "pendente": [
     "tumblr"
@@ -168,9 +168,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 159,
+   "ok_total": 161,
    "falhas_total": 588,
-   "ms_medio": 22741
+   "ms_medio": 22762
   },
   {
    "nome": "LLM7 (DeepSeek-V4.1-Flash)",
