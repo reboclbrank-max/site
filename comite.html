@@ -65,7 +65,7 @@
   <div id="saidas"></div>
 </main>
 <footer>
-  Os motores gratuitos têm limites — se um fechar a janela, outro responde.<br>
+  Toque numa resposta para copiá-la. Os motores gratuitos têm limites — se um fechar a janela, outro responde.<br>
   <a href="../blog/">Diário de bordo</a> · <a href="../">site oficial</a>
 </footer>
 <script>
@@ -179,6 +179,15 @@ function atualizarChaves() {
   const n = ["groq", "or", "hf", "ovh"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
   document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — " + KEYED.filter(k => localStorage.getItem("bolso_chave_" + k.tipo)).length + " robôs turbo na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
 }
+document.getElementById("saidas").addEventListener("click", (ev) => {
+  const p = ev.target.closest("p");
+  if (!p || p.classList.contains("estado")) return;
+  navigator.clipboard.writeText(p.textContent).then(() => {
+    const antigo = p.textContent;
+    p.textContent = "✅ copiado";
+    setTimeout(() => { p.textContent = antigo; }, 900);
+  }).catch(() => {});
+});
 if ("serviceWorker" in navigator) {
   try { navigator.serviceWorker.register("sw.js").catch(() => {}); } catch (e) {}
 }
