@@ -94,9 +94,15 @@ const LLM7 = [
 ];
 const ROBOS = [
   ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
-  {nome: "Mundial · Pollinations fast", tipo: "polli", modelo: "openai-fast"}
+  {nome: "Mundial · Pollinations fast", tipo: "polli", modelo: "openai-fast"},
+  {nome: "Mundial · GLM-5.3", tipo: "g4fn", modelo: "z-ai/glm-5.3"},
+  {nome: "Mundial · Kimi-K3", tipo: "g4fn", modelo: "moonshotai/kimi-k3"},
+  {nome: "Mundial · GPT-OSS-20B", tipo: "g4fn", modelo: "openai/gpt-oss-20b"},
+  {nome: "Mundial · GLM-5.3-Flash", tipo: "g4fn", modelo: "z-ai/glm-5.3-flash"},
+  {nome: "Mundial · Nano-Omni", tipo: "g4fn", modelo: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning"},
+  {nome: "Mundial · Lightning", tipo: "g4fn", modelo: "nvidia/nemotron-3.5-lightning-30b-a3b"}
 ];
-const BASES = {polli: "https://text.pollinations.ai/openai", llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+const BASES = {polli: "https://text.pollinations.ai/openai", g4fn: "https://nvidia.g4f.dev/v1", llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1", ollama: "https://ollama.com/v1"};
 let PRE = false, VENCEDOR = false;
 const CTRLS = {};
@@ -204,7 +210,7 @@ async function disparar() {
   VENCEDOR = false;
   let ativos;
   if (PRE) {
-    ativos = ROBOS.filter(r => r.tipo === "llm7" || r.tipo === "polli");
+    ativos = ROBOS.filter(r => r.tipo === "llm7" || r.tipo === "polli" || r.tipo === "g4fn");
   } else {
     ativos = [...ROBOS];
     for (const k of KEYED) {
@@ -218,7 +224,7 @@ async function disparar() {
     {id: "or", titulo: "OpenRouter turbo · sua chave", robs: ativos.filter(r => r.tipo === "or")},
     {id: "hf", titulo: "HuggingFace turbo · sua chave", robs: ativos.filter(r => r.tipo === "hf")},
     {id: "ovh", titulo: "OVH turbo 🛰 · sua chave", robs: ativos.filter(r => r.tipo === "ovh")},
-    {id: "polli", titulo: "Mundial keyless 🌸", robs: ativos.filter(r => r.tipo === "polli")},
+    {id: "polli", titulo: "Mundial keyless 🌸 (7 motores!)", robs: ativos.filter(r => r.tipo === "polli" || r.tipo === "g4fn")},
     {id: "ollama", titulo: "Ollama Nuvem ☁ · sua chave", robs: ativos.filter(r => r.tipo === "ollama")},
   ].filter(g => g.robs.length);
   const resultados = [];
