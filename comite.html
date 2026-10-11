@@ -44,6 +44,15 @@
 </header>
 <main>
   <textarea id="pergunta" placeholder="Sua pergunta para o comitê…"></textarea>
+  <details style="margin-top:18px;background:var(--preto-3);border:1px solid var(--borda);border-radius:12px;padding:12px 14px">
+    <summary style="cursor:pointer;color:var(--dourado-claro);font-size:.95rem">🔑 Robôs turbo com SUA chave (opcional · a chave fica só neste aparelho)</summary>
+    <p style="color:var(--suave);font-size:.85rem;margin-top:8px">Cole a chave e toque em guardar: ela vive apenas no armazenamento do SEU navegador — não vai pra nenhum servidor da casa nem aparece no código desta página. Consiga em: console.groq.com/keys · openrouter.ai/settings/keys · huggingface.co/settings/tokens</p>
+    <input id="cg" type="password" placeholder="chave Groq (gsk_…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="co" type="password" placeholder="chave OpenRouter (sk-or-…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="ch" type="password" placeholder="token HuggingFace (hf_…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <button onclick="salvarChaves()" style="margin-top:10px">GUARDAR NESTE APARELHO</button>
+    <p id="status-chaves" style="color:var(--suave);font-size:.85rem;margin-top:8px"></p>
+  </details>
   <button id="disparar" onclick="disparar()">🏛 CONVOCAR O COMITÊ</button>
   <div id="placar"></div>
   <div id="saidas"></div>
@@ -62,7 +71,21 @@ const ROBOS = [
   ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
   ...OVH.map(m => ({nome: "OVH · " + m, tipo: "ovh", modelo: m})),
 ];
-const BASES = {llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1"};
+const BASES = {llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1"};
+const KEYED = [
+  {tipo: "groq", nome: "Groq · Llama-3.3-70B ⚡", modelo: "llama-3.3-70b-versatile"},
+  {tipo: "groq", nome: "Groq · Llama-3.1-8B ⚡", modelo: "llama-3.1-8b-instant"},
+  {tipo: "groq", nome: "Groq · GPT-OSS-120B ⚡", modelo: "openai/gpt-oss-120b"},
+  {tipo: "groq", nome: "Groq · GPT-OSS-20B ⚡", modelo: "openai/gpt-oss-20b"},
+  {tipo: "or", nome: "OpenRouter · Nemotron-550B", modelo: "nvidia/nemotron-3-ultra-550b-a55b:free"},
+  {tipo: "or", nome: "OpenRouter · Inkling", modelo: "thinkingmachines/inkling:free"},
+  {tipo: "or", nome: "OpenRouter · Dots-3", modelo: "dots-studio/dots-3-note-preview:free"},
+  {tipo: "or", nome: "OpenRouter · Laguna", modelo: "poolside/laguna-s-2.1:free"},
+  {tipo: "hf", nome: "HF · DeepSeek-V4-Flash", modelo: "deepseek-ai/DeepSeek-V4-Flash"},
+  {tipo: "hf", nome: "HF · Qwen3.5-122B", modelo: "Qwen/Qwen3.5-122B-A10B"},
+  {tipo: "hf", nome: "HF · Kimi-K2.7-Code", modelo: "moonshotai/Kimi-K2.7-Code"},
+];
 
 function caixa(nome) {
   const d = document.createElement("div");
@@ -87,9 +110,11 @@ async function um(robo, pergunta, t0) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 90000);
   try {
+    const cab = {"Content-Type": "application/json", "Authorization": "Bearer " + (robo.chave || "unused")};
+    if (robo.tipo === "or") { cab["HTTP-Referer"] = "https://reboclbrank-max.github.io/site/"; cab["X-Title"] = "Comite no Bolso"; }
     const r = await fetch(BASES[robo.tipo] + "/chat/completions", {
       method: "POST", signal: ctrl.signal,
-      headers: {"Content-Type": "application/json", "Authorization": "Bearer unused"},
+      headers: cab,
       body: JSON.stringify({model: robo.modelo, messages: [{role: "user", content: pergunta}], max_tokens: 400})
     });
     clearTimeout(timer); tempo(robo.nome, t0);
@@ -114,17 +139,40 @@ async function disparar() {
   btn.disabled = true;
   document.getElementById("saidas").innerHTML = "";
   const t0 = Date.now();
-  const respostas = (await Promise.all(ROBOS.map(r => um(r, pergunta, t0)))).filter(Boolean);
+  const ativos = [...ROBOS];
+  for (const k of KEYED) {
+    const ch = localStorage.getItem("bolso_chave_" + k.tipo);
+    if (ch) { k.chave = ch; ativos.push(k); }
+  }
+  const respostas = (await Promise.all(ativos.map(r => um(r, pergunta, t0)))).filter(Boolean);
   const placar = document.getElementById("placar");
   if (respostas.length) {
     const melhor = respostas.reduce((a, b) => (b.txt.length > a.txt.length && b.txt.length > 200 ? b : a));
     if (melhor.txt.length > 200) escreve(melhor.nome, melhor.txt.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"), "vencedor");
-    placar.textContent = "🏛 " + respostas.length + "/" + ROBOS.length + " robôs responderam em " + ((Date.now() - t0) / 1000).toFixed(1) + "s";
+    placar.textContent = "🏛 " + respostas.length + "/" + ativos.length + " robôs responderam em " + ((Date.now() - t0) / 1000).toFixed(1) + "s";
   } else {
     placar.textContent = "🏛 Todas as janelas fecharam — reconecte o Wi-Fi (IP novo = cotas novas) e convoque de novo.";
   }
   btn.disabled = false;
 }
+function salvarChaves() {
+  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"]]) {
+    const v = document.getElementById(par[0]).value.trim();
+    if (v) localStorage.setItem("bolso_chave_" + par[1], v); else localStorage.removeItem("bolso_chave_" + par[1]);
+  }
+  atualizarChaves();
+}
+function atualizarChaves() {
+  const n = ["groq", "or", "hf"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
+  document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — até " + (n * 4) + " robôs extras na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
+}
+(function () {
+  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"]]) {
+    const v = localStorage.getItem("bolso_chave_" + par[1]);
+    if (v) document.getElementById(par[0]).value = v;
+  }
+  atualizarChaves();
+})();
 </script>
 </body>
 </html>
