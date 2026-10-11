@@ -94,7 +94,7 @@ let PRE = false, VENCEDOR = false;
 const CTRLS = {};
 function togglePreguica() {
   PRE = !PRE;
-  document.getElementById("preguica").textContent = PRE ? "⚡ PREGUIÇA LIGADA (só llm7, para no 1º)" : "⚡ PREGUIÇA: SÓ A RESPOSTA MAIS RÁPIDA";
+  document.getElementById("preguica").textContent = PRE ? "⚡ PREGUIÇA LIGADA (llm7 + mundial, para no 1º)" : "⚡ PREGUIÇA: SÓ A RESPOSTA MAIS RÁPIDA";
 }
 const KEYED = [
   {tipo: "ovh", nome: "OVH · Qwen-397B 🛰", modelo: "Qwen3.5-397B-A17B"},
@@ -132,6 +132,10 @@ function caixa(nome) {
   const d = document.createElement("div");
   d.className = "robo"; d.id = "r-" + btoa(nome).replace(/=/g, "");
   d.innerHTML = "<h3><span>" + nome + "</span><span class='tempo'>&#8203;</span></h3><p class='estado'>⏳ convocando…</p>";
+  const bt = document.createElement("span");
+  bt.textContent = "🔊"; bt.title = "ouvir a resposta"; bt.style.cursor = "pointer"; bt.style.marginLeft = "6px";
+  bt.onclick = (ev) => { ev.stopPropagation(); falar(d); };
+  d.querySelector("h3").insertBefore(bt, d.querySelector(".tempo"));
   document.getElementById("saidas").appendChild(d);
   return d;
 }
@@ -192,7 +196,7 @@ async function disparar() {
   VENCEDOR = false;
   let ativos;
   if (PRE) {
-    ativos = ROBOS.filter(r => r.tipo === "llm7");
+    ativos = ROBOS.filter(r => r.tipo === "llm7" || r.tipo === "polli");
   } else {
     ativos = [...ROBOS];
     for (const k of KEYED) {
@@ -296,6 +300,16 @@ document.getElementById("saidas").addEventListener("click", (ev) => {
   }).catch(() => {});
 });
 try { localStorage.removeItem("bolso_dica_vista"); } catch (e) {}
+function falar(d) {
+  const p = d.querySelector("p");
+  if (!p || p.classList.contains("estado")) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(p.textContent.slice(0, 1200));
+    u.lang = "pt-BR"; u.rate = 1.02;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
 function copiarTudo() {
   const caixas = [...document.querySelectorAll(".robo")];
   const partes = caixas.map(c => {
@@ -342,6 +356,8 @@ if ("serviceWorker" in navigator) {
     if (v) document.getElementById(par[0]).value = v;
   }
   atualizarChaves();
+  const qq = new URLSearchParams(location.search).get("q");
+  if (qq) { document.getElementById("pergunta").value = qq; perguntar(); }
 })();
 </script>
 </body>
