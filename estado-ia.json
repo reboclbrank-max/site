@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T09:17:13+00:00",
+ "atualizado": "2026-10-11T12:02:52+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -86,18 +86,6 @@
    "ms_medio": 11209
   },
   {
-   "nome": "LLM7 extra (GLM-5.3-Flash)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 14,
-   "falhas_total": 404,
-   "ms_medio": 0
-  },
-  {
    "nome": "LLM7 extra (codestral-latest)",
    "notas": {
     "codigo": 50.0,
@@ -105,8 +93,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 8,
-   "falhas_total": 396,
+   "ok_total": 15,
+   "falhas_total": 410,
    "ms_medio": 0
   },
   {
@@ -117,8 +105,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 0,
-   "falhas_total": 352,
+   "ok_total": 8,
+   "falhas_total": 402,
    "ms_medio": 0
   },
   {
@@ -130,7 +118,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 245,
+   "falhas_total": 357,
    "ms_medio": 0
   },
   {
@@ -142,7 +130,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 229,
+   "falhas_total": 250,
    "ms_medio": 0
   },
   {
@@ -154,7 +142,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 227,
+   "falhas_total": 235,
    "ms_medio": 0
   },
   {
@@ -165,12 +153,24 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 137,
-   "falhas_total": 583,
-   "ms_medio": 43396
+   "ok_total": 155,
+   "falhas_total": 587,
+   "ms_medio": 31141
   },
   {
    "nome": "LLM7 (DeepSeek-V4.1-Flash)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (GLM-5.3-Flash)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -874,7 +874,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 603,
+   "falhas_total": 609,
    "ms_medio": 0
   },
   {
