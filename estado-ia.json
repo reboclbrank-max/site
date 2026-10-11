@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T07:04:44+00:00",
+ "atualizado": "2026-10-11T09:16:15+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -93,8 +93,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 13,
-   "falhas_total": 395,
+   "ok_total": 14,
+   "falhas_total": 404,
    "ms_medio": 0
   },
   {
@@ -106,7 +106,7 @@
     "criativa": 50.0
    },
    "ok_total": 8,
-   "falhas_total": 389,
+   "falhas_total": 396,
    "ms_medio": 0
   },
   {
@@ -118,7 +118,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 344,
+   "falhas_total": 352,
    "ms_medio": 0
   },
   {
@@ -130,7 +130,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 237,
+   "falhas_total": 245,
    "ms_medio": 0
   },
   {
@@ -142,7 +142,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 221,
+   "falhas_total": 229,
    "ms_medio": 0
   },
   {
@@ -154,7 +154,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 221,
+   "falhas_total": 227,
    "ms_medio": 0
   },
   {
@@ -165,168 +165,24 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 119,
-   "falhas_total": 578,
+   "ok_total": 137,
+   "falhas_total": 583,
+   "ms_medio": 43396
+  },
+  {
+   "nome": "LLM7 (DeepSeek-V4.1-Flash)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
    "ms_medio": 0
   },
   {
    "nome": "LLM7 (L3-8B-Lunaris-v1-Turbo)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (chroma-v.46-flash)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (deepseek-v4-flash:0731)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (gemini-omni-flash)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (gemma4:31b)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (glm-5.3)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (gpt-oss:20b)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (jev-latest)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (kimi-k2.6)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (kimi-k2.7-code)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (minimax-m3)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (mistral-Small-24B-Instruct-2501)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (nemotron-3-nano:30b)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (DeepSeek-V4.1-Flash)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -398,6 +254,18 @@
    "ms_medio": 0
   },
   {
+   "nome": "LLM7 (chroma-v.46-flash)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
    "nome": "LLM7 (claude-fable-5)",
    "notas": {
     "codigo": 50.0,
@@ -422,6 +290,18 @@
    "ms_medio": 0
   },
   {
+   "nome": "LLM7 (claude-opus-4-8)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
    "nome": "LLM7 (claude-opus-5)",
    "notas": {
     "codigo": 50.0,
@@ -435,6 +315,42 @@
   },
   {
    "nome": "LLM7 (claude-opus-5-5)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (claude-sonnet-4-6)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (claude-sonnet-5)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (deepseek-v4-flash:0731)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -518,7 +434,43 @@
    "ms_medio": 0
   },
   {
+   "nome": "LLM7 (gemini-omni-flash)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (gemma4:31b)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
    "nome": "LLM7 (glm-5.2)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (glm-5.3)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -602,6 +554,18 @@
    "ms_medio": 0
   },
   {
+   "nome": "LLM7 (gpt-oss:20b)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
    "nome": "LLM7 (grok-4.5)",
    "notas": {
     "codigo": 50.0,
@@ -615,6 +579,42 @@
   },
   {
    "nome": "LLM7 (grok-4.6)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (jev-latest)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (kimi-k2.6)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (kimi-k2.7-code)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -650,7 +650,43 @@
    "ms_medio": 0
   },
   {
+   "nome": "LLM7 (minimax-m3)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (mistral-Small-24B-Instruct-2501)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
    "nome": "LLM7 (mistral-large-3:675b)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (nemotron-3-nano:30b)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -838,7 +874,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 595,
+   "falhas_total": 603,
    "ms_medio": 0
   },
   {
