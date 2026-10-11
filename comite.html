@@ -100,7 +100,10 @@ const ROBOS = [
   {nome: "Mundial · GPT-OSS-20B", tipo: "g4fn", modelo: "openai/gpt-oss-20b"},
   {nome: "Mundial · GLM-5.3-Flash", tipo: "g4fn", modelo: "z-ai/glm-5.3-flash"},
   {nome: "Mundial · Nano-Omni", tipo: "g4fn", modelo: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning"},
-  {nome: "Mundial · Lightning", tipo: "g4fn", modelo: "nvidia/nemotron-3.5-lightning-30b-a3b"}
+  {nome: "Mundial · Lightning", tipo: "g4fn", modelo: "nvidia/nemotron-3.5-lightning-30b-a3b"},
+  {nome: "Mundial · Nemotron-Ultra-550B", tipo: "g4fn", modelo: "nvidia/nemotron-3-ultra-550b-a55b"},
+  {nome: "Mundial · Nemotron-Super-120B", tipo: "g4fn", modelo: "nvidia/nemotron-3-super-120b-a12b"},
+  {nome: "Mundial · Auto (melhor vivo)", tipo: "g4fn", modelo: "auto"}
 ];
 const BASES = {polli: "https://text.pollinations.ai/openai", g4fn: "https://nvidia.g4f.dev/v1", llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1", ollama: "https://ollama.com/v1"};
@@ -224,7 +227,7 @@ async function disparar() {
     {id: "or", titulo: "OpenRouter turbo · sua chave", robs: ativos.filter(r => r.tipo === "or")},
     {id: "hf", titulo: "HuggingFace turbo · sua chave", robs: ativos.filter(r => r.tipo === "hf")},
     {id: "ovh", titulo: "OVH turbo 🛰 · sua chave", robs: ativos.filter(r => r.tipo === "ovh")},
-    {id: "polli", titulo: "Mundial keyless 🌸 (7 motores!)", robs: ativos.filter(r => r.tipo === "polli" || r.tipo === "g4fn")},
+    {id: "polli", titulo: "Mundial keyless 🌸 (10 motores!)", robs: ativos.filter(r => r.tipo === "polli" || r.tipo === "g4fn")},
     {id: "ollama", titulo: "Ollama Nuvem ☁ · sua chave", robs: ativos.filter(r => r.tipo === "ollama")},
   ].filter(g => g.robs.length);
   const resultados = [];
