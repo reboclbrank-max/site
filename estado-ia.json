@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T03:45:56+00:00",
+ "atualizado": "2026-10-11T07:04:11+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -62,6 +62,30 @@
  ],
  "motores": [
   {
+   "nome": "Groq (llama-3.3-70b-versatile)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 1,
+   "ms_medio": 0
+  },
+  {
+   "nome": "OpenRouter (grátis)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 7,
+   "falhas_total": 0,
+   "ms_medio": 11209
+  },
+  {
    "nome": "LLM7 extra (GLM-5.3-Flash)",
    "notas": {
     "codigo": 50.0,
@@ -69,8 +93,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 12,
-   "falhas_total": 384,
+   "ok_total": 13,
+   "falhas_total": 395,
    "ms_medio": 0
   },
   {
@@ -82,7 +106,7 @@
     "criativa": 50.0
    },
    "ok_total": 8,
-   "falhas_total": 379,
+   "falhas_total": 389,
    "ms_medio": 0
   },
   {
@@ -94,7 +118,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 333,
+   "falhas_total": 344,
    "ms_medio": 0
   },
   {
@@ -106,7 +130,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 227,
+   "falhas_total": 237,
    "ms_medio": 0
   },
   {
@@ -118,7 +142,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 210,
+   "falhas_total": 221,
    "ms_medio": 0
   },
   {
@@ -130,7 +154,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 210,
+   "falhas_total": 221,
    "ms_medio": 0
   },
   {
@@ -141,8 +165,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 98,
-   "falhas_total": 572,
+   "ok_total": 119,
+   "falhas_total": 578,
    "ms_medio": 0
   },
   {
@@ -806,7 +830,7 @@
    "ms_medio": 0
   },
   {
-   "nome": "LLM7 (GLM, sem chave)",
+   "nome": "LLM7 (com token do dono)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -814,17 +838,25 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 588,
+   "falhas_total": 595,
+   "ms_medio": 0
+  },
+  {
+   "nome": "HuggingFace (Qwen/Qwen3-235B-A22B-Instruct-2507)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
    "ms_medio": 0
   }
  ],
  "cerebro": {
-  "cache_respostas": 7,
+  "cache_respostas": 8,
   "ultimas": [
-   {
-    "p": "🔧 **Suas ferramentas novas estão NO AR agora:** [[TESTAR: https://base/v1 | modelo]], [[PLANTAR: ...]] e [[GHSEARCH: termo]]. Use-as DE VERDADE nesta missão: 1) [[GHSEARCH: free llm api no key]] p/ achar repos com endpoints · 2) abra os docs com [[ABRIR:]] · 3) [[TESTAR: ...]] cada candidato · 4) [[",
-    "em": "2026-10-10 10:51"
-   },
    {
     "p": "**Missão desta sessão (caçadora de palcos):** 🏹\n\n1. `[[PESQUISAR:]]` — procure ENDPOINTS DE LLM GRATUITOS NOVOS (sem chave, estilo openai `/v1/chat/completions`) que ainda não conhecemos. Termine quem já morreu pra gente: Puter, Pollinations (pagou), DDG, g4f, HackClub, Gaia, TypeGPT, Kilo (401). Pr",
     "em": "2026-10-10 23:09"
@@ -832,6 +864,10 @@
    {
     "p": "Plantão de garimpo #2 — turno da madrugada. 🌙\n\nContexto curto: a fila de robôs vivos da casa agora responde de verdade (GLM-5.3-Flash e DeepSeek cravaram 2 comitês seguidos). Falta PALCO NOVO pra fila crescer.\n\nSeu turno, em 4 passos (ferramentas reais, não teoria):\n\n1) Descobrir: [[GHSEARCH: keyles",
     "em": "2026-10-11 03:41"
+   },
+   {
+    "p": "Plantão de garimpo #3 — agora com exemplos prontos pra copiar. 🌙\n\nCandidatos pra verificar (todos de repos reais que achei):\n• https://api.mistral.ai/v1 — modelo: mistral-small-latest (exigirá chave? teste e veja)\n• https://api.deepinfra.com/v1/openai — modelo: deepseek-ai/DeepSeek-V4-Flash (algumas",
+    "em": "2026-10-11 03:49"
    }
   ]
  },
