@@ -77,8 +77,17 @@ const LLM7 = ["GLM-5.3-Flash","glm-5.3","gpt-oss:20b","nemotron-3-nano:30b","mis
   "L3-8B-Lunaris-v1-Turbo","mistral-Small-24B-Instruct-2501", "chroma-v.46-flash", "jev-latest", "dark-beast-krea2", "gemini-omni-flash", "default", "fast"];
 const ROBOS = [
   ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
-];
-const BASES = {llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+,
+  ...[["gaia8", "Gaia · Llama-8B 🔎", "llama"], ["gaia72", "Gaia · Qwen-72B 🔎", "qwen72b"],
+      ["typegpt", "TypeGPT 🔎", "gpt-4o-mini"], ["g4f", "g4f 🔎", "gpt-4o-mini"],
+      ["hackclub", "HackClub 🔎", "openai"],
+      ["ovh", "Prova · OVH Qwen-397B 🔎", "Qwen3.5-397B-A17B"], ["ovh", "Prova · OVH Llama-70B 🔎", "Meta-Llama-3_3-70B-Instruct"],
+      ["ovh", "Prova · OVH gpt-oss-120b 🔎", "gpt-oss-120b"], ["ovh", "Prova · OVH Qwen3.8 🔎", "Qwen3.8-27B"],
+      ["ovh", "Prova · OVH Qwen-32B 🔎", "Qwen3-32B"], ["ovh", "Prova · OVH Mistral-7B 🔎", "Mistral-7B-Instruct-v0.3"]
+  ].map(([tipo, nome, modelo]) => ({nome, tipo, modelo, prova: true}))];
+const BASES = {gaia8: "https://llama8b.gaia.domains/v1", gaia72: "https://qwen72b.gaia.domains/v1",
+  typegpt: "https://chat.typegpt.net/v1", g4f: "https://api.g4f.dev/v1", hackclub: "https://ai.hackclub.com/v1",
+  llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1"};
 const KEYED = [
   {tipo: "ovh", nome: "OVH · Qwen-397B 🛰", modelo: "Qwen3.5-397B-A17B"},
@@ -134,7 +143,10 @@ async function um(robo, pergunta, t0) {
       body: JSON.stringify({model: robo.modelo, messages: [{role: "user", content: pergunta}], max_tokens: 400})
     });
     clearTimeout(timer); tempo(robo.nome, t0);
-    if (!r.ok) { escreve(robo.nome, "<span class='estado'>🚫 janela fechada (HTTP " + r.status + ")</span>"); return null; }
+    if (!r.ok) {
+      const msg = robo.prova ? ("<span class='estado'>🔎 este palco pede chave/token ou não abre deste IP (HTTP " + r.status + ")</span>") : ("<span class='estado'>🚫 janela fechada (HTTP " + r.status + ")</span>");
+      escreve(robo.nome, msg); return null;
+    }
     const d = await r.json();
     const m = (d.choices || [{}])[0].message || {};
     const txt = (m.content || m.reasoning_content || "").trim();
@@ -167,7 +179,8 @@ async function disparar() {
   if (respostas.length) {
     const melhor = respostas.reduce((a, b) => (b.txt.length > a.txt.length && b.txt.length > 200 ? b : a));
     if (melhor.txt.length > 200) escreve(melhor.nome, melhor.txt.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"), "vencedor");
-    placar.textContent = "🏛 " + respostas.length + "/" + ativos.length + " robôs responderam em " + ((Date.now() - t0) / 1000).toFixed(1) + "s";
+    const nProva = ativos.filter(x => x.prova).length;
+  placar.textContent = "🏛 " + respostas.length + "/" + ativos.length + " robôs responderam em " + ((Date.now() - t0) / 1000).toFixed(1) + "s";
   } else {
     placar.textContent = "🏛 Todas as janelas fecharam — reconecte o Wi-Fi (IP novo = cotas novas) e convoque de novo.";
   }
