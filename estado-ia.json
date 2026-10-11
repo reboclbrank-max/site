@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T12:05:47+00:00",
+ "atualizado": "2026-10-11T13:57:20+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -109,7 +109,7 @@
     "criativa": 50.0
    },
    "ok_total": 15,
-   "falhas_total": 410,
+   "falhas_total": 411,
    "ms_medio": 0
   },
   {
@@ -121,7 +121,7 @@
     "criativa": 50.0
    },
    "ok_total": 8,
-   "falhas_total": 402,
+   "falhas_total": 404,
    "ms_medio": 0
   },
   {
@@ -133,7 +133,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 357,
+   "falhas_total": 358,
    "ms_medio": 0
   },
   {
@@ -145,7 +145,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 250,
+   "falhas_total": 252,
    "ms_medio": 0
   },
   {
@@ -157,7 +157,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 235,
+   "falhas_total": 236,
    "ms_medio": 0
   },
   {
@@ -168,9 +168,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 156,
-   "falhas_total": 587,
-   "ms_medio": 31064
+   "ok_total": 159,
+   "falhas_total": 588,
+   "ms_medio": 22741
   },
   {
    "nome": "LLM7 (DeepSeek-V4.1-Flash)",
@@ -889,7 +889,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 609,
+   "falhas_total": 610,
    "ms_medio": 0
   },
   {
