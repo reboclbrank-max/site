@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T19:21:21+00:00",
+ "atualizado": "2026-10-11T22:49:07+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -96,9 +96,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 22,
+   "ok_total": 31,
    "falhas_total": 0,
-   "ms_medio": 0
+   "ms_medio": 6952
   },
   {
    "nome": "LLM7 extra (codestral-latest)",
@@ -108,8 +108,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 23,
-   "falhas_total": 440,
+   "ok_total": 24,
+   "falhas_total": 446,
    "ms_medio": 0
   },
   {
@@ -121,7 +121,7 @@
     "criativa": 50.0
    },
    "ok_total": 9,
-   "falhas_total": 431,
+   "falhas_total": 438,
    "ms_medio": 0
   },
   {
@@ -133,7 +133,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 386,
+   "falhas_total": 393,
    "ms_medio": 0
   },
   {
@@ -145,7 +145,7 @@
     "criativa": 50.0
    },
    "ok_total": 1,
-   "falhas_total": 278,
+   "falhas_total": 286,
    "ms_medio": 0
   },
   {
@@ -157,7 +157,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 264,
+   "falhas_total": 272,
    "ms_medio": 0
   },
   {
@@ -169,7 +169,7 @@
     "criativa": 50.0
    },
    "ok_total": 1,
-   "falhas_total": 254,
+   "falhas_total": 262,
    "ms_medio": 0
   },
   {
@@ -180,8 +180,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 211,
-   "falhas_total": 611,
+   "ok_total": 230,
+   "falhas_total": 618,
    "ms_medio": 0
   },
   {
@@ -749,6 +749,18 @@
    "ms_medio": 0
   },
   {
+   "nome": "LLM7 (pollinations/openai-fast)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
    "nome": "Kilo auto-free",
    "notas": {
     "codigo": 50.0,
@@ -913,7 +925,7 @@
     "criativa": 50.0
    },
    "ok_total": 45,
-   "falhas_total": 635,
+   "falhas_total": 643,
    "ms_medio": 0
   },
   {
@@ -930,19 +942,19 @@
   }
  ],
  "cerebro": {
-  "cache_respostas": 14,
+  "cache_respostas": 16,
   "ultimas": [
-   {
-    "p": "🔎 **Missão de validação — confira a SUA própria tabela OURO com as ferramentas** (você mesma disse que montou de memória; agora verifique DE HOJE):\n\nPara as 3 primeiras da sua tabela, ABRA a página real e confirme se é a página certa de criar chave (se mudou, dê a URL nova):\n1. [[ABRIR: https://app.",
-    "em": "2026-10-11 18:14"
-   },
-   {
-    "p": "📊 **Nota da validação:** Requesty ✓ e Cloudflare ✓ — mas a \"mudança\" da Z.ai veio da sua memória, não da página (o rodapé mostra que os [[ABRIR]] não rodaram). Eu testei agora: **as DUAS URLs respondem 200** — a original da sua tabela valia.\n\nÉ exatamente por isso que existe a REGRA DE OURO: memória",
-    "em": "2026-10-11 18:19"
-   },
    {
     "p": "💡 **Sua ideia virou sistema (11/10, ~18:34Z):** o health-check que você pediu no seu primeiro turno autônomo está NO AR — a cada 4 horas a casa dá um ping em cada motor da cadeia, marca quem morreu pro fim da fila e guarda o retrato em `MEMORIA/saude-motores.json` (pra você ler quando quiser).\n\nPrim",
     "em": "2026-10-11 18:36"
+   },
+   {
+    "p": "🎯 **Missão de auditoria — agora COM PODERES DE GESTÃO:**\n\nO placar dos motores foi limpo e recomeçou honesto (a poluição do fallback morreu hoje de manhã). Sua parte:\n\n1. Leia o painel você mesma: [[PLACAR:]]\n2. Diagnóstico de consultora: quem está se arrastando, quem merece mais rodadas, quem está ",
+    "em": "2026-10-11 21:27"
+   },
+   {
+    "p": "📊 **Nota da auditoria — a melhor tabela que você já fez, com UMA correção de strategy:**\n\n✅ O diagnóstico está CERTO: pódio (OR, Ollama, Nemotron, Kimi-K3), cemitério, prova — leitura de placar de consultora sênior.\n\n⚠️ A prescrição precisa de uma lente: **morte transiente ≠ morte permanente.** Os l",
+    "em": "2026-10-11 21:29"
    }
   ]
  },
