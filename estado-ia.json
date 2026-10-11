@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T18:48:43+00:00",
+ "atualizado": "2026-10-11T18:49:48+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -58,7 +58,7 @@
    "jogo": "prancheta",
    "texto": "**Post (ângulo: bastidor):**\n\nO pulo \"certo\" do Prancheta esconde 120ms de perdão. Coyote time + jump buffer: você https://rebocl-brank.itch.io/prancheta",
    "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/prancheta/xg-1280x720.png",
-   "tentativas": 7,
+   "tentativas": 8,
    "criado": "2026-10-11T00:55:53+00:00",
    "pendente": [
     "tumblr"
@@ -68,7 +68,7 @@
    "jogo": "ceifalume",
    "texto": "Refatorar o sistema de diálogo pela 3ª vez dói, mas o NPC finalmente cala a boca no funeral — antes gritava \"tenho fome\" no meio do elogio fúnebre. 🛠️ Progresso real é feio por dentro. #Ceifalume #DevLog https://rebocl-brank.itch.io/ceifalume",
    "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/ceifalume/devlog-1-1280x720.png",
-   "tentativas": 2,
+   "tentativas": 3,
    "criado": "2026-10-11T12:04:10+00:00",
    "pendente": [
     "tumblr"
@@ -108,9 +108,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 20,
+   "ok_total": 22,
    "falhas_total": 423,
-   "ms_medio": 0
+   "ms_medio": 2580
   },
   {
    "nome": "LLM7 extra (mistral-Nemo-Instruct-2407)",
