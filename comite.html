@@ -72,6 +72,7 @@
   <button id="preguica" onclick="togglePreguica()" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);margin-top:10px">⚡ PREGUIÇA: SÓ A RESPOSTA MAIS RÁPIDA</button>
   <div id="historico"></div>
   <div id="placar"></div>
+  <button id="copiar-tudo" onclick="copiarTudo()" style="display:none;background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);margin-top:10px">📋 COPIAR TODAS AS RESPOSTAS</button>
   <div id="saidas"></div>
 </main>
 <footer>
@@ -221,6 +222,7 @@ async function disparar() {
     const melhor = respostas.reduce((a, b) => (b.txt.length > a.txt.length && b.txt.length > 200 ? b : a));
     if (melhor.txt.length > 200) escreve(melhor.nome, melhor.txt.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"), "vencedor");
     const nProva = ativos.filter(x => x.prova).length;
+  document.getElementById("copiar-tudo").style.display = respostas.length ? "block" : "none";
   if (respostas.length) salvarHist(pergunta, respostas.length);
   placar.textContent = "🏛 " + respostas.length + "/" + ativos.length + " robôs responderam em " + ((Date.now() - t0) / 1000).toFixed(1) + "s";
   } else {
@@ -284,6 +286,19 @@ document.getElementById("saidas").addEventListener("click", (ev) => {
   }).catch(() => {});
 });
 try { localStorage.removeItem("bolso_dica_vista"); } catch (e) {}
+function copiarTudo() {
+  const caixas = [...document.querySelectorAll(".robo")];
+  const partes = caixas.map(c => {
+    const nome = c.querySelector("h3 span").textContent.replace(" ★ MELHOR", "");
+    const txt = c.querySelector("p").textContent.trim();
+    return "—" + nome + "—\n" + txt;
+  }).filter(p => p.length > 12);
+  navigator.clipboard.writeText("🏛 Comitê no Bolso\n\n" + partes.join("\n\n")).then(() => {
+    const b = document.getElementById("copiar-tudo");
+    b.textContent = "✅ COPIADO (" + partes.length + " respostas)";
+    setTimeout(() => { b.textContent = "📋 COPIAR TODAS AS RESPOSTAS"; }, 1200);
+  }).catch(() => {});
+}
 function salvarHist(q, n) {
   try {
     const h = JSON.parse(localStorage.getItem("bolso_hist") || "[]");
