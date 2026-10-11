@@ -1,10 +1,10 @@
 {
- "atualizado": "2026-10-11T22:49:07+00:00",
+ "atualizado": "2026-10-11T22:54:58+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
-   "jogo": "ceifalume",
-   "em": "2026-10-11T12:04:41+00:00"
+   "jogo": "prancheta",
+   "em": "2026-10-11T22:54:03+00:00"
   },
   "historico": [
    {
@@ -41,6 +41,11 @@
     "jogo": "ceifalume",
     "em": "2026-10-11T12:04:41+00:00",
     "canais_ok": 5
+   },
+   {
+    "jogo": "prancheta",
+    "em": "2026-10-11T22:54:03+00:00",
+    "canais_ok": 5
    }
   ],
   "mencoes_hoje": 2,
@@ -58,7 +63,7 @@
    "jogo": "prancheta",
    "texto": "**Post (ângulo: bastidor):**\n\nO pulo \"certo\" do Prancheta esconde 120ms de perdão. Coyote time + jump buffer: você https://rebocl-brank.itch.io/prancheta",
    "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/prancheta/xg-1280x720.png",
-   "tentativas": 9,
+   "tentativas": 10,
    "criado": "2026-10-11T00:55:53+00:00",
    "pendente": [
     "tumblr"
@@ -68,8 +73,18 @@
    "jogo": "ceifalume",
    "texto": "Refatorar o sistema de diálogo pela 3ª vez dói, mas o NPC finalmente cala a boca no funeral — antes gritava \"tenho fome\" no meio do elogio fúnebre. 🛠️ Progresso real é feio por dentro. #Ceifalume #DevLog https://rebocl-brank.itch.io/ceifalume",
    "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/ceifalume/devlog-1-1280x720.png",
-   "tentativas": 4,
+   "tentativas": 5,
    "criado": "2026-10-11T12:04:10+00:00",
+   "pendente": [
+    "tumblr"
+   ]
+  },
+  {
+   "jogo": "prancheta",
+   "texto": "Q está rolando no bastidor: 80% da ronda 2 do **Prancheta da Rebocl Brank** tá quase pronta, ainda ajustando animações de tiro. A vibe quente, mas nem tudo desliza. Confio que o resultado vai hitar 😎 #Desenvolvimento #PranchetaDoRebocl https://rebocl-brank.itch.io/prancheta",
+   "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/prancheta/xg-1280x720.png",
+   "tentativas": 0,
+   "criado": "2026-10-11T22:53:33+00:00",
    "pendente": [
     "tumblr"
    ]
@@ -85,7 +100,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 4,
+   "falhas_total": 7,
    "ms_medio": 0
   },
   {
@@ -97,8 +112,8 @@
     "criativa": 50.0
    },
    "ok_total": 31,
-   "falhas_total": 0,
-   "ms_medio": 6952
+   "falhas_total": 3,
+   "ms_medio": 0
   },
   {
    "nome": "LLM7 extra (codestral-latest)",
@@ -108,8 +123,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 24,
-   "falhas_total": 446,
+   "ok_total": 25,
+   "falhas_total": 451,
    "ms_medio": 0
   },
   {
@@ -121,7 +136,7 @@
     "criativa": 50.0
    },
    "ok_total": 9,
-   "falhas_total": 438,
+   "falhas_total": 443,
    "ms_medio": 0
   },
   {
@@ -133,7 +148,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 393,
+   "falhas_total": 398,
    "ms_medio": 0
   },
   {
@@ -145,7 +160,7 @@
     "criativa": 50.0
    },
    "ok_total": 1,
-   "falhas_total": 286,
+   "falhas_total": 291,
    "ms_medio": 0
   },
   {
@@ -157,7 +172,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 272,
+   "falhas_total": 277,
    "ms_medio": 0
   },
   {
@@ -169,7 +184,7 @@
     "criativa": 50.0
    },
    "ok_total": 1,
-   "falhas_total": 262,
+   "falhas_total": 267,
    "ms_medio": 0
   },
   {
@@ -180,8 +195,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 230,
-   "falhas_total": 618,
+   "ok_total": 233,
+   "falhas_total": 621,
    "ms_medio": 0
   },
   {
@@ -924,8 +939,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 45,
-   "falhas_total": 643,
+   "ok_total": 46,
+   "falhas_total": 647,
    "ms_medio": 0
   },
   {
@@ -937,7 +952,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 3,
+   "falhas_total": 5,
    "ms_medio": 0
   }
  ],
