@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T02:10:28+00:00",
+ "atualizado": "2026-10-11T03:45:02+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -69,9 +69,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 11,
-   "falhas_total": 301,
-   "ms_medio": 17945
+   "ok_total": 12,
+   "falhas_total": 384,
+   "ms_medio": 0
   },
   {
    "nome": "LLM7 extra (codestral-latest)",
@@ -82,7 +82,7 @@
     "criativa": 50.0
    },
    "ok_total": 8,
-   "falhas_total": 296,
+   "falhas_total": 379,
    "ms_medio": 0
   },
   {
@@ -94,7 +94,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 250,
+   "falhas_total": 333,
    "ms_medio": 0
   },
   {
@@ -106,7 +106,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 144,
+   "falhas_total": 227,
    "ms_medio": 0
   },
   {
@@ -118,7 +118,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 127,
+   "falhas_total": 210,
    "ms_medio": 0
   },
   {
@@ -130,7 +130,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 127,
+   "falhas_total": 210,
    "ms_medio": 0
   },
   {
@@ -142,7 +142,7 @@
     "criativa": 50.0
    },
    "ok_total": 98,
-   "falhas_total": 489,
+   "falhas_total": 572,
    "ms_medio": 0
   },
   {
@@ -814,17 +814,13 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 505,
+   "falhas_total": 588,
    "ms_medio": 0
   }
  ],
  "cerebro": {
-  "cache_respostas": 6,
+  "cache_respostas": 7,
   "ultimas": [
-   {
-    "p": "🎯 **MISSÃO: CAÇA DE MOTORES** (sua parte da guerra)\n\nOs motores estão em crise e o dono mandou caçar MAIS. Você tem internet livre — use [[PESQUISAR:]] e [[ABRIR:]] de verdade e volte com **pistas verificáveis** de endpoints de LLM **sem chave** (keyless/anônimos) que aceitem `POST /chat/completions",
-    "em": "2026-10-10 10:26"
-   },
    {
     "p": "🔧 **Suas ferramentas novas estão NO AR agora:** [[TESTAR: https://base/v1 | modelo]], [[PLANTAR: ...]] e [[GHSEARCH: termo]]. Use-as DE VERDADE nesta missão: 1) [[GHSEARCH: free llm api no key]] p/ achar repos com endpoints · 2) abra os docs com [[ABRIR:]] · 3) [[TESTAR: ...]] cada candidato · 4) [[",
     "em": "2026-10-10 10:51"
@@ -832,6 +828,10 @@
    {
     "p": "**Missão desta sessão (caçadora de palcos):** 🏹\n\n1. `[[PESQUISAR:]]` — procure ENDPOINTS DE LLM GRATUITOS NOVOS (sem chave, estilo openai `/v1/chat/completions`) que ainda não conhecemos. Termine quem já morreu pra gente: Puter, Pollinations (pagou), DDG, g4f, HackClub, Gaia, TypeGPT, Kilo (401). Pr",
     "em": "2026-10-10 23:09"
+   },
+   {
+    "p": "Plantão de garimpo #2 — turno da madrugada. 🌙\n\nContexto curto: a fila de robôs vivos da casa agora responde de verdade (GLM-5.3-Flash e DeepSeek cravaram 2 comitês seguidos). Falta PALCO NOVO pra fila crescer.\n\nSeu turno, em 4 passos (ferramentas reais, não teoria):\n\n1) Descobrir: [[GHSEARCH: keyles",
+    "em": "2026-10-11 03:41"
    }
   ]
  },
