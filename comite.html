@@ -84,9 +84,10 @@ const LLM7 = [
   "GLM-5.3-Flash", "mistral-Nemo-Instruct-2407", "codestral-latest", "DeepSeek-V4-Flash-0731", "gpt-oss:20b", "nemotron-3-nano:30b", "default", "fast"
 ];
 const ROBOS = [
-  ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m}))
+  ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
+  {nome: "Mundial · Pollinations fast", tipo: "polli", modelo: "openai-fast"}
 ];
-const BASES = {llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+const BASES = {polli: "https://text.pollinations.ai/openai", llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1"};
 let PRE = false, VENCEDOR = false;
 const CTRLS = {};
@@ -147,7 +148,8 @@ async function um(robo, pergunta, t0) {
   try {
     const cab = {"Content-Type": "application/json", "Authorization": "Bearer " + (robo.chave || localStorage.getItem("bolso_chave_" + robo.tipo) || localStorage.getItem("bolso_chave_llm7") || "unused")};
     if (robo.tipo === "or") { cab["HTTP-Referer"] = "https://reboclbrank-max.github.io/site/"; cab["X-Title"] = "Comite no Bolso"; }
-    const r = await fetch(BASES[robo.tipo] + "/chat/completions", {
+    const ep = robo.tipo === "polli" ? BASES.polli : BASES[robo.tipo] + "/chat/completions";
+    const r = await fetch(ep, {
       method: "POST", signal: ctrl.signal,
       headers: cab,
       body: JSON.stringify({model: robo.modelo, messages: [{role: "user", content: pergunta}], max_tokens: 400})
@@ -198,6 +200,7 @@ async function disparar() {
     {id: "or", titulo: "OpenRouter turbo · sua chave", robs: ativos.filter(r => r.tipo === "or")},
     {id: "hf", titulo: "HuggingFace turbo · sua chave", robs: ativos.filter(r => r.tipo === "hf")},
     {id: "ovh", titulo: "OVH turbo 🛰 · sua chave", robs: ativos.filter(r => r.tipo === "ovh")},
+    {id: "polli", titulo: "Mundial keyless 🌸", robs: ativos.filter(r => r.tipo === "polli")},
   ].filter(g => g.robs.length);
   const resultados = [];
   for (const g of GRUPOS) {
