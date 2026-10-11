@@ -60,7 +60,7 @@
     <input id="co" type="password" placeholder="chave OpenRouter (sk-or-…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <input id="ch" type="password" placeholder="token HuggingFace (hf_…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <input id="cov" type="password" placeholder="token OVH (opcional · endpoints.ai.cloud.ovh.net → Get your free token)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
-    <input id="cl7" type="password" placeholder="token llm7 (opcional · token.llm7.io — sobe seus limites e tenta os grandões)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="cl7" type="password" placeholder="token llm7 (opcional · token.llm7.io — sobe seus limites nos grátis)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <button onclick="salvarChaves()" style="margin-top:10px">GUARDAR NESTE APARELHO</button>
     <p id="status-chaves" style="color:var(--suave);font-size:.85rem;margin-top:8px"></p>
   </details>
@@ -73,9 +73,9 @@
   <a href="../blog/">Diário de bordo</a> · <a href="../">site oficial</a>
 </footer>
 <script>
-const LLM7 = ["GLM-5.3-Flash","glm-5.3","gpt-oss:20b","nemotron-3-nano:30b","mistral-Nemo-Instruct-2407",
-  "codestral-latest","DeepSeek-V4-Flash-0731","gemma4:31b","minimax-m3","kimi-k2.6",
-  "L3-8B-Lunaris-v1-Turbo","mistral-Small-24B-Instruct-2501", "chroma-v.46-flash", "jev-latest", "dark-beast-krea2", "gemini-omni-flash", "default", "fast", "DeepSeek-V4.1-Flash", "anthropic/claude-opus-4-6", "anthropic/claude-opus-4-7", "anthropic/claude-opus-4-8", "anthropic/claude-sonnet-4-6", "anthropic/claude-sonnet-5", "anthropic/claude-sonnet-5-5", "claude-fable-5", "claude-fable-5-1", "claude-haiku-5-5", "claude-opus-4-8", "claude-opus-5", "claude-opus-5-5", "claude-sonnet-4-6", "claude-sonnet-5", "deepseek-v4-flash:0731", "deepseek-v4-pro", "gemini-3-flash", "gemini-3.1-flash-lite", "gemini-3.6-flash-high", "gemini-3.7-flash", "gemini-3.8-flash-high", "glm-5.2", "gpt-5.6-luna", "gpt-5.6-sol", "gpt-5.6-terra", "gpt-6-astra", "gpt-6-sol", "gpt-6.1-sol", "grok-4.5", "grok-4.6", "kimi-k2.7-code", "kimi-k3", "llama-4-maverick", "mistral-large-3:675b", "seed-2.0-mini"];
+const LLM7 = [
+  "GLM-5.3-Flash", "mistral-Nemo-Instruct-2407", "codestral-latest", "DeepSeek-V4-Flash-0731", "gpt-oss:20b", "nemotron-3-nano:30b", "default", "fast"
+];
 const ROBOS = [
   ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
 ,
