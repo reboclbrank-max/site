@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T02:09:11+00:00",
+ "atualizado": "2026-10-11T02:10:28+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -53,7 +53,7 @@
    "jogo": "prancheta",
    "texto": "**Post (ângulo: bastidor):**\n\nO pulo \"certo\" do Prancheta esconde 120ms de perdão. Coyote time + jump buffer: você https://rebocl-brank.itch.io/prancheta",
    "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/prancheta/xg-1280x720.png",
-   "tentativas": 0,
+   "tentativas": 1,
    "criado": "2026-10-11T00:55:53+00:00",
    "pendente": [
     "tumblr"
@@ -69,9 +69,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 10,
+   "ok_total": 11,
    "falhas_total": 301,
-   "ms_medio": 15725
+   "ms_medio": 17945
   },
   {
    "nome": "LLM7 extra (codestral-latest)",
