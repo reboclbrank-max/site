@@ -1,10 +1,10 @@
 {
- "atualizado": "2026-10-11T00:53:24+00:00",
+ "atualizado": "2026-10-11T00:59:09+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
-   "jogo": "ceifalume",
-   "em": "2026-10-10T14:41:55+00:00"
+   "jogo": "prancheta",
+   "em": "2026-10-11T00:56:23+00:00"
   },
   "historico": [
    {
@@ -31,6 +31,11 @@
     "jogo": "ceifalume",
     "em": "2026-10-10T14:41:55+00:00",
     "canais_ok": 6
+   },
+   {
+    "jogo": "prancheta",
+    "em": "2026-10-11T00:56:23+00:00",
+    "canais_ok": 5
    }
   ],
   "mencoes_hoje": 0,
@@ -40,10 +45,21 @@
    "telegram": "ok",
    "discord": "ok",
    "threads": "ok",
-   "tumblr": "ok"
+   "tumblr": "erro"
   }
  },
- "fila_publicacao": [],
+ "fila_publicacao": [
+  {
+   "jogo": "prancheta",
+   "texto": "**Post (ângulo: bastidor):**\n\nO pulo \"certo\" do Prancheta esconde 120ms de perdão. Coyote time + jump buffer: você https://rebocl-brank.itch.io/prancheta",
+   "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/prancheta/xg-1280x720.png",
+   "tentativas": 0,
+   "criado": "2026-10-11T00:55:53+00:00",
+   "pendente": [
+    "tumblr"
+   ]
+  }
+ ],
  "motores": [
   {
    "nome": "LLM7 extra (GLM-5.3-Flash)",
@@ -53,8 +69,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 7,
-   "falhas_total": 264,
+   "ok_total": 9,
+   "falhas_total": 272,
    "ms_medio": 0
   },
   {
@@ -66,7 +82,7 @@
     "criativa": 50.0
    },
    "ok_total": 8,
-   "falhas_total": 259,
+   "falhas_total": 267,
    "ms_medio": 0
   },
   {
@@ -78,7 +94,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 213,
+   "falhas_total": 221,
    "ms_medio": 0
   },
   {
@@ -90,7 +106,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 107,
+   "falhas_total": 115,
    "ms_medio": 0
   },
   {
@@ -102,7 +118,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 90,
+   "falhas_total": 98,
    "ms_medio": 0
   },
   {
@@ -114,7 +130,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 90,
+   "falhas_total": 98,
    "ms_medio": 0
   },
   {
@@ -126,7 +142,7 @@
     "criativa": 50.0
    },
    "ok_total": 98,
-   "falhas_total": 452,
+   "falhas_total": 460,
    "ms_medio": 0
   },
   {
@@ -798,7 +814,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 468,
+   "falhas_total": 476,
    "ms_medio": 0
   }
  ],
