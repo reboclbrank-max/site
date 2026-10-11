@@ -1,0 +1,16 @@
+{
+  "name": "Comitê no Bolso — Rebocl Brank",
+  "short_name": "Comitê",
+  "description": "39 robôs de IA ao mesmo tempo, na palma da mão. Sem conta, sem IP queimado — residencial é poder.",
+  "start_url": "https://reboclbrank-max.github.io/site/comite.html",
+  "scope": "https://reboclbrank-max.github.io/site/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {"src": "https://reboclbrank-max.github.io/site/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "https://reboclbrank-max.github.io/site/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "https://reboclbrank-max.github.io/site/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
