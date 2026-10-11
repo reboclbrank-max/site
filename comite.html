@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0a0a0a">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icone-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Comitê">
 <title>🏛 Comitê no Bolso — Rebocl Brank</title>
 <style>
   :root{--preto:#0a0a0a;--preto-2:#0f0e0c;--preto-3:#14120e;--dourado:#d4af37;
@@ -171,6 +176,9 @@ function salvarChaves() {
 function atualizarChaves() {
   const n = ["groq", "or", "hf", "ovh"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
   document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — " + KEYED.filter(k => localStorage.getItem("bolso_chave_" + k.tipo)).length + " robôs turbo na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
+}
+if ("serviceWorker" in navigator) {
+  try { navigator.serviceWorker.register("sw.js").catch(() => {}); } catch (e) {}
 }
 (function () {
   for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"]]) {
