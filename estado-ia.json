@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T00:59:09+00:00",
+ "atualizado": "2026-10-11T02:09:11+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -69,9 +69,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 9,
-   "falhas_total": 272,
-   "ms_medio": 0
+   "ok_total": 10,
+   "falhas_total": 301,
+   "ms_medio": 15725
   },
   {
    "nome": "LLM7 extra (codestral-latest)",
@@ -82,7 +82,7 @@
     "criativa": 50.0
    },
    "ok_total": 8,
-   "falhas_total": 267,
+   "falhas_total": 296,
    "ms_medio": 0
   },
   {
@@ -94,7 +94,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 221,
+   "falhas_total": 250,
    "ms_medio": 0
   },
   {
@@ -106,7 +106,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 115,
+   "falhas_total": 144,
    "ms_medio": 0
   },
   {
@@ -118,7 +118,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 98,
+   "falhas_total": 127,
    "ms_medio": 0
   },
   {
@@ -130,7 +130,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 98,
+   "falhas_total": 127,
    "ms_medio": 0
   },
   {
@@ -142,7 +142,7 @@
     "criativa": 50.0
    },
    "ok_total": 98,
-   "falhas_total": 460,
+   "falhas_total": 489,
    "ms_medio": 0
   },
   {
@@ -814,7 +814,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 476,
+   "falhas_total": 505,
    "ms_medio": 0
   }
  ],
@@ -837,7 +837,7 @@
  },
  "metricas": {
   "ceifalume": {
-   "itch_views": 111,
+   "itch_views": 112,
    "itch_downloads": 39,
    "apk": 68
   },
