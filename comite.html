@@ -83,21 +83,9 @@ const LLM7 = [
   "GLM-5.3-Flash", "mistral-Nemo-Instruct-2407", "codestral-latest", "DeepSeek-V4-Flash-0731", "gpt-oss:20b", "nemotron-3-nano:30b", "default", "fast"
 ];
 const ROBOS = [
-  ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
-,
-  ...[["gaia8", "Gaia · Llama-8B 🔎", "llama"], ["gaia72", "Gaia · Qwen-72B 🔎", "qwen72b"],
-      ["typegpt", "TypeGPT 🔎", "gpt-4o-mini"], ["g4f", "g4f 🔎", "gpt-4o-mini"],
-      ["hackclub", "HackClub 🔎", "openai"],
-      ["ovh", "Prova · OVH Qwen-397B 🔎", "Qwen3.5-397B-A17B"], ["ovh", "Prova · OVH Llama-70B 🔎", "Meta-Llama-3_3-70B-Instruct"],
-      ["ovh", "Prova · OVH gpt-oss-120b 🔎", "gpt-oss-120b"], ["ovh", "Prova · OVH Qwen3.8 🔎", "Qwen3.8-27B"],
-      ["ovh", "Prova · OVH Qwen-32B 🔎", "Qwen3-32B"], ["ovh", "Prova · OVH Mistral-7B 🔎", "Mistral-7B-Instruct-v0.3"],
-      ["ovh", "Prova · OVH Nemo 🔎", "Mistral-Nemo-Instruct-2407"], ["ovh", "Prova · OVH Qwen3.5-9B 🔎", "Qwen3.5-9B"],
-      ["ovh", "Prova · OVH gpt-oss-20b 🔎", "gpt-oss-20b"], ["ovh", "Prova · OVH Qwen3.6-27B 🔎", "Qwen3.6-27B"],
-      ["ovh", "Prova · OVH Qwen-VL-72B 🔎 (visão)", "Qwen2.5-VL-72B-Instruct"], ["ovh", "Prova · OVH Mistral-24B 🔎", "Mistral-Small-3.2-24B-Instruct-2506"]
-  ].map(([tipo, nome, modelo]) => ({nome, tipo, modelo, prova: true}))];
-const BASES = {gaia8: "https://llama8b.gaia.domains/v1", gaia72: "https://qwen72b.gaia.domains/v1",
-  typegpt: "https://chat.typegpt.net/v1", g4f: "https://api.g4f.dev/v1", hackclub: "https://ai.hackclub.com/v1",
-  llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m}))
+];
+const BASES = {llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1"};
 let PRE = false, VENCEDOR = false;
 const CTRLS = {};
@@ -209,7 +197,6 @@ async function disparar() {
     {id: "or", titulo: "OpenRouter turbo · sua chave", robs: ativos.filter(r => r.tipo === "or")},
     {id: "hf", titulo: "HuggingFace turbo · sua chave", robs: ativos.filter(r => r.tipo === "hf")},
     {id: "ovh", titulo: "OVH turbo 🛰 · sua chave", robs: ativos.filter(r => r.tipo === "ovh")},
-    {id: "prova", titulo: "Turma da prova 🔎", robs: ativos.filter(r => r.prova)},
   ].filter(g => g.robs.length);
   const resultados = [];
   for (const g of GRUPOS) {
