@@ -35,6 +35,10 @@
   .robo p{margin-top:8px;white-space:pre-wrap;font-size:.95rem}
   .estado{color:var(--suave);font-style:italic}
   .vencedor{border-color:var(--dourado);box-shadow:0 0 18px rgba(212,175,55,.25)}
+  .grupo{margin-top:16px;text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--dourado-escuro);border-top:1px solid var(--borda);padding-top:8px}
+  .grupo .res{color:var(--suave);font-weight:700;margin-left:6px}
+  .grupo.viva .res{color:#8fd18f}
   .selo{background:var(--dourado);color:#0a0a0a;border-radius:6px;padding:1px 8px;font-size:.75rem;font-weight:700}
   footer{text-align:center;color:var(--suave);font-size:.8rem;padding:34px 10% 0;border-top:1px solid var(--borda);margin-top:40px}
   footer a{color:var(--dourado-claro)}
@@ -182,7 +186,32 @@ async function disparar() {
     const ch = localStorage.getItem("bolso_chave_" + k.tipo);
     if (ch) { k.chave = ch; ativos.push(k); }
   }
-  const respostas = (await Promise.all(ativos.map(r => um(r, pergunta, t0)))).filter(Boolean);
+  const GRUPOS = [
+    {id: "llm7", titulo: "LLM7 grátis", robs: ativos.filter(r => r.tipo === "llm7")},
+    {id: "groq", titulo: "Groq turbo ⚡ · sua chave", robs: ativos.filter(r => r.tipo === "groq")},
+    {id: "or", titulo: "OpenRouter turbo · sua chave", robs: ativos.filter(r => r.tipo === "or")},
+    {id: "hf", titulo: "HuggingFace turbo · sua chave", robs: ativos.filter(r => r.tipo === "hf")},
+    {id: "ovh", titulo: "OVH turbo 🛰 · sua chave", robs: ativos.filter(r => r.tipo === "ovh")},
+    {id: "prova", titulo: "Turma da prova 🔎", robs: ativos.filter(r => r.prova)},
+  ].filter(g => g.robs.length);
+  const resultados = [];
+  for (const g of GRUPOS) {
+    const sep = document.createElement("div");
+    sep.className = "grupo"; sep.id = "g-" + g.id;
+    sep.innerHTML = "<span>" + g.titulo + " · " + g.robs.length + "</span><span class='res'></span>";
+    document.getElementById("saidas").appendChild(sep);
+    for (const r of g.robs) resultados.push(um(r, pergunta, t0).then(x => ({res: x, grupo: g.id})));
+  }
+  const concluidos = await Promise.all(resultados);
+  const respostas = concluidos.filter(x => x.res).map(x => x.res);
+  for (const g of GRUPOS) {
+    const okG = concluidos.filter(x => x.grupo === g.id && x.res).length;
+    const el = document.getElementById("g-" + g.id);
+    if (el) {
+      el.querySelector(".res").textContent = okG ? ("✓ " + okG + "/" + g.robs.length) : ("✗ 0/" + g.robs.length);
+      if (okG) el.classList.add("viva");
+    }
+  }
   const placar = document.getElementById("placar");
   if (respostas.length) {
     const melhor = respostas.reduce((a, b) => (b.txt.length > a.txt.length && b.txt.length > 200 ? b : a));
