@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T13:58:39+00:00",
+ "atualizado": "2026-10-11T15:56:45+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -96,9 +96,9 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 10,
+   "ok_total": 12,
    "falhas_total": 0,
-   "ms_medio": 12977
+   "ms_medio": 22594
   },
   {
    "nome": "LLM7 extra (codestral-latest)",
@@ -108,8 +108,8 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 15,
-   "falhas_total": 411,
+   "ok_total": 17,
+   "falhas_total": 415,
    "ms_medio": 0
   },
   {
@@ -121,7 +121,7 @@
     "criativa": 50.0
    },
    "ok_total": 8,
-   "falhas_total": 404,
+   "falhas_total": 408,
    "ms_medio": 0
   },
   {
@@ -133,7 +133,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 358,
+   "falhas_total": 362,
    "ms_medio": 0
   },
   {
@@ -145,7 +145,7 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 252,
+   "falhas_total": 255,
    "ms_medio": 0
   },
   {
@@ -157,7 +157,19 @@
     "criativa": 50.0
    },
    "ok_total": 0,
-   "falhas_total": 236,
+   "falhas_total": 240,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 extra (GLM-5.3-Flash)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 232,
    "ms_medio": 0
   },
   {
@@ -168,24 +180,12 @@
     "rapida": 50.0,
     "criativa": 50.0
    },
-   "ok_total": 161,
-   "falhas_total": 588,
-   "ms_medio": 22762
+   "ok_total": 177,
+   "falhas_total": 591,
+   "ms_medio": 41798
   },
   {
    "nome": "LLM7 (DeepSeek-V4.1-Flash)",
-   "notas": {
-    "codigo": 50.0,
-    "longa": 50.0,
-    "rapida": 50.0,
-    "criativa": 50.0
-   },
-   "ok_total": 0,
-   "falhas_total": 0,
-   "ms_medio": 0
-  },
-  {
-   "nome": "LLM7 (GLM-5.3-Flash)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -269,6 +269,18 @@
    "ms_medio": 0
   },
   {
+   "nome": "LLM7 (anthropic/claude-sonnet-5-5)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
    "nome": "LLM7 (chroma-v.46-flash)",
    "notas": {
     "codigo": 50.0,
@@ -294,6 +306,18 @@
   },
   {
    "nome": "LLM7 (claude-fable-5-1)",
+   "notas": {
+    "codigo": 50.0,
+    "longa": 50.0,
+    "rapida": 50.0,
+    "criativa": 50.0
+   },
+   "ok_total": 0,
+   "falhas_total": 0,
+   "ms_medio": 0
+  },
+  {
+   "nome": "LLM7 (claude-haiku-5-5)",
    "notas": {
     "codigo": 50.0,
     "longa": 50.0,
@@ -889,7 +913,7 @@
     "criativa": 50.0
    },
    "ok_total": 43,
-   "falhas_total": 610,
+   "falhas_total": 615,
    "ms_medio": 0
   },
   {
@@ -906,12 +930,8 @@
   }
  ],
  "cerebro": {
-  "cache_respostas": 8,
+  "cache_respostas": 9,
   "ultimas": [
-   {
-    "p": "**Missão desta sessão (caçadora de palcos):** 🏹\n\n1. `[[PESQUISAR:]]` — procure ENDPOINTS DE LLM GRATUITOS NOVOS (sem chave, estilo openai `/v1/chat/completions`) que ainda não conhecemos. Termine quem já morreu pra gente: Puter, Pollinations (pagou), DDG, g4f, HackClub, Gaia, TypeGPT, Kilo (401). Pr",
-    "em": "2026-10-10 23:09"
-   },
    {
     "p": "Plantão de garimpo #2 — turno da madrugada. 🌙\n\nContexto curto: a fila de robôs vivos da casa agora responde de verdade (GLM-5.3-Flash e DeepSeek cravaram 2 comitês seguidos). Falta PALCO NOVO pra fila crescer.\n\nSeu turno, em 4 passos (ferramentas reais, não teoria):\n\n1) Descobrir: [[GHSEARCH: keyles",
     "em": "2026-10-11 03:41"
@@ -919,6 +939,10 @@
    {
     "p": "Plantão de garimpo #3 — agora com exemplos prontos pra copiar. 🌙\n\nCandidatos pra verificar (todos de repos reais que achei):\n• https://api.mistral.ai/v1 — modelo: mistral-small-latest (exigirá chave? teste e veja)\n• https://api.deepinfra.com/v1/openai — modelo: deepseek-ai/DeepSeek-V4-Flash (algumas",
     "em": "2026-10-11 03:49"
+   },
+   {
+    "p": "Pedido de AJUDA de verdade — você tem músculo novo nesta hora exata: OpenRouter, NVIDIA (Nemotron-550B E Kimi-K3 agora), Ollama-120B e o token da frota estão VIVOS na sua cadeia. Não é era nova: é era com chave.\n\nPreciso da sua inteligência em duas coisas que eu sozinho não fecho hoje:\n\n1) [[ABRIR: ",
+    "em": "2026-10-11 15:02"
    }
   ]
  },
