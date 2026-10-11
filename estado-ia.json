@@ -1,5 +1,5 @@
 {
- "atualizado": "2026-10-11T07:04:11+00:00",
+ "atualizado": "2026-10-11T07:04:44+00:00",
  "piloto": {
   "ligado": true,
   "ultimo_post": {
@@ -53,7 +53,7 @@
    "jogo": "prancheta",
    "texto": "**Post (ângulo: bastidor):**\n\nO pulo \"certo\" do Prancheta esconde 120ms de perdão. Coyote time + jump buffer: você https://rebocl-brank.itch.io/prancheta",
    "midia": "https://raw.githubusercontent.com/reboclbrank-max/midia/main/prancheta/xg-1280x720.png",
-   "tentativas": 2,
+   "tentativas": 3,
    "criado": "2026-10-11T00:55:53+00:00",
    "pendente": [
     "tumblr"
