@@ -48,6 +48,9 @@
   Sem chave, sem conta, sem IP queimado — residencial é poder.</p>
 </header>
 <main>
+  <div id="dica-app" style="display:none;margin-top:14px;background:var(--preto-3);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;font-size:.9rem;color:var(--suave)">
+    📱 Este comitê é um APP: menu do navegador → <b style="color:var(--dourado-claro)">Adicionar à tela inicial</b> — abre tela cheia e funciona até offline. <span id="fechar-dica" style="cursor:pointer;color:var(--dourado)">✕</span>
+  </div>
   <textarea id="pergunta" placeholder="Sua pergunta para o comitê…"></textarea>
   <details style="margin-top:18px;background:var(--preto-3);border:1px solid var(--borda);border-radius:12px;padding:12px 14px">
     <summary style="cursor:pointer;color:var(--dourado-claro);font-size:.95rem">🔑 Robôs turbo com SUA chave (opcional · a chave fica só neste aparelho)</summary>
@@ -179,6 +182,17 @@ function atualizarChaves() {
   const n = ["groq", "or", "hf", "ovh"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
   document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — " + KEYED.filter(k => localStorage.getItem("bolso_chave_" + k.tipo)).length + " robôs turbo na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
 }
+(function () {
+  try {
+    if (!localStorage.getItem("bolso_dica_vista") && window.matchMedia("(display-mode: browser)").matches) {
+      document.getElementById("dica-app").style.display = "block";
+      document.getElementById("fechar-dica").onclick = () => {
+        document.getElementById("dica-app").style.display = "none";
+        localStorage.setItem("bolso_dica_vista", "1");
+      };
+    }
+  } catch (e) {}
+})();
 document.getElementById("saidas").addEventListener("click", (ev) => {
   const p = ev.target.closest("p");
   if (!p || p.classList.contains("estado")) return;
