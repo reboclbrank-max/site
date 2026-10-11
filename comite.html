@@ -46,10 +46,12 @@
   <textarea id="pergunta" placeholder="Sua pergunta para o comitê…"></textarea>
   <details style="margin-top:18px;background:var(--preto-3);border:1px solid var(--borda);border-radius:12px;padding:12px 14px">
     <summary style="cursor:pointer;color:var(--dourado-claro);font-size:.95rem">🔑 Robôs turbo com SUA chave (opcional · a chave fica só neste aparelho)</summary>
+    <p style="color:var(--suave);font-size:.82rem;margin-top:6px">Atualização 11/10: OVH e Kilo passaram a EXIGIR token — os robôs OVH mudaram pra cá. Com token da OVH (grátis em console.ovh.ai) eles voltam a atirar.</p>
     <p style="color:var(--suave);font-size:.85rem;margin-top:8px">Cole a chave e toque em guardar: ela vive apenas no armazenamento do SEU navegador — não vai pra nenhum servidor da casa nem aparece no código desta página. Consiga em: console.groq.com/keys · openrouter.ai/settings/keys · huggingface.co/settings/tokens</p>
     <input id="cg" type="password" placeholder="chave Groq (gsk_…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <input id="co" type="password" placeholder="chave OpenRouter (sk-or-…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <input id="ch" type="password" placeholder="token HuggingFace (hf_…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="cov" type="password" placeholder="token OVH (opcional · console.ovh.ai — a OVH agora pede token)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <button onclick="salvarChaves()" style="margin-top:10px">GUARDAR NESTE APARELHO</button>
     <p id="status-chaves" style="color:var(--suave);font-size:.85rem;margin-top:8px"></p>
   </details>
@@ -69,11 +71,15 @@ const OVH = ["Qwen3.5-397B-A17B","Meta-Llama-3_3-70B-Instruct","gpt-oss-120b","Q
   "Mistral-Small-3.2-24B-Instruct-2506","Qwen3.5-9B","gpt-oss-20b","Qwen3-32B","Llama-3.1-8B-Instruct","Mistral-Nemo-Instruct-2407"]];
 const ROBOS = [
   ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
-  ...OVH.map(m => ({nome: "OVH · " + m, tipo: "ovh", modelo: m})),
 ];
 const BASES = {llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1"};
 const KEYED = [
+  {tipo: "ovh", nome: "OVH · Qwen-397B 🛰", modelo: "Qwen3.5-397B-A17B"},
+  {tipo: "ovh", nome: "OVH · Llama-70B 🛰", modelo: "Meta-Llama-3_3-70B-Instruct"},
+  {tipo: "ovh", nome: "OVH · GPT-OSS-120B 🛰", modelo: "gpt-oss-120b"},
+  {tipo: "ovh", nome: "OVH · Qwen3.8-27B 🛰", modelo: "Qwen3.8-27B"},
+  {tipo: "ovh", nome: "OVH · Mistral-24B 🛰", modelo: "Mistral-Small-3.2-24B-Instruct-2506"},
   {tipo: "groq", nome: "Groq · Llama-3.3-70B ⚡", modelo: "llama-3.3-70b-versatile"},
   {tipo: "groq", nome: "Groq · Llama-3.1-8B ⚡", modelo: "llama-3.1-8b-instant"},
   {tipo: "groq", nome: "Groq · GPT-OSS-120B ⚡", modelo: "openai/gpt-oss-120b"},
@@ -110,7 +116,7 @@ async function um(robo, pergunta, t0) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 90000);
   try {
-    const cab = {"Content-Type": "application/json", "Authorization": "Bearer " + (robo.chave || "unused")};
+    const cab = {"Content-Type": "application/json", "Authorization": "Bearer " + (robo.chave || localStorage.getItem("bolso_chave_" + robo.tipo) || "unused")};
     if (robo.tipo === "or") { cab["HTTP-Referer"] = "https://reboclbrank-max.github.io/site/"; cab["X-Title"] = "Comite no Bolso"; }
     const r = await fetch(BASES[robo.tipo] + "/chat/completions", {
       method: "POST", signal: ctrl.signal,
@@ -156,18 +162,18 @@ async function disparar() {
   btn.disabled = false;
 }
 function salvarChaves() {
-  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"]]) {
+  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"]]) {
     const v = document.getElementById(par[0]).value.trim();
     if (v) localStorage.setItem("bolso_chave_" + par[1], v); else localStorage.removeItem("bolso_chave_" + par[1]);
   }
   atualizarChaves();
 }
 function atualizarChaves() {
-  const n = ["groq", "or", "hf"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
-  document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — até " + (n * 4) + " robôs extras na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
+  const n = ["groq", "or", "hf", "ovh"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
+  document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — " + KEYED.filter(k => localStorage.getItem("bolso_chave_" + k.tipo)).length + " robôs turbo na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
 }
 (function () {
-  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"]]) {
+  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"]]) {
     const v = localStorage.getItem("bolso_chave_" + par[1]);
     if (v) document.getElementById(par[0]).value = v;
   }
