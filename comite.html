@@ -69,6 +69,8 @@
     <p id="status-chaves" style="color:var(--suave);font-size:.85rem;margin-top:8px"></p>
   </details>
   <button id="disparar" onclick="disparar()">🏛 CONVOCAR O COMITÊ</button>
+  <button id="preguica" onclick="togglePreguica()" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);margin-top:10px">⚡ PREGUIÇA: SÓ A RESPOSTA MAIS RÁPIDA</button>
+  <div id="historico"></div>
   <div id="placar"></div>
   <div id="saidas"></div>
 </main>
@@ -97,6 +99,12 @@ const BASES = {gaia8: "https://llama8b.gaia.domains/v1", gaia72: "https://qwen72
   typegpt: "https://chat.typegpt.net/v1", g4f: "https://api.g4f.dev/v1", hackclub: "https://ai.hackclub.com/v1",
   llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1"};
+let PRE = false, VENCEDOR = false;
+const CTRLS = {};
+function togglePreguica() {
+  PRE = !PRE;
+  document.getElementById("preguica").textContent = PRE ? "⚡ PREGUIÇA LIGADA (só llm7, para no 1º)" : "⚡ PREGUIÇA: SÓ A RESPOSTA MAIS RÁPIDA";
+}
 const KEYED = [
   {tipo: "ovh", nome: "OVH · Qwen-397B 🛰", modelo: "Qwen3.5-397B-A17B"},
   {tipo: "ovh", nome: "OVH · Llama-70B 🛰", modelo: "Meta-Llama-3_3-70B-Instruct"},
@@ -145,6 +153,7 @@ function tempo(nome, t0) {
 async function um(robo, pergunta, t0) {
   escreve(robo.nome, "<span class='estado'>⏳ pensando…</span>");
   const ctrl = new AbortController();
+  CTRLS[robo.nome] = ctrl;
   const timer = setTimeout(() => ctrl.abort(), 90000);
   try {
     const cab = {"Content-Type": "application/json", "Authorization": "Bearer " + (robo.chave || localStorage.getItem("bolso_chave_" + robo.tipo) || localStorage.getItem("bolso_chave_llm7") || "unused")};
@@ -165,9 +174,11 @@ async function um(robo, pergunta, t0) {
     if (!txt) { escreve(robo.nome, "<span class='estado'>🤫 respondeu vazio</span>"); return null; }
     const escapado = txt.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     escreve(robo.nome, escapado);
+    if (PRE && !VENCEDOR) { VENCEDOR = true; for (const k in CTRLS) { if (k !== robo.nome) { try { CTRLS[k].abort(); } catch (e) {} } } }
     return {nome: robo.nome, txt};
   } catch (e) {
     clearTimeout(timer); tempo(robo.nome, t0);
+    if (PRE && VENCEDOR) { const el = document.getElementById("r-" + btoa(robo.nome).replace(/=/g, "")); if (el) el.remove(); return null; }
     escreve(robo.nome, "<span class='estado'>💀 " + (e.name === "AbortError" ? "tempo esgotado (90s)" : "sem resposta") + "</span>");
     return null;
   }
@@ -181,10 +192,16 @@ async function disparar() {
   btn.disabled = true;
   document.getElementById("saidas").innerHTML = "";
   const t0 = Date.now();
-  const ativos = [...ROBOS];
-  for (const k of KEYED) {
-    const ch = localStorage.getItem("bolso_chave_" + k.tipo);
-    if (ch) { k.chave = ch; ativos.push(k); }
+  VENCEDOR = false;
+  let ativos;
+  if (PRE) {
+    ativos = ROBOS.filter(r => r.tipo === "llm7");
+  } else {
+    ativos = [...ROBOS];
+    for (const k of KEYED) {
+      const ch = localStorage.getItem("bolso_chave_" + k.tipo);
+      if (ch) { k.chave = ch; ativos.push(k); }
+    }
   }
   const GRUPOS = [
     {id: "llm7", titulo: "LLM7 grátis", robs: ativos.filter(r => r.tipo === "llm7")},
@@ -217,6 +234,7 @@ async function disparar() {
     const melhor = respostas.reduce((a, b) => (b.txt.length > a.txt.length && b.txt.length > 200 ? b : a));
     if (melhor.txt.length > 200) escreve(melhor.nome, melhor.txt.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"), "vencedor");
     const nProva = ativos.filter(x => x.prova).length;
+  if (respostas.length) salvarHist(pergunta, respostas.length);
   placar.textContent = "🏛 " + respostas.length + "/" + ativos.length + " robôs responderam em " + ((Date.now() - t0) / 1000).toFixed(1) + "s";
   } else {
     placar.textContent = "🏛 Todas as janelas fecharam — reconecte o Wi-Fi (IP novo = cotas novas) e convoque de novo.";
@@ -279,6 +297,30 @@ document.getElementById("saidas").addEventListener("click", (ev) => {
   }).catch(() => {});
 });
 try { localStorage.removeItem("bolso_dica_vista"); } catch (e) {}
+function salvarHist(q, n) {
+  try {
+    const h = JSON.parse(localStorage.getItem("bolso_hist") || "[]");
+    h.unshift({q: q.slice(0, 120), n: n, em: new Date().toLocaleTimeString()});
+    localStorage.setItem("bolso_hist", JSON.stringify(h.slice(0, 15)));
+    desenharHist();
+  } catch (e) {}
+}
+function desenharHist() {
+  try {
+    const h = JSON.parse(localStorage.getItem("bolso_hist") || "[]");
+    const d = document.getElementById("historico");
+    if (!d) return;
+    if (!h.length) { d.innerHTML = ""; return; }
+    d.innerHTML = "<details style='margin-top:12px'><summary style='cursor:pointer;color:var(--dourado-claro);font-size:.9rem'>🕘 Histórico (" + h.length + ") — toque pra re-convocar</summary>" +
+      h.map((x, i) => "<div class='hi' data-i='" + i + "' style='cursor:pointer;padding:6px;border-bottom:1px solid var(--borda);font-size:.88rem;color:var(--suave)'>🕘 " + x.q.replace(/&/g, "&amp;").replace(/</g, "&lt;") + " <span style='opacity:.6'>(" + x.n + " respostas)</span></div>").join("") + "</details>";
+    d.querySelectorAll(".hi").forEach(el => el.onclick = () => {
+      const hh = JSON.parse(localStorage.getItem("bolso_hist") || "[]");
+      const it = hh[Number(el.dataset.i)];
+      if (it) { document.getElementById("pergunta").value = it.q; document.getElementById("pergunta").focus(); }
+    });
+  } catch (e) {}
+}
+desenharHist();
 if ("serviceWorker" in navigator) {
   try { navigator.serviceWorker.register("sw.js").catch(() => {}); } catch (e) {}
 }
