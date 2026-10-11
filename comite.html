@@ -152,6 +152,8 @@ async function disparar() {
   const pergunta = document.getElementById("pergunta").value.trim();
   if (!pergunta) { document.getElementById("pergunta").focus(); return; }
   const btn = document.getElementById("disparar");
+  if (btn.dataset.rolando === "1") return;
+  btn.dataset.rolando = "1";
   btn.disabled = true;
   document.getElementById("saidas").innerHTML = "";
   const t0 = Date.now();
@@ -169,6 +171,7 @@ async function disparar() {
   } else {
     placar.textContent = "🏛 Todas as janelas fecharam — reconecte o Wi-Fi (IP novo = cotas novas) e convoque de novo.";
   }
+  delete btn.dataset.rolando;
   btn.disabled = false;
 }
 function salvarChaves() {
@@ -178,6 +181,29 @@ function salvarChaves() {
   }
   atualizarChaves();
 }
+function sincronizarEstado() {
+  const el = document.getElementById("placar");
+  if (el && el.dataset.rolando !== "1" && !el.textContent) el.textContent = "⭐ toque e segure em qualquer parte para convocar de novo";
+}
+setInterval(sincronizarEstado, 1500);
+let _timer = null, _y0 = 0;
+document.addEventListener("touchstart", (e) => { _y0 = e.touches[0].clientY; }, {passive: true});
+document.addEventListener("touchend", (e) => {
+  const dy = e.changedTouches[0].clientY - _y0;
+  if (dy > 90 && window.scrollY < 4) disparar();
+}, {passive: true});
+document.addEventListener("pointerdown", (e) => {
+  if (_timer) { clearTimeout(_timer); _timer = null; }
+  const alvo = e.target.closest("p:not(.estado), .robo h3");
+  if (!alvo) return;
+  const px = e.clientX, py = e.clientY;
+  _timer = setTimeout(() => disparar(), 700);
+  const cancela = (ev) => {
+    if (Math.hypot(ev.clientX - px, ev.clientY - py) > 24) { clearTimeout(_timer); _timer = null; }
+  };
+  document.addEventListener("pointermove", cancela, {once: true});
+  document.addEventListener("pointerup", () => { clearTimeout(_timer); _timer = null; }, {once: true});
+});
 function atualizarChaves() {
   const n = ["groq", "or", "hf", "ovh"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
   document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — " + KEYED.filter(k => localStorage.getItem("bolso_chave_" + k.tipo)).length + " robôs turbo na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
@@ -202,6 +228,7 @@ document.getElementById("saidas").addEventListener("click", (ev) => {
     setTimeout(() => { p.textContent = antigo; }, 900);
   }).catch(() => {});
 });
+try { localStorage.removeItem("bolso_dica_vista"); } catch (e) {}
 if ("serviceWorker" in navigator) {
   try { navigator.serviceWorker.register("sw.js").catch(() => {}); } catch (e) {}
 }
