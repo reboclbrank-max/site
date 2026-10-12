@@ -107,7 +107,18 @@ const ROBOS = [
   {nome: "Mundial · Lightning", tipo: "g4fn", modelo: "nvidia/nemotron-3.5-lightning-30b-a3b"},
   {nome: "Mundial · Nemotron-Ultra-550B", tipo: "g4fn", modelo: "nvidia/nemotron-3-ultra-550b-a55b"},
   {nome: "Mundial · Nemotron-Super-120B", tipo: "g4fn", modelo: "nvidia/nemotron-3-super-120b-a12b"},
-  {nome: "Mundial · Auto (melhor vivo)", tipo: "g4fn", modelo: "auto"}
+  {nome: "Mundial · Auto (melhor vivo)", tipo: "g4fn", modelo: "auto"},
+  {nome: "Mundial · DeepSeek-V4.1 (janela)", tipo: "g4fn", modelo: "deepseek-ai/deepseek-v4.1-flash"},
+  {nome: "Mundial · Gemma-4-31B (janela)", tipo: "g4fn", modelo: "google/gemma-4-31b-it"},
+  {nome: "Mundial · Muse-Glimmer (janela)", tipo: "g4fn", modelo: "nvidia/muse-glimmer-30b"},
+  {nome: "Mundial · Laguna-XS-g4f (janela)", tipo: "g4fn", modelo: "nvidia/laguna-xs-2.1"},
+  {nome: "Mundial · DiffusionGemma (janela)", tipo: "g4fn", modelo: "nvidia/diffusiongemma-26b-a4b-it"},
+  {nome: "OR · Apodex (janela)", tipo: "or", modelo: "apodex/apodex-1.1-mini:free"},
+  {nome: "OR · Liquid (janela)", tipo: "or", modelo: "liquid/lfm-2.5-2.6b:free"},
+  {nome: "OR · Inkling-Small (janela)", tipo: "or", modelo: "thinkingmachines/inkling-small:free"},
+  {nome: "OR · Safety (janela)", tipo: "or", modelo: "nvidia/nemotron-3.5-content-safety:free"},
+  {nome: "OR · Gemma-26B (janela)", tipo: "or", modelo: "google/gemma-4-26b-a4b-it:free"},
+  {nome: "OR · Gemma-31B (janela)", tipo: "or", modelo: "google/gemma-4-31b-it:free"}
 ];
 const BASES = {polli: "https://text.pollinations.ai/openai", g4fn: "https://nvidia.g4f.dev/v1", llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
   groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1", ollama: "https://ollama.com/v1"};
@@ -231,7 +242,7 @@ async function disparar() {
     {id: "or", titulo: "OpenRouter turbo · sua chave", robs: ativos.filter(r => r.tipo === "or")},
     {id: "hf", titulo: "HuggingFace turbo · sua chave", robs: ativos.filter(r => r.tipo === "hf")},
     {id: "ovh", titulo: "OVH turbo 🛰 · sua chave", robs: ativos.filter(r => r.tipo === "ovh")},
-    {id: "polli", titulo: "Mundial keyless 🌸 (10 motores!)", robs: ativos.filter(r => r.tipo === "polli" || r.tipo === "g4fn")},
+    {id: "polli", titulo: "Mundial keyless 🌸 (15 motores!)", robs: ativos.filter(r => r.tipo === "polli" || r.tipo === "g4fn")},
     {id: "ollama", titulo: "Ollama Nuvem ☁ · sua chave", robs: ativos.filter(r => r.tipo === "ollama")},
   ].filter(g => g.robs.length);
   const resultados = [];
