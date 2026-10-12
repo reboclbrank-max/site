@@ -57,6 +57,7 @@
   </div>
   <textarea id="pergunta" placeholder="Sua pergunta para o comitê…"></textarea>
   <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
+    <button id="btn-ditado" onclick="ditado()" title="Fale com o comitê (pt-BR)" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">🎤 falar</button>
     <button onclick="rapida(&quot;Quem é você?&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">Quem é você?</button>
     <button onclick="rapida(&quot;Me dê 3 ideias de jogo&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">3 ideias de jogo</button>
     <button onclick="rapida(&quot;Explique IA como se eu tivesse 10 anos&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">IA pra criança</button>
@@ -90,7 +91,7 @@
 </main>
 <footer>
   Toque numa resposta para copiá-la. Os motores gratuitos têm limites — se um fechar a janela, outro responde.<br>
-  <a href="../blog/">Diário de bordo</a> · <a href="../">site oficial</a>
+  <a href="../blog/">Diário de bordo</a> · <a href="../">site oficial</a> · <a href="museu.html">🏛 museu dos motores</a>
 </footer>
 <script>
 const LLM7 = [
@@ -437,6 +438,24 @@ if ("serviceWorker" in navigator) {
   function rapida(t) { document.getElementById("pergunta").value = t; perguntar(); }
   window.rapida = rapida;
   document.getElementById("pergunta").addEventListener("keydown", (e) => { if (e.ctrlKey && e.key === "Enter") perguntar(); });
+  window.ditado = function() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { alert("Este navegador não tem ditado — digite na caixa. (Chrome tem 🎤)"); return; }
+    const rec = new SR();
+    rec.lang = "pt-BR"; rec.interimResults = true; rec.continuous = false;
+    const bt = document.getElementById("btn-ditado");
+    if (bt) bt.textContent = "🔴 ouvindo…";
+    rec.onresult = (ev) => {
+      let final = "", parcial = "";
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        if (ev.results[i].isFinal) final += ev.results[i][0].transcript; else parcial += ev.results[i][0].transcript;
+      }
+      document.getElementById("pergunta").value = (final || parcial).trim();
+    };
+    rec.onend = () => { if (bt) bt.textContent = "🎤 falar"; };
+    rec.onerror = () => { if (bt) bt.textContent = "🎤 falar"; };
+    rec.start();
+  };
   const qq = new URLSearchParams(location.search).get("q");
   if (qq) { document.getElementById("pergunta").value = qq; perguntar(); }
 })();
