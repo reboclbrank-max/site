@@ -74,6 +74,10 @@
     <input id="cl7" type="password" placeholder="token llm7 (opcional · token.llm7.io — sobe seus limites nos grátis)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <input id="coll" type="password" placeholder="chave Ollama Nuvem (opcional · ollama.com → Settings → API keys)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
     <button onclick="salvarChaves()" style="margin-top:10px">GUARDAR NESTE APARELHO</button>
+  <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+    <button onclick="backupExportar()" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);font-size:.8rem">💾 EXPORTAR BACKUP (chaves+histórico)</button>
+    <button onclick="backupImportar()" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);font-size:.8rem">📥 IMPORTAR BACKUP</button>
+  </div>
     <p id="status-chaves" style="color:var(--suave);font-size:.85rem;margin-top:8px"></p>
   </details>
   <button id="disparar" onclick="disparar()">🏛 CONVOCAR O COMITÊ</button>
@@ -346,6 +350,36 @@ function baixarTudo() {
   const b = document.getElementById("baixar-tudo");
   b.textContent = "✅ BAIXADO";
   setTimeout(() => { b.textContent = "💾 BAIXAR .MD"; }, 1200);
+}
+function backupExportar() {
+  const d = { quando: new Date().toISOString(), chaves: {}, hist: [] };
+  for (const t of ["groq","or","hf","ovh","llm7","ollama"]) { const v = localStorage.getItem("bolso_chave_" + t); if (v) d.chaves[t] = v; }
+  try { d.hist = JSON.parse(localStorage.getItem("bolso_hist") || "[]"); } catch (e) {}
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(d, null, 1)], {type: "application/json"}));
+  a.download = "bolso-backup.json";
+  a.click();
+  alert("💾 Backup baixado — guarde o arquivo bolso-backup.json (leva suas chaves e histórico pra qualquer aparelho).");
+}
+function backupImportar() {
+  const inp = document.createElement("input");
+  inp.type = "file"; inp.accept = ".json,application/json";
+  inp.onchange = () => {
+    const f = inp.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      try {
+        const d = JSON.parse(rd.result);
+        let n = 0;
+        for (const t in (d.chaves || {})) { localStorage.setItem("bolso_chave_" + t, d.chaves[t]); n++; }
+        if (Array.isArray(d.hist) && d.hist.length) localStorage.setItem("bolso_hist", JSON.stringify(d.hist.slice(0, 15)));
+        alert("✅ Backup restaurado: " + n + " chaves + histórico de volta. A página vai recarregar.");
+        location.reload();
+      } catch (e) { alert("Arquivo inválido — não é um backup do Bolso."); }
+    };
+    rd.readAsText(f);
+  };
+  inp.click();
 }
 function copiarTudo() {
   const partes = juntarTudo();
