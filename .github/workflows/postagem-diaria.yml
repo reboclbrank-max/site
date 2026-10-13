@@ -17,7 +17,7 @@ jobs:
           python3 tools/postador.py
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
-          git add posts/log.md
+          git add posts/
           git commit -m "🤖 postagem automatica $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
           git push
         env:
