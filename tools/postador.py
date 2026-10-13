@@ -324,6 +324,51 @@ def main():
         canal("descobridor de redes", _descobridor)
 
     if modo != "teste":
+        def _censo():
+            paginas = [("redes-ativas", "List_of_social_networking_services"), ("redes-mortas", "List_of_defunct_social_networking_services")]
+            medicoes = []
+            for rotulo, titulo in paginas:
+                try:
+                    import re as ree
+                    req = urllib.request.Request("https://en.wikipedia.org/w/api.php?action=parse&page=" + titulo + "&prop=wikitext&format=json&formatversion=2", headers=dict(UA))
+                    w = json.loads(urllib.request.urlopen(req, timeout=30).read().decode())["parse"]["wikitext"]
+                    medicoes.append("%s=%d" % (rotulo, len(ree.findall(r"^\|\s*\[\[", w, ree.M))))
+                except Exception:
+                    medicoes.append("%s=erro" % rotulo)
+                time.sleep(2)
+            pat = os.environ.get("GHPAT")
+            if not pat:
+                return "sem GHPAT"
+            alvo = "posts/censo-mundial.md"
+            cab = "\n## %s\n" % datetime.datetime.utcnow().strftime("%d/%m/%Y")
+            existente, sha0 = "", None
+            try:
+                req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
+                j0 = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())
+                existente = base64.b64decode(j0["content"]).decode(); sha0 = j0["sha"]
+            except urllib.error.HTTPError as e0:
+                if e0.code != 404:
+                    return "erro lendo censo: " + str(e0.code)
+            if cab in existente:
+                return "censo de hoje ja registrado (1 por dia)"
+            linha = "- mundo medido: %s (metodo: catalogo Wikipedia, contagem por tabela)\n" % " · ".join(medicoes)
+            body0 = {"message": "censo mundial: contagem diaria de redes do mundo", "content": base64.b64encode((existente + cab + linha).encode()).decode("ascii"), "branch": "main"}
+            if sha0:
+                body0["sha"] = sha0
+            for _ in range(2):
+                try:
+                    urllib.request.urlopen(urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo, data=json.dumps(body0).encode(), method="PUT", headers={"Authorization": "token " + pat, "Content-Type": "application/json", "User-Agent": "rebocl/2"}), timeout=30)
+                    return "mundo medido: " + " · ".join(medicoes)
+                except Exception:
+                    try:
+                        req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
+                        body0["sha"] = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())["sha"]
+                    except Exception:
+                        return "commit falhou 2x"
+            return "commit falhou"
+        canal("censo mundial", _censo)
+
+    if modo != "teste":
         def _vigia():
             gc = cofare.get("gmail_chat", {}) or {}
             endereco, apppass = gc.get("endereco"), gc.get("senha_de_app")
