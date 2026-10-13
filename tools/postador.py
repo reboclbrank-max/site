@@ -166,11 +166,11 @@ def main():
         def _ig():
             arte = IG_ARTE[datetime.datetime.utcnow().timetuple().tm_yday % len(IG_ARTE)]
             form = urllib.parse.urlencode({"image_url": arte, "caption": mensagem[:2000], "access_token": igtok}).encode()
-            reqc = urllib.request.Request("https://graph.facebook.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
+            reqc = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
             cid = json.loads(urllib.request.urlopen(reqc, timeout=60).read().decode()).get("id")
             time.sleep(6)
             formp = urllib.parse.urlencode({"creation_id": cid, "access_token": igtok}).encode()
-            reqp = urllib.request.Request("https://graph.facebook.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
+            reqp = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
             pub = json.loads(urllib.request.urlopen(reqp, timeout=60).read().decode())
             return "postado id " + str(pub.get("id"))[:14]
         canal("instagram", _ig)
