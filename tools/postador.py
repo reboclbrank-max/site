@@ -84,6 +84,7 @@ def canal(nome, fn):
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else ""
     fila = json.load(open("posts/fila.json"))
+    cofare, cofare_sha = le_cofare()
     dia = datetime.datetime.utcnow().timetuple().tm_yday
     if modo == "teste":
         texto = fila.get("teste", "teste da casa")
@@ -146,7 +147,6 @@ def main():
     else:
         resultados.append(("mastodon", "PULADO", "sem chave ainda (recuperacao na fila)"))
 
-    cofare, cofare_sha = le_cofare()
     thid, thtok = os.environ.get("THREADS_USER_ID"), os.environ.get("THREADS_TOKEN")
     if not (thid and thtok) and cofare.get("threads", {}).get("token"):
         thid, thtok = cofare["threads"].get("user_id"), cofare["threads"]["token"]
