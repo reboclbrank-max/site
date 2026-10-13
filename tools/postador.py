@@ -454,7 +454,8 @@ def main():
         import re as ree
         medicoes = []
         try:
-            rq = urllib.request.Request("https://bsky.social/xrpc/app.bsky.actor.getProfile?actor=" + bh, headers={"User-Agent": "rebocl/2"})
+            sj2 = json.loads(urllib.request.urlopen(urllib.request.Request("https://bsky.social/xrpc/com.atproto.server.createSession", data=json.dumps({"identifier": bh, "password": bp}).encode(), headers={"Content-Type": "application/json", "User-Agent": "rebocl/2"}), timeout=30).read().decode())
+            rq = urllib.request.Request("https://bsky.social/xrpc/app.bsky.actor.getProfile?actor=" + bh, headers={"User-Agent": "rebocl/2", "Authorization": "Bearer " + sj2["accessJwt"]})
             medicoes.append("bsky_seg=%d" % json.loads(urllib.request.urlopen(rq, timeout=30).read().decode()).get("followersCount", 0))
         except Exception:
             medicoes.append("bsky_seg=?")
