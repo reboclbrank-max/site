@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: A casa posta sozinha
         run: |
+          pip install -q coincurve websocket-client
           python3 tools/postador.py
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
@@ -28,3 +29,4 @@ jobs:
           MASTODON_URL: ${{ secrets.MASTODON_URL }}
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
