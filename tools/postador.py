@@ -65,6 +65,22 @@ def main():
     else:
         resultados.append(("mastodon", "PULADO", "sem chave ainda"))
 
+    thid, thtok = os.environ.get("THREADS_USER_ID"), os.environ.get("THREADS_TOKEN")
+    if thid and thtok:
+        def _th():
+            import time as _t
+            import urllib.parse as _up
+            def _post(url, dados):
+                form = _up.urlencode(dados).encode()
+                return json.loads(urllib.request.urlopen(urllib.request.Request(url, data=form, headers=dict(UA)), timeout=30).read().decode())
+            c = _post("https://graph.threads.net/v1.0/" + thid + "/threads", {"media_type": "TEXT", "text": mensagem[:480], "access_token": thtok})
+            _t.sleep(5)
+            pub = _post("https://graph.threads.net/v1.0/" + thid + "/threads_publish", {"creation_id": c.get("id"), "access_token": thtok})
+            return "publicado id " + str(pub.get("id"))[:12]
+        canal("threads", _th)
+    else:
+        resultados.append(("threads", "PULADO", "sem chave ainda"))
+
     nk = os.environ.get("NOSTR_KEY")
     if nk:
         def _no():
