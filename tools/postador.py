@@ -55,7 +55,7 @@ def http_json(url, data=None, headers=None):
     r = urllib.request.urlopen(urllib.request.Request(url, data=d, headers=h), timeout=30)
     return r.status, r.read().decode()
 
-def cerebro(pergunta, tentativas=3):
+def cerebro(pergunta, tentativas=2):
     p = pergunta[:560]
     for tent in range(tentativas):
         bruto = ""
@@ -83,7 +83,7 @@ def cerebro(pergunta, tentativas=3):
             bruto = bruto.strip("`").lstrip()
         if bruto and not bruto.startswith("{") and '"reasoning"' not in bruto and '"role"' not in bruto and not bruto.lower().startswith("we need"):
             return bruto
-        time.sleep(20)
+        time.sleep(4)
     return ""
 
 def canal(nome, fn):
@@ -168,7 +168,7 @@ def main():
             form = urllib.parse.urlencode({"image_url": arte, "caption": mensagem[:2000], "access_token": igtok}).encode()
             reqc = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
             cid = json.loads(urllib.request.urlopen(reqc, timeout=60).read().decode()).get("id")
-            time.sleep(6)
+            time.sleep(2)
             formp = urllib.parse.urlencode({"creation_id": cid, "access_token": igtok}).encode()
             reqp = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
             pub = json.loads(urllib.request.urlopen(reqp, timeout=60).read().decode())
@@ -185,7 +185,7 @@ def main():
             def _post(url, dados):
                 return json.loads(urllib.request.urlopen(urllib.request.Request(url, data=urllib.parse.urlencode(dados).encode(), headers=dict(UA)), timeout=30).read().decode())
             c = _post("https://graph.threads.net/v1.0/" + thid + "/threads", {"media_type": "TEXT", "text": mensagem[:480], "access_token": thtok})
-            time.sleep(5)
+            time.sleep(2)
             pub = _post("https://graph.threads.net/v1.0/" + thid + "/threads_publish", {"creation_id": c.get("id"), "access_token": thtok})
             try:
                 rr2 = json.loads(urllib.request.urlopen(urllib.request.Request("https://graph.threads.net/refresh_access_token?grant_type=threads_access_token&access_token=" + thtok, headers=dict(UA)), timeout=30).read().decode())
@@ -277,7 +277,7 @@ def main():
                 with open("posts/interacoes.md", "a") as fi:
                     fi.write(p["uri"] + "\n")
                 feitas += 1
-                time.sleep(3)
+                time.sleep(1)
             return "%d interacoes (q=%s)" % (feitas, q)
         canal("cacador de oportunidades", _cacador)
 
@@ -325,7 +325,7 @@ def main():
                         livres.append(nome)
                 except Exception:
                     muros.append(nome + "(inacessivel)")
-                time.sleep(2)
+                time.sleep(0.5)
             linha = "- pesquisei %d redes: LIVRES %s | MURO %s\n" % (len(livres), ", ".join(livres) if livres else "nenhuma", ", ".join(muros) if muros else "nenhuma")
             novo = existente + cab + linha
             body0 = {"message": "descobridor: pesquisa diaria de redes (lei do muro registrada)", "content": base64.b64encode(novo.encode()).decode("ascii"), "branch": "main", "sha": j0["sha"] if existente else None}
@@ -357,7 +357,7 @@ def main():
                     medicoes.append("%s=%d" % (rotulo, len(ree.findall(r"^\|\s*\[\[", w, ree.M))))
                 except Exception:
                     medicoes.append("%s=erro" % rotulo)
-                time.sleep(2)
+                time.sleep(0.5)
             pat = os.environ.get("GHPAT")
             if not pat:
                 return "sem GHPAT"
