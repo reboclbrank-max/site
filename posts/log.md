@@ -23,3 +23,17 @@
 | discord | ➖ sem chave ainda |
 
 > 🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? · Grátis no navegador ou APK.
+
+## 13/10/2026 02:45 UTC
+
+| canal | resultado |
+|---|---|
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ➖ sem chave ainda |
+| bluesky | ✅ postado 200 |
+| mastodon | ➖ sem chave ainda |
+| threads | ✅ publicado id 181288261278 |
+| nostr | ✅ nota em 1 relays (id cc1e2b64c3) |
+| discord | ➖ sem chave ainda |
+
+> 🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? · Grátis no navegador ou APK.
