@@ -34,3 +34,6 @@
 
 ## 13/10/2026 17:47 UTC
 🧠 Por que 100% fictício? Porque a casa não deve nada a liga nenhuma: times, jogadores e campeonatos nascem do zero. Só tática de verdade. ⏎ PRANCHETA, grátis no navegador ou APK. ⏎ #indiedev #gamedev #indiebrasil
+
+## 13/10/2026 19:06 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev #Godot #indiebrasil
