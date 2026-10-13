@@ -50,8 +50,15 @@ def main():
                  "convide pra testar o PRANCHETA e contar qual modo prefere (lances ao vivo ou instantaneo)",
                  "explique por que o PRANCHETA ser 100% ficticio e um ponto forte", "dica tatica curta que funciona no PRANCHETA",
                  " converse sobre vida de dev solo no Brasil e cite os jogos", "pinte o clima do CEIFALUME: a fazenda nao dorme"]
+        contexto = ""
+        try:
+            with open("posts/aulas.md") as fa:
+                ultimas = [l.strip() for l in fa.readlines() if l.strip()][-3:]
+            contexto = " APRENDIZADOS ANTERIORES DA CASA (use o que servir): " + " ".join(l[:120] for l in ultimas)
+        except Exception:
+            pass
         pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
-                  "ate 240 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + temas[dia % len(temas)] + ".")
+                  "ate 240 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + temas[dia % len(temas)] + "." + contexto)
         gerado = cerebro(pedido)
         texto = gerado[:280] if gerado and len(gerado) > 30 else fila["posts"][dia % len(fila["posts"])]["texto"]
         resultados.append(("cerebro", "OK", ("post novo criado" if gerado and len(gerado) > 30 else "fila de reserva")))
@@ -154,11 +161,18 @@ def main():
             rq = urllib.request.Request("https://bsky.social/xrpc/app.bsky.feed.searchPosts?q=" + urllib.parse.quote(q) + "&limit=10",
                 headers={"Authorization": "Bearer " + jwt, "User-Agent": "rebocl/1"})
             achados = json.loads(urllib.request.urlopen(rq, timeout=30).read().decode()).get("posts", [])
+            ja_feitos = set()
+            try:
+                with open("posts/interacoes.md") as fi0:
+                    ja_feitos = set(l.strip() for l in fi0 if l.strip().startswith("at://"))
+            except Exception:
+                pass
             feitas = 0
             for p in achados:
                 if feitas >= 3: break
                 rec = p.get("record") or {}
                 if rec.get("reply"): continue
+                if p.get("uri") in ja_feitos: continue
                 autor = (p.get("author") or {}).get("handle", "")
                 if not autor or "reboclbrank" in autor: continue
                 txt_pai = (rec.get("text") or "")[:150]
@@ -173,6 +187,8 @@ def main():
                 pr = urllib.request.Request("https://bsky.social/xrpc/com.atproto.repo.createRecord", data=json.dumps(corpo).encode(),
                     headers={"Content-Type": "application/json", "Authorization": "Bearer " + jwt, "User-Agent": "rebocl/1"})
                 urllib.request.urlopen(pr, timeout=30)
+                with open("posts/interacoes.md", "a") as fi:
+                    fi.write(p["uri"] + "\n")
                 feitas += 1
                 time.sleep(3)
             return "%d interacoes (q=%s)" % (feitas, q)
@@ -191,6 +207,8 @@ def main():
         canal("aula do cerebro", _aula)
 
     agora = datetime.datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC")
+    with open("posts/posts-publicados.md", "a") as fp:
+        fp.write("\n## %s\n%s\n" % (agora, texto.replace("\n", " ⏎ ")[:300]))
     linhas = ["\n## " + agora + (" — TESTE" if modo == "teste" else ""), "", "| canal | resultado |", "|---|---|"]
     for n, st, det in resultados:
         icone = "✅" if st == "OK" else ("➖" if st == "PULADO" else "❌")
