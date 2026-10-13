@@ -31,6 +31,9 @@ def salva_cofare(cofare, sha, msg):
 
 URL_JOGO = "https://rebocl-brank.itch.io/prancheta"
 UA = {"User-Agent": "rebocl-postador/2"}
+
+def codigo_erro(e):
+    return "%s %s" % (getattr(e, "code", ""), str(e)[:50])
 IG_ARTE = json.loads("""["https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5wbmc=/original/sNW2uy.png",
 "https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA2NjgzMC5wbmc=/original/y4xru4.png",
 "https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyOC5wbmc=/original/d7Kx0N.png",
@@ -416,9 +419,9 @@ def main():
                         req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
                         j0 = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())
                         body0["sha"] = j0["sha"]
-                    except Exception:
-                        return "commit falhou 2x"
-            return "commit falhou"
+                    except Exception as e10:
+                        return "commit-falhou 2x: " + codigo_erro(e10)
+            return "commit-falhou: " + codigo_erro(e10)
         canal("descobridor de redes", _descobridor)
 
     if modo != "teste":
@@ -461,9 +464,9 @@ def main():
                     try:
                         req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
                         body0["sha"] = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())["sha"]
-                    except Exception:
-                        return "commit falhou 2x"
-            return "commit falhou"
+                    except Exception as e10:
+                        return "commit-falhou 2x: " + codigo_erro(e10)
+            return "commit-falhou: " + codigo_erro(e10)
         canal("censo mundial", _censo)
 
     if modo != "teste":
@@ -592,9 +595,9 @@ def main():
                 try:
                     req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
                     body0["sha"] = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())["sha"]
-                except Exception:
-                    return "commit falhou"
-        return "commit falhou"
+                except Exception as e10:
+                    return "commit-falhou: " + codigo_erro(e10)
+        return "commit-falhou: " + codigo_erro(e10)
     canal("regua de metas (medicao)", _regua)
 
     if "descobridor de redes" not in " ".join(n for n, _, _ in resultados):
