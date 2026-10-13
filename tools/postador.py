@@ -112,7 +112,21 @@ def main():
         temas = ["apresente o PRANCHETA pra quem curte manager de futebol", "conte expectativa do CEIFALUME (em desenvolvimento)",
                  "convide pra testar o PRANCHETA e contar qual modo prefere (lances ao vivo ou instantaneo)",
                  "explique por que o PRANCHETA ser 100% ficticio e um ponto forte", "dica tatica curta que funciona no PRANCHETA",
-                 " converse sobre vida de dev solo no Brasil e cite os jogos", "pinte o clima do CEIFALUME: a fazenda nao dorme"]
+                 "converse sobre vida de dev solo no Brasil e cite os jogos", "pinte o clima do CEIFALUME: a fazenda nao dorme",
+                 "curiosidade de bastidor: como e criar um jogo sozinho", "pergunte qual time o torcedor torce e provoque amistoso no PRANCHETA",
+                 "explique o APK: por que tambem funciona no celular sem internet", "fale das plantacoes noturnas do CEIFALUME",
+                 "compare gerir um clube real vs ficticio (sem citar clubes reais)", "pergunte: resultado ao vivo ou instantaneo, por que?",
+                 "fale da arte pixelada e do clima de lanterna dos jogos", "convide pra seguir a conta pra acompanhar o lancamento do CEIFALUME",
+                 "conte que o PRANCHETA roda no navegador, sem baixar nada", "pergunte qual modo de jogo o publico prefere e por que",
+                 "dica: como montar defesa no PRANCHETA", "fale do mercado noturno do CEIFALUME que muda de preco",
+                 "agradeca aos que testaram e convide novos testadores", "explique o que e um manager de futebol pra quem nunca jogou",
+                 "fale da liberdade de jogo 100% offline", "pergunte: qual ultimo jogo indie o publico jogou?",
+                 "conte o passo a passo de como jogar o PRANCHETA agora", "pinte um cenario: noite de sexta, fazenda do CEIFALUME acesa",
+                 "explique que a casa tambem ensina: devlogs abertos no itch", "pergunte o que falta num jogo de futebol pra ser perfeito",
+                 "fale da rotina de estudar programacao todo dia", "compare jogar no navegador vs APK, vantagens de cada",
+                 "peça sugestao de recurso pro CEIFALUME nos comentarios", "fale da alegria do primeiro jogador que nao e da familia",
+                 "explique por que jogos pequenos tem alma", "pergunte: futebol com amigos ou gerir o clube sozinho?",
+                 "fale dos sons e musicas que combinam com CEIFALUME", "convide pra apoiar seguindo e compartilhando", "retrospectiva rapida: o que a casa aprendeu essa semana"]
         contexto = ""
         try:
             with open("posts/aulas.md") as fa:
@@ -120,12 +134,36 @@ def main():
             contexto = " APRENDIZADOS ANTERIORES DA CASA (use o que servir): " + " ".join(l[:120] for l in ultimas)
         except Exception:
             pass
+        indice_tema = 0
+        try:
+            with open("posts/tema-contador.txt") as ft:
+                indice_tema = int(ft.read().strip() or 0)
+        except Exception:
+            pass
+        with open("posts/tema-contador.txt", "w") as ft:
+            ft.write(str(indice_tema + 1))
         pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
-                  "ate 240 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + temas[dia % len(temas)] + "." + contexto)
+                  "ate 240 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + temas[indice_tema % len(temas)] + "." + contexto)
         gerado = cerebro(pedido[:550])
         ciclo_do_dia = datetime.datetime.utcnow().hour // 3
-        indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
-        texto = gerado[:280] if gerado and len(gerado) > 30 else fila["posts"][indice_reserva]["texto"]
+        try:
+            with open("posts/posts-publicados.md") as fpp:
+                ja_publicados = fpp.read().lower()
+        except Exception:
+            ja_publicados = ""
+        texto = gerado[:280] if gerado and len(gerado) > 30 else ""
+        if texto:
+            chave_nova = texto[:60].lower()
+            if chave_nova in ja_publicados:
+                texto = ""
+        if not texto:
+            for passo in range(len(fila["posts"])):
+                candidato = fila["posts"][(indice_reserva + passo) % len(fila["posts"])]["texto"]
+                if candidato[:60].lower() not in ja_publicados:
+                    texto = candidato
+                    break
+            if not texto:
+                texto = fila["posts"][indice_reserva]["texto"] + " (" + datetime.datetime.utcnow().strftime("%d/%m") + ")"
         resultados.append(("cerebro", "OK", ("post novo criado" if gerado and len(gerado) > 30 else "fila de reserva")))
     mensagem = texto + "\n" + URL_JOGO
 
