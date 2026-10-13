@@ -21,10 +21,15 @@ def cerebro(pergunta):
         bruto = urllib.request.urlopen(urllib.request.Request("https://text.pollinations.ai/" + q, headers=dict(UA)), timeout=30).read().decode("utf-8", "ignore")
         try:
             j = json.loads(bruto)
-            bruto = j.get("content") or bruto
+            bruto = j.get("content") or ""
         except Exception:
             pass
-        return (bruto or "").strip()
+        bruto = (bruto or "").strip()
+        if bruto.startswith("```"):
+            bruto = bruto.strip("`").lstrip()
+        if not bruto or bruto.startswith("{") or '"reasoning"' in bruto or '"role"' in bruto or bruto.lower().startswith("we need"):
+            return ""
+        return bruto
     except Exception:
         return ""
 
