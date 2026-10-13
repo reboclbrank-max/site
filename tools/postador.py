@@ -211,6 +211,23 @@ def main():
         ini = cofare.get("instagram", {}) or {}
         igid, igtok = ini.get("user_id"), ini.get("token")
     if igid and igtok:
+        def _reel():
+            dia_semana = datetime.datetime.utcnow().weekday()
+            hora_utc = datetime.datetime.utcnow().hour
+            if dia_semana != 5 or hora_utc not in (21, 22, 23):
+                raise RuntimeError("reel sai no sabado a noite BRT (um por semana — qualidade > quantidade)")
+            url_video = "https://raw.githubusercontent.com/reboclbrank-max/site/main/media/reel.mp4"
+            form = urllib.parse.urlencode({"video_url": url_video, "caption": mensagem[:2000], "media_type": "REELS", "share_to_feed": "1", "access_token": igtok}).encode()
+            reqc = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
+            cid = json.loads(urllib.request.urlopen(reqc, timeout=120).read().decode()).get("id")
+            time.sleep(2)
+            formp = urllib.parse.urlencode({"creation_id": cid, "access_token": igtok}).encode()
+            reqp = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
+            pub = json.loads(urllib.request.urlopen(reqp, timeout=120).read().decode())
+            return "REEL publicado id " + str(pub.get("id"))[:14]
+        canal("reel semanal", _reel)
+
+    if igid and igtok:
         def _ig():
             hora_utc = datetime.datetime.utcnow().hour
             if hora_utc not in (13, 22):
