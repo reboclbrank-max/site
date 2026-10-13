@@ -65,6 +65,39 @@ def main():
     else:
         resultados.append(("mastodon", "PULADO", "sem chave ainda"))
 
+    nk = os.environ.get("NOSTR_KEY")
+    if nk:
+        def _no():
+            import hashlib, time as _t
+            from coincurve import PrivateKey
+            import websocket
+            sk = PrivateKey(bytes.fromhex(nk))
+            px = sk.public_key.format()[1:].hex()
+            ev = {"pubkey": px, "created_at": int(_t.time()), "kind": 1,
+                  "tags": [["t", "gamedev"], ["t", "indiedev"], ["t", "brazil"]],
+                  "content": mensagem[:896]}
+            ser = json.dumps([0, ev["pubkey"], ev["created_at"], ev["kind"], ev["tags"], ev["content"]], separators=(",", ":"), ensure_ascii=False).encode()
+            ev["id"] = hashlib.sha256(ser).hexdigest()
+            ev["sig"] = sk.sign_schnorr(bytes.fromhex(ev["id"]), os.urandom(32)).hex()
+            aceitos = []
+            for relay in ["wss://relay.damus.io", "wss://nos.lol"]:
+                try:
+                    ws = websocket.create_connection(relay, timeout=20)
+                    ws.send(json.dumps(["EVENT", ev]))
+                    fim, resp = _t.time() + 15, ""
+                    while _t.time() < fim:
+                        resp = ws.recv()
+                        if '"OK"' in resp: break
+                    ws.close()
+                    r = json.loads(resp)
+                    if r[0] == "OK" and r[2] is True: aceitos.append(relay)
+                except Exception:
+                    pass
+            return "nota em %d relays (id %s)" % (len(aceitos), ev["id"][:10])
+        canal("nostr", _no)
+    else:
+        resultados.append(("nostr", "PULADO", "sem chave ainda"))
+
     dw = os.environ.get("DISCORD_WEBHOOK")
     if dw:
         canal("discord", lambda: "enviado " + str(http_json(dw, {"content": mensagem[:2000]})[0]))
