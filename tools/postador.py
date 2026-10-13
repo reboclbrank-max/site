@@ -31,6 +31,9 @@ def salva_cofare(cofare, sha, msg):
 
 URL_JOGO = "https://rebocl-brank.itch.io/prancheta"
 UA = {"User-Agent": "rebocl-postador/2"}
+IG_ARTE = ["https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5wbmc=/794x1000/69yxX2.png",
+           "https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyOC5wbmc=/794x1000/k4KlQc.png",
+           "https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5wbmc=/original/sNW2uy.png"]
 PESQUISA_REDES = [
     ("lemmy.world", "https://lemmy.world/signup"), ("lemmy.ml", "https://lemmy.ml/signup"),
     ("meta.discourse", "https://meta.discourse.org/signup"), ("flarum", "https://discuss.flarum.org/signup"),
@@ -154,6 +157,25 @@ def main():
         canal("mastodon", _ma)
     else:
         resultados.append(("mastodon", "PULADO", "sem chave ainda (recuperacao na fila)"))
+
+    igid, igtok = os.environ.get("IG_USER_ID"), os.environ.get("IG_TOKEN")
+    if not (igid and igtok):
+        ini = cofare.get("instagram", {}) or {}
+        igid, igtok = ini.get("user_id"), ini.get("token")
+    if igid and igtok:
+        def _ig():
+            arte = IG_ARTE[datetime.datetime.utcnow().timetuple().tm_yday % len(IG_ARTE)]
+            form = urllib.parse.urlencode({"image_url": arte, "caption": mensagem[:2000], "access_token": igtok}).encode()
+            reqc = urllib.request.Request("https://graph.facebook.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
+            cid = json.loads(urllib.request.urlopen(reqc, timeout=60).read().decode()).get("id")
+            time.sleep(6)
+            formp = urllib.parse.urlencode({"creation_id": cid, "access_token": igtok}).encode()
+            reqp = urllib.request.Request("https://graph.facebook.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
+            pub = json.loads(urllib.request.urlopen(reqp, timeout=60).read().decode())
+            return "postado id " + str(pub.get("id"))[:14]
+        canal("instagram", _ig)
+    else:
+        resultados.append(("instagram", "PULADO", "sem chave ainda (tomada pronta)"))
 
     thid, thtok = os.environ.get("THREADS_USER_ID"), os.environ.get("THREADS_TOKEN")
     if not (thid and thtok) and cofare.get("threads", {}).get("token"):
