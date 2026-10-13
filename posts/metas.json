@@ -1,0 +1,31 @@
+{
+ "_lei": "REGUA DE METAS — o robô mede cada ciclo e compara; quando bate, comemora no log; quando atrasa, registra plano no proximo ciclo. Dono aprovou 15/10/2026.",
+ "ig_30_dias": {
+  "inicio": "2026-10-13",
+  "posts": 30,
+  "seguidores": 50
+ },
+ "yt_30_dias": {
+  "inscritos": 40,
+  "shorts": 4
+ },
+ "itch_30_dias": {
+  "downloads": 100,
+  "seguidores": 10
+ },
+ "bsky_30_dias": {
+  "seguidores": 50
+ },
+ "total_90_dias": {
+  "fas_somados": 1000
+ },
+ "linha_de_partida_13_10": {
+  "ig_posts": 2,
+  "ig_seguidores": 0,
+  "yt_inscritos": 24,
+  "itch_downloads": 44,
+  "itch_seguidores": 0,
+  "bsky_seguidores": 13
+ },
+ "como_medir": "ig: graph.instagram.com (followers_count); bsky: getProfile; itch: pagina publica; yt: PENDENTE-PORTA"
+}
