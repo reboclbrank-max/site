@@ -291,3 +291,26 @@
 | regua de metas (medicao) | ✅ bsky_seg=13 ig_seg=0 ig_posts=6 itch_dl=? yt=PENDENTE-PORTA  |
 
 > 🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? · Grátis no navegador ou APK.
+
+## 13/10/2026 17:47 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ➖ sem chave ainda |
+| bluesky | ✅ postado 200 |
+| mastodon | ➖ sem chave ainda (recuperacao na fila) |
+| reel semanal | ❌ reel sai no sabado a noite BRT (um por semana — qualidade > quantidade |
+| instagram | ❌ fora da janela do instagram (2x/dia: 10h e 19h BRT) — conta nova nao p |
+| threads | ✅ publicado id 178798885175 |
+| nostr | ✅ nota em 2 relays |
+| discord | ➖ sem chave ainda |
+| cacador de oportunidades | ✅ 3 interacoes (q=#gamedev) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seg=13 ig_seg=0 ig_posts=2 itch=? yt=PENDENTE-PORTA (ja |
+
+> 🧠 Por que 100% fictício? Porque a casa não deve nada a liga nenhuma: times, jogadores e campeonatos nascem do zero. Só tática de verdade. · PRANCHETA,
