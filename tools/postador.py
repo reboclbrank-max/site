@@ -15,33 +15,36 @@ def http_json(url, data=None, headers=None):
     r = urllib.request.urlopen(urllib.request.Request(url, data=d, headers=h), timeout=30)
     return r.status, r.read().decode()
 
-def cerebro(pergunta):
-    bruto = ""
-    try:
-        req = urllib.request.Request("https://text.pollinations.ai/openai",
-            data=json.dumps({"model": "openai-fast", "messages": [{"role": "user", "content": pergunta[:1100]}]}).encode(),
-            headers={"Content-Type": "application/json", "User-Agent": "rebocl/2"})
-        j = json.loads(urllib.request.urlopen(req, timeout=40).read().decode())
-        bruto = (j.get("choices") or [{}])[0].get("message", {}).get("content", "")
-    except Exception:
+def cerebro(pergunta, tentativas=3):
+    p = pergunta[:560]
+    for tent in range(tentativas):
         bruto = ""
-    if not bruto:
         try:
-            q = urllib.parse.quote(pergunta[:590])
-            bruto = urllib.request.urlopen(urllib.request.Request("https://text.pollinations.ai/" + q, headers=dict(UA)), timeout=30).read().decode("utf-8", "ignore")
-            try:
-                jj = json.loads(bruto)
-                bruto = jj.get("content") or ""
-            except Exception:
-                pass
+            req = urllib.request.Request("https://text.pollinations.ai/openai",
+                data=json.dumps({"model": "openai-fast", "messages": [{"role": "user", "content": p}]}).encode(),
+                headers={"Content-Type": "application/json", "User-Agent": "rebocl/2"})
+            j = json.loads(urllib.request.urlopen(req, timeout=45).read().decode())
+            bruto = (j.get("choices") or [{}])[0].get("message", {}).get("content", "")
         except Exception:
             bruto = ""
-    bruto = (bruto or "").strip()
-    if bruto.startswith("```"):
-        bruto = bruto.strip("`").lstrip()
-    if not bruto or bruto.startswith("{") or '"reasoning"' in bruto or '"role"' in bruto or bruto.lower().startswith("we need"):
-        return ""
-    return bruto
+        if not bruto:
+            try:
+                q = urllib.parse.quote(p)
+                bruto = urllib.request.urlopen(urllib.request.Request("https://text.pollinations.ai/" + q, headers=dict(UA)), timeout=30).read().decode("utf-8", "ignore")
+                try:
+                    jj = json.loads(bruto)
+                    bruto = jj.get("content") or ""
+                except Exception:
+                    pass
+            except Exception:
+                bruto = ""
+        bruto = (bruto or "").strip()
+        if bruto.startswith("```"):
+            bruto = bruto.strip("`").lstrip()
+        if bruto and not bruto.startswith("{") and '"reasoning"' not in bruto and '"role"' not in bruto and not bruto.lower().startswith("we need"):
+            return bruto
+        time.sleep(20)
+    return ""
 
 def canal(nome, fn):
     try:
@@ -69,7 +72,7 @@ def main():
             pass
         pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
                   "ate 240 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + temas[dia % len(temas)] + "." + contexto)
-        gerado = cerebro(pedido)
+        gerado = cerebro(pedido[:550])
         indice_reserva = (dia * 2 + (0 if datetime.datetime.utcnow().hour < 12 else 1)) % len(fila["posts"])
         texto = gerado[:280] if gerado and len(gerado) > 30 else fila["posts"][indice_reserva]["texto"]
         resultados.append(("cerebro", "OK", ("post novo criado" if gerado and len(gerado) > 30 else "fila de reserva")))
