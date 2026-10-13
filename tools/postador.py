@@ -1,4 +1,33 @@
 import json, os, sys, datetime, time, urllib.request, urllib.parse
+import base64
+COFARE_URL = "https://api.github.com/repos/reboclbrank-max/base/contents/ferramentas/cofare.json?ref=main"
+
+def le_cofare():
+    pat = os.environ.get("GHPAT")
+    if not pat:
+        return {}, None
+    try:
+        req = urllib.request.Request(COFARE_URL, headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
+        j = json.loads(urllib.request.urlopen(req, timeout=30).read().decode())
+        return json.loads(base64.b64decode(j["content"]).decode()), j["sha"]
+    except Exception:
+        return {}, None
+
+def salva_cofare(cofare, sha, msg):
+    pat = os.environ.get("GHPAT")
+    if not pat or not cofare:
+        return
+    body = {"message": msg, "content": base64.b64encode(json.dumps(cofare, ensure_ascii=False, indent=1).encode()).decode("ascii"), "branch": "main", "sha": sha}
+    for tent in range(2):
+        try:
+            urllib.request.urlopen(urllib.request.Request(COFARE_URL.replace("?ref=main", ""), data=json.dumps(body).encode(), method="PUT", headers={"Authorization": "token " + pat, "Content-Type": "application/json", "User-Agent": "rebocl/2"}), timeout=30)
+            return
+        except Exception:
+            try:
+                req = urllib.request.Request(COFARE_URL, headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
+                body["sha"] = json.loads(urllib.request.urlopen(req, timeout=30).read().decode())["sha"]
+            except Exception:
+                return
 
 URL_JOGO = "https://rebocl-brank.itch.io/prancheta"
 UA = {"User-Agent": "rebocl-postador/2"}
@@ -90,7 +119,8 @@ def main():
     else:
         resultados.append(("telegram", "PULADO", "sem chave ainda"))
 
-    bh, bp = os.environ.get("BLUESKY_HANDLE"), os.environ.get("BLUESKY_APPPASS")
+    bh = os.environ.get("BLUESKY_HANDLE") or cofare.get("bluesky", {}).get("handle")
+    bp = os.environ.get("BLUESKY_APPPASS") or cofare.get("bluesky", {}).get("senha_de_app")
     if bh and bp:
         def _bs():
             s, c = http_json("https://bsky.social/xrpc/com.atproto.server.createSession", {"identifier": bh, "password": bp})
@@ -104,7 +134,8 @@ def main():
     else:
         resultados.append(("bluesky", "PULADO", "sem chave ainda"))
 
-    mu, mt = os.environ.get("MASTODON_URL"), os.environ.get("MASTODON_TOKEN")
+    mu = os.environ.get("MASTODON_URL") or cofare.get("mastodon", {}).get("url")
+    mt = os.environ.get("MASTODON_TOKEN") or cofare.get("mastodon", {}).get("token")
     if mu and mt:
         def _ma():
             form = urllib.parse.urlencode({"status": mensagem[:500]}).encode()
@@ -115,7 +146,10 @@ def main():
     else:
         resultados.append(("mastodon", "PULADO", "sem chave ainda (recuperacao na fila)"))
 
+    cofare, cofare_sha = le_cofare()
     thid, thtok = os.environ.get("THREADS_USER_ID"), os.environ.get("THREADS_TOKEN")
+    if not (thid and thtok) and cofare.get("threads", {}).get("token"):
+        thid, thtok = cofare["threads"].get("user_id"), cofare["threads"]["token"]
     if thid and thtok:
         def _th():
             def _post(url, dados):
@@ -123,6 +157,15 @@ def main():
             c = _post("https://graph.threads.net/v1.0/" + thid + "/threads", {"media_type": "TEXT", "text": mensagem[:480], "access_token": thtok})
             time.sleep(5)
             pub = _post("https://graph.threads.net/v1.0/" + thid + "/threads_publish", {"creation_id": c.get("id"), "access_token": thtok})
+            try:
+                rr2 = json.loads(urllib.request.urlopen(urllib.request.Request("https://graph.threads.net/refresh_access_token?grant_type=threads_access_token&access_token=" + thtok, headers=dict(UA)), timeout=30).read().decode())
+                novo = rr2.get("access_token")
+                if novo and novo != thtok:
+                    cofare.setdefault("threads", {})["token"] = novo
+                    cofare["threads"]["atualizado"] = datetime.datetime.utcnow().strftime("%d/%m/%Y")
+                    salva_cofare(cofare, cofare_sha, "robo renovou o token threads sozinho (nunca mais expira)")
+            except Exception:
+                pass
             return "publicado id " + str(pub.get("id"))[:12]
         canal("threads", _th)
     else:
@@ -219,6 +262,66 @@ def main():
                 f.write("\n- **%s — %s**\n  %s" % (datetime.datetime.utcnow().strftime("%d/%m"), perguntas[dia % len(perguntas)], aula[:400].replace("\n", " ")))
             return "licao gravada (%d perguntas no ciclo)" % len(perguntas)
         canal("aula do cerebro", _aula)
+
+    if modo != "teste":
+        def _vigia():
+            gc = cofare.get("gmail_chat", {}) or {}
+            endereco, apppass = gc.get("endereco"), gc.get("senha_de_app")
+            if not (endereco and apppass):
+                return "cofare sem gmail"
+            import imaplib
+            import email as ema
+            import re as ree
+            import http.cookiejar as hcj
+            mi = imaplib.IMAP4_SSL("imap.gmail.com")
+            mi.login(endereco, apppass)
+            mi.select("INBOX")
+            typ, dd = mi.search(None, "SINCE " + datetime.datetime.utcnow().strftime("%d-%b-%Y"))
+            link = None
+            for i in dd[0].split():
+                typ, x = mi.fetch(i, "(RFC822)")
+                msg = ema.message_from_bytes(x[0][1])
+                if "mastodon" not in msg.get("From", "").lower():
+                    continue
+                corpo = ""
+                for parte in (msg.walk() if msg.is_multipart() else [msg]):
+                    if parte.get_content_type() in ("text/plain", "text/html"):
+                        corpo += parte.get_payload(decode=True).decode("utf-8", "ignore")
+                ls = ree.findall(r'https://mastodon\.social/auth/password/edit\?[^\s"<>]+', corpo.replace("=\r\n", "").replace("=\n", ""))
+                if ls:
+                    link = ls[0]
+                    break
+            mi.logout()
+            if not link:
+                return "sem link de recovery hoje (vigia volta no proximo ciclo)"
+            nova_senha = os.urandom(12).hex()
+            cj2 = hcj.CookieJar()
+            opn = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj2))
+            opn.addheaders = [("User-Agent", "Mozilla/5.0 rebocl/2")]
+            pag = opn.open(link, timeout=30).read().decode("utf-8", "ignore")
+            tk = ree.search(r'name="authenticity_token"\s+value="([^"]+)"', pag)
+            if not tk:
+                return "link sem formulario esperado"
+            form = urllib.parse.urlencode({"authenticity_token": tk.group(1), "user[password]": nova_senha, "user[password_confirmation]": nova_senha}).encode()
+            opn.open(urllib.request.Request(link, data=form), timeout=30)
+            ma = cofare.get("mastodon", {}) or {}
+            cid, csec = ma.get("client_id"), ma.get("client_secret")
+            if not (cid and csec):
+                cofare.setdefault("mastodon", {})["senha_atual"] = nova_senha
+                salva_cofare(cofare, cofare_sha, "robo redefiniu a senha do mastodon sozinho (token no proximo passo)")
+                return "senha do mastodon redefinida pelo robo (token: proximo ciclo)"
+            ot = json.loads(urllib.request.urlopen(urllib.request.Request(ma.get("url", "https://mastodon.social") + "/oauth/token",
+                data=urllib.parse.urlencode({"client_id": cid, "client_secret": csec, "grant_type": "password", "scope": "read write", "username": endereco, "password": nova_senha}).encode(),
+                headers={"Content-Type": "application/x-www-form-urlencoded", "User-Agent": "rebocl/2"}), timeout=30).read().decode())
+            tok = ot.get("access_token")
+            if not tok:
+                return "oauth sem token: " + str(ot)[:60]
+            cofare.setdefault("mastodon", {})["token"] = tok
+            cofare["mastodon"]["senha_atual"] = nova_senha
+            cofare["mastodon"]["usuario"] = "ativado-pelo-robo"
+            salva_cofare(cofare, cofare_sha, "MASTODON RECUPERADO PELO ROBO: 5o canal liga no proximo ciclo")
+            return "mastodon recuperado pelo robo — canal 5 no ar no proximo ciclo"
+        canal("vigia da caixa (auto-recovery)", _vigia)
 
     agora = datetime.datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC")
     with open("posts/posts-publicados.md", "a") as fp:
