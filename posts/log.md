@@ -71,3 +71,20 @@
 | aula do cerebro | ✅ cerebro calado hoje |
 
 > 🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? · Grátis no navegador ou APK.
+
+## 13/10/2026 03:10 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ➖ sem chave ainda |
+| bluesky | ✅ postado 200 |
+| mastodon | ➖ sem chave ainda (recuperacao na fila) |
+| threads | ✅ publicado id 180744755457 |
+| nostr | ✅ nota em 2 relays |
+| discord | ➖ sem chave ainda |
+| cacador de oportunidades | ✅ 3 interacoes (q=#gamedev) |
+| aula do cerebro | ✅ cerebro calado hoje |
+
+> 🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? · Grátis no navegador ou APK.
