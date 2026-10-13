@@ -3,6 +3,7 @@ on:
   schedule:
     - cron: '0 12 * * *'
     - cron: '0 22 * * *'
+    - cron: '0 18 * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -22,6 +23,7 @@ jobs:
           git push
         env:
           NTFY_TOPIC: rebocl-enxame-x7k2
+          GHPAT: ${{ secrets.GHPAT }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT: ${{ secrets.TELEGRAM_CHAT }}
           BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
