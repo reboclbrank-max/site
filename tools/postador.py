@@ -450,6 +450,76 @@ def main():
             return "mastodon recuperado pelo robo — canal 5 no ar no proximo ciclo"
         canal("vigia da caixa (auto-recovery)", _vigia)
 
+    def _regua():
+        import re as ree
+        medicoes = []
+        try:
+            rq = urllib.request.Request("https://bsky.social/xrpc/app.bsky.actor.getProfile?actor=" + bh, headers={"User-Agent": "rebocl/2"})
+            medicoes.append("bsky_seg=%d" % json.loads(urllib.request.urlopen(rq, timeout=30).read().decode()).get("followersCount", 0))
+        except Exception:
+            medicoes.append("bsky_seg=?")
+        try:
+            rq = urllib.request.Request("https://graph.instagram.com/v21.0/" + (igid or "") + "?fields=followers_count,media_count&access_token=" + (igtok or ""), headers={"User-Agent": "rebocl/2"})
+            ji = json.loads(urllib.request.urlopen(rq, timeout=30).read().decode())
+            medicoes.append("ig_seg=%d" % ji.get("followers_count", 0))
+            medicoes.append("ig_posts=%d" % ji.get("media_count", 0))
+        except Exception:
+            medicoes.append("ig=?")
+        try:
+            rq = urllib.request.Request("https://rebocl-brank.itch.io", headers={"User-Agent": "Mozilla/5.0"})
+            html = urllib.request.urlopen(rq, timeout=30).read().decode("utf-8", "ignore")
+            m4 = ree.findall(r'(\d[\d,.]*)\s*(?:downloads|download)', html, ree.I)
+            medicoes.append("itch_dl=%s" % (m4[0] if m4 else "?"))
+        except Exception:
+            medicoes.append("itch=?")
+        medicoes.append("yt=PENDENTE-PORTA")
+        pat = os.environ.get("GHPAT")
+        if not pat:
+            return " ".join(medicoes)
+        alvo = "posts/progresso-metas.md"
+        cab = "\n## %s\n" % datetime.datetime.utcnow().strftime("%d/%m/%Y")
+        existente, sha0 = "", None
+        try:
+            req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
+            j0 = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())
+            existente = base64.b64decode(j0["content"]).decode(); sha0 = j0["sha"]
+        except urllib.error.HTTPError as e0:
+            if e0.code != 404:
+                return "erro lendo progresso"
+        if cab in existente:
+            return " ".join(medicoes) + " (ja registrado hoje)"
+        linhas_antigas = [l for l in existente.split("\n") if l.strip().startswith("-")]
+        ontem = ""
+        if linhas_antigas:
+            ontem = linhas_antigas[-1]
+        delta = ""
+        try:
+            def num(s, chave):
+                m5 = ree.search(chave + r"=(\d+)", s)
+                return int(m5.group(1)) if m5 else None
+            d_bsky = num(medicoes[0], "bsky_seg")
+            o_bsky = num(ontem, "bsky_seg")
+            if d_bsky is not None and o_bsky is not None and d_bsky != o_bsky:
+                delta = " | EVOLUCAO: bsky %+d" % (d_bsky - o_bsky)
+        except Exception:
+            pass
+        linha = "- %s%s\n" % (" · ".join(medicoes), delta)
+        body0 = {"message": "regua: medicao diaria das metas", "content": base64.b64encode((existente + cab + linha).encode()).decode("ascii"), "branch": "main"}
+        if sha0:
+            body0["sha"] = sha0
+        for _ in range(2):
+            try:
+                urllib.request.urlopen(urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo, data=json.dumps(body0).encode(), method="PUT", headers={"Authorization": "token " + pat, "Content-Type": "application/json", "User-Agent": "rebocl/2"}), timeout=30)
+                return " ".join(medicoes)
+            except Exception:
+                try:
+                    req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
+                    body0["sha"] = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())["sha"]
+                except Exception:
+                    return "commit falhou"
+        return "commit falhou"
+    canal("regua de metas (medicao)", _regua)
+
     if "descobridor de redes" not in " ".join(n for n, _, _ in resultados):
         resultados.append(("descobridor de redes", "PULADO", "1 pesquisa por dia — volta no proximo ciclo"))
     agora = datetime.datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC")
