@@ -31,6 +31,14 @@ def salva_cofare(cofare, sha, msg):
 
 URL_JOGO = "https://rebocl-brank.itch.io/prancheta"
 UA = {"User-Agent": "rebocl-postador/2"}
+PESQUISA_REDES = [
+    ("lemmy.world", "https://lemmy.world/signup"), ("lemmy.ml", "https://lemmy.ml/signup"),
+    ("meta.discourse", "https://meta.discourse.org/signup"), ("flarum", "https://discuss.flarum.org/signup"),
+    ("bookwyrm", "https://bookwyrm.social/register"), ("tilvids-peertube", "https://tilvids.com/login"),
+    ("writefreely", "https://write.as/register"), ("plume", "https://joinplu.me/"),
+    ("diaspora*", "https://diasp.org/signup"), ("friendica", "https://libranet.de/register"),
+    ("pixelfed", "https://pixelfed.social/register"), ("mastodon.social", "https://mastodon.social/auth/sign_up"),
+]
 FATOS = ("FATOS REAIS (use APENAS estes, NADA fora deles): PRANCHETA = manager de futebol 100% ficticio, "
          "voce desenha a bola parada na prancheta e ve a partida simular (ao vivo ou instantaneo), gratis no navegador ou APK, "
          "feito no Brasil com Godot. CEIFALUME = idle de fazenda noturna em desenvolvimento, \"a fazenda nao dorme\", "
@@ -264,6 +272,58 @@ def main():
         canal("aula do cerebro", _aula)
 
     if modo != "teste":
+        def _descobridor():
+            import re as ree
+            pat = os.environ.get("GHPAT")
+            if not pat:
+                return "sem GHPAT no ambiente"
+            alvo = "posts/descobertas.md"
+            cab = "\n## %s\n" % datetime.datetime.utcnow().strftime("%d/%m/%Y")
+            existente = ""
+            try:
+                req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main",
+                    headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
+                j0 = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())
+                existente = base64.b64decode(j0["content"]).decode()
+            except urllib.error.HTTPError as e0:
+                if e0.code != 404:
+                    return "erro lendo descobertas: " + str(e0.code)
+            hoje_bloco = existente.split(cab, 1)[1] if cab in existente else None
+            if hoje_bloco is not None:
+                return "pesquisa de hoje ja registrada (1 ciclo por dia)"
+            livres, muros = [], []
+            for nome, url in PESQUISA_REDES:
+                try:
+                    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) rebocl/2"})
+                    html = urllib.request.urlopen(req, timeout=15).read().decode("utf-8", "ignore").lower()
+                    tem_muro = [m3 for m3 in ["recaptcha", "hcaptcha", "turnstile", "funcaptcha", "arkose", "geetest", "captcha", "anubis", "within.website", "making sure you"] if m3 in html]
+                    if tem_muro:
+                        muros.append(nome + "(" + tem_muro[0] + ")")
+                    else:
+                        livres.append(nome)
+                except Exception:
+                    muros.append(nome + "(inacessivel)")
+                time.sleep(2)
+            linha = "- pesquisei %d redes: LIVRES %s | MURO %s\n" % (len(livres), ", ".join(livres) if livres else "nenhuma", ", ".join(muros) if muros else "nenhuma")
+            novo = existente + cab + linha
+            body0 = {"message": "descobridor: pesquisa diaria de redes (lei do muro registrada)", "content": base64.b64encode(novo.encode()).decode("ascii"), "branch": "main", "sha": j0["sha"] if existente else None}
+            if not body0["sha"]:
+                body0.pop("sha")
+            for _ in range(2):
+                try:
+                    urllib.request.urlopen(urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo, data=json.dumps(body0).encode(), method="PUT", headers={"Authorization": "token " + pat, "Content-Type": "application/json", "User-Agent": "rebocl/2"}), timeout=30)
+                    return "pesquisei %d redes → %d livre(s): %s" % (len(PESQUISA_REDES), len(livres), ", ".join(livres) if livres else "nenhuma")
+                except Exception:
+                    try:
+                        req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
+                        j0 = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())
+                        body0["sha"] = j0["sha"]
+                    except Exception:
+                        return "commit falhou 2x"
+            return "commit falhou"
+        canal("descobridor de redes", _descobridor)
+
+    if modo != "teste":
         def _vigia():
             gc = cofare.get("gmail_chat", {}) or {}
             endereco, apppass = gc.get("endereco"), gc.get("senha_de_app")
@@ -323,6 +383,8 @@ def main():
             return "mastodon recuperado pelo robo — canal 5 no ar no proximo ciclo"
         canal("vigia da caixa (auto-recovery)", _vigia)
 
+    if "descobridor de redes" not in " ".join(n for n, _, _ in resultados):
+        resultados.append(("descobridor de redes", "PULADO", "1 pesquisa por dia — volta no proximo ciclo"))
     agora = datetime.datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC")
     with open("posts/posts-publicados.md", "a") as fp:
         fp.write("\n## %s\n%s\n" % (agora, texto.replace("\n", " ⏎ ")[:300]))
