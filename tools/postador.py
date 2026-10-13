@@ -160,6 +160,7 @@ def main():
             if chave_nova in ja_publicados:
                 texto = ""
         if not texto:
+            indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
             for passo in range(len(fila["posts"])):
                 candidato = fila["posts"][(indice_reserva + passo) % len(fila["posts"])]["texto"]
                 if candidato[:60].lower() not in ja_publicados:
