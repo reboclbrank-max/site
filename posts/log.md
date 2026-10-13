@@ -54,3 +54,20 @@
 | aula do cerebro | ✅ cerebro calado hoje |
 
 > {"role":"assistant","reasoning":"We need to write a social media post, up to 240 characters, Portuguese, no more than 2 hashtags. Use only facts given
+
+## 13/10/2026 03:04 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ➖ sem chave ainda |
+| bluesky | ✅ postado 200 |
+| mastodon | ➖ sem chave ainda (recuperacao na fila) |
+| threads | ✅ publicado id 179355888423 |
+| nostr | ✅ nota em 2 relays |
+| discord | ➖ sem chave ainda |
+| cacador de oportunidades | ✅ 2 interacoes (q=#gamedev) |
+| aula do cerebro | ✅ cerebro calado hoje |
+
+> 🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? · Grátis no navegador ou APK.
