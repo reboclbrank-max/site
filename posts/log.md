@@ -88,3 +88,20 @@
 | aula do cerebro | ✅ cerebro calado hoje |
 
 > 🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? · Grátis no navegador ou APK.
+
+## 13/10/2026 03:17 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ➖ sem chave ainda |
+| bluesky | ✅ postado 200 |
+| mastodon | ➖ sem chave ainda (recuperacao na fila) |
+| threads | ✅ publicado id 181200173149 |
+| nostr | ✅ nota em 1 relays |
+| discord | ➖ sem chave ainda |
+| cacador de oportunidades | ✅ 1 interacoes (q=#gamedev) |
+| aula do cerebro | ✅ cerebro calado hoje |
+
+> 🌙 Devlog CEIFALUME: plantações crescem MESMO com o jogo fechado — o relógio da fazenda não para. Acompanhe os devlogs da série no itch. · #gamedev #in
