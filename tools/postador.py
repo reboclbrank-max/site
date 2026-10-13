@@ -31,9 +31,18 @@ def salva_cofare(cofare, sha, msg):
 
 URL_JOGO = "https://rebocl-brank.itch.io/prancheta"
 UA = {"User-Agent": "rebocl-postador/2"}
-IG_ARTE = ["https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5wbmc=/794x1000/69yxX2.png",
-           "https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyOC5wbmc=/794x1000/k4KlQc.png",
-           "https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5wbmc=/original/sNW2uy.png"]
+IG_ARTE = json.loads("""["https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5wbmc=/original/sNW2uy.png",
+"https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA2NjgzMC5wbmc=/original/y4xru4.png",
+"https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyOC5wbmc=/original/d7Kx0N.png",
+"https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyOS5wbmc=/original/Mx7rpI.png",
+"https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDEzMy5wbmc=/original/njF2ij.png",
+"https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDEzMC5wbmc=/original/QPkTlF.png",
+"https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDEzMi5wbmc=/original/Wygen%2F.png",
+"https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDEzNC5wbmc=/original/r0Bsw9.png",
+"https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDEzMS5wbmc=/original/PsPCSV.png",
+"https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDY0Ni5wbmc=/original/K9%2F4UT.png",
+"https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDY0NC5wbmc=/original/s4YS93.png",
+"https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDY0NS5wbmc=/original/8WWfsP.png"]""")
 PESQUISA_REDES = [
     ("lemmy.world", "https://lemmy.world/signup"), ("lemmy.ml", "https://lemmy.ml/signup"),
     ("meta.discourse", "https://meta.discourse.org/signup"), ("flarum", "https://discuss.flarum.org/signup"),
@@ -114,7 +123,8 @@ def main():
         pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
                   "ate 240 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + temas[dia % len(temas)] + "." + contexto)
         gerado = cerebro(pedido[:550])
-        indice_reserva = (dia * 2 + (0 if datetime.datetime.utcnow().hour < 12 else 1)) % len(fila["posts"])
+        ciclo_do_dia = datetime.datetime.utcnow().hour // 3
+        indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
         texto = gerado[:280] if gerado and len(gerado) > 30 else fila["posts"][indice_reserva]["texto"]
         resultados.append(("cerebro", "OK", ("post novo criado" if gerado and len(gerado) > 30 else "fila de reserva")))
     mensagem = texto + "\n" + URL_JOGO
@@ -164,7 +174,18 @@ def main():
         igid, igtok = ini.get("user_id"), ini.get("token")
     if igid and igtok:
         def _ig():
-            arte = IG_ARTE[datetime.datetime.utcnow().timetuple().tm_yday % len(IG_ARTE)]
+            hora_utc = datetime.datetime.utcnow().hour
+            if hora_utc not in (13, 22):
+                raise RuntimeError("fora da janela do instagram (2x/dia: 10h e 19h BRT) — conta nova nao pode parecer bot")
+            contador = 0
+            try:
+                with open("posts/ig-arte.txt") as fc:
+                    contador = int(fc.read().strip() or 0)
+            except Exception:
+                pass
+            arte = IG_ARTE[contador % len(IG_ARTE)]
+            with open("posts/ig-arte.txt", "w") as fc:
+                fc.write(str(contador + 1))
             form = urllib.parse.urlencode({"image_url": arte, "caption": mensagem[:2000], "access_token": igtok}).encode()
             reqc = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
             cid = json.loads(urllib.request.urlopen(reqc, timeout=60).read().decode()).get("id")
