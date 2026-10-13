@@ -379,6 +379,7 @@ def main():
             if not pat:
                 return "sem GHPAT no ambiente"
             alvo = "posts/descobertas.md"
+            ultimo_erro = ""
             cab = "\n## %s\n" % datetime.datetime.utcnow().strftime("%d/%m/%Y")
             existente = ""
             try:
@@ -441,6 +442,7 @@ def main():
             if not pat:
                 return "sem GHPAT"
             alvo = "posts/censo-mundial.md"
+            ultimo_erro = ""
             cab = "\n## %s\n" % datetime.datetime.utcnow().strftime("%d/%m/%Y")
             existente, sha0 = "", None
             try:
@@ -557,6 +559,7 @@ def main():
         if not pat:
             return " ".join(medicoes)
         alvo = "posts/progresso-metas.md"
+        ultimo_erro = ""
         cab = "\n## %s\n" % datetime.datetime.utcnow().strftime("%d/%m/%Y")
         existente, sha0 = "", None
         try:
