@@ -49,3 +49,6 @@
 
 ## 14/10/2026 08:29 UTC
 ⚽ Pra quem curte manager de futebol: PRANCHETA — você é o técnico, desenha a bola parada na prancheta e assiste a partida simular (ao vivo, lances ou instantâneo). 100% fictício, offline, grátis.
+
+## 14/10/2026 11:21 UTC
+📊 No PRANCHETA você desenha a bola parada na prancheta e assiste a partida simular — lances ao vivo ou resultado instantâneo, do jeito que o técnico tem pressa (ou não). ⏎ #indiedev #gamedev
