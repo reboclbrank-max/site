@@ -52,3 +52,6 @@
 
 ## 14/10/2026 11:21 UTC
 📊 No PRANCHETA você desenha a bola parada na prancheta e assiste a partida simular — lances ao vivo ou resultado instantâneo, do jeito que o técnico tem pressa (ou não). ⏎ #indiedev #gamedev
+
+## 14/10/2026 14:29 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev #Godot #indiebrasil
