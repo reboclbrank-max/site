@@ -12,6 +12,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: postagem-diaria
+  cancel-in-progress: false
 jobs:
   postar:
     runs-on: ubuntu-latest
