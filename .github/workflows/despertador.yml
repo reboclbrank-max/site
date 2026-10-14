@@ -1,0 +1,22 @@
+name: Despertador da casa (acorda o chat de e-mail)
+on:
+  schedule:
+    - cron: '9,29,49 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acorda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chama o vigia do chat (e o turno, se preciso)
+        run: |
+          set -e
+          chamar() {
+            curl -s -o /dev/null -w "$2: %{http_code}\n" -X POST \
+              -H "Authorization: Bearer ${{ secrets.GHPAT }}" \
+              -H "Accept: application/vnd.github+json" \
+              https://api.github.com/repos/reboclbrank-max/chat/actions/workflows/$1/dispatches \
+              -d '{"ref":"main"}' || true
+          }
+          chamar vigia.yml "vigia do chat"
