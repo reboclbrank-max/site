@@ -1,3 +1,6 @@
 
 ## 13/10/2026
 - ig_seg=0 · ig_posts=3 · bsky_seg=13 · itch_dl=44 · yt=PENDENTE-PORTA (linha de partida das metas)
+
+## 14/10/2026
+- bsky_seg=14 · ig_seg=0 · ig_posts=3 · itch_dl=? · yt=PENDENTE-PORTA | EVOLUCAO: bsky +1
