@@ -222,10 +222,22 @@ def main():
         igid, igtok = ini.get("user_id"), ini.get("token")
     if igid and igtok:
         def _reel():
-            dia_semana = datetime.datetime.utcnow().weekday()
-            hora_utc = datetime.datetime.utcnow().hour
-            if dia_semana != 5 or hora_utc not in (21, 22, 23):
+            agora = datetime.datetime.utcnow()
+            dia_semana = agora.weekday()
+            hora_utc = agora.hour
+            # 14/10: cron atrasado podia cair fora da madrugada de sabado e perder a semana — agora aceita
+            # sabado a partir das 21h UTC e a madrugada de domingo (ate 02h), alem do mesmo cuidado do IG.
+            na_janela = (dia_semana == 5 and hora_utc >= 21) or (dia_semana == 6 and hora_utc <= 2)
+            if not na_janela:
                 raise RuntimeError("reel sai no sabado a noite BRT (um por semana — qualidade > quantidade)")
+            ultimo_reel = None
+            try:
+                with open("posts/reel-quando.txt") as fr:
+                    ultimo_reel = datetime.datetime.fromisoformat(fr.read().strip())
+            except Exception:
+                pass
+            if ultimo_reel and (agora - ultimo_reel) < datetime.timedelta(days=6):
+                raise RuntimeError("reel da semana ja saiu ha %.1f dias" % ((agora - ultimo_reel).total_seconds() / 86400.0))
             url_video = "https://raw.githubusercontent.com/reboclbrank-max/site/main/media/reel.mp4"
             form = urllib.parse.urlencode({"video_url": url_video, "caption": mensagem[:2000], "media_type": "REELS", "share_to_feed": "1", "access_token": igtok}).encode()
             reqc = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
@@ -234,14 +246,31 @@ def main():
             formp = urllib.parse.urlencode({"creation_id": cid, "access_token": igtok}).encode()
             reqp = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
             pub = json.loads(urllib.request.urlopen(reqp, timeout=120).read().decode())
+            try:
+                with open("posts/reel-quando.txt", "w") as fr:
+                    fr.write(agora.isoformat())
+            except Exception:
+                pass
             return "REEL publicado id " + str(pub.get("id"))[:14]
         canal("reel semanal", _reel)
 
     if igid and igtok:
         def _ig():
             hora_utc = datetime.datetime.utcnow().hour
-            if hora_utc not in (13, 22):
-                raise RuntimeError("fora da janela do instagram (2x/dia: 10h e 19h BRT) — conta nova nao pode parecer bot")
+            # 14/10: os crons do GitHub chegam atrasados (visto: 00:11, 04:05, 08:27, 11:19...), entao a hora
+            # EXATA quase nunca batia e o instagram ficava sempre PULADO. Agora: janela com folga (dia 13h-16h,
+            # noite 21h-02h UTC) + trava de 6h desde o ultimo post (segue no maximo 2-3 por dia, sem parecer bot).
+            na_janela = (13 <= hora_utc <= 16) or hora_utc >= 21 or hora_utc <= 2
+            if not na_janela:
+                raise RuntimeError("fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC) — conta nova nao pode parecer bot")
+            ultimo_em = None
+            try:
+                with open("posts/ig-quando.txt") as fq:
+                    ultimo_em = datetime.datetime.fromisoformat(fq.read().strip())
+            except Exception:
+                pass
+            if ultimo_em and (datetime.datetime.utcnow() - ultimo_em) < datetime.timedelta(hours=6):
+                raise RuntimeError("instagram ja postou ha %.1fh (minimo 6h entre posts)" % ((datetime.datetime.utcnow() - ultimo_em).total_seconds() / 3600.0))
             contador = 0
             try:
                 with open("posts/ig-arte.txt") as fc:
@@ -258,6 +287,11 @@ def main():
             formp = urllib.parse.urlencode({"creation_id": cid, "access_token": igtok}).encode()
             reqp = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
             pub = json.loads(urllib.request.urlopen(reqp, timeout=60).read().decode())
+            try:
+                with open("posts/ig-quando.txt", "w") as fq:
+                    fq.write(datetime.datetime.utcnow().isoformat())
+            except Exception:
+                pass
             return "postado id " + str(pub.get("id"))[:14]
         canal("instagram", _ig)
     else:
