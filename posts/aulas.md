@@ -27,3 +27,5 @@
   Em geral, o público gamer brasileiro entra em alta de segunda a quinta à noite, entre 20h e 23h, e nos fins de semana, de 18h a meia-noite. Algumas plataformas também têm pico matutino (10h‑12h) quando usuários abrem as sessões de jogo. Estude os charts da Twitch/TikTok Live para ajustes.
 - **14/10 — Como transformar quem comenta em seguidor fiel?**
   Use o comentário como convite: responda rapidamente e com valor, personalize o tom, mostre agradecimento, dê um call‑to‑action suave, compartilhe conteúdo relevante e crie curiosidade. Mantenha a conversa leve, ofereça exclusividade e siga com novidades.
+- **14/10 — Como transformar quem comenta em seguidor fiel?**
+  Use o comentário como convite: responda rapidamente e com valor, personalize o tom, mostre agradecimento, dê um call‑to‑action suave, compartilhe conteúdo relevante e crie curiosidade. Mantenha a conversa leve, ofereça exclusividade e siga com novidades.
