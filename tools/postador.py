@@ -102,7 +102,13 @@ def canal(nome, fn):
     try:
         resultados.append((nome, "OK", str(fn())[:60]))
     except Exception as e:
-        resultados.append((nome, "FALHOU", str(e)[:70]))
+        msg = str(e)
+        # janela de regra não é falha: fora do dia/hora previsto = PULADO (auditoria 14/10: o reel de sábado
+        # aparecia como FALHOU em toda rodada, o que é falso alarme)
+        if "janela" in msg or "sai no sabado" in msg:
+            resultados.append((nome, "PULADO", msg[:60]))
+        else:
+            resultados.append((nome, "FALHOU", msg[:70]))
 
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else ""
