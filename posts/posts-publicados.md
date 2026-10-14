@@ -46,3 +46,6 @@
 
 ## 14/10/2026 04:06 UTC
 🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idle #indiebrasil
+
+## 14/10/2026 08:29 UTC
+⚽ Pra quem curte manager de futebol: PRANCHETA — você é o técnico, desenha a bola parada na prancheta e assiste a partida simular (ao vivo, lances ou instantâneo). 100% fictício, offline, grátis.
