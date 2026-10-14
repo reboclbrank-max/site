@@ -383,3 +383,26 @@
 | regua de metas (medicao) | ✅ bsky_seg=14 ig_seg=0 ig_posts=3 itch_dl=? yt=PENDENTE-PORTA  |
 
 > ⚽ Sou TÉCNICO, não jogador. · PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simul
+
+## 14/10/2026 04:06 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ➖ sem chave ainda |
+| bluesky | ✅ postado 200 |
+| mastodon | ➖ sem chave ainda (recuperacao na fila) |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (2x/dia: 10h e 19h BRT) — conta  |
+| threads | ✅ publicado id 178686318606 |
+| nostr | ✅ nota em 2 relays |
+| discord | ➖ sem chave ainda |
+| cacador de oportunidades | ✅ 3 interacoes (q=#screenshotsaturday) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seg=14 ig_seg=0 ig_posts=3 itch_dl=? yt=PENDENTE-PORTA  |
+
+> 🌙 Em breve: CEIFALUME. · A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço tod
