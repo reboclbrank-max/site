@@ -1,6 +1,7 @@
 name: postagem-diaria
 on:
   schedule:
+    - cron: '13,33,53 * * * *'   # pulso: acorda o vigia do chat (job separado, não posta)
     - cron: '0 9 * * *'
     - cron: '0 12 * * *'
     - cron: '0 15 * * *'
@@ -17,6 +18,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   postar:
+    if: github.event.schedule != '13,33,53 * * * *'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,6 +54,18 @@ jobs:
       - name: Acorda o vigia da casa (chat de e-mail)
         if: always()
         continue-on-error: true
+        run: |
+          curl -s -o /dev/null -w "vigia do chat: %{http_code}\n" -X POST \
+            -H "Authorization: Bearer ${{ secrets.GHPAT }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/reboclbrank-max/chat/actions/workflows/vigia.yml/dispatches \
+            -d '{"ref":"main"}' || true
+
+  acorda:
+    if: github.event.schedule == '13,33,53 * * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Acorda o vigia da casa (chat de e-mail)
         run: |
           curl -s -o /dev/null -w "vigia do chat: %{http_code}\n" -X POST \
             -H "Authorization: Bearer ${{ secrets.GHPAT }}" \
