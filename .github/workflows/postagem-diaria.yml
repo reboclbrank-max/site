@@ -25,7 +25,13 @@ jobs:
           git config user.email "casa@rebocl.local"
           git add posts/
           git commit -m "🤖 postagem automatica $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
-          git push
+          ok=0
+          for i in 1 2 3; do
+            git pull --rebase --autostash -q origin main || true
+            if git push; then ok=1; break; fi
+            sleep 5
+          done
+          [ "$ok" = "1" ] || echo "push falhou apos 3 tentativas (a proxima rodada cobre)"
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           GHPAT: ${{ secrets.GHPAT }}
