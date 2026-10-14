@@ -498,3 +498,26 @@
 | regua de metas (medicao) | ✅ bsky_seg=14 ig_seg=0 ig_posts=3 itch_dl=? yt=PENDENTE-PORTA  |
 
 > ⚽ Sou TÉCNICO, não jogador. · PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simul
+
+## 14/10/2026 19:11 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ➖ sem chave ainda |
+| bluesky | ✅ postado 200 |
+| mastodon | ➖ sem chave ainda (recuperacao na fila) |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | ✅ publicado id 178800975335 |
+| nostr | ✅ nota em 2 relays |
+| discord | ➖ sem chave ainda |
+| cacador de oportunidades | ✅ 1 interacoes (q=#screenshotsaturday) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seg=17 ig_seg=0 ig_posts=3 itch_dl=? yt=PENDENTE-PORTA  |
+
+> ⚽ Sou TÉCNICO, não jogador. · PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simul
