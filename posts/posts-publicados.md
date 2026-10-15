@@ -73,3 +73,6 @@
 
 ## 15/10/2026 08:04 UTC
 ⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev #Godot #indiebrasil
+
+## 15/10/2026 11:00 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev #Godot #indiebrasil
