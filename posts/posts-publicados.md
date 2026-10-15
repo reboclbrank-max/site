@@ -88,3 +88,6 @@
 
 ## 15/10/2026 20:52 UTC
 ⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev #Godot #indiebrasil
+
+## 15/10/2026 23:39 UTC
+🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idle #indiebrasil
