@@ -105,7 +105,9 @@ def canal(nome, fn):
         msg = str(e)
         # janela de regra não é falha: fora do dia/hora previsto = PULADO (auditoria 14/10: o reel de sábado
         # aparecia como FALHOU em toda rodada, o que é falso alarme)
-        if "janela" in msg or "sai no sabado" in msg:
+        # 14/10 noite: as TRAVAS também são regra, não falha (instagram 6h entre posts; reel 1x por semana) —
+        # a postagem das 21:11 marcou "instagram=FALHOU" só porque a trava de 6h segurou, como deveria.
+        if any(r in msg for r in ("janela", "sai no sabado", "ja postou ha", "ja saiu ha")):
             resultados.append((nome, "PULADO", msg[:60]))
         else:
             resultados.append((nome, "FALHOU", msg[:70]))
