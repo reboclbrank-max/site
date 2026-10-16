@@ -109,3 +109,6 @@
 
 ## 16/10/2026 19:24 UTC
 🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idle #indiebrasil
+
+## 16/10/2026 21:37 UTC
+🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idle #indiebrasil
