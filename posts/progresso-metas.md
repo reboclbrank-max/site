@@ -7,3 +7,6 @@
 
 ## 15/10/2026
 - bsky_seg=17 · ig_seg=0 · ig_posts=3 · itch_dl=? · yt=PENDENTE-PORTA | EVOLUCAO: bsky +3
+
+## 16/10/2026
+- bsky_seg=21 · ig_seg=0 · ig_posts=4 · itch_dl=? · yt=PENDENTE-PORTA | EVOLUCAO: bsky +4
