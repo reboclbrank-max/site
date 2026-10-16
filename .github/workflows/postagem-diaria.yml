@@ -19,7 +19,7 @@ concurrency:
 jobs:
   postar:
     if: github.event.schedule != '13,33,53 * * * *'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: A casa posta sozinha
@@ -63,7 +63,7 @@ jobs:
 
   acorda:
     if: github.event.schedule == '13,33,53 * * * *'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Acorda o vigia da casa (chat de e-mail)
         run: |
