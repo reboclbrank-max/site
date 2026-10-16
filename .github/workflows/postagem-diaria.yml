@@ -21,7 +21,7 @@ jobs:
     if: github.event.schedule != '13,33,53 * * * *'
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
