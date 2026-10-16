@@ -49,3 +49,5 @@
   Postar quase todo dia: mantém o algoritmo em alta, gera tráfego constante, reforça reputação, prova consistência, atrai patrocinadores, aumenta engajamento real e mantém a comunidade envolvida. Feedback rápido facilita melhorias rápidas no produto.
 - **15/10 — Por que dev indie brasileiro deve postar nas redes quase todo dia?**
   Postar quase todo dia: mantém o algoritmo em alta, gera tráfego constante, reforça reputação, prova consistência, atrai patrocinadores, aumenta engajamento real e mantém a comunidade envolvida. Feedback rápido facilita melhorias rápidas no produto.
+- **16/10 — Como conseguir os primeiros 100 jogadores de um jogo gratis?**
+  1. Crie um canal no Discord e separe um segmento “beta”.   2. Anuncie no Reddit, Twitter, TikTok usando hashtags de jogos indie.   3. Faça parcerias rápidas com micro‑influencers que jogam free‑to‑play.   4. Ofereça itens exclusivos, “early‑access badge” e recompensas por indicar.   5. Insira o jogo em plataformas gratuitas (Itch.io, Game Jolt) e peça reclamações e reviews.   6. Anúncios de 0€ em 
