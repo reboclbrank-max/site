@@ -2,14 +2,9 @@ name: postagem-diaria
 on:
   schedule:
     - cron: '13,33,53 * * * *'   # pulso: acorda o vigia do chat (job separado, não posta)
-    - cron: '0 9 * * *'
-    - cron: '0 12 * * *'
-    - cron: '0 15 * * *'
-    - cron: '0 18 * * *'
-    - cron: '0 21 * * *'
-    - cron: '0 0 * * *'
-    - cron: '0 3 * * *'
-    - cron: '0 6 * * *'
+    # GitHub documenta congestionamento no início da hora; mantém 8 ciclos/dia,
+    # mas os distribui no minuto 17 para reduzir atraso/queda de execução.
+    - cron: '17 0,3,6,9,12,15,18,21 * * *'
   workflow_dispatch:
 permissions:
   contents: write

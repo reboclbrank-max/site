@@ -1,6 +1,6 @@
 # Autonomia de marketing — R$ 0, mensurável e com freios
 
-> Estado operacional em 2026-10-16. Esta política registra a autorização expressa do dono para a casa pesquisar, criar, administrar, publicar e melhorar o marketing continuamente nos canais já configurados. Ela preserva as regras de marca e a memória privada `reboclbrank-max/base` como fontes prioritárias.
+> Estado operacional em 2026-10-17. Esta política registra a autorização expressa do dono para a casa pesquisar, criar, administrar, publicar e melhorar o marketing continuamente nos canais já configurados. Ela preserva as regras de marca e a memória privada `reboclbrank-max/base` como fontes prioritárias.
 
 ## Missão
 
@@ -16,7 +16,7 @@ A meta é melhorar alcance, testes, retenção e aprendizado com custo adicional
 | `posts/fila.json` | Reserva editorial factual quando o motor estiver indisponível ou a sugestão não passar no freio. |
 | `posts/aulas.md`, `posts/descobertas.md`, `posts/interacoes.md`, `posts/progresso-metas.md` | Memória pública sanitizada de estudo, oportunidades, deduplicação e resultados. |
 | `posts/mestria.json` e `posts/metas.json` | Cadência e metas já aprovadas; não aumentar por impulso. |
-| `.github/workflows/postagem-diaria.yml` | Executa os horários existentes, com concorrência única e commita somente o estado público em `posts/`. |
+| `.github/workflows/postagem-diaria.yml` | Executa 8 ciclos diários no minuto 17 (fora do congestionamento do início da hora), com concorrência única e commita somente o estado público em `posts/`. |
 | `reboclbrank-max/agente` (privado) | Complementa a operação com piloto, menções, métricas, estudo e propostas; respeita a cota gratuita já calculada. |
 
 Antes de mexer em discurso, fatos, ativos, públicos ou metas, consulte na Base: `empresa/ficha-da-marca.md`, `empresa/atlas-marketing.md`, `projetos/01-ceifalume/marketing/PLANO-MARKETING.md` e registros de decisão pertinentes.
