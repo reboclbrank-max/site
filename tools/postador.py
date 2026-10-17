@@ -1,5 +1,5 @@
 import json, os, sys, datetime, time, urllib.request, urllib.parse
-import base64
+import base64, re
 COFARE_URL = "https://api.github.com/repos/reboclbrank-max/base/contents/ferramentas/cofare.json?ref=main"
 
 def le_cofare():
@@ -59,6 +59,30 @@ FATOS = ("FATOS REAIS (use APENAS estes, NADA fora deles): PRANCHETA = manager d
          "feito no Brasil com Godot. CEIFALUME = idle de fazenda noturna em desenvolvimento, \"a fazenda nao dorme\", "
          "plantacoes crescem mesmo com o jogo fechado. Link do estudio: https://rebocl-brank.itch.io")
 resultados = []
+
+# Barreira determinística para texto vindo de motor externo: o modelo sugere, a casa decide.
+# Ela não tenta “provar” cada frase; reduz links inesperados, vazamento e promessas contraditórias
+# antes de o postador cair na fila editorial já revisada.
+def texto_gerado_seguro(texto, ja_publicados=""):
+    texto = " ".join(str(texto or "").strip().split())
+    baixo = texto.lower()
+    if not (31 <= len(texto) <= 240):
+        return False
+    if re.search(r"(?:https?://|www\.|(?:token|senha|password|api[ _-]?key|bearer)\b)", baixo, re.I):
+        return False
+    if re.search(r"(?:ignore|ignore as|esque[çc]a).{0,30}(?:instru|regra|prompt)", baixo, re.I):
+        return False
+    if len(re.findall(r"(?<!\w)#\w+", texto, re.UNICODE)) > 2:
+        return False
+    # CEIFALUME ainda está em desenvolvimento; PRANCHETA já é o jogo disponível.
+    if re.search(r"ceifalume.{0,45}\b(?:lan[çc]ad|dispon[ií]vel|baixe|jogue agora)\b", baixo, re.I):
+        return False
+    if re.search(r"prancheta.{0,45}\b(?:em breve|em desenvolvimento)\b", baixo, re.I):
+        return False
+    if not re.search(r"\b(?:prancheta|ceifalume|rebocl|fazenda|manager|futebol)\b", baixo, re.I):
+        return False
+    chave = texto[:60].lower()
+    return chave not in str(ja_publicados or "").lower()
 
 def http_json(url, data=None, headers=None):
     h = dict(UA); h["Content-Type"] = "application/json"
@@ -162,11 +186,8 @@ def main():
                 ja_publicados = fpp.read().lower()
         except Exception:
             ja_publicados = ""
-        texto = gerado[:280] if gerado and len(gerado) > 30 else ""
-        if texto:
-            chave_nova = texto[:60].lower()
-            if chave_nova in ja_publicados:
-                texto = ""
+        candidato_gerado = " ".join((gerado or "").strip().split())[:240]
+        texto = candidato_gerado if texto_gerado_seguro(candidato_gerado, ja_publicados) else ""
         if not texto:
             indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
             for passo in range(len(fila["posts"])):
@@ -176,7 +197,7 @@ def main():
                     break
             if not texto:
                 texto = fila["posts"][indice_reserva]["texto"] + " (" + datetime.datetime.utcnow().strftime("%d/%m") + ")"
-        resultados.append(("cerebro", "OK", ("post novo criado" if gerado and len(gerado) > 30 else "fila de reserva")))
+        resultados.append(("cerebro", "OK", ("post novo validado" if texto == candidato_gerado and texto else "fila de reserva (gerado reprovado/indisponivel)")))
     mensagem = texto + "\n" + URL_JOGO
 
     def _ntfy():
@@ -660,4 +681,5 @@ def main():
         f.write("\n".join(linhas))
     print("RESUMO:", " | ".join(n + "=" + st for n, st, _ in resultados))
 
-main()
+if __name__ == "__main__":
+    main()
