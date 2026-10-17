@@ -46,6 +46,14 @@ IG_ARTE = json.loads("""["https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5w
 "https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDY0Ni5wbmc=/original/K9%2F4UT.png",
 "https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDY0NC5wbmc=/original/s4YS93.png",
 "https://img.itch.zone/aW1hZ2UvNTExMjc4OC8zMDYxMDY0NS5wbmc=/original/8WWfsP.png"]""")
+# Espelhos estáveis e públicos do próprio repositório. Só entram se a arte de origem
+# for recusada pela Meta; evitam que uma falha de CDN pare o canal inteiro.
+IG_ARTE_RESERVA = [
+    "https://raw.githubusercontent.com/reboclbrank-max/site/main/media/prancheta/capa-630x500.png",
+    "https://raw.githubusercontent.com/reboclbrank-max/site/main/media/ceifalume/shot-dia9-chuva-1280x720.png",
+    "https://raw.githubusercontent.com/reboclbrank-max/site/main/media/ceifalume/shot-jogo-1280x720.png",
+    "https://raw.githubusercontent.com/reboclbrank-max/site/main/media/ceifalume/perfil-rb-itch-630x500.png",
+]
 PESQUISA_REDES = [
     ("lemmy.world", "https://lemmy.world/signup"), ("lemmy.ml", "https://lemmy.ml/signup"),
     ("meta.discourse", "https://meta.discourse.org/signup"), ("flarum", "https://discuss.flarum.org/signup"),
@@ -83,6 +91,54 @@ def texto_gerado_seguro(texto, ja_publicados=""):
         return False
     chave = texto[:60].lower()
     return chave not in str(ja_publicados or "").lower()
+
+def cria_container_com_reserva(criar, primaria, reservas):
+    """Tenta a arte principal uma vez e, se a plataforma a recusar, um espelho próprio.
+
+    Não repete publicação: só repete a criação do container antes do publish. Se ambas
+    falharem, preserva a falha original para o vigia registrar e tentar no próximo ciclo.
+    """
+    try:
+        cid = criar(primaria)
+        if not cid:
+            raise RuntimeError("container sem id")
+        return cid, primaria, False
+    except Exception as erro_primario:
+        for reserva in reservas:
+            if reserva == primaria:
+                continue
+            try:
+                cid = criar(reserva)
+                if cid:
+                    return cid, reserva, True
+            except Exception:
+                pass
+        raise erro_primario
+
+def espera_container_instagram(cid, token, consultar=None, pausar=time.sleep, tentativas=7, intervalo=10):
+    """Espera a Meta terminar de preparar a mídia antes de chamar media_publish.
+
+    A API pode aceitar o container e ainda responder 400 se o publish vier cedo.
+    O token segue em cabeçalho HTTP, nunca na URL ou em log.
+    """
+    if not cid:
+        raise RuntimeError("container instagram sem id")
+    if consultar is None:
+        def consultar(identificador, segredo):
+            url = "https://graph.instagram.com/v21.0/" + urllib.parse.quote(str(identificador), safe="") + "?fields=status_code"
+            req = urllib.request.Request(url, headers={"Authorization": "Bearer " + segredo, "User-Agent": UA["User-Agent"]})
+            return json.loads(urllib.request.urlopen(req, timeout=30).read().decode())
+    ultimo = ""
+    for tentativa in range(tentativas):
+        estado = consultar(cid, token) or {}
+        ultimo = str(estado.get("status_code") or "").upper()
+        if ultimo in ("FINISHED", "PUBLISHED"):
+            return
+        if ultimo in ("ERROR", "EXPIRED"):
+            raise RuntimeError("container instagram " + ultimo.lower())
+        if tentativa + 1 < tentativas:
+            pausar(intervalo)
+    raise RuntimeError("container instagram nao ficou pronto" + (" (" + ultimo.lower() + ")" if ultimo else ""))
 
 def http_json(url, data=None, headers=None):
     h = dict(UA); h["Content-Type"] = "application/json"
@@ -303,9 +359,16 @@ def main():
             arte = IG_ARTE[contador % len(IG_ARTE)]
             with open("posts/ig-arte.txt", "w") as fc:
                 fc.write(str(contador + 1))
-            form = urllib.parse.urlencode({"image_url": arte, "caption": mensagem[:2000], "access_token": igtok}).encode()
-            reqc = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
-            cid = json.loads(urllib.request.urlopen(reqc, timeout=60).read().decode()).get("id")
+            def criar_container(url_arte):
+                form = urllib.parse.urlencode({"image_url": url_arte, "caption": mensagem[:2000], "access_token": igtok}).encode()
+                reqc = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
+                cid = json.loads(urllib.request.urlopen(reqc, timeout=60).read().decode()).get("id")
+                if not cid:
+                    raise RuntimeError("instagram nao devolveu container")
+                espera_container_instagram(cid, igtok)
+                return cid
+            reserva = [IG_ARTE_RESERVA[contador % len(IG_ARTE_RESERVA)]]
+            cid, _, usou_reserva = cria_container_com_reserva(criar_container, arte, reserva)
             time.sleep(2)
             formp = urllib.parse.urlencode({"creation_id": cid, "access_token": igtok}).encode()
             reqp = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
@@ -315,7 +378,7 @@ def main():
                     fq.write(datetime.datetime.utcnow().isoformat())
             except Exception:
                 pass
-            return "postado id " + str(pub.get("id"))[:14]
+            return "postado id " + str(pub.get("id"))[:14] + (" (arte reserva)" if usou_reserva else "")
         canal("instagram", _ig)
     else:
         resultados.append(("instagram", "PULADO", "sem chave ainda (tomada pronta)"))

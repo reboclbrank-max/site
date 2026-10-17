@@ -31,9 +31,45 @@ verifica("rejeita promessa incompatível de Ceifalume", not postador.texto_gerad
 verifica("rejeita duplicata", not postador.texto_gerado_seguro(
     "No Prancheta, desenhe a bola parada e veja a partida fictícia simular. Feito no Brasil.",
     "No Prancheta, desenhe a bola parada e veja a partida fictícia simular. Feito no Brasil."))
+
+def teste_arte_reserva():
+    chamadas = []
+    def criar(url):
+        chamadas.append(url)
+        if url == "principal":
+            raise RuntimeError("cdn recusada")
+        return "container-reserva"
+    retorno = postador.cria_container_com_reserva(criar, "principal", ["reserva"])
+    return retorno == ("container-reserva", "reserva", True) and chamadas == ["principal", "reserva"]
+
+def teste_sem_reserva_nao_publica():
+    try:
+        postador.cria_container_com_reserva(lambda _: (_ for _ in ()).throw(RuntimeError("falhou")), "principal", ["reserva"])
+    except RuntimeError:
+        return True
+    return False
+
+def teste_espera_midia_pronta():
+    estados = iter([{"status_code": "IN_PROGRESS"}, {"status_code": "FINISHED"}])
+    pausas = []
+    postador.espera_container_instagram("abc", "segredo-teste", lambda *_: next(estados), lambda s: pausas.append(s), tentativas=3, intervalo=3)
+    return pausas == [3]
+
+def teste_midia_com_erro_nao_publica():
+    try:
+        postador.espera_container_instagram("abc", "segredo-teste", lambda *_: {"status_code": "ERROR"}, lambda _: None, tentativas=2)
+    except RuntimeError:
+        return True
+    return False
+
+verifica("arte reserva entra antes da publicação se CDN falhar", teste_arte_reserva())
+verifica("sem container não tenta publicar", teste_sem_reserva_nao_publica())
+verifica("espera mídia do Instagram terminar antes de publicar", teste_espera_midia_pronta())
+verifica("mídia com erro não chega ao publish", teste_midia_com_erro_nao_publica())
+verifica("espelhos próprios de Instagram estão declarados", len(postador.IG_ARTE_RESERVA) >= 2 and all(u.startswith("https://raw.githubusercontent.com/reboclbrank-max/site/") for u in postador.IG_ARTE_RESERVA))
 verifica("política de autonomia existe", (RAIZ / "AUTONOMIA-MARKETING.md").is_file())
 verifica("workflow usa checkout fixado", "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09" in
          (RAIZ / ".github" / "workflows" / "postagem-diaria.yml").read_text())
 
-print(f"{8-len(falhas)}/8 verificações de autonomia de marketing passaram")
+print(f"{13-len(falhas)}/13 verificações de autonomia de marketing passaram")
 sys.exit(1 if falhas else 0)
