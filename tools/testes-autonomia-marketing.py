@@ -68,8 +68,10 @@ verifica("espera mídia do Instagram terminar antes de publicar", teste_espera_m
 verifica("mídia com erro não chega ao publish", teste_midia_com_erro_nao_publica())
 verifica("espelhos próprios de Instagram estão declarados", len(postador.IG_ARTE_RESERVA) >= 2 and all(u.startswith("https://raw.githubusercontent.com/reboclbrank-max/site/") for u in postador.IG_ARTE_RESERVA))
 verifica("política de autonomia existe", (RAIZ / "AUTONOMIA-MARKETING.md").is_file())
-verifica("workflow usa checkout fixado", "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09" in
-         (RAIZ / ".github" / "workflows" / "postagem-diaria.yml").read_text())
+workflow = (RAIZ / ".github" / "workflows" / "postagem-diaria.yml").read_text()
+verifica("workflow usa checkout fixado", "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09" in workflow)
+verifica("workflow escalona os 8 ciclos fora do topo da hora", "cron: '17 0,3,6,9,12,15,18,21 * * *'" in workflow)
 
-print(f"{13-len(falhas)}/13 verificações de autonomia de marketing passaram")
+TOTAL = 14
+print(f"{TOTAL-len(falhas)}/{TOTAL} verificações de autonomia de marketing passaram")
 sys.exit(1 if falhas else 0)
