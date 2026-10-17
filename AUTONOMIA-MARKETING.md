@@ -38,15 +38,16 @@ A autonomia começa na estratégia e execução cotidiana; ela não permite cria
 
 1. **Marca e fatos:** usar somente informações confirmadas na Base e nos fatos/fila do postador. Ceifalume permanece “em desenvolvimento”; Prancheta é o jogo já disponível. Dúvida factual vira fila segura ou rascunho, não alegação pública.
 2. **Texto externo:** saída de motor é sugestão não confiável. `texto_gerado_seguro()` rejeita URL inesperada, possível segredo, prompt injection, duplicata, excesso de hashtags e promessas contraditórias antes de qualquer publicação; a fila é o fallback.
-3. **Cadência e anti-spam:** preservar janelas, máximo por canal, deduplicação e travas existentes. Resultados `PULADO` por janela/trava são comportamento saudável, não erro a “consertar” aumentando frequência.
-4. **Segredos:** credenciais ficam somente em Secrets/cofre já autorizado. Nunca entram em conteúdo, URL, commit, log, issue ou documentação. Não rotacionar/revogar nem criar chaves por iniciativa própria.
-5. **Legalidade e plataformas:** não burlar login, CAPTCHA, rate limit, paywall, termos, robots ou controles de conta. Não publicar material de terceiros sem licença/uso permitido.
-6. **Privacidade:** não publicar conversa, dados pessoais, memória privada, identificadores de usuário ou métricas individuais. O repositório público só recebe estado agregado e sanitizado.
-7. **Reversibilidade:** mudanças em código, cadência, canais, dependências ou fatos exigem teste e documentação. Segredos, permissões, contas, infraestrutura, gastos e ações irreversíveis exigem revisão humana explícita.
+3. **Mídia resiliente:** antes de publicar, o postador espera o container da Meta ficar pronto; se a URL da arte primária for recusada, `cria_container_com_reserva()` tenta uma única arte pública estável do próprio repositório. Se nenhum container ficar pronto, não publica nada; a falha fica para o próximo ciclo. Isso evita o 400 de mídia prematura/indisponível, duplicata e mudança de cadência.
+4. **Cadência e anti-spam:** preservar janelas, máximo por canal, deduplicação e travas existentes. Resultados `PULADO` por janela/trava são comportamento saudável, não erro a “consertar” aumentando frequência.
+5. **Segredos:** credenciais ficam somente em Secrets/cofre já autorizado. Nunca entram em conteúdo, URL, commit, log, issue ou documentação. Não rotacionar/revogar nem criar chaves por iniciativa própria.
+6. **Legalidade e plataformas:** não burlar login, CAPTCHA, rate limit, paywall, termos, robots ou controles de conta. Não publicar material de terceiros sem licença/uso permitido.
+7. **Privacidade:** não publicar conversa, dados pessoais, memória privada, identificadores de usuário ou métricas individuais. O repositório público só recebe estado agregado e sanitizado.
+8. **Reversibilidade:** mudanças em código, cadência, canais, dependências ou fatos exigem teste e documentação. Segredos, permissões, contas, infraestrutura, gastos e ações irreversíveis exigem revisão humana explícita.
 
 ## Porta de qualidade e melhoria contínua
 
-`tools/testes-autonomia-marketing.py` roda antes de cada ciclo de postagem. É um teste offline: não chama rede, não carrega segredo e não publica. Ele prova as propriedades básicas do freio de texto, a presença desta política e o pin da Action de checkout.
+`tools/testes-autonomia-marketing.py` roda antes de cada ciclo de postagem. É um teste offline: não chama rede, não carrega segredo e não publica. Ele prova as propriedades básicas do freio de texto, da troca segura de arte de Instagram, a presença desta política e o pin da Action de checkout.
 
 O ciclo correto é: **medir → formular hipótese → mudança pequena → teste → publicar/reverter → medir de novo**. Métrica ruim não autoriza spam; ela orienta melhoria de tema, formato, horário ou fila dentro dos limites existentes.
 
