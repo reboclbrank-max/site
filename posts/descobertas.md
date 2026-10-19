@@ -16,3 +16,6 @@
 
 ## 18/10/2026
 - pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 19/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
