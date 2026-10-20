@@ -16,7 +16,7 @@ A meta é melhorar alcance, testes, retenção e aprendizado com custo adicional
 | `posts/fila.json` | Reserva editorial factual quando o motor estiver indisponível ou a sugestão não passar no freio. |
 | `posts/aulas.md`, `posts/descobertas.md`, `posts/interacoes.md`, `posts/progresso-metas.md` | Memória pública sanitizada de estudo, oportunidades, deduplicação e resultados. |
 | `posts/mestria.json` e `posts/metas.json` | Cadência e metas já aprovadas; não aumentar por impulso. |
-| `.github/workflows/postagem-diaria.yml` | Executa 8 ciclos diários no minuto 17 (fora do congestionamento do início da hora), com concorrência única e commita somente o estado público em `posts/`. |
+| `.github/workflows/postagem-diaria.yml` | Executa os 8 ciclos planejados no minuto 17 (fora do congestionamento do início da hora), serializa somente os ciclos de publicação e commita apenas estado público em `posts/`. O pulso técnico já existente fica em grupo próprio e só pode solicitar o mesmo ciclo se uma lacuna for confirmada. |
 | `reboclbrank-max/agente` (privado) | Complementa a operação com piloto, menções, métricas, estudo e propostas; respeita a cota gratuita já calculada. |
 
 Antes de mexer em discurso, fatos, ativos, públicos ou metas, consulte na Base: `empresa/ficha-da-marca.md`, `empresa/atlas-marketing.md`, `projetos/01-ceifalume/marketing/PLANO-MARKETING.md` e registros de decisão pertinentes.
@@ -39,20 +39,22 @@ A autonomia começa na estratégia e execução cotidiana; ela não permite cria
 1. **Marca e fatos:** usar somente informações confirmadas na Base e nos fatos/fila do postador. Ceifalume permanece “em desenvolvimento”; Prancheta é o jogo já disponível. Dúvida factual vira fila segura ou rascunho, não alegação pública.
 2. **Texto externo:** saída de motor é sugestão não confiável. `texto_gerado_seguro()` rejeita URL inesperada, possível segredo, prompt injection, duplicata, excesso de hashtags e promessas contraditórias antes de qualquer publicação; a fila é o fallback.
 3. **Mídia resiliente:** antes de publicar, o postador espera o container da Meta ficar pronto; se a URL da arte primária for recusada, `cria_container_com_reserva()` tenta uma única arte pública estável do próprio repositório. Se nenhum container ficar pronto, não publica nada; a falha fica para o próximo ciclo. Isso evita o 400 de mídia prematura/indisponível, duplicata e mudança de cadência.
-4. **Cadência e anti-spam:** preservar janelas, máximo por canal, deduplicação e travas existentes. Resultados `PULADO` por janela/trava são comportamento saudável, não erro a “consertar” aumentando frequência.
-5. **Segredos:** credenciais ficam somente em Secrets/cofre já autorizado. Nunca entram em conteúdo, URL, commit, log, issue ou documentação. Não rotacionar/revogar nem criar chaves por iniciativa própria.
-6. **Legalidade e plataformas:** não burlar login, CAPTCHA, rate limit, paywall, termos, robots ou controles de conta. Não publicar material de terceiros sem licença/uso permitido.
-7. **Privacidade:** não publicar conversa, dados pessoais, memória privada, identificadores de usuário ou métricas individuais. O repositório público só recebe estado agregado e sanitizado.
-8. **Reversibilidade:** mudanças em código, cadência, canais, dependências ou fatos exigem teste e documentação. Segredos, permissões, contas, infraestrutura, gastos e ações irreversíveis exigem revisão humana explícita.
+4. **Cadência e anti-spam:** preservar janelas, máximo por canal, deduplicação e travas existentes. Os oito horários continuam iguais. O pulso técnico não publica diretamente: depois de quatro horas sem ciclo registrado, sem outra execução em curso e somente com fotografia de API/log bem formada, ele pode solicitar o workflow já existente. Qualquer incerteza não despacha; uma trava local de duas horas impede que cron atrasado e retaguarda gerem dois ciclos próximos. Resultados `PULADO` por janela/trava são comportamento saudável, não erro a “consertar” aumentando frequência.
+5. **Cobertura honesta:** `OK` significa somente que a operação técnica daquele canal retornou aceitação; `PULADO` é guarda normal de janela/cadência; `INDISPONIVEL` é configuração de publicação ausente no runtime; `FALHOU` é tentativa que retornou erro. Nenhum desses rótulos prova exibição, entrega independente, alcance, engajamento, download, conversão ou satisfação. Não manter lista estática de canais “verdes”: a classificação vem do ciclo que efetivamente rodou.
+6. **Métricas:** `posts/progresso-metas.md` registra apenas sinais externos que a leitura atual consegue observar. `NAO_OBSERVAVEL` e `NAO_CONFIGURADO` nunca significam zero, mau resultado ou ausência de público; `VARIACAO_OBSERVADA` não atribui causa aos posts. Alcance, engajamento, downloads e conversão permanecem lacunas até existir leitura independente autorizada. `estado-ia.json` conserva histórico próprio e só pode ser usado com seu carimbo de atualização, não como painel atual por padrão.
+7. **Segredos:** credenciais ficam somente em Secrets/cofre já autorizado. Nunca entram em conteúdo, URL, commit, log, issue ou documentação. Não rotacionar/revogar nem criar chaves por iniciativa própria.
+8. **Legalidade e plataformas:** não burlar login, CAPTCHA, rate limit, paywall, termos, robots ou controles de conta. Não publicar material de terceiros sem licença/uso permitido.
+9. **Privacidade:** não publicar conversa, dados pessoais, memória privada, identificadores de usuário ou métricas individuais. O repositório público só recebe estado agregado e sanitizado.
+10. **Reversibilidade:** mudanças em código, cadência, canais, dependências ou fatos exigem teste e documentação. Segredos, permissões, contas, infraestrutura, gastos e ações irreversíveis exigem revisão humana explícita.
 
 ## Porta de qualidade e melhoria contínua
 
-`tools/testes-autonomia-marketing.py` roda antes de cada ciclo de postagem. É um teste offline: não chama rede, não carrega segredo e não publica. Ele prova as propriedades básicas do freio de texto, da troca segura de arte de Instagram, a presença desta política e o pin da Action de checkout.
+`tools/testes-autonomia-marketing.py` roda antes de cada ciclo de postagem. É um teste offline: não chama rede, não carrega segredo e não publica. Ele prova as propriedades básicas do freio de texto, da troca segura de arte de Instagram, das decisões fail-closed da retaguarda, da trava contra ciclos próximos, da presença desta política e do pin da Action de checkout.
 
-O ciclo correto é: **medir → formular hipótese → mudança pequena → teste → publicar/reverter → medir de novo**. Métrica ruim não autoriza spam; ela orienta melhoria de tema, formato, horário ou fila dentro dos limites existentes.
+O ciclo correto é: **medir → formular hipótese → mudança pequena → teste → publicar/reverter → medir de novo**. Medição ausente ou ruim não autoriza spam; ela orienta melhoria de tema, formato, horário ou fila dentro dos limites existentes.
 
 ## Custo e continuidade
 
-Esta política não adiciona execução agendada nem serviço pago: aproveita o postador e a cadência já existentes. Para preservar R$ 0, qualquer ideia que necessite cartão, plano, cobrança, compra de anúncio, API paga ou aumento não analisado de minutos fica fora da promoção autônoma.
+Esta política não adiciona execução agendada, canal, conta, serviço pago ou frequência de publicação: a retaguarda aproveita somente o pulso e o workflow já existentes e pode, no máximo, recuperar uma lacuna confirmada. Para preservar R$ 0, qualquer ideia que necessite cartão, plano, cobrança, compra de anúncio, API paga ou aumento não analisado de minutos fica fora da promoção autônoma.
 
 A próxima pessoa/agente deve atualizar este arquivo, o README, a continuidade da Base e o registro de decisão quando alterar esse contrato operacional. Nunca registrar valores de credenciais.

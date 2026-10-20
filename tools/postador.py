@@ -67,6 +67,49 @@ FATOS = ("FATOS REAIS (use APENAS estes, NADA fora deles): PRANCHETA = manager d
          "feito no Brasil com Godot. CEIFALUME = idle de fazenda noturna em desenvolvimento, \"a fazenda nao dorme\", "
          "plantacoes crescem mesmo com o jogo fechado. Link do estudio: https://rebocl-brank.itch.io")
 resultados = []
+INTERVALO_MINIMO_ENTRE_CICLOS = datetime.timedelta(hours=2)
+CABECALHO_CICLO = re.compile(r"^##\s+(\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2}\s+UTC)\b")
+
+
+def ultimo_ciclo_registrado(caminho="posts/log.md"):
+    """Lê apenas o carimbo público do último ciclo produtivo registrado.
+
+    Entradas de teste não contam para a trava. Estado ausente ou malformado não
+    é convertido em um horário inventado; a agenda normal continua sendo a
+    fonte de continuidade nesse caso.
+    """
+    encontrados = []
+    try:
+        linhas = open(caminho, encoding="utf-8").read().splitlines()
+    except Exception:
+        return None
+    for linha in linhas:
+        if "TESTE" in linha.upper():
+            continue
+        achado = CABECALHO_CICLO.match(linha)
+        if not achado:
+            continue
+        try:
+            encontrados.append(datetime.datetime.strptime(
+                achado.group(1), "%d/%m/%Y %H:%M UTC"
+            ).replace(tzinfo=datetime.timezone.utc))
+        except ValueError:
+            return None
+    return max(encontrados) if encontrados else None
+
+
+def ciclo_ainda_recente(agora=None, caminho="posts/log.md"):
+    """Evita dois ciclos externos próximos quando cron atrasado encontra a retaguarda."""
+    ultimo = ultimo_ciclo_registrado(caminho)
+    if ultimo is None:
+        return False
+    agora = agora or datetime.datetime.now(datetime.timezone.utc)
+    if agora.tzinfo is None:
+        agora = agora.replace(tzinfo=datetime.timezone.utc)
+    else:
+        agora = agora.astimezone(datetime.timezone.utc)
+    idade = agora - ultimo
+    return datetime.timedelta(0) <= idade < INTERVALO_MINIMO_ENTRE_CICLOS
 
 # Barreira determinística para texto vindo de motor externo: o modelo sugere, a casa decide.
 # Ela não tenta “provar” cada frase; reduz links inesperados, vazamento e promessas contraditórias
@@ -180,7 +223,13 @@ def cerebro(pergunta, tentativas=2):
 
 def canal(nome, fn):
     try:
-        resultados.append((nome, "OK", str(fn())[:60]))
+        retorno = fn()
+        # Algumas sondas não publicam: elas podem declarar explicitamente que a
+        # leitura está indisponível, sem receber um selo verde por ter rodado.
+        if isinstance(retorno, tuple) and len(retorno) == 2 and retorno[0] in {"OK", "PULADO", "INDISPONIVEL", "FALHOU"}:
+            resultados.append((nome, retorno[0], str(retorno[1])[:220]))
+        else:
+            resultados.append((nome, "OK", str(retorno)[:60]))
     except Exception as e:
         msg = str(e)
         # janela de regra não é falha: fora do dia/hora previsto = PULADO (auditoria 14/10: o reel de sábado
@@ -192,8 +241,17 @@ def canal(nome, fn):
         else:
             resultados.append((nome, "FALHOU", msg[:70]))
 
+
+def indisponivel(nome, detalhe="configuracao de publicacao ausente"):
+    """Separa credencial/capacidade ausente de uma trava anti-spam normal."""
+    resultados.append((nome, "INDISPONIVEL", detalhe))
+
+
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else ""
+    if modo != "teste" and ciclo_ainda_recente():
+        print("RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)")
+        return
     fila = json.load(open("posts/fila.json"))
     cofare, cofare_sha = le_cofare()
     dia = datetime.datetime.utcnow().timetuple().tm_yday
@@ -266,7 +324,7 @@ def main():
     if tt and tc:
         canal("telegram", lambda: "enviado " + str(http_json("https://api.telegram.org/bot" + tt + "/sendMessage", {"chat_id": tc, "text": mensagem})[0]))
     else:
-        resultados.append(("telegram", "PULADO", "sem chave ainda"))
+        indisponivel("telegram")
 
     bh = os.environ.get("BLUESKY_HANDLE") or cofare.get("bluesky", {}).get("handle")
     bp = os.environ.get("BLUESKY_APPPASS") or cofare.get("bluesky", {}).get("senha_de_app")
@@ -281,7 +339,7 @@ def main():
             return "postado " + str(s2)
         canal("bluesky", _bs)
     else:
-        resultados.append(("bluesky", "PULADO", "sem chave ainda"))
+        indisponivel("bluesky")
 
     mu = os.environ.get("MASTODON_URL") or cofare.get("mastodon", {}).get("url")
     mt = os.environ.get("MASTODON_TOKEN") or cofare.get("mastodon", {}).get("token")
@@ -293,7 +351,7 @@ def main():
             return "toot " + str(urllib.request.urlopen(req, timeout=30).status)
         canal("mastodon", _ma)
     else:
-        resultados.append(("mastodon", "PULADO", "sem chave ainda (recuperacao na fila)"))
+        indisponivel("mastodon")
 
     igid, igtok = os.environ.get("IG_USER_ID"), os.environ.get("IG_TOKEN")
     if not (igid and igtok):
@@ -381,7 +439,7 @@ def main():
             return "postado id " + str(pub.get("id"))[:14] + (" (arte reserva)" if usou_reserva else "")
         canal("instagram", _ig)
     else:
-        resultados.append(("instagram", "PULADO", "sem chave ainda (tomada pronta)"))
+        indisponivel("instagram")
 
     thid, thtok = os.environ.get("THREADS_USER_ID"), os.environ.get("THREADS_TOKEN")
     if not (thid and thtok) and cofare.get("threads", {}).get("token"):
@@ -394,7 +452,9 @@ def main():
             time.sleep(2)
             pub = _post("https://graph.threads.net/v1.0/" + thid + "/threads_publish", {"creation_id": c.get("id"), "access_token": thtok})
             try:
-                rr2 = json.loads(urllib.request.urlopen(urllib.request.Request("https://graph.threads.net/refresh_access_token?grant_type=threads_access_token&access_token=" + thtok, headers=dict(UA)), timeout=30).read().decode())
+                cab = dict(UA)
+                cab["Authorization"] = "Bearer " + thtok
+                rr2 = json.loads(urllib.request.urlopen(urllib.request.Request("https://graph.threads.net/refresh_access_token?grant_type=threads_access_token", headers=cab), timeout=30).read().decode())
                 novo = rr2.get("access_token")
                 if novo and novo != thtok:
                     cofare.setdefault("threads", {})["token"] = novo
@@ -405,7 +465,7 @@ def main():
             return "publicado id " + str(pub.get("id"))[:12]
         canal("threads", _th)
     else:
-        resultados.append(("threads", "PULADO", "sem chave ainda"))
+        indisponivel("threads")
 
     nk = os.environ.get("NOSTR_KEY")
     if nk:
@@ -437,17 +497,16 @@ def main():
             return "nota em %d relays" % len(aceitos)
         canal("nostr", _no)
     else:
-        resultados.append(("nostr", "PULADO", "sem chave ainda"))
+        indisponivel("nostr")
 
     dw = os.environ.get("DISCORD_WEBHOOK")
     if dw:
         canal("discord", lambda: "enviado " + str(http_json(dw, {"content": mensagem[:2000]})[0]))
     else:
-        resultados.append(("discord", "PULADO", "sem chave ainda"))
+        indisponivel("discord")
 
-    if modo != "teste":
+    if modo != "teste" and bh and bp:
         def _cacador():
-            if not (bh and bp): return "sem chave bsky"
             s, c = http_json("https://bsky.social/xrpc/com.atproto.server.createSession", {"identifier": bh, "password": bp})
             jwt = json.loads(c)["accessJwt"]
             q = ["#indiedev", "#gamedev", "#screenshotsaturday"][dia % 3]
@@ -486,7 +545,10 @@ def main():
                 time.sleep(1)
             return "%d interacoes (q=%s)" % (feitas, q)
         canal("cacador de oportunidades", _cacador)
+    elif modo != "teste":
+        indisponivel("cacador de oportunidades", "configuracao do canal ausente")
 
+    if modo != "teste":
         def _aula():
             perguntas = ["Por que dev indie brasileiro deve postar nas redes quase todo dia?",
                          "Como conseguir os primeiros 100 jogadores de um jogo gratis?",
@@ -660,33 +722,50 @@ def main():
 
     def _regua():
         import re as ree
-        medicoes = []
-        try:
-            sj2 = json.loads(urllib.request.urlopen(urllib.request.Request("https://bsky.social/xrpc/com.atproto.server.createSession", data=json.dumps({"identifier": bh, "password": bp}).encode(), headers={"Content-Type": "application/json", "User-Agent": "rebocl/2"}), timeout=30).read().decode())
-            rq = urllib.request.Request("https://bsky.social/xrpc/app.bsky.actor.getProfile?actor=" + bh, headers={"User-Agent": "rebocl/2", "Authorization": "Bearer " + sj2["accessJwt"]})
-            medicoes.append("bsky_seg=%d" % json.loads(urllib.request.urlopen(rq, timeout=30).read().decode()).get("followersCount", 0))
-        except Exception:
-            medicoes.append("bsky_seg=?")
-        try:
-            rq = urllib.request.Request("https://graph.instagram.com/v21.0/" + (igid or "") + "?fields=followers_count,media_count&access_token=" + (igtok or ""), headers={"User-Agent": "rebocl/2"})
-            ji = json.loads(urllib.request.urlopen(rq, timeout=30).read().decode())
-            medicoes.append("ig_seg=%d" % ji.get("followers_count", 0))
-            medicoes.append("ig_posts=%d" % ji.get("media_count", 0))
-        except Exception:
-            medicoes.append("ig=?")
-        try:
-            rq = urllib.request.Request("https://rebocl-brank.itch.io", headers={"User-Agent": "Mozilla/5.0"})
-            html = urllib.request.urlopen(rq, timeout=30).read().decode("utf-8", "ignore")
-            m4 = ree.findall(r'(\d[\d,.]*)\s*(?:downloads|download)', html, ree.I)
-            medicoes.append("itch_dl=%s" % (m4[0] if m4 else "?"))
-        except Exception:
-            medicoes.append("itch=?")
-        medicoes.append("yt=PENDENTE-PORTA")
+        medicoes, leituras_observadas = [], 0
+        if bh and bp:
+            try:
+                sj2 = json.loads(urllib.request.urlopen(urllib.request.Request("https://bsky.social/xrpc/com.atproto.server.createSession", data=json.dumps({"identifier": bh, "password": bp}).encode(), headers={"Content-Type": "application/json", "User-Agent": "rebocl/2"}), timeout=30).read().decode())
+                rq = urllib.request.Request("https://bsky.social/xrpc/app.bsky.actor.getProfile?actor=" + bh, headers={"User-Agent": "rebocl/2", "Authorization": "Bearer " + sj2["accessJwt"]})
+                perfil = json.loads(urllib.request.urlopen(rq, timeout=30).read().decode())
+                if "followersCount" not in perfil:
+                    raise ValueError("perfil sem contador")
+                medicoes.append("bsky_seguidores=%d(api)" % int(perfil["followersCount"]))
+                leituras_observadas += 1
+            except Exception:
+                medicoes.append("bsky_seguidores=NAO_OBSERVAVEL")
+        else:
+            medicoes.append("bsky_seguidores=NAO_CONFIGURADO")
+        if igid and igtok:
+            try:
+                cab = {"User-Agent": "rebocl/2", "Authorization": "Bearer " + igtok}
+                rq = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "?fields=followers_count,media_count", headers=cab)
+                ji = json.loads(urllib.request.urlopen(rq, timeout=30).read().decode())
+                if "followers_count" not in ji or "media_count" not in ji:
+                    raise ValueError("contadores ausentes")
+                medicoes.append("ig_seguidores=%d(api)" % int(ji["followers_count"]))
+                medicoes.append("ig_posts=%d(api)" % int(ji["media_count"]))
+                leituras_observadas += 1
+            except Exception:
+                medicoes.append("ig_seguidores=NAO_OBSERVAVEL")
+                medicoes.append("ig_posts=NAO_OBSERVAVEL")
+        else:
+            medicoes.append("ig_seguidores=NAO_CONFIGURADO")
+            medicoes.append("ig_posts=NAO_CONFIGURADO")
+        # A página pública do itch não fornece uma leitura estável de downloads.
+        # Não transformar scraping frágil ou ausência de API em zero/resultado.
+        medicoes += [
+            "itch_downloads=NAO_OBSERVAVEL",
+            "alcance=NAO_OBSERVAVEL",
+            "engajamento=NAO_OBSERVAVEL",
+            "conversao=NAO_OBSERVAVEL",
+            "youtube=NAO_OBSERVAVEL",
+        ]
+        status_medicao = "OK" if leituras_observadas else "INDISPONIVEL"
         pat = os.environ.get("GHPAT")
         if not pat:
-            return " ".join(medicoes)
+            return status_medicao, " · ".join(medicoes)
         alvo = "posts/progresso-metas.md"
-        ultimo_erro = ""
         cab = "\n## %s\n" % datetime.datetime.utcnow().strftime("%d/%m/%Y")
         existente, sha0 = "", None
         try:
@@ -695,39 +774,39 @@ def main():
             existente = base64.b64decode(j0["content"]).decode(); sha0 = j0["sha"]
         except urllib.error.HTTPError as e0:
             if e0.code != 404:
-                return "erro lendo progresso"
+                return "FALHOU", "historico da medicao indisponivel"
         if cab in existente:
-            return " ".join(medicoes) + " (ja registrado hoje)"
+            return status_medicao, " · ".join(medicoes) + " (fotografia ja registrada hoje)"
         linhas_antigas = [l for l in existente.split("\n") if l.strip().startswith("-")]
-        ontem = ""
-        if linhas_antigas:
-            ontem = linhas_antigas[-1]
+        ontem = linhas_antigas[-1] if linhas_antigas else ""
         delta = ""
         try:
             def num(s, chave):
                 m5 = ree.search(chave + r"=(\d+)", s)
                 return int(m5.group(1)) if m5 else None
-            d_bsky = num(medicoes[0], "bsky_seg")
-            o_bsky = num(ontem, "bsky_seg")
+            d_bsky = num(medicoes[0], "bsky_seguidores")
+            o_bsky = num(ontem, "bsky_seguidores")
+            if o_bsky is None:
+                o_bsky = num(ontem, "bsky_seg")
             if d_bsky is not None and o_bsky is not None and d_bsky != o_bsky:
-                delta = " | EVOLUCAO: bsky %+d" % (d_bsky - o_bsky)
+                delta = " | VARIACAO_OBSERVADA: bsky_seguidores %+d (sem atribuicao causal)" % (d_bsky - o_bsky)
         except Exception:
             pass
         linha = "- %s%s\n" % (" · ".join(medicoes), delta)
-        body0 = {"message": "regua: medicao diaria das metas", "content": base64.b64encode((existente + cab + linha).encode()).decode("ascii"), "branch": "main"}
+        body0 = {"message": "regua: fotografia diaria de sinais externos", "content": base64.b64encode((existente + cab + linha).encode()).decode("ascii"), "branch": "main"}
         if sha0:
             body0["sha"] = sha0
         for _ in range(2):
             try:
                 urllib.request.urlopen(urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo, data=json.dumps(body0).encode(), method="PUT", headers={"Authorization": "token " + pat, "Content-Type": "application/json", "User-Agent": "rebocl/2"}), timeout=30)
-                return " ".join(medicoes)
+                return status_medicao, " · ".join(medicoes)
             except Exception:
                 try:
                     req0 = urllib.request.Request("https://api.github.com/repos/reboclbrank-max/site/contents/" + alvo + "?ref=main", headers={"Authorization": "token " + pat, "User-Agent": "rebocl/2", "Accept": "application/vnd.github+json"})
                     body0["sha"] = json.loads(urllib.request.urlopen(req0, timeout=30).read().decode())["sha"]
-                except Exception as e10:
-                    return "commit-falhou: " + codigo_erro(e10)
-        return "commit-falhou: " + codigo_erro(e10)
+                except Exception:
+                    return "FALHOU", "fotografia da medicao nao foi gravada"
+        return "FALHOU", "fotografia da medicao nao foi gravada"
     canal("regua de metas (medicao)", _regua)
 
     if "descobridor de redes" not in " ".join(n for n, _, _ in resultados):
@@ -737,7 +816,7 @@ def main():
         fp.write("\n## %s\n%s\n" % (agora, texto.replace("\n", " ⏎ ")[:300]))
     linhas = ["\n## " + agora + (" — TESTE" if modo == "teste" else ""), "", "| canal | resultado |", "|---|---|"]
     for n, st, det in resultados:
-        icone = "✅" if st == "OK" else ("➖" if st == "PULADO" else "❌")
+        icone = {"OK": "✅", "PULADO": "➖", "INDISPONIVEL": "⚪", "FALHOU": "❌"}.get(st, "❓")
         linhas.append("| " + n + " | " + icone + " " + det + " |")
     linhas += ["", "> " + texto.replace("\n", " · ")[:150], ""]
     with open("posts/log.md", "a") as f:
