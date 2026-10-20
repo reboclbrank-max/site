@@ -95,3 +95,5 @@
   Use o comentário como convite: responda rapidamente e com valor, personalize o tom, mostre agradecimento, dê um call‑to‑action suave, compartilhe conteúdo relevante e crie curiosidade. Mantenha a conversa leve, ofereça exclusividade e siga com novidades.
 - **20/10 — Como transformar quem comenta em seguidor fiel?**
   Use o comentário como convite: responda rapidamente e com valor, personalize o tom, mostre agradecimento, dê um call‑to‑action suave, compartilhe conteúdo relevante e crie curiosidade. Mantenha a conversa leve, ofereça exclusividade e siga com novidades.
+- **20/10 — Como transformar quem comenta em seguidor fiel?**
+  Use o comentário como convite: responda rapidamente e com valor, personalize o tom, mostre agradecimento, dê um call‑to‑action suave, compartilhe conteúdo relevante e crie curiosidade. Mantenha a conversa leve, ofereça exclusividade e siga com novidades.
