@@ -8,8 +8,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+# Pulso técnico e ciclo de marketing não podem disputar a única vaga pendente.
+# O dispatch de retaguarda entra no grupo do postador; o pulso apenas o coordena.
 concurrency:
-  group: postagem-diaria
+  group: ${{ github.event.schedule == '13,33,53 * * * *' && 'postagem-acorda' || 'postagem-diaria' }}
   cancel-in-progress: false
 jobs:
   postar:
@@ -61,8 +63,19 @@ jobs:
   acorda:
     if: github.event.schedule == '13,33,53 * * * *'
     runs-on: ubuntu-24.04
+    timeout-minutes: 3
     steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Lê o último ciclo público no main atual
+        run: |
+          git fetch -q origin main
+          git show origin/main:posts/log.md > /tmp/posts-log.md
+      - name: Retaguarda conservadora da cadência de marketing
+        run: python3 tools/retaguarda-postagem.py /tmp/posts-log.md
+        env:
+          GHPAT: ${{ secrets.GHPAT }}
       - name: Acorda o vigia da casa (chat de e-mail)
+        if: always()
         run: |
           curl -s -o /dev/null -w "vigia do chat: %{http_code}\n" -X POST \
             -H "Authorization: Bearer ${{ secrets.GHPAT }}" \

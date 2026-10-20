@@ -33,5 +33,7 @@ No estado de `main` auditado em **2026-10-05**, `ceifalume/index.wasm` tem **38.
 - `media/prancheta/` — capa e ícone da página do Prancheta.
 - `privacidade.html`, `app-ads.txt`, `sitemap.xml`, `robots.txt` — arquivos de suporte do site.
 - `AUTONOMIA-MARKETING.md` — autorização, guardas, métricas, custo zero e continuidade da operação autônoma de marketing.
+- `tools/retaguarda-postagem.py` — guarda fail-closed da cadência: reutiliza o pulso técnico existente, não publica diretamente e só solicita o workflow já configurado diante de uma lacuna confirmada.
+- `posts/progresso-metas.md` — fotografia diária de sinais externos e lacunas de medição; não confundir com sucesso de CI, entrega, alcance ou conversão.
 
 O README é documentação do repositório; não é uma alteração do conteúdo da página. Mudanças em `index.html`, na exportação do jogo, em releases ou em mídia pública precisam de verificação própria e autorização explícita.
