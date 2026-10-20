@@ -1326,3 +1326,26 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=29(api) · ig_seguidores=0(api) · ig_posts=10(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r |
 
 > ⚽ Sou TÉCNICO, não jogador. · PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simul
+
+## 20/10/2026 19:21 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva (gerado reprovado/indisponivel) |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | ✅ publicado id 178780506576 |
+| nostr | ✅ nota em 1 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| cacador de oportunidades | ✅ 3 interacoes (q=#screenshotsaturday) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=29(api) · ig_seguidores=0(api) · ig_posts=10(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r |
+
+> ⚽ Sou TÉCNICO, não jogador. · PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simul
