@@ -2,6 +2,7 @@
 """Barreira offline da autonomia de marketing: sem rede, segredos ou publicação."""
 import datetime as dt
 import importlib.util
+import json
 import pathlib
 import sys
 import tempfile
@@ -35,17 +36,33 @@ def verifica(nome, condicao):
 
 verifica("aceita post curto e factual do Prancheta", postador.texto_gerado_seguro(
     "No Prancheta, desenhe a bola parada e veja a partida fictícia simular. Feito no Brasil."))
-verifica("aceita expectativa honesta de Ceifalume", postador.texto_gerado_seguro(
-    "Ceifalume está em desenvolvimento: uma fazenda noturna onde as plantações crescem com o jogo fechado."))
+verifica("aceita lançamento factual de Ceifalume", postador.texto_gerado_seguro(
+    "Ceifalume 0.1 já está disponível: plante numa fazenda noturna e acompanhe o progresso mesmo com o jogo fechado."))
+verifica("rejeita estado vencido de Ceifalume", not postador.texto_gerado_seguro(
+    "Em breve: Ceifalume está em desenvolvimento, uma fazenda noturna para jogar depois."))
 verifica("rejeita URL inesperada", not postador.texto_gerado_seguro(
     "Conheça o Prancheta, manager de futebol fictício: https://exemplo.invalido/promo"))
 verifica("rejeita possível segredo", not postador.texto_gerado_seguro(
     "Prancheta é um jogo de futebol fictício. Token secreto: nao-compartilhe-isto."))
-verifica("rejeita promessa incompatível de Ceifalume", not postador.texto_gerado_seguro(
-    "Ceifalume já está lançado e disponível agora para jogar. Uma fazenda para todos."))
+verifica("aceita disponibilidade factual de Ceifalume", postador.texto_gerado_seguro(
+    "Ceifalume já está lançado e disponível agora para jogar: uma fazenda noturna grátis, sem conta."))
 verifica("rejeita duplicata", not postador.texto_gerado_seguro(
     "No Prancheta, desenhe a bola parada e veja a partida fictícia simular. Feito no Brasil.",
     "No Prancheta, desenhe a bola parada e veja a partida fictícia simular. Feito no Brasil."))
+
+verifica("rota de Prancheta aponta para a página certa", postador.destino_editorial(
+    "No Prancheta, desenhe a bola parada e decida a partida.") == postador.DESTINOS_EDITORIAIS["prancheta"])
+verifica("rota de Ceifalume aponta para a página certa", postador.destino_editorial(
+    "Ceifalume é uma fazenda noturna de colheita à luz da lanterna.") == postador.DESTINOS_EDITORIAIS["ceifalume"])
+verifica("assunto misto cai no catálogo", postador.destino_editorial(
+    "Prancheta e Ceifalume são jogos da Rebocl Brank.") == postador.DESTINOS_EDITORIAIS["catalogo"])
+verifica("convite genérico leva ao hub público", postador.destino_editorial(
+    "Acompanhe a casa Rebocl nos canais oficiais.") == postador.DESTINOS_EDITORIAIS["canais"])
+verifica("URL sugerida fora da lista não passa", postador.destino_oficial(
+    "https://exemplo.invalido", "Prancheta é um manager de futebol.") == postador.DESTINOS_EDITORIAIS["prancheta"])
+mensagem_curta = postador.mensagem_editorial(
+    "Ceifalume 0.1 já está disponível: plante e colha numa fazenda noturna.", postador.DESTINOS_EDITORIAIS["ceifalume"])
+verifica("mensagem preserva destino e cabe no menor canal", mensagem_curta.endswith(postador.DESTINOS_EDITORIAIS["ceifalume"]) and len(mensagem_curta) <= postador.LIMITE_MENSAGEM_MICROBLOG)
 
 
 def teste_arte_reserva():
@@ -111,6 +128,31 @@ postador.resultados.clear()
 postador.canal("sonda", lambda: ("INDISPONIVEL", "leitura ausente"))
 verifica("sonda sem leitura não recebe selo verde", postador.resultados == [("sonda", "INDISPONIVEL", "leitura ausente")])
 postador.resultados.clear()
+
+fila_editorial = json.loads((RAIZ / "posts" / "fila.json").read_text(encoding="utf-8"))
+verifica("fila usa somente destinos canônicos e cabe inteira", all(
+    item.get("url") in postador.URLS_DE_DESTINO_PERMITIDAS
+    and len(item.get("texto", "")) <= postador.LIMITE_TEXTO_EDITORIAL
+    and len(postador.mensagem_editorial(item.get("texto", ""), item.get("url", ""))) <= postador.LIMITE_MENSAGEM_MICROBLOG
+    and "em breve: ceifalume" not in item.get("texto", "").casefold()
+    for item in fila_editorial.get("posts", [])
+))
+hub = (RAIZ / "canais.html").read_text(encoding="utf-8")
+verifica("hub público liga jogos e canais já oficiais", (RAIZ / "canais.html").is_file() and all(url in hub for url in (
+    postador.DESTINOS_EDITORIAIS["prancheta"], postador.DESTINOS_EDITORIAIS["ceifalume"],
+    "https://bsky.app/profile/reboclbrank.bsky.social", "https://mastodon.social/@ReboclBrank",
+    "https://discord.gg/AnJr5nqx4K", "https://t.me/ceifalume",
+)))
+verifica("páginas e sitemap apontam ao hub oficial", all("canais.html" in (RAIZ / pagina).read_text(encoding="utf-8") for pagina in (
+    "index.html", "jogos.html", "jogos/prancheta/index.html", "jogos/ceifalume/index.html", "sitemap.xml",
+)))
+
+verifica("superfícies públicas não anunciam Ceifalume como futuro", all(
+    "em breve: ceifalume" not in (RAIZ / pagina).read_text(encoding="utf-8").casefold()
+    and "ceifalume (a fazenda não dorme) em breve" not in (RAIZ / pagina).read_text(encoding="utf-8").casefold()
+    for pagina in ("jogos.html", "postar.html", "posts/fila.json")
+))
+verifica("contrato de roteamento está documentado", (RAIZ / "MARKETING-ROTEAMENTO.md").is_file())
 
 fonte_postador = (RAIZ / "tools" / "postador.py").read_text(encoding="utf-8")
 verifica("configuração ausente não usa o mesmo estado de trava", "INDISPONIVEL" in fonte_postador and "def indisponivel(" in fonte_postador)
