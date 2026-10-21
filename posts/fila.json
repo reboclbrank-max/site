@@ -1,33 +1,33 @@
 {
- "teste": "📡 1ª postagem automática da REBOCL BRANK — se isso chegou, o robô da casa está VIVO. Prancheta grátis: https://rebocl-brank.itch.io/prancheta",
- "posts": [
-  {
-   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo.\nGrátis no navegador ou APK. Feito no Brasil com Godot.\n#indiedev #gamedev #Godot #indiebrasil",
-   "url": "https://rebocl-brank.itch.io/prancheta"
-  },
-  {
-   "texto": "🌙 Em breve: CEIFALUME.\nA fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia.\nUm idle de fazenda feito no Brasil.\n#indiedev #gamedev #idle #indiebrasil",
-   "url": "https://rebocl-brank.itch.io"
-  },
-  {
-   "texto": "⚽ Pra quem curte manager de futebol: PRANCHETA — você é o técnico, desenha a bola parada na prancheta e assiste a partida simular (ao vivo, lances ou instantâneo). 100% fictício, offline, grátis.",
-   "url": "https://rebocl-brank.itch.io/prancheta"
-  },
-  {
-   "texto": "📊 No PRANCHETA você desenha a bola parada na prancheta e assiste a partida simular — lances ao vivo ou resultado instantâneo, do jeito que o técnico tem pressa (ou não).\n#indiedev #gamedev",
-   "url": "https://rebocl-brank.itch.io/prancheta"
-  },
-  {
-   "texto": "🧠 Por que 100% fictício? Porque a casa não deve nada a liga nenhuma: times, jogadores e campeonatos nascem do zero. Só tática de verdade.\nPRANCHETA, grátis no navegador ou APK.\n#indiedev #gamedev #indiebrasil",
-   "url": "https://rebocl-brank.itch.io/prancheta"
-  },
-  {
-   "texto": "🌙 Devlog CEIFALUME: plantações crescem MESMO com o jogo fechado — o relógio da fazenda não para. Acompanhe os devlogs da série no itch.\n#gamedev #indiedev #idle",
-   "url": "https://rebocl-brank.itch.io"
-  },
-  {
-   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar?\nGrátis no navegador ou APK.",
-   "url": "https://rebocl-brank.itch.io/prancheta"
-  }
- ]
+  "teste": "📡 Teste controlado da Rebocl Brank: Prancheta é um manager de futebol fictício, grátis e feito no Brasil.",
+  "posts": [
+    {
+      "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular.\nGrátis no navegador ou APK. Feito no Brasil com Godot.\n#indiedev #gamedev",
+      "url": "https://reboclbrank-max.github.io/site/jogos/prancheta/"
+    },
+    {
+      "texto": "🌙 CEIFALUME 0.1 já está no ar.\nPlante, colha e negocie à luz da lanterna: a fazenda continua trabalhando até 8 h com o jogo fechado.\nGrátis no navegador e Android, sem conta.\n#indiedev #idle",
+      "url": "https://reboclbrank-max.github.io/site/jogos/ceifalume/"
+    },
+    {
+      "texto": "⚽ Pra quem curte manager de futebol: PRANCHETA deixa você desenhar a bola parada e assistir à partida simular. Mundo 100% fictício, offline e grátis.",
+      "url": "https://reboclbrank-max.github.io/site/jogos/prancheta/"
+    },
+    {
+      "texto": "📊 No PRANCHETA, desenhe a bola parada e veja a partida simular: lances ao vivo ou resultado instantâneo, do jeito que o técnico prefere.\n#indiedev #gamedev",
+      "url": "https://reboclbrank-max.github.io/site/jogos/prancheta/"
+    },
+    {
+      "texto": "🧠 Por que 100% fictício? Times, jogadores e campeonatos nascem do zero: só tática de verdade.\nPRANCHETA é grátis no navegador ou APK.\n#indiedev #gamedev",
+      "url": "https://reboclbrank-max.github.io/site/jogos/prancheta/"
+    },
+    {
+      "texto": "🌙 CEIFALUME 0.1: plante, colha e negocie à luz da lanterna. As plantações continuam até 8 h com o jogo fechado.\nGrátis, sem conta, no navegador ou Android.\n#gamedev #idle",
+      "url": "https://reboclbrank-max.github.io/site/jogos/ceifalume/"
+    },
+    {
+      "texto": "🎮 Jogou PRANCHETA esta semana? Conta: lances ao vivo ou resultado instantâneo — qual é seu jeito de decidir?\nGrátis no navegador ou APK.",
+      "url": "https://reboclbrank-max.github.io/site/jogos/prancheta/"
+    }
+  ]
 }

@@ -29,7 +29,22 @@ def salva_cofare(cofare, sha, msg):
             except Exception:
                 return
 
-URL_JOGO = "https://rebocl-brank.itch.io/prancheta"
+# Destinos públicos, factuais e estáveis do funil editorial. O texto nunca escolhe
+# URL livre: a rota é resolvida somente nesta lista, sem rastreador, encurtador ou
+# parâmetro de atribuição. As páginas do produto mantêm os links para os canais
+# oficiais já existentes; por isso um post pode levar ao jogo certo sem criar conta
+# ou aumentar cadência.
+DESTINOS_EDITORIAIS = {
+    "prancheta": "https://reboclbrank-max.github.io/site/jogos/prancheta/",
+    "ceifalume": "https://reboclbrank-max.github.io/site/jogos/ceifalume/",
+    "catalogo": "https://reboclbrank-max.github.io/site/jogos.html",
+    "canais": "https://reboclbrank-max.github.io/site/canais.html",
+}
+URLS_DE_DESTINO_PERMITIDAS = frozenset(DESTINOS_EDITORIAIS.values())
+LIMITE_TEXTO_EDITORIAL = 220
+# O menor limite vigente é o post textual do Bluesky. Reservar espaço para a URL
+# impede que cada adaptador corte o destino no fim da mensagem.
+LIMITE_MENSAGEM_MICROBLOG = 300
 UA = {"User-Agent": "rebocl-postador/2"}
 
 def codigo_erro(e):
@@ -62,10 +77,11 @@ PESQUISA_REDES = [
     ("diaspora*", "https://diasp.org/signup"), ("friendica", "https://libranet.de/register"),
     ("pixelfed", "https://pixelfed.social/register"), ("mastodon.social", "https://mastodon.social/auth/sign_up"),
 ]
-FATOS = ("FATOS REAIS (use APENAS estes, NADA fora deles): PRANCHETA = manager de futebol 100% ficticio, "
+FATOS = ("FATOS REAIS (use APENAS estes, NADA fora deles): PRANCHETA = simulador de gestao de futebol 100% ficticio, "
          "voce desenha a bola parada na prancheta e ve a partida simular (ao vivo ou instantaneo), gratis no navegador ou APK, "
-         "feito no Brasil com Godot. CEIFALUME = idle de fazenda noturna em desenvolvimento, \"a fazenda nao dorme\", "
-         "plantacoes crescem mesmo com o jogo fechado. Link do estudio: https://rebocl-brank.itch.io")
+         "feito no Brasil com Godot. CEIFALUME 0.1 = jogo idle de fazenda noturna ja lancado, \"a fazenda nao dorme\", "
+         "onde plantacoes crescem por ate 8 horas mesmo com o jogo fechado; gratis no navegador ou Android, sem conta. "
+         "O postador anexa sozinho apenas um destino oficial permitido.")
 resultados = []
 INTERVALO_MINIMO_ENTRE_CICLOS = datetime.timedelta(hours=2)
 CABECALHO_CICLO = re.compile(r"^##\s+(\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2}\s+UTC)\b")
@@ -111,13 +127,58 @@ def ciclo_ainda_recente(agora=None, caminho="posts/log.md"):
     idade = agora - ultimo
     return datetime.timedelta(0) <= idade < INTERVALO_MINIMO_ENTRE_CICLOS
 
+def destino_editorial(texto, tema=""):
+    """Escolhe a página oficial conforme o assunto, sem seguir instruções do texto.
+
+    Quando os dois jogos (ou nenhum) aparecem, o catálogo é mais honesto que
+    atribuir um produto arbitrariamente. Chamadas genéricas para acompanhar a
+    casa podem apontar ao hub público de canais. Não há URLs de terceiros,
+    parâmetros de rastreamento, redirecionamento ou efeito externo nesta função.
+    """
+    contexto = (str(texto or "") + " " + str(tema or "")).casefold()
+    ceifalume = any(sinal in contexto for sinal in (
+        "ceifalume", "fazenda", "plantação", "plantacoes", "lanterna", "colha", "colher", "mercado noturno",
+    ))
+    prancheta = any(sinal in contexto for sinal in (
+        "prancheta", "futebol", "manager", "bola parada", "tática", "tatica", "técnico", "tecnico", "clube",
+    ))
+    acompanhar = any(sinal in contexto for sinal in (
+        "seguir a conta", "siga a conta", "acompanhe a casa", "canais oficiais", "acompanhar a marca",
+    ))
+    if ceifalume and not prancheta:
+        return DESTINOS_EDITORIAIS["ceifalume"]
+    if prancheta and not ceifalume:
+        return DESTINOS_EDITORIAIS["prancheta"]
+    if acompanhar:
+        return DESTINOS_EDITORIAIS["canais"]
+    return DESTINOS_EDITORIAIS["catalogo"]
+
+
+def destino_oficial(url_sugerida, texto, tema=""):
+    """Aceita apenas uma URL exata da lista pública; o resto cai na rota semântica."""
+    candidata = str(url_sugerida or "").strip()
+    return candidata if candidata in URLS_DE_DESTINO_PERMITIDAS else destino_editorial(texto, tema)
+
+
+def mensagem_editorial(texto, destino):
+    """Monta uma mensagem íntegra para o menor canal, sem truncar o link final."""
+    texto = str(texto or "").strip()
+    destino = str(destino or "").strip()
+    if destino not in URLS_DE_DESTINO_PERMITIDAS:
+        raise ValueError("destino editorial fora da lista permitida")
+    mensagem = texto + "\n" + destino
+    if not texto or len(mensagem) > LIMITE_MENSAGEM_MICROBLOG:
+        raise ValueError("texto editorial nao cabe com destino no menor canal")
+    return mensagem
+
+
 # Barreira determinística para texto vindo de motor externo: o modelo sugere, a casa decide.
 # Ela não tenta “provar” cada frase; reduz links inesperados, vazamento e promessas contraditórias
 # antes de o postador cair na fila editorial já revisada.
 def texto_gerado_seguro(texto, ja_publicados=""):
     texto = " ".join(str(texto or "").strip().split())
     baixo = texto.lower()
-    if not (31 <= len(texto) <= 240):
+    if not (31 <= len(texto) <= LIMITE_TEXTO_EDITORIAL):
         return False
     if re.search(r"(?:https?://|www\.|(?:token|senha|password|api[ _-]?key|bearer)\b)", baixo, re.I):
         return False
@@ -125,8 +186,10 @@ def texto_gerado_seguro(texto, ja_publicados=""):
         return False
     if len(re.findall(r"(?<!\w)#\w+", texto, re.UNICODE)) > 2:
         return False
-    # CEIFALUME ainda está em desenvolvimento; PRANCHETA já é o jogo disponível.
-    if re.search(r"ceifalume.{0,45}\b(?:lan[çc]ad|dispon[ií]vel|baixe|jogue agora)\b", baixo, re.I):
+    # Ambos os jogos 0.1 estão lançados. Só a versão futura permanece sem data;
+    # portanto “em breve/em desenvolvimento” aplicado ao CEIFALUME inteiro é fato vencido.
+    if (re.search(r"ceifalume.{0,45}\b(?:em breve|em desenvolvimento|ainda n[aã]o (?:lan[çc]ou|est[aá] dispon[ií]vel))\b", baixo, re.I)
+            or re.search(r"\b(?:em breve|em desenvolvimento)\b.{0,45}ceifalume", baixo, re.I)):
         return False
     if re.search(r"prancheta.{0,45}\b(?:em breve|em desenvolvimento)\b", baixo, re.I):
         return False
@@ -257,15 +320,17 @@ def main():
     dia = datetime.datetime.utcnow().timetuple().tm_yday
     if modo == "teste":
         texto = fila.get("teste", "teste da casa")
+        tema_atual = "teste controlado"
+        url_da_fila = ""
     else:
-        temas = ["apresente o PRANCHETA pra quem curte manager de futebol", "conte expectativa do CEIFALUME (em desenvolvimento)",
+        temas = ["apresente o PRANCHETA pra quem curte manager de futebol", "apresente o CEIFALUME 0.1 para quem curte idle de fazenda noturna",
                  "convide pra testar o PRANCHETA e contar qual modo prefere (lances ao vivo ou instantaneo)",
                  "explique por que o PRANCHETA ser 100% ficticio e um ponto forte", "dica tatica curta que funciona no PRANCHETA",
                  "converse sobre vida de dev solo no Brasil e cite os jogos", "pinte o clima do CEIFALUME: a fazenda nao dorme",
                  "curiosidade de bastidor: como e criar um jogo sozinho", "pergunte qual time o torcedor torce e provoque amistoso no PRANCHETA",
                  "explique o APK: por que tambem funciona no celular sem internet", "fale das plantacoes noturnas do CEIFALUME",
                  "compare gerir um clube real vs ficticio (sem citar clubes reais)", "pergunte: resultado ao vivo ou instantaneo, por que?",
-                 "fale da arte pixelada e do clima de lanterna dos jogos", "convide pra seguir a conta pra acompanhar o lancamento do CEIFALUME",
+                 "fale da arte pixelada e do clima de lanterna dos jogos", "convide pra seguir a conta pra acompanhar atualizacoes do CEIFALUME",
                  "conte que o PRANCHETA roda no navegador, sem baixar nada", "pergunte qual modo de jogo o publico prefere e por que",
                  "dica: como montar defesa no PRANCHETA", "fale do mercado noturno do CEIFALUME que muda de preco",
                  "agradeca aos que testaram e convide novos testadores", "explique o que e um manager de futebol pra quem nunca jogou",
@@ -284,6 +349,7 @@ def main():
         except Exception:
             pass
         indice_tema = 0
+        url_da_fila = ""
         try:
             with open("posts/tema-contador.txt") as ft:
                 indice_tema = int(ft.read().strip() or 0)
@@ -291,8 +357,9 @@ def main():
             pass
         with open("posts/tema-contador.txt", "w") as ft:
             ft.write(str(indice_tema + 1))
+        tema_atual = temas[indice_tema % len(temas)]
         pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
-                  "ate 240 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + temas[indice_tema % len(temas)] + "." + contexto)
+                  "ate 220 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + tema_atual + "." + contexto)
         gerado = cerebro(pedido[:550])
         ciclo_do_dia = datetime.datetime.utcnow().hour // 3
         try:
@@ -300,19 +367,26 @@ def main():
                 ja_publicados = fpp.read().lower()
         except Exception:
             ja_publicados = ""
-        candidato_gerado = " ".join((gerado or "").strip().split())[:240]
+        candidato_gerado = " ".join((gerado or "").strip().split())[:LIMITE_TEXTO_EDITORIAL]
         texto = candidato_gerado if texto_gerado_seguro(candidato_gerado, ja_publicados) else ""
         if not texto:
             indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
             for passo in range(len(fila["posts"])):
-                candidato = fila["posts"][(indice_reserva + passo) % len(fila["posts"])]["texto"]
+                item = fila["posts"][(indice_reserva + passo) % len(fila["posts"])]
+                candidato = item["texto"]
                 if candidato[:60].lower() not in ja_publicados:
                     texto = candidato
+                    url_da_fila = item.get("url", "")
                     break
             if not texto:
-                texto = fila["posts"][indice_reserva]["texto"] + " (" + datetime.datetime.utcnow().strftime("%d/%m") + ")"
+                item = fila["posts"][indice_reserva]
+                texto = item["texto"] + " (" + datetime.datetime.utcnow().strftime("%d/%m") + ")"
+                url_da_fila = item.get("url", "")
         resultados.append(("cerebro", "OK", ("post novo validado" if texto == candidato_gerado and texto else "fila de reserva (gerado reprovado/indisponivel)")))
-    mensagem = texto + "\n" + URL_JOGO
+    destino = destino_oficial(url_da_fila, texto, tema_atual)
+    mensagem = mensagem_editorial(texto, destino)
+    nome_destino = next(nome for nome, url in DESTINOS_EDITORIAIS.items() if url == destino)
+    resultados.append(("destino editorial", "OK", "rota oficial " + nome_destino))
 
     def _ntfy():
         req = urllib.request.Request("https://ntfy.sh/" + os.environ.get("NTFY_TOPIC", "rebocl-enxame-x7k2"),
