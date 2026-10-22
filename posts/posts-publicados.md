@@ -190,3 +190,6 @@
 
 ## 22/10/2026 11:59 UTC
 🧠 Por que 100% fictício? Times, jogadores e campeonatos nascem do zero: só tática de verdade. ⏎ PRANCHETA é grátis no navegador ou APK. ⏎ #indiedev #gamedev
+
+## 22/10/2026 17:15 UTC
+🎮 Jogou PRANCHETA esta semana? Conta: lances ao vivo ou resultado instantâneo — qual é seu jeito de decidir? ⏎ Grátis no navegador ou APK.

@@ -1513,3 +1513,27 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=12(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r |
 
 > 🧠 Por que 100% fictício? Times, jogadores e campeonatos nascem do zero: só tática de verdade. · PRANCHETA é grátis no navegador ou APK. · #indiedev #g
+
+## 22/10/2026 17:15 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva (gerado reprovado/indisponivel) |
+| destino editorial | ✅ rota oficial prancheta |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | ✅ publicado id 181413344717 |
+| nostr | ✅ nota em 1 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| cacador de oportunidades | ✅ 3 interacoes (q=#gamedev) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=12(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r |
+
+> 🎮 Jogou PRANCHETA esta semana? Conta: lances ao vivo ou resultado instantâneo — qual é seu jeito de decidir? · Grátis no navegador ou APK.
