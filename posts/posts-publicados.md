@@ -187,3 +187,6 @@
 
 ## 22/10/2026 04:57 UTC
 ⚽ Pra quem curte manager de futebol: PRANCHETA deixa você desenhar a bola parada e assistir à partida simular. Mundo 100% fictício, offline e grátis.
+
+## 22/10/2026 11:59 UTC
+🧠 Por que 100% fictício? Times, jogadores e campeonatos nascem do zero: só tática de verdade. ⏎ PRANCHETA é grátis no navegador ou APK. ⏎ #indiedev #gamedev
