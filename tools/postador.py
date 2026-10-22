@@ -156,6 +156,111 @@ def mensagem_editorial(texto, destino):
     return mensagem
 
 
+LIMITE_CONSECUTIVO_POR_PRODUTO = 2
+CABECALHO_POST_PUBLICADO = re.compile(r"^##\s+\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2}\s+UTC\b", re.I)
+
+
+def produto_do_destino(destino):
+    """Classifica somente os dois destinos de jogo que a diversidade pode equilibrar."""
+    if destino == DESTINOS_EDITORIAIS["prancheta"]:
+        return "prancheta"
+    if destino == DESTINOS_EDITORIAIS["ceifalume"]:
+        return "ceifalume"
+    return None
+
+
+def produto_editorial(texto="", url=""):
+    """Retorna um jogo só quando o texto/rota não mistura ambos os produtos."""
+    conteudo = (str(texto or "") + " " + str(url or "")).casefold()
+    tem_prancheta = bool(re.search(r"\bprancheta\b", conteudo, re.I))
+    tem_ceifalume = bool(re.search(r"\bceifalume\b", conteudo, re.I))
+    if tem_prancheta == tem_ceifalume:
+        return None
+    return "prancheta" if tem_prancheta else "ceifalume"
+
+
+def produtos_publicados_recentes(historico, limite=LIMITE_CONSECUTIVO_POR_PRODUTO):
+    """Lê apenas blocos finais bem formados; histórico ambíguo não força uma troca."""
+    blocos, atual = [], None
+    for linha in str(historico or "").splitlines():
+        if CABECALHO_POST_PUBLICADO.match(linha):
+            if atual is not None:
+                blocos.append("\n".join(atual))
+            atual = []
+        elif atual is not None:
+            atual.append(linha)
+    if atual is not None:
+        blocos.append("\n".join(atual))
+    recentes = []
+    for bloco in reversed(blocos):
+        produto = produto_editorial(bloco)
+        if produto is None:
+            break
+        recentes.append(produto)
+        if len(recentes) >= limite:
+            break
+    return recentes
+
+
+def produto_exigido_por_diversidade(historico, reservas):
+    """Após dois posts do mesmo jogo, pede o outro se a fila fechada o oferece."""
+    recentes = produtos_publicados_recentes(historico)
+    if len(recentes) != LIMITE_CONSECUTIVO_POR_PRODUTO or len(set(recentes)) != 1:
+        return None
+    alternativo = "ceifalume" if recentes[0] == "prancheta" else "prancheta"
+    if any(produto_editorial(item.get("texto", ""), item.get("url", "")) == alternativo for item in (reservas or [])):
+        return alternativo
+    return None
+
+
+def respeita_diversidade_editorial(texto, url_sugerida="", tema="", produto_exigido=None):
+    """Aceita texto misto/genérico; bloqueia somente um terceiro destino igual seguido."""
+    if produto_exigido not in {"prancheta", "ceifalume"}:
+        return True
+    destino = destino_oficial(url_sugerida, texto, tema)
+    produto = produto_do_destino(destino)
+    return produto is None or produto == produto_exigido
+
+
+def seleciona_reserva_editorial(reservas, indice, historico="", produto_exigido=None):
+    """Seleciona na rotação, priorizando a alternativa factual quando a guarda pede.
+
+    A função não cria conteúdo, link ou cadência. Se todas as reservas já foram
+    usadas, devolve a alternativa pedida (quando existir) para o chamador marcar
+    a repetição com a data, preservando a deduplicação observável.
+    """
+    if not isinstance(reservas, list) or not reservas:
+        raise ValueError("fila editorial sem reservas")
+    ordem = [reservas[(int(indice) + passo) % len(reservas)] for passo in range(len(reservas))]
+    memoria = str(historico or "").casefold()
+
+    def nova(item):
+        chave = str(item.get("texto", "")).strip()[:60].casefold()
+        return bool(chave) and chave not in memoria
+
+    def primeira(produto=None, somente_nova=False):
+        for item in ordem:
+            if produto is not None and produto_editorial(item.get("texto", ""), item.get("url", "")) != produto:
+                continue
+            if somente_nova and not nova(item):
+                continue
+            return item
+        return None
+
+    if produto_exigido in {"prancheta", "ceifalume"}:
+        item = primeira(produto_exigido, somente_nova=True)
+        if item is not None:
+            return item, "diversidade", True
+    item = primeira(somente_nova=True)
+    if item is not None:
+        return item, "rotacao", True
+    if produto_exigido in {"prancheta", "ceifalume"}:
+        item = primeira(produto_exigido)
+        if item is not None:
+            return item, "diversidade", False
+    return ordem[0], "rotacao", False
+
+
 # Barreira determinística para texto vindo de motor externo: o modelo sugere, a casa decide.
 # Ela não tenta “provar” cada frase; reduz links inesperados, vazamento e promessas contraditórias
 # antes de o postador cair na fila editorial já revisada.
@@ -359,25 +464,29 @@ def main():
         ciclo_do_dia = datetime.datetime.utcnow().hour // 3
         try:
             with open("posts/posts-publicados.md") as fpp:
-                ja_publicados = fpp.read().lower()
+                ja_publicados = fpp.read()
         except Exception:
             ja_publicados = ""
+        produto_exigido = produto_exigido_por_diversidade(ja_publicados, fila["posts"])
         candidato_gerado = " ".join((gerado or "").strip().split())[:LIMITE_TEXTO_EDITORIAL]
-        texto = candidato_gerado if texto_gerado_seguro(candidato_gerado, ja_publicados) else ""
+        texto = candidato_gerado if (
+            texto_gerado_seguro(candidato_gerado, ja_publicados)
+            and respeita_diversidade_editorial(candidato_gerado, tema=tema_atual, produto_exigido=produto_exigido)
+        ) else ""
+        motivo_reserva = ""
         if not texto:
             indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
-            for passo in range(len(fila["posts"])):
-                item = fila["posts"][(indice_reserva + passo) % len(fila["posts"])]
-                candidato = item["texto"]
-                if candidato[:60].lower() not in ja_publicados:
-                    texto = candidato
-                    url_da_fila = item.get("url", "")
-                    break
-            if not texto:
-                item = fila["posts"][indice_reserva]
-                texto = item["texto"] + " (" + datetime.datetime.utcnow().strftime("%d/%m") + ")"
-                url_da_fila = item.get("url", "")
-        resultados.append(("cerebro", "OK", ("post novo validado" if texto == candidato_gerado and texto else "fila de reserva (gerado reprovado/indisponivel)")))
+            item, motivo_reserva, reserva_nova = seleciona_reserva_editorial(
+                fila["posts"], indice_reserva, ja_publicados, produto_exigido)
+            texto = item["texto"]
+            if not reserva_nova:
+                texto += " (" + datetime.datetime.utcnow().strftime("%d/%m") + ")"
+            url_da_fila = item.get("url", "")
+        detalhe_cerebro = "post novo validado" if texto == candidato_gerado and texto else (
+            "fila de reserva (diversidade editorial)" if motivo_reserva == "diversidade"
+            else "fila de reserva (gerado reprovado/indisponivel)"
+        )
+        resultados.append(("cerebro", "OK", detalhe_cerebro))
     destino = destino_oficial(url_da_fila, texto, tema_atual)
     mensagem = mensagem_editorial(texto, destino)
     nome_destino = next(nome for nome, url in DESTINOS_EDITORIAIS.items() if url == destino)

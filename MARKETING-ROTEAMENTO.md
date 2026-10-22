@@ -1,6 +1,6 @@
 # Roteamento editorial e malha pública de marketing
 
-**Estado:** 21/10/2026 · **Escopo:** canais já públicos/configurados · **Custo adicional:** R$ 0
+**Estado:** 22/10/2026 · **Escopo:** canais já públicos/configurados · **Custo adicional:** R$ 0
 
 ## Problema corrigido
 
@@ -24,6 +24,7 @@ A correção entrega uma malha de descoberta pequena e verificável: cada post e
 - Limite do texto editorial: **220** caracteres; texto + quebra + destino têm de caber em **300** caracteres, o menor adaptador textual. O código recusa uma composição que possa truncar o link final.
 - Sem UTM, pixel, encurtador, redirecionamento, cookie novo, coleta de e-mail, telemetria individual ou atribuição causal.
 - Sem nova conta, canal, segredo, permissão, publicação extra, follow, comentário em massa, tráfego fabricado ou aumento de cadência. Os oito ciclos e guardas existentes permanecem inalterados.
+- A reserva factual tem o mesmo repertório de Prancheta e Ceifalume, alternado na lista. Se os dois últimos blocos bem formados do histórico forem do mesmo jogo, a seleção prioriza uma reserva existente do outro; histórico ausente/ambíguo não é convertido em dado inventado. A regra não mede preferência, alcance ou conversão e não cria postagem extra.
 - Publicar em canal já configurado não autoriza recuperação de conta: o postador não abre caixa, segue link de senha, redefine credencial, renova/obtém token nem grava no cofre privado. Configuração ausente fica explícita e requer revisão humana.
 - A mudança usa fatos lançados: Ceifalume 0.1 e Prancheta 0.1 estão disponíveis. Não anuncia versão futura nem atribui resultado a essa troca.
 
@@ -36,6 +37,6 @@ A correção entrega uma malha de descoberta pequena e verificável: cada post e
 
 ## Verificação e rollback
 
-`python3 tools/testes-autonomia-marketing.py` é offline e verifica: fatos de lançamento, rejeição de texto vencido, rota por assunto, lista fechada, link íntegro no limite do menor canal, fila factual, hub público, links internos e sitemap. Ele não abre rede, não lê segredo e não publica.
+`python3 tools/testes-autonomia-marketing.py` é offline e verifica: fatos de lançamento, rejeição de texto vencido, rota por assunto, lista fechada, link íntegro no limite do menor canal, fila factual equilibrada, guarda de diversidade, hub público, links internos e sitemap. Ele não abre rede, não lê segredo e não publica.
 
 Para reverter, restaurar em um commit `tools/postador.py`, `posts/fila.json`, `canais.html`, os links HTML, `sitemap.xml` e esta documentação para o commit anterior. Isso não apaga post, conta, segredo, métrica, histórico, arquivo de usuário ou dado externo; apenas volta a lista/rotas locais.
