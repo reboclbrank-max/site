@@ -163,6 +163,29 @@ with tempfile.TemporaryDirectory() as temporario:
     verifica("trava do postador segura ciclo menor que duas horas", postador.ciclo_ainda_recente(AGORA_RECENTE, caminho))
     verifica("trava do postador libera o próximo bloco planejado", not postador.ciclo_ainda_recente(dt.datetime(2026, 10, 20, 2, 26, tzinfo=dt.timezone.utc), caminho))
 
+AGORA_INTERACOES = dt.datetime(2026, 10, 22, 14, 0, tzinfo=dt.timezone.utc)
+with tempfile.TemporaryDirectory() as temporario:
+    caminho_estado = pathlib.Path(temporario) / "interacoes-diarias.json"
+    hoje_interacoes = "2026-10-22"
+    verifica("cota de interação inicia vazia sem criar estado", postador.estado_interacoes_bsky(
+        caminho_estado, AGORA_INTERACOES) == (hoje_interacoes, 0) and not caminho_estado.exists())
+    reservas = [postador.reserva_interacao_bsky(caminho_estado, AGORA_INTERACOES) for _ in range(3)]
+    verifica("cota reserva no máximo três tentativas por UTC", reservas == [
+        (1, "reservada"), (2, "reservada"), (3, "reservada")])
+    verifica("quarta interação diária é bloqueada antes do envio", postador.reserva_interacao_bsky(
+        caminho_estado, AGORA_INTERACOES) == (3, "limite-atingido"))
+    estado_gravado = json.loads(caminho_estado.read_text(encoding="utf-8"))
+    verifica("estado diário é agregado e sem conteúdo de terceiros", estado_gravado == {
+        "dia_utc": hoje_interacoes, "tentativas_bsky": 3})
+    verifica("dia UTC seguinte reinicia somente a cota", postador.estado_interacoes_bsky(
+        caminho_estado, AGORA_INTERACOES + dt.timedelta(days=1)) == ("2026-10-23", 0))
+    caminho_estado.write_text("{invalido", encoding="utf-8")
+    verifica("estado diário malformado falha fechando a interação", postador.estado_interacoes_bsky(
+        caminho_estado, AGORA_INTERACOES) == (hoje_interacoes, None))
+    caminho_estado.write_text(json.dumps({"dia_utc": "2026-10-23", "tentativas_bsky": 0}), encoding="utf-8")
+    verifica("estado diário futuro falha fechando a interação", postador.estado_interacoes_bsky(
+        caminho_estado, AGORA_INTERACOES) == (hoje_interacoes, None))
+
 postador.resultados.clear()
 postador.canal("sonda", lambda: ("INDISPONIVEL", "leitura ausente"))
 verifica("sonda sem leitura não recebe selo verde", postador.resultados == [("sonda", "INDISPONIVEL", "leitura ausente")])
@@ -208,6 +231,13 @@ verifica("postador não recupera conta nem escreve no cofre privado", fonte_post
         "def salva_cofare", "COFARE_URL.replace", "IMAP4_SSL", "auth/password/edit", 'grant_type\": \"password')))
 verifica("consultas de métrica não põem token na URL", "?fields=followers_count,media_count&access_token=" not in fonte_postador)
 verifica("Threads não renova token automaticamente", "refresh_access_token" not in fonte_postador and "salva_cofare(" not in fonte_postador)
+inicio_cacador = fonte_postador.index("def _cacador():")
+preflight_cacador = fonte_postador.index("_, usadas = estado_interacoes_bsky()", inicio_cacador)
+sessao_cacador = fonte_postador.index("createSession", inicio_cacador)
+reserva_cacador = fonte_postador.index("usadas, reserva = reserva_interacao_bsky()", inicio_cacador)
+envio_cacador = fonte_postador.index("urllib.request.urlopen(pr, timeout=30)", inicio_cacador)
+verifica("cota esgotada para antes de abrir sessão externa", preflight_cacador < sessao_cacador)
+verifica("cota de interação é reservada antes do request externo", reserva_cacador < envio_cacador)
 
 workflow = (RAIZ / ".github" / "workflows" / "postagem-diaria.yml").read_text(encoding="utf-8")
 verifica("política de autonomia existe", (RAIZ / "AUTONOMIA-MARKETING.md").is_file())

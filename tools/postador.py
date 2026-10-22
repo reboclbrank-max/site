@@ -415,6 +415,79 @@ def indisponivel(nome, detalhe="configuracao de publicacao ausente"):
     resultados.append((nome, "INDISPONIVEL", detalhe))
 
 
+LIMITE_INTERACOES_BSKY_POR_DIA = 3
+CAMINHO_INTERACOES_BSKY_DIARIAS = "posts/interacoes-diarias.json"
+
+
+def dia_utc(agora=None):
+    """Converte o relógio de teste/runtime em dia UTC estável para a cota pública."""
+    agora = agora or datetime.datetime.now(datetime.timezone.utc)
+    if agora.tzinfo is None:
+        agora = agora.replace(tzinfo=datetime.timezone.utc)
+    return agora.astimezone(datetime.timezone.utc).date().isoformat()
+
+
+def estado_interacoes_bsky(caminho=CAMINHO_INTERACOES_BSKY_DIARIAS, agora=None):
+    """Retorna ``(dia, usadas)``; estado malformado/futuro vira ``usadas=None``.
+
+    O registro contém somente dia UTC e quantidade de tentativas reservadas, sem
+    texto, autor, URI ou outro dado de terceiros. Falhar fechado evita transformar
+    uma perda de estado em uma rajada de comentários.
+    """
+    caminho = os.fspath(caminho)
+    hoje = dia_utc(agora)
+    try:
+        with open(caminho, encoding="utf-8") as arquivo:
+            estado = json.load(arquivo)
+    except FileNotFoundError:
+        return hoje, 0
+    except Exception:
+        return hoje, None
+    if not isinstance(estado, dict):
+        return hoje, None
+    dia_registrado, usadas = estado.get("dia_utc"), estado.get("tentativas_bsky")
+    if not isinstance(dia_registrado, str) or isinstance(usadas, bool) or not isinstance(usadas, int) or usadas < 0:
+        return hoje, None
+    try:
+        data_registrada = datetime.date.fromisoformat(dia_registrado)
+        data_hoje = datetime.date.fromisoformat(hoje)
+    except (TypeError, ValueError):
+        return hoje, None
+    if data_registrada == data_hoje:
+        return hoje, usadas
+    if data_registrada < data_hoje:
+        return hoje, 0
+    return hoje, None
+
+
+def reserva_interacao_bsky(caminho=CAMINHO_INTERACOES_BSKY_DIARIAS, agora=None):
+    """Reserva uma das três tentativas diárias antes de qualquer envio externo.
+
+    Reservar antes do request é intencional: se a rede ficar ambígua depois, o
+    limite continua conservador e não tenta compensar com mais comentários.
+    """
+    caminho = os.fspath(caminho)
+    hoje, usadas = estado_interacoes_bsky(caminho, agora)
+    if usadas is None:
+        return None, "estado-invalido"
+    if usadas >= LIMITE_INTERACOES_BSKY_POR_DIA:
+        return usadas, "limite-atingido"
+    proxima = usadas + 1
+    temporario = caminho + ".tmp"
+    try:
+        with open(temporario, "w", encoding="utf-8") as arquivo:
+            json.dump({"dia_utc": hoje, "tentativas_bsky": proxima}, arquivo, ensure_ascii=False, sort_keys=True)
+            arquivo.write("\n")
+        os.replace(temporario, caminho)
+    except Exception:
+        try:
+            os.unlink(temporario)
+        except Exception:
+            pass
+        return None, "estado-invalido"
+    return proxima, "reservada"
+
+
 def recuperacao_credencial_pendente():
     """Mantém recuperação de conta fora do postador autônomo.
 
@@ -693,6 +766,11 @@ def main():
 
     if modo != "teste" and bh and bp:
         def _cacador():
+            _, usadas = estado_interacoes_bsky()
+            if usadas is None:
+                return "PULADO", "estado diario de interacoes invalido; sem envio"
+            if usadas >= LIMITE_INTERACOES_BSKY_POR_DIA:
+                return "PULADO", "limite diario de %d interacoes ja atingido" % LIMITE_INTERACOES_BSKY_POR_DIA
             s, c = http_json("https://bsky.social/xrpc/com.atproto.server.createSession", {"identifier": bh, "password": bp})
             jwt = json.loads(c)["accessJwt"]
             q = ["#indiedev", "#gamedev", "#screenshotsaturday"][dia % 3]
@@ -707,7 +785,7 @@ def main():
                 pass
             feitas = 0
             for p in achados:
-                if feitas >= 3: break
+                if usadas >= LIMITE_INTERACOES_BSKY_POR_DIA: break
                 rec = p.get("record") or {}
                 if rec.get("reply"): continue
                 if p.get("uri") in ja_feitos: continue
@@ -719,6 +797,12 @@ def main():
                             "curto (ate 200 caracteres), sem link e sem spam, em portugues ou ingles conforme o post, para este post de outro dev: \"" + txt_pai + "\"")
                 comentario = cerebro(pergunta)
                 if not comentario or len(comentario) < 15: continue
+                usadas, reserva = reserva_interacao_bsky()
+                if reserva != "reservada":
+                    detalhe = "estado diario indisponivel; sem envio" if reserva == "estado-invalido" else "limite diario de %d interacoes atingido" % LIMITE_INTERACOES_BSKY_POR_DIA
+                    if feitas:
+                        return ("OK", "%d interacoes (q=%s); %s" % (feitas, q, detalhe))
+                    return ("PULADO", detalhe)
                 corpo = {"repo": bh, "collection": "app.bsky.feed.post", "record": {"text": comentario[:300],
                     "createdAt": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
                     "reply": {"root": {"uri": p["uri"], "cid": p["cid"]}, "parent": {"uri": p["uri"], "cid": p["cid"]}}}}
@@ -729,7 +813,7 @@ def main():
                     fi.write(p["uri"] + "\n")
                 feitas += 1
                 time.sleep(1)
-            return "%d interacoes (q=%s)" % (feitas, q)
+            return "%d interacoes (q=%s; cota UTC %d/%d)" % (feitas, q, usadas, LIMITE_INTERACOES_BSKY_POR_DIA)
         canal("cacador de oportunidades", _cacador)
     elif modo != "teste":
         indisponivel("cacador de oportunidades", "configuracao do canal ausente")
