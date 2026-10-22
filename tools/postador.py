@@ -415,6 +415,33 @@ def indisponivel(nome, detalhe="configuracao de publicacao ausente"):
     resultados.append((nome, "INDISPONIVEL", detalhe))
 
 
+# Somente estes destinos entregam a mensagem editorial para fora. Sondas, motor,
+# rota, push do dono, medição e interação não podem transformar uma tentativa em
+# item do histórico de publicações.
+CANAIS_DE_PUBLICACAO_EDITORIAL = frozenset((
+    "telegram", "bluesky", "mastodon", "reel semanal", "instagram", "threads", "nostr", "discord",
+))
+
+
+def houve_aceite_tecnico_de_publicacao(registros):
+    """Retorna se algum canal editorial devolveu aceitação técnica neste ciclo.
+
+    Isto não prova entrega, alcance ou qualquer resultado humano. Apenas impede
+    que texto sem aceite de canal seja usado como histórico de post publicado.
+    """
+    return any(
+        nome in CANAIS_DE_PUBLICACAO_EDITORIAL and status == "OK"
+        for nome, status, _ in registros
+    )
+
+
+def resultado_nostr(aceitos):
+    """Exige a confirmação de ao menos um relay antes de marcar Nostr como OK."""
+    if not aceitos:
+        raise RuntimeError("nenhum relay confirmou aceitacao tecnica")
+    return "nota em %d relays" % len(aceitos)
+
+
 LIMITE_INTERACOES_BSKY_POR_DIA = 3
 CAMINHO_INTERACOES_BSKY_DIARIAS = "posts/interacoes-diarias.json"
 
@@ -753,7 +780,7 @@ def main():
                     if r[0] == "OK" and r[2] is True: aceitos.append(relay)
                 except Exception:
                     pass
-            return "nota em %d relays" % len(aceitos)
+            return resultado_nostr(aceitos)
         canal("nostr", _no)
     else:
         indisponivel("nostr")
@@ -1028,8 +1055,14 @@ def main():
     if "descobridor de redes" not in " ".join(n for n, _, _ in resultados):
         resultados.append(("descobridor de redes", "PULADO", "1 pesquisa por dia — volta no proximo ciclo"))
     agora = datetime.datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC")
-    with open("posts/posts-publicados.md", "a") as fp:
-        fp.write("\n## %s\n%s\n" % (agora, texto.replace("\n", " ⏎ ")[:300]))
+    if houve_aceite_tecnico_de_publicacao(resultados):
+        with open("posts/posts-publicados.md", "a") as fp:
+            fp.write("\n## %s\n%s\n" % (agora, texto.replace("\n", " ⏎ ")[:300]))
+    else:
+        resultados.append((
+            "memoria editorial", "PULADO",
+            "nenhum canal editorial confirmou aceitacao tecnica; texto nao entra no historico publicado",
+        ))
     linhas = ["\n## " + agora + (" — TESTE" if modo == "teste" else ""), "", "| canal | resultado |", "|---|---|"]
     for n, st, det in resultados:
         icone = {"OK": "✅", "PULADO": "➖", "INDISPONIVEL": "⚪", "FALHOU": "❌"}.get(st, "❓")

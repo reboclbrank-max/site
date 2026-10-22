@@ -3,6 +3,7 @@
 import datetime as dt
 import importlib.util
 import json
+import os
 import pathlib
 import sys
 import tempfile
@@ -191,6 +192,84 @@ postador.canal("sonda", lambda: ("INDISPONIVEL", "leitura ausente"))
 verifica("sonda sem leitura não recebe selo verde", postador.resultados == [("sonda", "INDISPONIVEL", "leitura ausente")])
 postador.resultados.clear()
 
+REGISTROS_SEM_ACEITE_EDITORIAL = [
+    ("cerebro", "OK", "fila factual"),
+    ("destino editorial", "OK", "rota oficial"),
+    ("ntfy (push do dono)", "OK", "push 200"),
+    ("telegram", "INDISPONIVEL", "configuracao ausente"),
+    ("nostr", "FALHOU", "nenhum relay confirmou"),
+]
+REGISTROS_COM_ACEITE_EDITORIAL = REGISTROS_SEM_ACEITE_EDITORIAL + [
+    ("bluesky", "OK", "postado 200"),
+]
+verifica("motor, rota e push privado não contam como post publicado", not postador.houve_aceite_tecnico_de_publicacao(
+    REGISTROS_SEM_ACEITE_EDITORIAL))
+verifica("histórico editorial exige aceite de canal de publicação", postador.houve_aceite_tecnico_de_publicacao(
+    REGISTROS_COM_ACEITE_EDITORIAL))
+try:
+    postador.resultado_nostr([])
+except RuntimeError:
+    nostr_sem_relay_falha = True
+else:
+    nostr_sem_relay_falha = False
+verifica("Nostr sem relay aceito não recebe selo verde", nostr_sem_relay_falha)
+verifica("Nostr com relay aceito conserva confirmação técnica", postador.resultado_nostr(["wss://relay.exemplo"]) == "nota em 1 relays")
+
+
+def ciclo_controlado_sem_rede(com_aceite):
+    """Exercita o ponto de escrita do ciclo sem executar nenhuma função de canal."""
+    antigo_cwd, antigo_argv = os.getcwd(), sys.argv[:]
+    ambiente_antigo = os.environ.copy()
+    canal_antigo, cofare_antigo = postador.canal, postador.le_cofare
+    resultados_antigos = postador.resultados[:]
+    try:
+        with tempfile.TemporaryDirectory() as temporario:
+            raiz = pathlib.Path(temporario)
+            posts = raiz / "posts"
+            posts.mkdir()
+            (posts / "fila.json").write_text(json.dumps({
+                "teste": "Prancheta é um jogo de futebol fictício.", "posts": [],
+            }), encoding="utf-8")
+            publicado = posts / "posts-publicados.md"
+            publicado.write_text("BASE\n", encoding="utf-8")
+            (posts / "log.md").write_text("", encoding="utf-8")
+            os.environ.clear()
+            os.environ.update({
+                "TELEGRAM_TOKEN": "teste", "TELEGRAM_CHAT": "teste",
+                "BLUESKY_HANDLE": "teste", "BLUESKY_APPPASS": "teste",
+                "MASTODON_URL": "https://exemplo.invalido", "MASTODON_TOKEN": "teste",
+                "IG_USER_ID": "teste", "IG_TOKEN": "teste",
+                "THREADS_USER_ID": "teste", "THREADS_TOKEN": "teste",
+                "NOSTR_KEY": "00", "DISCORD_WEBHOOK": "https://exemplo.invalido",
+            })
+            postador.resultados.clear()
+            postador.le_cofare = lambda: ({}, None)
+
+            def canal_controlado(nome, _fn):
+                status = "OK" if com_aceite and nome == "telegram" else "FALHOU"
+                postador.resultados.append((nome, status, "dublê offline"))
+
+            postador.canal = canal_controlado
+            os.chdir(raiz)
+            sys.argv = ["postador.py", "teste"]
+            postador.main()
+            return publicado.read_text(encoding="utf-8"), (posts / "log.md").read_text(encoding="utf-8")
+    finally:
+        os.chdir(antigo_cwd)
+        sys.argv = antigo_argv
+        os.environ.clear()
+        os.environ.update(ambiente_antigo)
+        postador.canal = canal_antigo
+        postador.le_cofare = cofare_antigo
+        postador.resultados[:] = resultados_antigos
+
+
+historico_sem_aceite, log_sem_aceite = ciclo_controlado_sem_rede(False)
+historico_com_aceite, _ = ciclo_controlado_sem_rede(True)
+verifica("ciclo sem aceite não infla histórico publicado", historico_sem_aceite == "BASE\n"
+    and "memoria editorial | ➖" in log_sem_aceite)
+verifica("ciclo com aceite técnico registra histórico editorial", "Prancheta é um jogo de futebol fictício." in historico_com_aceite)
+
 verifica("recuperação de credencial para em revisão humana", postador.recuperacao_credencial_pendente() == (
     "PULADO", "recuperação de credencial exige revisão humana; nenhuma caixa, senha, token ou cofre é alterado"))
 
@@ -231,6 +310,9 @@ verifica("postador não recupera conta nem escreve no cofre privado", fonte_post
         "def salva_cofare", "COFARE_URL.replace", "IMAP4_SSL", "auth/password/edit", 'grant_type\": \"password')))
 verifica("consultas de métrica não põem token na URL", "?fields=followers_count,media_count&access_token=" not in fonte_postador)
 verifica("Threads não renova token automaticamente", "refresh_access_token" not in fonte_postador and "salva_cofare(" not in fonte_postador)
+posicao_guarda_historico = fonte_postador.index("if houve_aceite_tecnico_de_publicacao(resultados):")
+posicao_escrita_historico = fonte_postador.index('with open("posts/posts-publicados.md", "a")', posicao_guarda_historico)
+verifica("histórico só é escrito depois da guarda de aceite técnico", posicao_guarda_historico < posicao_escrita_historico)
 inicio_cacador = fonte_postador.index("def _cacador():")
 preflight_cacador = fonte_postador.index("_, usadas = estado_interacoes_bsky()", inicio_cacador)
 sessao_cacador = fonte_postador.index("createSession", inicio_cacador)
