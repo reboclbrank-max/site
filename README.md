@@ -32,7 +32,7 @@ No estado de `main` auditado em **2026-10-05**, `ceifalume/index.wasm` tem **38.
 - `jogos/prancheta/` — página informativa do Prancheta (jogo hospedado no itch.io).
 - `media/prancheta/` — capa e ícone da página do Prancheta.
 - `privacidade.html`, `app-ads.txt`, `sitemap.xml`, `robots.txt` — arquivos de suporte do site.
-- `AUTONOMIA-MARKETING.md` — autorização, guardas, métricas, custo zero e continuidade da operação autônoma de marketing.
+- `AUTONOMIA-MARKETING.md` — autorização, guardas, métricas, custo zero e continuidade da operação autônoma de marketing; recuperação de conta/credencial permanece humana.
 - `MARKETING-ROTEAMENTO.md` — contrato do funil factual: destinos canônicos, links entre os canais já públicos, testes, rollback e limites.
 - `canais.html` — hub público de jogos, comunidade e atualizações; só lista URLs oficiais já confirmadas.
 - `tools/retaguarda-postagem.py` — guarda fail-closed da cadência: reutiliza o pulso técnico existente, não publica diretamente e só solicita o workflow já configurado diante de uma lacuna confirmada.

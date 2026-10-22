@@ -129,6 +129,9 @@ postador.canal("sonda", lambda: ("INDISPONIVEL", "leitura ausente"))
 verifica("sonda sem leitura não recebe selo verde", postador.resultados == [("sonda", "INDISPONIVEL", "leitura ausente")])
 postador.resultados.clear()
 
+verifica("recuperação de credencial para em revisão humana", postador.recuperacao_credencial_pendente() == (
+    "PULADO", "recuperação de credencial exige revisão humana; nenhuma caixa, senha, token ou cofre é alterado"))
+
 fila_editorial = json.loads((RAIZ / "posts" / "fila.json").read_text(encoding="utf-8"))
 verifica("fila usa somente destinos canônicos e cabe inteira", all(
     item.get("url") in postador.URLS_DE_DESTINO_PERMITIDAS
@@ -156,8 +159,11 @@ verifica("contrato de roteamento está documentado", (RAIZ / "MARKETING-ROTEAMEN
 
 fonte_postador = (RAIZ / "tools" / "postador.py").read_text(encoding="utf-8")
 verifica("configuração ausente não usa o mesmo estado de trava", "INDISPONIVEL" in fonte_postador and "def indisponivel(" in fonte_postador)
+verifica("postador não recupera conta nem escreve no cofre privado", fonte_postador.count("COFARE_URL") == 2 and all(
+    trecho not in fonte_postador for trecho in (
+        "def salva_cofare", "COFARE_URL.replace", "IMAP4_SSL", "auth/password/edit", 'grant_type\": \"password')))
 verifica("consultas de métrica não põem token na URL", "?fields=followers_count,media_count&access_token=" not in fonte_postador)
-verifica("renovação Threads não põe token na URL", "refresh_access_token?grant_type=threads_access_token&access_token=" not in fonte_postador)
+verifica("Threads não renova token automaticamente", "refresh_access_token" not in fonte_postador and "salva_cofare(" not in fonte_postador)
 
 workflow = (RAIZ / ".github" / "workflows" / "postagem-diaria.yml").read_text(encoding="utf-8")
 verifica("política de autonomia existe", (RAIZ / "AUTONOMIA-MARKETING.md").is_file())
