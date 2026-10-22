@@ -261,6 +261,20 @@ def seleciona_reserva_editorial(reservas, indice, historico="", produto_exigido=
     return ordem[0], "rotacao", False
 
 
+# Alegações de plataforma, modo, preço ou prova social não aparecem nos fatos
+# aprovados. A barreira é deliberadamente estreita: ela não tenta validar toda a
+# linguagem natural, mas impede classes recorrentes de invenção e deixa a fila
+# factual fechada assumir quando houver dúvida.
+PADRAO_ALEGACAO_NAO_CONFIRMADA = re.compile(
+    r"(?:\b(?:steam|epic(?: games)?|playstation|xbox|nintendo|switch|ios|app[ -]?store|google play)\b"
+    r"|\b(?:multiplayer|multijogador|co[- ]?op(?:erativ[oa])?|pvp)\b"
+    r"|\b(?:promo(?:[çc][aã]o)?|desconto|oferta|pr[ée][- ]?venda|beta|demo|early access|wishlist|lista de desejos)\b"
+    r"|(?:r\$|us\$|€)\s*\d"
+    r"|\b(?:viral|milhares|milh[oõ]es|mais jogad[oa]|recorde|\d+\s*(?:downloads?|seguidores?|avalia[çc][oõ]es?|reviews?))\b)",
+    re.I,
+)
+
+
 # Barreira determinística para texto vindo de motor externo: o modelo sugere, a casa decide.
 # Ela não tenta “provar” cada frase; reduz links inesperados, vazamento e promessas contraditórias
 # antes de o postador cair na fila editorial já revisada.
@@ -274,6 +288,8 @@ def texto_gerado_seguro(texto, ja_publicados=""):
     if re.search(r"(?:ignore|ignore as|esque[çc]a).{0,30}(?:instru|regra|prompt)", baixo, re.I):
         return False
     if len(re.findall(r"(?<!\w)#\w+", texto, re.UNICODE)) > 2:
+        return False
+    if PADRAO_ALEGACAO_NAO_CONFIRMADA.search(baixo):
         return False
     # Ambos os jogos 0.1 estão lançados. Só a versão futura permanece sem data;
     # portanto “em breve/em desenvolvimento” aplicado ao CEIFALUME inteiro é fato vencido.

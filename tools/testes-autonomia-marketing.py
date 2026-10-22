@@ -46,6 +46,22 @@ verifica("rejeita possível segredo", not postador.texto_gerado_seguro(
     "Prancheta é um jogo de futebol fictício. Token secreto: nao-compartilhe-isto."))
 verifica("aceita disponibilidade factual de Ceifalume", postador.texto_gerado_seguro(
     "Ceifalume já está lançado e disponível agora para jogar: uma fazenda noturna grátis, sem conta."))
+verifica("aceita plataforma confirmada do Prancheta", postador.texto_gerado_seguro(
+    "Prancheta é um manager de futebol fictício, grátis no navegador ou APK. Feito no Brasil."))
+verifica("aceita fato interno de mercado do Ceifalume", postador.texto_gerado_seguro(
+    "No Ceifalume, o mercado noturno muda de preço enquanto você planta e colhe numa fazenda grátis."))
+verifica("rejeita plataforma não confirmada", not postador.texto_gerado_seguro(
+    "Prancheta já está na Steam: conheça o manager de futebol fictício feito no Brasil."))
+verifica("rejeita modo não confirmado", not postador.texto_gerado_seguro(
+    "Ceifalume agora tem multiplayer cooperativo na fazenda noturna grátis."))
+verifica("rejeita prova social não observada", not postador.texto_gerado_seguro(
+    "Ceifalume é viral e já reúne milhares de jogadores na fazenda noturna grátis."))
+verifica("rejeita preço comercial não confirmado", not postador.texto_gerado_seguro(
+    "Prancheta custa R$ 9,90: aproveite o manager de futebol fictício feito no Brasil."))
+verifica("rejeita promoção não confirmada", not postador.texto_gerado_seguro(
+    "Prancheta entra em promoção com desconto: aproveite o manager de futebol fictício."))
+verifica("rejeita estado comercial não confirmado", not postador.texto_gerado_seguro(
+    "Ceifalume abre pré-venda para a fazenda noturna grátis."))
 verifica("rejeita duplicata", not postador.texto_gerado_seguro(
     "No Prancheta, desenhe a bola parada e veja a partida fictícia simular. Feito no Brasil.",
     "No Prancheta, desenhe a bola parada e veja a partida fictícia simular. Feito no Brasil."))
