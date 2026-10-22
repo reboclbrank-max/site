@@ -24,6 +24,7 @@ A correção entrega uma malha de descoberta pequena e verificável: cada post e
 - Limite do texto editorial: **220** caracteres; texto + quebra + destino têm de caber em **300** caracteres, o menor adaptador textual. O código recusa uma composição que possa truncar o link final.
 - Sem UTM, pixel, encurtador, redirecionamento, cookie novo, coleta de e-mail, telemetria individual ou atribuição causal.
 - Sem nova conta, canal, segredo, permissão, publicação extra, follow, comentário em massa, tráfego fabricado ou aumento de cadência. Os oito ciclos e guardas existentes permanecem inalterados.
+- Publicar em canal já configurado não autoriza recuperação de conta: o postador não abre caixa, segue link de senha, redefine credencial, renova/obtém token nem grava no cofre privado. Configuração ausente fica explícita e requer revisão humana.
 - A mudança usa fatos lançados: Ceifalume 0.1 e Prancheta 0.1 estão disponíveis. Não anuncia versão futura nem atribui resultado a essa troca.
 
 ## Alternativas recusadas
