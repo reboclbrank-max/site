@@ -358,6 +358,38 @@ def http_json(url, data=None, headers=None):
     r = urllib.request.urlopen(urllib.request.Request(url, data=d, headers=h), timeout=30)
     return r.status, r.read().decode()
 
+
+def resposta_json_de_confirmacao(corpo, canal):
+    """Lê resposta estruturada sem expor corpo remoto em erro ou log."""
+    try:
+        resposta = json.loads(corpo) if isinstance(corpo, (str, bytes, bytearray)) else corpo
+    except Exception:
+        raise RuntimeError(canal + " nao devolveu JSON de confirmacao")
+    if not isinstance(resposta, dict):
+        raise RuntimeError(canal + " nao devolveu objeto de confirmacao")
+    return resposta
+
+
+def recibo_de_publicacao(corpo, canal, *campos):
+    """Exige identificador mínimo da API antes de marcar publicação como aceita."""
+    resposta = resposta_json_de_confirmacao(corpo, canal)
+    for campo in campos:
+        valor = resposta.get(campo)
+        if isinstance(valor, str) and valor.strip():
+            return valor.strip()
+        if isinstance(valor, int) and not isinstance(valor, bool):
+            return str(valor)
+    raise RuntimeError(canal + " nao confirmou recibo de publicacao")
+
+
+def confirmacao_telegram(status, corpo):
+    """Telegram pode responder HTTP 200 com ``ok:false``; isso não é aceite."""
+    resposta = resposta_json_de_confirmacao(corpo, "telegram")
+    if not isinstance(status, int) or not 200 <= status < 300 or resposta.get("ok") is not True:
+        raise RuntimeError("telegram nao confirmou aceitacao")
+    return "enviado " + str(status)
+
+
 def cerebro(pergunta, tentativas=2):
     p = pergunta[:560]
     for tent in range(tentativas):
@@ -641,7 +673,10 @@ def main():
 
     tt, tc = os.environ.get("TELEGRAM_TOKEN"), os.environ.get("TELEGRAM_CHAT")
     if tt and tc:
-        canal("telegram", lambda: "enviado " + str(http_json("https://api.telegram.org/bot" + tt + "/sendMessage", {"chat_id": tc, "text": mensagem})[0]))
+        def _telegram():
+            status, corpo = http_json("https://api.telegram.org/bot" + tt + "/sendMessage", {"chat_id": tc, "text": mensagem})
+            return confirmacao_telegram(status, corpo)
+        canal("telegram", _telegram)
     else:
         indisponivel("telegram")
 
@@ -649,12 +684,15 @@ def main():
     bp = os.environ.get("BLUESKY_APPPASS") or cofare.get("bluesky", {}).get("senha_de_app")
     if bh and bp:
         def _bs():
-            s, c = http_json("https://bsky.social/xrpc/com.atproto.server.createSession", {"identifier": bh, "password": bp})
-            jwt = json.loads(c)["accessJwt"]
+            _, sessao_bruta = http_json("https://bsky.social/xrpc/com.atproto.server.createSession", {"identifier": bh, "password": bp})
+            sessao = resposta_json_de_confirmacao(sessao_bruta, "bluesky sessao")
+            jwt = recibo_de_publicacao(sessao, "bluesky sessao", "accessJwt")
+            did = recibo_de_publicacao(sessao, "bluesky sessao", "did")
             agora = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
-            s2, _ = http_json("https://bsky.social/xrpc/com.atproto.repo.createRecord",
-                {"repo": json.loads(c)["did"], "collection": "app.bsky.feed.post", "record": {"text": mensagem[:300], "createdAt": agora}},
+            s2, recibo_bruto = http_json("https://bsky.social/xrpc/com.atproto.repo.createRecord",
+                {"repo": did, "collection": "app.bsky.feed.post", "record": {"text": mensagem[:300], "createdAt": agora}},
                 {"Authorization": "Bearer " + jwt})
+            recibo_de_publicacao(recibo_bruto, "bluesky", "uri")
             return "postado " + str(s2)
         canal("bluesky", _bs)
     else:
@@ -667,7 +705,9 @@ def main():
             form = urllib.parse.urlencode({"status": mensagem[:500]}).encode()
             req = urllib.request.Request(mu.rstrip("/") + "/api/v1/statuses", data=form,
                 headers={"Authorization": "Bearer " + mt, "Content-Type": "application/x-www-form-urlencoded", "User-Agent": "rebocl-postador/2"})
-            return "toot " + str(urllib.request.urlopen(req, timeout=30).status)
+            resposta = urllib.request.urlopen(req, timeout=30).read().decode()
+            recibo_de_publicacao(resposta, "mastodon", "id")
+            return "toot aceito"
         canal("mastodon", _ma)
     else:
         indisponivel("mastodon")
@@ -697,7 +737,7 @@ def main():
             url_video = "https://raw.githubusercontent.com/reboclbrank-max/site/main/media/reel.mp4"
             form = urllib.parse.urlencode({"video_url": url_video, "caption": mensagem[:2000], "media_type": "REELS", "share_to_feed": "1", "access_token": igtok}).encode()
             reqc = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media", data=form, headers=dict(UA))
-            cid = json.loads(urllib.request.urlopen(reqc, timeout=120).read().decode()).get("id")
+            cid = recibo_de_publicacao(urllib.request.urlopen(reqc, timeout=120).read().decode(), "instagram reel", "id")
             time.sleep(2)
             formp = urllib.parse.urlencode({"creation_id": cid, "access_token": igtok}).encode()
             reqp = urllib.request.Request("https://graph.instagram.com/v21.0/" + igid + "/media_publish", data=formp, headers=dict(UA))
@@ -707,7 +747,7 @@ def main():
                     fr.write(agora.isoformat())
             except Exception:
                 pass
-            return "REEL publicado id " + str(pub.get("id"))[:14]
+            return "REEL publicado id " + recibo_de_publicacao(pub, "instagram reel", "id")[:14]
         canal("reel semanal", _reel)
 
     if igid and igtok:
@@ -755,7 +795,7 @@ def main():
                     fq.write(datetime.datetime.utcnow().isoformat())
             except Exception:
                 pass
-            return "postado id " + str(pub.get("id"))[:14] + (" (arte reserva)" if usou_reserva else "")
+            return "postado id " + recibo_de_publicacao(pub, "instagram", "id")[:14] + (" (arte reserva)" if usou_reserva else "")
         canal("instagram", _ig)
     else:
         indisponivel("instagram")
@@ -768,12 +808,13 @@ def main():
             def _post(url, dados):
                 return json.loads(urllib.request.urlopen(urllib.request.Request(url, data=urllib.parse.urlencode(dados).encode(), headers=dict(UA)), timeout=30).read().decode())
             c = _post("https://graph.threads.net/v1.0/" + thid + "/threads", {"media_type": "TEXT", "text": mensagem[:480], "access_token": thtok})
+            cid = recibo_de_publicacao(c, "threads container", "id")
             time.sleep(2)
-            pub = _post("https://graph.threads.net/v1.0/" + thid + "/threads_publish", {"creation_id": c.get("id"), "access_token": thtok})
+            pub = _post("https://graph.threads.net/v1.0/" + thid + "/threads_publish", {"creation_id": cid, "access_token": thtok})
             # A postagem usa somente o token já configurado para este ciclo. Não
             # tenta renová-lo, substituí-lo ou persistir segredo em outro repo;
             # expiração/configuração ausente fica para revisão humana explícita.
-            return "publicado id " + str(pub.get("id"))[:12]
+            return "publicado id " + recibo_de_publicacao(pub, "threads", "id")[:12]
         canal("threads", _th)
     else:
         indisponivel("threads")

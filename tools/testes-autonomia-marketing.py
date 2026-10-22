@@ -218,6 +218,36 @@ verifica("Nostr sem relay aceito não recebe selo verde", nostr_sem_relay_falha)
 verifica("Nostr com relay aceito conserva confirmação técnica", postador.resultado_nostr(["wss://relay.exemplo"]) == "nota em 1 relays")
 
 
+def rejeita_confirmacao(fn):
+    try:
+        fn()
+    except RuntimeError:
+        return True
+    return False
+
+
+verifica("recibo JSON exige identificador não vazio", postador.recibo_de_publicacao(
+    '{"id":"aceite-123"}', "canal de teste", "id") == "aceite-123")
+verifica("recibo aceita URI estruturada do Bluesky", postador.recibo_de_publicacao(
+    {"uri": "at://did:plc:exemplo/app.bsky.feed.post/1"}, "bluesky", "uri").startswith("at://"))
+verifica("recibo sem identificador falha fechado", rejeita_confirmacao(
+    lambda: postador.recibo_de_publicacao('{"id":""}', "canal de teste", "id")))
+verifica("recibo sem JSON estruturado falha fechado", rejeita_confirmacao(
+    lambda: postador.recibo_de_publicacao("[]", "canal de teste", "id")))
+verifica("Telegram exige ok verdadeiro da API", postador.confirmacao_telegram(
+    200, '{"ok":true,"result":{"message_id":1}}') == "enviado 200")
+verifica("Telegram com HTTP 200 e ok falso falha fechado", rejeita_confirmacao(
+    lambda: postador.confirmacao_telegram(200, '{"ok":false,"description":"recusado"}')))
+verifica("Telegram sem resposta estruturada falha fechado", rejeita_confirmacao(
+    lambda: postador.confirmacao_telegram(200, "resposta invalida")))
+postador.resultados.clear()
+postador.canal("telegram", lambda: postador.confirmacao_telegram(200, '{"ok":false}'))
+verifica("recibo recusado não recebe selo verde", postador.resultados == [(
+    "telegram", "FALHOU", "telegram nao confirmou aceitacao")])
+postador.resultados.clear()
+
+
+
 
 with tempfile.TemporaryDirectory() as temporario:
     caminho_historico = pathlib.Path(temporario) / "posts-publicados.md"
@@ -350,6 +380,14 @@ posicao_simulacao = fonte_postador.index('print("SIMULACAO OFFLINE: destino=%s |
 posicao_primeiro_canal = fonte_postador.index("def _ntfy():")
 verifica("modo teste interrompe antes do primeiro canal", posicao_simulacao < posicao_primeiro_canal)
 verifica("CLI só aceita execução agendada ou teste local", 'raise SystemExit("uso: python3 tools/postador.py [teste]")' in fonte_postador)
+verifica("adaptadores exigem recibo mínimo antes de selo verde", all(trecho in fonte_postador for trecho in (
+    "return confirmacao_telegram(status, corpo)",
+    'recibo_de_publicacao(recibo_bruto, "bluesky", "uri")',
+    'recibo_de_publicacao(resposta, "mastodon", "id")',
+    'recibo_de_publicacao(pub, "instagram", "id")',
+    'recibo_de_publicacao(pub, "threads", "id")',
+)))
+
 inicio_cacador = fonte_postador.index("def _cacador():")
 preflight_cacador = fonte_postador.index("_, usadas = estado_interacoes_bsky()", inicio_cacador)
 sessao_cacador = fonte_postador.index("createSession", inicio_cacador)
