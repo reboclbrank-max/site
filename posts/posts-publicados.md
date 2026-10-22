@@ -184,3 +184,6 @@
 
 ## 21/10/2026 21:49 UTC
 ⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev
+
+## 22/10/2026 04:57 UTC
+⚽ Pra quem curte manager de futebol: PRANCHETA deixa você desenhar a bola parada e assistir à partida simular. Mundo 100% fictício, offline e grátis.
