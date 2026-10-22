@@ -64,6 +64,29 @@ mensagem_curta = postador.mensagem_editorial(
     "Ceifalume 0.1 já está disponível: plante e colha numa fazenda noturna.", postador.DESTINOS_EDITORIAIS["ceifalume"])
 verifica("mensagem preserva destino e cabe no menor canal", mensagem_curta.endswith(postador.DESTINOS_EDITORIAIS["ceifalume"]) and len(mensagem_curta) <= postador.LIMITE_MENSAGEM_MICROBLOG)
 
+HISTORICO_PRANCHETA_DUPLO = """## 20/10/2026 00:25 UTC
+PRANCHETA é um manager de futebol fictício.
+
+## 20/10/2026 03:17 UTC
+PRANCHETA deixa você desenhar a bola parada.
+"""
+RESERVAS_DIVERSAS = [
+    {"texto": "Prancheta é um manager de futebol fictício.", "url": postador.DESTINOS_EDITORIAIS["prancheta"]},
+    {"texto": "Ceifalume é uma fazenda noturna disponível agora.", "url": postador.DESTINOS_EDITORIAIS["ceifalume"]},
+]
+verifica("histórico reconhece dois posts consecutivos do mesmo jogo", postador.produtos_publicados_recentes(
+    HISTORICO_PRANCHETA_DUPLO) == ["prancheta", "prancheta"])
+verifica("diversidade pede Ceifalume após duas reservas de Prancheta", postador.produto_exigido_por_diversidade(
+    HISTORICO_PRANCHETA_DUPLO, RESERVAS_DIVERSAS) == "ceifalume")
+verifica("terceiro destino de Prancheta é bloqueado pela diversidade", not postador.respeita_diversidade_editorial(
+    "Prancheta é um manager de futebol fictício.", tema="apresente o PRANCHETA", produto_exigido="ceifalume"))
+item_diverso, motivo_diverso, novo_diverso = postador.seleciona_reserva_editorial(
+    RESERVAS_DIVERSAS, 0, HISTORICO_PRANCHETA_DUPLO, "ceifalume")
+verifica("reserva escolhe o outro jogo sem criar conteúdo", item_diverso == RESERVAS_DIVERSAS[1]
+    and motivo_diverso == "diversidade" and novo_diverso)
+verifica("histórico misto não inventa preferência de produto", postador.produto_exigido_por_diversidade(
+    HISTORICO_PRANCHETA_DUPLO + "\n## 20/10/2026 06:17 UTC\nPrancheta e Ceifalume são jogos da casa.\n", RESERVAS_DIVERSAS) is None)
+
 
 def teste_arte_reserva():
     chamadas = []
@@ -140,6 +163,11 @@ verifica("fila usa somente destinos canônicos e cabe inteira", all(
     and "em breve: ceifalume" not in item.get("texto", "").casefold()
     for item in fila_editorial.get("posts", [])
 ))
+produtos_da_fila = [postador.produto_editorial(item.get("texto", ""), item.get("url", ""))
+    for item in fila_editorial.get("posts", [])]
+verifica("fila de reserva alterna os dois jogos em repertório equilibrado", len(produtos_da_fila) == 10
+    and produtos_da_fila.count("prancheta") == produtos_da_fila.count("ceifalume") == 5
+    and all(a != b for a, b in zip(produtos_da_fila, produtos_da_fila[1:])))
 hub = (RAIZ / "canais.html").read_text(encoding="utf-8")
 verifica("hub público liga jogos e canais já oficiais", (RAIZ / "canais.html").is_file() and all(url in hub for url in (
     postador.DESTINOS_EDITORIAIS["prancheta"], postador.DESTINOS_EDITORIAIS["ceifalume"],
