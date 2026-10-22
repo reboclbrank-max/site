@@ -435,6 +435,19 @@ def houve_aceite_tecnico_de_publicacao(registros):
     )
 
 
+def registra_historico_editorial(texto, registros, carimbo, caminho="posts/posts-publicados.md"):
+    """Persiste texto somente após aceite técnico de canal editorial.
+
+    A função não atribui entrega ou alcance; ela só preserva uma memória local
+    coerente para a guarda de diversidade do próximo ciclo.
+    """
+    if not houve_aceite_tecnico_de_publicacao(registros):
+        return False
+    with open(caminho, "a", encoding="utf-8") as arquivo:
+        arquivo.write("\n## %s\n%s\n" % (carimbo, str(texto).replace("\n", " ⏎ ")[:300]))
+    return True
+
+
 def resultado_nostr(aceitos):
     """Exige a confirmação de ao menos um relay antes de marcar Nostr como OK."""
     if not aceitos:
@@ -527,18 +540,25 @@ def recuperacao_credencial_pendente():
 
 
 def main():
-    modo = sys.argv[1] if len(sys.argv) > 1 else ""
+    argumentos = sys.argv[1:]
+    if not argumentos:
+        modo = ""
+    elif argumentos == ["teste"]:
+        modo = "teste"
+    else:
+        raise SystemExit("uso: python3 tools/postador.py [teste]")
     if modo != "teste" and ciclo_ainda_recente():
         print("RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)")
         return
     fila = json.load(open("posts/fila.json"))
-    cofare, _ = le_cofare()
+    cofare = {}
     dia = datetime.datetime.utcnow().timetuple().tm_yday
     if modo == "teste":
         texto = fila.get("teste", "teste da casa")
         tema_atual = "teste controlado"
         url_da_fila = ""
     else:
+        cofare, _ = le_cofare()
         temas = ["apresente o PRANCHETA pra quem curte manager de futebol", "apresente o CEIFALUME 0.1 para quem curte idle de fazenda noturna",
                  "convide pra testar o PRANCHETA e contar qual modo prefere (lances ao vivo ou instantaneo)",
                  "explique por que o PRANCHETA ser 100% ficticio e um ponto forte", "dica tatica curta que funciona no PRANCHETA",
@@ -606,6 +626,11 @@ def main():
     destino = destino_oficial(url_da_fila, texto, tema_atual)
     mensagem = mensagem_editorial(texto, destino)
     nome_destino = next(nome for nome, url in DESTINOS_EDITORIAIS.items() if url == destino)
+    if modo == "teste":
+        # A simulação deve permanecer local: sem cofre, rede, canal, escrita de
+        # arquivo ou contador. Ela só deixa visível a mensagem e a rota validadas.
+        print("SIMULACAO OFFLINE: destino=%s | mensagem=%s" % (nome_destino, mensagem))
+        return
     resultados.append(("destino editorial", "OK", "rota oficial " + nome_destino))
 
     def _ntfy():
@@ -1055,10 +1080,7 @@ def main():
     if "descobridor de redes" not in " ".join(n for n, _, _ in resultados):
         resultados.append(("descobridor de redes", "PULADO", "1 pesquisa por dia — volta no proximo ciclo"))
     agora = datetime.datetime.utcnow().strftime("%d/%m/%Y %H:%M UTC")
-    if houve_aceite_tecnico_de_publicacao(resultados):
-        with open("posts/posts-publicados.md", "a") as fp:
-            fp.write("\n## %s\n%s\n" % (agora, texto.replace("\n", " ⏎ ")[:300]))
-    else:
+    if not registra_historico_editorial(texto, resultados, agora):
         resultados.append((
             "memoria editorial", "PULADO",
             "nenhum canal editorial confirmou aceitacao tecnica; texto nao entra no historico publicado",

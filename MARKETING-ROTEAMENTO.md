@@ -38,6 +38,6 @@ A correção entrega uma malha de descoberta pequena e verificável: cada post e
 
 ## Verificação e rollback
 
-`python3 tools/testes-autonomia-marketing.py` é offline e verifica: fatos de lançamento, alegações de risco não confirmadas, rejeição de texto vencido, rota por assunto, lista fechada, link íntegro no limite do menor canal, fila factual equilibrada, guarda de diversidade, histórico condicionado a aceite técnico de canal, Nostr sem relay fail-closed, cota diária fail-closed de interação, hub público, links internos e sitemap. Ele não abre rede, não lê segredo e não publica.
+`python3 tools/testes-autonomia-marketing.py` é offline e verifica: fatos de lançamento, alegações de risco não confirmadas, rejeição de texto vencido, rota por assunto, lista fechada, link íntegro no limite do menor canal, fila factual equilibrada, guarda de diversidade, histórico condicionado a aceite técnico de canal, Nostr sem relay fail-closed, simulação local sem cofre/rede/canal/escrita e CLI fail-closed, cota diária fail-closed de interação, hub público, links internos e sitemap. Ele não abre rede, não lê segredo e não publica.
 
 Para reverter, restaurar em um commit `tools/postador.py`, `posts/fila.json`, `canais.html`, os links HTML, `sitemap.xml` e esta documentação para o commit anterior. Isso não apaga post, conta, segredo, métrica, histórico, arquivo de usuário ou dado externo; apenas volta a lista/rotas locais.

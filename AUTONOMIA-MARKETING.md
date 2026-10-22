@@ -47,10 +47,11 @@ A autonomia começa na estratégia e execução cotidiana; ela não permite cria
 8. **Legalidade e plataformas:** não burlar login, CAPTCHA, rate limit, paywall, termos, robots ou controles de conta. Não publicar material de terceiros sem licença/uso permitido.
 9. **Privacidade:** não publicar conversa, dados pessoais, memória privada, identificadores de usuário ou métricas individuais. O repositório público só recebe estado agregado e sanitizado.
 10. **Reversibilidade:** mudanças em código, cadência, canais, dependências ou fatos exigem teste e documentação. O roteamento editorial aceita uma lista pequena de URLs canônicas, sem UTM/encurtador/redirecionamento, e pode voltar à lista anterior num único commit. Segredos, permissões, contas, infraestrutura, gastos e ações irreversíveis exigem revisão humana explícita.
+11. **Simulação segura:** `python3 tools/postador.py teste` apenas monta e mostra localmente a mensagem e o destino factual; não consulta cofre, não abre rede, não chama canal, não escreve histórico/log/contador e não publica. A execução normal continua sem argumento; qualquer outro argumento de CLI falha fechado antes de ler a fila ou tocar numa fronteira externa.
 
 ## Porta de qualidade e melhoria contínua
 
-`tools/testes-autonomia-marketing.py` roda antes de cada ciclo de postagem. É um teste offline: não chama rede, não carrega segredo e não publica. Ele prova as propriedades básicas do freio de texto, da troca segura de arte de Instagram, das decisões fail-closed da retaguarda, da trava contra ciclos próximos, do histórico editorial condicionado a aceite técnico, da presença desta política e do pin da Action de checkout.
+`tools/testes-autonomia-marketing.py` roda antes de cada ciclo de postagem. É um teste offline: não chama rede, não carrega segredo e não publica. Ele prova as propriedades básicas do freio de texto, da troca segura de arte de Instagram, das decisões fail-closed da retaguarda, da trava contra ciclos próximos, do histórico editorial condicionado a aceite técnico, da simulação sem fronteira externa, da presença desta política e do pin da Action de checkout.
 
 O ciclo correto é: **medir → formular hipótese → mudança pequena → teste → publicar/reverter → medir de novo**. Medição ausente ou ruim não autoriza spam; ela orienta melhoria de tema, formato, horário ou fila dentro dos limites existentes.
 

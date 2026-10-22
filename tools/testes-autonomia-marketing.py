@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Barreira offline da autonomia de marketing: sem rede, segredos ou publicação."""
+import contextlib
 import datetime as dt
 import importlib.util
+import io
 import json
 import os
 import pathlib
@@ -216,11 +218,29 @@ verifica("Nostr sem relay aceito não recebe selo verde", nostr_sem_relay_falha)
 verifica("Nostr com relay aceito conserva confirmação técnica", postador.resultado_nostr(["wss://relay.exemplo"]) == "nota em 1 relays")
 
 
-def ciclo_controlado_sem_rede(com_aceite):
-    """Exercita o ponto de escrita do ciclo sem executar nenhuma função de canal."""
+
+with tempfile.TemporaryDirectory() as temporario:
+    caminho_historico = pathlib.Path(temporario) / "posts-publicados.md"
+    caminho_historico.write_text("BASE\n", encoding="utf-8")
+    registrou_sem_aceite = postador.registra_historico_editorial(
+        "Prancheta é um jogo de futebol fictício.", REGISTROS_SEM_ACEITE_EDITORIAL,
+        "20/10/2026 00:25 UTC", caminho_historico)
+    historico_sem_aceite = caminho_historico.read_text(encoding="utf-8")
+    registrou_com_aceite = postador.registra_historico_editorial(
+        "Prancheta é um jogo de futebol fictício.", REGISTROS_COM_ACEITE_EDITORIAL,
+        "20/10/2026 00:25 UTC", caminho_historico)
+    historico_com_aceite = caminho_historico.read_text(encoding="utf-8")
+verifica("ciclo sem aceite não infla histórico publicado", not registrou_sem_aceite and historico_sem_aceite == "BASE\n")
+verifica("ciclo com aceite técnico registra histórico editorial", registrou_com_aceite
+    and "Prancheta é um jogo de futebol fictício." in historico_com_aceite)
+
+
+def teste_modo_teste_offline():
+    """O modo teste só monta a prévia local, mesmo na presença de credenciais falsas."""
     antigo_cwd, antigo_argv = os.getcwd(), sys.argv[:]
     ambiente_antigo = os.environ.copy()
     canal_antigo, cofare_antigo = postador.canal, postador.le_cofare
+    indisponivel_antigo = postador.indisponivel
     resultados_antigos = postador.resultados[:]
     try:
         with tempfile.TemporaryDirectory() as temporario:
@@ -230,30 +250,27 @@ def ciclo_controlado_sem_rede(com_aceite):
             (posts / "fila.json").write_text(json.dumps({
                 "teste": "Prancheta é um jogo de futebol fictício.", "posts": [],
             }), encoding="utf-8")
-            publicado = posts / "posts-publicados.md"
-            publicado.write_text("BASE\n", encoding="utf-8")
-            (posts / "log.md").write_text("", encoding="utf-8")
+            antes = {str(arquivo.relative_to(posts)): arquivo.read_bytes()
+                for arquivo in posts.rglob("*") if arquivo.is_file()}
+
+            def proibido(*_args, **_kwargs):
+                raise AssertionError("modo teste tentou atravessar uma fronteira externa")
+
+            postador.canal = proibido
+            postador.le_cofare = proibido
+            postador.indisponivel = proibido
             os.environ.clear()
             os.environ.update({
-                "TELEGRAM_TOKEN": "teste", "TELEGRAM_CHAT": "teste",
-                "BLUESKY_HANDLE": "teste", "BLUESKY_APPPASS": "teste",
-                "MASTODON_URL": "https://exemplo.invalido", "MASTODON_TOKEN": "teste",
-                "IG_USER_ID": "teste", "IG_TOKEN": "teste",
-                "THREADS_USER_ID": "teste", "THREADS_TOKEN": "teste",
-                "NOSTR_KEY": "00", "DISCORD_WEBHOOK": "https://exemplo.invalido",
+                "GHPAT": "nao-usar", "TELEGRAM_TOKEN": "nao-usar", "TELEGRAM_CHAT": "nao-usar",
+                "BLUESKY_HANDLE": "nao-usar", "BLUESKY_APPPASS": "nao-usar",
             })
-            postador.resultados.clear()
-            postador.le_cofare = lambda: ({}, None)
-
-            def canal_controlado(nome, _fn):
-                status = "OK" if com_aceite and nome == "telegram" else "FALHOU"
-                postador.resultados.append((nome, status, "dublê offline"))
-
-            postador.canal = canal_controlado
             os.chdir(raiz)
             sys.argv = ["postador.py", "teste"]
-            postador.main()
-            return publicado.read_text(encoding="utf-8"), (posts / "log.md").read_text(encoding="utf-8")
+            with contextlib.redirect_stdout(io.StringIO()) as saida:
+                postador.main()
+            depois = {str(arquivo.relative_to(posts)): arquivo.read_bytes()
+                for arquivo in posts.rglob("*") if arquivo.is_file()}
+            return antes == depois and "SIMULACAO OFFLINE: destino=prancheta" in saida.getvalue()
     finally:
         os.chdir(antigo_cwd)
         sys.argv = antigo_argv
@@ -261,14 +278,30 @@ def ciclo_controlado_sem_rede(com_aceite):
         os.environ.update(ambiente_antigo)
         postador.canal = canal_antigo
         postador.le_cofare = cofare_antigo
+        postador.indisponivel = indisponivel_antigo
         postador.resultados[:] = resultados_antigos
 
 
-historico_sem_aceite, log_sem_aceite = ciclo_controlado_sem_rede(False)
-historico_com_aceite, _ = ciclo_controlado_sem_rede(True)
-verifica("ciclo sem aceite não infla histórico publicado", historico_sem_aceite == "BASE\n"
-    and "memoria editorial | ➖" in log_sem_aceite)
-verifica("ciclo com aceite técnico registra histórico editorial", "Prancheta é um jogo de futebol fictício." in historico_com_aceite)
+def teste_argumentos_desconhecidos_falham_fechado():
+    antigo_argv = sys.argv[:]
+    try:
+        for argumentos in (("publicar",), ("teste", "extra")):
+            sys.argv = ["postador.py", *argumentos]
+            try:
+                postador.main()
+            except SystemExit as erro:
+                if "uso: python3 tools/postador.py [teste]" not in str(erro):
+                    return False
+            else:
+                return False
+        return True
+    finally:
+        sys.argv = antigo_argv
+
+
+verifica("modo teste não consulta cofre, canal ou arquivo de estado", teste_modo_teste_offline())
+verifica("argumento desconhecido não vira publicação", teste_argumentos_desconhecidos_falham_fechado())
+
 
 verifica("recuperação de credencial para em revisão humana", postador.recuperacao_credencial_pendente() == (
     "PULADO", "recuperação de credencial exige revisão humana; nenhuma caixa, senha, token ou cofre é alterado"))
@@ -310,9 +343,13 @@ verifica("postador não recupera conta nem escreve no cofre privado", fonte_post
         "def salva_cofare", "COFARE_URL.replace", "IMAP4_SSL", "auth/password/edit", 'grant_type\": \"password')))
 verifica("consultas de métrica não põem token na URL", "?fields=followers_count,media_count&access_token=" not in fonte_postador)
 verifica("Threads não renova token automaticamente", "refresh_access_token" not in fonte_postador and "salva_cofare(" not in fonte_postador)
-posicao_guarda_historico = fonte_postador.index("if houve_aceite_tecnico_de_publicacao(resultados):")
-posicao_escrita_historico = fonte_postador.index('with open("posts/posts-publicados.md", "a")', posicao_guarda_historico)
-verifica("histórico só é escrito depois da guarda de aceite técnico", posicao_guarda_historico < posicao_escrita_historico)
+posicao_guarda_historico = fonte_postador.index("if not registra_historico_editorial(texto, resultados, agora):")
+posicao_escrita_historico = fonte_postador.index('def registra_historico_editorial(')
+verifica("histórico só é escrito pela guarda de aceite técnico", posicao_escrita_historico < posicao_guarda_historico)
+posicao_simulacao = fonte_postador.index('print("SIMULACAO OFFLINE: destino=%s | mensagem=%s"')
+posicao_primeiro_canal = fonte_postador.index("def _ntfy():")
+verifica("modo teste interrompe antes do primeiro canal", posicao_simulacao < posicao_primeiro_canal)
+verifica("CLI só aceita execução agendada ou teste local", 'raise SystemExit("uso: python3 tools/postador.py [teste]")' in fonte_postador)
 inicio_cacador = fonte_postador.index("def _cacador():")
 preflight_cacador = fonte_postador.index("_, usadas = estado_interacoes_bsky()", inicio_cacador)
 sessao_cacador = fonte_postador.index("createSession", inicio_cacador)
