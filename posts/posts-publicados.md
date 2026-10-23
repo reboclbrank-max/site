@@ -199,3 +199,6 @@
 
 ## 23/10/2026 02:02 UTC
 📊 No PRANCHETA, desenhe a bola parada e veja a partida simular: lances ao vivo ou resultado instantâneo, do jeito que o técnico prefere. ⏎ #indiedev #gamedev
+
+## 23/10/2026 04:57 UTC
+🌙 CEIFALUME 0.1: plante, colha e negocie à luz da lanterna. As plantações continuam até 8 h com o jogo fechado. ⏎ Grátis, sem conta, no navegador ou Android. ⏎ #gamedev #idle

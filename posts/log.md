@@ -1585,3 +1585,27 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=35(api) · ig_seguidores=0(api) · ig_posts=13(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL |
 
 > 📊 No PRANCHETA, desenhe a bola parada e veja a partida simular: lances ao vivo ou resultado instantâneo, do jeito que o técnico prefere. · #indiedev #
+
+## 23/10/2026 04:57 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva (gerado reprovado/indisponivel) |
+| destino editorial | ✅ rota oficial ceifalume |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | ✅ publicado id 179235885632 |
+| nostr | ✅ nota em 1 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| cacador de oportunidades | ✅ 3 interacoes (q=#screenshotsaturday) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=35(api) · ig_seguidores=0(api) · ig_posts=13(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r |
+
+> 🌙 CEIFALUME 0.1: plante, colha e negocie à luz da lanterna. As plantações continuam até 8 h com o jogo fechado. · Grátis, sem conta, no navegador ou A
