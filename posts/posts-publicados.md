@@ -196,3 +196,6 @@
 
 ## 22/10/2026 21:42 UTC
 🌙 CEIFALUME 0.1 já está no ar. ⏎ Plante, colha e negocie à luz da lanterna: a fazenda continua trabalhando até 8 h com o jogo fechado. ⏎ Grátis no navegador e Android, sem conta. ⏎ #indiedev #idle
+
+## 23/10/2026 02:02 UTC
+📊 No PRANCHETA, desenhe a bola parada e veja a partida simular: lances ao vivo ou resultado instantâneo, do jeito que o técnico prefere. ⏎ #indiedev #gamedev

@@ -1561,3 +1561,27 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=13(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r |
 
 > 🌙 CEIFALUME 0.1 já está no ar. · Plante, colha e negocie à luz da lanterna: a fazenda continua trabalhando até 8 h com o jogo fechado. · Grátis no nav
+
+## 23/10/2026 02:02 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva (gerado reprovado/indisponivel) |
+| destino editorial | ✅ rota oficial prancheta |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ instagram ja postou ha 4.4h (minimo 6h entre posts) |
+| threads | ✅ publicado id 180234049679 |
+| nostr | ✅ nota em 1 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| cacador de oportunidades | ✅ 3 interacoes (q=#screenshotsaturday) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
+| censo mundial | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=35(api) · ig_seguidores=0(api) · ig_posts=13(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL |
+
+> 📊 No PRANCHETA, desenhe a bola parada e veja a partida simular: lances ao vivo ou resultado instantâneo, do jeito que o técnico prefere. · #indiedev #
