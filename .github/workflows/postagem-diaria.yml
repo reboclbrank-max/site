@@ -20,7 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
       - name: Barreira offline de autonomia e marca
-        run: python3 tools/testes-autonomia-marketing.py
+        run: |
+          python3 tools/testes-autonomia-marketing.py
+          python3 tools/testes-metricas.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
@@ -49,6 +51,25 @@ jobs:
           NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+
+      - name: Mede o que foi postado e o que voltou (público, sem token)
+        # Só leitura pública: não publica, não usa segredo, não consome cota de repo privado.
+        # Fica fora do caminho crítico: se a medição falhar, a postagem já aconteceu.
+        if: always()
+        continue-on-error: true
+        run: |
+          python3 tools/metricas.py || echo "medição indisponível nesta rodada"
+          git config user.name "casa-rebocl"
+          git config user.email "casa@rebocl.local"
+          git add posts/desempenho.md 2>/dev/null || true
+          git commit -m "📊 desempenho $(date -u +'%d/%m %H:%M')" || echo "sem mudança de medição"
+          ok=0
+          for i in 1 2 3; do
+            git pull --rebase --autostash -q origin main || true
+            if git push; then ok=1; break; fi
+            sleep 5
+          done
+          [ "$ok" = "1" ] || echo "push da medição falhou (a próxima rodada cobre)"
 
       - name: Acorda o vigia da casa (chat de e-mail)
         if: always()
