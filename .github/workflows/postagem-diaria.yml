@@ -23,6 +23,7 @@ jobs:
         run: |
           python3 tools/testes-autonomia-marketing.py
           python3 tools/testes-metricas.py
+          python3 tools/testes-interacao.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
@@ -52,16 +53,21 @@ jobs:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
 
-      - name: Mede o que foi postado e o que voltou (público, sem token)
+      - name: Mede o que foi postado e o que voltou
         # Só leitura pública: não publica, não usa segredo, não consome cota de repo privado.
         # Fica fora do caminho crítico: se a medição falhar, a postagem já aconteceu.
         if: always()
         continue-on-error: true
+        env:
+          # Leitura de contadores e insights do Instagram. Sem estes segredos o medidor
+          # registra NAO_OBSERVAVEL — nunca zero. Nada é impresso nem versionado.
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
         run: |
           python3 tools/metricas.py || echo "medição indisponível nesta rodada"
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
-          git add posts/desempenho.md 2>/dev/null || true
+          git add posts/desempenho.md posts/placar-metas.md 2>/dev/null || true
           git commit -m "📊 desempenho $(date -u +'%d/%m %H:%M')" || echo "sem mudança de medição"
           ok=0
           for i in 1 2 3; do

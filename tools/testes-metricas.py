@@ -8,6 +8,7 @@ uma das oito execuções diárias. Cada teste abaixo cerca um desses riscos, sem
 rede (a busca HTTP é substituída por dados de teste).
 """
 import datetime
+import json
 import importlib.util
 import os
 import sys
@@ -134,8 +135,16 @@ finally:
 
 # 10. não usa token, segredo nem escrita em rede
 fonte = open(os.path.join(RAIZ, "tools", "metricas.py"), encoding="utf-8").read()
-ok("mede só o que é público (sem token nem segredo)",
-   "Authorization" not in fonte and "secret" not in fonte.lower() and "ghp_" not in fonte)
+# O Bluesky continua sendo lido sem credencial; o Instagram usa token do ambiente,
+# e o teste garante que ele nunca sai do cabeçalho HTTP (nem em log, nem em arquivo).
+trecho_publico = fonte.split("def http_json_autorizado")[0]
+ok("medição pública do Bluesky não manda Authorization",
+   "Authorization" not in trecho_publico, "credencial vazou para o caminho público")
+ok("token do Instagram vem do ambiente, nunca literal no código",
+   'os.environ.get("IG_TOKEN")' in fonte and "ghp_" not in fonte
+   and all(t not in fonte for t in ("IGAA", "Bearer IG", "ATATT")))
+ok("nenhum print grava token nem cabeçalho",
+   not any("print(" in l and ("token" in l or "Authorization" in l) for l in fonte.splitlines()))
 ok("não publica nada (nenhum POST, nenhum createRecord)",
    "method=\"POST\"" not in fonte and "createRecord" not in fonte)
 
@@ -199,6 +208,29 @@ metricas.interacao = lambda posts, max_threads=40: {"posts_checados": 0, "por_cl
 dados = metricas.analisar()
 ok("linha do dia marca interacao=NAO_OBSERVAVEL quando a thread falha",
    "interacao=NAO_OBSERVAVEL" in metricas.linha_do_dia(dados), metricas.linha_do_dia(dados))
+
+# 15. placar de metas: alvo, falta e ausência de leitura
+import tempfile as _tf
+metas_teste = {
+    "ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+    "bsky_30_dias": {"seguidores": 50},
+    "yt_30_dias": {"inscritos": 40, "shorts": 4},
+}
+with _tf.TemporaryDirectory() as d:
+    caminho = os.path.join(d, "metas.json")
+    json.dump(metas_teste, open(caminho, "w"))
+    linhas, ctx = metricas.placar_metas(
+        {"bsky_seguidores": 34, "ig_seguidores": None, "ig_posts": None},
+        caminho=caminho, hoje=datetime.date(2026, 10, 24))
+b = [l for l in linhas if l["meta"].startswith("Bluesky")][0]
+i = [l for l in linhas if l["meta"] == "Instagram: seguidores"][0]
+y = [l for l in linhas if l["meta"].startswith("YouTube: inscritos")][0]
+ok("placar calcula o que falta para a meta observável", b["observado"] == 34 and b["falta"] == 16, str(b))
+ok("meta sem leitura vira SEM_LEITURA, nunca zero",
+   i["observado"] is None and i["status"] == "SEM_LEITURA", str(i))
+ok("meta de canal sem API não é contada como observada", y["status"] == "SEM_LEITURA", str(y))
+ok("placar informa prazo e dias restantes", ctx["dias_restantes"] == 19, str(ctx))
+ok("o placar não inventa ritmo quando não há leitura", i["por_dia"] is None, str(i))
 
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)
