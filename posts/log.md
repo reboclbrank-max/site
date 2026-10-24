@@ -1777,3 +1777,28 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=15(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r |
 
 > 🌙 CEIFALUME 0.1 já está no ar. · Plante, colha e negocie à luz da lanterna: a fazenda continua trabalhando até 8 h com o jogo fechado. · Grátis no nav
+
+## 24/10/2026 23:18 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ fila de reserva (gerado reprovado/indisponivel) |
+| destino editorial | ✅ rota oficial prancheta |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ❌ HTTP Error 400: Bad Request |
+| instagram | ✅ postado id 18116390738591 (arte reserva) |
+| threads | ✅ publicado id 181451532346 |
+| nostr | ✅ nota em 1 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ✅ 3 resposta(s) enviada(s) de 7 pendente(s) |
+| cacador de oportunidades | ➖ cadencia diaria de interacao ja cumprida (2026-10-24) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=16(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r |
+
+> ⚽ Sou TÉCNICO, não jogador. · PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. · Grátis no navegador o
