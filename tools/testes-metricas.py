@@ -338,5 +338,25 @@ ok("YouTube sem chave no runtime é NAO_OBSERVAVEL", yt is None and "sem chave" 
 ok("a chave do YouTube não é impressa em nenhum caminho",
    not any(("print(" in l and "YT_API_KEY" in l) for l in open(os.path.join(RAIZ, "tools", "metricas.py"), encoding="utf-8").read().splitlines()))
 
+# 19. YouTube: separar o que é da casa do que é de outros jogos
+videos_teste = [
+    {"titulo": "Ceifalume: a horta acordou à noite", "descricao": "", "views": 230, "likes": 1,
+     "comentarios": 0, "segundos": 27, "quando": "2026-10-01"},
+    {"titulo": "Prancheta — simulador de futebol", "descricao": "", "views": 4, "likes": 0,
+     "comentarios": 0, "segundos": 59, "quando": "2026-09-20"},
+    {"titulo": "New game Rumble Knights - idle RPG", "descricao": "", "views": 700, "likes": 9,
+     "comentarios": 2, "segundos": 40, "quando": "2026-08-11"},
+    {"titulo": "New game Dragon Village Collection", "descricao": "jogo de terceiro", "views": 211,
+     "likes": 3, "comentarios": 0, "segundos": 35, "quando": "2026-08-02"},
+]
+r = metricas.resumo_youtube(videos_teste)
+ok("reconhece conteúdo da casa pelo título", r["casa"]["n"] == 2 and r["terceiros"]["n"] == 2, str(r["casa"]))
+ok("soma visualizações por grupo", r["casa"]["views"] == 234 and r["terceiros"]["views"] == 911)
+ok("calcula a fatia de visualizações da casa", r["casa"]["fatia_views"] == 20.4, str(r["casa"].get("fatia_views")))
+ok("lista os melhores da casa em ordem", [m["views"] for m in r["casa"]["melhores"]] == [230, 4])
+ok("vídeo sem título não quebra", metricas.resumo_youtube([{"titulo": "", "views": 0}])["terceiros"]["n"] == 1)
+ok("canal vazio não vira média zero falsa",
+   metricas.resumo_youtube([])["casa"]["media_views"] is None)
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)
