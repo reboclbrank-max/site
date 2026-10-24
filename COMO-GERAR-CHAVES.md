@@ -178,3 +178,22 @@ chave → *API restrictions* → **Restrict key** → marque só **YouTube Data 
 cofre. Depois de restringir, o mais seguro é **gerar uma nova** no mesmo painel,
 substituir o secret `YT_API_KEY` em `site/settings/secrets/actions` e apagar a antiga.
 Enquanto a restrição existir, o risco fica limitado à cota gratuita do YouTube.
+
+## Onde a chave do YouTube está guardada (ordem do dono, 24/10/2026)
+
+O dono pediu: *"pode ficar com a chave completa para usar, deixe salvo dentro do
+repositório para não perder"*. Ela está em **dois lugares**, e nenhum deles é público:
+
+| lugar | serve para |
+|---|---|
+| `base/ferramentas/cofare.json` (repo **privado**) | cópia de segurança, junto das outras chaves da casa |
+| `site` → Settings → Secrets → `YT_API_KEY` | é a cópia que o robô realmente usa |
+
+**Por que não no `site`:** o `site` é um repositório **público**. Qualquer chave
+commitada ali fica vísivel para o mundo em segundos — robôs varrem o GitHub procurando
+exatamente o padrão `AIza…`. Salvar lá não seria "não perder", seria entregar a chave
+para estranhos e assumir o risco de cobrança na conta do dono. O `base` é privado e já
+guarda as outras chaves desde 17/09, então é o lugar certo para a cópia de segurança.
+
+**Consequência a ter em mente:** se o repositório `base` um dia virar público, **todas**
+as chaves dele vazam de uma vez. Isso está escrito no próprio cofre.
