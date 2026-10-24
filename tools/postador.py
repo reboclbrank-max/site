@@ -127,6 +127,93 @@ def ciclo_ainda_recente(agora=None, caminho="posts/log.md"):
     idade = agora - ultimo
     return datetime.timedelta(0) <= idade < INTERVALO_MINIMO_ENTRE_CICLOS
 
+LIMITE_INTERACOES_DIA_PADRAO = 3
+
+
+def limite_interacoes_dia(caminho="posts/mestria.json"):
+    """Teto diário de interação fria, lido da cadência já aprovada pelo dono.
+
+    `mestria.json` está escrito "3 devs/dia" desde 15/10/2026, mas o caçador tratava
+    isso como "3 por ciclo" e, com oito ciclos, chegava a 24 comentários por dia. O
+    medidor mostrou o custo: comentário em post alheio rende 0,85 de engajamento e
+    42% deles não recebem nada. Aqui a cadência aprovada vale como está escrita.
+    """
+    try:
+        with open(caminho) as f:
+            texto = (json.load(f).get("bluesky") or {}).get("interacao") or ""
+    except Exception:
+        return LIMITE_INTERACOES_DIA_PADRAO
+    achado = re.search(r"(\d+)\s*dev", texto)
+    if not achado:
+        return LIMITE_INTERACOES_DIA_PADRAO
+    return max(1, int(achado.group(1)))
+
+
+def interacoes_registradas(caminho="posts/interacoes.md"):
+    """Devolve (uris já usadas, contagem por dia).
+
+    Linhas antigas trazem só a uri; as novas trazem uri + data separadas por tab,
+    que é o que permite contar o dia sem perder a deduplicação.
+    """
+    feitas, por_dia = set(), {}
+    try:
+        with open(caminho) as f:
+            for linha in f:
+                linha = linha.strip()
+                if not linha.startswith("at://"):
+                    continue
+                uri, _, resto = linha.partition("\t")
+                feitas.add(uri)
+                dia = (resto or "").split("T")[0].split(" ")[0]
+                if re.fullmatch(r"\d{4}-\d{2}-\d{2}", dia or ""):
+                    por_dia[dia] = por_dia.get(dia, 0) + 1
+    except Exception:
+        pass
+    return feitas, por_dia
+
+
+def vagas_de_interacao(hoje, limite, por_dia):
+    """Quantas interações ainda cabem hoje. Nunca negativo, nunca infinito."""
+    return max(0, int(limite) - int(por_dia.get(hoje, 0)))
+
+
+def respostas_que_pedem_atencao(notificacoes, did, ja_respondidas=(), agora=None, horas=72):
+    """Filtra só conversa que a casa abriu: alguém respondeu ao NOSSO conteúdo.
+
+    Fica de fora, de propósito, o agradecimento do autor de post alheio que a casa
+    comentou: medido em 24/10/2026, eram 40 de 40 notificações e nenhuma pedia
+    resposta. Responder aquilo é ruído, não conversa.
+    """
+    if not did:
+        return []
+    agora = agora or datetime.datetime.utcnow()
+    corte = agora - datetime.timedelta(hours=horas)
+    nosso = "at://" + did + "/app.bsky.feed.post/"
+    escolhidas = []
+    for n in notificacoes or []:
+        if n.get("reason") not in ("reply", "quote"):
+            continue
+        autor = (n.get("author") or {}).get("did")
+        if not autor or autor == did:
+            continue
+        uri = n.get("uri")
+        if not uri or uri in ja_respondidas:
+            continue
+        pai = (((n.get("record") or {}).get("reply") or {}).get("parent") or {}).get("uri") or ""
+        if not pai.startswith(nosso):
+            continue
+        quando = n.get("indexedAt") or (n.get("record") or {}).get("createdAt") or ""
+        try:
+            instante = datetime.datetime.fromisoformat(quando.replace("Z", "+00:00")).replace(tzinfo=None)
+        except (ValueError, AttributeError):
+            continue
+        if instante < corte:
+            continue
+        escolhidas.append(n)
+    escolhidas.sort(key=lambda n: n.get("indexedAt") or "", reverse=True)
+    return escolhidas
+
+
 def destino_editorial(texto, tema=""):
     """Escolhe a página oficial conforme o assunto, sem seguir instruções do texto.
 
@@ -580,6 +667,72 @@ def main():
         indisponivel("discord")
 
     if modo != "teste" and bh and bp:
+        def _respondedor():
+            """Responde quem respondeu à casa — o que o postador nunca fez.
+
+            Medido em 24/10/2026: 40 notificações, nenhuma resposta da casa. Até aqui
+            a casa falava e não escutava. Este canal lê as notificações do Bluesky e
+            responde APENAS resposta ao conteúdo próprio, dentro da cadência aprovada,
+            uma vez por conversa, sem link e sem promessa de data. Notificação que não
+            é conversa nossa (agradecimento em post alheio) fica de fora.
+            """
+            partes = http_json("https://bsky.social/xrpc/com.atproto.server.createSession",
+                               {"identifier": bh, "password": bp})
+            sessao = json.loads(partes[1])
+            jwt, did = sessao["accessJwt"], sessao.get("did")
+            if not did:
+                return "FALHOU", "sessao sem did"
+            pedido = urllib.request.Request(
+                "https://bsky.social/xrpc/app.bsky.notification.listNotifications?limit=50",
+                headers={"Authorization": "Bearer " + jwt, "User-Agent": "rebocl/2"})
+            notificacoes = json.loads(urllib.request.urlopen(pedido, timeout=30).read().decode()).get("notifications", [])
+            ja_respondidas, por_dia = interacoes_registradas()
+            hoje = datetime.datetime.utcnow().strftime("%Y-%m-%d")
+            vagas = vagas_de_interacao(hoje, limite_interacoes_dia(), por_dia)
+            pendentes = respostas_que_pedem_atencao(notificacoes, did, ja_respondidas)
+            if not pendentes:
+                return "PULADO", "nenhuma resposta ao conteudo da casa"
+            if vagas <= 0:
+                return "PULADO", "cadencia diaria de interacao ja cumprida (%s)" % hoje
+            feitas = 0
+            for n in pendentes:
+                if feitas >= vagas:
+                    break
+                fio = json.loads(urllib.request.urlopen(urllib.request.Request(
+                    "https://bsky.social/xrpc/app.bsky.feed.getPostThread?uri=" + urllib.parse.quote(n["uri"]) + "&depth=0",
+                    headers={"Authorization": "Bearer " + jwt, "User-Agent": "rebocl/2"}), timeout=30).read().decode())
+                raiz = (((fio.get("thread") or {}).get("post") or {}).get("record") or {}).get("reply") or {}
+                origem = raiz.get("root") or {}
+                if not origem.get("uri") or not origem.get("cid"):
+                    continue
+                texto_da_pessoa = ((n.get("record") or {}).get("text") or "")[:200]
+                pergunta = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro caloroso, dono dos jogos "
+                            "Prancheta e Ceifalume. Alguem respondeu um post da casa. Escreva UMA resposta humana "
+                            "e curta (ate 180 caracteres), sem link, sem promessa de data e sem inventar fato: "
+                            "continue o assunto ou agradeca de forma especifica. Responda no idioma da mensagem. "
+                            "MENSAGEM: \"" + texto_da_pessoa + "\"")
+                resposta = " ".join((cerebro(pergunta) or "").strip().split())[:180]
+                if not resposta or not texto_gerado_seguro(resposta):
+                    continue
+                corpo = {"repo": did, "collection": "app.bsky.feed.post", "record": {
+                    "text": resposta,
+                    "createdAt": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "reply": {"root": {"uri": origem["uri"], "cid": origem["cid"]},
+                              "parent": {"uri": n["uri"], "cid": n["cid"]}}}}
+                envio = urllib.request.Request("https://bsky.social/xrpc/com.atproto.repo.createRecord",
+                    data=json.dumps(corpo).encode(),
+                    headers={"Content-Type": "application/json", "Authorization": "Bearer " + jwt, "User-Agent": "rebocl/2"})
+                urllib.request.urlopen(envio, timeout=30)
+                with open("posts/interacoes.md", "a") as fi:
+                    fi.write(n["uri"] + "\t" + datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ") + "\n")
+                feitas += 1
+                time.sleep(1)
+            if not feitas:
+                return "PULADO", "%d resposta(s) pendente(s), nenhuma passou no freio de texto" % len(pendentes)
+            return "%d resposta(s) enviada(s) de %d pendente(s)" % (feitas, len(pendentes))
+        canal("respondedor de conversa", _respondedor)
+
+    if modo != "teste" and bh and bp:
         def _cacador():
             s, c = http_json("https://bsky.social/xrpc/com.atproto.server.createSession", {"identifier": bh, "password": bp})
             jwt = json.loads(c)["accessJwt"]
@@ -587,15 +740,14 @@ def main():
             rq = urllib.request.Request("https://bsky.social/xrpc/app.bsky.feed.searchPosts?q=" + urllib.parse.quote(q) + "&limit=10",
                 headers={"Authorization": "Bearer " + jwt, "User-Agent": "rebocl/1"})
             achados = json.loads(urllib.request.urlopen(rq, timeout=30).read().decode()).get("posts", [])
-            ja_feitos = set()
-            try:
-                with open("posts/interacoes.md") as fi0:
-                    ja_feitos = set(l.strip() for l in fi0 if l.strip().startswith("at://"))
-            except Exception:
-                pass
+            ja_feitos, por_dia = interacoes_registradas()
+            hoje = datetime.datetime.utcnow().strftime("%Y-%m-%d")
+            vagas = vagas_de_interacao(hoje, limite_interacoes_dia(), por_dia)
+            if vagas <= 0:
+                return "PULADO", "cadencia diaria de interacao ja cumprida (%s)" % hoje
             feitas = 0
             for p in achados:
-                if feitas >= 3: break
+                if feitas >= vagas: break
                 rec = p.get("record") or {}
                 if rec.get("reply"): continue
                 if p.get("uri") in ja_feitos: continue
@@ -614,10 +766,10 @@ def main():
                     headers={"Content-Type": "application/json", "Authorization": "Bearer " + jwt, "User-Agent": "rebocl/1"})
                 urllib.request.urlopen(pr, timeout=30)
                 with open("posts/interacoes.md", "a") as fi:
-                    fi.write(p["uri"] + "\n")
+                    fi.write(p["uri"] + "\t" + datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ") + "\n")
                 feitas += 1
                 time.sleep(1)
-            return "%d interacoes (q=%s)" % (feitas, q)
+            return "%d de %d interacoes do dia (q=%s)" % (feitas, vagas, q)
         canal("cacador de oportunidades", _cacador)
     elif modo != "teste":
         indisponivel("cacador de oportunidades", "configuracao do canal ausente")

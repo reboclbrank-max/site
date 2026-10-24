@@ -14,7 +14,9 @@ Antes desta data a casa publicava sem saber o que voltava: o registro diário re
 `engajamento=NAO_OBSERVAVEL` e só contava seguidores e número de posts. Agora existe
 `tools/metricas.py`, executado a cada ciclo depois da postagem:
 
-- lê **somente API pública** (Bluesky, sem token e sem segredo), então funciona mesmo sem credencial;
+- lê o **Bluesky pela API pública** (sem token, funciona mesmo sem credencial) e, quando o
+  runtime tem `IG_TOKEN`/`IG_USER_ID`, lê apenas os contadores públicos do Instagram; sem
+  eles a linha é `NAO_OBSERVAVEL`, nunca zero;
 - separa **conteúdo dos jogos** de **comentário em post alheio** e mede o retorno de cada tipo;
 - conta engajamento por post (curtidas + reposts + respostas), taxa de posts sem retorno e posts por seguidor;
 - grava `posts/desempenho.md`, com o bloco do dia reescrito (não duplicado) e histórico preservado;
@@ -53,6 +55,31 @@ madrugada, mas a conta é global e a amostra por hora (n≈2 a 28) está dentro 
 próprio medidor registra isso. Mudar cron agora seria escolher por intuição e chamar de
 dado. Falta o insumo que a API pública não dá: de onde vêm os seguidores. Com isso na mão,
 o horário passa a ter base. Até então: nada de mexer no cron e chamar de otimização.
+
+### Interação: a casa passou a escutar — 2026-10-24
+
+Duas correções, ambas tiradas de fato medido:
+
+1. **Cadência desrespeitada.** `mestria.json` está escrito "3 devs/dia" desde 15/10/2026, mas
+   o caçador tratava o número como "3 por ciclo". Com oito ciclos, eram até **24 comentários
+   por dia** — e o medidor mostrou o preço: 0,85 de engajamento por comentário e 42% sem
+   retorno nenhum. Agora o teto é lido do próprio `mestria.json` e vale **por dia**; ciclo
+   posterior no mesmo dia devolve `PULADO` com o motivo, que é comportamento saudável.
+2. **A casa falava e não ouvia.** Nenhuma linha do postador lia notificação. Agora existe o
+   canal `respondedor de conversa`: lê as notificações do Bluesky e responde **apenas** quando
+   alguém respondeu a um post da casa — uma vez por conversa, dentro da mesma cota diária,
+   sem link, sem promessa de data, passando pelo freio `texto_gerado_seguro()`.
+
+O que fica **de fora**, de propósito: o agradecimento do autor de post alheio ("Thanks!",
+"Obrigado!") não é respondido. Medido em 24/10/2026, eram 40 de 40 notificações e nenhuma
+pedia resposta — responder aquilo é ruído, não conversa.
+
+### Placar de metas — 2026-10-24
+
+`tools/metricas.py` grava também `posts/placar-metas.md`: cada meta aprovada em 15/10 ao lado
+do valor observado, quanto falta, dias restantes e quanto seria necessário por dia. Meta sem
+leitura automática aparece como `SEM_LEITURA` — não como zero, não como "quase lá". Hoje só
+Bluesky tem leitura; YouTube e itch seguem sem API e isso está escrito na tabela, não escondido.
 
 ## Fonte de verdade e operação atual
 

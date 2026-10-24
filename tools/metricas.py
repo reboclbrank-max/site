@@ -31,6 +31,8 @@ import urllib.request
 ATOR = os.environ.get("BSKY_ATOR", "reboclbrank.bsky.social")
 API = "https://public.api.bsky.app/xrpc"
 SAIDA = "posts/desempenho.md"
+SAIDA_PLACAR = "posts/placar-metas.md"
+METAS = "posts/metas.json"
 MAX_FEED = 300
 
 # Marcadores do conteúdo próprio. Se o texto fala dos jogos, é promo.
@@ -211,6 +213,125 @@ def interacao(posts, max_threads=40):
     }
 
 
+def observado_instagram():
+    """Lê o que a API do Instagram devolve, sem gravar credencial em lugar nenhum.
+
+    `NAO_OBSERVAVEL` aqui é ausência de leitura, não zero seguidores. O `ig_seguidores=0`
+    registrado em 24/10/2026 só é zero de verdade se a API confirmar zero; sem token no
+    ambiente, o registro tem de dizer que não houve leitura.
+    """
+    token = os.environ.get("IG_TOKEN")
+    conta = os.environ.get("IG_USER_ID")
+    if not token or not conta:
+        return None, "sem credencial no runtime (IG_TOKEN/IG_USER_ID ausentes)"
+    dados, erro = http_json_autorizado(
+        f"https://graph.instagram.com/v21.0/{conta}?fields=followers_count,media_count", token)
+    if erro or not isinstance(dados, dict):
+        return None, f"leitura recusada ({erro or 'resposta vazia'})"
+    if "followers_count" not in dados or "media_count" not in dados:
+        return None, "resposta sem os contadores"
+    return {"seguidores": dados["followers_count"], "posts": dados["media_count"]}, None
+
+
+def http_json_autorizado(url, token, tentativas=2):
+    """GET autenticado para leitura de contadores. Nunca imprime nem devolve o token."""
+    for _ in range(tentativas):
+        try:
+            req = urllib.request.Request(url, headers={
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json",
+                "User-Agent": "rebocl-metricas/1.0",
+            })
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return json.loads(r.read().decode("utf-8")), None
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, ValueError) as e:
+            motivo = getattr(e, "code", None) or type(e).__name__
+    return None, motivo
+
+
+def placar_metas(observado, caminho=METAS, hoje=None):
+    """Compara as metas aprovadas em 15/10 com o que foi medido. Não inventa nada.
+
+    Cada linha carrega alvo, observado, quanto falta e prazo. Sem leitura, o observado
+    é `NAO_OBSERVAVEL` — nunca zero, nunca "quase lá".
+    """
+    hoje = hoje or datetime.date.today()
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            metas = json.load(f)
+    except (OSError, ValueError):
+        return [], "metas.json ilegivel"
+    inicio = metas.get("ig_30_dias", {}).get("inicio")
+    prazo = None
+    if inicio:
+        try:
+            prazo = datetime.date.fromisoformat(inicio) + datetime.timedelta(days=30)
+        except ValueError:
+            prazo = None
+    dias = (prazo - hoje).days if prazo else None
+
+    def linha(nome, alvo, chave, fonte):
+        valor = (observado or {}).get(chave)
+        falta = None
+        status = "SEM_LEITURA"
+        if isinstance(valor, (int, float)):
+            falta = max(0, round(alvo - valor, 1))
+            status = "ATINGIDO" if valor >= alvo else "EM_CURSO"
+        return {"meta": nome, "alvo": alvo, "observado": valor, "falta": falta,
+                "status": status, "fonte": fonte, "por_dia": (
+                    round(falta / dias, 2) if (falta and dias and dias > 0) else None)}
+
+    linhas = []
+    ig = metas.get("ig_30_dias", {})
+    bsky = metas.get("bsky_30_dias", {})
+    yt = metas.get("yt_30_dias", {})
+    itch = metas.get("itch_30_dias", {})
+    if "posts" in ig:
+        linhas.append(linha("Instagram: publicações", ig["posts"], "ig_posts", "graph.instagram.com"))
+    if "seguidores" in ig:
+        linhas.append(linha("Instagram: seguidores", ig["seguidores"], "ig_seguidores", "graph.instagram.com"))
+    if "seguidores" in bsky:
+        linhas.append(linha("Bluesky: seguidores", bsky["seguidores"], "bsky_seguidores", "API pública do Bluesky"))
+    if "inscritos" in yt:
+        linhas.append(linha("YouTube: inscritos", yt["inscritos"], "yt_inscritos", "sem leitura automática"))
+    if "shorts" in yt:
+        linhas.append(linha("YouTube: shorts", yt["shorts"], "yt_shorts", "sem leitura automática"))
+    if "downloads" in itch:
+        linhas.append(linha("itch: downloads", itch["downloads"], "itch_downloads", "sem leitura automática"))
+    if "seguidores" in itch:
+        linhas.append(linha("itch: seguidores", itch["seguidores"], "itch_seguidores", "sem leitura automática"))
+    observavel = sum(1 for l in linhas if l["status"] != "SEM_LEITURA")
+    return linhas, {"dias_restantes": dias, "prazo": prazo.isoformat() if prazo else None,
+                    "metas_com_leitura": observavel, "metas_sem_leitura": len(linhas) - observavel}
+
+
+def gravar_placar(linhas, contexto, hoje=None):
+    hoje = hoje or datetime.date.today()
+    if not linhas:
+        return None
+    cab = ("# Placar das metas aprovadas\n\n"
+           "> Compara `posts/metas.json` (aprovado em 15/10/2026) com o que foi realmente "
+           "medido. `NAO_OBSERVAVEL` é ausência de leitura, **não** zero. `por_dia` é quanto "
+           "seria necessário por dia para fechar no prazo — não é previsão.\n\n")
+    dias = contexto.get("dias_restantes")
+    prazo = contexto.get("prazo") or "sem prazo definido"
+    rodape = (f"\nPrazo: **{prazo}**" + (f" · {dias} dia(s) restante(s)" if dias is not None else "")
+              + f" · {contexto['metas_com_leitura']} meta(s) com leitura, "
+                f"{contexto['metas_sem_leitura']} sem leitura automática.\n")
+    linhas_md = ["| meta | alvo | observado | falta | por dia | status |",
+                 "|---|---|---|---|---|---|"]
+    for l in linhas:
+        obs = "NAO_OBSERVAVEL" if l["observado"] is None else l["observado"]
+        falta = "—" if l["falta"] is None else l["falta"]
+        por_dia = "—" if not l["por_dia"] else l["por_dia"]
+        linhas_md.append(f"| {l['meta']} | {l['alvo']} | {obs} | {falta} | {por_dia} | {l['status']} |")
+    texto = cab + "\n".join(linhas_md) + "\n" + rodape
+    caminho = os.path.join(os.path.dirname(SAIDA_PLACAR) or ".", os.path.basename(SAIDA_PLACAR))
+    with open(caminho, "w", encoding="utf-8") as f:
+        f.write(texto)
+    return caminho
+
+
 def hora_brasilia(iso):
     try:
         dt = datetime.datetime.fromisoformat(iso.replace("Z", "+00:00"))
@@ -331,6 +452,18 @@ def gravar(dados):
 
 def main(argv):
     dados = analisar()
+    ig, motivo_ig = observado_instagram()
+    dados["instagram"] = ig
+    dados["instagram_motivo"] = motivo_ig
+    perfil_dados = dados.get("perfil") or {}
+    observado = {
+        "bsky_seguidores": perfil_dados.get("seguidores"),
+        "ig_posts": (ig or {}).get("posts"),
+        "ig_seguidores": (ig or {}).get("seguidores"),
+    }
+    linhas_metas, contexto_metas = placar_metas(observado)
+    dados["placar"] = linhas_metas
+    dados["placar_contexto"] = contexto_metas
     if "--json" in argv:
         print(json.dumps(dados, ensure_ascii=False, indent=1))
         return 0
@@ -345,6 +478,10 @@ def main(argv):
             print(f"   {rotulo:<24} n={d['posts']:<4} média={d['media']:<5} zero={d['taxa_sem_engajamento']}%")
     print(f"   engajamento médio geral: {r['total']['media']}")
     print(f"   gravado em {caminho}")
+    if linhas_metas:
+        caminho_placar = gravar_placar(linhas_metas, contexto_metas)
+        print(f"   instagram: {'sem leitura — ' + motivo_ig if motivo_ig else 'lido'}")
+        print(f"   placar de metas: {caminho_placar}")
     return 0
 
 
