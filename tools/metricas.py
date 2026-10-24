@@ -24,6 +24,7 @@ import collections
 import datetime
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -270,6 +271,113 @@ def http_json_autorizado(url, token, tentativas=2):
     return None, motivo
 
 
+CANAL_YOUTUBE_PADRAO = "UCQdxKtfRnqNLd1ZOs9B6eaQ"
+
+
+def observado_itch(chaves=None):
+    """Downloads e visitas do itch.io, por conta.
+
+    A casa tem DUAS contas publicando (reboclbrank-max e rebocl-brank), e a API do
+    itch só devolve os jogos da chave usada. Por isso a variável aceita várias chaves
+    separadas por vírgula: uma por conta. Sem chave, é NAO_OBSERVAVEL — nunca zero.
+
+    O itch não expõe seguidores por API (pedido ainda aberto no fórum do próprio
+    itch), então `itch_seguidores` continua sem leitura automática de propósito.
+    """
+    bruto = chaves if chaves is not None else os.environ.get("ITCH_API_KEYS", "")
+    lista = [k.strip() for k in (bruto or "").split(",") if k.strip()]
+    if not lista:
+        return None, "sem chave no runtime (ITCH_API_KEYS ausente)"
+    total_downloads = total_visitas = 0
+    jogos, contas_lidas, erros = [], 0, []
+    for chave in lista:
+        dados, erro = http_json_autorizado("https://api.itch.io/profile/games", chave)
+        if erro or not isinstance(dados, dict) or "games" not in dados:
+            erros.append(erro or "resposta sem lista de jogos")
+            continue
+        contas_lidas += 1
+        for j in dados.get("games") or []:
+            if j.get("published") is False:
+                continue
+            downloads = j.get("downloads_count") or 0
+            total_downloads += downloads
+            total_visitas += j.get("views_count") or 0
+            jogos.append({"titulo": (j.get("title") or "")[:60],
+                          "downloads": downloads,
+                          "visitas": j.get("views_count") or 0})
+    if not contas_lidas:
+        return None, "leitura recusada (" + "; ".join(erros[:2]) + ")"
+    return {"downloads": total_downloads, "visitas": total_visitas,
+            "contas_lidas": contas_lidas, "contas_tentadas": len(lista),
+            "jogos": sorted(jogos, key=lambda x: x["downloads"], reverse=True)}, None
+
+
+def _duracao_em_segundos(iso):
+    """Converte PT1M15S (formato do YouTube) em segundos. None se não entender."""
+    achado = re.match(r"^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$", iso or "")
+    if not achado:
+        return None
+    h, m, s = (int(g) if g else 0 for g in achado.groups())
+    return h * 3600 + m * 60 + s
+
+
+def observado_youtube(chave=None, canal=None):
+    """Inscritos, vídeos e shorts do canal, com leitura pública do YouTube.
+
+    Só precisa de chave de API (não é OAuth): `channels.list` devolve contadores
+    públicos. Para contar shorts, lê a playlist de envios e mede a duração dos
+    últimos vídeos — custa 3 unidades de cota de 10.000, sem risco.
+    Publicar vídeo é outra história: exige OAuth com o dono logado.
+    """
+    chave = chave if chave is not None else os.environ.get("YT_API_KEY", "")
+    canal = canal or os.environ.get("YT_CHANNEL_ID") or CANAL_YOUTUBE_PADRAO
+    if not chave:
+        return None, "sem chave no runtime (YT_API_KEY ausente)"
+    base = "https://www.googleapis.com/youtube/v3"
+    dados, erro = http_json(f"{base}/channels?part=statistics,contentDetails&id={canal}&key={chave}")
+    if erro or not isinstance(dados, dict) or not dados.get("items"):
+        return None, "leitura recusada (" + (erro or "canal não encontrado") + ")"
+    item = dados["items"][0]
+    stat = item.get("statistics") or {}
+    if "subscriberCount" not in stat:
+        return None, "resposta sem contadores (canal pode ocultar inscritos)"
+    leitura = {
+        "inscritos": int(stat["subscriberCount"]),
+        "videos": int(stat.get("videoCount") or 0),
+        "visitas": int(stat.get("viewCount") or 0),
+    }
+    envios = (((item.get("contentDetails") or {}).get("relatedPlaylists") or {}).get("uploads"))
+    if envios:
+        atual, shorts, conferidos = None, 0, 0
+        for _ in range(2):  # até 50 vídeos recentes
+            url = f"{base}/playlistItems?part=contentDetails&maxResults=50&playlistId={envios}&key={chave}"
+            if atual:
+                url += f"&pageToken={atual}"
+            lista, erro_lista = http_json(url)
+            if erro_lista or not isinstance(lista, dict):
+                break
+            ids = [((i.get("contentDetails") or {}).get("videoId")) for i in lista.get("items") or []]
+            ids = [i for i in ids if i]
+            if not ids:
+                break
+            videos, erro_videos = http_json(
+                f"{base}/videos?part=contentDetails&id={','.join(ids[:50])}&key={chave}")
+            if erro_videos or not isinstance(videos, dict):
+                break
+            for v in videos.get("items") or []:
+                segundos = _duracao_em_segundos((v.get("contentDetails") or {}).get("duration"))
+                conferidos += 1
+                if segundos is not None and segundos <= 61:
+                    shorts += 1
+            atual = lista.get("nextPageToken")
+            if not atual:
+                break
+        if conferidos:
+            leitura["shorts"] = shorts
+            leitura["videos_conferidos"] = conferidos
+    return leitura, None
+
+
 def placar_metas(observado, caminho=METAS, hoje=None):
     """Compara as metas aprovadas em 15/10 com o que foi medido. Não inventa nada.
 
@@ -432,6 +540,25 @@ def bloco_markdown(dados):
     elif dados.get("instagram_motivo"):
         linhas.append(f"**Instagram:** NAO_OBSERVAVEL ({dados['instagram_motivo']})")
         linhas.append("")
+    it = dados.get("itch")
+    if it:
+        detalhe = " · ".join(f"{j['titulo']}: {j['downloads']}" for j in it["jogos"][:4])
+        linhas.append(f"**itch.io:** {it['downloads']} download(s) e {it['visitas']} visita(s) em "
+                      f"{it['contas_lidas']}/{it['contas_tentadas']} conta(s). {detalhe}")
+        linhas.append("")
+    elif dados.get("itch_motivo"):
+        linhas.append(f"**itch.io:** NAO_OBSERVAVEL ({dados['itch_motivo']})")
+        linhas.append("")
+    yt = dados.get("youtube")
+    if yt:
+        shorts = yt.get("shorts")
+        extra = f" · shorts={shorts} de {yt.get('videos_conferidos')} conferido(s)" if shorts is not None else ""
+        linhas.append(f"**YouTube:** {yt['inscritos']} inscrito(s) · {yt['videos']} vídeo(s) · "
+                      f"{yt['visitas']} visualizaç(ões){extra}")
+        linhas.append("")
+    elif dados.get("youtube_motivo"):
+        linhas.append(f"**YouTube:** NAO_OBSERVAVEL ({dados['youtube_motivo']})")
+        linhas.append("")
     conv = dados.get("interacao") or {}
     if conv.get("posts_checados"):
         promo_c = (conv.get("por_classe") or {}).get("promo", {})
@@ -485,11 +612,21 @@ def main(argv):
     ig, motivo_ig = observado_instagram()
     dados["instagram"] = ig
     dados["instagram_motivo"] = motivo_ig
+    itch, motivo_itch = observado_itch()
+    dados["itch"] = itch
+    dados["itch_motivo"] = motivo_itch
+    yt, motivo_yt = observado_youtube()
+    dados["youtube"] = yt
+    dados["youtube_motivo"] = motivo_yt
     perfil_dados = dados.get("perfil") or {}
     observado = {
         "bsky_seguidores": perfil_dados.get("seguidores"),
         "ig_posts": (ig or {}).get("posts"),
         "ig_seguidores": (ig or {}).get("seguidores"),
+        "itch_downloads": (itch or {}).get("downloads"),
+        "itch_seguidores": None,  # o itch não expõe seguidores por API
+        "yt_inscritos": (yt or {}).get("inscritos"),
+        "yt_shorts": (yt or {}).get("shorts"),
     }
     linhas_metas, contexto_metas = placar_metas(observado)
     dados["placar"] = linhas_metas
@@ -511,6 +648,8 @@ def main(argv):
     if linhas_metas:
         caminho_placar = gravar_placar(linhas_metas, contexto_metas)
         print(f"   instagram: {'sem leitura — ' + motivo_ig if motivo_ig else 'lido'}")
+        print(f"   itch: {'sem leitura — ' + motivo_itch if motivo_itch else str(itch['downloads']) + ' download(s)'}")
+        print(f"   youtube: {'sem leitura — ' + motivo_yt if motivo_yt else str(yt['inscritos']) + ' inscrito(s)'}")
         print(f"   placar de metas: {caminho_placar}")
     return 0
 
