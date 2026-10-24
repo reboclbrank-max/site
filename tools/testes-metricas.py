@@ -232,5 +232,44 @@ ok("meta de canal sem API não é contada como observada", y["status"] == "SEM_L
 ok("placar informa prazo e dias restantes", ctx["dias_restantes"] == 19, str(ctx))
 ok("o placar não inventa ritmo quando não há leitura", i["por_dia"] is None, str(i))
 
+# 16. Instagram: contadores e engajamento por formato, sem inventar zero
+def com_instagram(contadores, midias=None, erro=None):
+    def falso(url, token, tentativas=2):
+        if "/media" in url:
+            if erro:
+                return (None, erro)
+            return ({"data": midias or []}, None)
+        return (contadores, None)
+    metricas.http_json_autorizado = falso
+
+
+os.environ["IG_TOKEN"] = "valor-de-teste"
+os.environ["IG_USER_ID"] = "123"
+com_instagram({"followers_count": 0, "media_count": 15},
+              [{"like_count": 3, "comments_count": 1, "media_type": "IMAGE"},
+               {"like_count": 0, "comments_count": 0, "media_type": "IMAGE"},
+               {"like_count": 9, "comments_count": 0, "media_type": "VIDEO"}])
+ig, motivo = metricas.observado_instagram()
+ok("Instagram: zero seguidores só é zero se a API disser zero",
+   ig["seguidores"] == 0 and motivo is None, str(motivo))
+ok("Instagram: engajamento separado por formato",
+   ig["por_tipo"]["IMAGE"]["media"] == 2.0 and ig["por_tipo"]["VIDEO"]["media"] == 9.0, str(ig["por_tipo"]))
+ok("Instagram: conta publicação sem engajamento",
+   ig["por_tipo"]["IMAGE"]["zero"] == 1, str(ig["por_tipo"]["IMAGE"]))
+
+com_instagram({"followers_count": 12}, None)
+ig, motivo = metricas.observado_instagram()
+ok("Instagram: resposta sem os contadores não vira medição", ig is None and "contadores" in motivo, str(motivo))
+
+com_instagram({"followers_count": 5, "media_count": 3}, erro="403")
+ig, motivo = metricas.observado_instagram()
+ok("Instagram: lista de mídias recusada não zera o engajamento",
+   ig["seguidores"] == 5 and "midias_motivo" in ig and "por_tipo" not in ig, str(ig))
+
+os.environ.pop("IG_TOKEN", None)
+ig, motivo = metricas.observado_instagram()
+ok("Instagram: sem credencial no runtime é NAO_OBSERVAVEL, não zero",
+   ig is None and "sem credencial" in motivo, str(motivo))
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)
