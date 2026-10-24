@@ -271,5 +271,72 @@ ig, motivo = metricas.observado_instagram()
 ok("Instagram: sem credencial no runtime é NAO_OBSERVAVEL, não zero",
    ig is None and "sem credencial" in motivo, str(motivo))
 
+# 17. itch: duas contas, uma chave cada, sem inventar zero
+def com_itch(resposta_por_chave):
+    def falso(url, token, tentativas=2):
+        return resposta_por_chave.get(token, (None, "403"))
+    metricas.http_json_autorizado = falso
+
+
+com_itch({
+    "chave-a": ({"games": [{"title": "Ceifalume", "downloads_count": 44, "views_count": 900, "published": True},
+                           {"title": "Rascunho", "downloads_count": 99, "published": False}]}, None),
+    "chave-b": ({"games": [{"title": "Prancheta", "downloads_count": 12, "views_count": 200}]}, None),
+})
+itch, motivo = metricas.observado_itch("chave-a,chave-b")
+ok("itch soma as duas contas", itch["downloads"] == 56 and itch["contas_lidas"] == 2, str(motivo))
+ok("itch ignora jogo não publicado", all(j["titulo"] != "Rascunho" for j in itch["jogos"]))
+ok("itch ordena por download", itch["jogos"][0]["titulo"] == "Ceifalume")
+
+com_itch({})  # todas as chaves recusadas
+itch, motivo = metricas.observado_itch("chave-a")
+ok("itch com chave recusada é NAO_OBSERVAVEL, não zero", itch is None and "recusada" in motivo, str(motivo))
+os.environ.pop("ITCH_API_KEYS", None)
+itch, motivo = metricas.observado_itch()
+ok("itch sem chave no runtime é NAO_OBSERVAVEL", itch is None and "sem chave" in motivo, motivo)
+
+# 18. YouTube: contadores públicos e contagem de shorts
+def com_youtube(canal, playlist=None, videos=None, erro=None):
+    def falso(url, tentativas=2):
+        if erro:
+            return (None, erro)
+        if "/channels" in url:
+            return (canal, None)
+        if "/playlistItems" in url:
+            return (playlist if playlist is not None else {}, None)
+        return (videos if videos is not None else {}, None)
+    metricas.http_json = falso
+
+
+canal_ok = {"items": [{"statistics": {"subscriberCount": "24", "videoCount": "7", "viewCount": "1500"},
+                       "contentDetails": {"relatedPlaylists": {"uploads": "UUxxx"}}}]}
+com_youtube(canal_ok,
+            {"items": [{"contentDetails": {"videoId": "a"}}, {"contentDetails": {"videoId": "b"}},
+                       {"contentDetails": {"videoId": "c"}}]},
+            {"items": [{"contentDetails": {"duration": "PT45S"}},
+                       {"contentDetails": {"duration": "PT8M"}},
+                       {"contentDetails": {"duration": "PT59S"}}]})
+yt, motivo = metricas.observado_youtube("chave-yt")
+ok("YouTube lê inscritos e vídeos", yt["inscritos"] == 24 and yt["videos"] == 7, str(motivo))
+ok("YouTube conta shorts por duração (até 61s)", yt["shorts"] == 2 and yt["videos_conferidos"] == 3, str(yt))
+
+com_youtube({"items": []})
+yt, motivo = metricas.observado_youtube("chave-yt")
+ok("YouTube sem canal encontrado não vira zero", yt is None and "recusada" in motivo, str(motivo))
+
+com_youtube({"items": [{"statistics": {"hiddenSubscriberCount": True}}]})
+yt, motivo = metricas.observado_youtube("chave-yt")
+ok("YouTube com inscritos ocultos é NAO_OBSERVAVEL", yt is None and "contadores" in motivo, str(motivo))
+
+com_youtube(canal_ok, erro="quotaExceeded")
+yt, motivo = metricas.observado_youtube("chave-yt")
+ok("YouTube com erro de cota é NAO_OBSERVAVEL", yt is None and "recusada" in motivo, str(motivo))
+
+os.environ.pop("YT_API_KEY", None)
+yt, motivo = metricas.observado_youtube()
+ok("YouTube sem chave no runtime é NAO_OBSERVAVEL", yt is None and "sem chave" in motivo, motivo)
+ok("a chave do YouTube não é impressa em nenhum caminho",
+   not any(("print(" in l and "YT_API_KEY" in l) for l in open(os.path.join(RAIZ, "tools", "metricas.py"), encoding="utf-8").read().splitlines()))
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)

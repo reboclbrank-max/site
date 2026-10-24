@@ -125,6 +125,23 @@ medidor em um clique (`workflow_dispatch`), com permissão de leitura apenas: n�
 faz commit, não tem cron e não consome cota de repositório privado. É como o dono confere o
 placar sem esperar o próximo ciclo de três horas.
 
+### itch.io e YouTube: o que já está pronto e o que depende de chave — 2026-10-24
+
+O medidor passou a saber ler os dois canais, e o código já está no repositório:
+
+- **itch.io**: `observado_itch()` lê `api.itch.io/profile/games` e soma downloads e
+  visitas. A casa publica em **duas contas** (`reboclbrank-max` e `rebocl-brank`) e a API
+  só devolve os jogos da chave usada — por isso o secret `ITCH_API_KEYS` aceita várias
+  chaves separadas por vírgula. O itch **não** expõe seguidores por API (pedido aberto no
+  fórum desde 2020), então `itch_seguidores` continua sem leitura, e isso fica escrito.
+- **YouTube**: `observado_youtube()` lê inscritos, vídeos e visualizações com **chave de
+  API** (não é OAuth) e conta shorts pela duração dos envios. O ID do canal já está no
+  código, porque é o mesmo linkado no site.
+
+Sem as chaves, a linha é `NAO_OBSERVAVEL` — nunca zero. Os passos para gerar estão em
+`COMO-GERAR-CHAVES.md`. Upload automático de vídeo é outro assunto: exige OAuth com o
+dono logado e está fora do que a casa pode fazer sozinha.
+
 ## Fonte de verdade e operação atual
 
 | Componente | Responsabilidade |

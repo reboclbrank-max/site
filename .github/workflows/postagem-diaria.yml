@@ -63,6 +63,11 @@ jobs:
           # registra NAO_OBSERVAVEL — nunca zero. Nada é impresso nem versionado.
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          # Uma chave por conta do itch (a casa publica em duas). Sem elas: NAO_OBSERVAVEL.
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          # Leitura pública do YouTube (inscritos, vídeos, shorts). Não é OAuth.
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
         run: |
           python3 tools/metricas.py || echo "medição indisponível nesta rodada"
           git config user.name "casa-rebocl"
