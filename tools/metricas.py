@@ -230,7 +230,28 @@ def observado_instagram():
         return None, f"leitura recusada ({erro or 'resposta vazia'})"
     if "followers_count" not in dados or "media_count" not in dados:
         return None, "resposta sem os contadores"
-    return {"seguidores": dados["followers_count"], "posts": dados["media_count"]}, None
+    leitura = {"seguidores": dados["followers_count"], "posts": dados["media_count"]}
+
+    # Engajamento por publicação do Instagram. like_count/comments_count são campos
+    # de leitura da própria conta e não exigem permissão de insights; se a chamada
+    # for recusada, o campo fica ausente — não vira zero.
+    midias, erro_midia = http_json_autorizado(
+        f"https://graph.instagram.com/v21.0/{conta}/media"
+        "?fields=id,like_count,comments_count,timestamp,media_type&limit=30", token)
+    if not erro_midia and isinstance(midias, dict) and midias.get("data"):
+        por_tipo = collections.defaultdict(list)
+        for m in midias["data"]:
+            eng = (m.get("like_count") or 0) + (m.get("comments_count") or 0)
+            por_tipo[m.get("media_type") or "DESCONHECIDO"].append(eng)
+        leitura["midias"] = len(midias["data"])
+        leitura["por_tipo"] = {
+            tipo: {"n": len(v), "media": round(sum(v) / len(v), 2),
+                   "zero": sum(1 for x in v if x == 0)}
+            for tipo, v in por_tipo.items()
+        }
+    else:
+        leitura["midias_motivo"] = erro_midia or "lista de mídias vazia"
+    return leitura, None
 
 
 def http_json_autorizado(url, token, tentativas=2):
@@ -402,6 +423,15 @@ def bloco_markdown(dados):
             continue
         linhas.append(f"| {rotulo} | {d['posts']} | {d['media']} | {d['maximo']} | {d['sem_engajamento']} ({d['taxa_sem_engajamento']}%) |")
     linhas.append("")
+    ig = dados.get("instagram")
+    if ig and ig.get("por_tipo"):
+        linhas.append(f"**Instagram ({ig['seguidores']} seguidores · {ig['posts']} posts):** " +
+                      " · ".join(f"{tipo} n={v['n']} média={v['media']} zero={v['zero']}"
+                                 for tipo, v in ig["por_tipo"].items()))
+        linhas.append("")
+    elif dados.get("instagram_motivo"):
+        linhas.append(f"**Instagram:** NAO_OBSERVAVEL ({dados['instagram_motivo']})")
+        linhas.append("")
     conv = dados.get("interacao") or {}
     if conv.get("posts_checados"):
         promo_c = (conv.get("por_classe") or {}).get("promo", {})
