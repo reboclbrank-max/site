@@ -81,6 +81,50 @@ do valor observado, quanto falta, dias restantes e quanto seria necessário por 
 leitura automática aparece como `SEM_LEITURA` — não como zero, não como "quase lá". Hoje só
 Bluesky tem leitura; YouTube e itch seguem sem API e isso está escrito na tabela, não escondido.
 
+### Instagram: a medição desmentiu a hipótese — 2026-10-24
+
+A leitura de 24/10 pela API pública só alcançava o Bluesky, e o `ig_seguidores=0` do
+registro diário parecia falha de token. Rodando o medidor no runner, com os segredos reais
+(execução `40128715802` do workflow `diagnostico-da-casa`), a resposta veio:
+
+| leitura | valor |
+|---|---|
+| posts publicados | **15** |
+| seguidores | **0** (a API respondeu zero; não é ausência de leitura) |
+| engajamento médio por post | **0,13** |
+| posts sem nenhum engajamento | **13 de 15 (87%)** |
+
+Isso muda a conclusão anterior: o Instagram não está "com leitura quebrada", está publicando
+para o vazio. Quinze publicações em onze dias não moveram um único seguidor. A causa não é
+cadência — é distribuição: conta nova, sem seguidores e sem sinal de engajamento, não é
+entregue pelo algoritmo, e a casa não tem nenhum outro caminho até ela.
+
+Consequência operacional: o problema do Instagram é de **entrada de público**, não de volume
+de posts. Aumentar frequência ali seria gastar mais para o mesmo zero.
+
+### Ponte entre redes — 2026-10-24
+
+O dono pediu "divulgar uma rede dentro das outras" e isso não tinha entrega nenhuma. Agora a
+casa tem quatro temas editoriais de ponte, que convidam quem já acompanha a casa a seguir a
+conta no Instagram e lembram o hub `canais.html` — todos roteados para o hub público de
+canais, sem link de terceiro, sem rastreador e sem conta nova:
+
+- "convide a seguir a conta no Instagram para ver os bastidores dos jogos"
+- "convide a seguir a conta no Instagram para acompanhar as artes novas"
+- "lembre que o site lista os canais oficiais da casa"
+- "convide quem joga no navegador a seguir a conta no Instagram"
+
+O efeito é medível e está no placar: se a ponte funcionar, `Instagram: seguidores` sai de 0
+sem que a casa publique mais nada. Se em duas semanas continuar em 0, a ponte não funciona e
+o assunto passa a ser decidir com o dono se o Instagram continua no plano.
+
+### Diagnóstico sob demanda
+
+`.github/workflows/diagnostico-da-casa.yml` roda as três barreiras e uma leitura completa do
+medidor em um clique (`workflow_dispatch`), com permissão de leitura apenas: não publica, não
+faz commit, não tem cron e não consome cota de repositório privado. É como o dono confere o
+placar sem esperar o próximo ciclo de três horas.
+
 ## Fonte de verdade e operação atual
 
 | Componente | Responsabilidade |

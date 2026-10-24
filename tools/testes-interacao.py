@@ -120,5 +120,18 @@ ok("a resposta usa a cadência aprovada, não um número solto",
 ok("o caçador não usa mais '3 por ciclo'",
    "if feitas >= 3: break" not in fonte.replace("postador", ""))
 
+# 6. ponte entre redes: existe tema que leva público de onde há gente para onde não há
+fonte_temas = fonte
+ok("a casa tem temas que divulgam uma rede dentro da outra",
+   "bastidores dos jogos" in fonte_temas and "canais oficiais da casa" in fonte_temas)
+temas_ponte = ["convide a seguir a conta no Instagram para ver os bastidores dos jogos",
+               "convide a seguir a conta no Instagram para acompanhar as artes novas",
+               "lembre que o site lista os canais oficiais da casa",
+               "convide quem joga no navegador a seguir a conta no Instagram"]
+canais = postador.DESTINOS_EDITORIAIS["canais"]
+ok("todo tema de ponte roteia para o hub de canais, nunca para URL livre",
+   all(postador.destino_editorial("", t) == canais for t in temas_ponte),
+   str([postador.destino_editorial("", t) for t in temas_ponte]))
+
 print("\n%d/%d verificações de interação passaram" % (certos, certos + falhas))
 raise SystemExit(1 if falhas else 0)

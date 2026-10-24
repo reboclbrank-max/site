@@ -427,7 +427,15 @@ def main():
                  "fale da rotina de estudar programacao todo dia", "compare jogar no navegador vs APK, vantagens de cada",
                  "peça sugestao de recurso pro CEIFALUME nos comentarios", "fale da alegria do primeiro jogador que nao e da familia",
                  "explique por que jogos pequenos tem alma", "pergunte: futebol com amigos ou gerir o clube sozinho?",
-                 "fale dos sons e musicas que combinam com CEIFALUME", "convide pra apoiar seguindo e compartilhando", "retrospectiva rapida: o que a casa aprendeu essa semana"]
+                 "fale dos sons e musicas que combinam com CEIFALUME", "convide pra apoiar seguindo e compartilhando", "retrospectiva rapida: o que a casa aprendeu essa semana",
+                 # Ponte entre redes: o dono pediu divulgar cada rede dentro das outras.
+                 # Medido em 24/10/2026, o Instagram tem 15 posts e 0 seguidores; o
+                 # Bluesky tem 34 seguidores. Levar quem já acompanha para o canal
+                 # vazio é o único caminho sem criar conta, custo ou anúncio.
+                 "convide a seguir a conta no Instagram para ver os bastidores dos jogos",
+                 "convide a seguir a conta no Instagram para acompanhar as artes novas",
+                 "lembre que o site lista os canais oficiais da casa",
+                 "convide quem joga no navegador a seguir a conta no Instagram"]
         contexto = ""
         try:
             with open("posts/aulas.md") as fa:
