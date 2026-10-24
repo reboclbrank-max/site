@@ -26,6 +26,34 @@ Primeira medição (24/10/2026, 300 posts próprios): conteúdo dos jogos n=80, 
 tem 34 seguidores com 338 posts publicados. Esse contraste é o dado que faltava para decidir
 o que continuar fazendo — e o que parar de fazer. Não é prova de alcance, download ou conversão.
 
+### Interação: o que foi medido e o que isso obriga
+
+O postador nunca leu notificação. A primeira leitura de thread (24/10/2026, 40 conversas)
+mostrou três coisas separadas, que antes estavam misturadas:
+
+| origem | conversas | respostas de terceiros | pendentes de resposta |
+|---|---|---|---|
+| conteúdo dos jogos (promo) | 0 | **0** | **0** |
+| post alheio que a casa comentou | 38 | 40 | não se aplica |
+
+Leitura honesta: **o conteúdo dos jogos não gerou nenhuma resposta** nesta amostra. O que
+existe é o autor do post comentado agradecendo o comentário ("Thanks!", "Obrigado!") —
+retribuição educada, não jogador pedindo atenção nem conversa sobre o jogo. Portanto:
+
+- responder o agradecimento não é prioridade; **gerar assunto** é o problema real;
+- o medidor passou a separar as duas coisas e a marcar `interacao=NAO_OBSERVAVEL` quando
+  a thread não pode ser lida — nunca zero;
+- enquanto o conteúdo não gerar resposta, "responder mais rápido" não resolve nada. A
+  ordem correta é: mudar o que é postado, depois medir de novo.
+
+### Horário: por que ainda não foi mudado
+
+Os 8 ciclos caem às 00, 03, 06, 09, 12, 15, 18 e 21h de Brasília. Parece óbvio cortar a
+madrugada, mas a conta é global e a amostra por hora (n≈2 a 28) está dentro do ruído — o
+próprio medidor registra isso. Mudar cron agora seria escolher por intuição e chamar de
+dado. Falta o insumo que a API pública não dá: de onde vêm os seguidores. Com isso na mão,
+o horário passa a ter base. Até então: nada de mexer no cron e chamar de otimização.
+
 ## Fonte de verdade e operação atual
 
 | Componente | Responsabilidade |

@@ -147,5 +147,58 @@ linha = metricas.linha_do_dia(dados)
 ok("linha do dia tem seguidores, posts, média e os dois tipos",
    all(t in linha for t in ("bsky_seguidores=34", "posts_proprios=2", "eng_medio=", "promo:", "comentario:")), linha)
 
+# 12. conversa: quem respondeu ao conteúdo da casa e quem ficou sem resposta
+def com_threads(respostas_por_uri, erro_thread=None):
+    """Fonte falsa: feed genérico + thread descrita caso a caso."""
+    def falso(url, tentativas=2):
+        if "getProfile" in url:
+            return ({"followersCount": 34, "followsCount": 10, "postsCount": 338}, None)
+        if "getPostThread" in url:
+            uri = url.split("uri=")[1].split("&")[0]
+            if erro_thread:
+                return (None, erro_thread)
+            return ({"thread": {"replies": [
+                {"post": {"author": {"handle": a}}} for a in respostas_por_uri.get(uri, [])
+            ]}}, None)
+        return ({"feed": [], "cursor": None}, None)
+    metricas.http_json = falso
+
+
+def meu(uri, classe_texto, respostas=1):
+    return {"uri": uri, "classe": metricas.classificar(classe_texto), "respostas": respostas}
+
+
+# dois posts de conteúdo próprio: um com resposta de fã, outro já atendido pela casa
+com_threads({
+    "at://promo-sem-resposta": ["fa.novo"],
+    "at://promo-atendido": ["fa.antigo", metricas.ATOR],
+})
+conv = metricas.interacao([meu("at://promo-sem-resposta", "⚽ PRANCHETA"),
+                           meu("at://promo-atendido", "🌙 CEIFALUME")])
+ok("resposta ao conteúdo da casa sem retorno vira pendência",
+   conv["por_classe"]["promo"]["pendentes"] == 1, str(conv["por_classe"]["promo"]))
+ok("resposta já atendida não conta como pendente",
+   conv["por_classe"]["promo"]["respondidas"] == 1, str(conv["por_classe"]["promo"]))
+
+# 13. retribuição em post alheio não é fila de resposta
+com_threads({"at://comentario": ["autor.do.post"]})
+conv = metricas.interacao([meu("at://comentario", "que jogo bonito")])
+ok("agradecimento em post alheio não entra como pendência de resposta",
+   conv["por_classe"]["promo"]["pendentes"] == 0 and conv["por_classe"]["comentario"]["respostas"] == 1,
+   str(conv["por_classe"]))
+
+# 14. thread ilegível não vira zero: vira NAO_OBSERVAVEL
+com_threads({}, erro_thread="URLError")
+conv = metricas.interacao([meu("at://x", "⚽ PRANCHETA")])
+ok("thread fora do ar = fonte_ok False (não zero)",
+   conv["fonte_ok"] is False and conv["posts_checados"] == 0, str(conv))
+com_fonte([post("⚽ PRANCHETA", respostas=3)])
+metricas.interacao = lambda posts, max_threads=40: {"posts_checados": 0, "por_classe": {},
+                                                    "respostas_recebidas": 0, "respondidas": 0,
+                                                    "pendentes": 0, "fonte_ok": False, "erro": "URLError"}
+dados = metricas.analisar()
+ok("linha do dia marca interacao=NAO_OBSERVAVEL quando a thread falha",
+   "interacao=NAO_OBSERVAVEL" in metricas.linha_do_dia(dados), metricas.linha_do_dia(dados))
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)
