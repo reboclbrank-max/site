@@ -1,0 +1,18 @@
+# Desempenho do que foi postado
+
+> Medição pública e automática do que a casa publica e do que volta. `NAO_OBSERVAVEL` é ausência de leitura, **não** zero. Números aqui não provam entrega, alcance, download, conversão ou satisfação — mostram só o que a API pública devolveu.
+
+## 24/10/2026
+
+> Medição pública em 2026-10-24T20:01Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
+
+- **bsky_seguidores=34 · posts_proprios=300 · eng_medio=1.17 · promo: n=80 media=2.06 zero=11.2% · comentario: n=220 media=0.85 zero=42.3%**
+
+| tipo | posts | engajamento médio | melhor | sem engajamento |
+|---|---|---|---|---|
+| conteúdo dos jogos | 80 | 2.06 | 4 | 9 (11.2%) |
+| comentário em post alheio | 220 | 0.85 | 3 | 93 (42.3%) |
+
+**Horário (Brasília):** 00h=1.1(n=20) · 01h=1.25(n=28) · 02h=2.0(n=4) · 04h=1.25(n=8) · 05h=1.0(n=11) · 07h=1.38(n=8) · 08h=1.42(n=26) · 09h=1.2(n=5) · 10h=0.93(n=15) · 11h=1.22(n=18) · 12h=0.9(n=21) · 13h=1.29(n=14) · 14h=0.5(n=20) · 15h=0.88(n=8) · 16h=1.2(n=10) · 17h=1.07(n=28) · 18h=1.4(n=15) · 19h=1.25(n=4) · 20h=1.33(n=21) · 21h=1.38(n=8) · 23h=1.75(n=8)
+
+> ⚠ Amostra pequena por hora. Isso **não** sustenta escolher horário: a diferença está dentro do ruído. Só vale depois de acumular mais posts com este medidor ligado.

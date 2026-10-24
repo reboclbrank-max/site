@@ -8,6 +8,24 @@ O marketing da Rebocl Brank pode operar de forma autônoma em torno dos jogos e 
 
 A meta é melhorar alcance, testes, retenção e aprendizado com custo adicional de **R$ 0**. Não é uma promessa de crescimento, alcance garantido, postagem instantânea, acesso a toda plataforma ou funcionamento sem interrupção: APIs, redes sociais, Actions e motores gratuitos podem limitar, atrasar ou falhar.
 
+## Medição de resultado por post — 2026-10-24
+
+Antes desta data a casa publicava sem saber o que voltava: o registro diário repetia
+`engajamento=NAO_OBSERVAVEL` e só contava seguidores e número de posts. Agora existe
+`tools/metricas.py`, executado a cada ciclo depois da postagem:
+
+- lê **somente API pública** (Bluesky, sem token e sem segredo), então funciona mesmo sem credencial;
+- separa **conteúdo dos jogos** de **comentário em post alheio** e mede o retorno de cada tipo;
+- conta engajamento por post (curtidas + reposts + respostas), taxa de posts sem retorno e posts por seguidor;
+- grava `posts/desempenho.md`, com o bloco do dia reescrito (não duplicado) e histórico preservado;
+- fonte fora do ar entra como `NAO_OBSERVAVEL` — **nunca** vira zero;
+- horário só é lido quando há amostra suficiente; com amostra pequena o arquivo diz, com todas as letras, que a diferença é ruído.
+
+Primeira medição (24/10/2026, 300 posts próprios): conteúdo dos jogos n=80, média **2,06**,
+11,2% sem retorno; comentário em post alheio n=220, média **0,85**, 42,3% sem retorno. A conta
+tem 34 seguidores com 338 posts publicados. Esse contraste é o dado que faltava para decidir
+o que continuar fazendo — e o que parar de fazer. Não é prova de alcance, download ou conversão.
+
 ## Fonte de verdade e operação atual
 
 | Componente | Responsabilidade |
