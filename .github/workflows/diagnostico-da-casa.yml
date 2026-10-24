@@ -1,0 +1,50 @@
+name: diagnostico-da-casa
+
+# Diagnóstico sob demanda: roda as três barreiras offline e uma única leitura do
+# medidor. NÃO publica, NÃO faz commit, NÃO tem cron — só responde, em um clique e
+# em dois minutos, à pergunta "o que a casa está medindo agora?".
+#
+# Existe porque esperar o próximo ciclo de três horas para descobrir se a medição
+# funciona é tempo perdido, e porque o dono não deve precisar ler código para saber
+# em que pé está o marketing.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma delas toca a rede)
+        run: |
+          python3 tools/testes-autonomia-marketing.py
+          python3 tools/testes-metricas.py
+          python3 tools/testes-interacao.py
+
+      - name: Mede o que foi postado e o que voltou (só leitura)
+        env:
+          # Só leitura de contadores. Sem estes segredos o medidor escreve
+          # NAO_OBSERVAVEL, nunca zero, e o diagnóstico continua válido.
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: |
+          python3 tools/metricas.py
+          echo "──────────── placar de metas ────────────"
+          cat posts/placar-metas.md
+          echo "──────────── desempenho do dia ────────────"
+          cat posts/desempenho.md
+
+      - name: Resumo no painel da execução
+        if: always()
+        run: |
+          {
+            echo "### Diagnóstico da casa"
+            echo
+            echo "Somente leitura: nada foi publicado e nada foi commitado."
+            echo
+            sed -n '1,40p' posts/placar-metas.md 2>/dev/null || echo "placar indisponível nesta rodada"
+          } >> "$GITHUB_STEP_SUMMARY"
