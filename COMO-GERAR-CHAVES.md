@@ -1,5 +1,11 @@
 # Como gerar as chaves que faltam — itch.io e YouTube
 
+> **STATUS 24/10/2026: RESOLVIDO.** As duas leituras estão ligadas e rodando em
+> produção. A chave do itch já existia em `base/ferramentas/chaves.md` e foi para o
+> secret `ITCH_API_KEYS`; a chave do YouTube foi recebida do dono e está em
+> `YT_API_KEY`. Ver "Resultado medido" no fim deste arquivo. O passo a passo abaixo
+> continua válido para quando for preciso gerar ou trocar uma chave.
+
 > O código já está pronto e testado. Falta **só** você gerar as chaves e colar nos
 > cofres do GitHub. Enquanto elas não existirem, o medidor escreve
 > `NAO_OBSERVAVEL` (não escreve zero, não inventa número).
@@ -138,3 +144,37 @@ Nada disso publica, nada faz commit, nada gasta cota de repositório privado.
 
 > Resumo em uma frase: **itch = 1 minuto e resolve downloads; YouTube = 5 minutos e
 > resolve inscritos.** O resto do trabalho já está no repositório.
+
+---
+
+# Resultado medido em 24/10/2026 (produção, secrets reais)
+
+| leitura | valor | o que significa |
+|---|---|---|
+| itch: downloads | **45** (Ceifalume 40 · Prancheta 5) | linha de partida em 13/10 era 44 |
+| itch: visitas | **175** | ~3,9 visitas por download |
+| YouTube: inscritos | **24** | era 24 em 13/10 — onze dias, zero líquido |
+| YouTube: vídeos | **160** | média de 33 visualizações por vídeo |
+| YouTube: shorts | **5** (de 100 conferidos) | meta de 4 shorts: **ATINGIDA** |
+| Instagram: seguidores | **0** (15 posts) | 13 dos 15 posts sem nenhum engajamento |
+| Bluesky: seguidores | **34** | 338 posts publicados |
+
+A leitura do itch cobre uma conta só: a chave de `reboclbrank-max` devolve **os dois
+jogos**, porque o itch publica sob o subdomínio `rebocl-brank.itch.io`. Não é preciso
+gerar uma segunda chave. Os links do site (`reboclbrank-max.itch.io/...`) funcionam:
+o itch responde nos dois endereços.
+
+## Problema de segurança encontrado no teste da chave do YouTube
+
+A chave responde à API do YouTube **e** ao Geocoding do Google Maps. Ou seja: ela não
+está restrita, e uma chave sem restrição pode ser usada em qualquer API habilitada no
+projeto, com a cobrança caindo na conta do dono.
+
+**Corrigir (1 minuto):** https://console.cloud.google.com/apis/credentials → clique na
+chave → *API restrictions* → **Restrict key** → marque só **YouTube Data API v3** →
+**Save**.
+
+**Recomendação adicional:** a chave foi digitada em conversa, então o valor já saiu do
+cofre. Depois de restringir, o mais seguro é **gerar uma nova** no mesmo painel,
+substituir o secret `YT_API_KEY` em `site/settings/secrets/actions` e apagar a antiga.
+Enquanto a restrição existir, o risco fica limitado à cota gratuita do YouTube.
