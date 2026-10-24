@@ -223,3 +223,6 @@
 
 ## 24/10/2026 15:57 UTC
 🌙 CEIFALUME 0.1 já está no ar. ⏎ Plante, colha e negocie à luz da lanterna: a fazenda continua trabalhando até 8 h com o jogo fechado. ⏎ Grátis no navegador e Android, sem conta. ⏎ #indiedev #idle
+
+## 24/10/2026 23:18 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev
