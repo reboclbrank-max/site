@@ -106,6 +106,7 @@ def analisar(limite=MAX_FEED):
         if not quando:
             continue
         posts.append({
+            "uri": post.get("uri"),
             "quando": quando,
             "texto": (registro.get("text") or "")[:80],
             "classe": classificar(registro.get("text")),
@@ -144,14 +145,69 @@ def analisar(limite=MAX_FEED):
     }
     if fonte_ok and p and p.get("seguidores"):
         resumo["total"]["posts_por_seguidor"] = round(total / p["seguidores"], 1)
+    conversa = interacao(proprios)
     return {
         "ator": ATOR,
+        "interacao": conversa,
         "medido_em": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
         "perfil": p,
         "erro_perfil": erro_perfil,
         "erro_feed": erro_feed,
         "resumo": resumo,
         "posts": sorted(proprios, key=lambda x: x["quando"], reverse=True),
+    }
+
+
+def interacao(posts, max_threads=40):
+    """Quem falou com a casa e quem ficou sem resposta.
+
+    O postador publica e comenta, mas nunca leu notificação: se alguém responde, ninguém
+    sabe. Aqui a thread dos posts recentes com resposta é lida (API pública) e o retorno
+    é separado por origem, porque as duas coisas significam coisas diferentes:
+
+      PROMO      — resposta ao conteúdo da casa. Se não foi respondida, é conversa perdida.
+      COMENTÁRIO — resposta do autor do post alheio onde a casa comentou. É retribuição
+                   educada ao comentário, não alguém pedindo atenção: não vira fila.
+
+    Não publica nada, não responde nada: só mede e registra.
+    """
+    por_classe = {
+        "promo": {"conversas": 0, "respostas": 0, "respondidas": 0, "pendentes": 0},
+        "comentario": {"conversas": 0, "respostas": 0, "respondidas": 0, "pendentes": 0},
+    }
+    candidatos = [x for x in posts if x.get("respostas")][:max_threads]
+    checados, erro = 0, None
+    for x in candidatos:
+        dados, erro_leitura = http_json(f"{API}/app.bsky.feed.getPostThread?uri={x['uri']}&depth=2")
+        if erro_leitura or not isinstance(dados, dict):
+            erro = erro_leitura or "resposta vazia"
+            continue
+        checados += 1
+        classe = x.get("classe") if x.get("classe") in por_classe else "comentario"
+        balde = por_classe[classe]
+        terceiros = casa = 0
+        for r in ((dados.get("thread") or {}).get("replies") or []):
+            autor = ((r.get("post") or {}).get("author") or {}).get("handle")
+            if autor == ATOR:
+                casa += 1
+            else:
+                terceiros += 1
+        if not terceiros:
+            continue
+        balde["conversas"] += 1
+        balde["respostas"] += terceiros
+        if casa:
+            balde["respondidas"] += 1
+        else:
+            balde["pendentes"] += 1
+    return {
+        "posts_checados": checados,
+        "por_classe": por_classe,
+        "respostas_recebidas": sum(b["respostas"] for b in por_classe.values()),
+        "respondidas": por_classe["promo"]["respondidas"],
+        "pendentes": por_classe["promo"]["pendentes"],
+        "fonte_ok": erro is None,
+        "erro": erro,
     }
 
 
@@ -194,6 +250,13 @@ def linha_do_dia(dados):
         partes.append(f"promo: n={promo['posts']} media={promo['media']} zero={promo['taxa_sem_engajamento']}%")
     if coment:
         partes.append(f"comentario: n={coment['posts']} media={coment['media']} zero={coment['taxa_sem_engajamento']}%")
+    conv = dados.get("interacao") or {}
+    if conv.get("fonte_ok") and conv.get("posts_checados"):
+        pc = (conv.get("por_classe") or {}).get("promo", {})
+        partes.append(f"respostas_recebidas={conv['respostas_recebidas']} "
+                      f"promo_respostas={pc.get('respostas', 0)} promo_pendentes={pc.get('pendentes', 0)}")
+    elif conv:
+        partes.append("interacao=NAO_OBSERVAVEL")
     if dados.get("erro_feed"):
         partes.append(f"feed=NAO_OBSERVAVEL({dados['erro_feed']})")
     return " · ".join(partes)
@@ -217,6 +280,19 @@ def bloco_markdown(dados):
         if not d:
             continue
         linhas.append(f"| {rotulo} | {d['posts']} | {d['media']} | {d['maximo']} | {d['sem_engajamento']} ({d['taxa_sem_engajamento']}%) |")
+    linhas.append("")
+    conv = dados.get("interacao") or {}
+    if conv.get("posts_checados"):
+        promo_c = (conv.get("por_classe") or {}).get("promo", {})
+        coment_c = (conv.get("por_classe") or {}).get("comentario", {})
+        linhas.append(
+            f"**Conversa:** {conv['posts_checados']} conversa(s) lida(s). "
+            f"Respostas ao conteúdo da casa: {promo_c.get('respostas', 0)} em {promo_c.get('conversas', 0)} thread(s), "
+            f"{promo_c.get('respondidas', 0)} atendida(s), {promo_c.get('pendentes', 0)} pendente(s). "
+            f"Retorno do autor de post comentado: {coment_c.get('respostas', 0)} em {coment_c.get('conversas', 0)} thread(s) "
+            f"— é retribuição ao comentário, não fila de resposta.")
+    elif conv:
+        linhas.append(f"**Conversa:** NAO_OBSERVAVEL ({conv.get('erro')})")
     linhas.append("")
     if horas:
         linhas.append("**Horário (Brasília):** " + " · ".join(
