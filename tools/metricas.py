@@ -321,6 +321,50 @@ def _duracao_em_segundos(iso):
     return h * 3600 + m * 60 + s
 
 
+# Marcadores de conteúdo da casa nos títulos do YouTube. Fora deles, o vídeo é de
+# outra empresa — e isso importa: medido em 24/10/2026, 145 de 150 envios recentes
+# não eram dos jogos da casa.
+MARCAS_DA_CASA = ("prancheta", "ceifalume", "rebocl", "devlog", "bastidor")
+
+
+def classificar_youtube(titulo, descricao=""):
+    texto = ((titulo or "") + " " + (descricao or "")).casefold()
+    return "casa" if any(m in texto for m in MARCAS_DA_CASA) else "terceiros"
+
+
+def resumo_youtube(videos):
+    """Separa o canal em duas coisas que não são a mesma: conteúdo da casa e o resto.
+
+    Não julga nem apaga nada: só mede quanto do canal fala dos jogos e quanto do
+    retorno vem de cada lado. É o que faltava para explicar "160 vídeos, 24 inscritos".
+    """
+    grupos = {"casa": [], "terceiros": []}
+    for v in videos:
+        grupos[classificar_youtube(v.get("titulo"), v.get("descricao"))].append(v)
+
+    def bloco(lista):
+        if not lista:
+            return {"n": 0, "views": 0, "media_views": None, "likes": 0, "comentarios": 0}
+        # Campo ausente conta como zero AQUI porque é soma de um vídeo já lido; a
+        # ausência de leitura do canal inteiro é tratada antes, em observado_youtube.
+        views = sum(v.get("views") or 0 for v in lista)
+        return {"n": len(lista), "views": views, "media_views": round(views / len(lista), 1),
+                "likes": sum(v.get("likes") or 0 for v in lista),
+                "comentarios": sum(v.get("comentarios") or 0 for v in lista)}
+
+    resumo = {classe: bloco(lista) for classe, lista in grupos.items()}
+    total = sum(g["views"] for g in resumo.values())
+    if total:
+        for classe in resumo:
+            resumo[classe]["fatia_views"] = round(100.0 * resumo[classe]["views"] / total, 1)
+    casa = sorted(grupos["casa"], key=lambda v: v["views"], reverse=True)
+    resumo["casa"]["melhores"] = [
+        {"titulo": v["titulo"], "views": v["views"], "segundos": v["segundos"], "quando": v["quando"]}
+        for v in casa[:3]
+    ]
+    return resumo
+
+
 def observado_youtube(chave=None, canal=None):
     """Inscritos, vídeos e shorts do canal, com leitura pública do YouTube.
 
@@ -347,6 +391,7 @@ def observado_youtube(chave=None, canal=None):
         "visitas": int(stat.get("viewCount") or 0),
     }
     envios = (((item.get("contentDetails") or {}).get("relatedPlaylists") or {}).get("uploads"))
+    coletados = []
     if envios:
         atual, shorts, conferidos = None, 0, 0
         for _ in range(2):  # até 50 vídeos recentes
@@ -361,7 +406,7 @@ def observado_youtube(chave=None, canal=None):
             if not ids:
                 break
             videos, erro_videos = http_json(
-                f"{base}/videos?part=contentDetails&id={','.join(ids[:50])}&key={chave}")
+                f"{base}/videos?part=statistics,snippet,contentDetails&id={','.join(ids[:50])}&key={chave}")
             if erro_videos or not isinstance(videos, dict):
                 break
             for v in videos.get("items") or []:
@@ -369,12 +414,25 @@ def observado_youtube(chave=None, canal=None):
                 conferidos += 1
                 if segundos is not None and segundos <= 61:
                     shorts += 1
+                st = v.get("statistics") or {}
+                sn = v.get("snippet") or {}
+                coletados.append({
+                    "titulo": (sn.get("title") or "")[:80],
+                    "descricao": (sn.get("description") or "")[:160],
+                    "views": int(st.get("viewCount") or 0),
+                    "likes": int(st.get("likeCount") or 0),
+                    "comentarios": int(st.get("commentCount") or 0),
+                    "segundos": segundos,
+                    "quando": (sn.get("publishedAt") or "")[:10],
+                })
             atual = lista.get("nextPageToken")
             if not atual:
                 break
         if conferidos:
             leitura["shorts"] = shorts
             leitura["videos_conferidos"] = conferidos
+        if coletados:
+            leitura["videos_medidos"] = resumo_youtube(coletados)
     return leitura, None
 
 
@@ -555,6 +613,16 @@ def bloco_markdown(dados):
         extra = f" · shorts={shorts} de {yt.get('videos_conferidos')} conferido(s)" if shorts is not None else ""
         linhas.append(f"**YouTube:** {yt['inscritos']} inscrito(s) · {yt['videos']} vídeo(s) · "
                       f"{yt['visitas']} visualizaç(ões){extra}")
+        vm = yt.get("videos_medidos")
+        if vm:
+            casa, fora = vm["casa"], vm["terceiros"]
+            linhas.append(f"**YouTube — o que o canal publica:** dos {casa['n'] + fora['n']} vídeos lidos, "
+                          f"**{casa['n']} são dos jogos da casa** ({casa['views']} views, média {casa['media_views']}) "
+                          f"e **{fora['n']} são de outros jogos** ({fora['views']} views, média {fora['media_views']})"
+                          + (f" — os da casa são {casa['fatia_views']}% das visualizações." if "fatia_views" in casa else "."))
+            if casa.get("melhores"):
+                linhas.append("Melhores da casa: " + " · ".join(
+                    f"\"{m['titulo'][:40]}\" ({m['views']})" for m in casa["melhores"]))
         linhas.append("")
     elif dados.get("youtube_motivo"):
         linhas.append(f"**YouTube:** NAO_OBSERVAVEL ({dados['youtube_motivo']})")
@@ -650,6 +718,9 @@ def main(argv):
         print(f"   instagram: {'sem leitura — ' + motivo_ig if motivo_ig else 'lido'}")
         print(f"   itch: {'sem leitura — ' + motivo_itch if motivo_itch else str(itch['downloads']) + ' download(s)'}")
         print(f"   youtube: {'sem leitura — ' + motivo_yt if motivo_yt else str(yt['inscritos']) + ' inscrito(s)'}")
+        if not motivo_yt and yt.get("videos_medidos"):
+            vm = yt["videos_medidos"]
+            print(f"      da casa: n={vm['casa']['n']} · de outros jogos: n={vm['terceiros']['n']}")
         print(f"   placar de metas: {caminho_placar}")
     return 0
 
