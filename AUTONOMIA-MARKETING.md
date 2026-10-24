@@ -142,6 +142,27 @@ Sem as chaves, a linha é `NAO_OBSERVAVEL` — nunca zero. Os passos para gerar 
 `COMO-GERAR-CHAVES.md`. Upload automático de vídeo é outro assunto: exige OAuth com o
 dono logado e está fora do que a casa pode fazer sozinha.
 
+### Fotografia completa das metas — 24/10/2026 (produção, com todas as chaves)
+
+Com itch e YouTube ligados, seis das sete metas passaram a ter leitura. O que os números
+dizem, sem enfeite:
+
+| canal | medido | alvo (30 dias) | leitura |
+|---|---|---|---|
+| itch | 45 downloads · 175 visitas | 100 | +1 em onze dias; faltam 55 em 19 dias (2,9/dia) |
+| YouTube | 24 inscritos · 160 vídeos · 5.387 visualizações | 40 inscritos | 24 era o número de 13/10: onze dias, zero líquido |
+| YouTube | 5 shorts | 4 shorts | **atingido** |
+| Instagram | 0 seguidores · 15 posts · 87% sem engajamento | 50 | nenhum seguidor em onze dias |
+| Bluesky | 34 seguidores · 338 posts | 50 | faltam 16 em 19 dias (0,84/dia) |
+
+O padrão é o mesmo em todos os canais, e não é falta de produção: **160 vídeos no YouTube
+e 24 inscritos; 338 posts no Bluesky e 34 seguidores; 15 posts no Instagram e zero
+seguidores.** A casa produz muito e distribui pouco. O gargalo é entrada de público, não
+volume — e é isso que a ponte entre redes passou a atacar.
+
+`itch_seguidores` continua `SEM_LEITURA`: o itch não expõe seguidores por API. As demais
+passaram de `NAO_OBSERVAVEL` para número real em 24/10/2026.
+
 ## Fonte de verdade e operação atual
 
 | Componente | Responsabilidade |
