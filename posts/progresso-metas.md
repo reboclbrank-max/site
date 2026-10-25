@@ -39,3 +39,6 @@
 
 ## 24/10/2026
 - bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=14(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL | VARIACAO_OBSERVADA: bsky_seguidores -1 (sem atribuicao causal)
+
+## 25/10/2026
+- bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=16(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL
