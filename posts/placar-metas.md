@@ -4,12 +4,12 @@
 
 | meta | alvo | observado | falta | por dia | status |
 |---|---|---|---|---|---|
-| Instagram: publicações | 30 | 16 | 14 | 0.74 | EM_CURSO |
-| Instagram: seguidores | 50 | 0 | 50 | 2.63 | EM_CURSO |
-| Bluesky: seguidores | 50 | 34 | 16 | 0.84 | EM_CURSO |
-| YouTube: inscritos | 40 | 24 | 16 | 0.84 | EM_CURSO |
+| Instagram: publicações | 30 | 16 | 14 | 0.78 | EM_CURSO |
+| Instagram: seguidores | 50 | 0 | 50 | 2.78 | EM_CURSO |
+| Bluesky: seguidores | 50 | 34 | 16 | 0.89 | EM_CURSO |
+| YouTube: inscritos | 40 | 24 | 16 | 0.89 | EM_CURSO |
 | YouTube: shorts | 4 | 5 | 0 | — | ATINGIDO |
-| itch: downloads | 100 | 45 | 55 | 2.89 | EM_CURSO |
+| itch: downloads | 100 | 46 | 54 | 3.0 | EM_CURSO |
 | itch: seguidores | 10 | NAO_OBSERVAVEL | — | — | SEM_LEITURA |
 
-Prazo: **2026-11-12** · 19 dia(s) restante(s) · 6 meta(s) com leitura, 1 sem leitura automática.
+Prazo: **2026-11-12** · 18 dia(s) restante(s) · 6 meta(s) com leitura, 1 sem leitura automática.
