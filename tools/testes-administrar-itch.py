@@ -73,25 +73,31 @@ ok("sem arquivo de veto, tudo é bloqueado (falha fechada)",
    and adm.vetados(os.path.join(vazio, "nao-existe.json")) == ["*"])
 
 # ------------------------------------------------------------------ administração automática
-class ButlerFalso:
-    def __init__(self, codigo=0, saida="pushed"):
-        self.codigo = codigo
-        self.saida = saida
+SEM_CANAL = "No channel found for rebocl-brank/ceifalume"
+COM_CANAL = "rebocl-brank/ceifalume:\n  html5 (build 999) %s" % local["hash"][:12]
+
+
+class ButlerSequencia:
+    """Dublê do butler: responde por sequência, como o processo real responde."""
+
+    def __init__(self, respostas):
+        self.respostas = list(respostas)
         self.chamadas = []
 
     def __call__(self, cmd, capture_output=None, text=None, timeout=None, env=None):
         self.chamadas.append(" ".join(cmd))
+        codigo, saida = self.respostas.pop(0) if self.respostas else (0, "")
         class R:
-            returncode = self.codigo
-            stdout = self.saida
+            returncode = codigo
+            stdout = saida
             stderr = ""
         return R()
 
 
-def _get_falso(payloads):
+def _get_falso(payloads=None):
     """Dublê de `_get_json`: devolve (dados, erro), como o real."""
     def get(url, chave=None):
-        for chave_url, valor in payloads.items():
+        for chave_url, valor in (payloads or {}).items():
             if chave_url in url:
                 return valor, None
         return {}, None
@@ -99,61 +105,55 @@ def _get_falso(payloads):
 
 
 jogos = {"games": [{"id": 777, "url": "https://rebocl-brank.itch.io/ceifalume", "title": "Ceifalume"}]}
-falso_get = _get_falso({"profile/games": jogos, "uploads": {"uploads": []}})
+sem_espera = lambda s: None
 
-# depois do push o script RELÊ o itch: o dublê passa a devolver o canal recém-criado
-chamadas = {"n": 0}
+# 1) canal não existe → envia e confirma depois
+b1 = ButlerSequencia([(0, SEM_CANAL),            # status inicial
+                      (0, "pushing 40.26 MiB"),  # push
+                      (0, SEM_CANAL),            # 1ª releitura (processing)
+                      (0, COM_CANAL)])           # 2ª releitura
+acao, motivo, linhas = adm.auto("ceifalume", "chave", raiz=RAIZ, get=_get_falso({"profile/games": jogos}),
+                               identidade="/x", executar=b1, esperar=sem_espera)
+ok("auto envia quando o canal não existe", acao == "enviado", acao + " / " + str(linhas)[:160])
+push = [c for c in b1.chamadas if " push " in c]
+ok("o push usa --if-changed (segunda conferência contra corrida)", push and "--if-changed" in push[0])
+ok("o push usa --hidden (nada muda para o jogador sem o dono ver)", push and "--hidden" in push[0])
+ok("o push manda a versão pelo hash da build", push and "--userversion " + local["hash"][:12] in push[0])
+ok("o alvo é o canal certo", push and "rebocl-brank/ceifalume:html5" in push[0])
+ok("a confirmação é relida no remoto, com espera",
+   any("remoto confirmado" in l for l in linhas), str(linhas)[:200])
+ok("o canal não é procurado na API de uploads (ela não lista canal de butler)",
+   "remoto confirmado" in " ".join(linhas))
 
+# 2) versão já publicada é a mesma do build → nenhum push
+b2 = ButlerSequencia([(0, COM_CANAL)])
+acao2, motivo2, linhas2 = adm.auto("ceifalume", "chave", raiz=RAIZ, get=_get_falso({"profile/games": jogos}),
+                                   identidade="/x", executar=b2, esperar=sem_espera)
+ok("versão idêntica não gera push", acao2 == "nada", acao2 + " " + str(linhas2)[:120])
+ok("e nenhum push foi chamado", not [c for c in b2.chamadas if " push " in c], str(b2.chamadas))
 
-def get_muda(url, chave=None):
-    if "uploads" in url:
-        chamadas["n"] += 1
-        if chamadas["n"] >= 2:
-            return {"uploads": [{"channel_name": "html5", "size": local["bytes"],
-                                 "build_id": 4321, "id": 19268323}]}, None
-        return {"uploads": []}, None
-    return jogos, None
+# 3) enviou mas nunca confirmou → NÃO é sucesso silencioso
+b3 = ButlerSequencia([(0, SEM_CANAL), (0, "pushing"), (0, SEM_CANAL), (0, SEM_CANAL), (0, SEM_CANAL)])
+acao3, motivo3, _l = adm.auto("ceifalume", "chave", raiz=RAIZ, get=_get_falso({"profile/games": jogos}),
+                              identidade="/x", executar=b3, esperar=sem_espera, limite_s=40)
+ok("envio não confirmado tem nome próprio (não vira 'enviado')",
+   acao3 == "enviado_nao_confirmado", acao3)
 
+# 4) butler recusando não vira sucesso
+b4 = ButlerSequencia([(0, SEM_CANAL), (1, "upload rejected: invalid api key")])
+acao4, motivo4, _l = adm.auto("ceifalume", "chave", raiz=RAIZ, get=_get_falso({"profile/games": jogos}),
+                              identidade="/x", executar=b4, esperar=sem_espera)
+ok("butler recusando aparece como falha", acao4 == "falhou" and "recusou" in motivo4, motivo4[:80])
 
-butler = ButlerFalso()
-acao, motivo, linhas = adm.auto("ceifalume", "chave", raiz=RAIZ, get=get_muda,
-                               identidade="/x", executar=butler)
-ok("auto envia quando o canal não existe", acao == "enviado", acao + " / " + str(linhas))
-ok("o push usa --if-changed (segunda conferência contra corrida)", "--if-changed" in butler.chamadas[0])
-ok("o push usa --hidden (nada muda para o jogador sem o dono ver)", "--hidden" in butler.chamadas[0])
-ok("o push manda a versão pelo hash da build", "--userversion " + local["hash"][:12] in butler.chamadas[0],
-   butler.chamadas[0])
-ok("o alvo é o canal certo", "rebocl-brank/ceifalume:html5" in butler.chamadas[0])
-ok("depois do push o remoto é relido (prova, não fé)",
-   any("remoto depois do push" in l for l in linhas), str(linhas)[:200])
+# 5) jogo vetado nunca chega ao butler
+b5 = ButlerSequencia([])
+adm.auto("toque-rapido", "chave", raiz=RAIZ, get=_get_falso(), identidade="/x", executar=b5)
+ok("jogo vetado não chama o butler", b5.chamadas == [], str(b5.chamadas))
 
-# butler diz que enviou mas o itch não lista → NÃO é sucesso
-butler5 = ButlerFalso()
-falso_get5 = _get_falso({"profile/games": jogos, "uploads": {"uploads": []}})
-acao5, motivo5, _l = adm.auto("ceifalume", "chave", raiz=RAIZ, get=falso_get5,
-                              identidade="/x", executar=butler5)
-ok("push sem canal no remoto vira falha", acao5 == "falhou" and "não lista" in motivo5, motivo5[:90])
-
-# build igual da última vez → nenhum comando é chamado
-butler2 = ButlerFalso()
-falso_get2 = _get_falso({"profile/games": jogos,
-                         "uploads": {"uploads": [{"channel_name": "html5", "size": local["bytes"]}]}})
-acao2, _m, _l = adm.auto("ceifalume", "chave", raiz=RAIZ, get=falso_get2,
-                         identidade="/x", executar=butler2)
-ok("build idêntica não gera nenhum comando", acao2 == "nada" and butler2.chamadas == [],
-   str(butler2.chamadas))
-
-# butler recusando não vira sucesso
-butler3 = ButlerFalso(codigo=1, saida="upload rejected")
-falso_get3 = _get_falso({"profile/games": jogos, "uploads": {"uploads": []}})
-acao3, motivo3, _l = adm.auto("ceifalume", "chave", raiz=RAIZ, get=falso_get3,
-                              identidade="/x", executar=butler3)
-ok("butler recusando aparece como falha", acao3 == "falhou" and "recusou" in motivo3, motivo3[:80])
-
-# vetado nunca chega ao butler
-butler4 = ButlerFalso()
-adm.auto("toque-rapido", "chave", raiz=RAIZ, get=falso_get, identidade="/x", executar=butler4)
-ok("jogo vetado não chama o butler", butler4.chamadas == [], str(butler4.chamadas))
+# 6) leitura do status
+ok("status sem canal é lido como inexistente", adm.interpretar_status(SEM_CANAL, "html5")[0] is False)
+ok("status com canal é lido como existente", adm.interpretar_status(COM_CANAL, "html5")[0] is True)
+ok("a versão é extraída do status", adm.interpretar_status(COM_CANAL, "html5", local["hash"])[1] == local["hash"][:12])
 
 # ------------------------------------------------------------------ segredo não vaza
 texto = open(os.path.join(RAIZ, "tools", "administrar-itch.py"), encoding="utf-8").read()
