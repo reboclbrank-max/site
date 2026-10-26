@@ -373,7 +373,7 @@ _linhas, _ctx = metricas.placar_metas(observado={"yt_inscritos": 24, "yt_shorts"
                                                  "itch_downloads": 45, "bsky_seguidores": 34,
                                                  "ig_seguidores": 0, "ig_posts": 18},
                                       caminho=_arq_metas)
-_por_meta = {l["meta"]: l for l in _linhas}
+_por_meta = {(l["meta"].split(" (")[0]): l for l in _linhas}
 ok("YouTube inscritos não é rotulado 'sem leitura automática'",
    "sem leitura" not in _por_meta["YouTube: inscritos"]["fonte"].lower(),
    _por_meta["YouTube: inscritos"]["fonte"])
@@ -381,7 +381,8 @@ ok("itch downloads não é rotulado 'sem leitura automática'",
    "sem leitura" not in _por_meta["itch: downloads"]["fonte"].lower(),
    _por_meta["itch: downloads"]["fonte"])
 ok("itch seguidores declara SEM_API com a data da conferência",
-   "SEM_API" in _por_meta["itch: seguidores"]["fonte"] and "25/10/2026" in _por_meta["itch: seguidores"]["fonte"])
+   "SEM_API" in _por_meta["itch: seguidores"]["fonte"]
+   and "25/10/2026" in _por_meta["itch: seguidores"]["fonte"])
 ok("o que é lido aparece com número, não com NAO_OBSERVAVEL",
    _por_meta["itch: downloads"]["observado"] == 45 and _por_meta["yt_inscritos"] if False else
    (_por_meta["itch: downloads"]["observado"] == 45 and _por_meta["YouTube: inscritos"]["observado"] == 24))
@@ -392,7 +393,8 @@ _texto_placar = open(_saida, encoding="utf-8").read()
 ok("o placar avisa que itch seguidores não tem API", "não publica contagem de seguidores" in _texto_placar)
 ok("o placar propõe a troca medida (visitas), sem trocar sozinho", "itch: visitas" in _texto_placar)
 ok("o placar não inventa número para a meta impossível",
-   "| itch: seguidores | 10 | NAO_OBSERVAVEL |" in _texto_placar)
+   "NAO_OBSERVAVEL" in _texto_placar and "| itch: seguidores (aposentada) | 10 |" in _texto_placar,
+   _texto_placar[_texto_placar.find("itch"):][:120])
 
 # ---- 16. o placar mede o RETORNO desde a linha de partida --------------------------------
 # "0 seguidores" sozinho não diz nada: pode ser canal parado desde sempre. A coluna nova
@@ -408,7 +410,7 @@ with open(_arq_partida, "w", encoding="utf-8") as f:
 _obs = {"ig_seguidores": 0, "ig_posts": 18, "bsky_seguidores": 34,
         "itch_downloads": 46, "yt_inscritos": 24, "yt_shorts": 5}
 _l2, _c2 = metricas.placar_metas(observado=_obs, caminho=_arq_partida)
-_por2 = {l["meta"]: l for l in _l2}
+_por2 = {(l["meta"].split(" (")[0]): l for l in _l2}
 ok("o placar calcula o quanto andou desde a partida", _por2["Bluesky: seguidores"]["delta"] == 21,
    str(_por2["Bluesky: seguidores"].get("delta")))
 ok("canal que não moveu tem delta zero", _por2["Instagram: seguidores"]["delta"] == 0)
@@ -425,6 +427,42 @@ _c3 = dict(_c2); _c3["dias_decorridos"] = 10
 _saida3 = metricas.gravar_placar(_l2, _c3)
 ok("poucos dias não viram veredicto de aposentadoria",
    "Sem retorno em" not in open(_saida3, encoding="utf-8").read())
+
+# ---- 17. meta impossível é aposentada com substituto medido, não esquecida ----------------
+# Decisão tomada em 25/10/2026: `itch: seguidores` não tem como ser medida (o itch não publica
+# seguidores em API nem em página pública: 5 caminhos conferidos). Em vez de deixá-la em
+# NAO_OBSERVAVEL para sempre — que não informa nada e parece falha do robô — ela é aposentada
+# NO ARQUIVO, e o que o itch mede de audiência (visitas) entra como linha ACOMPANHADA, sem
+# alvo inventado.
+_arq_aposentada = os.path.join(_meta_tmp, "metas3.json")
+with open(_arq_aposentada, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "itch_30_dias": {"downloads": 100},
+               "itch_visitas": {"no_lugar_de": "itch_seguidores", "alvo": None},
+               "_meta_aposentada_25_10": {"meta": "itch: seguidores", "alvo_original": 10,
+                                          "motivo": "o itch não publica contagem de seguidores em API nem em página pública"},
+               "linha_de_partida_13_10": {"ig_seguidores": 0, "itch_downloads": 44}}, f)
+_obs3 = {"ig_seguidores": 0, "ig_posts": 18, "itch_downloads": 46, "itch_visitas": 175}
+_l3, _c3b = metricas.placar_metas(observado=_obs3, caminho=_arq_aposentada)
+_por3 = {l["meta"]: l for l in _l3}
+_por3["itch: seguidores (aposentada)"] = next(l for l in _l3 if l["meta"].startswith("itch: seguidores"))
+ok("a meta aposentada não some do placar sem registro",
+   "itch: seguidores (aposentada)" in _por3)
+ok("a meta aposentada diz por que foi aposentada",
+   ("não publica" in (_por3["itch: seguidores (aposentada)"].get("motivo") or "")
+    and "25/10/2026" in (_por3["itch: seguidores (aposentada)"].get("motivo") or "")))
+ok("as visitas do itch entram como medida acompanhada",
+   _por3["itch: visitas"]["status"] == "ACOMPANHADA" and _por3["itch: visitas"]["observado"] == 175)
+ok("a linha acompanhada não inventa alvo", _por3["itch: visitas"]["alvo"] == "—")
+ok("a linha acompanhada não inventa 'falta' nem 'por dia'",
+   _por3["itch: visitas"]["falta"] is None and _por3["itch: visitas"]["por_dia"] is None)
+ok("sem leitura, a acompanhada também não vira zero",
+   metricas.placar_metas(observado={"itch_visitas": None}, caminho=_arq_aposentada)[0][-1]["status"] == "SEM_LEITURA")
+_saida4 = metricas.gravar_placar(_l3, _c3b)
+_texto4 = open(_saida4, encoding="utf-8").read()
+ok("o placar mostra a visitas e o número do download", "| itch: visitas | — | 175 |" in _texto4, _texto4)
+ok("o placar não conta mais a aposentada como meta sem leitura",
+   "0 sem leitura automática" in _texto4 or "1 sem leitura automática" not in _texto4, _texto4[-400:])
 
 # ---- 14. o relatório diário do postador usa o MESMO medidor ------------------------------
 # Era aqui que nascia o "sem leitura automática": a régua do postador escrevia
