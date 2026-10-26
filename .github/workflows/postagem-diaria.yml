@@ -27,6 +27,7 @@ jobs:
           python3 tools/testes-devlog.py
           python3 tools/testes-sondar-trava-youtube.py
           python3 tools/testes-kit-youtube.py
+          python3 tools/testes-itch-navegador.py
           python3 tools/testes-administrar-itch.py
           python3 tools/testes-administrar-youtube.py
       - name: A casa posta sozinha

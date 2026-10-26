@@ -1,0 +1,134 @@
+name: editar-itch
+
+# Edita a PAGINA do itch.io (texto, resumo, tags, genero) — o que a API nao oferece.
+# Funciona por sessao (segredo ITCH_COOKIE), que passa porque /dashboard nao e desafiado pelo
+# Cloudflare; so /login e, e por isso o login nunca e automatizado aqui.
+#
+# Travas:
+#   - modo padrao 'ler': so mostra os campos atuais, nao escreve nada;
+#   - escrever exige a palavra EDITAR no campo de confirmacao;
+#   - antes de escrever, o run publica posts/backup-itch.json com os valores anteriores;
+#   - depois de escrever, rele a pagina publica e diz o que de fato mudou.
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "ler = so mostra · aplicar = escreve (exige EDITAR)"
+        required: true
+        default: ler
+        type: choice
+        options:
+          - ler
+          - aplicar
+      caminho:
+        description: "caminho da pagina de edicao, ex.: /dashboard/game/123456/edit"
+        required: true
+        default: "/dashboard/game/0/edit"
+      titulo:
+        description: "novo titulo (vazio = nao mexe)"
+        required: false
+        default: ""
+      resumo:
+        description: "nova frase curta (vazio = nao mexe)"
+        required: false
+        default: ""
+      confirmacao:
+        description: "para escrever, digite EDITAR"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: editar-itch
+  cancel-in-progress: false
+
+jobs:
+  editar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/testes-itch-navegador.py
+          python3 tools/testes-administrar-itch.py
+
+      - name: Le ou aplica
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          ITCH_EDICAO: ${{ inputs.caminho }}
+          MODO: ${{ inputs.modo }}
+          TITULO: ${{ inputs.titulo }}
+          RESUMO: ${{ inputs.resumo }}
+          CONFIRMACAO: ${{ inputs.confirmacao }}
+        run: |
+          # caminho vazio = descobre pelo ID real do jogo na API do itch (nada de chutar numero)
+          if [ -z "$ITCH_EDICAO" ] || [ "$ITCH_EDICAO" = "/dashboard/game/0/edit" ]; then
+            ITCH_EDICAO=$(python3 - <<'PY'
+          import importlib.util, os, sys
+          spec = importlib.util.spec_from_file_location("adm", "tools/administrar-itch.py")
+          adm = importlib.util.module_from_spec(spec); spec.loader.exec_module(adm)
+          chave = os.environ.get("ITCH_API_KEYS", "")
+          dados, _ = adm.itch._get_json("https://api.itch.io/profile/games", chave)
+          for g in (dados or {}).get("games") or []:
+              if (g.get("url") or "").rstrip("/").endswith("/ceifalume"):
+                  print("/dashboard/game/%s/edit" % g["id"])
+          PY
+            )
+            echo "caminho descoberto pela API: $ITCH_EDICAO"
+          fi
+          export ITCH_EDICAO
+          python3 - <<'PY'
+          import os, sys
+          sys.path.insert(0, "tools")
+          import importlib.util
+          spec = importlib.util.spec_from_file_location("nav", "tools/itch-navegador.py")
+          nav = importlib.util.module_from_spec(spec); spec.loader.exec_module(nav)
+
+          cookie = os.environ.get("ITCH_COOKIE", "")
+          alvo = os.environ.get("ITCH_EDICAO", "")
+          modo = os.environ.get("MODO", "ler")
+          print("cookie: " + nav.resumir_cookie(cookie))
+          ok, msg = nav.sessao_ok(cookie)
+          print(("OK " if ok else "FALHOU ") + "sessao: " + msg)
+          if not ok:
+              sys.exit(1)
+          estado, erro = nav.ler(alvo, cookie)
+          if erro:
+              print("FALHOU leitura: " + erro); sys.exit(1)
+          print("campos do itch: " + ", ".join(estado["_campos_do_itch"]))
+          for rotulo in nav.MAPA.values():
+              if rotulo in estado:
+                  v = estado[rotulo]
+                  print("  %s = %s" % (rotulo, (str(v)[:90] + "...") if v and len(str(v)) > 90 else v))
+          if modo != "aplicar":
+              print("- modo ler: nada foi escrito")
+              sys.exit(0)
+          mudancas = {}
+          if os.environ.get("TITULO"): mudancas["titulo"] = os.environ["TITULO"]
+          if os.environ.get("RESUMO"): mudancas["resumo"] = os.environ["RESUMO"]
+          if not mudancas:
+              print("FALHOU aplicar sem nenhum campo novo"); sys.exit(1)
+          ok2, msg2, backup = nav.aplicar(alvo, mudancas, cookie, confirmacao=os.environ.get("CONFIRMACAO", ""))
+          if backup:
+              import json
+              os.makedirs("posts", exist_ok=True)
+              with open("posts/backup-itch.json", "w", encoding="utf-8") as f:
+                  json.dump(backup, f, ensure_ascii=False, indent=2)
+              print("backup dos valores anteriores escrito em posts/backup-itch.json")
+              for k, v in backup.items():
+                  print("  antes: %s = %s" % (k, (str(v)[:70] + "...") if v and len(str(v)) > 70 else v))
+          print(("OK " if ok2 else "FALHOU ") + msg2)
+          sys.exit(0 if ok2 else 1)
+          PY
+          {
+            echo "### itch.io — pagina ($MODO)"
+            echo
+            echo '```'
+            python3 -c "print(open('/tmp/edicao.txt').read())" 2>/dev/null || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY" || true
