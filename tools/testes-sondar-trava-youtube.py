@@ -42,18 +42,22 @@ ok("o vídeo existe e é menor que 10 MB",
 
 # fluxo com dublês
 class Post:
+    """Dublê de _iniciar(url, token, corpo) — a assinatura tem de casar com o código real."""
+
     def __init__(self, resp): self.resp = resp; self.chamadas = []
-    def __call__(self, url, token, metodo="GET", corpo=None, timeout=45):
-        self.chamadas.append((url, metodo, corpo))
+    def __call__(self, url, token, corpo=None):
+        self.chamadas.append((url, corpo))
         return self.resp, None
 
 
 post = Post({"upload_url": "https://exemplo.invalido/sessao"})
 sessao, erro = s.abrir_sessao("tok", 1000, s.metadados("t"), post=post)
-ok("abre sessão de upload com POST", sessao.get("upload_url") and post.chamadas[0][1] == "POST")
+ok("abre sessão de upload e recebe a URL", bool(sessao.get("upload_url")), sessao)
 ok("a URL da sessão vem do cabeçalho Location (não do corpo)", sessao.get("upload_url") == "https://exemplo.invalido/sessao")
-ok("o corpo do POST não leva chave interna (_tamanho)", not any(k.startswith("_") for k in post.chamadas[0][2]))
-ok("o corpo do POST leva snippet e status", "snippet" in post.chamadas[0][2] and "status" in post.chamadas[0][2])
+ok("o corpo do POST não leva chave interna (_tamanho)",
+   not any(k.startswith("_") for k in post.chamadas[0][1]), post.chamadas[0][1])
+ok("o corpo do POST leva snippet e status",
+   "snippet" in post.chamadas[0][1] and "status" in post.chamadas[0][1], post.chamadas[0][1])
 
 class Put:
     def __init__(self, resp): self.resp = resp; self.conteudo = None
