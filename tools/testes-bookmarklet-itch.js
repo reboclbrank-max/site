@@ -222,4 +222,16 @@ ok('o favorito de devlog nao adivinha: descobre o formulario e envia o csrf', ()
   assert(!/name=\s*['"]post\[/.test(f), 'chutou nome de campo');
 });
 
+ok('o carregador curto aponta para o arquivo publicado e existe', () => {
+  const curto = fs.readFileSync(path.join(raiz, 'itch/postar-devlog-curto.txt'), 'utf8').trim();
+  assert(curto.startsWith('javascript:'), 'nao e favorito');
+  assert(curto.length < 500, 'linha longa demais para colar no celular (' + curto.length + ')');
+  const url = (curto.match(/https:\/\/raw\.githubusercontent\.com\/[^'"]+/) || [])[0];
+  assert(url, 'nao aponta para um arquivo publicado');
+  const rel = url.split('/main/')[1];
+  assert(fs.existsSync(path.join(raiz, rel)), 'arquivo publicado inexistente: ' + rel);
+  const servido = fs.readFileSync(path.join(raiz, rel), 'utf8');
+  assert(servido.includes('FormData'), 'arquivo servido nao envia o formulario real');
+});
+
 console.log('\n' + passou + '/' + passou + ' testes do modo navegador do itch passaram');
