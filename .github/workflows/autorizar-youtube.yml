@@ -1,0 +1,49 @@
+name: autorizar-youtube
+
+# Autoriza o envio de vídeo ao YouTube — o único passo que depende do dono.
+#
+# Não tem cron: roda só quando alguém aperta o botão. Não publica nada: apenas pede o
+# consentimento (device flow, sem servidor local e sem instalar nada) e guarda o token como
+# segredo. Depois disso, o envio passa a ser automático pelo workflow enviar-youtube.
+#
+# Pré-requisito único (2 minutos, sem custo, na conta Google que já existe):
+#   1. console.cloud.google.com > APIs e serviços > Tela de consentimento (tipo Externo, app em teste)
+#   2. Credenciais > Criar credenciais > ID do cliente OAuth > "TVs e dispositivos de entrada limitada"
+#   3. guardar YT_CLIENT_ID e YT_CLIENT_SECRET nos segredos deste repositório
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  autorizar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/testes-kit-youtube.py
+          python3 tools/testes-youtube-oauth.py
+
+      - name: Pede o código ao Google e espera a aprovação do dono
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          GHPAT: ${{ secrets.GHPAT }}
+          REPO_ENVIO: ${{ github.repository }}
+        run: |
+          pip install -q pynacl
+          python3 tools/youtube_oauth.py | tee /tmp/autorizacao.txt
+          {
+            echo "### Autorização do YouTube"
+            echo
+            echo '```'
+            cat /tmp/autorizacao.txt
+            echo '```'
+            echo
+            echo "Se o código apareceu acima, abra a URL, digite o código e aprove."
+            echo "O token fica guardado como segredo YT_REFRESH_TOKEN — o valor nunca aparece em log."
+          } >> "$GITHUB_STEP_SUMMARY"
