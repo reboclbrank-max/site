@@ -166,5 +166,82 @@ verifica("workflow mantém exatamente pulso e 8 ciclos planejados", workflow.cou
 verifica("pulso e postagem usam concorrências separadas", "group: ${{ github.event.schedule == '13,33,53 * * * *' && 'postagem-acorda' || 'postagem-diaria' }}" in workflow)
 verifica("pulso usa retaguarda fail-closed", "python3 tools/retaguarda-postagem.py /tmp/posts-log.md" in workflow and "timeout-minutes: 3" in workflow and "Retaguarda conservadora da cadência de marketing\n        run:" in workflow)
 
+# ---------------------------------------------------------------------------------------
+# Conteúdo repetido no ar (defeito medido em 26/10/2026)
+#
+# O perfil da casa publicou O MESMO texto 53 vezes — cinco delas em um único dia. A causa não
+# foi falta de tema: foi (1) um único motor de texto, sem retaguarda, e (2) um dedupe que
+# comparava o candidato COM quebra de linha contra um registro que gravava " ⏎ " no lugar
+# dela. Dedupe que nunca compara igual não é dedupe.
+from collections import Counter
+
+_registro = ("⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício"
+             " ⏎ Grátis no navegador ou APK.")
+_igual = "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício\nGrátis no navegador ou APK."
+verifica("dedupe reconhece repetição mesmo com quebra de linha diferente",
+         postador.ja_foi_publicado(_igual, _registro))
+verifica("dedupe não bloqueia texto novo",
+         not postador.ja_foi_publicado("🌙 A fazenda não dorme: plante à luz da lanterna", _registro))
+verifica("o crivo editorial usa o dedupe normalizado",
+         not postador.texto_gerado_seguro(_igual, _registro))
+verifica("existe mais de um motor de texto (motor único é ponto único de falha)",
+         len(postador.MOTORES_DE_TEXTO) >= 2)
+verifica("o motor de texto informa o motivo quando todos falham",
+         callable(postador.cerebro_com_motivo))
+_fonte_postador = (RAIZ / "tools" / "postador.py").read_text(encoding="utf-8")
+verifica("o log do ciclo diz QUAL motor escreveu (ou por que nenhum escreveu)",
+         'motivo_geracao = motivo or "motor respondeu"' in _fonte_postador)
+verifica("a fila de reserva respeita o dedupe", "ja_foi_publicado(item[\"texto\"], ja_publicados)" in _fonte_postador)
+verifica("fila esgotada varia o fecho em vez de repetir a frase",
+         "variacao_de_fecho(indice_tema)" in _fonte_postador)
+verifica("os fechos de reserva são distintos entre si",
+         len({postador.variacao_de_fecho(i) for i in range(8)}) == 8)
+
+# Ponte entre redes: existia no código e nunca chegou à rede (0 menções em 100 posts).
+_temas_falsos = ["tema %d" % i for i in range(40)]
+_ciclos = [postador.tema_do_ciclo(_temas_falsos, i) for i in range(80)]
+verifica("a ponte entre redes roda por construção (1 a cada 8 ciclos)",
+         sum(1 for t in _ciclos if "Instagram" in t) == 10)
+verifica("a ponte repete o mesmo canal-alvo (Instagram), sem inventar URL",
+         all("instagram" in t.lower() for t in _ciclos if "Instagram" in t))
+verifica("tema comum continua variando entre os ciclos sem ponte",
+         len({t for t in _ciclos if "Instagram" not in t}) > 20)
+verifica("o ciclo registra o tema no log (para poder ser cobrado)",
+         '"tema do ciclo"' in _fonte_postador)
+# ---------------------------------------------------------------------------------------
+# O crivo reprovava o verbo do próprio jogo (medido em 26/10/2026)
+#
+# A regra de segredo usava "senha\b" SEM fronteira à esquerda, então casava dentro de
+# "deSENHA". Resultado: todo post que dizia "desenhe a bola parada" — a descrição oficial do
+# PRANCHETA — era reprovado, o gerador caía na fila fixa e repetia a mesma frase.
+verifica("o crivo aceita o verbo do jogo ('desenhe a bola parada')",
+         postador.texto_gerado_seguro(
+             "Desenhe a bola parada no PRANCHETA e veja a partida simular. Grátis no navegador.", ""))
+verifica("o crivo continua barrando senha de verdade",
+         not postador.texto_gerado_seguro("mande a senha do painel para o PRANCHETA", ""))
+verifica("o crivo continua barrando link no corpo",
+         not postador.texto_gerado_seguro("acesse https://exemplo.example e jogue PRANCHETA", ""))
+verifica("o crivo continua barrando token",
+         not postador.texto_gerado_seguro("use o token da api no PRANCHETA", ""))
+
+# ---------------------------------------------------------------------------------------
+# Cadência de ponte sem convite não leva ninguém
+#
+# Pedimos o tema de ponte ao motor e ele escreveu um post bonito sobre os jogos, sem citar o
+# Instagram. A ponte tem que GARANTIR o convite, não esperar boa vontade do modelo.
+_tema_ponte = postador.TEMAS_PONTE[0]
+_sem_cta = "Desenhe a bola parada no PRANCHETA e veja a partida simular. Grátis no navegador."
+_com_cta, _mexeu = postador.garantir_ponte(_sem_cta, _tema_ponte)
+verifica("no ciclo de ponte, o convite ao Instagram é garantido", _mexeu and "instagram" in _com_cta.lower())
+verifica("o texto com convite continua dentro do limite", len(_com_cta) <= postador.LIMITE_TEXTO_EDITORIAL)
+verifica("o texto com convite continua passando no crivo", postador.texto_gerado_seguro(_com_cta, ""))
+verifica("o convite não põe URL no corpo (o link vem do destino oficial)",
+         "http" not in _com_cta.lower())
+verifica("tema comum não é alterado", postador.garantir_ponte(_sem_cta, "dica tatica de defesa")[1] is False)
+verifica("o destino do tema de ponte é o hub de canais",
+         postador.destino_editorial("", _tema_ponte) == postador.DESTINOS_EDITORIAIS["canais"])
+verifica("o log avisa quando o convite foi anexado",
+         "convite da ponte anexado" in _fonte_postador)
+
 print(f"{verificacoes-len(falhas)}/{verificacoes} verificações de autonomia de marketing passaram")
 sys.exit(1 if falhas else 0)

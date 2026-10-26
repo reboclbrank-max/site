@@ -262,12 +262,33 @@ def mensagem_editorial(texto, destino):
 # Barreira determinística para texto vindo de motor externo: o modelo sugere, a casa decide.
 # Ela não tenta “provar” cada frase; reduz links inesperados, vazamento e promessas contraditórias
 # antes de o postador cair na fila editorial já revisada.
+def normalizar_para_comparar(texto):
+    """Texto comparável: sem ⏎, sem quebra de linha, sem espaço duplo, minúsculo.
+
+    DEFEITO MEDIDO (26/10/2026): o registro gravava a publicação trocando quebra de linha
+    por " ⏎ " e o candidato era comparado COM quebra de linha — a comparação nunca batia e
+    o mesmo post saiu 53 vezes, cinco delas em 25/10. Dedupe que não compara de verdade não
+    é dedupe: é enfeite com log bonito.
+    """
+    t = str(texto or "").replace("⏎", " ")
+    return " ".join(t.lower().split())
+
+
+def ja_foi_publicado(texto, ja_publicados, tamanho=60):
+    """True se o começo deste texto já está no registro de publicados."""
+    chave = normalizar_para_comparar(texto)[:tamanho]
+    return bool(chave) and chave in normalizar_para_comparar(ja_publicados)
+
+
 def texto_gerado_seguro(texto, ja_publicados=""):
     texto = " ".join(str(texto or "").strip().split())
     baixo = texto.lower()
     if not (31 <= len(texto) <= LIMITE_TEXTO_EDITORIAL):
         return False
-    if re.search(r"(?:https?://|www\.|(?:token|senha|password|api[ _-]?key|bearer)\b)", baixo, re.I):
+    #  nas palavras sensíveis: sem isso "senha" casava dentro de "deSENHA" e o crivo
+    # reprovava TODO texto que usasse o verbo do jogo ("desenhe a bola parada") — foi um dos
+    # motivos de o gerador cair na fila fixa e repetir a mesma frase. (medido em 26/10/2026)
+    if re.search(r"(?:https?://|www\.|\b(?:token|senha|password|api[ _-]?key|bearer)\b)", baixo, re.I):
         return False
     if re.search(r"(?:ignore|ignore as|esque[çc]a).{0,30}(?:instru|regra|prompt)", baixo, re.I):
         return False
@@ -282,8 +303,7 @@ def texto_gerado_seguro(texto, ja_publicados=""):
         return False
     if not re.search(r"\b(?:prancheta|ceifalume|rebocl|fazenda|manager|futebol)\b", baixo, re.I):
         return False
-    chave = texto[:60].lower()
-    return chave not in str(ja_publicados or "").lower()
+    return not ja_foi_publicado(texto, ja_publicados)
 
 def cria_container_com_reserva(criar, primaria, reservas):
     """Tenta a arte principal uma vez e, se a plataforma a recusar, um espelho próprio.
@@ -340,37 +360,93 @@ def http_json(url, data=None, headers=None):
     r = urllib.request.urlopen(urllib.request.Request(url, data=d, headers=h), timeout=30)
     return r.status, r.read().decode()
 
-def cerebro(pergunta, tentativas=2):
-    p = pergunta[:560]
-    for tent in range(tentativas):
-        bruto = ""
-        try:
-            req = urllib.request.Request("https://text.pollinations.ai/openai",
-                data=json.dumps({"model": "openai-fast", "messages": [{"role": "user", "content": p}]}).encode(),
-                headers={"Content-Type": "application/json", "User-Agent": "rebocl/2"})
-            j = json.loads(urllib.request.urlopen(req, timeout=45).read().decode())
-            bruto = (j.get("choices") or [{}])[0].get("message", {}).get("content", "")
-        except Exception:
-            bruto = ""
-        if not bruto:
-            try:
-                q = urllib.parse.quote(p)
-                bruto = urllib.request.urlopen(urllib.request.Request("https://text.pollinations.ai/" + q, headers=dict(UA)), timeout=30).read().decode("utf-8", "ignore")
-                try:
-                    jj = json.loads(bruto)
-                    bruto = jj.get("content") or ""
-                except Exception:
-                    pass
-            except Exception:
-                bruto = ""
-        bruto = (bruto or "").strip()
-        if bruto.startswith("```"):
-            bruto = bruto.strip("`").lstrip()
-        if bruto and not bruto.startswith("{") and '"reasoning"' not in bruto and '"role"' not in bruto and not bruto.lower().startswith("we need"):
-            return bruto
-        time.sleep(4)
-    return ""
+MOTORES_DE_TEXTO = [
+    # Ordem: quem respondeu melhor por último primeiro. Nenhum pede chave, conta ou
+    # pagamento — são os mesmos que a casa mede em MEMORIA/exatidao-motores.json.
+    ("pollinations openai-fast", "pollinations"),
+    ("g4f auto", "g4f:auto"),
+    ("g4f lightning", "g4f:nvidia/nemotron-3.5-lightning-30b-a3b"),
+]
 
+
+def _texto_pollinations(p, timeout):
+    req = urllib.request.Request("https://text.pollinations.ai/openai",
+        data=json.dumps({"model": "openai-fast",
+                         "messages": [{"role": "user", "content": p}]}).encode(),
+        headers={"Content-Type": "application/json", "User-Agent": "rebocl/2"})
+    j = json.loads(urllib.request.urlopen(req, timeout=timeout).read().decode())
+    return (j.get("choices") or [{}])[0].get("message", {}).get("content", "")
+
+
+def _texto_g4f(modelo, p, timeout):
+    req = urllib.request.Request("https://nvidia.g4f.dev/v1/chat/completions",
+        data=json.dumps({"model": modelo,
+                         "messages": [{"role": "user", "content": p}]}).encode(),
+        headers={"Content-Type": "application/json", "User-Agent": "rebocl/2"})
+    j = json.loads(urllib.request.urlopen(req, timeout=timeout).read().decode())
+    return ((j.get("choices") or [{}])[0].get("message", {}).get("content", "") or "")
+
+
+def cerebro_com_motivo(pergunta, tentativas=2):
+    """(texto, motivo). Qual motor respondeu — ou por que nenhum respondeu.
+
+    DEFEITO CORRIGIDO (26/10/2026): havia UM endpoint e, quando ele falhava, o robô caía
+    na fila fixa de 7 textos — e o mesmo texto foi publicado 53 vezes. Motor único é ponto
+    único de falha; e falha silenciosa vira conteúdo repetido no ar.
+    """
+    p = pergunta[:560]
+    motivos = []
+    for nome, qual in MOTORES_DE_TEXTO:
+        for _tent in range(max(1, tentativas)):
+            bruto = ""
+            try:
+                if qual == "pollinations":
+                    bruto = _texto_pollinations(p, 45)
+                else:
+                    bruto = _texto_g4f(qual.split(":", 1)[1], p, 45)
+            except Exception as e:
+                bruto = ""
+                motivos.append("%s: %s" % (nome, str(e)[:40]))
+            bruto = (bruto or "").strip()
+            if bruto.startswith("```"):
+                bruto = bruto.strip("`").lstrip()
+            if not (not bruto or bruto.startswith("{") or '"reasoning"' in bruto
+                    or '"role"' in bruto or bruto.lower().startswith("we need")):
+                return bruto, "motor=" + nome
+            if bruto:
+                motivos.append("%s: resposta em formato interno" % nome)
+            time.sleep(2)
+    vistos, limpos = set(), []
+    for m in motivos:
+        if m not in vistos:
+            vistos.add(m)
+            limpos.append(m)
+    return "", ("nenhum motor de texto respondeu (" + "; ".join(limpos[:3]) + ")"
+                if limpos else "nenhum motor de texto respondeu (vazio)")
+
+
+def cerebro(pergunta, tentativas=2):
+    texto, _motivo = cerebro_com_motivo(pergunta, tentativas)
+    return texto
+
+
+def variacao_de_fecho(indice):
+    """Fecho diferente para cada tema — usado só quando a fila inteira já foi publicada.
+
+    Não é conteúdo novo (o motor está fora do ar nesse caso); é o mínimo para não repetir
+    a MESMA frase no perfil, que é o que afastou quem chegou.
+    """
+    fechos = [
+        "Feito no Brasil, um sistema de cada vez.",
+        "Quem joga, conta o que achou.",
+        "Grátis no navegador, sem instalação.",
+        "Dev solo, jogo pequeno, conversa aberta.",
+        "O próximo ajuste sai da sua opinião.",
+        "Sem anúncio, sem compra dentro do jogo.",
+        "Bastidor aberto: os devlogs estão no itch.",
+        "Dá pra jogar no celular também.",
+    ]
+    return fechos[int(indice or 0) % len(fechos)]
 def canal(nome, fn):
     try:
         retorno = fn()
@@ -442,6 +518,55 @@ def medicoes_de_plataforma(medidor=None):
     return medicoes, lidas
 
 
+TEMAS_PONTE = (
+    "convide a seguir a conta no Instagram para ver os bastidores dos jogos",
+    "convide a seguir a conta no Instagram para acompanhar as artes novas",
+    "convide quem joga no navegador a seguir a conta no Instagram",
+)
+CADENCIA_PONTE = 8   # 1 em cada 8 ciclos leva público de onde há gente para onde não há
+
+
+# Convite de ponte sem URL no corpo: o link entra depois, por mensagem_editorial, e sempre
+# aponta para o hub de canais da casa (nunca URL livre).
+CTA_PONTE = "Bastidores e artes novas também no Instagram — todos os canais no link."
+
+
+def tema_e_ponte(tema):
+    return any(tema == p for p in TEMAS_PONTE)
+
+
+def garantir_ponte(texto, tema, limite=LIMITE_TEXTO_EDITORIAL):
+    """No ciclo de ponte, o texto OBRIGATORIAMENTE nomeia o Instagram. Devolve (texto, mexeu).
+
+    Medido em 26/10/2026: o tema de ponte foi pedido ao motor e ele escreveu um post bonito
+    sobre os jogos, sem uma palavra sobre o Instagram. Cadência de ponte sem convite é
+    cadência de nada — o público continua sem saber que o outro canal existe.
+    """
+    if not tema_e_ponte(tema) or not texto:
+        return texto, False
+    if "instagram" in texto.lower():
+        return texto, False
+    espaco = limite - len(CTA_PONTE) - 1
+    base = texto[:max(0, espaco)].rstrip(" ,.;:—-")
+    return (base + " " + CTA_PONTE)[:limite], True
+
+
+def tema_do_ciclo(temas, indice):
+    """Tema do ciclo — com a ponte entre redes GARANTIDA, não sorteada.
+
+    Medido em 26/10/2026: as três frases de ponte existiam na lista (3 de 40 temas) e o
+    Instagram estava com 0 seguidores desde 13/10. Motivo: com a geração de texto fora do
+    ar, o robô publicava a fila fixa e o tema nunca chegava ao ar — a ponte existia no
+    código e não existia na rede. Agora ela roda a cada 8 ciclos por construção, e o tema
+    do ciclo vai escrito no log para poder ser cobrado.
+    """
+    if not temas:
+        return ""
+    if indice % CADENCIA_PONTE == CADENCIA_PONTE - 1:
+        return TEMAS_PONTE[(indice // CADENCIA_PONTE) % len(TEMAS_PONTE)]
+    return temas[indice % len(temas)]
+
+
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else ""
     if modo != "teste" and ciclo_ainda_recente():
@@ -497,10 +622,10 @@ def main():
             pass
         with open("posts/tema-contador.txt", "w") as ft:
             ft.write(str(indice_tema + 1))
-        tema_atual = temas[indice_tema % len(temas)]
+        tema_atual = tema_do_ciclo(temas, indice_tema)
         pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
                   "ate 220 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + tema_atual + "." + contexto)
-        gerado = cerebro(pedido[:550])
+        gerado, motivo = cerebro_com_motivo(pedido[:550])
         ciclo_do_dia = datetime.datetime.utcnow().hour // 3
         try:
             with open("posts/posts-publicados.md") as fpp:
@@ -508,25 +633,37 @@ def main():
         except Exception:
             ja_publicados = ""
         candidato_gerado = " ".join((gerado or "").strip().split())[:LIMITE_TEXTO_EDITORIAL]
+        motivo_geracao = motivo or "motor respondeu"
         texto = candidato_gerado if texto_gerado_seguro(candidato_gerado, ja_publicados) else ""
+        if candidato_gerado and not texto:
+            motivo_geracao = ("reprovado pelo crivo editorial "
+                              "(tamanho, link, hashtag, fato vencido ou repetição)")
         if not texto:
             indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
             for passo in range(len(fila["posts"])):
                 item = fila["posts"][(indice_reserva + passo) % len(fila["posts"])]
-                candidato = item["texto"]
-                if candidato[:60].lower() not in ja_publicados:
-                    texto = candidato
+                if not ja_foi_publicado(item["texto"], ja_publicados):
+                    texto = item["texto"]
                     url_da_fila = item.get("url", "")
                     break
             if not texto:
+                # Toda a fila já foi publicada: em vez de repetir a MESMA frase (foi o que
+                # aconteceu 53 vezes), assume a repetição no log e varia o fecho pelo tema.
                 item = fila["posts"][indice_reserva]
-                texto = item["texto"] + " (" + datetime.datetime.utcnow().strftime("%d/%m") + ")"
+                texto = item["texto"].rstrip(" .") + ". " + variacao_de_fecho(indice_tema)
                 url_da_fila = item.get("url", "")
-        resultados.append(("cerebro", "OK", ("post novo validado" if texto == candidato_gerado and texto else "fila de reserva (gerado reprovado/indisponivel)")))
+                motivo_geracao += " · fila esgotada, fecho variado pelo tema"
+        texto, anexou_ponte = garantir_ponte(texto, tema_atual)
+        if anexou_ponte:
+            motivo_geracao += " · convite da ponte anexado (motor não citou o Instagram)"
+        resultados.append(("cerebro", "OK" if texto == candidato_gerado else "INDISPONIVEL",
+                           ("post novo validado — " + motivo_geracao) if texto == candidato_gerado
+                           else ("fila de reserva — " + motivo_geracao)))
     destino = destino_oficial(url_da_fila, texto, tema_atual)
     mensagem = mensagem_editorial(texto, destino)
     nome_destino = next(nome for nome, url in DESTINOS_EDITORIAIS.items() if url == destino)
     resultados.append(("destino editorial", "OK", "rota oficial " + nome_destino))
+    resultados.append(("tema do ciclo", "OK", str(tema_atual)[:80]))
 
     def _ntfy():
         req = urllib.request.Request("https://ntfy.sh/" + os.environ.get("NTFY_TOPIC", "rebocl-enxame-x7k2"),
