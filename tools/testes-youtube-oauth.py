@@ -42,7 +42,8 @@ def ok(nome, cond, detalhe=""):
 
 # ---------------------------------------------------------------- escopo e sigilo
 ok("pede o escopo de administração (cobre envio e edição num consentimento só)",
-   oauth.ESCOPO == "https://www.googleapis.com/auth/youtube", oauth.ESCOPO)
+   "https://www.googleapis.com/auth/youtube" in oauth.ESCOPOS
+   and oauth.ESCOPO == " ".join(oauth.ESCOPOS), oauth.ESCOPO)
 # o código do dispositivo é publicado para o agente poder lê-lo
 _gravado = {}
 def _put_falso(url, pat, dados):
@@ -78,8 +79,12 @@ ok("resposta sem esse campo = token sem prazo (produção)",
 ok("resposta vazia não é confundida com teste",
    oauth.duracao_do_token(None)[0] == "ilimitado")
 
-ok("o escopo pedido não é 'force-ssl' (esse é o mínimo que não serve para playlist+upload combinados)",
-   "force-ssl" not in oauth.ESCOPO)
+# Medido em 26/10/2026: sem force-ssl, commentThreads e captions devolvem
+# 403 insufficientPermissions. Ele entra JUNTO do escopo amplo — não no lugar dele.
+ok("pede também 'force-ssl', o único que libera comentários e legendas",
+   "https://www.googleapis.com/auth/youtube.force-ssl" in oauth.ESCOPOS)
+ok("o escopo amplo continua pedido (envio e edição não dependem só do force-ssl)",
+   "https://www.googleapis.com/auth/youtube" in oauth.ESCOPOS)
 ok("resumo de segredo mostra no máximo 4 caracteres",
    "AB12" in oauth.resumo_de_segredo("AB12xyz1234")
    and "xyz1234" not in oauth.resumo_de_segredo("AB12xyz1234"))
