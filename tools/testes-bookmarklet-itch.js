@@ -8,6 +8,7 @@ const fonte = fs.readFileSync(path.join(raiz, 'tools', 'bookmarklet-itch.js'), '
 const derivada = fs.readFileSync(path.join(raiz, 'itch', 'preencher-bookmarklet.txt'), 'utf8').trim();
 const entrar = fs.readFileSync(path.join(raiz, 'tools', 'entrar-itch.js'), 'utf8');
 const entrarDerivada = fs.readFileSync(path.join(raiz, 'itch', 'entrar-bookmarklet.txt'), 'utf8').trim();
+const consoleDerivado = fs.readFileSync(path.join(raiz, 'itch', 'comando-console.txt'), 'utf8').trim();
 
 function minificar(codigo) {
   return 'javascript:' + codigo
@@ -70,6 +71,11 @@ ok('o modo leitura não grava', () => {
 
 ok('o one-liner é a fonte única minificada', () => {
   assert.strictEqual(derivada, minificar(fonte), 'a versão de instalar divergiu da fonte');
+});
+
+ok('o comando de Console é a mesma fonte, sem o javascript:', () => {
+  assert.strictEqual(consoleDerivado, derivada.replace(/^javascript:/, ''), 'o comando de Console divergiu');
+  assert(!consoleDerivado.startsWith('javascript:'), 'comando de Console não leva o esquema');
 });
 
 ok('cabe em um favorito de navegador', () => {
