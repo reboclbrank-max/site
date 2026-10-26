@@ -213,7 +213,12 @@ ok('o favorito de devlog nao adivinha: descobre o formulario e envia o csrf', ()
   assert(f.includes('/game/edit/'), 'nao parte da pagina de edicao');
   assert(f.includes('new FormData('), 'nao reenvia os campos reais do formulario');
   assert(f.includes("getAttribute('action')"), 'nao usa o action do proprio formulario');
-  assert(f.includes('devlog-itch.json'), 'nao busca o texto publicado');
+  // o texto vai EMBUTIDO (gerado de posts/devlog-itch.json): nada de busca externa,
+  // entao o favorito nao depende de CORS nem do cache do raw
+  const json = JSON.parse(fs.readFileSync(path.join(raiz, 'posts/devlog-itch.json'), 'utf8'));
+  assert(f.includes(JSON.stringify(json.titulo)), 'nao levou o titulo publicado');
+  assert(f.includes(JSON.stringify(json.corpo)), 'nao levou o corpo publicado');
+  assert(!f.includes('raw.githubusercontent'), 'ainda depende de busca externa');
   assert(!/name=\s*['"]post\[/.test(f), 'chutou nome de campo');
 });
 
