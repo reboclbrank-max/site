@@ -397,6 +397,51 @@ def indisponivel(nome, detalhe="configuracao de publicacao ausente"):
     resultados.append((nome, "INDISPONIVEL", detalhe))
 
 
+def medicoes_de_plataforma(medidor=None):
+    """Linhas de itch e YouTube do relatório diário — usando o MESMO medidor do placar.
+
+    Defeito corrigido em 25/10/2026: esta parte era escrita à mão como NAO_OBSERVAVEL para
+    itch e YouTube, mesmo com os dois medidos em tools/metricas.py (chave do itch nos
+    segredos, YouTube Data API). O dono lia "sem leitura automática" no log do dia enquanto o
+    medidor lia 45 downloads e 24 inscritos — duas réguas, uma cega.
+
+    Devolve (linhas, quantas leituras reais). Sem leitura, a linha diz o MOTIVO.
+    """
+    medicoes, lidas = [], 0
+    M = medidor
+    if M is None:
+        try:
+            import metricas as M  # mesma pasta tools/
+        except Exception as e:
+            return ["medidor indisponível=%s" % type(e).__name__], 0
+    try:
+        itch_d, itch_erro = M.observado_itch()
+    except Exception as e:
+        itch_d, itch_erro = None, type(e).__name__
+    if itch_d:
+        medicoes.append("itch_downloads=%d(api)" % itch_d["downloads"])
+        medicoes.append("itch_visitas=%d(api)" % itch_d["visitas"])
+        lidas += 1
+    else:
+        medicoes.append("itch_downloads=NAO_OBSERVAVEL(%s)" % (itch_erro or "sem motivo"))
+    try:
+        yt_d, yt_erro = M.observado_youtube()
+    except Exception as e:
+        yt_d, yt_erro = None, type(e).__name__
+    if yt_d:
+        medicoes.append("youtube_inscritos=%d(api)" % yt_d["inscritos"])
+        if yt_d.get("shorts") is not None:
+            medicoes.append("youtube_shorts=%d(api)" % yt_d["shorts"])
+        lidas += 1
+    else:
+        medicoes.append("youtube=NAO_OBSERVAVEL(%s)" % (yt_erro or "sem motivo"))
+    # itch não publica contagem de seguidores em API nem em página pública (conferido em
+    # 25/10/2026: /api/1/user/<id>/followers, perfil e página do criador só mostram Posts).
+    # Declarado com o motivo — SEM_API, nunca zero.
+    medicoes.append("itch_seguidores=SEM_API")
+    return medicoes, lidas
+
+
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else ""
     if modo != "teste" and ciclo_ainda_recente():
@@ -986,14 +1031,19 @@ def main():
         else:
             medicoes.append("ig_seguidores=NAO_CONFIGURADO")
             medicoes.append("ig_posts=NAO_CONFIGURADO")
-        # A página pública do itch não fornece uma leitura estável de downloads.
-        # Não transformar scraping frágil ou ausência de API em zero/resultado.
+        # DEFEITO CORRIGIDO (25/10/2026): esta linha era escrita à mão como
+        # NAO_OBSERVAVEL para itch e YouTube, mesmo com os dois medidos por
+        # tools/metricas.py (chave do itch nos segredos, YouTube Data API). Resultado: o
+        # dono lia "sem leitura automática" no log diário e nas metas — enquanto o medidor
+        # lia 45 downloads e 24 inscritos. Duas réguas, uma cega. Agora o relatório usa o
+        # MESMO medidor; se a leitura falhar, o motivo aparece em vez do silêncio.
+        _linhas_medidor, _lidas = medicoes_de_plataforma()
+        medicoes += _linhas_medidor
+        leituras_observadas += _lidas
         medicoes += [
-            "itch_downloads=NAO_OBSERVAVEL",
             "alcance=NAO_OBSERVAVEL",
             "engajamento=NAO_OBSERVAVEL",
             "conversao=NAO_OBSERVAVEL",
-            "youtube=NAO_OBSERVAVEL",
         ]
         status_medicao = "OK" if leituras_observadas else "INDISPONIVEL"
         pat = os.environ.get("GHPAT")

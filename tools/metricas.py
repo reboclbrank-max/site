@@ -480,13 +480,14 @@ def placar_metas(observado, caminho=METAS, hoje=None):
     if "seguidores" in bsky:
         linhas.append(linha("Bluesky: seguidores", bsky["seguidores"], "bsky_seguidores", "API pública do Bluesky"))
     if "inscritos" in yt:
-        linhas.append(linha("YouTube: inscritos", yt["inscritos"], "yt_inscritos", "sem leitura automática"))
+        linhas.append(linha("YouTube: inscritos", yt["inscritos"], "yt_inscritos", "YouTube Data API v3 (chave no runner)"))
     if "shorts" in yt:
-        linhas.append(linha("YouTube: shorts", yt["shorts"], "yt_shorts", "sem leitura automática"))
+        linhas.append(linha("YouTube: shorts", yt["shorts"], "yt_shorts", "YouTube Data API v3 (chave no runner)"))
     if "downloads" in itch:
-        linhas.append(linha("itch: downloads", itch["downloads"], "itch_downloads", "sem leitura automática"))
+        linhas.append(linha("itch: downloads", itch["downloads"], "itch_downloads", "api.itch.io/profile/games (chave no runner)"))
     if "seguidores" in itch:
-        linhas.append(linha("itch: seguidores", itch["seguidores"], "itch_seguidores", "sem leitura automática"))
+        linhas.append(linha("itch: seguidores", itch["seguidores"], "itch_seguidores",
+                        "SEM_API: o itch não publica seguidores (conferido em 25/10/2026)"))
     observavel = sum(1 for l in linhas if l["status"] != "SEM_LEITURA")
     return linhas, {"dias_restantes": dias, "prazo": prazo.isoformat() if prazo else None,
                     "metas_com_leitura": observavel, "metas_sem_leitura": len(linhas) - observavel}
@@ -505,6 +506,13 @@ def gravar_placar(linhas, contexto, hoje=None):
     rodape = (f"\nPrazo: **{prazo}**" + (f" · {dias} dia(s) restante(s)" if dias is not None else "")
               + f" · {contexto['metas_com_leitura']} meta(s) com leitura, "
                 f"{contexto['metas_sem_leitura']} sem leitura automática.\n")
+    sem_api = [l for l in linhas if l["status"] == "SEM_LEITURA" and "SEM_API" in (l.get("fonte") or "")]
+    if sem_api:
+        rodape += ("\n> **Sem API, não sem robô:** " + ", ".join(l["meta"] for l in sem_api)
+                   + ". O itch não publica contagem de seguidores em API nem em página pública "
+                     "(conferido em 25/10/2026). O que o itch mede é download e visita — se a meta "
+                     "de seguidores do itch continuar aqui, ela fica em NAO_OBSERVAVEL para sempre. "
+                     "Troca sugerida (decisão do dono): usar **itch: visitas**, já medido.\n")
     linhas_md = ["| meta | alvo | observado | falta | por dia | status |",
                  "|---|---|---|---|---|---|"]
     for l in linhas:
