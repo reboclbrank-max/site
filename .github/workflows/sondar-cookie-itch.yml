@@ -1,11 +1,16 @@
 name: sondar-cookie-itch
 
-# Sonda de diagnostico: a sessao do itch (ITCH_COOKIE) atravessa a Cloudflare a partir de um
-# runner? Testa combinacoes de User-Agent x conjunto de cookies e imprime SO o status HTTP.
-# Nao grava nada. Serve para decidir com medida, nao com suposicao.
+# Mede UMA coisa: com a sessao real do dono (segredo ITCH_COOKIE), a pagina de EDICAO
+# (/game/edit/<id>, o endereco que o dono confirmou em 26/10) responde o formulario ou e barrada?
+# Nao grava nada. So imprime status e se o formulario veio.
 
 on:
   workflow_dispatch:
+    inputs:
+      id:
+        description: "id do jogo (padrao 5017404 = ceifalume)"
+        required: true
+        default: "5017404"
 
 permissions:
   contents: read
@@ -17,55 +22,59 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
-      - name: Matriz de User-Agent x cookies
+      - name: A pagina de edicao responde com a sessao?
         env:
           ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+          ID_JOGO: ${{ inputs.id }}
         run: |
           python3 - <<'PY'
           import os, time, urllib.error, urllib.request
 
           cookie = os.environ.get("ITCH_COOKIE", "")
-          pares = {}
-          for pedaco in cookie.split(";"):
-              if "=" in pedaco:
-                  k, v = pedaco.split("=", 1)
-                  pares[k.strip()] = v.strip()
-          print("cookies presentes: " + ", ".join(sorted(pares)))
+          id_jogo = os.environ.get("ID_JOGO", "5017404").strip()
+          print("cookie presente: %s (%d caracteres)" % (bool(cookie), len(cookie)))
 
           agentes = {
               "linux-chrome128": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36",
               "windows-chrome141": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
-              "sem-agente": "",
           }
-          conjuntos = {
-              "itchio": [k for k in pares if k == "itchio"],
-              "itchio+token": [k for k in pares if k in ("itchio", "itchio_token")],
-              "tudo": list(pares),
-          }
+          alvos = [
+              "/game/edit/%s" % id_jogo,
+              "/dashboard",
+          ]
 
-          def pedir(alvo, agente, cabecalho_cookie):
-              h = {"Accept": "text/html,application/xhtml+xml,*/*;q=0.8", "Accept-Language": "pt-BR,pt;q=0.9"}
-              if agente:
-                  h["User-Agent"] = agente
-              if cabecalho_cookie:
-                  h["Cookie"] = cabecalho_cookie
+          def pedir(caminho, agente, com_cookie):
+              h = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                   "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
+                   "User-Agent": agente,
+                   "Referer": "https://itch.io/dashboard"}
+              if com_cookie:
+                  h["Cookie"] = cookie
               try:
-                  with urllib.request.urlopen(urllib.request.Request(alvo, headers=h), timeout=40) as r:
-                      corpo = r.read(4000).decode("utf-8", "replace")
-                      return "%s%s" % (r.status, " (desafio)" if "Just a moment" in corpo else "")
+                  with urllib.request.urlopen(urllib.request.Request("https://itch.io" + caminho, headers=h), timeout=40) as r:
+                      corpo = r.read(200000).decode("utf-8", "replace")
+                      return r.status, corpo
               except urllib.error.HTTPError as e:
-                  corpo = e.read(4000).decode("utf-8", "replace")
-                  return "%s%s" % (e.code, " (desafio)" if "Just a moment" in corpo else "")
+                  return e.code, e.read(200000).decode("utf-8", "replace")
               except Exception as e:
-                  return "erro %r" % (e,)
+                  return None, repr(e)
 
-          for nome_agente, agente in agentes.items():
-              for nome_conjunto, chaves in conjuntos.items():
-                  cabecalho = "; ".join("%s=%s" % (k, pares[k]) for k in chaves)
-                  print("%-18s %-14s /dashboard -> %s" % (nome_agente, nome_conjunto, pedir("https://itch.io/dashboard", agente, cabecalho)))
-                  time.sleep(3)
-              print("%-18s %-14s /dashboard -> %s" % (nome_agente, "sem cookie", pedir("https://itch.io/dashboard", agente, "")))
-              time.sleep(3)
-
-          print("controle pagina publica -> " + pedir("https://rebocl-brank.itch.io/ceifalume", agentes["windows-chrome141"], ""))
+          for nome, agente in agentes.items():
+              for caminho in alvos:
+                  status, corpo = pedir(caminho, agente, True)
+                  tem_form = 'name="game[title]"' in corpo
+                  tem_csrf = "csrf_token" in corpo
+                  desafio = "Just a moment" in corpo or "challenge-platform" in corpo
+                  print("%-17s %-22s -> %s | form=%s csrf=%s desafio=%s (%d bytes)"
+                        % (nome, caminho, status, tem_form, tem_csrf, desafio, len(corpo)))
+                  if tem_form:
+                      import re
+                      campos = sorted(set(re.findall(r'name="(game\[[a-z_]+\])"', corpo)))
+                      print("   campos do jogo: " + ", ".join(campos))
+                      m = re.search(r'name="game\[title\]"[^>]*value="([^"]*)"', corpo)
+                      print("   titulo na pagina: " + (m.group(1) if m else "?"))
+                  time.sleep(4)
+              status, corpo = pedir("/game/edit/%s" % id_jogo, agente, False)
+              print("%-17s %-22s -> %s | sem cookie (%d bytes)" % (nome, "/game/edit (sem cookie)", status, len(corpo)))
+              time.sleep(4)
           PY
