@@ -2,6 +2,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const raiz = path.join(__dirname, '..');
 const fonte = fs.readFileSync(path.join(raiz, 'tools', 'bookmarklet-itch.js'), 'utf8');
@@ -144,6 +145,37 @@ ok('só mexe nos campos que vieram no conteúdo publicado', () => {
 ok('aceita escolher opção do select pelo rótulo', () => {
   assert(fonte.includes('opcoes[o].textContent'), 'não tenta casar pelo texto da opção');
   assert(fonte.includes("el.tagName === 'SELECT'"), 'não trata select');
+});
+
+ok('todo comando entregue ao dono tem sintaxe válida', () => {
+  // Regra criada em 26/10: dois comandos seguidos caíram por erro de sintaxe meu (um "..." literal).
+  // node --check pega isso antes de qualquer colagem no navegador do dono.
+  const alvos = ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/preencher-bookmarklet.txt',
+    'itch/entrar-bookmarklet.txt'];
+  alvos.forEach((rel) => {
+    const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8').trim();
+    const codigo = bruto.startsWith('javascript:') ? bruto.slice('javascript:'.length) : bruto;
+    const tmp = path.join(os.tmpdir(), 'comando-' + path.basename(rel) + '.js');
+    fs.writeFileSync(tmp, codigo);
+    const r = require('child_process').spawnSync(process.execPath, ['--check', tmp], { encoding: 'utf8' });
+    assert.strictEqual(r.status, 0, rel + ' com erro de sintaxe: ' + (r.stderr || '').split('\n').slice(0, 4).join(' '));
+  });
+});
+
+ok('o comando do gênero não mexe em mais nada', () => {
+  const cmd = fs.readFileSync(path.join(raiz, 'itch/comando-genero.txt'), 'utf8');
+  assert(cmd.includes('game[genre]'), 'não trata o gênero');
+  assert(!/game\[description\]\s*=/.test(cmd), 'toca na descrição');
+  assert(cmd.includes('confirm('), 'envia sem confirmar');
+  assert(cmd.includes('game[title]'), 'não identifica a página de edição');
+});
+
+ok('nenhum arquivo entregue tem reticências soltas (o erro de 26/10)', () => {
+  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'tools/bookmarklet-itch.js'].forEach((rel) => {
+    const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8');
+    const semTexto = bruto.replace(/'[^']*'/g, "''").replace(/"([^"\\]|\\.)*"/g, '""').replace(/\/\/.*/g, '');
+    assert(!/\.\.\.\s*[,}]/.test(semTexto), rel + ' tem reticências no lugar de código');
+  });
 });
 
 console.log('\n' + passou + '/' + passou + ' testes do modo navegador do itch passaram');

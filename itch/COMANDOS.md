@@ -58,3 +58,21 @@ A página tem **vários** formulários (o de busca do topo também tem `csrf_tok
 
 Depois de rodar, **Ctrl+V no chat** cola o conteúdo (ele já vai para a área de transferência).
 Nada é gravado.
+
+## 4. Preencher o gênero (comando testado em navegador)
+
+Hoje `game[genre]` está `none` — é o único campo vazio da página. Este comando escolhe
+"Simulation" pelo rótulo, mostra `antes -> depois` e só envia se você confirmar.
+Está em `itch/comando-genero.txt`.
+
+```js
+(()=>{const t=document.querySelector('[name="game[title]"]');if(!t)return alert('Esta não é a página de edição (sem game[title]).');const f=t.form;const e=f.querySelector('[name="game[genre]"]');if(!e)return alert('Esta página não tem o campo de gênero.');const antes=e.options[e.selectedIndex].textContent.trim();const alvo=[...e.options].find(o=>o.textContent.trim().toLowerCase()==='simulation');if(!alvo){alert('Opções de gênero: '+[...e.options].map(o=>o.textContent.trim()).join(', '));return 'sem opcao'}e.value=alvo.value;e.dispatchEvent(new Event('change',{bubbles:true}));if(!confirm('Gênero: '+antes+' -> '+alvo.textContent.trim()+'. Salvar?'))return 'cancelado';const b=f.querySelector('[type="submit"]');if(b)b.click();else f.submit();return 'enviado'})()
+```
+
+**Testado** em navegador com um formulário igual ao do itch (Chromium 156, headless):
+o envio levou `game[genre]=sim`, manteve `csrf_token` e os demais campos, e as travas
+("sem game[title]", "sem campo de gênero") disparam corretamente.
+
+> Regra nova do repositório: **todo comando entregue ao dono passa por `node --check`**
+> antes de sair (`tools/testes-bookmarklet-itch.js`). Foi assim que um `...` literal meu
+> derrubou dois comandos seguidos — não acontece mais sem a barreira pegar.
