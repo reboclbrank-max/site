@@ -38,7 +38,7 @@ on:
         default: ""
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: editar-itch
@@ -66,6 +66,8 @@ jobs:
           RESUMO: ${{ inputs.resumo }}
           CONFIRMACAO: ${{ inputs.confirmacao }}
         run: |
+          set -o pipefail
+          {
           # caminho vazio = descobre pelo ID real do jogo na API do itch (nada de chutar numero)
           if [ -z "$ITCH_EDICAO" ] || [ "$ITCH_EDICAO" = "/dashboard/game/0/edit" ]; then
             ITCH_EDICAO=$(python3 - <<'PY'
@@ -125,10 +127,81 @@ jobs:
           print(("OK " if ok2 else "FALHOU ") + msg2)
           sys.exit(0 if ok2 else 1)
           PY
+          } 2>&1 | tee /tmp/edicao.txt
+
+      - name: Resumo do run
+        if: always()
+        run: |
           {
             echo "### itch.io — pagina ($MODO)"
             echo
             echo '```'
             python3 -c "print(open('/tmp/edicao.txt').read())" 2>/dev/null || true
             echo '```'
-          } >> "$GITHUB_STEP_SUMMARY" || true
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # O chat le posts/estado-itch.json para responder o !itch com o resultado de verdade.
+      # So grava quando o resultado muda (o carimbo de tempo sozinho nao gera commit).
+      - name: Registra o estado para o chat
+        if: always()
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          try:
+              saida = Path('/tmp/edicao.txt').read_text(encoding='utf-8', errors='replace')
+          except OSError:
+              saida = ''
+          linhas = [l.strip() for l in saida.splitlines() if l.strip()]
+          antes = {}
+          alvo = Path('posts/estado-itch.json')
+          if alvo.exists():
+              try:
+                  antes = json.loads(alvo.read_text(encoding='utf-8'))
+              except ValueError:
+                  antes = {}
+
+          def achar(prefixos):
+              for linha in linhas:
+                  if linha.startswith(prefixos):
+                      return linha
+              return ''
+
+          estado = {
+              'quando': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+              'modo': os.environ.get('MODO', 'ler'),
+              'caminho': next((l.split(':', 1)[1].strip() for l in linhas
+                               if l.startswith('caminho descoberto pela API')), '') or os.environ.get('ITCH_EDICAO', ''),
+              'cookie': next((l.split(':', 1)[1].strip() for l in linhas if l.startswith('cookie:')), 'desconhecido'),
+              'sessao': achar(('OK sessao', 'FALHOU sessao')),
+              'resultado': ([l for l in linhas if l.startswith(('OK ', 'FALHOU '))] or [''])[-1],
+              'resumo': linhas[-6:],
+              'run': '%s/%s/actions/runs/%s' % (os.environ.get('GITHUB_SERVER_URL', 'https://github.com'),
+                                                os.environ.get('GITHUB_REPOSITORY', ''), os.environ.get('GITHUB_RUN_ID', '')),
+          }
+          comparavel = {k: v for k, v in estado.items() if k != 'quando'}
+          if not linhas:
+              print('sem saida do passo principal: nada a registrar')
+              raise SystemExit(0)
+          if comparavel == {k: v for k, v in antes.items() if k != 'quando'}:
+              print('estado igual ao anterior: nada a registrar')
+              raise SystemExit(0)
+          alvo.parent.mkdir(parents=True, exist_ok=True)
+          alvo.write_text(json.dumps(estado, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print('estado gravado em posts/estado-itch.json: ' + estado['resultado'])
+          PY
+          git config user.name "editar-itch"
+          git config user.email "actions@users.noreply.github.com"
+          git add posts/estado-itch.json
+          if git diff --cached --quiet; then echo "nada a commitar"; exit 0; fi
+          git commit -m "itch: estado do run ($MODO)"
+          for tentativa in 1 2 3; do
+            if git fetch origin main && git rebase origin/main && git push origin HEAD:main; then
+              echo "estado registrado no main"; exit 0
+            fi
+            sleep 5
+          done
+          echo "aviso: nao consegui registrar o estado (o run em si ja terminou)"
