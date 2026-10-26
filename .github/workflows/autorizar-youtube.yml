@@ -2,7 +2,9 @@ name: autorizar-youtube
 
 # Autoriza o envio de vídeo ao YouTube — o único passo que depende do dono.
 #
-# Não tem cron: roda só quando alguém aperta o botão. Não publica nada: apenas pede o
+# Não tem cron: roda só quando alguém aperta o botão. A janela para aprovar é de 25 minutos
+# (o código do Google vale 30) — o log só fica visível depois que o run termina, então leia o
+# código na tela do run, na etapa 'Pede o código ao Google'. Não publica nada: apenas pede o
 # consentimento (device flow, sem servidor local e sem instalar nada) e guarda o token como
 # segredo. Depois disso, o envio passa a ser automático pelo workflow enviar-youtube.
 #
@@ -19,7 +21,7 @@ permissions:
 jobs:
   autorizar:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 

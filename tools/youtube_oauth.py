@@ -178,7 +178,7 @@ def _put_json(url, pat, dados):
         return False, str(e)[:80]
 
 
-def fluxo_completo(client_id, client_secret, repo, pat, esperar=5, limite_s=900,
+def fluxo_completo(client_id, client_secret, repo, pat, esperar=5, limite_s=1500,
                    post=_post_json, dormir=time.sleep, relogio=time.time, escrever=print):
     """Fluxo inteiro: pede código, mostra ao dono, espera a aprovação, grava o segredo.
 
