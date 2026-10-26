@@ -139,14 +139,13 @@ if os.path.exists(_wf):
     texto = open(_wf, encoding="utf-8").read()
     ok("o workflow do itch não tem cron", "schedule:" not in texto)
     ok("o workflow do itch só roda por workflow_dispatch", "workflow_dispatch:" in texto)
+    ok("o workflow exige confirmação", "confirmacao" in texto)
     # o ramo do run e a lista de modos do dispatch têm de casar: um modo que existe no run mas
-# não na lista volta 422 e o disparo não roda nada (aconteceu com "ensaio").
-_wf = open(".github/workflows/enviar-itch.yml", encoding="utf-8").read()
-_modos_run = set(re.findall(r'inputs\.modo \}\}" = "([a-z]+)"', _wf))
-_lista = set(re.findall(r'^          - (status|api|ensaio|push)$', _wf, re.M))
-ok("todo modo do run está na lista do dispatch", _modos_run <= _lista,
-   "run=" + str(sorted(_modos_run)) + " lista=" + str(sorted(_lista)))
-ok("o workflow exige confirmação", "confirmacao" in texto)
+    # não na lista volta 422 e o disparo não roda nada (aconteceu com "ensaio").
+    _modos_run = set(re.findall(r'inputs\.modo \}\}" = "([a-z]+)"', texto))
+    _lista = set(re.findall(r'^          - (status|api|ensaio|push)$', texto, re.M))
+    ok("todo modo do run está na lista do dispatch", _modos_run <= _lista,
+       "run=" + str(sorted(_modos_run)) + " lista=" + str(sorted(_lista)))
     ok("o workflow roda a barreira antes de tocar a rede",
        texto.index("testes-enviar-itch.py") < texto.index("enviar-itch.py"))
 else:
