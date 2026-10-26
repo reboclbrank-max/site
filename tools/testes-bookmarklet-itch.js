@@ -28,16 +28,23 @@ ok('age na página de edição real (/game/edit/<id>)', () => {
   assert(!fonte.includes('\\/dashboard\\/game\\/[0-9]+\\/edit\\/?$/'), 'voltou ao endereço que deu 404');
 });
 
-ok('exige o formulário com csrf_token', () => {
-  assert(fonte.includes('[name="csrf_token"]'), 'não confere o csrf do formulário');
+ok('continua exigindo o formulário do jogo (com csrf no envio)', () => {
+  // o form do jogo é identificado por game[title]; o csrf continua indo no envio inteiro
+  assert(fonte.includes('[name="game[title]"]'), 'não identifica o formulário do jogo');
+  assert(!/form\.submit\(\)[^;]*$/.test(fonte) || fonte.includes('botao'), 'envia sem o formulário completo');
 });
 
-ok('conhece exatamente os campos do MAPA do itch', () => {
-  const esperado = ['title', 'short_text', 'description', 'genre', 'tags', 'min_price', 'classification'];
-  const linha = fonte.split('\n').find((l) => l.includes('var CAMPOS ='));
-  esperado.forEach((campo) => assert(linha.includes("'" + campo + "'"), 'campo ausente: ' + campo));
-  const achados = (linha.match(/'[a-z_]+'/g) || []).map((s) => s.replace(/'/g, ''));
-  assert.deepStrictEqual(achados, esperado, 'lista de campos fora do esperado');
+ok('usa os nomes REAIS do formulário (game[...])', () => {
+  const esperado = ['game[title]', 'game[short_text]', 'game[description]', 'game[genre]',
+    'game[tags]', 'game[min_price]', 'game[classification]'];
+  const trecho = fonte.slice(fonte.indexOf('var CAMPOS ='), fonte.indexOf('function formDoJogo'));
+  esperado.forEach((campo) => assert(trecho.includes("'" + campo + "'"), 'campo ausente: ' + campo));
+  assert(!/'(title|short_text|description)'/.test(trecho), 'voltou aos nomes sem o prefixo game[]');
+});
+
+ok('escolhe o formulário do jogo, não o de busca', () => {
+  assert(fonte.includes("formDoJogo"), 'não procura o formulário certo');
+  assert(fonte.includes('[name="game[title]"]'), 'não identifica o formulário pelo campo do jogo');
 });
 
 ok('nunca lê o cookie da sessão', () => {

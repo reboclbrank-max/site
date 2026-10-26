@@ -12,7 +12,18 @@
 
   // Campos que este script conhece — os mesmos nomes do formulário real de edição,
   // conferidos em tools/itch-navegador.py (MAPA). Qualquer outro campo é ignorado.
-  var CAMPOS = ['title', 'short_text', 'description', 'genre', 'tags', 'min_price', 'classification'];
+  // Medido no formulário do dono em 26/10: o itch prefixa tudo com game[].
+  var CAMPOS = ['game[title]', 'game[short_text]', 'game[description]', 'game[genre]',
+    'game[tags]', 'game[min_price]', 'game[classification]', 'game[release_status]',
+    'game[payment_mode]', 'game[type]', 'game[slug]'];
+  // O formulário certo é o que tem estes campos (a página também tem o form de busca).
+  function formDoJogo() {
+    var forms = document.querySelectorAll('form');
+    for (var i = 0; i < forms.length; i += 1) {
+      if (forms[i].querySelector('[name="game[title]"]')) { return forms[i]; }
+    }
+    return null;
+  }
 
   // De onde vem o conteúdo publicado: arquivo público do repositório, sem credencial.
   var FONTE = 'https://raw.githubusercontent.com/reboclbrank-max/site/main/posts/pagina-itch.json';
@@ -24,14 +35,11 @@
     return;
   }
 
-  // O formulário certo é o que tem csrf_token — o itch regrava todos os campos no envio.
-  var form = null;
-  var todos = document.querySelectorAll('form');
-  for (var i = 0; i < todos.length; i += 1) {
-    if (todos[i].querySelector('[name="csrf_token"]')) { form = todos[i]; break; }
-  }
+  // A página tem vários formulários (o de busca do topo também tem csrf_token): o do jogo é o
+  // que tem game[title]. Sem ele, aborta em vez de mexer no formulário errado.
+  var form = formDoJogo();
   if (!form) {
-    alert('Não achei o formulário de edição (sem csrf_token). A página mudou — nada foi feito.');
+    alert('Não achei o formulário do jogo (sem game[title]). A página mudou — nada foi feito.');
     return;
   }
 

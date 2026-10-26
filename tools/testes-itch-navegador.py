@@ -31,28 +31,28 @@ ok("cookie ausente e dito como ausente", n.resumir_cookie("") == "ausente")
 PAGINA = """
 <form method="post" action="/dashboard/game/1/edit">
  <input type="hidden" name="csrf_token" value="tok123">
- <input type="text" name="title" value="Ceifalume">
- <input type="text" name="short_text" value="Fazenda noturna">
- <textarea name="description">Texto &amp; mais texto</textarea>
- <select name="genre"><option value="sim">Simulation</option><option value="act" selected>Action</option></select>
+ <input type="text" name="game[title]" value="Ceifalume">
+ <input type="text" name="game[short_text]" value="Fazenda noturna">
+ <textarea name="game[description]">Texto &amp; mais texto</textarea>
+ <select name="game[genre]"><option value="sim">Simulation</option><option value="act" selected>Action</option></select>
  <input type="checkbox" name="p_android" value="on" checked>
  <input type="checkbox" name="p_web" value="on">
  <input type="submit" name="salvar" value="Save">
 </form>
 """
 c = n.campos_do_form(PAGINA)
-ok("le input de texto", c.get("title") == "Ceifalume", c.get("title"))
+ok("le input de texto", c.get("game[title]") == "Ceifalume", c.get("game[title]"))
 ok("le csrf_token", c.get("csrf_token") == "tok123")
-ok("le textarea com entidade desescapada", c.get("description") == "Texto & mais texto", c.get("description"))
-ok("le select pela opcao selecionada", c.get("genre") == "act", c.get("genre"))
+ok("le textarea com entidade desescapada", c.get("game[description]") == "Texto & mais texto", c.get("game[description]"))
+ok("le select pela opcao selecionada", c.get("game[genre]") == "act", c.get("game[genre]"))
 ok("checkbox marcado entra", c.get("p_android") == "on")
 ok("checkbox vazio nao entra", "p_web" not in c)
 ok("botao de submit nao entra como campo", "salvar" not in c)
 
 # ---------------------------------------------------------------- envio preserva o resto
 envio, aplicados = n.montar_envio(c, {"titulo": "Ceifalume 2"})
-ok("troca o campo pedido", envio["title"] == "Ceifalume 2")
-ok("preserva descricao e csrf", envio["description"] == "Texto & mais texto" and envio["csrf_token"] == "tok123")
+ok("troca o campo pedido", envio["game[title]"] == "Ceifalume 2")
+ok("preserva descricao e csrf", envio["game[description]"] == "Texto & mais texto" and envio["csrf_token"] == "tok123")
 ok("reporta o que aplicou", aplicados == ["titulo"])
 _v, _a = n.montar_envio(c, {"campo_que_nao_existe": "x"})
 ok("campo desconhecido nao vira escrita", _a == [])
@@ -77,8 +77,8 @@ ok_e, msg_e, backup = n.aplicar("/dashboard/game/1/edit", {"titulo": "Novo", "re
                                 "cookie", get=lambda u, ck, timeout=40: (PAGINA, None),
                                 post=post_falso, confirmacao="EDITAR")
 ok("com EDITAR escreve", ok_e is True, msg_e)
-ok("o envio leva o formulario inteiro", chamadas["dados"]["description"] == "Texto & mais texto")
-ok("o envio leva os campos novos", chamadas["dados"]["title"] == "Novo" and chamadas["dados"]["short_text"] == "Novo resumo")
+ok("o envio leva o formulario inteiro", chamadas["dados"]["game[description]"] == "Texto & mais texto")
+ok("o envio leva os campos novos", chamadas["dados"]["game[title]"] == "Novo" and chamadas["dados"]["game[short_text]"] == "Novo resumo")
 ok("backup guarda o valor ANTERIOR", backup["titulo"] == "Ceifalume", backup)
 ok("backup e um dicionario com os campos mapeados", "descricao" in backup)
 
@@ -190,6 +190,29 @@ ok("sessao invalida de verdade continua False",
 ok("sem cookie continua False",
    n.sessao_ok("", get=get_bloqueado)[0] is False)
 ok("o texto do bloqueio diz que nao e a sessao", "nao e a sessao" in n.BLOQUEIO, n.BLOQUEIO)
+
+# ------------------------------------------ nomes REAIS dos campos (medidos em 26/10)
+# A pagina do editor tem 57 campos e o itch prefixa tudo com game[]. O codigo antigo esperava
+# "title" e por isso lia zero campos — funcionaria nunca, nem com sessao.
+ok("o mapa usa os nomes reais do itch", n.MAPA.get("game[title]") == "titulo", list(n.MAPA)[:3])
+ok("o mapa cobre titulo, resumo e descricao",
+   all(k in n.MAPA for k in ("game[title]", "game[short_text]", "game[description]")), list(n.MAPA))
+ok("o mapa nao voltou para os nomes sem prefixo",
+   not any(k in n.MAPA for k in ("title", "short_text", "description", "genre")), list(n.MAPA))
+PAGINA_REAL = """
+<form><input type="hidden" name="csrf_token" value="t">
+<input name="game[title]" value="Ceifalume">
+<input name="game[short_text]" value="Fazenda noturna">
+<textarea name="game[description]">Texto</textarea>
+<select name="game[genre]"><option value="1" selected>Simulation</option></select>
+<input name="game[tags]" value="idle, farm">
+<input name="game[min_price]" value="0">
+</form>"""
+estado_real = n.campos_do_form(PAGINA_REAL)
+ok("le a pagina com os nomes reais",
+   estado_real.get("game[title]") == "Ceifalume" and estado_real.get("game[tags]") == "idle, farm", estado_real)
+ok("o mapa extrai os rotulos da pagina real",
+   {r: estado_real.get(c) for c, r in n.MAPA.items() if c in estado_real}.get("titulo") == "Ceifalume")
 
 print("\n%d/%d testes do controle do itch passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)
