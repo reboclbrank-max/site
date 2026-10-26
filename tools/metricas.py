@@ -480,6 +480,16 @@ def placar_metas(observado, caminho=METAS, hoje=None):
                 "por_dia": (
                     round(falta / dias, 2) if (falta and dias and dias > 0) else None)}
 
+    # Meta impossível de medir não fica eternamente em NAO_OBSERVAVEL: vira meta aposentada
+    # (com evidência) e o que É medido no lugar dela entra como linha ACOMPANHADA — com
+    # número e sem alvo inventado. Alvo é decisão do dono; leitura é obrigação do robô.
+    def linha_acompanhada(nome, chave, fonte, motivo):
+        valor = (observado or {}).get(chave)
+        return {"meta": nome, "alvo": "—", "observado": valor, "falta": None,
+                "status": "ACOMPANHADA" if isinstance(valor, (int, float)) else "SEM_LEITURA",
+                "fonte": fonte, "partida": None, "delta": None, "por_dia": None,
+                "motivo": motivo}
+
     linhas = []
     ig = metas.get("ig_30_dias", {})
     bsky = metas.get("bsky_30_dias", {})
@@ -497,10 +507,28 @@ def placar_metas(observado, caminho=METAS, hoje=None):
         linhas.append(linha("YouTube: shorts", yt["shorts"], "yt_shorts", "YouTube Data API v3 (chave no runner)"))
     if "downloads" in itch:
         linhas.append(linha("itch: downloads", itch["downloads"], "itch_downloads", "api.itch.io/profile/games (chave no runner)"))
-    if "seguidores" in itch:
-        linhas.append(linha("itch: seguidores", itch["seguidores"], "itch_seguidores",
-                        "SEM_API: o itch não publica seguidores (conferido em 25/10/2026)"))
-    observavel = sum(1 for l in linhas if l["status"] != "SEM_LEITURA")
+    # 25/10/2026: `itch: seguidores` está APOSENTADA (metas.json). O itch não publica essa
+    # contagem em API nem em página pública — conferido em 5 caminhos. Ficar em
+    # NAO_OBSERVAVEL para sempre não informa nada e ainda parece culpa do robô.
+    aposentada = metas.get("_meta_aposentada_25_10") or {}
+    if "seguidores" in itch or aposentada:
+        alvo_hist = (itch.get("seguidores") if "seguidores" in itch
+                     else aposentada.get("alvo_original"))
+        linha_ap = linha_acompanhada(
+            "itch: seguidores (aposentada)", "itch_seguidores",
+            "SEM_API: o itch não publica seguidores (conferido em 25/10/2026)",
+            "aposentada em 25/10/2026 — " + (aposentada.get("motivo") or
+                                                "o itch não publica contagem de seguidores"))
+        linha_ap["alvo"] = alvo_hist if alvo_hist is not None else "—"
+        linhas.append(linha_ap)
+    if metas.get("itch_visitas"):
+        linhas.append(linha_acompanhada(
+            "itch: visitas", "itch_visitas", "api.itch.io/profile/games (chave no runner)",
+            "medida no lugar de itch: seguidores, sem alvo (alvo é decisão do dono)"))
+    # Meta aposentada não entra na conta de "sem leitura": ela não é mais meta a medir, é
+    # registro do que foi retirado e por quê. Contá-la como falha esconderia o progresso.
+    observavel = sum(1 for l in linhas
+                     if l["status"] != "SEM_LEITURA" and "aposentada" not in l["meta"])
     dias_decorridos = None
     if inicio:
         try:
@@ -509,7 +537,10 @@ def placar_metas(observado, caminho=METAS, hoje=None):
             dias_decorridos = None
     return linhas, {"dias_restantes": dias, "prazo": prazo.isoformat() if prazo else None,
                     "dias_decorridos": dias_decorridos,
-                    "metas_com_leitura": observavel, "metas_sem_leitura": len(linhas) - observavel}
+                    "metas_com_leitura": observavel,
+                    "metas_sem_leitura": sum(1 for l in linhas if l["status"] == "SEM_LEITURA"
+                                             and "aposentada" not in l["meta"]),
+                    "metas_aposentadas": sum(1 for l in linhas if "aposentada" in l["meta"])}
 
 
 def gravar_placar(linhas, contexto, hoje=None):
@@ -524,7 +555,9 @@ def gravar_placar(linhas, contexto, hoje=None):
     prazo = contexto.get("prazo") or "sem prazo definido"
     rodape = (f"\nPrazo: **{prazo}**" + (f" · {dias} dia(s) restante(s)" if dias is not None else "")
               + f" · {contexto['metas_com_leitura']} meta(s) com leitura, "
-                f"{contexto['metas_sem_leitura']} sem leitura automática.\n")
+                f"{contexto['metas_sem_leitura']} sem leitura automática"
+              + (f" · {contexto['metas_aposentadas']} aposentada(s) com o motivo no arquivo"
+                 if contexto.get("metas_aposentadas") else "") + ".\n")
     # Decisão que o placar passa a tomar sozinho: canal medido, com partida conhecida, que
     # não moveu um único número em N dias. Não atribui causa — só diz que o esforço não
     # voltou, e nomeia a decisão (manter ou aposentar) que passa a ser do dono.
@@ -733,6 +766,7 @@ def main(argv):
         "ig_posts": (ig or {}).get("posts"),
         "ig_seguidores": (ig or {}).get("seguidores"),
         "itch_downloads": (itch or {}).get("downloads"),
+        "itch_visitas": (itch or {}).get("visitas"),
         "itch_seguidores": None,  # o itch não expõe seguidores por API
         "yt_inscritos": (yt or {}).get("inscritos"),
         "yt_shorts": (yt or {}).get("shorts"),
@@ -757,7 +791,7 @@ def main(argv):
     if linhas_metas:
         caminho_placar = gravar_placar(linhas_metas, contexto_metas)
         print(f"   instagram: {'sem leitura — ' + motivo_ig if motivo_ig else 'lido'}")
-        print(f"   itch: {'sem leitura — ' + motivo_itch if motivo_itch else str(itch['downloads']) + ' download(s)'}")
+        print(f"   itch: {'sem leitura — ' + motivo_itch if motivo_itch else str(itch['downloads']) + ' download(s) e ' + str(itch['visitas']) + ' visita(s)'}")
         print(f"   youtube: {'sem leitura — ' + motivo_yt if motivo_yt else str(yt['inscritos']) + ' inscrito(s)'}")
         if not motivo_yt and yt.get("videos_medidos"):
             vm = yt["videos_medidos"]

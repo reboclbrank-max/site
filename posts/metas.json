@@ -10,8 +10,7 @@
   "shorts": 4
  },
  "itch_30_dias": {
-  "downloads": 100,
-  "seguidores": 10
+  "downloads": 100
  },
  "bsky_30_dias": {
   "seguidores": 50
@@ -28,5 +27,25 @@
   "bsky_seguidores": 13
  },
  "como_medir": "ig: graph.instagram.com (followers_count, media_count) · bsky: getProfile (API pública) · itch: api.itch.io/profile/games com chave nos segredos (downloads e visitas) · yt: YouTube Data API v3 com chave (inscritos, vídeos, shorts) · itch seguidores: SEM_API — o itch não publica contagem de seguidores (conferido em 25/10/2026). Meta impossível de medir fica em NAO_OBSERVAVEL para sempre; substituto medido já disponível: itch: visitas.",
- "_correcao_25_10": "A linha antiga dizia 'itch: pagina publica; yt: PENDENTE-PORTA' e o relatório diário do postador escrevia itch/youtube como NAO_OBSERVAVEL sem tentar medir — o dono lia 'sem leitura automática' com as duas leituras funcionando. Agora o relatório usa o mesmo medidor do placar, e o motivo aparece quando falha."
+ "_correcao_25_10": "A linha antiga dizia 'itch: pagina publica; yt: PENDENTE-PORTA' e o relatório diário do postador escrevia itch/youtube como NAO_OBSERVAVEL sem tentar medir — o dono lia 'sem leitura automática' com as duas leituras funcionando. Agora o relatório usa o mesmo medidor do placar, e o motivo aparece quando falha.",
+ "_meta_aposentada_25_10": {
+  "meta": "itch: seguidores",
+  "alvo_original": 10,
+  "decisao": "aposentada e substituída por 'itch: visitas' (medida, sem alvo)",
+  "motivo": "o itch não publica contagem de seguidores em API nem em página pública",
+  "evidencia": [
+   "GET api/1/user/<id>/followers -> 404 (25/10/2026)",
+   "GET itch.io/user/followers/<id> -> 404",
+   "GET itch.io/follow_button/<id> -> 404",
+   "perfil público itch.io/profile/rebocl-brank -> só mostra 'Posts'",
+   "página do criador -> só mostra os jogos"
+  ],
+  "por_que_nao_retirar_em_silencio": "meta que some sem registro vira promessa esquecida; fica aqui com o motivo e a data"
+ },
+ "itch_visitas": {
+  "no_lugar_de": "itch_seguidores",
+  "desde": "2026-10-25",
+  "alvo": null,
+  "motivo": "único número de audiência que o itch publica além de download"
+ }
 }
