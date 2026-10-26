@@ -391,7 +391,8 @@ ok("o que é lido aparece com número, não com NAO_OBSERVAVEL",
 _saida = metricas.gravar_placar(_linhas, _ctx)
 _texto_placar = open(_saida, encoding="utf-8").read()
 ok("o placar avisa que itch seguidores não tem API", "não publica contagem de seguidores" in _texto_placar)
-ok("o placar propõe a troca medida (visitas), sem trocar sozinho", "itch: visitas" in _texto_placar)
+ok("o placar registra que a troca pela visitas foi FEITA, não sugere de novo",
+   "itch: visitas" in _texto_placar and "aposentada" in _texto_placar)
 ok("o placar não inventa número para a meta impossível",
    "NAO_OBSERVAVEL" in _texto_placar and "| itch: seguidores (aposentada) | 10 |" in _texto_placar,
    _texto_placar[_texto_placar.find("itch"):][:120])

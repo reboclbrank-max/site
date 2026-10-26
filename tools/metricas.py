@@ -575,9 +575,10 @@ def gravar_placar(linhas, contexto, hoje=None):
     if sem_api:
         rodape += ("\n> **Sem API, não sem robô:** " + ", ".join(l["meta"] for l in sem_api)
                    + ". O itch não publica contagem de seguidores em API nem em página pública "
-                     "(conferido em 25/10/2026). O que o itch mede é download e visita — se a meta "
-                     "de seguidores do itch continuar aqui, ela fica em NAO_OBSERVAVEL para sempre. "
-                     "Troca sugerida (decisão do dono): usar **itch: visitas**, já medido.\n")
+                     "(5 caminhos conferidos em 25/10/2026). Essa meta está **aposentada** — o "
+                     "registro com o motivo ficou em `posts/metas.json` — e o que o itch mede de "
+                     "audiência (**itch: visitas**) entrou no placar como medida acompanhada, "
+                     "com número e sem alvo inventado.\n")
     linhas_md = ["| meta | alvo | observado | falta | por dia | status | desde a partida |",
                  "|---|---|---|---|---|---|---|"]
     for l in linhas:
