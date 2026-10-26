@@ -40,3 +40,19 @@ atual em uma caixa para copiar. Nada é gravado nesse modo.
 - Só conversa com `raw.githubusercontent.com` (o JSON do repositório). Nenhum outro host.
 - `11/11` contratos em `tools/testes-bookmarklet-itch.js`; a versão de instalar é derivada da
   fonte `tools/bookmarklet-itch.js` (`node tools/montar-bookmarklet.js --verificar`).
+
+## Entrar com um clique (quando a sessão cair)
+
+A partir de datacenter o itch **não** deixa logar: medido em 26/10, `POST /login` → 403 e um
+`fetch` de dentro da própria origem do itch → 403 `Just a moment…`. O desafio do Cloudflare
+fecha antes de existir formulário. Por isso a senha só serve em um lugar: o seu navegador.
+
+- Favorito **"Ceifalume entrar"** (`itch/entrar-bookmarklet.txt`): abra `https://itch.io/login`,
+  clique e ele preenche usuário e senha e envia. Na primeira vez ele pergunta; se você autorizar,
+  guarda no `localStorage` do próprio itch.io para entrar com um clique nas próximas.
+- Para apagar o que foi guardado: abra `https://itch.io/login#esquecer` e clique no favorito.
+- **Nenhuma senha entra no repositório**: um dos 17 contratos falha se aparecer senha literal
+  em qualquer uma das fontes ou linhas derivadas.
+
+Depois de entrar, o `ITCH_COOKIE` do Actions pode ser renovado (copiando `itchio_token`) **ou**
+você simplesmente usa o favorito de preencher, que não precisa de segredo nenhum.
