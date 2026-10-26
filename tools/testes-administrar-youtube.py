@@ -139,6 +139,10 @@ if os.path.exists(_g):
        "reboclbrank-max.github.io/site/privacidade.html" in guia)
     ok("o guia corrige o número de cota antigo", "100 envios por dia" in guia)
     ok("o guia avisa que os segredos não vão pelo chat", "Não me mande esses valores pelo chat" in guia)
+    _g3 = " ".join(guia.split())
+    ok("o guia diz para NÃO enviar o app para verificação", "não envie para análise" in _g3.lower())
+    ok("o guia avisa que logotipo obriga verificação", "Logotipo: deixe vazio" in _g3)
+    ok("o guia distingue publicar de verificar", "publicar não é verificar" in _g3)
 
 print("\n%d/%d testes do administrador do YouTube passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)
