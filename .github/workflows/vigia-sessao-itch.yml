@@ -47,6 +47,12 @@ jobs:
           print(("OK " if ok else "FALHOU ") + "sessao: " + msg)
           if ok:
               sys.exit(0)
+          if ok is None:
+              # O itch bloqueia /dashboard a partir de datacenter (403 mesmo sem cookie).
+              # Isso nao quer dizer que a sessao do dono caiu: nao alarmar por causa disso.
+              print("::warning::" + msg)
+              print("· vigia sem resposta util deste IP; nada a concluir sobre a sessao")
+              sys.exit(0)
 
           topico = os.environ.get("NTFY_TOPIC", "").strip()
           if topico:

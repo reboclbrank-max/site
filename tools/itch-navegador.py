@@ -26,6 +26,8 @@ import urllib.parse
 import urllib.request
 
 BASE = "https://itch.io"
+BLOQUEIO = ("bloqueado pela Cloudflare: /dashboard devolve 403 a partir daqui, "
+            "inclusive sem cookie — nao e a sessao, e o IP")
 PALAVRA = "EDITAR"
 AGENTE = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
           "(KHTML, like Gecko) Chrome/128.0 Safari/537.36")
@@ -118,6 +120,10 @@ def _get(url, cookie, timeout=40):
                 return None, "sessao recusada: o itch redirecionou para o login"
             return texto, None
     except urllib.error.HTTPError as e:
+        # 403 aqui NAO diz nada sobre a sessao: medido em 26/10 no runner, o /dashboard devolve
+        # 403 (desafio da Cloudflare) para TODA combinacao, inclusive sem cookie nenhum.
+        if e.code == 403:
+            return None, BLOQUEIO
         return None, "HTTP %d" % e.code
     except Exception as e:
         return None, str(e)[:120]
@@ -137,10 +143,17 @@ def _post(url, cookie, dados, timeout=60):
 
 
 def sessao_ok(cookie, get=None):
+    """(ok, motivo). ok=None significa "nao deu para saber": o itch bloqueou o caminho.
+
+    Falso aqui nao e necessariamente sessao ruim: medido em 26/10, o /dashboard e desafiado
+    pela Cloudflare a partir de datacenter mesmo SEM cookie. Quem chama precisa distinguir.
+    """
     if not cookie:
         return False, "sem cookie (segredo ITCH_COOKIE)"
     pagina, erro = buscar("/dashboard", cookie, get=get)
     if erro:
+        if erro == BLOQUEIO:
+            return None, erro
         return False, erro
     if "dashboard" not in (pagina or "").lower():
         return False, "respondeu 200 mas nao parece o painel (sessao parcial?)"
