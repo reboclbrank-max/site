@@ -25,6 +25,8 @@ jobs:
           python3 tools/testes-metricas.py
           python3 tools/testes-interacao.py
           python3 tools/testes-kit-youtube.py
+          python3 tools/testes-administrar-itch.py
+          python3 tools/testes-administrar-youtube.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client

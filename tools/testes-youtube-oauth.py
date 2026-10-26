@@ -41,7 +41,10 @@ def ok(nome, cond, detalhe=""):
 
 
 # ---------------------------------------------------------------- escopo e sigilo
-ok("pede só o escopo de envio (privilégio mínimo)", oauth.ESCOPO.endswith("/youtube.upload"), oauth.ESCOPO)
+ok("pede o escopo de administração (cobre envio e edição num consentimento só)",
+   oauth.ESCOPO == "https://www.googleapis.com/auth/youtube", oauth.ESCOPO)
+ok("o escopo pedido não é 'force-ssl' (esse é o mínimo que não serve para playlist+upload combinados)",
+   "force-ssl" not in oauth.ESCOPO)
 ok("resumo de segredo mostra no máximo 4 caracteres",
    "AB12" in oauth.resumo_de_segredo("AB12xyz1234")
    and "xyz1234" not in oauth.resumo_de_segredo("AB12xyz1234"))

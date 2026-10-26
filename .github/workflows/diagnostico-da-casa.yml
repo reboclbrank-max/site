@@ -26,6 +26,8 @@ jobs:
           python3 tools/testes-interacao.py
           python3 tools/testes-kit-youtube.py
           python3 tools/testes-youtube-oauth.py
+          python3 tools/testes-administrar-itch.py
+          python3 tools/testes-administrar-youtube.py
           python3 tools/testes-enviar-itch.py
 
       - name: Mede o que foi postado e o que voltou (só leitura)

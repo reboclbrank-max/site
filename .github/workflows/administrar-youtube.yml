@@ -1,0 +1,57 @@
+name: administrar-youtube
+
+# Administração automática do YouTube: organiza e corrige o que já está publicado (título,
+# descrição, tags) sem clique do dono. Não publica nada novo — publicar de verdade depende do
+# consentimento único (autorizar-youtube) e, para o vídeo sair público, da auditoria de
+# conformidade do Google ou do envio pelo navegador. O workflow diz isso quando falta.
+on:
+  schedule:
+    - cron: "43 6 * * *"
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "estado = só leitura · auto = corrige metadados"
+        required: true
+        default: estado
+        type: choice
+        options:
+          - estado
+          - auto
+
+permissions:
+  contents: read
+
+concurrency:
+  group: administrar-youtube
+  cancel-in-progress: false
+
+jobs:
+  administrar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/testes-administrar-youtube.py
+          python3 tools/testes-youtube-oauth.py
+          python3 tools/testes-kit-youtube.py
+
+      - name: Administra
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          MODO="${{ inputs.modo }}"
+          if [ -z "$MODO" ]; then MODO=auto; fi
+          echo "modo: $MODO"
+          python3 tools/administrar-youtube.py "$MODO" | tee /tmp/yt.txt || true
+          {
+            echo "### YouTube — administração ($MODO)"
+            echo
+            echo '```'
+            cat /tmp/yt.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
