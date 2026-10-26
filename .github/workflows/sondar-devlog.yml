@@ -1,0 +1,58 @@
+name: sondar-devlog
+
+# Mede se a API do itch permite CRIAR postagem (devlog) sem navegador.
+# So leitura: faz GET nos endpoints e no fim um POST vazio para descobrir a resposta
+# (um POST vazio nao cria nada; serve para saber se o endpoint existe e aceita o verbo).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sondar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Sonda os endpoints
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.error
+          chave = os.environ.get("ITCH_API_KEYS", "").split(",")[0].strip()
+          def req(url, metodo="GET", corpo=None):
+              dados = json.dumps(corpo).encode() if corpo is not None else None
+              r = urllib.request.Request(url, data=dados, method=metodo, headers={
+                  "Authorization": "Bearer " + chave,
+                  "Accept": "application/json",
+                  "Content-Type": "application/json"})
+              try:
+                  resp = urllib.request.urlopen(r, timeout=45)
+                  return resp.status, resp.read()[:300].decode("utf-8", "replace")
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read()[:300].decode("utf-8", "replace")
+              except Exception as e:
+                  return 0, str(e)[:200]
+          alvos = [
+              ("GET", "https://api.itch.io/profile"),
+              ("GET", "https://api.itch.io/profile/games"),
+              ("GET", "https://api.itch.io/games/5017404"),
+              ("GET", "https://api.itch.io/games/5017404/devlogs"),
+              ("GET", "https://api.itch.io/games/5017404/posts"),
+              ("GET", "https://api.itch.io/games/5017404/uploads"),
+              ("POST", "https://api.itch.io/games/5017404/devlogs"),
+              ("POST", "https://api.itch.io/games/5017404/posts"),
+              ("POST", "https://api.itch.io/devlogs"),
+              ("GET", "https://itch.io/api/1/x/me"),
+          ]
+          for metodo, url in alvos:
+              if metodo == "POST":
+                  s, c = req(url, "POST", {})
+              else:
+                  s, c = req(url)
+              print("%-4s %-52s -> %s | %s" % (metodo, url.replace("https://", ""), s, c.replace("\n", " ")[:150]))
+          PY
