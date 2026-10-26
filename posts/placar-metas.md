@@ -6,12 +6,12 @@
 |---|---|---|---|---|---|---|
 | Instagram: publicações | 30 | 19 | 11 | 0.65 | EM_CURSO | +17 |
 | Instagram: seguidores | 50 | 0 | 50 | 2.94 | EM_CURSO | 0 |
-| Bluesky: seguidores | 50 | 34 | 16 | 0.94 | EM_CURSO | +21 |
+| Bluesky: seguidores | 50 | 32 | 18 | 1.06 | EM_CURSO | +19 |
 | YouTube: inscritos | 40 | 24 | 16 | 0.94 | EM_CURSO | 0 |
 | YouTube: shorts | 4 | 5 | 0 | — | ATINGIDO | — |
 | itch: downloads | 100 | 46 | 54 | 3.18 | EM_CURSO | +2 |
 | itch: seguidores (aposentada) | 10 | NAO_OBSERVAVEL | — | — | SEM_LEITURA | — |
-| itch: visitas | — | 180 | — | — | ACOMPANHADA | — |
+| itch: visitas | — | 184 | — | — | ACOMPANHADA | — |
 
 Prazo: **2026-11-12** · 17 dia(s) restante(s) · 7 meta(s) com leitura, 0 sem leitura automática · 1 aposentada(s) com o motivo no arquivo.
 
