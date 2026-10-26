@@ -20,6 +20,7 @@ Nada é publicado. O teste usa o próprio conteúdo da casa, não lixo.
 import json
 import os
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -47,11 +48,29 @@ def metadados(titulo):
     }
 
 
+def _iniciar(url, token, corpo):
+    """POST de inicialização. A URL da sessão vem no CABEÇALHO Location, não no corpo JSON."""
+    req = urllib.request.Request(url, data=json.dumps(corpo).encode(), method="POST",
+                                 headers={"Authorization": "Bearer " + token,
+                                          "Content-Type": "application/json; charset=UTF-8",
+                                          "X-Upload-Content-Length": str(corpo.get("_tamanho", ""))
+                                          if corpo.get("_tamanho") else "",
+                                          "X-Upload-Content-Type": "video/mp4"})
+    try:
+        with urllib.request.urlopen(req, timeout=90) as r:
+            local = r.headers.get("Location") or r.headers.get("location")
+            return {"upload_url": local}, (None if local else "resposta sem cabeçalho Location")
+    except urllib.error.HTTPError as e:
+        return None, "HTTP %d: %s" % (e.code, e.read().decode()[:300])
+    except Exception as e:
+        return None, str(e)[:120]
+
+
 def abrir_sessao(token, tamanho, corpo, post=None):
-    """Inicia o upload resumable. Devolve (url_da_sessao, erro)."""
-    post = post or adm._requisicao
-    dados, erro = post(UPLOAD, token, metodo="POST", corpo=corpo)
-    return dados, erro
+    """Inicia o upload resumable. Devolve (dados, erro)."""
+    post = post or _iniciar
+    limpo = {k: v for k, v in corpo.items() if not k.startswith("_")}
+    return post(UPLOAD, token, limpo)
 
 
 def subir(url_sessao, caminho, put=None, raiz=RAIZ):
