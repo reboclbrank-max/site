@@ -1,0 +1,31 @@
+name: sondar-itch-navegador
+
+# Mede se automação de navegador no itch é viável a partir de um runner do GitHub.
+# O itch fica atrás de Cloudflare; páginas públicas passam, mas endpoints de conta podem
+# responder desafio (403/503) para IP de datacenter. Sem essa medida, "controle total por
+# robô" seria promessa — e promessa sem número é o que não se faz aqui.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sondar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Mede respostas do itch a partir do runner
+        run: |
+          for alvo in \
+            "https://itch.io/" \
+            "https://itch.io/login" \
+            "https://itch.io/dashboard" \
+            "https://rebocl-brank.itch.io/ceifalume" ; do
+            codigo=$(curl -sS -o /tmp/corpo.html -w "%{http_code}" -A "Mozilla/5.0 (X11; Linux x86_64)" \
+              --max-time 25 "$alvo" || echo "erro")
+            tamanho=$(wc -c < /tmp/corpo.html 2>/dev/null || echo 0)
+            desafio=$(grep -ci "just a moment\|cf-challenge\|attention required" /tmp/corpo.html 2>/dev/null || echo 0)
+            echo "$alvo → HTTP $codigo · ${tamanho}B · desafio_cloudflare=$desafio"
+          done
+          echo "IP do runner: $(curl -sS --max-time 15 https://api.ipify.org || echo desconhecido)"
