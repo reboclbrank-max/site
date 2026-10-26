@@ -33,6 +33,7 @@ ESCOPO = "https://www.googleapis.com/auth/youtube"
 URL_CODIGO = "https://oauth2.googleapis.com/device/code"
 URL_TOKEN = "https://oauth2.googleapis.com/token"
 URL_SEGREDO = "https://api.github.com/repos/{repo}/actions/secrets/{nome}"
+URL_CONTEUDO = "https://api.github.com/repos/%s/contents/%s"  # formatado com %
 URL_CHAVE = "https://api.github.com/repos/{repo}/actions/secrets/public-key"
 UA = "rebocl-oauth/1.0"
 
@@ -178,6 +179,31 @@ def _put_json(url, pat, dados):
         return False, str(e)[:80]
 
 
+def publicar_codigo(repo, pat, url, codigo, get=None, put=None):
+    """Escreve o código de dispositivo num arquivo do repositório, para o agente poder lê-lo.
+
+    O código de usuário NÃO é segredo: é público, de uso único e morre em 30 minutos — o Google
+    o mostra na tela justamente para ser digitado. Publicá-lo resolve um problema prático real:
+    o log do GitHub Actions fica invisível enquanto o run está vivo, então o dono tinha de abrir
+    a tela do run e expandir a etapa. Agora o agente lê o arquivo e entrega o código pronto.
+    """
+    import base64
+    get = get or _get_json
+    put = put or _put_json
+    caminho = "posts/codigo-autorizacao.txt"
+    texto = ("Autorização do YouTube — código de uso único\n\n"
+             "1) Abra: %s\n2) Digite: %s\n\n"
+             "Vale 30 minutos e serve uma vez só. Este arquivo não contém segredo nenhum.\n"
+             % (url, codigo))
+    atual, erro = get(URL_CONTEUDO % (repo, caminho), pat)
+    corpo = {"message": "autorização: código do dispositivo %s" % codigo,
+             "content": base64.b64encode(texto.encode()).decode()}
+    if not erro and isinstance(atual, dict) and atual.get("sha"):
+        corpo["sha"] = atual["sha"]
+    ok, msg = put(URL_CONTEUDO % (repo, caminho), pat, corpo)
+    return ok, msg
+
+
 def fluxo_completo(client_id, client_secret, repo, pat, esperar=5, limite_s=1500,
                    post=_post_json, dormir=time.sleep, relogio=time.time, escrever=print):
     """Fluxo inteiro: pede código, mostra ao dono, espera a aprovação, grava o segredo.
@@ -190,6 +216,10 @@ def fluxo_completo(client_id, client_secret, repo, pat, esperar=5, limite_s=1500
     escrever("1) Abra: " + codigo.get("verification_url", "https://www.google.com/device"))
     escrever("2) Digite o código: " + str(codigo.get("user_code")))
     escrever("3) Aprove o acesso do canal da casa ao YouTube (enviar e administrar).")
+    publicado, msg_pub = publicar_codigo(repo, pat, codigo.get("verification_url", "https://www.google.com/device"),
+                                       str(codigo.get("user_code")))
+    escrever("4) " + ("código publicado em posts/codigo-autorizacao.txt" if publicado
+                      else "não consegui publicar o código: " + str(msg_pub)[:60]))
     escrever("   esperando aprovação…")
     tentativas = max(1, int(limite_s / max(1, esperar)))
     dados, erro = trocar_token(client_id, client_secret, codigo["device_code"],

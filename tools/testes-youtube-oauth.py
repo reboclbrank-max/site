@@ -43,6 +43,19 @@ def ok(nome, cond, detalhe=""):
 # ---------------------------------------------------------------- escopo e sigilo
 ok("pede o escopo de administração (cobre envio e edição num consentimento só)",
    oauth.ESCOPO == "https://www.googleapis.com/auth/youtube", oauth.ESCOPO)
+# o código do dispositivo é publicado para o agente poder lê-lo
+_gravado = {}
+def _put_falso(url, pat, dados):
+    _gravado["url"] = url
+    _gravado["texto"] = __import__("base64").b64decode(dados["content"]).decode()
+    return True, "ok"
+ok_pub, _m = oauth.publicar_codigo("site", "pat", "https://www.google.com/device", "ABCD-1234",
+                                   get=lambda u, p: ({}, "404"), put=_put_falso)
+ok("o código de autorização é publicado em arquivo do repo", ok_pub and "codigo-autorizacao.txt" in _gravado["url"])
+ok("o arquivo traz URL e código para o dono", "https://www.google.com/device" in _gravado["texto"] and "ABCD-1234" in _gravado["texto"])
+ok("o arquivo diz que não é segredo e que vale 30 min",
+   "não contém segredo" in _gravado["texto"] and "30 minutos" in _gravado["texto"])
+
 # duração do token: o Google conta na resposta, não no console
 ok("resposta com refresh_token_expires_in = app em teste",
    oauth.duracao_do_token({"refresh_token": "x", "refresh_token_expires_in": 604799})[0] == "teste")
