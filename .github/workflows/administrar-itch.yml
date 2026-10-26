@@ -23,6 +23,7 @@ on:
         type: choice
         options:
           - estado
+          - escopos
           - auto
 
 permissions:
