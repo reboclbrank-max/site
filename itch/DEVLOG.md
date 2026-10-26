@@ -3,7 +3,15 @@
 O texto da postagem mora em `posts/devlog-itch.json` (título + corpo). Eu escrevo e
 publico ali; o envio acontece no seu navegador, onde a sessão do itch está viva.
 
-## Instalar (uma vez)
+## Celular (Android) — o jeito que funciona
+No Android, favorito aberto pelo menu **não executa**, e ao colar o Chrome **apaga o `javascript:`**.
+Por isso:
+1. copie `itch/postar-devlog-colar.txt` (versão **sem** `javascript:` no começo);
+2. favoritar a página do painel → **Editar** → Nome: `postar`;
+3. no campo **URL**, apague tudo, **digite com o teclado** `javascript:` e **cole** o conteúdo copiado;
+4. salvar; para usar, toque na **barra de endereço**, digite `postar` e toque na sugestão **com estrelinha**.
+
+## Instalar (uma vez, no computador)
 1. Abra e copie tudo: https://raw.githubusercontent.com/reboclbrank-max/site/main/itch/devlog-bookmarklet.txt
 2. **Ctrl+D** → nome `Postar devlog` → **URL:** apague e cole a linha → salvar.
 
