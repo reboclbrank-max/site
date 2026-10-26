@@ -27,5 +27,6 @@
   "itch_seguidores": 0,
   "bsky_seguidores": 13
  },
- "como_medir": "ig: graph.instagram.com (followers_count); bsky: getProfile; itch: pagina publica; yt: PENDENTE-PORTA"
+ "como_medir": "ig: graph.instagram.com (followers_count, media_count) · bsky: getProfile (API pública) · itch: api.itch.io/profile/games com chave nos segredos (downloads e visitas) · yt: YouTube Data API v3 com chave (inscritos, vídeos, shorts) · itch seguidores: SEM_API — o itch não publica contagem de seguidores (conferido em 25/10/2026). Meta impossível de medir fica em NAO_OBSERVAVEL para sempre; substituto medido já disponível: itch: visitas.",
+ "_correcao_25_10": "A linha antiga dizia 'itch: pagina publica; yt: PENDENTE-PORTA' e o relatório diário do postador escrevia itch/youtube como NAO_OBSERVAVEL sem tentar medir — o dono lia 'sem leitura automática' com as duas leituras funcionando. Agora o relatório usa o mesmo medidor do placar, e o motivo aparece quando falha."
 }

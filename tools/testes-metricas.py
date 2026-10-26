@@ -358,5 +358,76 @@ ok("vídeo sem título não quebra", metricas.resumo_youtube([{"titulo": "", "vi
 ok("canal vazio não vira média zero falsa",
    metricas.resumo_youtube([])["casa"]["media_views"] is None)
 
+# ---- 12. o placar não pode chamar de "sem leitura" o que é lido ---------------------------
+# Defeito medido em 25/10/2026: a coluna "fonte" dizia "sem leitura automática" para YouTube e
+# itch downloads, que o medidor lia normalmente (45 downloads, 24 inscritos). O dono leu esse
+# rótulo e concluiu que não havia leitura. Rótulo errado é medição errada.
+_meta_tmp = tempfile.mkdtemp()
+_arq_metas = os.path.join(_meta_tmp, "metas.json")
+with open(_arq_metas, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "yt_30_dias": {"inscritos": 40, "shorts": 4},
+               "itch_30_dias": {"downloads": 100, "seguidores": 10},
+               "bsky_30_dias": {"seguidores": 50}}, f)
+_linhas, _ctx = metricas.placar_metas(observado={"yt_inscritos": 24, "yt_shorts": 5,
+                                                 "itch_downloads": 45, "bsky_seguidores": 34,
+                                                 "ig_seguidores": 0, "ig_posts": 18},
+                                      caminho=_arq_metas)
+_por_meta = {l["meta"]: l for l in _linhas}
+ok("YouTube inscritos não é rotulado 'sem leitura automática'",
+   "sem leitura" not in _por_meta["YouTube: inscritos"]["fonte"].lower(),
+   _por_meta["YouTube: inscritos"]["fonte"])
+ok("itch downloads não é rotulado 'sem leitura automática'",
+   "sem leitura" not in _por_meta["itch: downloads"]["fonte"].lower(),
+   _por_meta["itch: downloads"]["fonte"])
+ok("itch seguidores declara SEM_API com a data da conferência",
+   "SEM_API" in _por_meta["itch: seguidores"]["fonte"] and "25/10/2026" in _por_meta["itch: seguidores"]["fonte"])
+ok("o que é lido aparece com número, não com NAO_OBSERVAVEL",
+   _por_meta["itch: downloads"]["observado"] == 45 and _por_meta["yt_inscritos"] if False else
+   (_por_meta["itch: downloads"]["observado"] == 45 and _por_meta["YouTube: inscritos"]["observado"] == 24))
+
+# ---- 13. o rodapé diz o que é impossível e qual o substituto medido -----------------------
+_saida = metricas.gravar_placar(_linhas, _ctx)
+_texto_placar = open(_saida, encoding="utf-8").read()
+ok("o placar avisa que itch seguidores não tem API", "não publica contagem de seguidores" in _texto_placar)
+ok("o placar propõe a troca medida (visitas), sem trocar sozinho", "itch: visitas" in _texto_placar)
+ok("o placar não inventa número para a meta impossível",
+   "| itch: seguidores | 10 | NAO_OBSERVAVEL |" in _texto_placar)
+
+# ---- 14. o relatório diário do postador usa o MESMO medidor ------------------------------
+# Era aqui que nascia o "sem leitura automática": a régua do postador escrevia
+# itch_downloads=NAO_OBSERVAVEL e youtube=NAO_OBSERVAVEL à mão.
+_fonte_postador = open(os.path.join(RAIZ, "tools", "postador.py"), encoding="utf-8").read()
+ok("o postador mede o itch pelo medidor de verdade", "observado_itch()" in _fonte_postador)
+ok("o postador mede o YouTube pelo medidor de verdade", "observado_youtube()" in _fonte_postador)
+ok("o postador não escreve mais itch/youtube como NAO_OBSERVAVEL fixo",
+   '"itch_downloads=NAO_OBSERVAVEL",' not in _fonte_postador
+   and '"youtube=NAO_OBSERVAVEL",' not in _fonte_postador)
+ok("itch seguidores é declarado SEM_API no relatório diário", "itch_seguidores=SEM_API" in _fonte_postador)
+
+# ---- 15. a régua do dia realmente devolve número (função, não texto) ----------------------
+import types
+sys.path.insert(0, os.path.join(RAIZ, "tools"))
+import postador
+
+_falso = types.SimpleNamespace(
+    observado_itch=lambda: ({"downloads": 45, "visitas": 175}, None),
+    observado_youtube=lambda: ({"inscritos": 24, "shorts": 5}, None))
+_linhas_dia, _lidas = postador.medicoes_de_plataforma(medidor=_falso)
+ok("relatório do dia traz o download medido", "itch_downloads=45(api)" in _linhas_dia, str(_linhas_dia))
+ok("relatório do dia traz os inscritos medidos", "youtube_inscritos=24(api)" in _linhas_dia, str(_linhas_dia))
+ok("relatório do dia conta as leituras reais", _lidas == 2, str(_lidas))
+ok("relatório do dia declara itch seguidores como SEM_API", "itch_seguidores=SEM_API" in _linhas_dia)
+
+_sem = types.SimpleNamespace(observado_itch=lambda: (None, "sem chave no runtime"),
+                             observado_youtube=lambda: (None, "HTTP 403"))
+_linhas_sem, _lidas_sem = postador.medicoes_de_plataforma(medidor=_sem)
+ok("sem leitura, o motivo aparece em vez do silêncio",
+   "ITCH_API_KEYS" not in str(_linhas_sem) and "sem chave no runtime" in " ".join(_linhas_sem),
+   str(_linhas_sem))
+ok("sem leitura, nada é contado como lido", _lidas_sem == 0)
+ok("medidor quebrado não derruba o ciclo", postador.medicoes_de_plataforma(
+    medidor=types.SimpleNamespace(observado_itch=lambda: 1 / 0, observado_youtube=lambda: 1 / 0))[1] == 0)
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
-sys.exit(1 if falhas else 0)
+raise SystemExit(1 if falhas else 0)
