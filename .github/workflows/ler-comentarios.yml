@@ -1,0 +1,19 @@
+name: ler-comentarios
+# Lê comentários públicos só com a API key (sem OAuth, sem consentimento novo).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "27 12 * * *"
+permissions:
+  contents: read
+jobs:
+  ler:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Lê
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+        run: python3 tools/ler-comentarios-chave.py
