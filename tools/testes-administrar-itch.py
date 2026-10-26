@@ -67,6 +67,10 @@ ok("escopo de perfil não promete edição de página", _j["pagina"] is False)
 _j2 = adm.julgar_escopos(["profile:games", "game:upload"])
 ok("escopo de upload conta como poder subir build", _j2["build"] is True)
 ok("julgar sem lista não estoura", adm.julgar_escopos(None)["build"] is False)
+_l2, _e2 = adm.escopos("k", get=lambda url, chave=None: ({"credentials": {"scopes": ["profile:games"]}}, None))
+ok("escopos aninhados em 'credentials' são lidos", _l2 == ["profile:games"], _l2)
+_l3, _e3 = adm.escopos("k", get=lambda url, chave=None: ({"expires_at": "x"}, None))
+ok("resposta sem escopo diz quais chaves vieram", _l3 == [] and "expires_at" in str(_e3), _e3)
 
 # ------------------------------------------------------------------ veto do dono
 ok("Toque Rápido está vetado", "toque-rapido" in adm.vetados())

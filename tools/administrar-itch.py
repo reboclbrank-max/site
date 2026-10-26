@@ -151,7 +151,14 @@ def escopos(chave, get=None):
     dados, erro = get("https://api.itch.io/credentials/info", chave)
     if erro or not isinstance(dados, dict):
         return None, erro or "resposta inesperada"
-    return list(dados.get("scopes") or []), None
+    # o itch já respondeu em mais de um formato; aceita lista no topo ou dentro de "credentials"
+    if isinstance(dados.get("scopes"), list):
+        return list(dados["scopes"]), None
+    for chave_possivel in ("credentials", "info", "data"):
+        interno = dados.get(chave_possivel)
+        if isinstance(interno, dict) and isinstance(interno.get("scopes"), list):
+            return list(interno["scopes"]), None
+    return [], "chaves da resposta: " + ", ".join(sorted(dados.keys()))
 
 
 def julgar_escopos(lista):
@@ -246,8 +253,10 @@ def main(argv):
         print("chave do itch: " + itch.resumo_de_chave(chave))
         lista, erro = escopos(chave)
         if erro:
-            print("✗ não consegui ler os escopos: " + str(erro))
-            return 1
+            print("· resposta do itch: " + str(erro))
+        if not lista:
+            print("· a credencial não declarou escopo (isso não impediu o butler de subir build: "
+                  "o butler usa outro caminho de autenticação, não este endpoint)")
         j = julgar_escopos(lista)
         print("escopos da credencial: " + (", ".join(j["lista"]) or "(nenhum declarado)"))
         print("sobe build: " + ("sim" if j["build"] else "não"))
