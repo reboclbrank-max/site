@@ -18,12 +18,13 @@ on:
         options:
           - ceifalume
       modo:
-        description: "status = só leitura · push = envia de verdade"
+        description: "api = lista jogos e slugs · status = só leitura · push = envia"
         required: true
         default: status
         type: choice
         options:
           - status
+          - api
           - push
       canal:
         description: "canal do itch (html5 é o padrão para jogo web)"
@@ -66,7 +67,9 @@ jobs:
           ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
           CONFIRMACAO: ${{ inputs.confirmacao }}
         run: |
-          if [ "${{ inputs.modo }}" = "push" ]; then
+          if [ "${{ inputs.modo }}" = "api" ]; then
+            python3 tools/enviar-itch.py api | tee /tmp/itch.txt
+          elif [ "${{ inputs.modo }}" = "push" ]; then
             python3 tools/enviar-itch.py push "${{ inputs.jogo }}" "${{ inputs.canal }}" | tee /tmp/itch.txt
           else
             python3 tools/enviar-itch.py status "${{ inputs.jogo }}" | tee /tmp/itch.txt

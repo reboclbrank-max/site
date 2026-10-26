@@ -16,11 +16,13 @@ Regras que este arquivo respeita:
     de linha de comando (que apareceria em log de processo) e nunca em mensagem;
   * nada é inventado: sem butler, sem chave ou sem build, o script diz o motivo.
 """
+import json
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
+import urllib.request
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -87,7 +89,15 @@ def conferir_build(slug, raiz=RAIZ):
     return erros, pasta
 
 
-def rodar(argumentos, identidade=None, timeout=600, executar=None):
+def ambiente_do_butler(chave, base=None):
+    """O butler recomenda BUTLER_API_KEY em CI (ele mesmo avisa isso)."""
+    ambiente = dict(base or os.environ)
+    if chave:
+        ambiente["BUTLER_API_KEY"] = chave
+    return ambiente
+
+
+def rodar(argumentos, identidade=None, timeout=600, executar=None, chave=None):
     """Chama o butler. Devolve (codigo, saida). A chave vai só por arquivo de identidade."""
     executar = executar or subprocess.run
     butler = procurar_butler()
@@ -95,7 +105,8 @@ def rodar(argumentos, identidade=None, timeout=600, executar=None):
         return 127, "butler não está instalado (baixe de " + URL_BUTLER + ")"
     cmd = [butler] + (["--identity", identidade] if identidade else []) + list(argumentos)
     try:
-        r = executar(cmd, capture_output=True, text=True, timeout=timeout)
+        r = executar(cmd, capture_output=True, text=True, timeout=timeout,
+                     env=ambiente_do_butler(chave))
         return r.returncode, ((r.stdout or "") + (r.stderr or "")).strip()
     except subprocess.TimeoutExpired:
         return 124, "butler passou do tempo limite"
@@ -106,7 +117,7 @@ def alvo_do_canal(slug, canal):
     return "%s:%s" % (alvo["alvo"], canal) if alvo else None
 
 
-def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None):
+def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=None):
     """SOMENTE LEITURA. Sem canal, o butler LISTA os canais que existem no jogo.
 
     Defeito corrigido no próprio teste (26/10/2026): `butler status` aceita apenas o alvo
@@ -118,19 +129,20 @@ def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None):
     if not alvo_base:
         return False, "build não declarado para %r" % slug
     if canal is None:
-        codigo, saida = rodar(["status", alvo_base], identidade=identidade, executar=executar)
+        codigo, saida = rodar(["status", alvo_base], identidade=identidade, executar=executar,
+                              chave=chave)
         return (codigo == 0), (saida or "(sem saída)")[:800]
     erros, _pasta = conferir_build(slug, raiz)
     if erros:
         return False, "; ".join(erros)
     codigo, saida = rodar(["status", alvo_do_canal(slug, canal)],
-                          identidade=identidade, executar=executar)
+                          identidade=identidade, executar=executar, chave=chave)
     if codigo == 0:
         return True, (saida or "(sem diferença: o itch já tem este build)")[:800]
     return False, "status recusado (canal %r?): %s" % (canal, saida[:300])
 
 
-def enviar(slug, canal, confirmacao, raiz=RAIZ, identidade=None, executar=None):
+def enviar(slug, canal, confirmacao, raiz=RAIZ, identidade=None, executar=None, chave=None):
     """Envia o build. Só com a palavra de confirmação."""
     if str(confirmacao or "").strip().upper() != PALAVRA_CONFIRMACAO:
         return False, ("faltou a confirmação (%s): build ao vivo substitui o que o jogador "
@@ -140,11 +152,45 @@ def enviar(slug, canal, confirmacao, raiz=RAIZ, identidade=None, executar=None):
         return False, "build recusado: " + "; ".join(erros)
     alvo = alvo_do_canal(slug, canal)
     codigo, saida = rodar(["push", pasta, alvo, "--assume-yes"],
-                          identidade=identidade, executar=executar)
+                          identidade=identidade, executar=executar, chave=chave)
     if codigo != 0:
         return False, "envio recusado: " + saida[:400]
     return True, "enviado para %s — https://%s.itch.io/%s" % (
         alvo, BUILDS[slug]["alvo"].split("/")[0], BUILDS[slug]["alvo"].split("/")[1])
+
+
+def listar_jogos(chave, get=None):
+    """Jogos da conta pela API oficial (somente leitura): slug e url exatos.
+
+    Existe porque adivinhar slug/ canal custa rodada: `butler status` respondeu "No channel
+    found" para o alvo que a página do site aponta, e sem a lista eu estaria chutando entre
+    rebocl-brank, reboclbrank-max e variantes com versão no nome.
+    """
+    get = get or _get_json
+    if not chave:
+        return None, "sem chave"
+    dados, erro = get("https://api.itch.io/profile/games", chave)
+    if erro or not isinstance(dados, dict):
+        return None, erro or "resposta inesperada"
+    jogos = []
+    for j in dados.get("games") or []:
+        jogos.append({"titulo": (j.get("title") or "")[:60],
+                      "slug": j.get("url") or j.get("slug") or "",
+                      "publicado": j.get("published"),
+                      "downloads": j.get("downloads_count"),
+                      "visitas": j.get("views_count")})
+    return jogos, None
+
+
+def _get_json(url, chave):
+    req = urllib.request.Request(url, headers={"Authorization": "Bearer " + chave,
+                                               "Accept": "application/json",
+                                               "User-Agent": "rebocl-itch/1.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=40) as r:
+            return json.loads(r.read().decode()), None
+    except Exception as e:
+        return None, str(e)[:80]
 
 
 def main(argv):
@@ -157,8 +203,17 @@ def main(argv):
         return 1
     identidade = arquivo_de_identidade(chave)
     try:
+        if modo == "api":
+            jogos, erro = listar_jogos(chave)
+            if erro:
+                print("✗ não consegui listar os jogos:", erro)
+                return 1
+            for j in jogos:
+                print("  %-28s slug=%-40s downloads=%s visitas=%s publicado=%s" % (
+                    j["titulo"], j["slug"] or "?", j["downloads"], j["visitas"], j["publicado"]))
+            return 0
         if modo == "status":
-            ok_lista, lista = status(slug, None, identidade=identidade)
+            ok_lista, lista = status(slug, None, identidade=None, chave=chave)
             print(("✓ " if ok_lista else "✗ ") + "canais no itch (alvo "
                   + (BUILDS.get(slug) or {}).get("alvo", "?") + "):")
             for linha in (lista or "").splitlines():

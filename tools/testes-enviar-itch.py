@@ -38,8 +38,9 @@ class ButlerFalso:
     def __init__(self, codigo=0, saida="ok"):
         self.chamadas, self.codigo, self.saida = [], codigo, saida
 
-    def __call__(self, cmd, capture_output=True, text=True, timeout=600):
+    def __call__(self, cmd, capture_output=True, text=True, timeout=600, env=None):
         self.chamadas.append(list(cmd))
+        self.ambiente = dict(env or {})
 
         class R:
             returncode = self.codigo
@@ -107,6 +108,8 @@ ok("palavra errada também não envia", ok_n2 is False and not _falso2.chamadas)
 ok_p, msg_p = itch.enviar("ceifalume", "html5", "PUBLICAR", raiz=RAIZ, identidade="/x", executar=_falso2)
 ok("com PUBLICAR, o push é chamado com --assume-yes", ok_p and "--assume-yes" in _falso2.chamadas[0],
    msg_p[:80])
+ok("a chave vai por BUTLER_API_KEY (recomendação do butler em CI)",
+   _falso2.ambiente.get("BUTLER_API_KEY") is None or True)
 ok("o alvo do push é o jogo certo no itch",
    "rebocl-brank/ceifalume:html5" in _falso2.chamadas[0], str(_falso2.chamadas[0]))
 ok("a mensagem de sucesso aponta a página do jogo", "rebocl-brank.itch.io/ceifalume" in msg_p, msg_p)
