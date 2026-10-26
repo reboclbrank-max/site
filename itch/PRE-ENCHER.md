@@ -1,7 +1,7 @@
 # Modo navegador — controle da página do itch sem credencial nenhuma
 
 O itch não tem API para escrever na página. A única superfície de escrita é o formulário
-`/dashboard/game/<id>/edit`, que só aceita um navegador **logado**. Então existem só duas
+`/game/edit/<id>`, que só aceita um navegador **logado**. Então existem só duas
 formas de escrever:
 
 | caminho | precisa de | expira? | quem aperta o botão |
@@ -23,13 +23,13 @@ pede confirmação. Não há token para copiar, para vazar ou para vencer.
 
 ## Usar
 
-1. Abra logado `https://itch.io/dashboard/game/5017404/edit`.
+1. Abra logado `https://itch.io/game/edit/5017404`.
 2. Clique no favorito **Ceifalume itch**.
 3. Ele busca `posts/pagina-itch.json` (conteúdo desejado), mostra o antes/depois de cada campo
    e **só envia se você confirmar**. Campo `null` no JSON = não mexe.
 
 Para **ler** o que está na página hoje (e me mandar), abra
-`https://itch.io/dashboard/game/5017404/edit#ler` e clique no favorito: ele mostra o conteúdo
+`https://itch.io/game/edit/5017404#ler` e clique no favorito: ele mostra o conteúdo
 atual em uma caixa para copiar. Nada é gravado nesse modo.
 
 ## Travas

@@ -22,9 +22,10 @@ function ok(nome, fn) {
   console.log('OK ' + nome);
 }
 
-ok('age só em página de jogo do dashboard (sem chutar o endereço do editor)', () => {
-  assert(fonte.includes('/^\\/dashboard\\/game\\/[0-9]+/'), 'guarda de rota ausente');
-  assert(!fonte.includes('\\/edit\\/?$/'), 'voltou a exigir o endereço de editor que deu 404');
+ok('age na página de edição real (/game/edit/<id>)', () => {
+  assert(fonte.includes('/^\\/game\\/edit\\/[0-9]+/'), 'não conhece o endereço real do editor');
+  assert(fonte.includes('itch.io/game/edit/5017404'), 'não diz onde é a página');
+  assert(!fonte.includes('\\/dashboard\\/game\\/[0-9]+\\/edit\\/?$/'), 'voltou ao endereço que deu 404');
 });
 
 ok('exige o formulário com csrf_token', () => {
@@ -48,10 +49,15 @@ ok('não usa eval nem Function construtor', () => {
   assert(!/new\s+Function/.test(fonte), 'usa new Function');
 });
 
-ok('só fala com o repositório (raw.githubusercontent.com)', () => {
+ok('a única rede é o repositório (raw.githubusercontent.com)', () => {
+  // itch.io só aparece como texto/mensagem para o dono, nunca em requisição.
   const hosts = fonte.match(/https?:\/\/[a-z0-9.-]+/gi) || [];
-  const fora = hosts.filter((h) => !/^https:\/\/raw\.githubusercontent\.com$/.test(h));
+  const fora = hosts.filter((h) => !/^https:\/\/raw\.githubusercontent\.com$/.test(h) && h !== 'https://itch.io');
   assert.deepStrictEqual(fora, [], 'host não previsto: ' + fora.join(', '));
+  const chamadas = fonte.match(/fetch\s*\([^)]*/g) || [];
+  assert(chamadas.length > 0, 'não busca o conteúdo publicado');
+  chamadas.forEach((c) => assert(/fetch\(\s*FONTE/.test(c), 'fetch fora do repositório: ' + c));
+  assert(!/XMLHttpRequest|new WebSocket/.test(fonte), 'outra via de rede');
 });
 
 ok('pede confirmação antes de enviar', () => {
