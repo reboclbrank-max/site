@@ -151,7 +151,7 @@ ok('todo comando entregue ao dono tem sintaxe válida', () => {
   // Regra criada em 26/10: dois comandos seguidos caíram por erro de sintaxe meu (um "..." literal).
   // node --check pega isso antes de qualquer colagem no navegador do dono.
   const alvos = ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/preencher-bookmarklet.txt',
-    'itch/entrar-bookmarklet.txt'];
+    'itch/entrar-bookmarklet.txt', 'itch/comando-selets.txt'];
   alvos.forEach((rel) => {
     const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8').trim();
     const codigo = bruto.startsWith('javascript:') ? bruto.slice('javascript:'.length) : bruto;
@@ -171,7 +171,7 @@ ok('o comando do gênero não mexe em mais nada', () => {
 });
 
 ok('nenhum arquivo entregue tem reticências soltas (o erro de 26/10)', () => {
-  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'tools/bookmarklet-itch.js'].forEach((rel) => {
+  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/comando-selets.txt', 'tools/bookmarklet-itch.js'].forEach((rel) => {
     const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8');
     const semTexto = bruto.replace(/'[^']*'/g, "''").replace(/"([^"\\]|\\.)*"/g, '""').replace(/\/\/.*/g, '');
     assert(!/\.\.\.\s*[,}]/.test(semTexto), rel + ' tem reticências no lugar de código');
