@@ -10,8 +10,10 @@ const path = require('path');
 const raiz = path.join(__dirname, '..');
 
 const PARES = [
-  { fonte: 'tools/bookmarklet-itch.js', destino: 'itch/preencher-bookmarklet.txt', rotulo: 'preencher a página' },
-  { fonte: 'tools/entrar-itch.js', destino: 'itch/entrar-bookmarklet.txt', rotulo: 'entrar no itch' },
+  { fonte: 'tools/bookmarklet-itch.js', destino: 'itch/preencher-bookmarklet.txt', rotulo: 'preencher a página', prefixo: 'javascript:' },
+  { fonte: 'tools/entrar-itch.js', destino: 'itch/entrar-bookmarklet.txt', rotulo: 'entrar no itch', prefixo: 'javascript:' },
+  // o mesmo código, sem o javascript: — é a versão que se cola no Console do DevTools
+  { fonte: 'tools/bookmarklet-itch.js', destino: 'itch/comando-console.txt', rotulo: 'colar no Console', prefixo: '' },
 ];
 
 function minificar(codigo) {
@@ -24,7 +26,7 @@ function minificar(codigo) {
 }
 
 function linhaDe(par) {
-  return 'javascript:' + minificar(fs.readFileSync(path.join(raiz, par.fonte), 'utf8'));
+  return par.prefixo + minificar(fs.readFileSync(path.join(raiz, par.fonte), 'utf8'));
 }
 
 const modo = process.argv[2] || '--verificar';
