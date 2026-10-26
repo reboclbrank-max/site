@@ -43,6 +43,17 @@ def ok(nome, cond, detalhe=""):
 # ---------------------------------------------------------------- escopo e sigilo
 ok("pede o escopo de administração (cobre envio e edição num consentimento só)",
    oauth.ESCOPO == "https://www.googleapis.com/auth/youtube", oauth.ESCOPO)
+# duração do token: o Google conta na resposta, não no console
+ok("resposta com refresh_token_expires_in = app em teste",
+   oauth.duracao_do_token({"refresh_token": "x", "refresh_token_expires_in": 604799})[0] == "teste")
+ok("e o prazo é traduzido em dias",
+   oauth.duracao_do_token({"refresh_token_expires_in": 604799})[1] == 7.0,
+   oauth.duracao_do_token({"refresh_token_expires_in": 604799}))
+ok("resposta sem esse campo = token sem prazo (produção)",
+   oauth.duracao_do_token({"refresh_token": "x"})[0] == "ilimitado")
+ok("resposta vazia não é confundida com teste",
+   oauth.duracao_do_token(None)[0] == "ilimitado")
+
 ok("o escopo pedido não é 'force-ssl' (esse é o mínimo que não serve para playlist+upload combinados)",
    "force-ssl" not in oauth.ESCOPO)
 ok("resumo de segredo mostra no máximo 4 caracteres",

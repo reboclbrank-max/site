@@ -93,6 +93,23 @@ def trocar_token(client_id, client_secret, device_code, post=_post_json,
     return None, "o código expirou antes da aprovação"
 
 
+def duracao_do_token(dados):
+    """Diz se o refresh token expira, lendo o que o PRÓPRIO Google devolve.
+
+    Em 'Testing' o Google inclui `refresh_token_expires_in` (segundos, tipicamente 604799) e o
+    token morre em 7 dias. Em 'In production' esse campo não vem. É a única medida confiável do
+    status do app que não exige entrar no console — e é melhor que perguntar ao dono.
+    """
+    expira = (dados or {}).get("refresh_token_expires_in")
+    if expira:
+        try:
+            dias = round(int(expira) / 86400, 1)
+        except (TypeError, ValueError):
+            dias = None
+        return "teste", dias
+    return "ilimitado", None
+
+
 def renovar(client_id, client_secret, refresh_token, post=_post_json):
     """Access token de curta duração a partir do refresh_token. Devolve (token, erro)."""
     if not (client_id and client_secret and refresh_token):
@@ -172,19 +189,28 @@ def fluxo_completo(client_id, client_secret, repo, pat, esperar=5, limite_s=900,
         return False, erro
     escrever("1) Abra: " + codigo.get("verification_url", "https://www.google.com/device"))
     escrever("2) Digite o código: " + str(codigo.get("user_code")))
-    escrever("3) Aprove o acesso do canal da casa ao YouTube (só envio de vídeo).")
+    escrever("3) Aprove o acesso do canal da casa ao YouTube (enviar e administrar).")
     escrever("   esperando aprovação…")
     tentativas = max(1, int(limite_s / max(1, esperar)))
     dados, erro = trocar_token(client_id, client_secret, codigo["device_code"],
                                post=post, esperar=esperar, tentativas=tentativas, dormir=dormir)
     if erro:
         return False, erro
+    # ANTES de gravar: o Google já disse, na própria resposta, se o token tem prazo
+    tipo, dias = duracao_do_token(dados)
+    if tipo == "teste":
+        escrever("   ⚠ ATENÇÃO: o Google devolveu refresh_token_expires_in → app em TESTE.")
+        escrever("      Este token expira em %s dias. Publique o app (Público → Publicar app)" % dias)
+        escrever("      e rode esta autorização de novo para gerar um token sem prazo.")
+    else:
+        escrever("   ✓ app EM PRODUÇÃO: o Google não devolveu prazo de expiração.")
+        escrever("      O refresh token não expira (só cai se for revogado ou ficar 6 meses sem uso).")
     ok, msg = gravar_segredo(repo, "YT_REFRESH_TOKEN", dados["refresh_token"], pat)
     if not ok:
         return False, msg
     escrever("   " + msg)
-    escrever("   pronto: o envio de vídeo passa a ser automático neste repositório.")
-    return True, "autorizado"
+    escrever("   pronto: enviar e administrar o YouTube passa a ser automático neste repositório.")
+    return True, ("autorizado/" + tipo)
 
 
 def main(argv):

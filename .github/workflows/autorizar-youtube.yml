@@ -37,6 +37,8 @@ jobs:
         run: |
           pip install -q pynacl
           python3 tools/youtube_oauth.py | tee /tmp/autorizacao.txt
+          grep -q "refresh_token_expires_in" /tmp/autorizacao.txt \
+            && echo "PRAZO=EM_TESTE" >> "$GITHUB_ENV" || echo "PRAZO=ILIMITADO" >> "$GITHUB_ENV"
           {
             echo "### Autorização do YouTube"
             echo
@@ -46,4 +48,10 @@ jobs:
             echo
             echo "Se o código apareceu acima, abra a URL, digite o código e aprove."
             echo "O token fica guardado como segredo YT_REFRESH_TOKEN — o valor nunca aparece em log."
+            echo
+            if [ "$PRAZO" = "EM_TESTE" ]; then
+              echo "**Prazo do token: app em TESTE — expira em ~7 dias.** Publique o app e rode de novo."
+            else
+              echo "**Prazo do token: ILIMITADO** (app em produção; cai só por revogação ou 6 meses sem uso)."
+            fi
           } >> "$GITHUB_STEP_SUMMARY"
