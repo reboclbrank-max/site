@@ -1,0 +1,19 @@
+name: conferir-comentarios
+# Remede comentários e legendas em vídeo PÚBLICO (a primeira sonda usou vídeo privado).
+# Só leitura + videos.rate com nota "none" (não altera nada).
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conferir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Confere
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 tools/conferir-comentarios.py
