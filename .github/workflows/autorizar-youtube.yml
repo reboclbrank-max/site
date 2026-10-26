@@ -30,6 +30,13 @@ jobs:
           python3 tools/testes-kit-youtube.py
           python3 tools/testes-youtube-oauth.py
 
+      - name: Apaga o código usado (uso único, já morreu)
+        if: always()
+        env:
+          GHPAT: ${{ secrets.GHPAT }}
+          REPO_ENVIO: ${{ github.repository }}
+        run: python3 tools/youtube_oauth.py limpar-codigo
+
       - name: Pede o código ao Google e espera a aprovação do dono
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}

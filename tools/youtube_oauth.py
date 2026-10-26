@@ -166,6 +166,18 @@ def _get_json(url, pat):
         return {}, str(e)[:80]
 
 
+def _deletar_json(url, pat, dados):
+    req = urllib.request.Request(url, data=json.dumps(dados).encode(), method="DELETE",
+                                 headers={"Authorization": "Bearer " + pat,
+                                          "Accept": "application/vnd.github+json",
+                                          "Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=40) as r:
+            return True, "apagado (%d)" % r.status
+    except Exception as e:
+        return False, str(e)[:80]
+
+
 def _put_json(url, pat, dados):
     req = urllib.request.Request(url, data=json.dumps(dados).encode(), method="PUT",
                                  headers={"Authorization": "Bearer " + pat,
@@ -201,6 +213,18 @@ def publicar_codigo(repo, pat, url, codigo, get=None, put=None):
     if not erro and isinstance(atual, dict) and atual.get("sha"):
         corpo["sha"] = atual["sha"]
     ok, msg = put(URL_CONTEUDO % (repo, caminho), pat, corpo)
+    return ok, msg
+
+
+def limpar_codigo(repo, pat, deletar=None, get=None):
+    """Apaga posts/codigo-autorizacao.txt: o código é de uso único e já foi consumido."""
+    get = get or _get_json
+    deletar = deletar or _deletar_json
+    atual, erro = get(URL_CONTEUDO % (repo, "posts/codigo-autorizacao.txt"), pat)
+    if erro or not isinstance(atual, dict) or not atual.get("sha"):
+        return False, "nada para apagar"
+    ok, msg = deletar(URL_CONTEUDO % (repo, "posts/codigo-autorizacao.txt"), pat,
+                      {"message": "autorização: código de uso único já consumido", "sha": atual["sha"]})
     return ok, msg
 
 
@@ -244,6 +268,10 @@ def fluxo_completo(client_id, client_secret, repo, pat, esperar=5, limite_s=1500
 
 
 def main(argv):
+    if argv and argv[0] == "limpar-codigo":
+        ok, msg = limpar_codigo(os.environ.get("REPO_ENVIO", "site"), os.environ.get("GHPAT", ""))
+        print(("✓ " if ok else "· ") + msg)
+        return 0
     client_id = os.environ.get("YT_CLIENT_ID", "")
     client_secret = os.environ.get("YT_CLIENT_SECRET", "")
     repo = os.environ.get("REPO_ENVIO", "site")
