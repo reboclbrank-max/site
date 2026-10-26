@@ -85,12 +85,17 @@ ok("o arquivo de identidade é só do dono (0600)", (os.stat(_id).st_mode & 0o77
 os.remove(_id)
 
 # ---------------------------------------------------------------- status é só leitura
-_falso = ButlerFalso(saida="would push 12 files")
-ok_s, msg_s = itch.status("ceifalume", "html5", raiz=RAIZ, identidade="/x", executar=_falso)
+_falso = ButlerFalso(saida="html5 - 2026-10-20: 12 files")
+ok_s, msg_s = itch.status("ceifalume", None, raiz=RAIZ, identidade="/x", executar=_falso)
 ok("status roda sem erro", ok_s, msg_s[:80])
-ok("status chama o butler com 'status' e nunca com 'push'",
-   _falso.chamadas and _falso.chamadas[0][-2].endswith(":html5") and "status" in _falso.chamadas[0],
+ok("status sem canal lista os canais (não adivinha o nome)",
+   _falso.chamadas and _falso.chamadas[0][-1] == "rebocl-brank/ceifalume"
+   and "status" in _falso.chamadas[0] and "push" not in _falso.chamadas[0],
    str(_falso.chamadas[0]))
+_falso_c = ButlerFalso(saida="...")
+ok_c, _ = itch.status("ceifalume", "html5", raiz=RAIZ, identidade="/x", executar=_falso_c)
+ok("status COM canal usa alvo usuario/jogo:canal",
+   ok_c and _falso_c.chamadas[0][-1] == "rebocl-brank/ceifalume:html5", str(_falso_c.chamadas[0]))
 ok("status não pede confirmação (é leitura)", ok_s)
 
 # ---------------------------------------------------------------- push exige palavra

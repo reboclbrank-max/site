@@ -106,15 +106,27 @@ def alvo_do_canal(slug, canal):
     return "%s:%s" % (alvo["alvo"], canal) if alvo else None
 
 
-def status(slug, canal, raiz=RAIZ, identidade=None, executar=None):
-    """SOMENTE LEITURA: o que mudaria se fosse enviado agora."""
-    erros, pasta = conferir_build(slug, raiz)
+def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None):
+    """SOMENTE LEITURA. Sem canal, o butler LISTA os canais que existem no jogo.
+
+    Defeito corrigido no próprio teste (26/10/2026): `butler status` aceita apenas o alvo
+    (`usuario/jogo`), não a pasta — passar a pasta devolve "unexpected <path>". Sem canal, o
+    comando lista os canais e o estado do último build: é assim que se descobre o nome do
+    canal em vez de adivinhar.
+    """
+    alvo_base = (BUILDS.get(slug) or {}).get("alvo")
+    if not alvo_base:
+        return False, "build não declarado para %r" % slug
+    if canal is None:
+        codigo, saida = rodar(["status", alvo_base], identidade=identidade, executar=executar)
+        return (codigo == 0), (saida or "(sem saída)")[:800]
+    erros, _pasta = conferir_build(slug, raiz)
     if erros:
         return False, "; ".join(erros)
-    alvo = alvo_do_canal(slug, canal)
-    codigo, saida = rodar(["status", alvo, pasta], identidade=identidade, executar=executar)
+    codigo, saida = rodar(["status", alvo_do_canal(slug, canal)],
+                          identidade=identidade, executar=executar)
     if codigo == 0:
-        return True, saida or "(sem diferença: o itch já tem este build)"
+        return True, (saida or "(sem diferença: o itch já tem este build)")[:800]
     return False, "status recusado (canal %r?): %s" % (canal, saida[:300])
 
 
@@ -146,10 +158,12 @@ def main(argv):
     identidade = arquivo_de_identidade(chave)
     try:
         if modo == "status":
-            for canal in BUILDS.get(slug, {}).get("canais", ["html5"]):
-                ok, msg = status(slug, canal, identidade=identidade)
-                print(("✓ " if ok else "· ") + canal + ": " + msg.replace("\n", " | ")[:400])
-            return 0
+            ok_lista, lista = status(slug, None, identidade=identidade)
+            print(("✓ " if ok_lista else "✗ ") + "canais no itch (alvo "
+                  + (BUILDS.get(slug) or {}).get("alvo", "?") + "):")
+            for linha in (lista or "").splitlines():
+                print("   " + linha[:160])
+            return 0 if ok_lista else 1
         if modo == "push":
             canal = argv[2] if len(argv) > 2 else "html5"
             ok, msg = enviar(slug, canal, os.environ.get("CONFIRMACAO", ""), identidade=identidade)
