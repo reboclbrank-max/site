@@ -247,3 +247,6 @@ Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso 
 
 ## 26/10/2026 13:09 UTC
 Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? Dois jeitos de jogar, ambos feitos com carinho no Brasil (Godot). Grátis n Bastidores e artes novas também no Instagram — todos os canais no link.
+
+## 26/10/2026 23:51 UTC
+Tática na PRANCHETA ⚽ ou colheita noturna no CEIFALUME 🌙? Dois projetos solo, feitos no Brasil com Godot. PRANCHETA: grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, cresce 8h offline. Qual seu estilo? #gamed
