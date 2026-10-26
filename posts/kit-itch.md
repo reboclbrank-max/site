@@ -84,7 +84,17 @@ página vazia, e página vazia é pior que página nenhuma.
 
 ---
 
-## 5. O que eu faço sozinho assim que você disser a palavra
+## 5. Situação do build (já mudou)
+
+O build **já está no itch**: canal `html5`, versão `d8f20fd4e6b2`, enviado pelo robô sem clique
+(`Pushing 40.26 MiB`), e a rodada seguinte confirmou `canal no itch: existe · versão
+d8f20fd4e6b2` sem chamar o butler nenhuma vez.
+
+Ele está **oculto**: o arquivo está lá, mas não aparece como download até você desmarcar o
+oculto em **Edit game → Uploads**. Não existe API para esse botão. Se preferir que o próximo
+envio já entre visível, é só dizer — aí eu tiro o `--hidden` do robô.
+
+## 5b. O que eu faço sozinho
 
 - `modo push` no workflow `enviar-itch.yml`, com a palavra **PUBLICAR** → sobe o canal `html5`
   do CEIFALUME pelo butler. O canal entra **oculto** de propósito: o build fica no itch, mas não
