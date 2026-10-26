@@ -151,7 +151,7 @@ ok('todo comando entregue ao dono tem sintaxe válida', () => {
   // Regra criada em 26/10: dois comandos seguidos caíram por erro de sintaxe meu (um "..." literal).
   // node --check pega isso antes de qualquer colagem no navegador do dono.
   const alvos = ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/preencher-bookmarklet.txt',
-    'itch/entrar-bookmarklet.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js', 'itch/aplicar-bookmarklet.txt'];
+    'itch/entrar-bookmarklet.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js', 'itch/aplicar-bookmarklet.txt', 'itch/devlog-bookmarklet.txt', 'tools/devlog-itch-auto.js'];
   alvos.forEach((rel) => {
     const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8').trim();
     const codigo = bruto.startsWith('javascript:') ? bruto.slice('javascript:'.length) : bruto;
@@ -171,7 +171,7 @@ ok('o comando do gênero não mexe em mais nada', () => {
 });
 
 ok('nenhum arquivo entregue tem reticências soltas (o erro de 26/10)', () => {
-  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js', 'itch/aplicar-bookmarklet.txt', 'tools/bookmarklet-itch.js'].forEach((rel) => {
+  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js', 'itch/aplicar-bookmarklet.txt', 'itch/devlog-bookmarklet.txt', 'tools/devlog-itch-auto.js', 'tools/bookmarklet-itch.js'].forEach((rel) => {
     const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8');
     const semTexto = bruto.replace(/'[^']*'/g, "''").replace(/"([^"\\]|\\.)*"/g, '""').replace(/\/\/.*/g, '');
     assert(!/\.\.\.\s*[,}]/.test(semTexto), rel + ' tem reticências no lugar de código');
@@ -205,6 +205,16 @@ ok('o favorito de aplicar é derivado do userscript', () => {
   assert(f.includes('ceifalume:itch:versao-aplicada'), 'sem trava de versao (repetiria sempre)');
   assert(f.includes('raw.githubusercontent.com'), 'nao busca o conteudo publicado');
   assert(!/document\.cookie/.test(f), 'le cookie');
+});
+
+ok('o favorito de devlog nao adivinha: descobre o formulario e envia o csrf', () => {
+  const f = fs.readFileSync(path.join(raiz, 'itch/devlog-bookmarklet.txt'), 'utf8').trim();
+  assert(f.startsWith('javascript:'), 'nao e favorito');
+  assert(f.includes('/game/edit/'), 'nao parte da pagina de edicao');
+  assert(f.includes('new FormData('), 'nao reenvia os campos reais do formulario');
+  assert(f.includes("getAttribute('action')"), 'nao usa o action do proprio formulario');
+  assert(f.includes('devlog-itch.json'), 'nao busca o texto publicado');
+  assert(!/name=\s*['"]post\[/.test(f), 'chutou nome de campo');
 });
 
 console.log('\n' + passou + '/' + passou + ' testes do modo navegador do itch passaram');

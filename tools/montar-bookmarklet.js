@@ -16,6 +16,8 @@ const PARES = [
   { fonte: 'tools/bookmarklet-itch.js', destino: 'itch/comando-console.txt', rotulo: 'colar no Console', prefixo: '' },
   // o userscript (aplicar sozinho o que eu publico) também em versão favorito: sem extensão
   { fonte: 'itch/ceifalume-auto.user.js', destino: 'itch/aplicar-bookmarklet.txt', rotulo: 'aplicar mudancas (1 clique)', prefixo: 'javascript:' },
+  // devlog: descobre o formulario real do itch e posta (1 clique)
+  { fonte: 'tools/devlog-itch-auto.js', destino: 'itch/devlog-bookmarklet.txt', rotulo: 'postar devlog (1 clique)', prefixo: 'javascript:' },
 ];
 
 function minificar(codigo) {

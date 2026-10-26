@@ -1,0 +1,6 @@
+{
+  "versao": "2026-10-26-1",
+  "titulo": "Ceifalume 0.1 — a fazenda que trabalha enquanto você dorme",
+  "corpo": "Ceifalume saiu do forno: um jogo idle de fazenda noturna, feito no Brasil, que roda direto no navegador.\n\n**Como funciona**\n\n- Plante antes de dormir. Cada cultura tem seu tempo, e o tempo continua passando com o jogo fechado — ate 8 horas.\n- Colha quando a lanterna alcancar. A luz e curta de proposito: escolher o que colher e a decisao do dia.\n- Venda quando o mercado pagar mais. O preco muda a cada dia, entao vender tudo de uma vez e o jeito mais facil de ganhar menos.\n\n**O que ja esta pronto na 0.1**\n\n- Cinco minutos por dia bastam: o progresso nao exige deixar a aba aberta.\n- Rodando em HTML5 (Godot), sem instalar nada.\n- Progresso salvo no navegador.\n\n**O que vem na 0.2**\n\n- Mais culturas e um celeiro com limite.\n- Eventos de mercado (chuva, seca, feira).\n- Ajuste no ritmo do comeco, que hoje ainda e lento.\n\nSe voce jogar, me diga o que travou: o relato de quem jogou vale mais que qualquer planilha.\n\nJogar: https://rebocl-brank.itch.io/ceifalume\n",
+  "_nota": "Texto do devlog no itch. O favorito 'Postar devlog' le este arquivo e envia pelo navegador do dono. Campo ausente = nao mexe."
+}
