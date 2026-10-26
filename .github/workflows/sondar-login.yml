@@ -1,0 +1,52 @@
+name: sondar-login
+
+# Mede se o itch.io deixa um servidor chegar na tela de login (sem Cloudflare).
+# Se deixar, existe o caminho "entrar sozinho a cada execucao" (usuario+senha em
+# secret). Nao tenta senha nenhuma: so mede POST vazio para saber se o verbo passa.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sondar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Login e CSRF
+        run: |
+          python3 - <<'PY'
+          import urllib.request, urllib.error, re
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+          def pedir(url, metodo="GET", dados=None, extra=None):
+              h = {"User-Agent": UA, "Accept": "text/html,application/json"}
+              if extra: h.update(extra)
+              r = urllib.request.Request(url, data=dados, method=metodo, headers=h)
+              try:
+                  resp = urllib.request.urlopen(r, timeout=40)
+                  return resp.status, resp.read()[:4000].decode("utf-8", "replace"), resp.headers
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read()[:4000].decode("utf-8", "replace"), e.headers
+              except Exception as e:
+                  return 0, str(e)[:150], {}
+
+          for url in ["https://itch.io/login", "https://itch.io/register", "https://itch.io/user/2fa"]:
+              s, c, h = pedir(url)
+              desafio = "Just a moment" in c
+              print("%-34s -> %s | desafio=%s | bytes=%d | cf-ray=%s" % (url, s, desafio, len(c), h.get("cf-ray", "-")))
+              if not desafio and s == 200:
+                  csrf = re.search(r'name="csrf_token"\s+value="([^"]+)"', c)
+                  print("   form de login presente:", 'name="username"' in c or 'name="password"' in c,
+                        "| csrf:", bool(csrf), "| campos:",
+                        sorted(set(re.findall(r'name="([a-z_\[\]]+)"', c)))[:10])
+                  if csrf:
+                      print("   csrf tem %d caracteres" % len(csrf.group(1)))
+
+          print("--- POST vazio no login (nao envia credencial nenhuma) ---")
+          s, c, h = pedir("https://itch.io/login", "POST", b"", {"Content-Type": "application/x-www-form-urlencoded"})
+          print("POST /login -> %s | desafio=%s | %s" % (s, "Just a moment" in c, c.replace("\n", " ")[:150]))
+          PY
