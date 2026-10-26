@@ -24,6 +24,7 @@ jobs:
           python3 tools/testes-autonomia-marketing.py
           python3 tools/testes-metricas.py
           python3 tools/testes-interacao.py
+          python3 tools/testes-kit-youtube.py
 
       - name: Mede o que foi postado e o que voltou (só leitura)
         env:

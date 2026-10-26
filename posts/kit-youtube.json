@@ -1,0 +1,75 @@
+{
+ "gerado_em": "2026-10-26T01:42:05+00:00",
+ "por_que": "envio por API exige OAuth do dono; a chave da casa é só de leitura. Este kit reduz o trabalho do dono a colar e clicar — e nada é enviado pelo robô.",
+ "pacotes": [
+  {
+   "slug": "prancheta",
+   "arquivo": "media/reel.mp4",
+   "arquivo_existe": true,
+   "capa": "media/prancheta/capa-630x500.png",
+   "capa_existe": true,
+   "dimensoes": [
+    1080,
+    1350
+   ],
+   "formato": "Short (vertical)",
+   "aviso_formato": "vertical 1080x1350 (0.80:1), não 9:16 — o Short aceita vertical, mas o padrão é 9:16; recortar exige ffmpeg, que a casa não tem",
+   "titulo": "PRANCHETA — simulador de gestão de futebol 100% fictício (jogo indie brasileiro)",
+   "descricao": "PRANCHETA — simulador de gestão de futebol 100% fictício.\n\nComo funciona: você desenha a bola parada na prancheta e vê a partida simular.\nOnde jogar: grátis no navegador ou no APK.\nFeito com Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#indiedev #gamedev #godot #jogobrasileiro",
+   "tags": [
+    "prancheta",
+    "manager de futebol",
+    "jogo de futebol",
+    "jogo indie brasileiro",
+    "godot",
+    "futebol ficticio",
+    "jogo de navegador"
+   ],
+   "idioma": "pt-BR",
+   "categoria": "Gaming",
+   "visibilidade": "público",
+   "feito_para_criancas": "não",
+   "passos_do_dono": [
+    "1. Abrir https://studio.youtube.com e escolher 'Criar > Enviar vídeos'",
+    "2. Arrastar media/reel.mp4",
+    "3. Colar o título e a descrição deste pacote (copiar dos blocos abaixo)",
+    "4. Marcar como Short e publicar"
+   ]
+  },
+  {
+   "slug": "ceifalume",
+   "arquivo": "media/ceifalume/ceifalume-trailer-0.1.mp4",
+   "arquivo_existe": true,
+   "capa": "media/ceifalume/perfil-rb-itch-630x500.png",
+   "capa_existe": true,
+   "dimensoes": [
+    1280,
+    720
+   ],
+   "formato": "vídeo normal (16:9)",
+   "aviso_formato": null,
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
+   "descricao": "CEIFALUME 0.1 — jogo idle de fazenda noturna.\n\nComo funciona: plante, colha e negocie à luz da lanterna.\nO que chama atenção: as plantações crescem por até 8 horas mesmo com o jogo fechado.\nOnde jogar: grátis no navegador ou no Android, sem conta.\nFeito com Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#indiedev #gamedev #godot #jogobrasileiro",
+   "tags": [
+    "ceifalume",
+    "jogo de fazenda",
+    "idle game",
+    "jogo indie brasileiro",
+    "godot",
+    "jogo offline",
+    "fazenda noturna"
+   ],
+   "idioma": "pt-BR",
+   "categoria": "Gaming",
+   "visibilidade": "público",
+   "feito_para_criancas": "não",
+   "passos_do_dono": [
+    "1. Abrir https://studio.youtube.com e escolher 'Criar > Enviar vídeos'",
+    "2. Arrastar media/ceifalume/ceifalume-trailer-0.1.mp4",
+    "3. Colar o título e a descrição deste pacote (copiar dos blocos abaixo)",
+    "4. Marcar como vídeo normal e publicar"
+   ]
+  }
+ ],
+ "problemas": {}
+}
