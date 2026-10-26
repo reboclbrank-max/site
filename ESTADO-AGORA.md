@@ -43,6 +43,26 @@ o escopo `youtube` cobre, e o token não expira.
 | jogo já jogável na página | sim, servido do upload antigo `19268311` (13 MB) |
 | Toque Rápido | vetado em `posts/nunca-publicar.json` — nenhum robô toca |
 
+## As três coisas que eu tinha dito "fora do alcance" — medidas
+
+**1. Vídeo público por API → RESOLVIDO, não se aplica a você.**
+Sondagem no canal de verdade: subi `media/reel.mp4` pedindo `unlisted`, o YouTube **aplicou
+`unlisted`** (a trava se manifesta forçando `private`), e o vídeo foi apagado em seguida
+(`apagado (204)`). Veredito medido: `sem_trava`. O envio por API já pede `privacyStatus: public`,
+então publicar funciona. Auditoria do Google: **desnecessária**. Id da sonda: `79qExhG8Gos`
+(removido).
+
+**2. Devlog do itch → RESOLVIDO por outro caminho.**
+O itch não tem API para devlog. O diário de bordo passou a ser publicado onde não existe trava:
+`posts/devlog/*.json` → `blog/<slug>.html` + índice, por commit, no nosso domínio
+(`tools/devlog.py`, roda no workflow diário). O texto do CEIFALUME já está no ar. O mesmo texto
+continua no kit para colar no itch quando quiser.
+
+**3. Autorização do Google → feita uma vez, e não deve ser pedida de novo.**
+O token não tem prazo. O `administrar-youtube` roda todo dia e renova o access token — isso
+também impede a expiração por 6 meses de inatividade. Se o Google revogar, o log passa a dizer
+`ALERTA: invalid_grant … rode autorizar-youtube`.
+
 ## O que continua fora do alcance
 
 - **Página do itch** (texto, capa, devlog, botão publicar): sem API no itch, por decisão deles.

@@ -1,0 +1,17 @@
+{
+  "slug": "ceifalume-no-navegador",
+  "data": "26 de outubro de 2026",
+  "titulo": "O CEIFALUME agora abre no navegador",
+  "resumo": "Saiu do arquivo de Android e virou build de navegador: sem instalar nada, sem ocupar espaço no celular.",
+  "tags": ["godot", "web", "android"],
+  "corpo": [
+    "Antes, para jogar, era preciso baixar o APK e instalar. Agora a mesma build abre direto na página, sem instalação. O download do Android continua lá, para quem preferir jogar com o aplicativo.",
+    {"lista": [
+      "o jogo foi exportado de novo para a web — mesmo motor, mesma build, outro empacotamento;",
+      "o download do Android segue disponível, sem alteração;",
+      "quem já tinha o aplicativo não precisa fazer nada."
+    ]},
+    "Se a página abrir preta, é a opção de SharedArrayBuffer desligada nas configurações de embed do itch — o build é Godot 4.0.10 e depende dela.",
+    "Comentário, bug e sugestão: é no próprio itch, na página do jogo."
+  ]
+}

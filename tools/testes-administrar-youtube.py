@@ -61,6 +61,16 @@ c, erro = adm.canal("tok", get=get1)
 ok("lê inscritos/vídeos/views do canal", c and (c["inscritos"], c["videos"], c["views"]) == (24, 5, 900), c)
 ok("canal vazio vira erro claro", adm.canal("tok", get=GetFalso({"/channels": {"items": []}}))[1] == "a conta não tem canal")
 
+# ------------------------------------------------------------------ token revogado é dito, não escondido
+def _renovar_revogado(ci, cs, r):
+    return None, "renovação recusada: invalid_grant"
+
+
+_linhas_r, _ok_r = adm.estado({"YT_REFRESH_TOKEN": "r", "YT_CLIENT_ID": "i", "YT_CLIENT_SECRET": "s"},
+                             renovar=_renovar_revogado, get=GetFalso({}))
+ok("token revogado gera alerta explícito com o que fazer",
+   any("ALERTA" in l and "autorizar-youtube" in l for l in _linhas_r), _linhas_r)
+
 # ------------------------------------------------------------------ prova só com API key
 _gk = GetFalso({"key=": {"items": [{"snippet": {"title": "Canal do dono"}, "statistics":
                                      {"subscriberCount": "24", "videoCount": "5", "viewCount": "900"}}]}})

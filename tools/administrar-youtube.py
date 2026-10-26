@@ -150,6 +150,9 @@ def estado(ambiente=None, get=None, renovar=None):
     if not token:
         # sem consentimento ainda dá para provar a chave gravada — e dizer o que falta
         linhas, _ok = estado_por_chave(ambiente, get=get)
+        if "invalid_grant" in str(erro):
+            linhas.append("ALERTA: o Google recusou o refresh token (invalid_grant) — foi revogado "
+                          "ou ficou 6 meses sem uso. Rode o workflow autorizar-youtube uma vez.")
         return linhas + ["youtube: " + erro], False
     c, erro2 = canal(token, get=get)
     if erro2:
