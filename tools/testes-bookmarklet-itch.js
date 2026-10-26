@@ -151,7 +151,7 @@ ok('todo comando entregue ao dono tem sintaxe válida', () => {
   // Regra criada em 26/10: dois comandos seguidos caíram por erro de sintaxe meu (um "..." literal).
   // node --check pega isso antes de qualquer colagem no navegador do dono.
   const alvos = ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/preencher-bookmarklet.txt',
-    'itch/entrar-bookmarklet.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js'];
+    'itch/entrar-bookmarklet.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js', 'itch/aplicar-bookmarklet.txt'];
   alvos.forEach((rel) => {
     const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8').trim();
     const codigo = bruto.startsWith('javascript:') ? bruto.slice('javascript:'.length) : bruto;
@@ -171,7 +171,7 @@ ok('o comando do gênero não mexe em mais nada', () => {
 });
 
 ok('nenhum arquivo entregue tem reticências soltas (o erro de 26/10)', () => {
-  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js', 'tools/bookmarklet-itch.js'].forEach((rel) => {
+  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js', 'itch/aplicar-bookmarklet.txt', 'tools/bookmarklet-itch.js'].forEach((rel) => {
     const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8');
     const semTexto = bruto.replace(/'[^']*'/g, "''").replace(/"([^"\\]|\\.)*"/g, '""').replace(/\/\/.*/g, '');
     assert(!/\.\.\.\s*[,}]/.test(semTexto), rel + ' tem reticências no lugar de código');
@@ -197,6 +197,14 @@ ok('o userscript aplica sozinho, com trava de versao', () => {
   assert.deepStrictEqual(connects, ['raw.githubusercontent.com'], 'host extra: ' + connects.join(', '));
   assert(u.includes("if (nome.charAt(0) === '_') return;"), 'tentaria escrever os campos de meta');
   assert(u.includes('previous') || u.includes('anteriores'), 'nao guarda o antes');
+});
+
+ok('o favorito de aplicar é derivado do userscript', () => {
+  const f = fs.readFileSync(path.join(raiz, 'itch/aplicar-bookmarklet.txt'), 'utf8').trim();
+  assert(f.startsWith('javascript:'), 'nao e favorito');
+  assert(f.includes('ceifalume:itch:versao-aplicada'), 'sem trava de versao (repetiria sempre)');
+  assert(f.includes('raw.githubusercontent.com'), 'nao busca o conteudo publicado');
+  assert(!/document\.cookie/.test(f), 'le cookie');
 });
 
 console.log('\n' + passou + '/' + passou + ' testes do modo navegador do itch passaram');
