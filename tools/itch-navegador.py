@@ -32,14 +32,21 @@ PALAVRA = "EDITAR"
 AGENTE = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
           "(KHTML, like Gecko) Chrome/128.0 Safari/537.36")
 
+# Nomes REAIS dos campos, medidos no formulario do dono em 26/10 (57 campos na pagina).
+# O itch prefixa tudo com game[] — o codigo antigo esperava "title" e por isso nunca acharia nada.
 MAPA = {
-    "title": "titulo",
-    "short_text": "resumo",
-    "description": "descricao",
-    "genre": "genero",
-    "tags": "tags",
-    "min_price": "preco",
-    "classification": "classificacao",
+    "game[title]": "titulo",
+    "game[short_text]": "resumo",
+    "game[description]": "descricao",
+    "game[slug]": "endereco",
+    "game[classification]": "classificacao",
+    "game[user_classification]": "classificacao_publica",
+    "game[genre]": "genero",
+    "game[tags]": "tags",
+    "game[min_price]": "preco",
+    "game[payment_mode]": "modo_de_pagamento",
+    "game[type]": "tipo",
+    "game[release_status]": "lancamento",
 }
 
 
