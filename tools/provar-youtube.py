@@ -139,14 +139,55 @@ def main():
     if s != 200:
         print("      %s" % c[:160])
 
-    # 7. comentários (ler e moderar) — só leitura aqui
-    s, c, _ = pedir(API + "/commentThreads?part=id&maxResults=1&allThreadsRelatedToChannelId="
-                    + (canal.get("id") or ""), token=token)
-    print("%s  commentThreads.list -> HTTP %s" % ("OK" if s == 200 else "FALHOU", s))
+    # 7. comentários: testa os dois jeitos, porque 403 pode ser permissão OU parâmetro
+    alvo_com = vid["id"]["videoId"] if vid else ""
+    for rotulo, url in [
+        ("por vídeo", API + "/commentThreads?part=id&maxResults=1&videoId=" + alvo_com),
+        ("por canal", API + "/commentThreads?part=id&maxResults=1&allThreadsRelatedToChannelId=" + (canal.get("id") or "")),
+    ]:
+        s, c, _ = pedir(url, token=token)
+        motivo = ""
+        if s != 200:
+            try:
+                motivo = (json.loads(c).get("error", {}).get("errors") or [{}])[0].get("reason", "")
+            except Exception:
+                motivo = c[:80]
+        print("%s  commentThreads.list %s -> HTTP %s %s"
+              % ("OK" if s == 200 else "FALHOU", rotulo, s, motivo))
 
-    # 8. legendas: costuma exigir permissão de dono
+    # 8. miniatura: tenta regravar a PRÓPRIA miniatura atual (sem mudar nada na tela)
+    if vid:
+        thumb = (vid["snippet"].get("thumbnails", {}).get("high") or {}).get("url")
+        if thumb:
+            try:
+                img = urllib.request.urlopen(thumb, timeout=45).read()
+                fronteira = "----ceifalume"
+                corpo = (("--%s\r\nContent-Disposition: form-data; name=\"image\"; filename=\"a.jpg\"\r\n"
+                          "Content-Type: image/jpeg\r\n\r\n" % fronteira).encode() + img +
+                         ("\r\n--%s--\r\n" % fronteira).encode())
+                r = urllib.request.Request(
+                    API.replace("/youtube/v3", "/upload/youtube/v3") + "/thumbnails/set?videoId=" + vId,
+                    data=corpo, method="POST",
+                    headers={"Authorization": "Bearer " + token,
+                             "Content-Type": "multipart/form-data; boundary=" + fronteira})
+                resp = urllib.request.urlopen(r, timeout=90)
+                print("OK  thumbnails.set (regravando a mesma imagem) -> HTTP %s · %d bytes"
+                      % (resp.status, len(img)))
+            except urllib.error.HTTPError as e:
+                det = e.read()[:160].decode("utf-8", "replace")
+                print("FALHOU  thumbnails.set -> HTTP %s | %s" % (e.code, det.replace("\n", " ")))
+            except Exception as e:
+                print("FALHOU  thumbnails.set -> %s" % str(e)[:120])
+
+    # 9. legendas
     s, c, _ = pedir(API + "/captions?part=id&videoId=" + (vid["id"]["videoId"] if vid else ""), token=token)
-    print("%s  captions.list -> HTTP %s" % ("OK" if s == 200 else "FALHOU", s))
+    motivo = ""
+    if s != 200:
+        try:
+            motivo = (json.loads(c).get("error", {}).get("errors") or [{}])[0].get("reason", "")
+        except Exception:
+            motivo = c[:80]
+    print("%s  captions.list -> HTTP %s %s" % ("OK" if s == 200 else "FALHOU", s, motivo))
     return 0
 
 
