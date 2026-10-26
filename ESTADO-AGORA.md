@@ -12,7 +12,7 @@ Nada aqui é estimativa: cada linha veio de uma chamada real, feita no runner.
 | `YT_CHANNEL_ID` | leitura do canal | resolve o canal certo |
 | `YT_CLIENT_ID` | `device/code` | **HTTP 200** — cliente do tipo TVs aceito |
 | `YT_CLIENT_SECRET` | troca de token com refresh falso | `invalid_grant` (não `invalid_client`) — par reconhecido |
-| `YT_REFRESH_TOKEN` | gravação na autorização | 103 caracteres, prefixo `1//0…` |
+| `YT_REFRESH_TOKEN` | gravação na autorização | 103 caracteres, gravado no cofre |
 
 **Prazo do token: ILIMITADO.** Medido, não deduzido: o Google só devolve
 `refresh_token_expires_in` quando o app está em *Testing*. Ele **não devolveu** →
