@@ -1,0 +1,16 @@
+{
+  "janela": {
+    "inicio": 9,
+    "fim": 22,
+    "fuso": "America/Fortaleza"
+  },
+  "teto_diario": 5,
+  "_por_que": "O relogio do postador rodava 24 horas: 8 ciclos por dia, incluindo 00h e 03h de Brasilia, quando quase ninguem esta acordado e o proprio feed esta vazio. A janela 9h-22h mantem os 5 ciclos que caem dentro dela (09, 12, 15, 18, 21 em Brasilia, que sao 12, 15, 18, 21, 00 UTC no cron atual) e corta os da madrugada. O teto de 5 e o proprio numero de ciclos que sobram: nao aumenta volume, so concentra na hora em que alguem pode ler.",
+  "_o_que_nao_sei": "A medicao por hora em posts/desempenho.md tem amostra pequena e o proprio relatorio avisa que a diferenca esta dentro do ruido. Entao esta janela NAO foi escolhida por engajamento medido: e prudencia de fuso horario, nao prova. Quando houver amostra suficiente (o medidor precisa de mais posts), a janela pode ser recalculada com dado.",
+  "_devlog": {
+    "estado": "pronto, esperando o gatilho",
+    "texto": "posts/devlog-itch.json",
+    "gatilho": "quando a build 0.2 subir (butler) — anunciar 0.1 duas vezes seria ruido",
+    "fallback": "se a 0.2 nao sair ate 02/11/2026, publicar como esta: o devlog ja esta no blog da casa desde 26/10"
+  }
+}

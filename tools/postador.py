@@ -567,11 +567,86 @@ def tema_do_ciclo(temas, indice):
     return temas[indice % len(temas)]
 
 
+
+# ---- janela de publicacao (posts/calendario.json) -------------------------------
+# Motivo: o cron roda 8 ciclos por dia, 24 horas por dia, e dois deles caem na
+# madrugada de Brasilia. A janela concentra o que ja existe nas horas em que alguem
+# pode ler; nao aumenta volume. Ver _o_que_nao_sei no proprio calendario: a escolha
+# e prudencia de fuso, nao engajamento medido (a amostra por hora e pequena).
+
+def ler_calendario(caminho="posts/calendario.json"):
+    """Le a janela. Arquivo ausente ou invalido nao trava a casa: devolve None."""
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def hora_local(agora=None, fuso="America/Fortaleza"):
+    """Hora no fuso pedido, com queda para UTC-3 fixo se zoneinfo nao existir."""
+    agora = agora or datetime.datetime.now(datetime.timezone.utc)
+    if agora.tzinfo is None:
+        agora = agora.replace(tzinfo=datetime.timezone.utc)
+    try:
+        from zoneinfo import ZoneInfo
+        return agora.astimezone(ZoneInfo(fuso))
+    except Exception:
+        return agora.astimezone(datetime.timezone(datetime.timedelta(hours=-3)))
+
+
+def dentro_da_janela(agora=None, calendario=None):
+    """(pode, motivo). Sem calendario, pode=True: a ausencia do arquivo nao e ordem
+    de silencio — e o comportamento antigo (24h) que continua valendo."""
+    calendario = calendario if calendario is not None else ler_calendario()
+    if not calendario or "janela" not in calendario:
+        return True, "sem calendario: janela nao aplicada"
+    j = calendario["janela"]
+    local = hora_local(agora, j.get("fuso", "America/Fortaleza"))
+    inicio, fim = int(j.get("inicio", 0)), int(j.get("fim", 24))
+    if inicio <= local.hour < fim:
+        return True, "dentro da janela (%02dh local)" % local.hour
+    return False, "fora da janela (%02dh local; janela %02d-%02dh)" % (local.hour, inicio, fim)
+
+
+def ciclos_hoje(agora=None, caminho="posts/log.md", calendario=None):
+    """Quantos ciclos ja foram registrados hoje (data local do calendario)."""
+    calendario = calendario if calendario is not None else ler_calendario()
+    fuso = (calendario or {}).get("janela", {}).get("fuso", "America/Fortaleza")
+    hoje = hora_local(agora, fuso).strftime("%d/%m/%Y")
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            return sum(1 for linha in f if linha.startswith("## " + hoje))
+    except Exception:
+        return 0
+
+
+def pode_publicar_agora(agora=None, calendario=None, caminho_log="posts/log.md"):
+    """(pode, motivo) juntando janela e teto diario."""
+    calendario = calendario if calendario is not None else ler_calendario()
+    pode, motivo = dentro_da_janela(agora, calendario)
+    if not pode:
+        return False, motivo
+    teto = int((calendario or {}).get("teto_diario", 0) or 0)
+    if teto:
+        feitos = ciclos_hoje(agora, caminho_log, calendario)
+        if feitos >= teto:
+            return False, "teto diario atingido (%d de %d hoje)" % (feitos, teto)
+        return True, "%s; ciclos hoje %d/%d" % (motivo, feitos, teto)
+    return True, motivo
+
+
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else ""
     if modo != "teste" and ciclo_ainda_recente():
         print("RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)")
         return
+    if modo != "teste":
+        pode, motivo = pode_publicar_agora()
+        print("janela:", motivo)
+        if not pode:
+            print("RESUMO: janela=PULADO (%s)" % motivo)
+            return
     fila = json.load(open("posts/fila.json"))
     cofare, cofare_sha = le_cofare()
     dia = datetime.datetime.utcnow().timetuple().tm_yday
