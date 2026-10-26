@@ -17,8 +17,9 @@
   // De onde vem o conteúdo publicado: arquivo público do repositório, sem credencial.
   var FONTE = 'https://raw.githubusercontent.com/reboclbrank-max/site/main/posts/pagina-itch.json';
 
-  // Só age na página de edição de um jogo. Em qualquer outra página, para.
-  if (!/^\/dashboard\/game\/[0-9]+\/edit\/?$/.test(location.pathname)) {
+  // Só age em uma página de jogo do dashboard (a edição e as abas dela). Fora disso, para.
+  // O endereço exato do editor NÃO é chutado: o itch não documenta e fora da sessão ele dá 404.
+  if (!/^\/dashboard\/game\/[0-9]+/.test(location.pathname)) {
     alert('Abra a página de edição do jogo (…/dashboard/game/<id>/edit) e clique no favorito de novo.');
     return;
   }

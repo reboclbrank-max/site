@@ -54,6 +54,55 @@ def resumir_cookie(cookie):
     return "%d cookie(s): %s - %d caracteres" % (len(nomes), ", ".join(nomes), len(cookie))
 
 
+def candidatos_de_edicao(pagina_dashboard, id_jogo):
+    """Le os links do /dashboard e devolve os caminhos de edicao do jogo, do mais provavel ao menos.
+
+    Nada de chutar formato: o itch nao documenta o endereco do editor e o caminho devolve 404
+    para quem nao tem sessao. Com a sessao, o /dashboard lista o jogo e o link verdadeiro vem nele.
+    """
+    achados = []
+    for href in re.findall(r'href="([^"]+)"', pagina_dashboard or ""):
+        limpo = html_mod.unescape(href).strip()
+        if not limpo.startswith("/"):
+            continue
+        caminho = limpo.split("?")[0].split("#")[0]
+        if not caminho.startswith("/dashboard/game/"):
+            continue
+        if str(id_jogo) and str(id_jogo) not in caminho:
+            continue
+        if caminho not in achados:
+            achados.append(caminho)
+    achados.sort(key=lambda c: (0 if c.rstrip("/").endswith("/edit") else 1, len(c)))
+    for extra in ("/dashboard/game/%s/edit" % id_jogo, "/dashboard/game/%s" % id_jogo):
+        if extra not in achados:
+            achados.append(extra)
+    return achados
+
+
+def descobrir_edicao(cookie, id_jogo, get=None):
+    """Devolve (caminho_valido, tentativas). A validacao e dura: precisa ter csrf_token."""
+    get = get or _get
+    painel, erro = buscar("/dashboard", cookie, get=get)
+    tentativas = []
+    if erro:
+        tentativas.append("dashboard: " + erro)
+        lista = candidatos_de_edicao("", id_jogo)
+    else:
+        lista = candidatos_de_edicao(painel, id_jogo)
+        tentativas.append("dashboard: %d candidato(s) -> %s" % (len(lista), ", ".join(lista[:6])))
+    for caminho in lista:
+        pagina, erro2 = buscar(caminho, cookie, get=get)
+        if erro2:
+            tentativas.append("%s: %s" % (caminho, erro2))
+            continue
+        if "csrf_token" not in (pagina or ""):
+            tentativas.append("%s: respondeu sem formulario de edicao" % caminho)
+            continue
+        tentativas.append("%s: OK (tem csrf_token)" % caminho)
+        return caminho, tentativas
+    return None, tentativas
+
+
 def buscar(caminho, cookie, get=None, timeout=40):
     get = get or _get
     return get(BASE + caminho, cookie, timeout=timeout)

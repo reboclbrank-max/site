@@ -22,8 +22,9 @@ function ok(nome, fn) {
   console.log('OK ' + nome);
 }
 
-ok('age só na página de edição do jogo', () => {
-  assert(fonte.includes('/^\\/dashboard\\/game\\/[0-9]+\\/edit\\/?$/'), 'guarda de rota ausente');
+ok('age só em página de jogo do dashboard (sem chutar o endereço do editor)', () => {
+  assert(fonte.includes('/^\\/dashboard\\/game\\/[0-9]+/'), 'guarda de rota ausente');
+  assert(!fonte.includes('\\/edit\\/?$/'), 'voltou a exigir o endereço de editor que deu 404');
 });
 
 ok('exige o formulário com csrf_token', () => {
