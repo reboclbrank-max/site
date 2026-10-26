@@ -131,6 +131,8 @@ jobs:
 
       - name: Resumo do run
         if: always()
+        env:
+          MODO: ${{ inputs.modo }}
         run: |
           {
             echo "### itch.io — pagina ($MODO)"
@@ -145,6 +147,8 @@ jobs:
       - name: Registra o estado para o chat
         if: always()
         continue-on-error: true
+        env:
+          MODO: ${{ inputs.modo }}
         run: |
           python3 - <<'PY'
           import json, os
