@@ -33,7 +33,7 @@ def ok(nome, condicao, detalhe=""):
 # ------------------------------------------------------------------ sem consentimento não finge
 linhas, feito = adm.estado(ambiente={})
 ok("sem refresh_token, o estado não finge sucesso", feito is False, linhas)
-ok("e diz exatamente o que falta", "falta consentimento" in linhas[0], linhas)
+ok("e diz exatamente o que falta", any("falta consentimento" in l for l in linhas), linhas)
 token, erro = adm.acesso({})
 ok("acesso sem token devolve erro explicado", token is None and "consentimento" in erro)
 token2, erro2 = adm.acesso({"YT_REFRESH_TOKEN": "x"})
@@ -60,6 +60,20 @@ get1 = GetFalso({"/channels": canal_ok})
 c, erro = adm.canal("tok", get=get1)
 ok("lê inscritos/vídeos/views do canal", c and (c["inscritos"], c["videos"], c["views"]) == (24, 5, 900), c)
 ok("canal vazio vira erro claro", adm.canal("tok", get=GetFalso({"/channels": {"items": []}}))[1] == "a conta não tem canal")
+
+# ------------------------------------------------------------------ prova só com API key
+_gk = GetFalso({"key=": {"items": [{"snippet": {"title": "Canal do dono"}, "statistics":
+                                     {"subscriberCount": "24", "videoCount": "5", "viewCount": "900"}}]}})
+linhas_k, ok_k = adm.estado_por_chave({"YT_API_KEY": "k", "YT_CHANNEL_ID": "UC1"}, get=_gk)
+ok("API key sozinha prova o canal", ok_k and "Canal do dono" in linhas_k[0], linhas_k)
+ok("a prova por API key mostra números reais", "24 inscritos" in linhas_k[0], linhas_k)
+sem_chave, ok_sem = adm.estado_por_chave({}, get=_gk)
+ok("sem chave, a prova não finge", ok_sem is False and "sem API key" in sem_chave[0], sem_chave)
+_erro = GetFalso({"key=": {}})
+_erro.__call__ = lambda url, token, metodo="GET", corpo=None, timeout=45: (None, "HTTP 400: API key not valid")
+linhas_e, ok_e = adm.estado_por_chave({"YT_API_KEY": "k", "YT_CHANNEL_ID": "UC1"}, get=_erro)
+ok("chave inválida aparece como chave inválida", ok_e is False and "não leu o canal" in linhas_e[0], linhas_e)
+
 
 # ------------------------------------------------------------------ divergências de metadado
 video = {"id": "v1", "snippet": {"title": "antigo", "description": "velha", "tags": ["a", "b"]},
