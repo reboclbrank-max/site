@@ -116,11 +116,37 @@ def aplicar_metadados(token, video, dif, put=None):
                corpo={"id": video.get("id"), "snippet": snippet})
 
 
+def estado_por_chave(ambiente=None, get=None):
+    """Leitura só com API key (sem consentimento). Serve de prova de que a chave vale.
+
+    É o que sobra antes do OAuth: API key lê estatística pública do canal, mas não administra
+    nada. Se responder número, a chave gravada nos segredos funciona de verdade no runner.
+    """
+    amb = ambiente if ambiente is not None else os.environ
+    chave, canal_id = amb.get("YT_API_KEY"), amb.get("YT_CHANNEL_ID")
+    if not (chave and canal_id):
+        return ["youtube: sem API key ou sem YT_CHANNEL_ID — não há como provar a chave"], False
+    get = get or _requisicao
+    dados, erro = get(API + "/channels?part=snippet,statistics&id=%s&key=%s" % (canal_id, chave), None)
+    if erro or not dados:
+        return ["youtube: a chave não leu o canal — " + str(erro or "resposta vazia")], False
+    itens = dados.get("items") or []
+    if not itens:
+        return ["youtube: chave válida, mas o canal %s… não foi encontrado" % canal_id[:6]], False
+    c = itens[0]
+    est = c.get("statistics") or {}
+    return ["canal (por API key): %s · %s inscritos · %s vídeos · %s views"
+            % ((c.get("snippet") or {}).get("title"),
+               est.get("subscriberCount"), est.get("videoCount"), est.get("viewCount"))], True
+
+
 def estado(ambiente=None, get=None, renovar=None):
     """Só leitura. Devolve (linhas, concluido)."""
     token, erro = acesso(ambiente, renovar=renovar)
     if not token:
-        return ["youtube: " + erro], False
+        # sem consentimento ainda dá para provar a chave gravada — e dizer o que falta
+        linhas, _ok = estado_por_chave(ambiente, get=get)
+        return linhas + ["youtube: " + erro], False
     c, erro2 = canal(token, get=get)
     if erro2:
         return ["youtube: canal indisponível — " + erro2], False
