@@ -14,6 +14,8 @@ const PARES = [
   { fonte: 'tools/entrar-itch.js', destino: 'itch/entrar-bookmarklet.txt', rotulo: 'entrar no itch', prefixo: 'javascript:' },
   // o mesmo código, sem o javascript: — é a versão que se cola no Console do DevTools
   { fonte: 'tools/bookmarklet-itch.js', destino: 'itch/comando-console.txt', rotulo: 'colar no Console', prefixo: '' },
+  // o userscript (aplicar sozinho o que eu publico) também em versão favorito: sem extensão
+  { fonte: 'itch/ceifalume-auto.user.js', destino: 'itch/aplicar-bookmarklet.txt', rotulo: 'aplicar mudancas (1 clique)', prefixo: 'javascript:' },
 ];
 
 function minificar(codigo) {
