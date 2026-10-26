@@ -59,6 +59,28 @@ ok("canal de outro nome não conta como nosso",
 ok("sem build local → bloqueado",
    adm.decidir("ceifalume", None, [])[0] == "bloqueado")
 
+# ------------------------------------------------------------------ kit da página
+import struct
+_pag = os.path.join(RAIZ, "ITCH-PAGINA.md")
+ok("o kit da pagina do itch existe", os.path.exists(_pag))
+if os.path.exists(_pag):
+    _t = " ".join(open(_pag, encoding="utf-8").read().split())
+    ok("o kit diz que nao existe integracao GitHub-itch de pagina", "nenhuma" in _t and "hooks" in _t)
+    ok("o kit aponta a capa 630x500 que existe", os.path.exists(os.path.join(RAIZ, "itch/capa-630x500.png")))
+    ok("o kit lista as 4 screenshots reais",
+       all(os.path.exists(os.path.join(RAIZ, "itch/shots/%s.png" % n))
+           for n in ("titulo", "inicial", "meio", "cheio")))
+    ok("o kit registra a midia que controlamos na pagina", "gif-jogo-ceifalume-640x360.gif" in _t)
+
+def _dim(p):
+    with open(p, "rb") as f:
+        f.read(16); return struct.unpack(">II", f.read(8))
+
+_capa = _dim(os.path.join(RAIZ, "itch/capa-630x500.png"))
+ok("a capa tem exatamente 630x500 (spec do itch)", _capa == (630, 500), _capa)
+_shots = [_dim(os.path.join(RAIZ, "itch/shots/%s.png" % n)) for n in ("titulo", "inicial", "meio", "cheio")]
+ok("as screenshots sao 1280x720", all(d == (1280, 720) for d in _shots), _shots)
+
 # ------------------------------------------------------------------ escopos da credencial
 _l, _e = adm.escopos("chave", get=lambda url, chave=None: ({"scopes": ["profile:me", "profile:games"]}, None))
 ok("lê os escopos declarados pela credencial", _l == ["profile:me", "profile:games"], _l)
