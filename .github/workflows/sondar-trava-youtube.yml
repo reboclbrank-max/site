@@ -1,0 +1,39 @@
+name: sondar-trava-youtube
+
+# Mede, no canal de verdade, se a política de "vídeo privado por projeto não auditado" se aplica
+# a esta conta. Sobe um vídeo da casa como NÃO LISTADO, lê o privacyStatus aplicado e APAGA o
+# vídeo. Não publica nada: "não listado" só abre por link, não entra em feed, busca nem
+# notificação. Sem cron: roda quando alguém pede.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sondar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/testes-sondar-trava-youtube.py
+          python3 tools/testes-administrar-youtube.py
+
+      - name: Sonda a trava (sobe não listado, lê, apaga)
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          python3 tools/sondar-trava-youtube.py "Sondagem automática da casa (apagada em seguida)" \
+            | tee /tmp/sonda.txt || true
+          {
+            echo "### Sondagem da trava de privacidade"
+            echo
+            echo '```'
+            cat /tmp/sonda.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
