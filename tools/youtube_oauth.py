@@ -25,7 +25,11 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-ESCOPO = "https://www.googleapis.com/auth/youtube.upload"
+# Escopo de administração completa, e não só de envio: o dono pediu "postar E administrar de
+# forma automática". `youtube` inclui upload e cobre editar título/descrição/tags, playlist,
+# thumbnail e comentários. Pedir só upload obrigaria um SEGUNDO consentimento depois — e
+# consentimento é o único passo que depende dele, então tem de ser um só.
+ESCOPO = "https://www.googleapis.com/auth/youtube"
 URL_CODIGO = "https://oauth2.googleapis.com/device/code"
 URL_TOKEN = "https://oauth2.googleapis.com/token"
 URL_SEGREDO = "https://api.github.com/repos/{repo}/actions/secrets/{nome}"

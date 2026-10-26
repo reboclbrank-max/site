@@ -1,0 +1,70 @@
+name: administrar-itch
+
+# Administração automática do itch.io: o robô olha o estado, decide e (se for o caso) sobe o
+# build — sem clique do dono. É o único caminho de escrita que o itch oferece (butler push):
+# a API oficial de lá é só de leitura, e o próprio itch já disse que não vai abrir endpoint de
+# postagem. Texto de página, devlog e botão "publicar" continuam sendo no navegador.
+#
+# Segurança do automático:
+#   - jogo vetado pelo dono (posts/nunca-publicar.json) nunca é tocado;
+#   - canal novo entra OCULTO (--hidden): o build chega no itch sem virar download na cara
+#     do jogador;
+#   - --if-changed: o butler reconfere antes de subir, então dois runners não duplicam envio;
+#   - a decisão é por medida (tamanho/hash do build) — build igual não gera comando nenhum.
+on:
+  schedule:
+    - cron: "17 6 * * *"   # uma vez por dia, cedo
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "estado = só leitura · auto = administra (sobe se mudou)"
+        required: true
+        default: estado
+        type: choice
+        options:
+          - estado
+          - auto
+
+permissions:
+  contents: read
+
+concurrency:
+  group: administrar-itch
+  cancel-in-progress: false
+
+jobs:
+  administrar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/testes-administrar-itch.py
+          python3 tools/testes-enviar-itch.py
+          python3 tools/testes-kit-youtube.py
+
+      - name: Instala o butler (ferramenta oficial e gratuita do itch)
+        run: |
+          curl -sSL -o /tmp/butler.zip "https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default"
+          mkdir -p /tmp/butler && unzip -q /tmp/butler.zip -d /tmp/butler
+          chmod +x /tmp/butler/butler
+          /tmp/butler/butler version
+          echo "BUTLER_PATH=/tmp/butler/butler" >> "$GITHUB_ENV"
+
+      - name: Administra (agendado roda sempre em auto)
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+        run: |
+          MODO="${{ inputs.modo }}"
+          if [ -z "$MODO" ]; then MODO=auto; fi
+          echo "modo: $MODO"
+          python3 tools/administrar-itch.py "$MODO" ceifalume | tee /tmp/adm.txt
+          {
+            echo "### itch.io — administração ($MODO)"
+            echo
+            echo '```'
+            cat /tmp/adm.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
