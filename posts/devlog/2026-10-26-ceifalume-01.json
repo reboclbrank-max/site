@@ -1,0 +1,46 @@
+{
+  "slug": "ceifalume-01-o-que-e-que-vem",
+  "data": "26 de outubro de 2026",
+  "titulo": "Ceifalume 0.1 — a fazenda que trabalha enquanto você dorme",
+  "resumo": "Plantar antes de dormir, colher na luz da lanterna e vender quando o mercado pagar mais. O que já está pronto na 0.1 e o que vem na 0.2.",
+  "tags": [
+    "ceifalume",
+    "idle",
+    "godot",
+    "web"
+  ],
+  "corpo": [
+    "Ceifalume saiu do forno: um jogo idle de fazenda noturna, feito no Brasil, que roda direto no navegador.",
+    {
+      "titulo": "Como funciona"
+    },
+    {
+      "lista": [
+        "Plante antes de dormir. Cada cultura tem seu tempo, e o tempo continua passando com o jogo fechado — até 8 horas.",
+        "Colha quando a lanterna alcançar. A luz é curta de propósito: escolher o que colher é a decisão do dia.",
+        "Venda quando o mercado pagar mais. O preço muda a cada dia, então vender tudo de uma vez é o jeito mais fácil de ganhar menos."
+      ]
+    },
+    {
+      "titulo": "O que já está pronto na 0.1"
+    },
+    {
+      "lista": [
+        "Cinco minutos por dia bastam: o progresso não exige deixar a aba aberta.",
+        "Rodando em HTML5 (Godot), sem instalar nada.",
+        "Progresso salvo no navegador."
+      ]
+    },
+    {
+      "titulo": "O que vem na 0.2"
+    },
+    {
+      "lista": [
+        "Mais culturas e um celeiro com limite.",
+        "Eventos de mercado (chuva, seca, feira).",
+        "Ajuste no ritmo do começo, que hoje ainda é lento."
+      ]
+    },
+    "Se você jogar, me diga o que travou: o relato de quem jogou vale mais que qualquer planilha."
+  ]
+}
