@@ -107,7 +107,6 @@ jobs:
             exit 1
           fi
           echo "caminho de edicao: $ITCH_EDICAO"
-          fi
           export ITCH_EDICAO
           python3 - <<'PY'
           import os, sys
