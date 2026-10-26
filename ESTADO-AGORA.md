@@ -65,7 +65,16 @@ também impede a expiração por 6 meses de inatividade. Se o Google revogar, o 
 
 ## O que continua fora do alcance
 
-- **Página do itch — RESOLVIDO em 26/10, por sessão.** `tools/itch-navegador.py` (32/32 offline)
+- **Página do itch — MEDIDO E FECHADO em 26/10: sessão não atravessa a Cloudflare.**
+  Com o cookie real do dono (`itchio` + `itchio_token`) em mãos, a sonda
+  `.github/workflows/sondar-cookie-itch.yml` testou 3 User-Agents × 3 conjuntos de cookies no
+  runner: **`/dashboard` devolveu 403 (desafio) em todas as 12 combinações — inclusive SEM
+  cookie nenhum.** A página pública do jogo continua 200. Conclusão: não é a sessão, é o IP de
+  datacenter; automação por servidor do painel do itch está morta. O segredo `ITCH_COOKIE` foi
+  apagado (não servia para nada) e o código passou a distinguir "bloqueado" de "sessão inválida"
+  (46/46 testes). O controle vive no navegador: o favorito `itch/preencher-bookmarklet.txt` e o
+  comando `itch/comando-console.txt`, ambos sem credencial nenhuma.
+- **Página do itch — o que já funciona por sessão.** `tools/itch-navegador.py` (32/32 offline)
   lê e escreve os campos pelo formulário real, e `.github/workflows/editar-itch.yml` roda isso no
   runner: descobre a página pela API (`/dashboard/game/5017404/edit`), confere a sessão, faz backup
   dos valores anteriores em `posts/backup-itch.json` e só escreve com a palavra `EDITAR`.

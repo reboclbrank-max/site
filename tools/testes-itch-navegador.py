@@ -171,5 +171,21 @@ caido = n.descobrir_edicao("c=1", 5017404, get=get_dashboard_caido)
 ok("descobrir reporta a falha do dashboard e segue",
    caido[0] == "/dashboard/game/5017404/edit" and caido[1][0].startswith("dashboard: sessao recusada"), caido)
 
+# ------------------------------------------- 403 da Cloudflare != sessao invalida
+# (medido no runner em 26/10: /dashboard devolve 403 para TODA combinacao, inclusive sem cookie)
+def get_bloqueado(url, cookie, timeout=40):
+    return None, n.BLOQUEIO
+
+
+ok("403 vira bloqueio, nao 'sessao invalida'",
+   n.sessao_ok("c=1", get=get_bloqueado) == (None, n.BLOQUEIO))
+ok("bloqueio nao e lido como False (nao acusa sessao ruim)",
+   n.sessao_ok("c=1", get=get_bloqueado)[0] is None)
+ok("sessao invalida de verdade continua False",
+   n.sessao_ok("c=1", get=lambda u, c, timeout=40: (None, "sessao recusada: o itch redirecionou para o login"))[0] is False)
+ok("sem cookie continua False",
+   n.sessao_ok("", get=get_bloqueado)[0] is False)
+ok("o texto do bloqueio diz que nao e a sessao", "nao e a sessao" in n.BLOQUEIO, n.BLOQUEIO)
+
 print("\n%d/%d testes do controle do itch passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)
