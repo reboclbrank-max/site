@@ -24,6 +24,8 @@ jobs:
           python3 tools/testes-autonomia-marketing.py
           python3 tools/testes-metricas.py
           python3 tools/testes-interacao.py
+          python3 tools/testes-devlog.py
+          python3 tools/testes-sondar-trava-youtube.py
           python3 tools/testes-kit-youtube.py
           python3 tools/testes-youtube-oauth.py
           python3 tools/testes-administrar-itch.py

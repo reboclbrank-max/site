@@ -24,6 +24,8 @@ jobs:
           python3 tools/testes-autonomia-marketing.py
           python3 tools/testes-metricas.py
           python3 tools/testes-interacao.py
+          python3 tools/testes-devlog.py
+          python3 tools/testes-sondar-trava-youtube.py
           python3 tools/testes-kit-youtube.py
           python3 tools/testes-administrar-itch.py
           python3 tools/testes-administrar-youtube.py
@@ -33,9 +35,12 @@ jobs:
           python3 tools/postador.py
           # Kit de envio do YouTube: PRODUZ, não publica. O envio depende do OAuth do dono.
           python3 tools/kit-youtube.py || echo "kit do YouTube com problema — registrado, sem publicar"
+          # Devlog no site da casa: o itch não tem API para devlog, então o diário de bordo é
+          # publicado onde não existe trava — por commit, no nosso próprio domínio.
+          python3 tools/devlog.py
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
-          git add posts/
+          git add posts/ blog/
           git commit -m "🤖 postagem automatica $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
           ok=0
           for i in 1 2 3; do
