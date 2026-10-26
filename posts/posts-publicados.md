@@ -244,3 +244,6 @@
 
 ## 26/10/2026 04:53 UTC
 Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna que cresce enquanto você dorme 🌙🌱 Feito com carinho aqui no Brasil. #IndieDevBR #GodotEngine
+
+## 26/10/2026 13:09 UTC
+Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? Dois jeitos de jogar, ambos feitos com carinho no Brasil (Godot). Grátis n Bastidores e artes novas também no Instagram — todos os canais no link.
