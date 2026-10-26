@@ -1,0 +1,43 @@
+name: testes-devlog
+
+# Mede o favorito "Postar devlog" num Chromium de verdade, no runner.
+# Nao toca o itch real: as paginas do itch sao simuladas dentro do teste (rotas
+# interceptadas), entao isto mede a logica — descoberta do formulario, nomes de
+# campo vindos do HTML, csrf preservado, envio e trava de repeticao.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/devlog-itch-auto.js'
+      - 'tools/testes-devlog-navegador.py'
+      - 'itch/devlog-bookmarklet.txt'
+      - 'posts/devlog-itch.json'
+      - '.github/workflows/testes-devlog.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-python@42375524e23c412d93fb67b4692014f7849c3536 # v5
+        with:
+          python-version: '3.12'
+
+      - name: Prepara o navegador
+        run: |
+          python3 -m pip install --quiet playwright
+          python3 -m playwright install --with-deps chromium
+
+      - name: Barreiras de sintaxe e contrato
+        run: |
+          node tools/montar-bookmarklet.js --verificar
+          node tools/testes-bookmarklet-itch.js
+
+      - name: Mede o favorito de devlog
+        run: python3 tools/testes-devlog-navegador.py
