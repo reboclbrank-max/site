@@ -101,8 +101,22 @@ def _get_falso(payloads):
 jogos = {"games": [{"id": 777, "url": "https://rebocl-brank.itch.io/ceifalume", "title": "Ceifalume"}]}
 falso_get = _get_falso({"profile/games": jogos, "uploads": {"uploads": []}})
 
+# depois do push o script RELÊ o itch: o dublê passa a devolver o canal recém-criado
+chamadas = {"n": 0}
+
+
+def get_muda(url, chave=None):
+    if "uploads" in url:
+        chamadas["n"] += 1
+        if chamadas["n"] >= 2:
+            return {"uploads": [{"channel_name": "html5", "size": local["bytes"],
+                                 "build_id": 4321, "id": 19268323}]}, None
+        return {"uploads": []}, None
+    return jogos, None
+
+
 butler = ButlerFalso()
-acao, motivo, linhas = adm.auto("ceifalume", "chave", raiz=RAIZ, get=falso_get,
+acao, motivo, linhas = adm.auto("ceifalume", "chave", raiz=RAIZ, get=get_muda,
                                identidade="/x", executar=butler)
 ok("auto envia quando o canal não existe", acao == "enviado", acao + " / " + str(linhas))
 ok("o push usa --if-changed (segunda conferência contra corrida)", "--if-changed" in butler.chamadas[0])
@@ -110,6 +124,15 @@ ok("o push usa --hidden (nada muda para o jogador sem o dono ver)", "--hidden" i
 ok("o push manda a versão pelo hash da build", "--userversion " + local["hash"][:12] in butler.chamadas[0],
    butler.chamadas[0])
 ok("o alvo é o canal certo", "rebocl-brank/ceifalume:html5" in butler.chamadas[0])
+ok("depois do push o remoto é relido (prova, não fé)",
+   any("remoto depois do push" in l for l in linhas), str(linhas)[:200])
+
+# butler diz que enviou mas o itch não lista → NÃO é sucesso
+butler5 = ButlerFalso()
+falso_get5 = _get_falso({"profile/games": jogos, "uploads": {"uploads": []}})
+acao5, motivo5, _l = adm.auto("ceifalume", "chave", raiz=RAIZ, get=falso_get5,
+                              identidade="/x", executar=butler5)
+ok("push sem canal no remoto vira falha", acao5 == "falhou" and "não lista" in motivo5, motivo5[:90])
 
 # build igual da última vez → nenhum comando é chamado
 butler2 = ButlerFalso()

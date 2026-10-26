@@ -165,6 +165,15 @@ def auto(nome, chave, raiz=RAIZ, get=None, identidade=None, executar=None):
     if codigo != 0:
         return "falhou", "butler recusou: " + (saida or "")[:400], linhas
     linhas.append("butler: " + " ".join((saida or "").split())[:300])
+    # prova no remoto: reler o itch em vez de confiar no que o butler disse. Sem isso, "enviado"
+    # é fé, não medida.
+    depois = uploads_do_jogo(nome, chave, get=get)
+    do_canal = [u for u in depois if (u.get("channel_name") or "") == canal]
+    if not do_canal:
+        return "falhou", "butler disse que enviou, mas o itch não lista o canal '%s'" % canal, linhas
+    u = do_canal[0]
+    linhas.append("remoto depois do push: canal=%s size=%s build=%s id=%s"
+                  % (u.get("channel_name"), u.get("size"), u.get("build_id"), u.get("id")))
     return "enviado", motivo, linhas
 
 
