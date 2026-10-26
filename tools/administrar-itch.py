@@ -22,6 +22,7 @@ import hashlib
 import json
 import os
 import sys
+import time
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "tools"))
@@ -103,6 +104,24 @@ def uploads_do_jogo(nome, chave, get=None):
     return []
 
 
+def interpretar_status(saida, canal, hash_local=None):
+    """Lê `butler status alvo` e diz (existe, versao).
+
+    Canal criado por butler NÃO aparece em /games/{id}/uploads — aquele endpoint lista upload
+    feito pelo site. Quem enxerga canal é o próprio butler. Medido: depois do push, o endpoint
+    continuou listando só os 2 uploads antigos.
+    """
+    texto = saida or ""
+    existe = canal in texto and "no channel found" not in texto.lower()
+    versao = None
+    if existe and hash_local:
+        for pedaco in texto.replace(":", " ").replace("/", " ").split():
+            if pedaco.strip("()[],") == hash_local[:12]:
+                versao = pedaco.strip("()[],")
+                break
+    return existe, versao
+
+
 def decidir(nome, local, remotos, canal=None):
     """Devolve (acao, motivo). Ação é 'enviar', 'nada' ou 'bloqueado'.
 
@@ -145,36 +164,56 @@ def estado(nome, chave, raiz=RAIZ, get=None):
     return acao, motivo, linhas
 
 
-def auto(nome, chave, raiz=RAIZ, get=None, identidade=None, executar=None):
-    """Administra: envia se (e só se) a medida disser que mudou.
+def auto(nome, chave, raiz=RAIZ, get=None, identidade=None, executar=None,
+         esperar=None, limite_s=300):
+    """Administra: envia se (e só se) a medida disser que mudou, e prova no remoto.
 
-    O canal entra OCULTO e com --if-changed: o butler confere de novo antes de subir, então
-    nem uma corrida entre dois runners faz envio redundante.
+    A prova é `butler status` relido depois do push, com espera: o itch processa o build
+    ("Build is now processing") e a primeira leitura volta vazia. Ler uma vez só produziu
+    falso negativo de verdade nesta casa — envio OK, log dizendo falha.
     """
-    acao, motivo, linhas = estado(nome, chave, raiz=raiz, get=get)
-    if acao != "enviar":
-        return acao, motivo, linhas
+    if nome.lower() in vetados() or "*" in vetados() or nome not in PROJETOS:
+        acao, motivo = decidir(nome, None, [])
+        return acao, motivo, ["decisão: %s — %s" % (acao, motivo)]
     local = impressao(PROJETOS[nome]["pasta"], raiz=raiz)
+    if local is None:
+        return "bloqueado", "não existe build na pasta (nada a enviar)", []
+    alvo = PROJETOS[nome]["alvo"]
     canal = PROJETOS[nome]["canal"]
+    linhas = ["local: %d arquivos, %d bytes, hash %s…"
+              % (local["arquivos"], local["bytes"], local["hash"][:12])]
+
+    codigo, saida = itch.rodar(["status", alvo], identidade=identidade,
+                               executar=executar, chave=chave)
+    existe, versao = interpretar_status(saida, canal, local["hash"])
+    linhas.append("canal no itch: %s%s" % ("existe" if existe else "não existe",
+                                           "" if not versao else " · versão " + versao))
+    if existe and versao == local["hash"][:12]:
+        return "nada", "build local e versão publicada são a mesma (%s)" % versao, linhas
+
     codigo, saida = itch.rodar(
-        ["push", os.path.join(raiz, PROJETOS[nome]["pasta"]),
-         "%s:%s" % (PROJETOS[nome]["alvo"], canal),
-         "--assume-yes", "--hidden", "--if-changed",
-         "--userversion", local["hash"][:12]],
+        ["push", os.path.join(raiz, PROJETOS[nome]["pasta"]), "%s:%s" % (alvo, canal),
+         "--assume-yes", "--hidden", "--if-changed", "--userversion", local["hash"][:12]],
         identidade=identidade, executar=executar, chave=chave)
     if codigo != 0:
         return "falhou", "butler recusou: " + (saida or "")[:400], linhas
-    linhas.append("butler: " + " ".join((saida or "").split())[:300])
-    # prova no remoto: reler o itch em vez de confiar no que o butler disse. Sem isso, "enviado"
-    # é fé, não medida.
-    depois = uploads_do_jogo(nome, chave, get=get)
-    do_canal = [u for u in depois if (u.get("channel_name") or "") == canal]
-    if not do_canal:
-        return "falhou", "butler disse que enviou, mas o itch não lista o canal '%s'" % canal, linhas
-    u = do_canal[0]
-    linhas.append("remoto depois do push: canal=%s size=%s build=%s id=%s"
-                  % (u.get("channel_name"), u.get("size"), u.get("build_id"), u.get("id")))
-    return "enviado", motivo, linhas
+    linhas.append("butler: " + " ".join((saida or "").split())[:280])
+
+    # espera o itch processar e relê até confirmar
+    esperar = esperar or (lambda s: time.sleep(s))
+    passado = 0
+    while passado < limite_s:
+        passado += 20
+        esperar(20)
+        codigo, saida2 = itch.rodar(["status", alvo], identidade=identidade,
+                                    executar=executar, chave=chave)
+        existe2, versao2 = interpretar_status(saida2, canal, local["hash"])
+        if existe2:
+            linhas.append("remoto confirmado após %ds: canal %s · versão %s"
+                          % (passado, canal, versao2 or "não exposta"))
+            return "enviado", "canal '%s' confirmado no itch" % canal, linhas
+    linhas.append("butler enviou, mas o canal não apareceu em %ds" % limite_s)
+    return "enviado_nao_confirmado", "envio feito, confirmação pendente (itch processando)", linhas
 
 
 def main(argv):
