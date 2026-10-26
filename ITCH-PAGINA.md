@@ -29,6 +29,34 @@ arquivo no repositório, a página do itch muda sem ninguém tocar no itch. Junt
 
 O que sobra na interface deles: título, texto, tags, capa, screenshots, botão publicar, devlog.
 
+## Se a pergunta é "o que precisa para controle total"
+
+Medido do runner do GitHub (IP 20.64.17.100, Azure):
+
+```
+itch.io/               → 200 · sem desafio
+itch.io/login          → 403 · desafio Cloudflare
+itch.io/dashboard      → 302 (para o login)
+página do jogo         → 200
+```
+
+Ou seja: página pública passa, **fronteira de autenticação não**. Cloudflare barra IP de
+datacenter justamente onde o robô precisaria entrar. Três caminhos, do mais sólido ao mais frágil:
+
+**A) Robô na sua máquina (controle total de verdade).** Um runner próprio do GitHub Actions (ou
+um script local) rodando no seu PC: o IP é o seu, o perfil do navegador é o seu, o Cloudflare
+trata como você. Eu escrevo a automação; você loga uma vez na janela que abrir e a sessão fica no
+perfil do seu computador. **Nada de credencial passa por mim** e nada vai para o repositório.
+Custo: uma máquina ligada quando o robô roda.
+
+**B) Cookie de sessão como segredo.** Funciona em tese, mas: Cloudflare devolve 403 na fronteira
+de login de IP de datacenter; o cookie expira e quebra sem avisar; e o cookie é **da conta
+inteira** — compras, repasses, troca de e-mail —, muito além da página do jogo. Não recomendo
+como primeira opção e não testei porque exige o seu cookie.
+
+**C) O que já existe.** Build sobe sozinho, mídia da descrição é nossa (troca por commit), devlog
+sai no nosso domínio. Do lado do itch sobram 6 campos e o botão publicar.
+
 ## Kit de colar — os arquivos já estão prontos no repositório
 
 **Capa** (o itch pede 630×500 ou maior):
