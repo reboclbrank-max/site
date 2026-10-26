@@ -22,3 +22,19 @@ Ele busca `posts/pagina-itch.json`, mostra antes/depois e **só grava se você c
 
 `itch/preencher-bookmarklet.txt` — crie um favorito com essa linha. Um clique na página de
 edição e ele faz o mesmo que o comando do item 2.
+
+## 0. Achar e abrir a página de edição (o endereço varia e não é adivinhável)
+
+O endereço do editor não é documentado e devolve 404 para quem não tem sessão — testados e
+descartados em 26/10: `/dashboard/game/<id>/edit`, `/dashboard/game/<id>`, `/dashboard/games/<id>`,
+`/game/<id>/edit`, `/my-game/<id>/edit`, `/dashboard/project/<id>/edit`, `<jogo>/edit`.
+
+Com a sessão aberta, em **qualquer** página do itch, cole isto no Console:
+
+```js
+(()=>{const l=[...document.querySelectorAll('a')].map(a=>a.getAttribute('href')||'').filter(h=>h.includes('/dashboard'));const ed=l.find(h=>/\/edit/.test(h));if(ed){location.href=ed;return 'abrindo '+ed}if(l.length){if(window.copy)copy(l.join('\n'));prompt('Não achei "edit". Copiei os links do dashboard — me mande:',l.join('\n'));return}prompt('Nenhum link de dashboard aqui. Vá em Dashboard → clique no Ceifalume → Edit e me mande o endereço.')})()
+```
+
+Se ele disser "abrindo …", você está na página certa e o resto (`itch/comando-console.txt`)
+funciona. Se ele mostrar links, me mande — com o endereço real eu conserto `!itch pagina` e o
+favorito de vez.
