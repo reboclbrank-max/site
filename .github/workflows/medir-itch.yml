@@ -1,0 +1,41 @@
+name: medir-itch
+
+# Placar do itch pela API (que nao passa pela Cloudflare): downloads, visitas, publicacao.
+# So leitura. Serve para saber se o jogo esta andando sem depender de abrir o site.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 13 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Le o placar
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+        run: |
+          python3 - <<'PY'
+          import importlib.util, json, os
+          spec = importlib.util.spec_from_file_location("adm", "tools/administrar-itch.py")
+          adm = importlib.util.module_from_spec(spec); spec.loader.exec_module(adm)
+          chave = os.environ.get("ITCH_API_KEYS", "")
+          dados, erro = adm.itch._get_json("https://api.itch.io/profile/games", chave)
+          if erro:
+              print("FALHOU leitura: %s" % (erro,)); raise SystemExit(1)
+          for g in (dados or {}).get("games") or []:
+              print("jogo: %s (id %s)" % (g.get("title"), g.get("id")))
+              print("  url: %s" % g.get("url"))
+              print("  downloads: %s" % g.get("downloads_count"))
+              print("  visitas: %s" % g.get("views_count"))
+              print("  compras: %s" % g.get("purchases_count"))
+              print("  publicado: %s em %s" % (g.get("published"), g.get("published_at")))
+              print("  atualizado: %s" % g.get("updated_at"))
+          PY
