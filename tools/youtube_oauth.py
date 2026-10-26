@@ -29,7 +29,15 @@ import urllib.request
 # forma automática". `youtube` inclui upload e cobre editar título/descrição/tags, playlist,
 # thumbnail e comentários. Pedir só upload obrigaria um SEGUNDO consentimento depois — e
 # consentimento é o único passo que depende dele, então tem de ser um só.
-ESCOPO = "https://www.googleapis.com/auth/youtube"
+# Escopos pedidos no consentimento. "youtube" cobre ler e escrever metadados, playlists,
+# miniatura e envio de video. "youtube.force-ssl" e o UNICO que libera comentarios
+# (commentThreads) e legendas (captions) — medido em 26/10/2026: sem ele, os dois voltam
+# 403 insufficientPermissions.
+ESCOPOS = (
+    "https://www.googleapis.com/auth/youtube",
+    "https://www.googleapis.com/auth/youtube.force-ssl",
+)
+ESCOPO = " ".join(ESCOPOS)
 URL_CODIGO = "https://oauth2.googleapis.com/device/code"
 URL_TOKEN = "https://oauth2.googleapis.com/token"
 URL_SEGREDO = "https://api.github.com/repos/{repo}/actions/secrets/{nome}"
