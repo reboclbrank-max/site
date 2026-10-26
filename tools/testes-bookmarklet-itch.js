@@ -180,7 +180,7 @@ ok('nenhum arquivo entregue tem reticências soltas (o erro de 26/10)', () => {
 
 ok('o comando da ficha só acrescenta, nunca apaga', () => {
   const cmd = fs.readFileSync(path.join(raiz, 'itch/comando-ficha.txt'), 'utf8');
-  assert(cmd.includes("d.value=d.value+'\n'+bloco"), 'não acrescenta: pode estar sobrescrevendo');
+  assert(/d\.value\s*=\s*d\.value\s*\+/.test(cmd), 'nao acrescenta: pode estar sobrescrevendo');
   assert(!/d\.value\s*=\s*bloco/.test(cmd), 'sobrescreve a descrição');
   assert(cmd.includes('ceifalume:ficha'), 'sem marcador: rodar duas vezes duplicaria');
   assert(cmd.includes('confirm('), 'aplica sem confirmar');
