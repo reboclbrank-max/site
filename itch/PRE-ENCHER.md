@@ -56,3 +56,27 @@ fecha antes de existir formulário. Por isso a senha só serve em um lugar: o se
 
 Depois de entrar, o `ITCH_COOKIE` do Actions pode ser renovado (copiando `itchio_token`) **ou**
 você simplesmente usa o favorito de preencher, que não precisa de segredo nenhum.
+
+## Modo automático (instalar uma vez, nunca mais digitar comando)
+
+`itch/ceifalume-auto.user.js` — userscript para Tampermonkey/Violentmonkey.
+
+**Como instalar (uma vez):**
+1. Instale a extensão **Tampermonkey** no navegador.
+2. Abra `https://raw.githubusercontent.com/reboclbrank-max/site/main/itch/ceifalume-auto.user.js`
+   — a extensão oferece **Instalar**. Aceite.
+
+**Como fica depois:**
+- Eu edito `posts/pagina-itch.json` no repositório e subo a `versao`.
+- Você abre a página de edição do jogo (ou deixa a aba aberta). O script percebe a versão nova
+  e aplica.
+- Com `"auto": true` no JSON, ele **preenche e salva sozinho**, sem nenhum clique.
+  Com `"auto": false` (padrão), aparece um botão pequeno no canto — um clique.
+
+**Travas:** só roda em `/game/edit/<id>`; só toca nos campos presentes no JSON; guarda o "antes"
+no console; grava a versão aplicada (não repete nem entra em laço); nunca lê cookie; só conversa
+com `raw.githubusercontent.com`.
+
+**Medido em navegador (26/10):** os dois modos preenchem e enviam preservando `game[title]`,
+`game[tags]` e `csrf_token`; a segunda passada não repete (`versão … já aplicada`).
+26/26 contratos do modo navegador e 56/56 do controle do itch.

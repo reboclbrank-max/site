@@ -151,7 +151,7 @@ ok('todo comando entregue ao dono tem sintaxe válida', () => {
   // Regra criada em 26/10: dois comandos seguidos caíram por erro de sintaxe meu (um "..." literal).
   // node --check pega isso antes de qualquer colagem no navegador do dono.
   const alvos = ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/preencher-bookmarklet.txt',
-    'itch/entrar-bookmarklet.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt'];
+    'itch/entrar-bookmarklet.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js'];
   alvos.forEach((rel) => {
     const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8').trim();
     const codigo = bruto.startsWith('javascript:') ? bruto.slice('javascript:'.length) : bruto;
@@ -171,7 +171,7 @@ ok('o comando do gênero não mexe em mais nada', () => {
 });
 
 ok('nenhum arquivo entregue tem reticências soltas (o erro de 26/10)', () => {
-  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'tools/bookmarklet-itch.js'].forEach((rel) => {
+  ['itch/comando-genero.txt', 'itch/comando-console.txt', 'itch/comando-selets.txt', 'itch/comando-ficha.txt', 'itch/ceifalume-auto.user.js', 'tools/bookmarklet-itch.js'].forEach((rel) => {
     const bruto = fs.readFileSync(path.join(raiz, rel), 'utf8');
     const semTexto = bruto.replace(/'[^']*'/g, "''").replace(/"([^"\\]|\\.)*"/g, '""').replace(/\/\/.*/g, '');
     assert(!/\.\.\.\s*[,}]/.test(semTexto), rel + ' tem reticências no lugar de código');
@@ -184,6 +184,19 @@ ok('o comando da ficha só acrescenta, nunca apaga', () => {
   assert(!/d\.value\s*=\s*bloco/.test(cmd), 'sobrescreve a descrição');
   assert(cmd.includes('ceifalume:ficha'), 'sem marcador: rodar duas vezes duplicaria');
   assert(cmd.includes('confirm('), 'aplica sem confirmar');
+});
+
+ok('o userscript aplica sozinho, com trava de versao', () => {
+  const u = fs.readFileSync(path.join(raiz, 'itch/ceifalume-auto.user.js'), 'utf8');
+  assert(u.includes('@match        https://itch.io/game/edit/*'), 'nao roda so na pagina de edicao');
+  assert(u.includes('versaoAplicada() === versao'), 'sem trava: aplicaria a mesma versao sem parar');
+  assert(u.includes('localStorage.setItem(CHAVE_VERSAO'), 'nao guarda a versao aplicada');
+  assert(u.includes("cache: 'no-store'"), 'raw.githubusercontent pode servir cache antigo');
+  assert(!/document\.cookie/.test(u), 'le cookie');
+  const connects = (u.match(/^\/\/ @connect\s+(\S+)/gm) || []).map((l) => l.split(/\s+/).pop());
+  assert.deepStrictEqual(connects, ['raw.githubusercontent.com'], 'host extra: ' + connects.join(', '));
+  assert(u.includes("if (nome.charAt(0) === '_') return;"), 'tentaria escrever os campos de meta');
+  assert(u.includes('previous') || u.includes('anteriores'), 'nao guarda o antes');
 });
 
 console.log('\n' + passou + '/' + passou + ' testes do modo navegador do itch passaram');

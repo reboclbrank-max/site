@@ -219,8 +219,12 @@ ok("o mapa extrai os rotulos da pagina real",
 _caminho = os.path.join(RAIZ, "posts", "pagina-itch.json")
 if os.path.exists(_caminho):
     _dados = json.load(open(_caminho, encoding="utf-8"))
+    _controle = {"versao", "auto"}
     ok("o conteudo publicado so tem campos do mapa (sem lixo)",
-       all(c in n.MAPA for c in _dados if not c.startswith("_")), [c for c in _dados if not c.startswith("_")])
+       all(c in n.MAPA or c in _controle for c in _dados if not c.startswith("_")),
+       [c for c in _dados if not c.startswith("_") and c not in _controle and c not in n.MAPA])
+    ok("o conteudo publicado tem versao e a chave auto",
+       "versao" in _dados and "auto" in _dados, list(_dados)[:4])
     ok("a descricao nao e sobrescrita com texto curto",
        "game[description]" not in _dados or len(str(_dados["game[description]"])) > 400,
        len(str(_dados.get("game[description]", ""))))
