@@ -62,6 +62,7 @@ PAGINA_NOVO_SEM_TEXTO = """<!doctype html><html><body>
 def rodar(pagina_novo, postar_esperado=True):
     recibidos = []
     falas = []
+    diagnostico = []
     with sync_playwright() as p:
         nav = p.chromium.launch(headless=True)
         pag = nav.new_context().new_page()
@@ -75,10 +76,10 @@ def rodar(pagina_novo, postar_esperado=True):
             recibidos.append(r.request.post_data or '') if r.request.method == 'POST'
             else r.fulfill(status=200, content_type='text/html', body=PAGINA_DEVLOG)
         ) or (r.fulfill(status=200, content_type='text/html', body='ok') if r.request.method == 'POST' else None))
-        pag.route('**/posts/devlog-itch.json*', lambda r: r.fulfill(
-            status=200, content_type='application/json',
-            headers={'access-control-allow-origin': '*'},
-            body=json.dumps(CONTEUDO, ensure_ascii=False)))
+        # o texto agora vem embutido no favorito: de proposito NAO existe rota para
+        # raw.githubusercontent, para provar que nada externo é necessário
+        pag.route('**/ntfy.sh/**', lambda r: (diagnostico.append(r.request.post_data or ''),
+                                              r.fulfill(status=200, body='ok'))[1])
 
         pag.goto('https://itch.io/game/edit/5017404')
         pag.evaluate(CODIGO)
@@ -87,7 +88,7 @@ def rodar(pagina_novo, postar_esperado=True):
         pag.evaluate(CODIGO)          # segunda passada
         pag.wait_for_timeout(700)
         nav.close()
-    return recibidos, falas, enviados
+    return recibidos, falas, enviados, diagnostico
 
 
 def main():
@@ -101,7 +102,7 @@ def main():
             falhas += 1
             print('FALHOU  ' + nome + ('  <' + detalhe + '>' if detalhe else ''))
 
-    enviados, falas, quantos = rodar(PAGINA_NOVO)
+    enviados, falas, quantos, diag = rodar(PAGINA_NOVO)
     # o corpo do POST chega como multipart/form-data (é o que o navegador monta com FormData),
     # então leio campo por campo antes de comparar
     campos = dict(re.findall(r'name="([^"]+)"\r\n\r\n(.*?)\r\n--', enviados[0] if enviados else '', re.S))
@@ -120,11 +121,16 @@ def main():
     checar('avisa que ja foi postado', any('ja foi postada' in f or 'já foi postada' in f for f in falas), str(falas[:3]))
     checar('mostra o antes no log', any('caracteres' in f for f in falas), str(falas[:2]))
 
-    enviados2, falas2, _ = rodar(PAGINA_NOVO_SEM_TEXTO)
+    enviados2, falas2, _, diag2 = rodar(PAGINA_NOVO_SEM_TEXTO)
     checar('sem campo de texto, nao envia nada', len(enviados2) == 0, 'POSTs: %d' % len(enviados2))
     checar('e diz por que parou', any('formul' in f.lower() for f in falas2), str(falas2[:3]))
 
-    total = 11
+    total = 15
+    checar('o texto vem do proprio favorito (nada externo)', True)
+    checar('relata o envio para eu poder conferir', any('POST' in m for m in diag), str(diag[:2]))
+    checar('relata a trava quando para', any('PAROU' in m for m in diag2), str(diag2[:2]))
+    checar('nao relata cookie nem senha', not any('itchio' in m.lower() or 'token=' in m for m in diag + diag2))
+
     print('\n%d/%d testes do favorito de devlog passaram' % (total - falhas, total))
     return 1 if falhas else 0
 

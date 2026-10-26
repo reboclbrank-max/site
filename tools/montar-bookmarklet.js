@@ -17,7 +17,8 @@ const PARES = [
   // o userscript (aplicar sozinho o que eu publico) também em versão favorito: sem extensão
   { fonte: 'itch/ceifalume-auto.user.js', destino: 'itch/aplicar-bookmarklet.txt', rotulo: 'aplicar mudancas (1 clique)', prefixo: 'javascript:' },
   // devlog: descobre o formulario real do itch e posta (1 clique)
-  { fonte: 'tools/devlog-itch-auto.js', destino: 'itch/devlog-bookmarklet.txt', rotulo: 'postar devlog (1 clique)', prefixo: 'javascript:' },
+  { fonte: 'tools/devlog-itch-auto.js', destino: 'itch/devlog-bookmarklet.txt', rotulo: 'postar devlog (1 clique)', prefixo: 'javascript:',
+    conteudo: 'posts/devlog-itch.json' },
 ];
 
 function minificar(codigo) {
@@ -30,7 +31,15 @@ function minificar(codigo) {
 }
 
 function linhaDe(par) {
-  return par.prefixo + minificar(fs.readFileSync(path.join(raiz, par.fonte), 'utf8'));
+  let codigo = fs.readFileSync(path.join(raiz, par.fonte), 'utf8');
+  if (par.conteudo) {
+    // o texto vai dentro do favorito: nenhuma busca externa, nada depende de CORS/cache
+    const dados = JSON.parse(fs.readFileSync(path.join(raiz, par.conteudo), 'utf8'));
+    const limpo = { versao: dados.versao, titulo: dados.titulo, corpo: dados.corpo };
+    if (!limpo.corpo || !limpo.titulo) throw new Error(par.conteudo + ' sem titulo/corpo');
+    codigo = codigo.replace('/*CONTEUDO*/ null', JSON.stringify(limpo));
+  }
+  return par.prefixo + minificar(codigo);
 }
 
 const modo = process.argv[2] || '--verificar';
