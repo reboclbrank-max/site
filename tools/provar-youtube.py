@@ -90,7 +90,7 @@ def main():
         print("FALHOU  channels.list -> HTTP %s | %s" % (s, c[:120]))
 
     # 3. lê um vídeo do próprio canal (pega o mais recente da busca interna)
-    s, c, _ = pedir(API + "/search?part=snippet&forMine=true&type=video&maxResults=1", token=token)
+    s, c, _ = pedir(API + "/search?part=snippet&forMine=true&type=video&maxResults=10&order=date", token=token)
     vid = {}
     if s == 200:
         itens = json.loads(c).get("items") or []
@@ -155,9 +155,41 @@ def main():
         print("%s  commentThreads.list %s -> HTTP %s %s"
               % ("OK" if s == 200 else "FALHOU", rotulo, s, motivo))
 
-    # 8. miniatura: tenta regravar a PRÓPRIA miniatura atual (sem mudar nada na tela)
+    # 7b. limpeza: apaga os vídeos de sonda que ficaram na conta de execuções antigas
+    if s == 200:
+        ids = [i["id"]["videoId"] for i in (json.loads(c).get("items") or [])]
+        if ids:
+            s2, c2, _ = pedir(API + "/videos?part=snippet,status&id=" + ",".join(ids), token=token)
+            if s2 == 200:
+                for item in json.loads(c2).get("items") or []:
+                    titulo = item.get("snippet", {}).get("title", "")
+                    if "teste interno" in titulo.lower() or "sondagem automática da casa" in titulo.lower():
+                        s3, _, _ = pedir(API + "/videos?id=" + item["id"], "DELETE", token=token)
+                        print("%s  limpeza: apagado vídeo de sonda '%s' -> HTTP %s"
+                              % ("OK" if s3 in (200, 204) else "FALHOU", titulo[:40], s3))
+
+    # 8. miniatura: precisa ser vídeo PÚBLICO (privado devolve 404 — medido)
+    publico = None
     if vid:
-        thumb = (vid["snippet"].get("thumbnails", {}).get("high") or {}).get("url")
+        s8, c8, _ = pedir(API + "/videos?part=snippet,status&id=" + vId, token=token)
+        if s8 == 200:
+            det8 = (json.loads(c8).get("items") or [{}])[0]
+            if det8.get("status", {}).get("privacyStatus") == "public":
+                publico = det8
+            else:
+                s9, c9, _ = pedir(API + "/search?part=snippet&forMine=true&type=video&maxResults=25&order=viewCount", token=token)
+                ids9 = [i["id"]["videoId"] for i in (json.loads(c9).get("items") or [])] if s9 == 200 else []
+                if ids9:
+                    sA, cA, _ = pedir(API + "/videos?part=snippet,status&id=" + ",".join(ids9), token=token)
+                    for item in (json.loads(cA).get("items") or []) if sA == 200 else []:
+                        if item.get("status", {}).get("privacyStatus") == "public":
+                            publico = item
+                            vId = item["id"]
+                            break
+    if vid and not publico:
+        print("PULADO  thumbnails.set: nenhum vídeo público encontrado para o teste")
+    if publico:
+        thumb = (publico["snippet"].get("thumbnails", {}).get("high") or {}).get("url")
         if thumb:
             try:
                 img = urllib.request.urlopen(thumb, timeout=45).read()
