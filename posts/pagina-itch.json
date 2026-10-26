@@ -1,0 +1,11 @@
+{
+  "_nota": "Conteudo desejado da pagina do itch. Fonte unica do modo navegador (itch/preencher-bookmarklet.txt). Campo null = nao mexe. Os campos ainda nulos sao os que so o modo 'ler' do favorito consegue copiar do formulario real: rode o favorito com #ler na pagina de edicao e me mande o que aparecer.",
+  "_atualizado": "2026-10-26",
+  "title": "Ceifalume",
+  "short_text": null,
+  "description": null,
+  "genre": null,
+  "tags": null,
+  "min_price": null,
+  "classification": null
+}

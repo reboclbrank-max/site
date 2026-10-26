@@ -30,6 +30,8 @@ jobs:
           python3 tools/testes-youtube-oauth.py
           python3 tools/testes-itch-navegador.py
           python3 tools/testes-administrar-itch.py
+          node tools/montar-bookmarklet.js --verificar
+          node tools/testes-bookmarklet-itch.js
           python3 tools/testes-administrar-youtube.py
           python3 tools/testes-enviar-itch.py
 

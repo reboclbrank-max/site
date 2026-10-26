@@ -1,0 +1,66 @@
+name: vigia-sessao-itch
+
+# A sessao do itch (segredo ITCH_COOKIE) e o unico caminho para escrever na pagina.
+# Ela nao tem prazo publicado: cai quando o dono sai da conta, troca a senha, ou quando
+# o itch expira a sessao. Este vigia roda todo dia e avisa no dia em que cair — assim
+# "expira um dia" nunca vira "descobri semanas depois".
+#
+# Verde = sessao valida (ou ainda sem cookie). Vermelho = sessao caiu: renove em 2 minutos.
+
+on:
+  schedule:
+    - cron: "0 12 * * *" # 09:00 em Maceio
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vigia-sessao-itch
+  cancel-in-progress: false
+
+jobs:
+  vigiar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: A sessao ainda vale?
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          python3 - <<'PY'
+          import importlib.util, os, sys, urllib.request
+
+          spec = importlib.util.spec_from_file_location("nav", "tools/itch-navegador.py")
+          nav = importlib.util.module_from_spec(spec); spec.loader.exec_module(nav)
+
+          cookie = os.environ.get("ITCH_COOKIE", "")
+          print("cookie: " + nav.resumir_cookie(cookie))
+          if not cookie:
+              print("::warning::sem ITCH_COOKIE no repositorio — nada a vigiar ainda")
+              sys.exit(0)
+
+          ok, msg = nav.sessao_ok(cookie)
+          print(("OK " if ok else "FALHOU ") + "sessao: " + msg)
+          if ok:
+              sys.exit(0)
+
+          topico = os.environ.get("NTFY_TOPIC", "").strip()
+          if topico:
+              pedido = urllib.request.Request(
+                  "https://ntfy.sh/" + topico,
+                  data=("A sessao do itch caiu.\n\n" + msg +
+                        "\n\nPara voltar: copie o cookie itchio_token de uma aba logada e "
+                        "atualize o segredo ITCH_COOKIE no repositorio site.").encode(),
+                  headers={"Title": "itch: sessao caiu", "Priority": "high", "Tags": "warning"})
+              try:
+                  print("aviso enviado: " + str(urllib.request.urlopen(pedido, timeout=30).status))
+              except Exception as e:
+                  print("nao consegui avisar por push: %r" % (e,))
+          else:
+              print("sem NTFY_TOPIC: o aviso fica so no log e no e-mail do GitHub")
+          sys.exit(1)
+          PY
