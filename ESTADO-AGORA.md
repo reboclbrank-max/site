@@ -65,7 +65,14 @@ também impede a expiração por 6 meses de inatividade. Se o Google revogar, o 
 
 ## O que continua fora do alcance
 
-- **Página do itch — MEDIDO E FECHADO em 26/10: sessão não atravessa a Cloudflare.**
+- **Página do itch — FECHADO em 26/10 com duas medidas independentes.** (1) `/dashboard` e
+  (2) **`/game/edit/5017404`** — o endereço real do editor — devolvem **403 com desafio da
+  Cloudflare** a partir do runner, com o cookie completo do dono **e também sem cookie nenhum**.
+  Não é sessão, não é User-Agent, não é código: é o IP de datacenter.
+  **Consequência prática:** automação por servidor é impossível; a automação tem de rodar no
+  navegador do dono. É o que `itch/ceifalume-auto.user.js` faz — eu edito o JSON no repositório,
+  o navegador dele aplica (com `auto: true`, sem clique nenhum).
+- **Página do itch — histórico.**
   Com o cookie real do dono (`itchio` + `itchio_token`) em mãos, a sonda
   `.github/workflows/sondar-cookie-itch.yml` testou 3 User-Agents × 3 conjuntos de cookies no
   runner: **`/dashboard` devolveu 403 (desafio) em todas as 12 combinações — inclusive SEM

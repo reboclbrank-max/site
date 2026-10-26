@@ -1,0 +1,162 @@
+// ==UserScript==
+// @name         Ceifalume — aplica as mudanças que eu publico
+// @namespace    reboclbrank-max/site
+// @version      1.0.0
+// @description  Lê posts/pagina-itch.json do repositório e aplica na página do itch sozinho. Instalar uma vez; depois disso o dono não digita mais nada.
+// @match        https://itch.io/game/edit/*
+// @grant        GM.xmlHttpRequest
+// @connect      raw.githubusercontent.com
+// @run-at       document-idle
+// ==/UserScript==
+
+// Como funciona (a divisão de trabalho):
+//   - EU edito posts/pagina-itch.json no repositório e subo a "versao";
+//   - o SEU navegador, quando abre a página de edição, vê que a versão é nova e aplica;
+//   - com "auto": true no JSON, ele preenche e salva sem ninguém clicar;
+//   - com "auto": false, aparece um botão flutuante e você só confirma.
+//
+// Travas:
+//   - só age em /game/edit/<id>;
+//   - só toca nos campos que existem no JSON (campo ausente = intocado);
+//   - mostra o ANTES de tudo no console antes de salvar;
+//   - guarda a versão aplicada, então não repete nem entra em laço;
+//   - nunca lê cookie nem conversa com outro host.
+(function () {
+  'use strict';
+
+  if (!/^\/game\/edit\/\d+/.test(location.pathname)) return;
+
+  var FONTE = 'https://raw.githubusercontent.com/reboclbrank-max/site/main/posts/pagina-itch.json';
+  var CHAVE_VERSAO = 'ceifalume:itch:versao-aplicada';
+
+  function campo(nome) {
+    return document.querySelector('[name="' + nome + '"]');
+  }
+
+  function escolherOpcao(el, valor) {
+    // selects do itch usam valor curto ("sim"); aceita casar pelo rótulo também
+    el.value = valor;
+    if (el.value === valor) return true;
+    var opcoes = el.options || [];
+    for (var i = 0; i < opcoes.length; i += 1) {
+      if (String(opcoes[i].textContent).trim().toLowerCase() === String(valor).trim().toLowerCase()) {
+        el.value = opcoes[i].value;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function aviso(texto, cor) {
+    var caixa = document.getElementById('ceifalume-aviso');
+    if (!caixa) {
+      caixa = document.createElement('div');
+      caixa.id = 'ceifalume-aviso';
+      caixa.style.cssText = 'position:fixed;z-index:2147483647;right:16px;bottom:16px;max-width:320px;' +
+        'font:13px/1.4 system-ui,sans-serif;padding:12px 14px;border-radius:10px;color:#fff;' +
+        'box-shadow:0 8px 24px rgba(0,0,0,.35)';
+      document.body.appendChild(caixa);
+    }
+    caixa.style.background = cor || '#33518e';
+    caixa.textContent = texto;
+    return caixa;
+  }
+
+  function aplicar(dados, salvar) {
+    var titulo = campo('game[title]');
+    if (!titulo) {
+      aviso('Ceifalume: esta página não parece o editor (sem game[title]).', '#8e3333');
+      return false;
+    }
+    var form = titulo.form;
+    var anteriores = {};
+    var mudancas = [];
+    var ignorados = [];
+
+    Object.keys(dados).forEach(function (nome) {
+      if (nome.charAt(0) === '_') return;
+      var el = campo(nome);
+      if (!el) { ignorados.push(nome); return; }
+      var novo = dados[nome];
+      if (novo === null || novo === undefined) return;
+      novo = String(novo);
+      if (String(el.value) === novo) return;
+      anteriores[nome] = el.value;
+      mudancas.push(nome);
+      if (el.tagName === 'SELECT') {
+        if (!escolherOpcao(el, novo)) { ignorados.push(nome + ' (opção não existe no select)'); mudancas.pop(); return; }
+      } else if (el.type === 'checkbox') {
+        el.checked = (novo === 'true' || novo === '1');
+      } else {
+        el.value = novo;
+      }
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
+    if (!mudancas.length) {
+      console.log('[ceifalume] nada a mudar. ignorados:', ignorados);
+      return false;
+    }
+
+    console.log('[ceifalume] aplicando:', mudancas.join(', '), '\nantes:', anteriores);
+    if (!salvar) return true;
+
+    var botao = form.querySelector('[type="submit"]') || form.querySelector('button[name="submit"]');
+    aviso('Ceifalume: salvando ' + mudancas.length + ' campo(s)…');
+    if (botao) { botao.click(); } else { form.submit(); }
+    return true;
+  }
+
+  function guardarVersao(v) {
+    try { localStorage.setItem(CHAVE_VERSAO, String(v || '')); } catch (e) { return; }
+  }
+
+  function versaoAplicada() {
+    try { return localStorage.getItem(CHAVE_VERSAO) || ''; } catch (e) { return ''; }
+  }
+
+  function buscar() {
+    // cache-buster: o raw.githubusercontent guarda em cache por alguns minutos
+    var url = FONTE + '?t=' + Date.now();
+    return fetch(url, { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('repositório respondeu ' + r.status);
+      return r.json();
+    });
+  }
+
+  buscar().then(function (dados) {
+    var versao = String(dados.versao || dados._atualizado || '');
+    if (!versao) { console.log('[ceifalume] conteúdo sem versão; nada a fazer'); return; }
+    if (versaoAplicada() === versao) {
+      console.log('[ceifalume] versão ' + versao + ' já aplicada neste navegador');
+      return;
+    }
+
+    if (dados.auto === true) {
+      aviso('Ceifalume: aplicando a versão ' + versao + ' automaticamente…', '#2f6b3a');
+      guardarVersao(versao);
+      aplicar(dados, true);
+      return;
+    }
+
+    // modo seguro (padrão): botão flutuante, um clique
+    var caixa = aviso('Ceifalume: há mudanças prontas (versão ' + versao + ').', '#33518e');
+    var botao = document.createElement('button');
+    botao.textContent = 'Aplicar mudanças';
+    botao.style.cssText = 'margin-top:10px;display:block;width:100%;padding:8px;border:0;border-radius:8px;' +
+      'background:#fff;color:#22306b;font:600 13px system-ui,sans-serif;cursor:pointer';
+    botao.addEventListener('click', function () {
+      if (!aplicar(dados, false)) { caixa.textContent = 'Ceifalume: nada a mudar (a página já está igual).'; return; }
+      if (!window.confirm('Aplicar a versão ' + versao + ' na página do itch?')) {
+        location.reload();
+        return;
+      }
+      guardarVersao(versao);
+      aplicar(dados, true);
+    });
+    caixa.appendChild(botao);
+  }).catch(function (erro) {
+    console.log('[ceifalume] não consegui ler o conteúdo publicado:', erro && erro.message);
+  });
+}());

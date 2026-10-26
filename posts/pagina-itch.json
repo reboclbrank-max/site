@@ -1,17 +1,16 @@
 {
-  "_nota": "Conteudo desejado da pagina do itch. SO os campos presentes aqui sao tocados; ausente = nao mexe. Fonte unica do favorito/comando em itch/. Nomes conferidos no formulario real em 26/10 (o itch prefixa tudo com game[]).",
+  "_nota": "Fonte unica do conteudo da pagina do itch. SO os campos aqui sao tocados; ausente = intocado. Nomes conferidos no formulario real em 26/10 (o itch prefixa tudo com game[]). O userscript itch/ceifalume-auto.user.js aplica isto no navegador do dono.",
+  "versao": "2026-10-26-1",
+  "auto": false,
   "_atualizado": "2026-10-26",
   "_situacao_medida": {
     "title": "Ceifalume",
     "short_text": "A fazenda nao dorme: plante, colha e negocie a luz da lanterna.",
+    "description": "preenchida (GIF + texto rico)",
     "tags": "casual,cozy,economy,farming,idle,incremental,management,mobile,offline,relaxing (10)",
-    "genre": "none -> e o unico campo vazio de verdade",
-    "release_status": "released",
-    "published": "published",
-    "min_price": "R$0.00",
-    "uploads": 3,
-    "screenshots": 4,
-    "capa": 30039996
-  },
-  "game[genre]": "Simulation"
+    "genre": "o itch so oferece 'No genre' — nao ha o que corrigir",
+    "observacao": "a pagina esta completa; o que falta e conteudo novo, nao conserto",
+    "sonda": "com cookie real, /game/edit/5017404 devolve 403 (desafio Cloudflare) de datacenter",
+    "atualizado_em": "2026-10-26"
+  }
 }
