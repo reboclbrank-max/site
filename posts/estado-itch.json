@@ -1,14 +1,16 @@
 {
-  "quando": "2026-10-26T17:14:59Z",
+  "quando": "2026-10-26T18:41:03Z",
   "modo": "ler",
-  "caminho": "/dashboard/game/5017404/edit",
-  "cookie": "ausente",
-  "sessao": "FALHOU sessao: sem cookie (segredo ITCH_COOKIE)",
-  "resultado": "FALHOU sessao: sem cookie (segredo ITCH_COOKIE)",
+  "caminho": "",
+  "cookie": "desconhecido",
+  "sessao": "",
+  "resultado": "FALHOU sem caminho de edicao: rode com 'caminho' preenchido ou com ITCH_COOKIE no repositorio",
   "resumo": [
-    "caminho descoberto pela API: /dashboard/game/5017404/edit",
-    "cookie: ausente",
-    "FALHOU sessao: sem cookie (segredo ITCH_COOKIE)"
+    "id do jogo pela API: 5017404",
+    "dashboard: HTTP 403",
+    "/dashboard/game/5017404/edit: HTTP 404",
+    "/dashboard/game/5017404: HTTP 404",
+    "FALHOU sem caminho de edicao: rode com 'caminho' preenchido ou com ITCH_COOKIE no repositorio"
   ],
-  "run": "https://github.com/reboclbrank-max/site/actions/runs/40366805956"
+  "run": "https://github.com/reboclbrank-max/site/actions/runs/40379876042"
 }
