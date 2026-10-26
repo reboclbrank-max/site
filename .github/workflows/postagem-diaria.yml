@@ -24,10 +24,13 @@ jobs:
           python3 tools/testes-autonomia-marketing.py
           python3 tools/testes-metricas.py
           python3 tools/testes-interacao.py
+          python3 tools/testes-kit-youtube.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
           python3 tools/postador.py
+          # Kit de envio do YouTube: PRODUZ, não publica. O envio depende do OAuth do dono.
+          python3 tools/kit-youtube.py || echo "kit do YouTube com problema — registrado, sem publicar"
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
           git add posts/
