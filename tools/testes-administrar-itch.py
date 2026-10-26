@@ -59,6 +59,15 @@ ok("canal de outro nome não conta como nosso",
 ok("sem build local → bloqueado",
    adm.decidir("ceifalume", None, [])[0] == "bloqueado")
 
+# ------------------------------------------------------------------ escopos da credencial
+_l, _e = adm.escopos("chave", get=lambda url, chave=None: ({"scopes": ["profile:me", "profile:games"]}, None))
+ok("lê os escopos declarados pela credencial", _l == ["profile:me", "profile:games"], _l)
+_j = adm.julgar_escopos(["profile:me", "profile:games"])
+ok("escopo de perfil não promete edição de página", _j["pagina"] is False)
+_j2 = adm.julgar_escopos(["profile:games", "game:upload"])
+ok("escopo de upload conta como poder subir build", _j2["build"] is True)
+ok("julgar sem lista não estoura", adm.julgar_escopos(None)["build"] is False)
+
 # ------------------------------------------------------------------ veto do dono
 ok("Toque Rápido está vetado", "toque-rapido" in adm.vetados())
 ok("jogo vetado é bloqueado mesmo com build pronto",

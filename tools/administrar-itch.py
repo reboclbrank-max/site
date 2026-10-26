@@ -141,6 +141,27 @@ def decidir(nome, local, remotos, canal=None):
     return "enviar", "tamanho difere: local %d B · itch %s B" % (local["bytes"], remoto.get("size"))
 
 
+def escopos(chave, get=None):
+    """O que a chave do itch pode fazer, segundo o próprio itch.
+
+    /credentials/info devolve os escopos da credencial. É a resposta definitiva para "essa
+    conexão deixa eu editar a página?" — melhor que qualquer documentação ou suposição.
+    """
+    get = get or itch._get_json
+    dados, erro = get("https://api.itch.io/credentials/info", chave)
+    if erro or not isinstance(dados, dict):
+        return None, erro or "resposta inesperada"
+    return list(dados.get("scopes") or []), None
+
+
+def julgar_escopos(lista):
+    """Traduz escopo em capacidade, sem otimismo: só conta o que existe de fato."""
+    lista = lista or []
+    pode_build = "game:upload" in lista or "game" in lista or "profile:games" in lista
+    pode_pagina = any("edit" in e or "write" in e for e in lista)
+    return {"lista": lista, "build": pode_build, "pagina": pode_pagina}
+
+
 def estado(nome, chave, raiz=RAIZ, get=None):
     """Só leitura: mostra a decisão e o que está no itch. É o modo padrão."""
     if nome not in PROJETOS:
@@ -217,6 +238,21 @@ def auto(nome, chave, raiz=RAIZ, get=None, identidade=None, executar=None,
 
 
 def main(argv):
+    if len(argv) > 1 and argv[1] == "escopos":
+        chave = itch.chave_do_ambiente("ITCH_API_KEYS") or itch.chave_do_ambiente("ITCH_API_KEY")
+        if not chave:
+            print("sem chave do itch no ambiente")
+            return 1
+        print("chave do itch: " + itch.resumo_de_chave(chave))
+        lista, erro = escopos(chave)
+        if erro:
+            print("✗ não consegui ler os escopos: " + str(erro))
+            return 1
+        j = julgar_escopos(lista)
+        print("escopos da credencial: " + (", ".join(j["lista"]) or "(nenhum declarado)"))
+        print("sobe build: " + ("sim" if j["build"] else "não"))
+        print("edita página/devlog: " + ("sim" if j["pagina"] else "NÃO — o itch não expõe esse escopo"))
+        return 0
     if len(argv) < 2 or argv[1] not in ("estado", "auto"):
         print("uso: administrar-itch.py estado|auto [jogo]")
         return 2
