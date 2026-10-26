@@ -1,11 +1,17 @@
 {
-  "_nota": "Conteudo desejado da pagina do itch. Fonte unica do modo navegador (itch/preencher-bookmarklet.txt). Campo null = nao mexe. Os campos ainda nulos sao os que so o modo 'ler' do favorito consegue copiar do formulario real: rode o favorito com #ler na pagina de edicao e me mande o que aparecer.",
+  "_nota": "Conteudo desejado da pagina do itch. SO os campos presentes aqui sao tocados; ausente = nao mexe. Fonte unica do favorito/comando em itch/. Nomes conferidos no formulario real em 26/10 (o itch prefixa tudo com game[]).",
   "_atualizado": "2026-10-26",
-  "title": "Ceifalume",
-  "short_text": null,
-  "description": null,
-  "genre": null,
-  "tags": null,
-  "min_price": null,
-  "classification": null
+  "_situacao_medida": {
+    "title": "Ceifalume",
+    "short_text": "A fazenda nao dorme: plante, colha e negocie a luz da lanterna.",
+    "tags": "casual,cozy,economy,farming,idle,incremental,management,mobile,offline,relaxing (10)",
+    "genre": "none -> e o unico campo vazio de verdade",
+    "release_status": "released",
+    "published": "published",
+    "min_price": "R$0.00",
+    "uploads": 3,
+    "screenshots": 4,
+    "capa": 30039996
+  },
+  "game[genre]": "Simulation"
 }
