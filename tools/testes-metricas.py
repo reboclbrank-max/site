@@ -394,6 +394,38 @@ ok("o placar propõe a troca medida (visitas), sem trocar sozinho", "itch: visit
 ok("o placar não inventa número para a meta impossível",
    "| itch: seguidores | 10 | NAO_OBSERVAVEL |" in _texto_placar)
 
+# ---- 16. o placar mede o RETORNO desde a linha de partida --------------------------------
+# "0 seguidores" sozinho não diz nada: pode ser canal parado desde sempre. A coluna nova
+# mostra o que andou desde 13/10, e o rodapé nomeia a decisão quando nada andou.
+_arq_partida = os.path.join(_meta_tmp, "metas2.json")
+with open(_arq_partida, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "bsky_30_dias": {"seguidores": 50},
+               "itch_30_dias": {"downloads": 100, "seguidores": 10},
+               "yt_30_dias": {"inscritos": 40, "shorts": 4},
+               "linha_de_partida_13_10": {"ig_seguidores": 0, "bsky_seguidores": 13,
+                                          "itch_downloads": 44, "yt_inscritos": 24}}, f)
+_obs = {"ig_seguidores": 0, "ig_posts": 18, "bsky_seguidores": 34,
+        "itch_downloads": 46, "yt_inscritos": 24, "yt_shorts": 5}
+_l2, _c2 = metricas.placar_metas(observado=_obs, caminho=_arq_partida)
+_por2 = {l["meta"]: l for l in _l2}
+ok("o placar calcula o quanto andou desde a partida", _por2["Bluesky: seguidores"]["delta"] == 21,
+   str(_por2["Bluesky: seguidores"].get("delta")))
+ok("canal que não moveu tem delta zero", _por2["Instagram: seguidores"]["delta"] == 0)
+ok("meta sem leitura não ganha delta inventado", _por2["itch: seguidores"]["delta"] is None)
+_c2["dias_decorridos"] = 20  # simula o prazo de duas semanas já vencido
+_saida2 = metricas.gravar_placar(_l2, _c2)
+_texto2 = open(_saida2, encoding="utf-8").read()
+ok("a tabela mostra a coluna 'desde a partida'", "desde a partida" in _texto2)
+ok("o placar diz em quantos dias nada voltou", "Sem retorno em" in _texto2, _texto2[-300:])
+ok("a decisão de manter ou aposentar é nomeada como do dono",
+   "decisão do dono" in _texto2 and "o robô não decide" in _texto2)
+# amostra curta NÃO vira veredicto: 2 dias de canal parado é cedo para aposentar nada
+_c3 = dict(_c2); _c3["dias_decorridos"] = 10
+_saida3 = metricas.gravar_placar(_l2, _c3)
+ok("poucos dias não viram veredicto de aposentadoria",
+   "Sem retorno em" not in open(_saida3, encoding="utf-8").read())
+
 # ---- 14. o relatório diário do postador usa o MESMO medidor ------------------------------
 # Era aqui que nascia o "sem leitura automática": a régua do postador escrevia
 # itch_downloads=NAO_OBSERVAVEL e youtube=NAO_OBSERVAVEL à mão.

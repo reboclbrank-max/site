@@ -436,6 +436,11 @@ def observado_youtube(chave=None, canal=None):
     return leitura, None
 
 
+# Duas semanas: é o prazo que o dono mesmo deu para o canal que não devolve nada deixar de
+# ser pergunta técnica e virar decisão dele.
+DIAS_PARA_VEREDITO = 14
+
+
 def placar_metas(observado, caminho=METAS, hoje=None):
     """Compara as metas aprovadas em 15/10 com o que foi medido. Não inventa nada.
 
@@ -457,6 +462,10 @@ def placar_metas(observado, caminho=METAS, hoje=None):
             prazo = None
     dias = (prazo - hoje).days if prazo else None
 
+    # Linha de partida (13/10): sem ela, "0 seguidores" não diz nada — o canal pode estar
+    # parado desde sempre ou ter perdido o que tinha. Com ela, o placar mostra o RETORNO.
+    partida = metas.get("linha_de_partida_13_10") or {}
+
     def linha(nome, alvo, chave, fonte):
         valor = (observado or {}).get(chave)
         falta = None
@@ -464,8 +473,11 @@ def placar_metas(observado, caminho=METAS, hoje=None):
         if isinstance(valor, (int, float)):
             falta = max(0, round(alvo - valor, 1))
             status = "ATINGIDO" if valor >= alvo else "EM_CURSO"
+        base = partida.get(chave)
+        delta = round(valor - base, 1) if isinstance(valor, (int, float)) and isinstance(base, (int, float)) else None
         return {"meta": nome, "alvo": alvo, "observado": valor, "falta": falta,
-                "status": status, "fonte": fonte, "por_dia": (
+                "status": status, "fonte": fonte, "partida": base, "delta": delta,
+                "por_dia": (
                     round(falta / dias, 2) if (falta and dias and dias > 0) else None)}
 
     linhas = []
@@ -489,7 +501,14 @@ def placar_metas(observado, caminho=METAS, hoje=None):
         linhas.append(linha("itch: seguidores", itch["seguidores"], "itch_seguidores",
                         "SEM_API: o itch não publica seguidores (conferido em 25/10/2026)"))
     observavel = sum(1 for l in linhas if l["status"] != "SEM_LEITURA")
+    dias_decorridos = None
+    if inicio:
+        try:
+            dias_decorridos = (hoje - datetime.date.fromisoformat(inicio)).days
+        except ValueError:
+            dias_decorridos = None
     return linhas, {"dias_restantes": dias, "prazo": prazo.isoformat() if prazo else None,
+                    "dias_decorridos": dias_decorridos,
                     "metas_com_leitura": observavel, "metas_sem_leitura": len(linhas) - observavel}
 
 
@@ -506,6 +525,19 @@ def gravar_placar(linhas, contexto, hoje=None):
     rodape = (f"\nPrazo: **{prazo}**" + (f" · {dias} dia(s) restante(s)" if dias is not None else "")
               + f" · {contexto['metas_com_leitura']} meta(s) com leitura, "
                 f"{contexto['metas_sem_leitura']} sem leitura automática.\n")
+    # Decisão que o placar passa a tomar sozinho: canal medido, com partida conhecida, que
+    # não moveu um único número em N dias. Não atribui causa — só diz que o esforço não
+    # voltou, e nomeia a decisão (manter ou aposentar) que passa a ser do dono.
+    dias_dec = contexto.get("dias_decorridos")
+    parados = [l for l in linhas if l.get("delta") == 0 and isinstance(dias_dec, int)
+               and dias_dec >= DIAS_PARA_VEREDITO]
+    if parados:
+        rodape += ("\n> **Sem retorno em %d dias:** " % dias_dec
+                   + ", ".join("%s (%s medido(s), nada a mais desde 13/10)" % (
+                       l["meta"], l["observado"]) for l in parados)
+                   + ". O esforço não voltou número nenhum. Manter o canal ou aposentá-lo é "
+                     "decisão do dono, com este número na mão — o robô não decide isso e não "
+                     "vai fingir que decide.\n")
     sem_api = [l for l in linhas if l["status"] == "SEM_LEITURA" and "SEM_API" in (l.get("fonte") or "")]
     if sem_api:
         rodape += ("\n> **Sem API, não sem robô:** " + ", ".join(l["meta"] for l in sem_api)
@@ -513,13 +545,14 @@ def gravar_placar(linhas, contexto, hoje=None):
                      "(conferido em 25/10/2026). O que o itch mede é download e visita — se a meta "
                      "de seguidores do itch continuar aqui, ela fica em NAO_OBSERVAVEL para sempre. "
                      "Troca sugerida (decisão do dono): usar **itch: visitas**, já medido.\n")
-    linhas_md = ["| meta | alvo | observado | falta | por dia | status |",
-                 "|---|---|---|---|---|---|"]
+    linhas_md = ["| meta | alvo | observado | falta | por dia | status | desde a partida |",
+                 "|---|---|---|---|---|---|---|"]
     for l in linhas:
         obs = "NAO_OBSERVAVEL" if l["observado"] is None else l["observado"]
         falta = "—" if l["falta"] is None else l["falta"]
         por_dia = "—" if not l["por_dia"] else l["por_dia"]
-        linhas_md.append(f"| {l['meta']} | {l['alvo']} | {obs} | {falta} | {por_dia} | {l['status']} |")
+        delta = "—" if l.get("delta") is None else ("+" + str(l["delta"]) if l["delta"] > 0 else str(l["delta"]))
+        linhas_md.append(f"| {l['meta']} | {l['alvo']} | {obs} | {falta} | {por_dia} | {l['status']} | {delta} |")
     texto = cab + "\n".join(linhas_md) + "\n" + rodape
     caminho = os.path.join(os.path.dirname(SAIDA_PLACAR) or ".", os.path.basename(SAIDA_PLACAR))
     with open(caminho, "w", encoding="utf-8") as f:
