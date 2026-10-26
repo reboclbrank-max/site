@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autorização do YouTube — Rebocl Casa</title>
+<style>
+  :root { --preto:#0a0a0a; --ouro:#d4af37; --texto:#e8e6e1; --suave:#9d9a93; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--preto); color:var(--texto); font-family:"Segoe UI",Roboto,Arial,sans-serif;
+         line-height:1.7; padding:28px 20px; }
+  h1 { font-size:1.35rem; color:var(--ouro); margin-bottom:14px; }
+  p { color:var(--suave); margin-bottom:12px; }
+  .caixa { border:1px solid rgba(212,175,55,.35); border-radius:12px; padding:16px; margin:18px 0;
+           background:rgba(212,175,55,.06); }
+  .status { font-size:1.05rem; color:var(--texto); font-weight:600; }
+  code { display:block; word-break:break-all; background:#111; padding:12px; border-radius:8px;
+         font-size:.82rem; margin-top:10px; color:#b9d9ff; }
+  .grande { font-size:2rem; text-align:center; margin:10px 0; }
+  a { color:var(--ouro); }
+</style>
+</head>
+<body>
+<h1>Rebocl Casa — autorização do YouTube</h1>
+
+<div class="caixa">
+  <div class="status" id="status">Verificando o retorno do Google…</div>
+  <div class="grande" id="simbolo">⏳</div>
+  <p id="explicacao">Aguarde um instante.</p>
+</div>
+
+<div class="caixa" id="caixa-codigo" style="display:none">
+  <p>Este é o código devolvido pelo Google (uso único, morre em minutos):</p>
+  <code id="codigo"></code>
+  <p style="margin-top:12px">Se a casa não confirmar sozinha em 1 minuto, mande este texto para o dono do projeto.</p>
+</div>
+
+<p><strong>Por que esta página existe:</strong> o Google entrega o código de autorização no navegador, e
+não para servidores. Esta página recebe o código, avisa a casa por um canal público e mostra o valor
+na tela. O código é de uso único, expira em minutos e vira um token depois de trocado — por isso não
+fica guardado em lugar nenhum.</p>
+
+<script>
+(function () {
+  var CANAL = 'https://ntfy.sh/ceifalume-oauth-2026';
+  var STATUS = document.getElementById('status');
+  var SIMBOLO = document.getElementById('simbolo');
+  var EXPLICACAO = document.getElementById('explicacao');
+
+  function avisar(texto) {
+    try {
+      fetch(CANAL, { method: 'POST', mode: 'cors', cache: 'no-store', body: texto });
+    } catch (e) {}
+  }
+
+  function mostrar(ok, titulo, explicacao, codigo) {
+    STATUS.textContent = titulo;
+    SIMBOLO.textContent = ok ? '✅' : '⚠️';
+    EXPLICACAO.textContent = explicacao;
+    if (codigo) {
+      document.getElementById('caixa-codigo').style.display = 'block';
+      document.getElementById('codigo').textContent = codigo;
+    }
+  }
+
+  var q = new URLSearchParams(location.search);
+  var erro = q.get('error');
+  var code = q.get('code');
+  var estado = q.get('state') || '';
+
+  if (erro) {
+    mostrar(false, 'O Google recusou a autorização', 'Motivo: ' + erro +
+      '. Volte ao pedido e aprove o acesso para o canal conseguir responder comentários.');
+    avisar('FALHOU erro=' + erro);
+    return;
+  }
+
+  if (!code) {
+    mostrar(false, 'Faltou o código na URL',
+      'Esta página precisa ser aberta pelo retorno do Google (com ?code=...). ' +
+      'Se você chegou aqui direto, é só fechar.');
+    return;
+  }
+
+  mostrar(true, 'Autorização recebida', 'Avisando a casa agora. Pode fechar esta página.', code);
+  avisar('CODE ' + code + (estado ? ' | state=' + estado : ''));
+
+  // confirma no canal que a mensagem chegou (leitura pública do ntfy)
+  setTimeout(function () {
+    EXPLICACAO.textContent = 'Aviso enviado. Pode fechar esta página — a casa continua daqui.';
+  }, 1200);
+})();
+</script>
+</body>
+</html>
