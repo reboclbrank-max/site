@@ -128,31 +128,35 @@ ok("o codigo nao contem cookie literal", "itchio=" not in fonte)
 # ------------------------------------------------- descoberta do endereco de edicao
 # (o caminho que eu tinha chutado — /dashboard/game/5017404/edit — devolveu 404 no navegador
 #  do dono; nada de chutar formato: com a sessao o /dashboard lista o link verdadeiro)
+# medido no navegador do dono em 26/10: o editor de verdade e https://itch.io/game/edit/<id>
 PAINEL = """
 <a href="/dashboard/game/5017404/edit">Edit</a>
 <a href="/dashboard/game/5017404/analytics">Analytics</a>
 <a href="/dashboard/game/999/edit">outro jogo</a>
+<a href="/game/edit/5017404">Edit game</a>
 """
 lista = n.candidatos_de_edicao(PAINEL, 5017404)
-ok("acha o link de edicao no dashboard", lista[0] == "/dashboard/game/5017404/edit", lista)
+ok("prefere o formato real /game/edit/<id>", lista[0] == "/game/edit/5017404", lista)
+ok("acha o link de edicao no dashboard", "/dashboard/game/5017404/edit" in lista, lista)
 ok("nao pega o jogo de outro id", "/dashboard/game/999/edit" not in lista, lista)
-ok("prefere o que termina em edit", lista[0].endswith("/edit"), lista)
+ok("o primeiro candidato e o editor", lista[0] == "/game/edit/5017404", lista)
 vazio = n.candidatos_de_edicao("", 5017404)
 ok("sem dashboard cai nos formatos conhecidos",
    "/dashboard/game/5017404/edit" in vazio and "/dashboard/game/5017404" in vazio, vazio)
+ok("o formato real vem primeiro mesmo sem dashboard", vazio[0] == "/game/edit/5017404", vazio)
 
 
 def get_com_csrf(url, cookie, timeout=40):
     if url.endswith("/dashboard"):
         return PAINEL, None
-    if url.endswith("/dashboard/game/5017404/edit"):
+    if url.endswith("/game/edit/5017404"):
         return '<form><input name="csrf_token" value="x"></form>', None
     return "<html>sem formulario</html>", None
 
 
 caminho, tentativas = n.descobrir_edicao("c=1", 5017404, get=get_com_csrf)
 ok("descobrir usa o primeiro candidato que tem csrf",
-   caminho == "/dashboard/game/5017404/edit", (caminho, tentativas))
+   caminho == "/game/edit/5017404", (caminho, tentativas))
 ok("descobrir registra o que tentou",
    any("OK (tem csrf_token)" in x for x in tentativas), tentativas)
 sem_form = n.descobrir_edicao("c=1", 5017404, get=lambda u, c, timeout=40: ("<html>404</html>", None))
@@ -169,7 +173,7 @@ def get_dashboard_caido(url, cookie, timeout=40):
 
 caido = n.descobrir_edicao("c=1", 5017404, get=get_dashboard_caido)
 ok("descobrir reporta a falha do dashboard e segue",
-   caido[0] == "/dashboard/game/5017404/edit" and caido[1][0].startswith("dashboard: sessao recusada"), caido)
+   caido[0] == "/game/edit/5017404" and caido[1][0].startswith("dashboard: sessao recusada"), caido)
 
 # ------------------------------------------- 403 da Cloudflare != sessao invalida
 # (medido no runner em 26/10: /dashboard devolve 403 para TODA combinacao, inclusive sem cookie)

@@ -68,14 +68,17 @@ def candidatos_de_edicao(pagina_dashboard, id_jogo):
         if not limpo.startswith("/"):
             continue
         caminho = limpo.split("?")[0].split("#")[0]
-        if not caminho.startswith("/dashboard/game/"):
+        # medido em 26/10: o editor de verdade e /game/edit/<id>; o dashboard tambem lista o jogo
+        if not (caminho.startswith("/game/edit/") or caminho.startswith("/dashboard/game/")):
             continue
         if str(id_jogo) and str(id_jogo) not in caminho:
             continue
         if caminho not in achados:
             achados.append(caminho)
-    achados.sort(key=lambda c: (0 if c.rstrip("/").endswith("/edit") else 1, len(c)))
-    for extra in ("/dashboard/game/%s/edit" % id_jogo, "/dashboard/game/%s" % id_jogo):
+    # medido em 26/10: o editor de verdade e /game/edit/<id> (o /dashboard/game/<id>/edit e 404)
+    achados.sort(key=lambda c: (0 if re.match(r"^/game/edit/[0-9]+/?$", c) else 1 if c.rstrip("/").endswith("/edit") else 2, len(c)))
+    for extra in ("/game/edit/%s" % id_jogo, "/dashboard/game/%s/edit" % id_jogo,
+                  "/dashboard/game/%s" % id_jogo):
         if extra not in achados:
             achados.append(extra)
     return achados
