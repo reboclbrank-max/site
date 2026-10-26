@@ -151,5 +151,14 @@ if os.path.exists(_wf):
 else:
     ok("workflow do itch existe", False, "arquivo ausente")
 
+# ---------------------------------------------------------------- kit de página/devlog
+_kit = os.path.join(RAIZ, "posts", "kit-itch.md")
+ok("o kit de página/devlog existe", os.path.exists(_kit))
+if os.path.exists(_kit):
+    _k = open(_kit, encoding="utf-8").read()
+    ok("o kit manda marcar SharedArrayBuffer (build 4.0.10 exige)", "SharedArrayBuffer support" in _k)
+    ok("o kit não promete página da PRANCHETA sem build", "PRANCHETA" in _k and "não há o que enviar" in _k)
+    ok("o kit deixa claro que devlog é na mão", "não tem API" in _k or "sem API" in _k)
+
 print("\n%d/%d testes do envio ao itch passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)

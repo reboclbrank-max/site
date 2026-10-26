@@ -1,0 +1,29 @@
+{
+  "gerado_para": "rebocl-brank/ceifalume",
+  "medido_em": "2026-10-26",
+  "ensaio": {
+    "arquivos": 13,
+    "tamanho_mib": 40.26,
+    "enviado": false
+  },
+  "motor": "Godot 4.0.10",
+  "exige_sharedarraybuffer": true,
+  "devlog": {
+    "titulo": "O CEIFALUME agora abre no navegador",
+    "tags": [
+      "godot",
+      "web",
+      "android",
+      "atualização"
+    ]
+  },
+  "cliques_do_dono": [
+    "marcar SharedArrayBuffer support (embed options)",
+    "publicar Toque Rápido",
+    "colar o devlog"
+  ],
+  "bloqueios": {
+    "prancheta": "sem build em nenhum repositorio",
+    "pagina_nova": "itch sem API de criacao"
+  }
+}
