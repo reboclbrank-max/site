@@ -33,12 +33,12 @@ def pedir(url, metodo="GET", token=None, corpo=None, cru=False):
         dados = json.dumps(corpo).encode()
         headers["Content-Type"] = "application/json"
     r = urllib.request.Request(url, data=dados, method=metodo, headers=headers)
+    # devolve o corpo INTEIRO: truncar aqui quebrava o json.loads (erro medido)
     try:
         resp = urllib.request.urlopen(r, timeout=60)
-        texto = resp.read()
-        return resp.status, (texto[:400] if cru else texto[:400].decode("utf-8", "replace")), dict(resp.headers)
+        return resp.status, resp.read().decode("utf-8", "replace"), dict(resp.headers)
     except urllib.error.HTTPError as e:
-        return e.code, e.read()[:300].decode("utf-8", "replace"), dict(e.headers or {})
+        return e.code, e.read().decode("utf-8", "replace"), dict(e.headers or {})
     except Exception as e:
         return 0, str(e)[:150], {}
 
@@ -64,13 +64,18 @@ def main():
         except Exception:
             escopos = []
         print("OK  escopos (%d): %s" % (len(escopos), " ".join(e.split("/")[-1] for e in escopos)))
-        for alvo in ["youtube.readonly", "youtube.upload", "youtube.force-ssl"]:
-            print("    %-22s %s" % (alvo, "presente" if any(alvo in e for e in escopos) else "AUSENTE"))
+        # auth/youtube é o escopo AMPLO: inclui ler, escrever metadados, playlists e upload.
+        # (youtube.readonly seria só leitura; youtube.upload seria só enviar.)
+        amplo = any(e.rstrip("/").endswith("/auth/youtube") for e in escopos)
+        print("    escopo amplo (auth/youtube) %s" % ("presente — cobre leitura e escrita" if amplo else "AUSENTE"))
+        print("    só leitura (youtube.readonly) %s" % ("presente" if any("readonly" in e for e in escopos) else "ausente"))
     else:
         print("FALHOU  tokeninfo -> HTTP %s" % s)
 
     # 2. leitura do canal
     s, c, _ = pedir(API + "/channels?part=snippet,statistics&mine=true", token=token)
+    if s != 200:
+        print("      corpo: %s" % c[:200].replace("\n", " "))
     canal = {}
     if s == 200:
         try:
