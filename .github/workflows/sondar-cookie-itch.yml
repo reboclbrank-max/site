@@ -1,0 +1,71 @@
+name: sondar-cookie-itch
+
+# Sonda de diagnostico: a sessao do itch (ITCH_COOKIE) atravessa a Cloudflare a partir de um
+# runner? Testa combinacoes de User-Agent x conjunto de cookies e imprime SO o status HTTP.
+# Nao grava nada. Serve para decidir com medida, nao com suposicao.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sondar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Matriz de User-Agent x cookies
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        run: |
+          python3 - <<'PY'
+          import os, time, urllib.error, urllib.request
+
+          cookie = os.environ.get("ITCH_COOKIE", "")
+          pares = {}
+          for pedaco in cookie.split(";"):
+              if "=" in pedaco:
+                  k, v = pedaco.split("=", 1)
+                  pares[k.strip()] = v.strip()
+          print("cookies presentes: " + ", ".join(sorted(pares)))
+
+          agentes = {
+              "linux-chrome128": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36",
+              "windows-chrome141": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+              "sem-agente": "",
+          }
+          conjuntos = {
+              "itchio": [k for k in pares if k == "itchio"],
+              "itchio+token": [k for k in pares if k in ("itchio", "itchio_token")],
+              "tudo": list(pares),
+          }
+
+          def pedir(alvo, agente, cabecalho_cookie):
+              h = {"Accept": "text/html,application/xhtml+xml,*/*;q=0.8", "Accept-Language": "pt-BR,pt;q=0.9"}
+              if agente:
+                  h["User-Agent"] = agente
+              if cabecalho_cookie:
+                  h["Cookie"] = cabecalho_cookie
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(alvo, headers=h), timeout=40) as r:
+                      corpo = r.read(4000).decode("utf-8", "replace")
+                      return "%s%s" % (r.status, " (desafio)" if "Just a moment" in corpo else "")
+              except urllib.error.HTTPError as e:
+                  corpo = e.read(4000).decode("utf-8", "replace")
+                  return "%s%s" % (e.code, " (desafio)" if "Just a moment" in corpo else "")
+              except Exception as e:
+                  return "erro %r" % (e,)
+
+          for nome_agente, agente in agentes.items():
+              for nome_conjunto, chaves in conjuntos.items():
+                  cabecalho = "; ".join("%s=%s" % (k, pares[k]) for k in chaves)
+                  print("%-18s %-14s /dashboard -> %s" % (nome_agente, nome_conjunto, pedir("https://itch.io/dashboard", agente, cabecalho)))
+                  time.sleep(3)
+              print("%-18s %-14s /dashboard -> %s" % (nome_agente, "sem cookie", pedir("https://itch.io/dashboard", agente, "")))
+              time.sleep(3)
+
+          print("controle pagina publica -> " + pedir("https://rebocl-brank.itch.io/ceifalume", agentes["windows-chrome141"], ""))
+          PY
