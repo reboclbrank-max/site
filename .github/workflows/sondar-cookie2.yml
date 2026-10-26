@@ -1,0 +1,61 @@
+name: sondar-cookie2
+
+# Descobre POR QUE a sessao do dono e recusada no servidor, sem imprimir valor nenhum.
+# Mostra apenas: tamanho do cabecalho, nomes dos cookies, tamanho de cada valor,
+# e a resposta de cada combinacao.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sondar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Cookie por cookie
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        run: |
+          python3 - <<'PY'
+          import os, urllib.request, urllib.error
+          bruto = os.environ.get("ITCH_COOKIE", "").strip()
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+          print("cabecalho: %d caracteres" % len(bruto))
+          pares = [p.strip() for p in bruto.split(";") if "=" in p]
+          nomes = []
+          for p in pares:
+              k, v = p.split("=", 1)
+              nomes.append(k.strip())
+              print("  cookie: %-14s %d caracteres" % (k.strip(), len(v.strip())))
+
+          def pedir(caminho, cookie=None):
+              h = {"User-Agent": UA, "Accept": "application/json, text/html"}
+              if cookie:
+                  h["Cookie"] = cookie
+              r = urllib.request.Request("https://itch.io/" + caminho, headers=h)
+              try:
+                  resp = urllib.request.urlopen(r, timeout=40)
+                  return resp.status, resp.read()[:220].decode("utf-8", "replace")
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read()[:220].decode("utf-8", "replace")
+              except Exception as e:
+                  return 0, str(e)[:120]
+
+          combos = [("completo", bruto)]
+          for nome in nomes:
+              combo = [p for p in pares if p.split("=", 1)[0].strip() == nome]
+              combos.append(("so " + nome, "; ".join(combo)))
+          for rotulo, valor in combos:
+              s, c = pedir("dashboard/posts", valor)
+              print("%-18s dashboard/posts -> %s | %s" % (rotulo, s, c.replace("\n", " ")[:110]))
+
+          print("--- outros caminhos com o cabecalho completo ---")
+          for caminho in ["dashboard/posts.json", "dashboard", "game/5017404/devlog", "posts", "my-posts"]:
+              s, c = pedir(caminho, bruto)
+              print("%-28s -> %s | %s" % (caminho, s, c.replace("\n", " ")[:100]))
+          PY
