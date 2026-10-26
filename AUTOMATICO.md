@@ -4,9 +4,21 @@ Medido em 26/10, não deduzido. Onde não dá, está dito por quê e qual é a s
 
 ## itch.io
 
+**Estado medido em 26/10, com o robô trabalhando sozinho:**
+
+```
+rodada 1 (modo auto): decisão enviar → butler: Pushing 40.26 MiB (13 files) ✓ Build is now processing
+rodada 2 (modo auto): canal no itch: existe · versão d8f20fd4e6b2 → ✓ nada
+```
+
+O canal `html5` do CEIFALUME foi criado pelo robô, sem clique, com a versão igual ao hash do
+build. A rodada seguinte não chamou o butler nenhuma vez — é assim que se prova automação: a
+segunda passada não faz nada. O canal está **oculto** de propósito (não aparece como download
+antes de você ver); tirar do oculto é um clique na página de edição, e não tem API para isso.
+
 | operação | automático? | como |
 |---|---|---|
-| subir / atualizar build | **sim, rodando** | `tools/administrar-itch.py auto`, cron diário |
+| subir / atualizar build | **sim, feito** | `tools/administrar-itch.py auto`, cron diário |
 | saber se o build mudou | **sim** | hash dos 13 arquivos contra `size` do upload no itch |
 | ler downloads, visitas, publicado | **sim** | `api.itch.io/profile/games` |
 | criar página de jogo | **não** | o itch não tem endpoint; nunca teve |
