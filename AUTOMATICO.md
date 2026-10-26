@@ -65,8 +65,9 @@ As duas travas, e nenhuma delas é nossa:
 
 O escopo pedido agora é `https://www.googleapis.com/auth/youtube` — **um consentimento só** que
 cobre enviar e administrar. Antes era só `youtube.upload`, o que obrigaria um segundo
-consentimento depois. Cota: 10.000 unidades/dia; um envio custa 1.600 (≈6 vídeos/dia), editar
-metadado custa 50.
+consentimento depois. Cota (desde 01/06/2026): `videos.insert` e `search.list` têm balde próprio de **100 chamadas
+por dia cada**, e o resto divide 10.000 unidades. Volume não é limite — a trava do vídeo
+privado é. Passo a passo com links: `GUIA-YOUTUBE.md`.
 
 ## O que continua fora do alcance de qualquer robô
 

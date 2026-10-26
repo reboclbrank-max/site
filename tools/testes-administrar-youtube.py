@@ -114,5 +114,31 @@ ok("o código avisa da trava de vídeo privado por projeto não auditado",
    "locked as private" in " ".join(texto.split()))
 ok("o código não promete publicação que a API pode negar", "não dá para apelar" in texto)
 
+# ------------------------------------------------------------------ guia do dono
+_g = os.path.join(RAIZ, "GUIA-YOUTUBE.md")
+ok("o guia do YouTube existe", os.path.exists(_g))
+if os.path.exists(_g):
+    guia = open(_g, encoding="utf-8").read()
+    for link in ["console.cloud.google.com/projectcreate",
+                 "apis/library/youtube.googleapis.com",
+                 "console.cloud.google.com/auth/overview/create",
+                 "console.cloud.google.com/auth/audience",
+                 "console.cloud.google.com/auth/scopes",
+                 "console.cloud.google.com/auth/clients/create",
+                 "site/settings/secrets/actions",
+                 "actions/workflows/autorizar-youtube.yml",
+                 "support.google.com/youtube/contact/yt_api_form"]:
+        ok("o guia dá link direto: " + link.split("/")[-1], link in guia)
+    # a quebra de linha do markdown não pode esconder a instrução: normaliza antes de procurar
+    _g2 = " ".join(guia.split())
+    ok("o guia manda publicar o app (senão o token morre em 7 dias)",
+       "Publicar app" in _g2 and "7 dias" in _g2)
+    ok("o guia pede o tipo de cliente certo (fluxo de dispositivo)",
+       "TVs e dispositivos de entrada limitada" in guia)
+    ok("o guia usa a política de privacidade que responde 200",
+       "reboclbrank-max.github.io/site/privacidade.html" in guia)
+    ok("o guia corrige o número de cota antigo", "100 envios por dia" in guia)
+    ok("o guia avisa que os segredos não vão pelo chat", "Não me mande esses valores pelo chat" in guia)
+
 print("\n%d/%d testes do administrador do YouTube passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)
