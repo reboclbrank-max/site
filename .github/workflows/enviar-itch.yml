@@ -18,13 +18,14 @@ on:
         options:
           - ceifalume
       modo:
-        description: "api = lista jogos e slugs · status = só leitura · push = envia"
+        description: "api = lista jogos · status = só leitura · ensaio = dry-run do envio · push = envia"
         required: true
         default: status
         type: choice
         options:
           - status
           - api
+          - ensaio
           - push
       canal:
         description: "canal do itch (html5 é o padrão para jogo web)"
