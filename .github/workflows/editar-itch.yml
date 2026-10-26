@@ -70,20 +70,43 @@ jobs:
         run: |
           set -o pipefail
           {
-          # caminho vazio = descobre pelo ID real do jogo na API do itch (nada de chutar numero)
+          # caminho vazio = o proprio itch diz qual e: le o /dashboard com a sessao, pega o link
+          # de edicao do jogo e so aceita o que tiver csrf_token. Nada de chutar formato — o
+          # caminho /dashboard/game/<id>/edit foi chutado antes e devolveu 404 no navegador do dono.
           if [ -z "$ITCH_EDICAO" ] || [ "$ITCH_EDICAO" = "/dashboard/game/0/edit" ]; then
             ITCH_EDICAO=$(python3 - <<'PY'
           import importlib.util, os, sys
-          spec = importlib.util.spec_from_file_location("adm", "tools/administrar-itch.py")
-          adm = importlib.util.module_from_spec(spec); spec.loader.exec_module(adm)
-          chave = os.environ.get("ITCH_API_KEYS", "")
-          dados, _ = adm.itch._get_json("https://api.itch.io/profile/games", chave)
+          spec = importlib.util.spec_from_file_location("nav", "tools/itch-navegador.py")
+          nav = importlib.util.module_from_spec(spec); spec.loader.exec_module(nav)
+
+          cookie = os.environ.get("ITCH_COOKIE", "")
+          if not cookie:
+              print("sem ITCH_COOKIE: nao da para descobrir o endereco de edicao", file=sys.stderr)
+              sys.exit(0)
+
+          spec2 = importlib.util.spec_from_file_location("adm", "tools/administrar-itch.py")
+          adm = importlib.util.module_from_spec(spec2); spec2.loader.exec_module(adm)
+          id_jogo = ""
+          dados, _ = adm.itch._get_json("https://api.itch.io/profile/games", os.environ.get("ITCH_API_KEYS", ""))
           for g in (dados or {}).get("games") or []:
               if (g.get("url") or "").rstrip("/").endswith("/ceifalume"):
-                  print("/dashboard/game/%s/edit" % g["id"])
+                  id_jogo = str(g["id"])
+          if not id_jogo:
+              print("a API nao informou o id do ceifalume", file=sys.stderr)
+              sys.exit(0)
+          print("id do jogo pela API: " + id_jogo, file=sys.stderr)
+          caminho, tentativas = nav.descobrir_edicao(cookie, id_jogo)
+          for linha in tentativas:
+              print("  " + linha, file=sys.stderr)
+          print(caminho or "")
           PY
             )
-            echo "caminho descoberto pela API: $ITCH_EDICAO"
+          fi
+          if [ -z "$ITCH_EDICAO" ]; then
+            echo "FALHOU sem caminho de edicao: rode com 'caminho' preenchido ou com ITCH_COOKIE no repositorio"
+            exit 1
+          fi
+          echo "caminho de edicao: $ITCH_EDICAO"
           fi
           export ITCH_EDICAO
           python3 - <<'PY'

@@ -125,5 +125,51 @@ fonte = open(os.path.join(RAIZ, "tools", "itch-navegador.py"), encoding="utf-8")
 ok("o codigo le o cookie do ambiente", 'os.environ.get("ITCH_COOKIE"' in fonte)
 ok("o codigo nao contem cookie literal", "itchio=" not in fonte)
 
+# ------------------------------------------------- descoberta do endereco de edicao
+# (o caminho que eu tinha chutado — /dashboard/game/5017404/edit — devolveu 404 no navegador
+#  do dono; nada de chutar formato: com a sessao o /dashboard lista o link verdadeiro)
+PAINEL = """
+<a href="/dashboard/game/5017404/edit">Edit</a>
+<a href="/dashboard/game/5017404/analytics">Analytics</a>
+<a href="/dashboard/game/999/edit">outro jogo</a>
+"""
+lista = n.candidatos_de_edicao(PAINEL, 5017404)
+ok("acha o link de edicao no dashboard", lista[0] == "/dashboard/game/5017404/edit", lista)
+ok("nao pega o jogo de outro id", "/dashboard/game/999/edit" not in lista, lista)
+ok("prefere o que termina em edit", lista[0].endswith("/edit"), lista)
+vazio = n.candidatos_de_edicao("", 5017404)
+ok("sem dashboard cai nos formatos conhecidos",
+   "/dashboard/game/5017404/edit" in vazio and "/dashboard/game/5017404" in vazio, vazio)
+
+
+def get_com_csrf(url, cookie, timeout=40):
+    if url.endswith("/dashboard"):
+        return PAINEL, None
+    if url.endswith("/dashboard/game/5017404/edit"):
+        return '<form><input name="csrf_token" value="x"></form>', None
+    return "<html>sem formulario</html>", None
+
+
+caminho, tentativas = n.descobrir_edicao("c=1", 5017404, get=get_com_csrf)
+ok("descobrir usa o primeiro candidato que tem csrf",
+   caminho == "/dashboard/game/5017404/edit", (caminho, tentativas))
+ok("descobrir registra o que tentou",
+   any("OK (tem csrf_token)" in x for x in tentativas), tentativas)
+sem_form = n.descobrir_edicao("c=1", 5017404, get=lambda u, c, timeout=40: ("<html>404</html>", None))
+ok("descobrir recusa pagina sem formulario", sem_form[0] is None, sem_form)
+ok("descobrir explica por que recusou",
+   all("sem formulario" in x or x.startswith("dashboard") for x in sem_form[1]), sem_form[1])
+
+
+def get_dashboard_caido(url, cookie, timeout=40):
+    if url.endswith("/dashboard"):
+        return None, "sessao recusada"
+    return ('<form><input name="csrf_token" value="x"></form>', None)
+
+
+caido = n.descobrir_edicao("c=1", 5017404, get=get_dashboard_caido)
+ok("descobrir reporta a falha do dashboard e segue",
+   caido[0] == "/dashboard/game/5017404/edit" and caido[1][0].startswith("dashboard: sessao recusada"), caido)
+
 print("\n%d/%d testes do controle do itch passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)
