@@ -1953,3 +1953,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=18(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna que cresce enquanto voc
+
+## 26/10/2026 13:09 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ⚪ fila de reserva — motor=g4f auto · convite da ponte anexado (motor não citou o Instagram) |
+| destino editorial | ✅ rota oficial canais |
+| tema do ciclo | ✅ convide quem joga no navegador a seguir a conta no Instagram |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18138821983727 (arte reserva) |
+| threads | ✅ publicado id 181035173455 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ❌ HTTP Error 502: Bad Gateway |
+| cacador de oportunidades | ➖ cadencia diaria de interacao ja cumprida (2026-10-26) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=19(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? Dois jeitos de jogar, ambos feitos com carinho no Brasil (Godot). Grátis n B
