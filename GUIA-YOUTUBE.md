@@ -19,6 +19,48 @@ Faltam `YT_CLIENT_ID`, `YT_CLIENT_SECRET` e `YT_REFRESH_TOKEN` (o último o rob�
 
 ---
 
+## ⚠️ Leia antes: a "Central de verificação" é opcional
+
+Se o console mostrar *"Seu aplicativo precisa ser verificado"*, **não envie para análise.** O que
+você quer é **publicar**, e publicar não é verificar.
+
+| status | aviso "app não verificado" | limite de usuários | token dura |
+|---|---|---|---|
+| Em teste (*Testing*) | sim | 100, adicionados à mão | **7 dias** ← o problema |
+| **Em produção, não verificado** | sim, uma vez, só para quem autoriza | 100 no total, na vida do projeto | **não expira** ← o que queremos |
+| Em produção, verificado | não | sem limite | não expira |
+
+Você é o único usuário do app. O aviso aparece **uma vez**, na sua tela, com o caminho
+*Avançado → Acessar (não seguro)*. Trocar isso por verificação custa semanas e, dependendo da
+classificação dos escopos do YouTube, exige **CASA**: avaliação de segurança por laboratório
+terceirizado, anual e paga. Não faça.
+
+Para a verificação o Google ainda pede vídeo demonstrando o fluxo OAuth, justificativa por
+escopo e domínio verificado no Search Console. Nada disso melhora a automação em um milímetro.
+
+### Se a página de Branding reclamar ("sua marca não está aparecendo")
+
+Normalmente é ovo-galinha: a marca só aparece para usuários **depois** de publicar. Confira os
+quatro pontos e siga:
+
+1. **Logotipo: deixe vazio.** Logotipo personalizado por si só **obriga** verificação, mesmo sem
+   escopo sensível — é a causa mais comum de app travado em Testing.
+2. **Domínio autorizado** = `reboclbrank-max.github.io`. Se ele exigir verificação de posse:
+   Search Console → propriedade de **prefixo de URL** `https://reboclbrank-max.github.io/site/`
+   → método *tag HTML* → me passe só o valor de `google-site-verification` que eu coloco no
+   `index.html` e publico.
+3. Os três links (início, privacidade, termos) preenchidos e respondendo **200**.
+4. Salvar e voltar em **Público → Publicar app**.
+
+### Se "Publicar app" der erro
+
+Há relato de *"Error updating app"* deixando o app preso em Testing mesmo com domínio
+verificado. Antes de desistir: salve a Branding de novo, espere alguns minutos e repita; o
+console às vezes devolve erro vazio e conclui depois. Se insistir, os planos B e C estão no fim
+deste guia.
+
+---
+
 ## Passo 1 — projeto no Google Cloud
 
 🔗 **https://console.cloud.google.com/projectcreate**
@@ -158,6 +200,15 @@ duas chaves do passo 4a estão trocadas ou o cliente não é do tipo *TVs e disp
 | playlist, miniatura, comentários | ✅ |
 | **envio de vídeo** | ✅ técnico — mas o vídeo pode sair **travado como privado** |
 | deixar o vídeo público | ⚠️ **depende da auditoria** (abaixo) |
+
+### Planos B e C, se o app ficar preso em Testing
+
+- **Plano B — ficar em Testing e reautorizar semanalmente.** O token morre em 7 dias, mas o
+  robô detecta `invalid_grant`, avisa no resumo do runner e você roda `autorizar-youtube` de
+  novo (2 cliques). Automático em tudo, menos nesse clique semanal.
+- **Plano C — não usar app Google para postar.** O envio vai por robô de navegador, com a sua
+  sessão já logada; a API continua só lendo estatística com API key. Aí não existe consentimento,
+  nem token, nem verificação — e o vídeo sobe público, sem a trava de projeto não auditado.
 
 ### A auditoria (só se o vídeo sair privado)
 
