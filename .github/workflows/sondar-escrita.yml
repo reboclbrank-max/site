@@ -1,0 +1,78 @@
+name: sondar-escrita
+
+# Varre, com a chave real, TUDO que possa escrever no itch a partir de servidor.
+# Só faz GET (nenhuma chamada capaz de criar conteudo) e, no fim, um POST vazio em
+# endpoints de HTML para saber se a Cloudflare barra o verbo POST (POST vazio nao cria
+# nada: o itch exige csrf e campos obrigatorios).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sondar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Varre endpoints
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.error
+          chave = os.environ.get("ITCH_API_KEYS", "").split(",")[0].strip()
+          cookie = os.environ.get("ITCH_COOKIE", "").strip()
+          UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+
+          def req(url, metodo="GET", com_chave=True, com_cookie=False, corpo=None):
+              h = {"Accept": "application/json", "User-Agent": UA}
+              if com_chave and chave:
+                  h["Authorization"] = "Bearer " + chave
+              if com_cookie and cookie:
+                  h["Cookie"] = cookie
+              dados = corpo if corpo is not None else None
+              r = urllib.request.Request(url, data=dados, method=metodo, headers=h)
+              try:
+                  resp = urllib.request.urlopen(r, timeout=40)
+                  return resp.status, resp.read()[:200].decode("utf-8", "replace")
+              except urllib.error.HTTPError as e:
+                  return e.code, e.read()[:200].decode("utf-8", "replace")
+              except Exception as e:
+                  return 0, str(e)[:120]
+
+          alvos = [
+              ("api.itch.io/", "GET"),
+              ("api.itch.io/me", "GET"),
+              ("api.itch.io/profile", "GET"),
+              ("api.itch.io/profile/posts", "GET"),
+              ("api.itch.io/posts", "GET"),
+              ("api.itch.io/games/5017404/devlog", "GET"),
+              ("api.itch.io/games/5017404/blog_posts", "GET"),
+              ("api.itch.io/games/5017404/metadata", "GET"),
+              ("api.itch.io/games/5017404/comments", "GET"),
+              ("api.itch.io/games/5017404/edit", "GET"),
+              ("api.itch.io/docs", "GET"),
+          ]
+          print("--- API (chave real) ---")
+          for url, m in alvos:
+              s, c = req("https://" + url, m)
+              print("%-46s -> %s | %s" % (url, s, c.replace("\n", " ")[:120]))
+
+          print("--- API antiga itch.io/api/1 (chave real) ---")
+          for sufixo in ["me", "my-games", "game/5017404", "game/5017404/devlogs", "game/5017404/uploads"]:
+              s, c = req("https://itch.io/api/1/%s/%s" % (chave, sufixo))
+              print("%-46s -> %s | %s" % ("itch.io/api/1/<chave>/" + sufixo, s, c.replace("\n", " ")[:110]))
+
+          print("--- HTML do painel: GET vs POST vazio (com cookie) ---")
+          for cam, m in [("game/edit/5017404", "GET"), ("game/edit/5017404", "POST"),
+                         ("game/5017404/devlog", "POST"), ("dashboard/posts", "GET"),
+                         ("dashboard/posts/new", "GET")]:
+              s, c = req("https://itch.io/" + cam, m, com_chave=False, com_cookie=True, corpo=b"" if m == "POST" else None)
+              desafio = "Just a moment" in c or "challenge" in c.lower() or "cf-" in c.lower()
+              print("%-4s %-32s -> %s | desafio=%s | %s" % (m, cam, s, desafio, c.replace("\n", " ")[:70]))
+          PY
