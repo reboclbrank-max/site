@@ -69,6 +69,8 @@ jobs:
         run: |
           if [ "${{ inputs.modo }}" = "api" ]; then
             python3 tools/enviar-itch.py api | tee /tmp/itch.txt
+          elif [ "${{ inputs.modo }}" = "ensaio" ]; then
+            python3 tools/enviar-itch.py ensaio "${{ inputs.jogo }}" "${{ inputs.canal }}" | tee /tmp/itch.txt
           elif [ "${{ inputs.modo }}" = "push" ]; then
             python3 tools/enviar-itch.py push "${{ inputs.jogo }}" "${{ inputs.canal }}" | tee /tmp/itch.txt
           else

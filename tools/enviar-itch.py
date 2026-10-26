@@ -142,6 +142,24 @@ def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=No
     return False, "status recusado (canal %r?): %s" % (canal, saida[:300])
 
 
+def ensaio(slug, canal, raiz=RAIZ, identidade=None, executar=None, chave=None):
+    """ENSAIO (butler push --dry-run): mostra o que subiria, sem subir nada.
+
+    É o que faltava para provar build pronto sem mexer na página: a página do CEIFALUME tem
+    upload feito pelo site (APK, upload_id 19268322) e o butler não enxerga canal nenhum, ou
+    seja, o canal do export web seria NOVO — e canal novo é mudança visível na loja.
+    """
+    erros, pasta = conferir_build(slug, raiz)
+    if erros:
+        return False, "; ".join(erros)
+    alvo = alvo_do_canal(slug, canal)
+    codigo, saida = rodar(["push", pasta, alvo, "--dry-run", "--assume-yes"],
+                          identidade=identidade, executar=executar, chave=chave)
+    if codigo != 0:
+        return False, "ensaio recusado: " + saida[:400]
+    return True, saida[:1200]
+
+
 def enviar(slug, canal, confirmacao, raiz=RAIZ, identidade=None, executar=None, chave=None):
     """Envia o build. Só com a palavra de confirmação."""
     if str(confirmacao or "").strip().upper() != PALAVRA_CONFIRMACAO:
@@ -151,7 +169,9 @@ def enviar(slug, canal, confirmacao, raiz=RAIZ, identidade=None, executar=None, 
     if erros:
         return False, "build recusado: " + "; ".join(erros)
     alvo = alvo_do_canal(slug, canal)
-    codigo, saida = rodar(["push", pasta, alvo, "--assume-yes"],
+    # --hidden só vale para canal novo: o build fica no itch, mas não aparece como download
+    # imediato. Assim nada muda para o jogador sem o dono ver primeiro.
+    codigo, saida = rodar(["push", pasta, alvo, "--assume-yes", "--hidden"],
                           identidade=identidade, executar=executar, chave=chave)
     if codigo != 0:
         return False, "envio recusado: " + saida[:400]
@@ -219,6 +239,13 @@ def main(argv):
             for linha in (lista or "").splitlines():
                 print("   " + linha[:160])
             return 0 if ok_lista else 1
+        if modo == "ensaio":
+            canal = argv[2] if len(argv) > 2 else "html5"
+            ok, msg = ensaio(slug, canal, identidade=None, chave=chave)
+            print(("✓ " if ok else "✗ ") + "ensaio " + canal + ":")
+            for linha in (msg or "").splitlines()[:20]:
+                print("   " + linha[:160])
+            return 0 if ok else 1
         if modo == "push":
             canal = argv[2] if len(argv) > 2 else "html5"
             ok, msg = enviar(slug, canal, os.environ.get("CONFIRMACAO", ""), identidade=identidade)

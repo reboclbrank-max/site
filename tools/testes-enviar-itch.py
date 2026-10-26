@@ -108,6 +108,12 @@ ok("palavra errada também não envia", ok_n2 is False and not _falso2.chamadas)
 ok_p, msg_p = itch.enviar("ceifalume", "html5", "PUBLICAR", raiz=RAIZ, identidade="/x", executar=_falso2)
 ok("com PUBLICAR, o push é chamado com --assume-yes", ok_p and "--assume-yes" in _falso2.chamadas[0],
    msg_p[:80])
+ok("o push entra em canal OCULTO (nada muda para o jogador sem o dono ver)",
+   "--hidden" in _falso2.chamadas[0], str(_falso2.chamadas[0]))
+_f3 = ButlerFalso(saida="would push 12 files (3.9 MB)")
+ok_e, msg_e = itch.ensaio("ceifalume", "html5", raiz=RAIZ, identidade="/x", executar=_f3)
+ok("ensaio usa --dry-run e não envia nada", ok_e and "--dry-run" in _f3.chamadas[0], str(_f3.chamadas[0]))
+ok("ensaio reporta o que subiria", "would push" in msg_e, msg_e[:60])
 ok("a chave vai por BUTLER_API_KEY (recomendação do butler em CI)",
    _falso2.ambiente.get("BUTLER_API_KEY") is None or True)
 ok("o alvo do push é o jogo certo no itch",
