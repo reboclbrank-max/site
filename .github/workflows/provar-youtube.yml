@@ -1,0 +1,26 @@
+name: provar-youtube
+
+# Mede, contra a API real, o que a casa consegue fazer no YouTube — leitura E escrita.
+# Não publica vídeo (o upload é só iniciado e abandonado, sem enviar byte nenhum),
+# não deixa rastro (metadados são regravados com o mesmo valor; playlist de teste
+# nasce privada e é apagada na mesma execução).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  provar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Mede as capacidades
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 tools/provar-youtube.py
