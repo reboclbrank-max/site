@@ -46,3 +46,15 @@ Com a sessão aberta, em **qualquer** página do itch, cole isto no Console:
 Se ele disser "abrindo …", você está na página certa e o resto (`itch/comando-console.txt`)
 funciona. Se ele mostrar links, me mande — com o endereço real eu conserto `!itch pagina` e o
 favorito de vez.
+
+## 1b. Ler todos os campos da página de edição (versão que funciona)
+
+A página tem **vários** formulários (o de busca do topo também tem `csrf_token`), então escolher
+"o primeiro form" devolve vazio. Esta versão varre a página inteira:
+
+```js
+(()=>{const c=[...document.querySelectorAll('input[name],textarea[name],select[name]')].filter(e=>!/csrf|password|_token/i.test(e.name));const o={};c.forEach(e=>{o[e.name]=e.type==='checkbox'?e.checked:String(e.value||'').slice(0,400)});const t=JSON.stringify(o,null,1);if(window.copy)copy(t);alert('achei '+c.length+' campos: '+Object.keys(o).slice(0,10).join(', '));console.log(t);return t})()
+```
+
+Depois de rodar, **Ctrl+V no chat** cola o conteúdo (ele já vai para a área de transferência).
+Nada é gravado.
