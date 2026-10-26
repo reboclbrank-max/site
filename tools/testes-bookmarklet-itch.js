@@ -135,4 +135,15 @@ ok('o one-liner de entrar é a fonte única minificada', () => {
   assert(entrarDerivada.length < 8000, 'grande demais para bookmarklet');
 });
 
+ok('só mexe nos campos que vieram no conteúdo publicado', () => {
+  // o risco real: mandar um texto truncado e apagar a descrição. Campo ausente = intocado.
+  assert(fonte.includes('hasOwnProperty.call(dados, nome)'), 'não confere se o campo veio');
+  assert(fonte.includes('dados[nome] === null'), 'não respeita campo nulo');
+});
+
+ok('aceita escolher opção do select pelo rótulo', () => {
+  assert(fonte.includes('opcoes[o].textContent'), 'não tenta casar pelo texto da opção');
+  assert(fonte.includes("el.tagName === 'SELECT'"), 'não trata select');
+});
+
 console.log('\n' + passou + '/' + passou + ' testes do modo navegador do itch passaram');

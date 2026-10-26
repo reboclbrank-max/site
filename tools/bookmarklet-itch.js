@@ -86,6 +86,16 @@
       mudancas.push(nome + ':\n  antes: ' + corta(el.value, 90) + '\n  depois: ' + corta(novo, 90));
       if (el.tagName === 'SELECT') {
         el.value = novo;
+        if (el.value !== novo) {
+          // o itch usa valores curtos nas opções (ex.: "sim"); aceita escolher pelo rótulo
+          var opcoes = el.options || [];
+          for (var o = 0; o < opcoes.length; o += 1) {
+            if (String(opcoes[o].textContent).trim().toLowerCase() === novo.trim().toLowerCase()) {
+              el.value = opcoes[o].value;
+              break;
+            }
+          }
+        }
         if (el.value !== novo) { ignorados.push(nome + ' (opção inexistente no select)'); }
       } else {
         el.value = novo;

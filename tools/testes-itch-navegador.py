@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Barreira do controle da pagina do itch. Nenhum teste toca a rede."""
 import importlib.util
+import json
 import os
 import sys
 import tempfile
@@ -213,6 +214,16 @@ ok("le a pagina com os nomes reais",
    estado_real.get("game[title]") == "Ceifalume" and estado_real.get("game[tags]") == "idle, farm", estado_real)
 ok("o mapa extrai os rotulos da pagina real",
    {r: estado_real.get(c) for c, r in n.MAPA.items() if c in estado_real}.get("titulo") == "Ceifalume")
+
+# --------------------------------- o conteudo publicado nao pode truncar a descricao
+_caminho = os.path.join(RAIZ, "posts", "pagina-itch.json")
+if os.path.exists(_caminho):
+    _dados = json.load(open(_caminho, encoding="utf-8"))
+    ok("o conteudo publicado so tem campos do mapa (sem lixo)",
+       all(c in n.MAPA for c in _dados if not c.startswith("_")), [c for c in _dados if not c.startswith("_")])
+    ok("a descricao nao e sobrescrita com texto curto",
+       "game[description]" not in _dados or len(str(_dados["game[description]"])) > 400,
+       len(str(_dados.get("game[description]", ""))))
 
 print("\n%d/%d testes do controle do itch passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)
