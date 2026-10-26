@@ -65,7 +65,17 @@ também impede a expiração por 6 meses de inatividade. Se o Google revogar, o 
 
 ## O que continua fora do alcance
 
-- **Página do itch** (texto, capa, devlog, botão publicar): sem API no itch, por decisão deles.
+- **Página do itch — RESOLVIDO em 26/10, por sessão.** `tools/itch-navegador.py` (32/32 offline)
+  lê e escreve os campos pelo formulário real, e `.github/workflows/editar-itch.yml` roda isso no
+  runner: descobre a página pela API (`/dashboard/game/5017404/edit`), confere a sessão, faz backup
+  dos valores anteriores em `posts/backup-itch.json` e só escreve com a palavra `EDITAR`.
+  O chat dispara tudo com `!itch` (ler) e `!itch editar` (escrever) e **responde com o resultado**,
+  lendo o que o run registra em `posts/estado-itch.json`.
+  **Falta uma coisa só, e é do dono:** o segredo `ITCH_COOKIE` no repositório `site`
+  (Settings → Secrets and variables → Actions → New repository secret). O valor é o cabeçalho
+  `Cookie` inteiro de uma aba já logada no itch (DevTools → Network → qualquer requisição a
+  itch.io → Request Headers → Cookie). O `/login` é bloqueado por Cloudflare a partir de
+  datacenter, então login automatizado nunca será o caminho.
 - **Vídeo público por API**: projeto de API não auditado tem vídeo travado como privado pelo
   Google. Independe do token, do app ou do meu código.
 - **Autorizar no Google**: exige sessão da conta dona. É o único passo que não é meu.
