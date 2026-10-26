@@ -31,11 +31,12 @@ API = "https://www.googleapis.com/youtube/v3"
 def _requisicao(url, token, metodo="GET", corpo=None, timeout=45):
     """Devolve (dados, erro). Uma função só, para o teste poder dublar tudo."""
     dados = json.dumps(corpo).encode() if corpo is not None else None
-    req = urllib.request.Request(url, data=dados, method=metodo, headers={
-        "Authorization": "Bearer " + token,
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-    })
+    cabecalhos = {"Accept": "application/json", "Content-Type": "application/json"}
+    # token None = chamada autenticada por API key na própria URL (sem OAuth). Mandar
+    # "Bearer None" fazia o runner estourar TypeError em vez de ler o canal.
+    if token:
+        cabecalhos["Authorization"] = "Bearer " + token
+    req = urllib.request.Request(url, data=dados, method=metodo, headers=cabecalhos)
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             texto = r.read().decode()
@@ -127,7 +128,10 @@ def estado_por_chave(ambiente=None, get=None):
     if not (chave and canal_id):
         return ["youtube: sem API key ou sem YT_CHANNEL_ID — não há como provar a chave"], False
     get = get or _requisicao
-    dados, erro = get(API + "/channels?part=snippet,statistics&id=%s&key=%s" % (canal_id, chave), None)
+    try:
+        dados, erro = get(API + "/channels?part=snippet,statistics&id=%s&key=%s" % (canal_id, chave), None)
+    except Exception as e:  # rede, tipo, o que for: vira linha, nunca pilha de erro no log
+        return ["youtube: a chamada com API key falhou — " + type(e).__name__ + ": " + str(e)[:90]], False
     if erro or not dados:
         return ["youtube: a chave não leu o canal — " + str(erro or "resposta vazia")], False
     itens = dados.get("items") or []

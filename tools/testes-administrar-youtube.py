@@ -158,5 +158,19 @@ if os.path.exists(_g):
     ok("o guia avisa que logotipo obriga verificação", "Logotipo: deixe vazio" in _g3)
     ok("o guia distingue publicar de verificar", "publicar não é verificar" in _g3)
 
+# ------------------------------------------------------------------ sem token não estoura
+ok("requisição sem token não monta 'Bearer None'",
+   adm._requisicao("https://exemplo.invalido/x?key=k", None)[0] is None)
+
+
+class GetExplode:
+    def __call__(self, *a, **k):
+        raise TypeError("Bearer None")
+
+
+linhas_x, ok_x = adm.estado_por_chave({"YT_API_KEY": "k", "YT_CHANNEL_ID": "UC1"}, get=GetExplode())
+ok("exceção na leitura vira linha de log, não pilha de erro",
+   ok_x is False and "falhou" in linhas_x[0] and "TypeError" in linhas_x[0], linhas_x)
+
 print("\n%d/%d testes do administrador do YouTube passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)
