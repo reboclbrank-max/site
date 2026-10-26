@@ -1,7 +1,7 @@
 {
   "_nota": "Fonte unica do conteudo da pagina do itch. SO os campos aqui sao tocados; ausente = intocado. Nomes conferidos no formulario real em 26/10 (o itch prefixa tudo com game[]). O userscript itch/ceifalume-auto.user.js aplica isto no navegador do dono.",
-  "versao": "2026-10-26-1",
-  "auto": false,
+  "versao": "2026-10-26-2",
+  "auto": true,
   "_atualizado": "2026-10-26",
   "_situacao_medida": {
     "title": "Ceifalume",
@@ -12,5 +12,9 @@
     "observacao": "a pagina esta completa; o que falta e conteudo novo, nao conserto",
     "sonda": "com cookie real, /game/edit/5017404 devolve 403 (desafio Cloudflare) de datacenter",
     "atualizado_em": "2026-10-26"
+  },
+  "game[short_text]": "Idle noturno grátis: plante, colha e venda quando o mercado pagar mais — a fazenda cresce até com o jogo fechado.",
+  "_antes_conhecido": {
+    "game[short_text]": "A fazenda não dorme: plante, colha e negocie à luz da lanterna."
   }
 }
