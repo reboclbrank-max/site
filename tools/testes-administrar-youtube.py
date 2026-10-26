@@ -128,6 +128,15 @@ ok("o código avisa da trava de vídeo privado por projeto não auditado",
    "locked as private" in " ".join(texto.split()))
 ok("o código não promete publicação que a API pode negar", "não dá para apelar" in texto)
 
+# ------------------------------------------------------------------ estado medido
+_e = os.path.join(RAIZ, "ESTADO-AGORA.md")
+ok("o retrato do estado existe", os.path.exists(_e))
+if os.path.exists(_e):
+    _t = " ".join(open(_e, encoding="utf-8").read().split())
+    ok("o retrato registra o prazo ilimitado medido", "ILIMITADO" in _t and "refresh_token_expires_in" in _t)
+    ok("o retrato não contém valor de segredo", "1//0" not in _t and "GOCSPX-" not in _t and "AIza" not in _t)
+    ok("o retrato declara o que continua fora do alcance", "fora do alcance" in _t)
+
 # ------------------------------------------------------------------ guia do dono
 _g = os.path.join(RAIZ, "GUIA-YOUTUBE.md")
 ok("o guia do YouTube existe", os.path.exists(_g))
