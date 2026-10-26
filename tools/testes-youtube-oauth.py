@@ -56,6 +56,17 @@ ok("o arquivo traz URL e código para o dono", "https://www.google.com/device" i
 ok("o arquivo diz que não é segredo e que vale 30 min",
    "não contém segredo" in _gravado["texto"] and "30 minutos" in _gravado["texto"])
 
+# limpeza do código de uso único
+_apagado = {}
+def _del_falso(url, pat, dados):
+    _apagado["url"], _apagado["sha"] = url, dados.get("sha")
+    return True, "apagado (200)"
+ok_limpo, _m2 = oauth.limpar_codigo("site", "pat", deletar=_del_falso,
+                                    get=lambda u, p: ({"sha": "abc123"}, None))
+ok("o código de autorização é apagado depois do uso", ok_limpo and _apagado["sha"] == "abc123", _apagado)
+ok_limpo2, _m3 = oauth.limpar_codigo("site", "pat", deletar=_del_falso, get=lambda u, p: ({}, "404"))
+ok("sem arquivo, limpar não inventa erro", ok_limpo2 is False and _m3 == "nada para apagar")
+
 # duração do token: o Google conta na resposta, não no console
 ok("resposta com refresh_token_expires_in = app em teste",
    oauth.duracao_do_token({"refresh_token": "x", "refresh_token_expires_in": 604799})[0] == "teste")
