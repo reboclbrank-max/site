@@ -29,14 +29,12 @@ import urllib.request
 # forma automática". `youtube` inclui upload e cobre editar título/descrição/tags, playlist,
 # thumbnail e comentários. Pedir só upload obrigaria um SEGUNDO consentimento depois — e
 # consentimento é o único passo que depende dele, então tem de ser um só.
-# Escopos pedidos no consentimento. "youtube" cobre ler e escrever metadados, playlists,
-# miniatura e envio de video. "youtube.force-ssl" e o UNICO que libera comentarios
-# (commentThreads) e legendas (captions) — medido em 26/10/2026: sem ele, os dois voltam
-# 403 insufficientPermissions.
-ESCOPOS = (
-    "https://www.googleapis.com/auth/youtube",
-    "https://www.googleapis.com/auth/youtube.force-ssl",
-)
+# Escopos pedidos no consentimento.
+# MEDIDO em 26/10/2026 (run 40413954041): o device flow do cliente "TV e dispositivos de
+# entrada limitada" RECUSA "youtube.force-ssl" com invalid_scope — aquele fluxo aceita
+# apenas youtube e youtube.readonly. Pedir force-ssl aqui derrubaria a autorizacao inteira,
+# entao ele NAO entra. Comentarios e legendas exigem outro tipo de cliente OAuth.
+ESCOPOS = ("https://www.googleapis.com/auth/youtube",)
 ESCOPO = " ".join(ESCOPOS)
 URL_CODIGO = "https://oauth2.googleapis.com/device/code"
 URL_TOKEN = "https://oauth2.googleapis.com/token"

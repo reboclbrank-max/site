@@ -79,12 +79,12 @@ ok("resposta sem esse campo = token sem prazo (produção)",
 ok("resposta vazia não é confundida com teste",
    oauth.duracao_do_token(None)[0] == "ilimitado")
 
-# Medido em 26/10/2026: sem force-ssl, commentThreads e captions devolvem
-# 403 insufficientPermissions. Ele entra JUNTO do escopo amplo — não no lugar dele.
-ok("pede também 'force-ssl', o único que libera comentários e legendas",
-   "https://www.googleapis.com/auth/youtube.force-ssl" in oauth.ESCOPOS)
-ok("o escopo amplo continua pedido (envio e edição não dependem só do force-ssl)",
-   "https://www.googleapis.com/auth/youtube" in oauth.ESCOPOS)
+# Medido em 26/10/2026 (run 40413954041): o device flow recusa force-ssl com invalid_scope.
+# Pedi-lo aqui derrubaria a autorização inteira — o teste guarda isso.
+ok("não pede 'force-ssl' no device flow (o Google recusa com invalid_scope)",
+   "force-ssl" not in oauth.ESCOPO, oauth.ESCOPO)
+ok("pede o escopo amplo, que é o que o device flow aceita",
+   oauth.ESCOPOS == ("https://www.googleapis.com/auth/youtube",), oauth.ESCOPOS)
 ok("resumo de segredo mostra no máximo 4 caracteres",
    "AB12" in oauth.resumo_de_segredo("AB12xyz1234")
    and "xyz1234" not in oauth.resumo_de_segredo("AB12xyz1234"))
