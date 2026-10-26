@@ -17,6 +17,9 @@
   var dados = /*CONTEUDO*/ null;
   var CHAVE = 'ceifalume:devlog:ultima';
   var ID = 'ceifalume:game-id';
+  // id do Ceifalume: publico (aparece na URL do jogo). Assim o favorito funciona
+  // de qualquer página do itch, inclusive da tela de Postagens do painel.
+  var ID_PADRAO = '5017404';
   var DIAG = 'https://ntfy.sh/ceifalume-devlog-diag-2026';
 
   // Relata a estrutura do que aconteceu (endereço, nome de campo, código HTTP).
