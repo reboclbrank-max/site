@@ -178,12 +178,11 @@ function duracaoDoVideo(binario, arquivo) {
  * vira código de erro 3, nunca um vídeo vazio. A lista é parâmetro para que a barreira possa
  * provar o caminho "sem navegador" sem depender do que está instalado na máquina.
  */
-function carregarPlaywright(tentativas = []) {
-  const caminhos = tentativas.concat([
-    'playwright-core',
-    'playwright',
-    process.env.PLAYWRIGHT_CORE || ''
-  ]).filter(Boolean);
+function carregarPlaywright(tentativas = [], incluirPadroes = true) {
+  const padroes = incluirPadroes
+    ? ['playwright-core', 'playwright', process.env.PLAYWRIGHT_CORE || '']
+    : [];
+  const caminhos = tentativas.concat(padroes).filter(Boolean);
   for (const caminho of caminhos) {
     try { return require(caminho); } catch (e) { /* tenta o próximo */ }
   }

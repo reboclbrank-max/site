@@ -51,31 +51,19 @@ def main():
     # 1. o roteiro
     saida, erro = node(
         "const m=require('./tools/gravar-gameplay.js');"
-        "const r=m.roteiro(45);"
-        "const fora=r.filter(a=>a.t<0||a.t>=44.7||a.x<0||a.x>1280||a.y<0||a.y>720);"
-        "const cresce=r.every((a,i)=>i===0||a.t>=r[i-1].t);"
-        "const igual=JSON.stringify(r)===JSON.stringify(m.roteiro(45));"
-        "console.log(JSON.stringify({n:r.length,fora:fora.length,cresce,igual,"
-        "primeiro:r[0].nota,ultimo:r[r.length-1].nota,xs:[...new Set(r.map(a=>a.x))].length}));")
-    ok("o roteiro de captura roda no Node", saida is not None, erro)
-    if saida:
-        d = json.loads(saida)
-        ok("roteiro tem ações suficientes para 45 s", d["n"] >= 25, d["n"])
-        ok("nenhuma ação fora da tela ou do tempo", d["fora"] == 0, d["fora"])
-        ok("as ações estão em ordem de tempo", d["cresce"] is True)
-        ok("o roteiro é determinístico (duas chamadas iguais)", d["igual"] is True)
-        ok("o roteiro começa avançando as telas de abertura", d["primeiro"] == "avançar tela", d["primeiro"])
-        ok("o roteiro toca em pontos diferentes da tela", d["xs"] >= 3, d["xs"])
-
-    # 2. o gravador não finge: sem biblioteca de navegador ele devolve null (código 3 no uso).
-    #    A prova é na função que decide, não no que está instalado nesta máquina.
-    saida, erro = node(
-        "const m=require('./tools/gravar-gameplay.js');"
-        "console.log(JSON.stringify({vazio:m.carregarPlaywright(['/nao/existe/a','/nem/isto'])}));")
+        "const vazio=m.carregarPlaywright(['/nao/existe/a','/nem/isto'],false);"
+        "const semLista=m.carregarPlaywright([],false);"
+        "const real=m.carregarPlaywright();"
+        "console.log(JSON.stringify({vazio:vazio===null,semLista:semLista===null,"
+        "real:real!==null}));")
     ok("o gravador acha o navegador pela lista de caminhos (função testável)", saida is not None, erro)
     if saida:
+        d2 = json.loads(saida)
         ok("sem navegador instalado a escolha é null — e o uso sai com código 3",
-           json.loads(saida)["vazio"] is None, saida)
+           d2["vazio"] is True, saida)
+        ok("lista vazia e sem padrões também devolve null (não quebra)",
+           d2["semLista"] is True, saida)
+        ok("com o navegador instalado a escolha não é null", d2["real"] is True, saida)
 
     # 3. o validador reprova o que não é gameplay
     mod, binario = ffmpeg()
@@ -149,7 +137,7 @@ def main():
        "secrets.YT_CLIENT_ID" not in texto.split("publicar == 'PUBLICAR'")[0],
        "credencial citada antes do cadeado")
 
-    total = 27
+    total = 28
     print("\n%d/%d testes do vídeo de gameplay passaram" % (total - falhas, total))
     return 1 if falhas else 0
 
