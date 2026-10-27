@@ -11,9 +11,10 @@ Style: Casa,DejaVu Sans,34,&H00E8E6E1,&H00E8E6E1,&H00101010,&H99000000,0,0,0,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:02.40,0:00:06.40,Casa,,0,0,0,,plantando semente
-Dialogue: 0,0:00:13.90,0:00:17.90,Casa,,0,0,0,,fazendo bico: +1 moeda
-Dialogue: 0,0:00:19.00,0:00:23.00,Casa,,0,0,0,,plantando semente
-Dialogue: 0,0:00:32.70,0:00:35.50,Casa,,0,0,0,,fazendo bico: +1 moeda
-Dialogue: 0,0:00:35.50,0:00:37.80,Casa,,0,0,0,,plantando semente
-Dialogue: 0,0:00:37.80,0:00:41.80,Casa,,0,0,0,,colhendo a planta madura
+Dialogue: 0,0:00:00.10,0:00:04.10,Casa,,0,0,0,,tela de abertura (sem HUD)
+Dialogue: 0,0:00:06.10,0:00:10.10,Casa,,0,0,0,,abrindo o jogo
+Dialogue: 0,0:00:12.70,0:00:16.70,Casa,,0,0,0,,plantando semente
+Dialogue: 0,0:00:23.50,0:00:24.60,Casa,,0,0,0,,vendendo a colheita
+Dialogue: 0,0:00:24.60,0:00:28.60,Casa,,0,0,0,,fazendo bico: +1 moeda
+Dialogue: 0,0:00:35.00,0:00:39.00,Casa,,0,0,0,,colhendo a planta madura
+Dialogue: 0,0:00:48.40,0:00:50.00,Casa,,0,0,0,,vendendo a colheita

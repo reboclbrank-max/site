@@ -69,16 +69,28 @@ def ffmpeg():
 
 def main():
     # 1. o agente que olha o estado e decide (o roteiro cego saiu em 27/10)
+    # Os estados abaixo são os MEDIDOS no jogo rodando em 27/10/2026 (ver docs/VIDEO-GAMEPLAY.md):
+    # campo vazio: casca 0,000 · crescendo: verde 0,05-0,10 · maduro: casca 0,026-0,037.
     saida, erro = node(
         "const m=require('./tools/gravar-gameplay.js');"
-        "const cel=(v,id)=>({id:id||'A',verde:v,centro:{x:500,y:300}});"
-        "const base={tutorial:0,titulo:0,celulas:[cel(0,'A'),cel(0,'B'),cel(0,'C'),cel(0,'D')]};"
+        "const cel=(o)=>Object.assign({id:'A',verde:0,branco:0,ouroBotao:0,"
+        "centro:{x:500,y:300},colher:{x:510,y:337}},o);"
+        "const quatro=(f)=>({id:f.id||'A',verde:f.verde||0,branco:f.branco||0,"
+        "ouroBotao:f.ouroBotao||0,centro:{x:500,y:300},colher:{x:510,y:337}});"
+        "const base={tutorial:0,titulo:0,hud:0.084,celulas:[cel({id:'A'}),cel({id:'B'}),"
+        "cel({id:'C'}),cel({id:'D'})]};"
+        "const dois={A:2,B:2,C:2,D:2};"
         "const r={"
         " tutorial:m.decidir({...base,tutorial:0.4}).motivo,"
         " titulo:m.decidir({...base,titulo:0.3}).motivo,"
-        " pronta:m.decidir({...base,celulas:[cel(0.12,'A'),cel(0,'B')]}),"
-        " vazia:m.decidir({...base}).tipo,"
-        " crescendo:m.decidir({...base,celulas:[cel(0.05,'A'),cel(0.04,'B')]}).motivo"
+        " abertura:m.decidir({...base,hud:0}).motivo,"
+        " pronta:m.decidir({...base,celulas:[cel({id:'A',branco:0.028}),cel({id:'B'})]}),"
+        " vazia:m.decidir({...base},{confirmacoes:dois}).tipo,"
+        " semConfirmacao:m.decidir({...base},{}).tipo,"
+        " barra:m.decidir({...base,celulas:[cel({id:'A',ouroBotao:0.09}),cel({id:'B'})]},"
+        "{confirmacoes:dois}).celula.id,"
+        " crescendo:m.decidir({...base,celulas:[cel({id:'A',verde:0.05}),"
+        "cel({id:'B',verde:0.04})]}).motivo"
         "};"
         "console.log(JSON.stringify(r));")
     ok("o decisor roda no Node", saida is not None, erro)
@@ -86,10 +98,15 @@ def main():
         d = json.loads(saida)
         ok("tutorial visivel -> toca no tutorial", "tutorial" in d["tutorial"], d["tutorial"])
         ok("tela de titulo -> toca em Jogar", "t" in d["titulo"], d["titulo"])
+        ok("sem HUD de moedas -> atravessa a abertura", "abertura" in d["abertura"], d["abertura"])
         ok("celula madura -> colhe aquela celula", "pronta" in d["pronta"]["motivo"], d["pronta"])
-        ok("celula madura manda tocar no centro dela",
-           d["pronta"]["alvo"] == {"x": 500, "y": 300}, d["pronta"].get("alvo"))
+        ok("celula madura manda tocar no botao Colher da caixa",
+           d["pronta"]["alvo"] == {"x": 510, "y": 337}, d["pronta"].get("alvo"))
         ok("tudo vazio -> planta", d["vazia"] == "plantar", d["vazia"])
+        ok("celula livre so e plantada quando a leitura se repete",
+           d["semConfirmacao"] != "plantar", d["semConfirmacao"])
+        ok("celula com barra dourada nao e replantada (planta na outra)",
+           d["barra"] == "B", d["barra"])
         ok("tudo crescendo -> rende moeda no bico", "bico" in d["crescendo"], d["crescendo"])
     fonte = open(os.path.join(RAIZ, "tools", "gravar-gameplay.js"), encoding="utf-8").read()
     ok("o gravador decide pelo estado (nao por lista fixa)", "function decidir(" in fonte)

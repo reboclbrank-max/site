@@ -1,0 +1,2 @@
+file '/home/user/site-work/media/gameplay/trecho-0.mp4'
+file '/home/user/site-work/media/gameplay/trecho-1.mp4'

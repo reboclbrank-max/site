@@ -51,6 +51,47 @@ O jogo **responde de verdade**: as moedas saem de 25 → 26 com o botão "Fazer 
 campo passa a mostrar "Nabo crescendo — 10s" com o broto na terra. Isso é ciclo de jogo, não
 tela parada.
 
+## O que estava errado no vídeo entregue em 27/10 (corrigido no mesmo dia)
+
+O dono viu o vídeo e reprovou: *"as instruções de como jogar não saem da tela em momento algum"*.
+Estava certo. Medições feitas no jogo rodando:
+
+| o que o robô lia | com o tutorial aberto | jogando (sem tutorial) | veredito |
+|---|---|---|---|
+| "painel escuro" (r<40, g<45, b<60) | **0,255** | 0,748 | nunca passava do limiar 0,35 — o painel do tutorial é azul-escuro (rgb 44,52,65), não preto |
+| painel azul (teste novo) | **0,878** | 0,080 | separa com folga |
+| botão dourado dentro do painel | **0,582** | 0,000 | confirma que é o botão, não o brilho da colheita |
+
+Ou seja: o detector de tutorial **nunca disparava**, o robô nunca tocou em "Entendi, jogar!" e o
+modal ficou no quadro do começo ao fim. Agora ele fecha em ~2,8 s, o gravador confere por imagem
+que o painel sumiu e o pipeline **falha** se o tutorial estiver na tela no fim da captura.
+
+Outros dois erros de leitura, também medidos:
+
+- **Colheita pelo sinal errado.** O código esperava "verde alto" para colher. No ponto de colheita o
+  nabo fica **branco**: verde cai de 0,10 para 0,038 e aparece casca branca em 0,026-0,037. Era por
+  isso que nenhuma das execuções colhia nada (0 colheitas em 4 tentativas de 45-75 s). Agora a
+  colheita é decidida pela casca, e o botão "Colher" (rodapé da caixa) é o alvo do toque.
+- **Semeadura dupla.** A barra dourada de progresso só aparece 1-3 s depois da semente; nesse vão a
+  célula parecia vazia e o robô semeava de novo em cima, reiniciando o crescimento (8 sementes para
+  4 campos e nenhuma colheita em 75 s). Agora a célula só é semeada quando duas leituras seguidas
+  dizem que está livre.
+
+## Espera longa: o que é corte e o que é jogo
+
+Sob gravação o relógio do jogo anda ~3x mais devagar que o relógio da parede (24 s de crescimento
+custam ~100 s de captura). Por isso o vídeo usa `--trechos`:
+
+```bash
+python3 tools/produzir-video.py cru.mp4 cru-decisoes.json final.mp4 --trechos "2-26,106-132"
+```
+
+Os trechos escolhidos são de ação (abertura + plantio, e colheita + venda). O que fica de fora é
+espera parada — e isso está escrito aqui e no relatório do run. Nada é acelerado nem inventado: as
+decisões que aparecem na legenda são as mesmas do relatório, com o tempo deslocado para a linha do
+tempo do corte.
+
+
 ## O que este pipeline NÃO faz
 
 - **Não joga bem.** O agente lê o estado (tutorial, título e o verde de 5 células) e decide
@@ -79,4 +120,4 @@ KIT_YOUTUBE=posts/kit-gameplay.json CONFIRMACAO=PUBLICAR \
   python3 tools/enviar-youtube.py ceifalume-gameplay
 ```
 
-Barreira: `python3 tools/testes-gameplay.py` (27 provas, sem rede).
+Barreira: `python3 tools/testes-gameplay.py` (37 provas, sem rede).
