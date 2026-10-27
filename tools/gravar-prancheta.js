@@ -119,7 +119,10 @@ const MEDIDOR_DIFERENCA = (anterior) => {
   return anterior ? soma / (d.length / 4) / 3 : 0;
 };
 
-(async () => {
+// O fluxo só roda quando o arquivo é executado direto. Antes, um simples `require` para testar
+// descobrirBuild() disparava a gravação inteira — foi o que quebrou a barreira no runner
+// (run 40549191510: o node do teste abriu o navegador e não imprimiu o JSON esperado).
+async function principal() {
   const op = argumentos(process.argv.slice(2));
   const pw = carregarPlaywright();
   if (!pw) {
@@ -270,6 +273,10 @@ const MEDIDOR_DIFERENCA = (anterior) => {
     try { await contexto.close(); await navegador.close(); } catch (e) { /* já fechado */ }
     return 4;
   }
-})();
+}
+
+if (require.main === module) {
+  principal().then((codigo) => process.exit(codigo || 0));
+}
 
 module.exports = { descobrirBuild, ALVO, BUILD_RESERVA, PAGINA_ITCH };
