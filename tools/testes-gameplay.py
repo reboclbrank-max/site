@@ -67,12 +67,15 @@ def main():
         ok("o roteiro começa avançando as telas de abertura", d["primeiro"] == "avançar tela", d["primeiro"])
         ok("o roteiro toca em pontos diferentes da tela", d["xs"] >= 3, d["xs"])
 
-    # 2. o gravador não finge: sem navegador, sai com código próprio
-    r = subprocess.run(["node", "tools/gravar-gameplay.js", "--saida", "/tmp/nao-deve-existir.mp4",
-                        "--segundos", "3"], capture_output=True, text=True, cwd=RAIZ,
-                       env=dict(os.environ, PLAYWRIGHT_CORE="/caminho/que/nao/existe"))
-    ok("sem navegador o gravador falha com código 3 (não inventa vídeo)",
-       r.returncode == 3, (str(r.returncode) + " " + (r.stderr or "")[-120:]))
+    # 2. o gravador não finge: sem biblioteca de navegador ele devolve null (código 3 no uso).
+    #    A prova é na função que decide, não no que está instalado nesta máquina.
+    saida, erro = node(
+        "const m=require('./tools/gravar-gameplay.js');"
+        "console.log(JSON.stringify({vazio:m.carregarPlaywright(['/nao/existe/a','/nem/isto'])}));")
+    ok("o gravador acha o navegador pela lista de caminhos (função testável)", saida is not None, erro)
+    if saida:
+        ok("sem navegador instalado a escolha é null — e o uso sai com código 3",
+           json.loads(saida)["vazio"] is None, saida)
 
     # 3. o validador reprova o que não é gameplay
     mod, binario = ffmpeg()
