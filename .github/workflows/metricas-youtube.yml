@@ -1,0 +1,51 @@
+name: metricas-youtube
+
+# 📈 Mede o que os vídeos publicados fizeram (views, likes, comentários).
+#
+# Por que existe: o envio ao YouTube registrava id e título, e depois disso nada era medido.
+# Este workflow lê a YouTube Data API (dados públicos, chave YT_API_KEY) dos ids registrados em
+# posts/youtube-publicados.json e grava posts/youtube-metricas.json, que o chat lê com !views.
+#
+# REGRA: se a API não responder, o workflow FALHA e não reescreve o JSON. Número velho com data
+# nova seria mentira; número nenhum é honesto.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 3,9,15,21 * * *"   # 4 leituras por dia
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metricas-youtube
+  cancel-in-progress: false
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreira offline do medidor
+        run: |
+          python3 -m py_compile tools/metricas-youtube.py
+          python3 tools/testes-metricas-youtube.py
+
+      - name: Mede os vídeos publicados
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+        run: python3 tools/metricas-youtube.py
+
+      - name: Guarda o número medido
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/youtube-metricas.json
+          if git diff --cached --quiet; then
+            echo "sem mudança nas métricas"
+            exit 0
+          fi
+          git commit -m "metricas do YouTube: $(date -u +%d/%m\ %H:%M\ UTC)"
+          git push
