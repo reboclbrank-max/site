@@ -114,6 +114,60 @@ def main():
         ok("celula com barra dourada nao e replantada (planta na outra)",
            d["barra"] == "B", d["barra"])
         ok("tudo crescendo -> rende moeda no bico", "bico" in d["crescendo"], d["crescendo"])
+
+    # 1b. ECONOMIA — o robo compra melhoria e escolhe a semente mais cara que o bolso cobre.
+    # O estado de dinheiro abaixo vem do save do proprio jogo (moedas/nivel_*/semente_selecionada),
+    # e a compra e conferida no save depois do toque — nao no "parece que comprou".
+    saida, erro = node(
+        "const m=require('./tools/gravar-gameplay.js');"
+        "const cel=(id)=>Object.assign({id:id,verde:0.05,branco:0,ouroBotao:0.05,"
+        "centro:{x:500,y:300},colher:{x:510,y:337}});"
+        "const base={tutorial:0,titulo:0,hud:0.084,celulas:[cel('A'),cel('B')]};"
+        "const eco=(o)=>Object.assign({moedas:0,semente:0},o);"
+        "const d=(e,mem)=>m.decidir(base,Object.assign({confirmacoes:{A:2,B:2},economia:e},mem||{}));"
+        "const todos={poco:true,lanterna:true,composteira:true,campo:true,celeiro:true};"
+        "const r={"
+        " rico:d(eco({moedas:100})),"
+        " pobre:d(eco({moedas:20})).tipo,"
+        " celeiroBarato:d(eco({moedas:35})).tipo,"
+        " prioridade:d(eco({moedas:100}),{melhoriasFeitas:{poco:true}}).melhoria.id,"
+        " caro:d(eco({moedas:1000}),{melhoriasFeitas:todos}),"
+        " semente:d(eco({moedas:210}),{melhoriasFeitas:todos}),"
+        " tomate:d(eco({moedas:900}),{melhoriasFeitas:todos}),"
+        " semSemente:d(eco({moedas:210,semente:3}),{melhoriasFeitas:todos}).tipo,"
+        " zero:d(eco({moedas:0})).tipo,"
+        " ganho:m.ganhoDeMoedas(25,19,70),"
+        " semLeitura:m.ganhoDeMoedas(null,19,70)"
+        "};"
+        "console.log(JSON.stringify(r));")
+    ok("o decisor de economia roda no Node", saida is not None, erro)
+    if saida:
+        e = json.loads(saida)
+        ok("com dinheiro no bolso o robo compra melhoria", e["rico"]["tipo"] == "melhoria",
+           e["rico"])
+        ok("a melhoria comprada e a de maior efeito (poco, nao a mais barata)",
+           e["rico"]["melhoria"]["id"] == "poco", e["rico"]["melhoria"])
+        ok("sem dinheiro suficiente o robo nao inventa compra", e["pobre"] != "melhoria", e["pobre"])
+        ok("celeiro (que nao muda moedas/min) nao e comprado nem sendo o mais barato",
+           e["celeiroBarato"] != "melhoria", e["celeiroBarato"])
+        ok("melhoria ja comprada nao e comprada de novo (vai para a proxima)",
+           e["prioridade"] == "lanterna", e["prioridade"])
+        ok("com as melhorias feitas o robo troca a semente pelo maior valor",
+           e["caro"]["tipo"] == "semente", e["caro"])
+        ok("a semente escolhida e a mais cara que o caixa cobre (1000 -> Abobora, 700+5)",
+           e["caro"]["semente"]["indice"] == 4, e["caro"]["semente"])
+        ok("com 210 moedas a semente escolhida e o Tomate (custo 200 + folga 5)",
+           e["semente"]["semente"]["nome"] == "Tomate", e["semente"]["semente"])
+        ok("com 900 moedas a semente escolhida sobe para a Abobora (venda 1400)",
+           e["tomate"]["semente"]["nome"] == "Abóbora", e["tomate"]["semente"])
+        ok("semente ja escolhida nao e trocada de novo", e["semSemente"] != "semente",
+           e["semSemente"])
+        ok("sem moeda nenhuma o robo continua jogando (nao travа no dinheiro)",
+           e["zero"] in ("plantar", "toque"), e["zero"])
+        ok("GANHO != SALDO: saldo cai 25->19 gastando 70 e o ganho e 64",
+           e["ganho"] == 64, e["ganho"])
+        ok("sem leitura do save o ganho e null (nao vira numero inventado)",
+           e["semLeitura"] is None, e["semLeitura"])
     fonte = open(os.path.join(RAIZ, "tools", "gravar-gameplay.js"), encoding="utf-8").read()
     ok("o gravador decide pelo estado (nao por lista fixa)", "function decidir(" in fonte)
     ok("o gravador grava o relatorio de decisoes ao lado do video", "-decisoes.json" in fonte)
