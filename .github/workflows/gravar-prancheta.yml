@@ -47,7 +47,9 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
           npm install --no-save --no-audit --no-fund playwright-core@1
-          npx --yes playwright install --with-deps chromium-headless-shell
+          npx --yes playwright install chromium-headless-shell
+          # --with-deps é lento (apt completo) e já falhou por tempo; o headless-shell
+          # roda no runner com as libs padrão do ubuntu-24.04 (medido no job do CEIFALUME).
 
       - name: Barreiras offline
         run: |
