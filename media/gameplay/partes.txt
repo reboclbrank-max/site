@@ -1,0 +1,2 @@
+file '/home/user/site-work/media/gameplay/ceifalume-gameplay-cru.mp4'
+file '/home/user/site-work/media/gameplay/cartao.mp4'

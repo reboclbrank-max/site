@@ -30,7 +30,8 @@ GAMEPLAY = {
         "arquivo": "media/gameplay/ceifalume-gameplay.mp4",
         "sufixo_titulo": " — gameplay gravado no navegador",
         "origem": ("Gameplay: gravado automaticamente do próprio jogo rodando no navegador "
-                   "(build web do repositório), sem edição."),
+                   "(build web do repositório). A trilha é sintetizada pelo próprio script de "
+                   "produção e as legendas descrevem o que o agente fez na partida."),
     },
 }
 

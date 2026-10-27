@@ -1,0 +1,23 @@
+1
+00:00:02,400 --> 00:00:06,400
+plantando semente
+
+2
+00:00:13,900 --> 00:00:17,900
+fazendo bico: +1 moeda
+
+3
+00:00:19,000 --> 00:00:23,000
+plantando semente
+
+4
+00:00:32,700 --> 00:00:35,500
+fazendo bico: +1 moeda
+
+5
+00:00:35,500 --> 00:00:37,800
+plantando semente
+
+6
+00:00:37,800 --> 00:00:41,800
+colhendo a planta madura
