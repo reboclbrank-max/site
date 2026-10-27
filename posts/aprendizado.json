@@ -1,0 +1,21 @@
+{
+ "quando": "2026-10-27T01:02:28Z",
+ "confiavel": false,
+ "melhor_hora": null,
+ "decisao": "manter",
+ "motivo": "diferença dentro do ruído: melhor 01h (1.14) vs mediana 1.25, desvio 0.48",
+ "detalhe": {
+  "horas_lidas": 21,
+  "amostra_total": 300,
+  "elegiveis": 2,
+  "amostra_minima": 30,
+  "mediana": 1.25,
+  "desvio": 0.48344474437279594,
+  "melhor": {
+   "hora": 1,
+   "media": 1.14,
+   "n": 36
+  }
+ },
+ "_regra": "só troca horário com amostra >= 30 por hora E ganho maior que um desvio padrão"
+}
