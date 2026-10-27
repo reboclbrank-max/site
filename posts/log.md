@@ -2082,3 +2082,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=22(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > Dois mundos, um dev brasileiro 🇧🇷✨ PRANCHETA: tático de futebol fictício, grátis no navegador/APK (Godot). CEIFALUME 0.1: fazenda noturna idle onde a 
+
+## 27/10/2026 22:17 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ⚪ fila de reserva — motor=g4f auto · convite da ponte anexado (motor não citou o Instagram) |
+| destino editorial | ✅ rota oficial canais |
+| tema do ciclo | ✅ convide a seguir a conta no Instagram para ver os bastidores dos jogos |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18120146617997 |
+| threads | ✅ publicado id 181176205251 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ➖ cadencia diaria de interacao ja cumprida (2026-10-27) |
+| cacador de oportunidades | ➖ cadencia diaria de interacao ja cumprida (2026-10-27) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=23(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> PRANCHETA: desenhe a bola parada e veja o jogo simular, grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, plantações crescem 8h offline Bas

@@ -159,3 +159,5 @@
   Postar quase todo dia: mantém o algoritmo em alta, gera tráfego constante, reforça reputação, prova consistência, atrai patrocinadores, aumenta engajamento real e mantém a comunidade envolvida. Feedback rápido facilita melhorias rápidas no produto.
 - **27/10 — Por que dev indie brasileiro deve postar nas redes quase todo dia?**
   Postar quase todo dia: mantém o algoritmo em alta, gera tráfego constante, reforça reputação, prova consistência, atrai patrocinadores, aumenta engajamento real e mantém a comunidade envolvida. Feedback rápido facilita melhorias rápidas no produto.
+- **27/10 — Por que dev indie brasileiro deve postar nas redes quase todo dia?**
+  Postar quase todo dia: mantém o algoritmo em alta, gera tráfego constante, reforça reputação, prova consistência, atrai patrocinadores, aumenta engajamento real e mantém a comunidade envolvida. Feedback rápido facilita melhorias rápidas no produto.
