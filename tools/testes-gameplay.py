@@ -132,9 +132,10 @@ def main():
         " celeiroBarato:d(eco({moedas:35})).tipo,"
         " prioridade:d(eco({moedas:100}),{melhoriasFeitas:{poco:true}}).melhoria.id,"
         " caro:d(eco({moedas:1000}),{melhoriasFeitas:todos}),"
-        " semente:d(eco({moedas:210}),{melhoriasFeitas:todos}),"
+        " semente:d(eco({moedas:90}),{melhoriasFeitas:todos}),"
+        " rodadaCurta:d(eco({moedas:25}),{melhoriasFeitas:todos}).tipo,"
         " tomate:d(eco({moedas:900}),{melhoriasFeitas:todos}),"
-        " semSemente:d(eco({moedas:210,semente:3}),{melhoriasFeitas:todos}).tipo,"
+        " semSemente:d(eco({moedas:900,semente:3}),{melhoriasFeitas:todos}).tipo,"
         " zero:d(eco({moedas:0})).tipo,"
         " ganho:m.ganhoDeMoedas(25,19,70),"
         " semLeitura:m.ganhoDeMoedas(null,19,70)"
@@ -154,12 +155,14 @@ def main():
            e["prioridade"] == "lanterna", e["prioridade"])
         ok("com as melhorias feitas o robo troca a semente pelo maior valor",
            e["caro"]["tipo"] == "semente", e["caro"])
-        ok("a semente escolhida e a mais cara que o caixa cobre (1000 -> Abobora, 700+5)",
-           e["caro"]["semente"]["indice"] == 4, e["caro"]["semente"])
-        ok("com 210 moedas a semente escolhida e o Tomate (custo 200 + folga 5)",
-           e["semente"]["semente"]["nome"] == "Tomate", e["semente"]["semente"])
-        ok("com 900 moedas a semente escolhida sobe para a Abobora (venda 1400)",
-           e["tomate"]["semente"]["nome"] == "Abóbora", e["tomate"]["semente"])
+        ok("com 1000 moedas a semente e o Tomate (custo 200 x 4 celulas + 5 = 805)",
+           e["caro"]["semente"]["indice"] == 3, e["caro"]["semente"])
+        ok("com 90 moedas a semente ja sobe para o Milho (20 x 4 + 5 = 85)",
+           e["semente"]["semente"]["nome"] == "Milho", e["semente"]["semente"])
+        ok("com 25 moedas NAO sobe para o Milho (trocar sem caixa para a rodada piora o jogo)",
+           e["rodadaCurta"] != "semente", e["rodadaCurta"])
+        ok("com 900 moedas a semente escolhida sobe para o Tomate (venda 380)",
+           e["tomate"]["semente"]["nome"] == "Tomate", e["tomate"]["semente"])
         ok("semente ja escolhida nao e trocada de novo", e["semSemente"] != "semente",
            e["semSemente"])
         ok("sem moeda nenhuma o robo continua jogando (nao travа no dinheiro)",
