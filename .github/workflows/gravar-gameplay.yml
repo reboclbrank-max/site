@@ -16,9 +16,9 @@ on:
   workflow_dispatch:
     inputs:
       segundos:
-        description: "duração da gravação em segundos"
+        description: "duração da gravação em segundos (precisa passar da colheita: ~130)"
         required: false
-        default: "45"
+        default: "130"
       publicar:
         description: "digite PUBLICAR para enviar ao YouTube (vazio = só gravar)"
         required: false
@@ -63,15 +63,19 @@ jobs:
         run: |
           node tools/gravar-gameplay.js \
             --saida media/gameplay/ceifalume-gameplay-cru.mp4 \
-            --segundos "${{ github.event.inputs.segundos || '45' }}" \
+            --segundos "${{ github.event.inputs.segundos || '130' }}" \
             --largura 1280 --altura 720 --quadros 24
 
-      - name: Pós-produção (legenda do que o agente fez, trilha sintetizada, cartão final)
+      # O corte é escolhido pelo RELATÓRIO (quando o agente semeou e colheu), não por segundos
+      # fixos: no runner o relógio do jogo anda diferente do sandbox. Se o corte enxuto medir
+      # movimento abaixo do mínimo, o script tenta um corte mais largo e, se nenhum passar,
+      # termina em erro — vídeo parado não é entregue.
+      - name: Pós-produção (corte automático, legenda, trilha, cartão final)
         run: |
           python3 tools/produzir-video.py \
             media/gameplay/ceifalume-gameplay-cru.mp4 \
             media/gameplay/ceifalume-gameplay-cru-decisoes.json \
-            media/gameplay/ceifalume-gameplay.mp4
+            media/gameplay/ceifalume-gameplay.mp4 --trechos-auto
 
       - name: Mede o vídeo final (tela preta e imagem parada reprovam aqui)
         run: python3 tools/validar-video.py media/gameplay/ceifalume-gameplay.mp4
