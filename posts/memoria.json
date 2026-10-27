@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-27T12:19:44Z",
+ "quando": "2026-10-27T12:29:44Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
@@ -224,37 +224,37 @@
   "_regra": "só troca horário com amostra >= 30 por hora E ganho maior que um desvio padrão"
  },
  "plano": {
-  "quando": "2026-10-27T00:26:05Z",
+  "quando": "2026-10-27T12:29:44Z",
   "meta_em_risco": {
    "meta": "itch: downloads",
    "falta": 54.0,
-   "por_dia": 3.18
+   "por_dia": 3.38
   },
   "ranking_de_risco": [
    {
     "meta": "itch: downloads",
     "falta": 54.0,
-    "por_dia": 3.18
+    "por_dia": 3.38
    },
    {
     "meta": "Instagram: seguidores",
     "falta": 50.0,
-    "por_dia": 2.94
+    "por_dia": 3.12
    },
    {
     "meta": "Bluesky: seguidores",
     "falta": 18.0,
-    "por_dia": 1.06
+    "por_dia": 1.12
    },
    {
     "meta": "YouTube: inscritos",
     "falta": 16.0,
-    "por_dia": 0.94
+    "por_dia": 1.0
    },
    {
     "meta": "Instagram: publicações",
     "falta": 10.0,
-    "por_dia": 0.59
+    "por_dia": 0.62
    }
   ],
   "formatos_a_evitar": [
@@ -285,13 +285,13 @@
   "versao": 1,
   "ultima_publicacao": "2026-10-27T12:19:44Z",
   "ultima_medicao": "2026-10-27T11:59:44Z",
-  "ultima_pesquisa": null,
+  "ultima_pesquisa": "2026-10-27T12:29:44Z",
   "ultima_aprendizagem": null,
-  "pulsos": 6
+  "pulsos": 7
  },
  "fila": {
   "publicar": "feito",
-  "pesquisar": "pendente",
+  "pesquisar": "feito",
   "medir": "feito",
   "aprender": "pendente"
  },
