@@ -4,8 +4,8 @@
  "ultima_publicacao": "2026-10-27T12:19:44Z",
  "ultima_medicao": "2026-10-27T11:59:44Z",
  "ultima_pesquisa": "2026-10-27T12:29:44Z",
- "ultima_aprendizagem": null,
- "pulsos": 7,
+ "ultima_aprendizagem": "2026-10-27T12:39:44Z",
+ "pulsos": 8,
  "historico": [
   {
    "quando": "2026-10-27T00:30:50Z",
@@ -55,6 +55,13 @@
    "motivo": "fila: [pesquisar-20261027T003050Z] meta em risco: itch: downloads",
    "codigo": 0,
    "saida": "meta em risco: itch: downloads (falta 54.0 · 3.38/dia)\nformatos a evitar: comentário em post alheio\ntema do dia: ⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des\nhorári"
+  },
+  {
+   "quando": "2026-10-27T12:39:44Z",
+   "acao": "aprender",
+   "motivo": "fila: [aprender-20261027T003050Z] horário: só com prova",
+   "codigo": 0,
+   "saida": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.14) vs mediana 1.25, desvio 0.48\ngravado em posts/aprendizado.json"
   }
  ]
 }
