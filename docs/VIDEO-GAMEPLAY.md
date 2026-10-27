@@ -166,9 +166,11 @@ aumentou o ganho por minuto; na janela longa ficou até um pouco abaixo. O que o
 4. **O gargalo não é comprar, é colher.** Na janela de 900 s o robô sem economia fez **36
    colheitas** de Nabo e 404 decisões (a maioria "bico", +1 moeda por toque). Com Milho foram 18
    colheitas e 411 decisões: o ciclo do Milho é mais longo e o bico continuou sendo a maior fonte.
-   Ou seja: o próximo ganho real está em **mais células** (a 5ª do "Comprar campo" ainda não está
-   mapeada — por isso o campo está catalogado mas não é comprado) e em **colher mais rápido**,
-   não em gastar moeda.
+   Ou seja: o próximo ganho real está em **mais células** e em **colher mais rápido**, não em
+   gastar moeda. E isso foi visto no próprio CI: a gravação de 27/10 21:13 comprou *Cavar Poço* e
+   *Comprar campo* (89 moedas) e terminou com **30,00 moedas/min** e as mesmas 4 colheitas de
+   antes — o campo novo é comprado quando sobra caixa, mas ainda não rende, porque o robô só
+   enxerga as 4 células medidas em (510,259), (760,259), (1001,259) e (510,490).
 
 Prova automatizada dessa parte: `tools/testes-gameplay.py` ganhou 15 provas de economia (leitor do
 save, prioridade de compra, celeiro que não rende não é comprado, semente mais cara que o caixa
