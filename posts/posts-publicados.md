@@ -259,3 +259,6 @@ Dois mundos, um código feito com carinho no Brasil 🇧🇷✨ Desenhe jogadas 
 
 ## 27/10/2026 19:43 UTC
 Dois mundos, um dev brasileiro 🇧🇷✨ PRANCHETA: tático de futebol fictício, grátis no navegador/APK (Godot). CEIFALUME 0.1: fazenda noturna idle onde a colheita cresce enquanto você dorme 🌙🌱 Feito com carinho aqui. #Gamede
+
+## 27/10/2026 22:17 UTC
+PRANCHETA: desenhe a bola parada e veja o jogo simular, grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, plantações crescem 8h offline Bastidores e artes novas também no Instagram — todos os canais no link.
