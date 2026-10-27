@@ -2,10 +2,10 @@
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
  "ultima_publicacao": "2026-10-27T00:41:19Z",
- "ultima_medicao": "2026-10-27T00:31:19Z",
+ "ultima_medicao": "2026-10-27T11:59:44Z",
  "ultima_pesquisa": null,
  "ultima_aprendizagem": null,
- "pulsos": 3,
+ "pulsos": 4,
  "historico": [
   {
    "quando": "2026-10-27T00:30:50Z",
@@ -27,6 +27,13 @@
    "motivo": "fila: [publicar-20261027T003050Z] ⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
    "codigo": 0,
    "saida": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)"
+  },
+  {
+   "quando": "2026-10-27T11:59:44Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261027T115944Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 184,\n   \"falta\": null,\n   \"status\": \"AC"
   }
  ]
 }
