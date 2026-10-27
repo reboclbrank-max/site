@@ -129,14 +129,16 @@ const TELA = { largura: 1280, altura: 720 };
 
 // regiões (x, y, largura, altura) em coordenadas de 1280x720
 const REGIAO_TUTORIAL = { x: 520, y: 298, w: 240, h: 56 };   // botão amarelo do tutorial
-const REGIAO_TITULO = { x: 500, y: 445, w: 290, h: 66 };      // caixa "Jogar" da capa
-const REGIAO_DIALOGO = { x: 330, y: 180, w: 620, h: 220 };    // caixa escura do tutorial
+const REGIAO_TITULO = { x: 470, y: 445, w: 350, h: 80 };       // caixa "Jogar" da capa
+const REGIAO_DIALOGO = { x: 330, y: 180, w: 620, h: 220 };     // painel do tutorial
+const REGIAO_HUD = { x: 500, y: 0, w: 300, h: 50 };            // "Moedas: N" dourado do jogo
+// Caixas dos campos, lidas da tela do jogo em 27/10/2026 (o build tem 4 campos: 3 em cima e
+// 1 embaixo à esquerda). A quinta "célula" que existia antes media o telhado da casa.
 const CELULAS = [
-  { id: 'A', x: 420, y: 205, w: 180, h: 130 },
-  { id: 'B', x: 680, y: 205, w: 180, h: 130 },
-  { id: 'C', x: 940, y: 205, w: 180, h: 130 },
-  { id: 'D', x: 420, y: 435, w: 180, h: 130 },
-  { id: 'E', x: 680, y: 435, w: 180, h: 130 }
+  { id: 'A', x: 400, y: 157, w: 220, h: 205 },
+  { id: 'B', x: 640, y: 157, w: 240, h: 205 },
+  { id: 'C', x: 884, y: 157, w: 235, h: 205 },
+  { id: 'D', x: 400, y: 400, w: 220, h: 180 }
 ];
 const ALVO = {
   tutorial: { x: 640, y: 331 },
@@ -148,10 +150,13 @@ const ALVO = {
 };
 // limites de decisão — calibrados nos quadros de 27/10 (ver docs/VIDEO-GAMEPLAY.md)
 const LIMIAR = {
-  botao: 0.05,        // fração de amarelo/claro que já conta como botão visível
-  verdeVazio: 0.02,   // abaixo disso a célula está vazia
-  verdePronto: 0.085, // acima disso a planta já pode ser colhida
-  esperaCrescimento: 14000 // ms em que uma célula semeada ainda pode parecer vazia
+  botao: 0.02,        // fração de branco que já conta como letra "Jogar" visível
+  hud: 0.04,          // dourado de "Moedas" no topo: só existe com a fazenda na tela
+  verdeVazio: 0.02,   // abaixo disso a célula está vazia (medido: 0,000 no campo vazio)
+  verdeCrescendo: 0.03, // broto na tela (medido: 0,049 a 0,100)
+  brancoPronto: 0.012,  // nabo maduro: casca branca no miolo (medido: 0,027 vs 0,000)
+  barraOcupada: 0.02,   // barra dourada de progresso (medido: 0,046 já 3 s após semear; 0,000 vazia)
+  esperaCrescimento: 4000  // ms de carência depois de semear (a barra aparece em até 3 s)
 };
 
 /** Conta, dentro de um recorte do canvas, quantos pixels são amarelos e quantos são claros. */
@@ -175,23 +180,44 @@ const MEDIDOR = (regioes) => {
     }
     return n / tot;
   };
-  const amarelo = (r, c, b) => c > 150 && c > b + 60 && b < 140;   // dourado do jogo
-  const claro = (r, c, b) => r > 200 && c > 200 && b > 200;
+  const ouro = (r, c, b) => c > 140 && c > b + 50 && b < 150;      // dourado do jogo
+  const brancoTexto = (r, c, b) => r > 200 && c > 200 && b > 200;  // letra "Jogar"
   const verde = (r, c, b) => c > 90 && c > r + 30 && c > b + 30;
-  const escuro = (r, c, b) => r < 40 && c < 45 && b < 60;
-  // ⚠️ O botão do tutorial é amarelo, mas o brilho de colheita TAMBÉM é amarelo e cai nessa
-  // mesma faixa da tela. Por isso o tutorial só conta quando a caixa escura dele está atrás
-  // (medido: 0,75 da região é escura com o tutorial aberto; 0,00 sem ele).
-  const dialogo = conta(regioes.dialogo, escuro);
+  const brancoCasca = (r, c, b) => r > 190 && c > 185 && b > 170;   // casca do nabo maduro
+  // ⚠️ CORRIGIDO EM 27/10/2026 — o vídeo entregue ao dono tinha o tutorial preso na tela do
+  // começo ao fim. A causa foi medida quadro a quadro: o detector antigo exigia 35% de pixels
+  // "escuros" (r<40,g<45,b<60) dentro do painel, mas o painel do tutorial é AZUL-ESCURO
+  // (média rgb 44,52,65 → o azul passa de 60) e só dava 0,255 de "escuro". O tutorial nunca era
+  // reconhecido, então o robô nunca tocou em "Entendi, jogar!" e ele ficou para sempre no quadro.
+  // Agora o teste é o azul do painel + o dourado do botão — medidos nos dois estados:
+  //   tutorial aberto: painel azul 0,878 · botão dourado 0,582
+  //   jogando sem tutorial: painel azul 0,080 · botão dourado 0,000
+  const azulPainel = (r, c, b) => b >= 45 && b <= 115 && b > r + 18 && b > c + 8 && r < 80;
+  const dialogo = conta(regioes.dialogo, azulPainel);
+  // 0,084 com a fazenda na tela (HUD "Moedas" em dourado) e 0,000 em splash/título: é o sinal
+  // mais limpo para saber que o jogo já está sendo jogado.
+  const hud = conta(regioes.hud, ouro);
   return {
     dialogo,
-    tutorial: dialogo > 0.35 ? conta(regioes.tutorial, amarelo) : 0,
-    titulo: conta(regioes.titulo, claro),
-    celulas: regioes.celulas.map((c) => ({
-      id: c.id,
-      verde: conta(c, verde),
-      centro: { x: Math.round(c.x + c.w / 2), y: Math.round(c.y + c.h / 2) }
-    }))
+    tutorial: dialogo > 0.6 ? conta(regioes.tutorial, ouro) : 0,
+    titulo: conta(regioes.titulo, brancoTexto),
+    hud,
+    celulas: regioes.celulas.map((c) => {
+      // Faixas medidas nos quadros do jogo:
+      //   crescendo → broto verde ocupa ~10% do miolo da caixa
+      //   pronto    → o nabo fica BRANCO (verde cai para ~4% e aparece branco ~3%)
+      //   colher    → botão dourado "Colher" na faixa de baixo da caixa
+      const miolo = { x: c.x, y: c.y + 45, w: c.w, h: Math.max(20, c.h - 105) };
+      const rodape = { x: c.x + 10, y: c.y + c.h - 45, w: c.w - 20, h: 40 };
+      return {
+        id: c.id,
+        verde: conta(miolo, verde),
+        branco: conta(miolo, brancoCasca),
+        ouroBotao: conta(rodape, ouro),
+        centro: { x: Math.round(c.x + c.w / 2), y: Math.round(c.y + c.h / 2) },
+        colher: { x: Math.round(c.x + c.w / 2), y: Math.round(c.y + c.h - 25) }
+      };
+    })
   };
 };
 
@@ -206,25 +232,46 @@ function decidir(estado, memoria = {}) {
   if (estado.titulo > LIMIAR.botao) {
     return { tipo: 'toque', alvo: ALVO.titulo, motivo: 'tela de título (' + estado.titulo.toFixed(2) + ')' };
   }
+  // Ainda não há HUD de moedas na tela: é splash do estúdio ou outra tela de abertura.
+  // Tocar no mesmo ponto do "Jogar" atravessa essa tela sem efeito colateral.
+  if (estado.hud <= LIMIAR.hud) {
+    return { tipo: 'toque', alvo: ALVO.titulo, motivo: 'tela de abertura (sem HUD)' };
+  }
   const agora = memoria.agora || 0;
   const ocupadas = memoria.ocupadas || {};
-  // madura: a visão decide (o broto é verde e cresce na tela)
-  const prontas = estado.celulas.filter((c) => c.verde >= LIMIAR.verdePronto);
+  // PRONTA: o nabo maduro fica branco (medido: casca branca 0,027 no miolo, verde cai de 0,10
+  // para 0,04). A leitura antiga exigia "verde alto" e por isso nunca colhia nada: no ponto de
+  // colheita a planta deixa de ser verde.
+  const prontas = estado.celulas.filter((c) => c.branco >= LIMIAR.brancoPronto);
   if (prontas.length) {
     const c = prontas[0];
-    return { tipo: 'colher', alvo: c.centro, celula: c.id,
-             motivo: 'célula ' + c.id + ' pronta (verde ' + c.verde.toFixed(3) + ')' };
+    return { tipo: 'colher', alvo: c.colher, celula: c.id, celulaCentro: c.centro,
+             motivo: 'célula ' + c.id + ' pronta (casca ' + c.branco.toFixed(3) + ')' };
   }
-  // livre: a visão diz que não há verde E a memória diz que não semeei ali há pouco.
-  // Sem a memória o robô replanta a mesma célula para sempre: a semente leva ~12 s para
-  // aparecer como broto, e nesse tempo a célula parece vazia.
+  // CRESCENDO: broto verde na tela — não replantar em cima, mas também não é hora de colher.
+  const crescendo = estado.celulas.filter((c) => c.verde >= LIMIAR.verdeCrescendo);
+  if (crescendo.length) {
+    const c = crescendo[0];
+    return { tipo: 'toque', alvo: ALVO.bico, celula: c.id,
+             motivo: 'célula ' + c.id + ' crescendo (verde ' + c.verde.toFixed(3) + '): bico' };
+  }
+  // livre: nada plantado na célula. O sinal mais cedo é a BARRA DOURADA de progresso, que
+  // aparece no rodapé da caixa no instante em que a semente cai (medido: 0,12 na célula com
+  // semente e 0,00 na vazia). Antes o robô esperava o broto verde e nesse vão semeava a mesma
+  // célula duas vezes ("Nabo crescendo" com dois toques de semente).
+  const ocupada = (c) => c.ouroBotao > LIMIAR.barraOcupada
+    || c.verde >= LIMIAR.verdeCrescendo || c.branco >= LIMIAR.brancoPronto;
+  // Só planta quando a célula está livre em DUAS leituras seguidas: a barra dourada leva de 1 a
+  // 3 s para aparecer e, com uma leitura só, o robô semeava de novo em cima da semente anterior,
+  // reiniciando o crescimento (medido em 27/10: 4 campos, 8 sementes e nenhuma colheita em 75 s).
+  const confirmacoes = memoria.confirmacoes || {};
   const livres = estado.celulas.filter((c) =>
-    c.verde <= LIMIAR.verdeVazio && (agora - (ocupadas[c.id] || -1e9)) > LIMIAR.esperaCrescimento);
+    !ocupada(c) && (confirmacoes[c.id] || 0) >= 2
+    && (agora - (ocupadas[c.id] || -1e9)) > LIMIAR.esperaCrescimento);
   if (livres.length) {
     return { tipo: 'plantar', celula: livres[0], motivo: 'célula ' + livres[0].id + ' livre' };
   }
-  const crescendo = estado.celulas.filter((c) => c.verde > LIMIAR.verdeVazio && c.verde < LIMIAR.verdePronto);
-  if (crescendo.length || estado.celulas.every((c) => (agora - (ocupadas[c.id] || -1e9)) <= LIMIAR.esperaCrescimento)) {
+  if (estado.celulas.every((c) => (agora - (ocupadas[c.id] || -1e9)) <= LIMIAR.esperaCrescimento)) {
     return { tipo: 'toque', alvo: ALVO.bico, motivo: 'tudo semeado ou crescendo: moeda no bico' };
   }
   return { tipo: 'toque', alvo: ALVO.vender, motivo: 'sem célula livre: vender' };
@@ -345,18 +392,30 @@ async function principal() {
     let colhidas = 0;
     let plantadas = 0;
     let toquesTela = 0;
+    let toquesTutorial = 0;
+    let tutorialFechado = false;
+    let tutorialDesde = 0;
+    let segundosComTutorial = 0;
+    let confirmacoesAnteriores = {};
     while (Date.now() < fimAcoes) {
       let estado;
       try {
         estado = await pagina.evaluate(MEDIDOR, {
           tutorial: REGIAO_TUTORIAL, titulo: REGIAO_TITULO,
-          dialogo: REGIAO_DIALOGO, celulas: CELULAS
+          dialogo: REGIAO_DIALOGO, hud: REGIAO_HUD, celulas: CELULAS
         });
       } catch (e) {
         await pagina.waitForTimeout(400);
         continue;
       }
-      const d = decidir(estado, { agora: Date.now() - inicioAcoes, ocupadas });
+      const confirmacoes = {};
+      estado.celulas.forEach((c) => {
+        const livre = c.ouroBotao <= LIMIAR.barraOcupada && c.verde < LIMIAR.verdeCrescendo
+          && c.branco < LIMIAR.brancoPronto;
+        confirmacoes[c.id] = livre ? ((confirmacoesAnteriores[c.id] || 0) + 1) : 0;
+      });
+      confirmacoesAnteriores = confirmacoes;
+      const d = decidir(estado, { agora: Date.now() - inicioAcoes, ocupadas, confirmacoes });
       let acao;
       if (d.tipo === 'plantar') {
         await pagina.mouse.click(ALVO.semente.x, ALVO.semente.y);
@@ -369,7 +428,11 @@ async function principal() {
         acao = 'semente + célula ' + d.celula.id;
         await pagina.waitForTimeout(420);
       } else if (d.tipo === 'colher') {
+        // Duas tentativas de propósito: o botão "Colher" fica no rodapé da caixa e o toque na
+        // planta também colhe. Se o primeiro não pegar, o segundo pega.
         await acionar(pagina, d.alvo);
+        await pagina.waitForTimeout(450);
+        await acionar(pagina, d.celulaCentro || d.alvo);
         delete ocupadas[d.celula];
         colhidas += 1;
         acao = 'colher ' + d.celula;
@@ -381,20 +444,72 @@ async function principal() {
         await acionar(pagina, d.alvo);
         acao = 'toque em ' + d.alvo.x + ',' + d.alvo.y;
         if (d.alvo === ALVO.tutorial || d.alvo === ALVO.titulo) toquesTela += 1;
-        await pagina.waitForTimeout(320);
+        // Abertura (splash do estúdio + capa) é só passagem: toque rápido, sem esperar 1 s por
+        // toque. Antes o aquecimento comia 10 s dos 45 s de vídeo.
+        const abertura = d.alvo === ALVO.titulo && estado.hud <= LIMIAR.hud;
+        // O tutorial é um modal: depois do toque, confere se ele REALMENTE saiu da tela.
+        // Antes (vídeo de 27/10) o robô achava que estava jogando com o "COMO JOGAR" aberto.
+        if (d.alvo === ALVO.tutorial) {
+          await pagina.waitForTimeout(600);
+          const depois = await pagina.evaluate(MEDIDOR, {
+            tutorial: REGIAO_TUTORIAL, titulo: REGIAO_TITULO,
+            dialogo: REGIAO_DIALOGO, hud: REGIAO_HUD, celulas: CELULAS
+          });
+          tutorialFechado = depois.tutorial === 0 && depois.dialogo <= 0.6;
+          acao += tutorialFechado ? ' · tutorial saiu da tela' : ' · tutorial AINDA na tela';
+          toquesTutorial += 1;
+          if (toquesTutorial > 8 && !tutorialFechado) {
+            console.error('✘ o tutorial não fechou depois de ' + toquesTutorial + ' toques');
+            await contexto.close();
+            return 8;
+          }
+        }
+        // Ritmo: a espera da plantação é longa (o tempo do jogo anda ~3x mais devagar sob
+        // gravação). Alternar o bico a cada ~1 s mantém a tela viva e as moedas subindo, em vez
+        // de 30 s de imagem praticamente parada.
+        await pagina.waitForTimeout(abertura ? 180 : 150);
+      }
+      const agoraS = Date.now() - inicioAcoes;
+      if (estado.tutorial > 0) {
+        if (!tutorialDesde) tutorialDesde = agoraS;
+      } else if (tutorialDesde) {
+        segundosComTutorial += (agoraS - tutorialDesde) / 1000;
+        tutorialDesde = 0;
       }
       decisoes.push({
-        t: +((Date.now() - inicioAcoes) / 1000).toFixed(1),
+        t: +(agoraS / 1000).toFixed(1),
         tutorial: +estado.tutorial.toFixed(3),
+        dialogo: +estado.dialogo.toFixed(3),
         titulo: +estado.titulo.toFixed(3),
+        hud: +estado.hud.toFixed(3),
         verdes: estado.celulas.map((c) => +c.verde.toFixed(3)),
+        cascas: estado.celulas.map((c) => +c.branco.toFixed(3)),
+        barras: estado.celulas.map((c) => +c.ouroBotao.toFixed(3)),
         motivo: d.motivo, acao
       });
     }
-    const verdeFinal = (await pagina.evaluate(MEDIDOR, {
+    const estadoFinal = await pagina.evaluate(MEDIDOR, {
       tutorial: REGIAO_TUTORIAL, titulo: REGIAO_TITULO,
-      dialogo: REGIAO_DIALOGO, celulas: CELULAS
-    })).celulas.map((c) => c.id + ':' + c.verde.toFixed(3)).join(' ');
+      dialogo: REGIAO_DIALOGO, hud: REGIAO_HUD, celulas: CELULAS
+    });
+    const verdeFinal = estadoFinal.celulas.map((c) => c.id + ':' + c.verde.toFixed(3)).join(' ');
+    if (tutorialDesde) segundosComTutorial += (Date.now() - inicioAcoes - tutorialDesde) / 1000;
+    // PORTÃO DO TUTORIAL — o dono reprovou o vídeo de 27/10 porque o "COMO JOGAR" nunca saía
+    // da tela. Enquanto esse portão existir, um vídeo com o tutorial aberto NÃO é entregue:
+    // o gravador falha e o pipeline para aqui.
+    if (estadoFinal.tutorial > 0) {
+      console.error('✘ o tutorial ("COMO JOGAR") ainda está na tela no fim da captura');
+      await contexto.close();
+      return 8;
+    }
+    if (segundosComTutorial > op.segundos * 0.2) {
+      console.error('✘ o tutorial ficou ' + segundosComTutorial.toFixed(1) + ' s na tela ('
+        + Math.round(100 * segundosComTutorial / op.segundos) + '% da captura)');
+      await contexto.close();
+      return 8;
+    }
+    console.log('tutorial: ficou ' + segundosComTutorial.toFixed(1) + ' s na tela · fechou: '
+      + (tutorialFechado ? 'sim' : 'não precisou') + ' · toques nele: ' + toquesTutorial);
 
     // Um quadro de prova, salvo ao lado do vídeo: serve para conferir a olho o que foi gravado.
     const quadro = op.saida.replace(/\.mp4$/i, '-quadro.png');
@@ -408,6 +523,8 @@ async function principal() {
     try {
       fs.writeFileSync(op.saida.replace(/\.mp4$/i, '-decisoes.json'), JSON.stringify({
         decisoes, plantadas, colhidas, telas: toquesTela, verde_final: verdeFinal,
+        tutorial_segundos: +segundosComTutorial.toFixed(1), tutorial_fechou: tutorialFechado,
+        tutorial_toques: toquesTutorial,
         limite: LIMIAR, celulas: CELULAS.map((c) => c.id)
       }, null, 1));
     } catch (e) { /* relatório é extra, não pode derrubar a captura */ }

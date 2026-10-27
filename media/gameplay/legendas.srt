@@ -1,23 +1,27 @@
 1
-00:00:02,400 --> 00:00:06,400
-plantando semente
+00:00:00,100 --> 00:00:04,100
+tela de abertura (sem HUD)
 
 2
-00:00:13,900 --> 00:00:17,900
-fazendo bico: +1 moeda
+00:00:06,100 --> 00:00:10,100
+abrindo o jogo
 
 3
-00:00:19,000 --> 00:00:23,000
+00:00:12,700 --> 00:00:16,700
 plantando semente
 
 4
-00:00:32,700 --> 00:00:35,500
-fazendo bico: +1 moeda
+00:00:23,500 --> 00:00:24,600
+vendendo a colheita
 
 5
-00:00:35,500 --> 00:00:37,800
-plantando semente
+00:00:24,600 --> 00:00:28,600
+fazendo bico: +1 moeda
 
 6
-00:00:37,800 --> 00:00:41,800
+00:00:35,000 --> 00:00:39,000
 colhendo a planta madura
+
+7
+00:00:48,400 --> 00:00:50,000
+vendendo a colheita

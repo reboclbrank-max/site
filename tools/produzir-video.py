@@ -166,7 +166,67 @@ def cartao_final(binario, destino, segundos, titulo, linha2, raiz=RAIZ):
     return r.returncode == 0, (r.stderr or "")[-300:]
 
 
-def produzir(cru, decisoes_json, saida, binario=None, escrever=print):
+def recortar(binario, cru, destino, inicio, fim):
+    """Corta um trecho do cru. Existe porque a captura sempre gasta segundos na abertura do
+    jogo e, sob gravação, o tempo do jogo anda ~3x mais devagar que o relógio — o trecho de
+    espera da plantação fica longo. Recortar é escolher o que mostrar, não maquiar: as decisões
+    que sobram são as mesmas, só com o tempo deslocado."""
+    comando = [binario, "-y", "-ss", "%.2f" % inicio, "-i", cru]
+    if fim:
+        comando += ["-t", "%.2f" % max(0.1, fim - inicio)]
+    comando += ["-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
+                "-an", destino]
+    r = subprocess.run(comando, capture_output=True, text=True)
+    return r.returncode == 0, (r.stderr or "")[-300:]
+
+
+def recortar_trechos(binario, cru, destino, trechos, pasta):
+    """Junta vários trechos do cru num só arquivo, na ordem pedida.
+
+    Por que existe: no jogo, entre plantar e colher passam ~30 s de tempo do jogo — e sob
+    gravação o relógio do jogo anda quase 3x mais devagar, então a espera ocupa mais de um
+    minuto de filme quase parado. O vídeo mostra a ação (plantar, crescer, colher, vender) e o
+    trecho de espera é cortado; as decisões do relatório são as mesmas, só com o tempo deslocado.
+    """
+    pedacos = []
+    for i, (ini, fim, velocidade) in enumerate(trechos):
+        pedaco = os.path.join(pasta, "trecho-%d.mp4" % i)
+        comando = [binario, "-y", "-ss", "%.2f" % ini, "-i", cru,
+                   "-t", "%.2f" % max(0.1, fim - ini)]
+        if velocidade > 1:
+            # espera acelerada: o trecho em que a planta cresce aparece em ritmo x N
+            comando += ["-vf", "setpts=PTS/%.3f,fps=24" % velocidade]
+        comando += ["-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+                    "-pix_fmt", "yuv420p", "-an", pedaco]
+        r = subprocess.run(comando, capture_output=True, text=True)
+        if r.returncode != 0:
+            return False, (r.stderr or "")[-300:]
+        pedacos.append(pedaco)
+    lista = os.path.join(pasta, "trechos.txt")
+    with open(lista, "w", encoding="utf-8") as f:
+        for pedaco in pedacos:
+            f.write("file '" + os.path.abspath(pedaco) + "'\n")
+    r = subprocess.run([binario, "-y", "-f", "concat", "-safe", "0", "-i", lista,
+                        "-c", "copy", destino], capture_output=True, text=True)
+    return r.returncode == 0, (r.stderr or "")[-300:]
+
+
+def deslocar(decisoes, trechos):
+    """Reescreve o tempo das decisões para a linha do tempo do vídeo cortado."""
+    novas = []
+    deslocamento = 0.0
+    for ini, fim, velocidade in trechos:
+        for d in decisoes:
+            t = float(d.get("t", 0))
+            if ini <= t <= fim:
+                novas.append(dict(d, t=round((t - ini) / velocidade + deslocamento, 2)))
+        deslocamento += (fim - ini) / velocidade
+    novas.sort(key=lambda d: d["t"])
+    return novas
+
+
+def produzir(cru, decisoes_json, saida, binario=None, escrever=print, inicio=0.0, fim=None,
+             trechos=None):
     """Devolve (ok, informacoes, problemas)."""
     binario = binario or ffmpeg()
     problemas = []
@@ -180,6 +240,23 @@ def produzir(cru, decisoes_json, saida, binario=None, escrever=print):
 
     rel = json.load(open(decisoes_json, encoding="utf-8"))
     decisoes = rel.get("decisoes") or []
+    if trechos:
+        pasta_trechos = os.path.dirname(os.path.abspath(saida)) or "."
+        recortado = os.path.join(pasta_trechos, "cru-com-cortes.mp4")
+        ok_corte, erro = recortar_trechos(binario, cru, recortado, trechos, pasta_trechos)
+        if not ok_corte:
+            return False, info, ["recorte falhou: " + erro]
+        decisoes = deslocar(decisoes, trechos)
+        cru = recortado
+    elif inicio or fim:
+        recortado = os.path.join(os.path.dirname(os.path.abspath(saida)) or ".", "cru-recortado.mp4")
+        ok_corte, erro = recortar(binario, cru, recortado, inicio, fim or 0)
+        if not ok_corte:
+            return False, info, ["recorte falhou: " + erro]
+        decisoes = [dict(d, t=round(float(d.get("t", 0)) - inicio, 2)) for d in decisoes
+                    if float(d.get("t", 0)) >= inicio
+                    and (not fim or float(d.get("t", 0)) <= fim)]
+        cru = recortado
     dur = duracao(binario, cru)
     info["duracao_cru"] = dur
     if not dur:
@@ -246,7 +323,22 @@ def main(argv):
     rel = argv[1] if len(argv) > 1 else re.sub(r"\.mp4$", "-decisoes.json", cru)
     saida = argv[2] if len(argv) > 2 else os.path.join(RAIZ, "media", "gameplay",
                                                        "ceifalume-gameplay.mp4")
-    ok, _info, _problemas = produzir(cru, rel, saida)
+    resto = argv[3:]
+    inicio = 0.0
+    fim = None
+    if "--inicio" in resto:
+        inicio = float(resto[resto.index("--inicio") + 1])
+    if "--fim" in resto:
+        fim = float(resto[resto.index("--fim") + 1])
+    trechos = None
+    if "--trechos" in resto:
+        bruto = resto[resto.index("--trechos") + 1]
+        trechos = []
+        for parte in bruto.split(","):
+            faixa, _, vel = parte.partition(":")
+            ini, _, fim_t = faixa.partition("-")
+            trechos.append((float(ini), float(fim_t), float(vel or 1)))
+    ok, _info, _problemas = produzir(cru, rel, saida, inicio=inicio, fim=fim, trechos=trechos)
     return 0 if ok else 1
 
 
