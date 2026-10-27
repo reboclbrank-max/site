@@ -23,8 +23,14 @@ sys.path.insert(0, os.path.join(RAIZ, "tools"))
 falhas = 0
 
 
+total = 0
+
+
 def ok(nome, cond, detalhe=""):
-    global falhas
+    # O total era um número escrito à mão ("total = 37"): prova nova não entrava na conta e o
+    # relatório mentia sobre quantas provas existiam. Agora quem conta é a própria chamada.
+    global falhas, total
+    total += 1
     if cond:
         print("OK  " + nome)
     else:
@@ -129,6 +135,29 @@ def main():
            d2["semLista"] is True, saida)
         ok("com o navegador instalado a escolha não é null", d2["real"] is True, saida)
 
+    # 2b. o corte do vídeo é derivado do relatório (funciona em qualquer velocidade de máquina)
+    spec_prod = __import__("importlib.util").util.spec_from_file_location(
+        "prod", os.path.join(RAIZ, "tools", "produzir-video.py"))
+    mod_prod = __import__("importlib.util").util.module_from_spec(spec_prod)
+    spec_prod.loader.exec_module(mod_prod)
+    relatorio = [
+        {"t": 1.0, "acao": "toque em 640,484"},
+        {"t": 14.7, "acao": "semente + célula C"},
+        {"t": 23.2, "acao": "semente + célula D"},
+        {"t": 60.0, "acao": "toque em 100,481"},
+        {"t": 113.0, "acao": "colher C + vender"},
+        {"t": 128.3, "acao": "colher D + vender"},
+    ]
+    trechos = mod_prod.trechos_automaticos(relatorio, 135.0)
+    ok("o corte sai do relatório (cobre o plantio e a colheita)",
+       bool(trechos) and trechos[0][0] <= 14.7 and trechos[0][1] >= 23.2
+       and trechos[-1][0] <= 113.0 and trechos[-1][1] >= 128.3, trechos)
+    ok("relatório sem colheita não inventa corte",
+       mod_prod.trechos_automaticos([{"t": 1.0, "acao": "semente + célula A"}], 60.0) is None)
+    variantes = mod_prod.variantes_do_corte(trechos, 135.0)
+    ok("há corte de reserva mais largo quando o enxuto reprova",
+       len(variantes) >= 2 and variantes[1][0][0] <= trechos[0][0], len(variantes))
+
     # 3. o validador reprova o que não é gameplay
     mod, binario = ffmpeg()
     if not binario:
@@ -226,7 +255,6 @@ def main():
        "secrets.YT_CLIENT_ID" not in texto.split("publicar == 'PUBLICAR'")[0],
        "credencial citada antes do cadeado")
 
-    total = 37
     print("\n%d/%d testes do vídeo de gameplay passaram" % (total - falhas, total))
     return 1 if falhas else 0
 

@@ -166,6 +166,55 @@ def cartao_final(binario, destino, segundos, titulo, linha2, raiz=RAIZ):
     return r.returncode == 0, (r.stderr or "")[-300:]
 
 
+def trechos_automaticos(decisoes, duracao):
+    """Escolhe os trechos olhando o RELATÓRIO do agente, não números fixos.
+
+    O problema que isto resolve: no runner a captura é mais lenta ou mais rápida que no sandbox,
+    então o instante da colheita muda de run para run — um corte com segundos fixos ("106-132")
+    funciona numa máquina e corta a colheita fora na outra. O relatório diz exatamente quando o
+    agente semeou e quando colheu, então o corte é derivado daí.
+    """
+    plantar = [float(d.get("t", 0)) for d in decisoes if "semente" in str(d.get("acao") or "")]
+    colher = [float(d.get("t", 0)) for d in decisoes if "colher" in str(d.get("acao") or "")]
+    if not plantar or not colher:
+        return None
+    # trecho 1: abertura do jogo + todos os plantios (no máximo 30 s de cauda)
+    fim1 = min(duracao, plantar[-1] + 4)
+    inicio1 = max(0.0, fim1 - 30)
+    # trecho 2: as colheitas e a venda (com folga antes e depois)
+    inicio2 = max(0.0, colher[0] - 10)
+    fim2 = min(duracao, colher[-1] + 8)
+    if fim1 - inicio1 < 4 or fim2 - inicio2 < 4:
+        return None
+    return [(inicio1, fim1, 1.0), (inicio2, fim2, 1.0)]
+
+
+def variantes_do_corte(trechos, duracao):
+    """Do mais enxuto ao mais largo. Se a medida de movimento reprovar um, tenta o seguinte —
+    o que nunca acontece é entregar vídeo parado como se fosse gameplay."""
+    if not trechos:
+        return []
+    candidatos = [trechos]
+    largos = [(max(0.0, ini - 6), min(duracao, fim + 6), vel) for ini, fim, vel in trechos]
+    candidatos.append(largos)
+    tudo = [(max(0.0, trechos[0][0]), min(duracao, trechos[-1][1]), 1.0)]
+    candidatos.append(tudo)
+    return candidatos
+
+
+def medir_movimento(binario, arquivo):
+    """Usa o mesmo medidor do portão (tools/validar-video.py) — sem conta paralela."""
+    import importlib.util
+    caminho = os.path.join(RAIZ, "tools", "validar-video.py")
+    spec = importlib.util.spec_from_file_location("validar_video", caminho)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    quadros = mod.amostras(binario, arquivo)
+    dados = mod.estatisticas(quadros)
+    difs = [d["diferenca"] for d in dados if d["diferenca"] is not None]
+    return (sum(difs) / len(difs)) if difs else 0.0, mod.MIN_MOVIMENTO
+
+
 def recortar(binario, cru, destino, inicio, fim):
     """Corta um trecho do cru. Existe porque a captura sempre gasta segundos na abertura do
     jogo e, sob gravação, o tempo do jogo anda ~3x mais devagar que o relógio — o trecho de
@@ -338,6 +387,33 @@ def main(argv):
             faixa, _, vel = parte.partition(":")
             ini, _, fim_t = faixa.partition("-")
             trechos.append((float(ini), float(fim_t), float(vel or 1)))
+    if "--trechos-auto" in resto:
+        binario = ffmpeg()
+        if not binario:
+            print("✘ sem ffmpeg")
+            return 1
+        dur = duracao(binario, cru)
+        relatorio = json.load(open(rel, encoding="utf-8"))
+        base = trechos_automaticos(relatorio.get("decisoes") or [], dur or 0)
+        if not base:
+            print("✘ o relatório não tem plantio e colheita: não sei o que cortar")
+            return 1
+        aprovado = False
+        for numero, candidato in enumerate(variantes_do_corte(base, dur or 0), start=1):
+            print("corte %d: %s" % (numero, candidato))
+            ok, _info, _problemas = produzir(cru, rel, saida, trechos=candidato)
+            if not ok:
+                return 1
+            movimento, minimo = medir_movimento(binario, saida)
+            print("  movimento medido: %.2f (mínimo %.2f)" % (movimento, minimo))
+            if movimento >= minimo:
+                aprovado = True
+                break
+        if not aprovado:
+            print("✘ nenhum corte mostrou ação suficiente: o vídeo NÃO é entregue")
+            return 1
+        return 0
+
     ok, _info, _problemas = produzir(cru, rel, saida, inicio=inicio, fim=fim, trechos=trechos)
     return 0 if ok else 1
 
