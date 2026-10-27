@@ -173,16 +173,26 @@ function duracaoDoVideo(binario, arquivo) {
   return Number(m[1]) * 3600 + Number(m[2]) * 60 + Number(m[3]);
 }
 
+/**
+ * Acha a biblioteca do navegador. Devolve null quando não há nenhuma — é essa ausência que
+ * vira código de erro 3, nunca um vídeo vazio. A lista é parâmetro para que a barreira possa
+ * provar o caminho "sem navegador" sem depender do que está instalado na máquina.
+ */
+function carregarPlaywright(tentativas = []) {
+  const caminhos = tentativas.concat([
+    'playwright-core',
+    'playwright',
+    process.env.PLAYWRIGHT_CORE || ''
+  ]).filter(Boolean);
+  for (const caminho of caminhos) {
+    try { return require(caminho); } catch (e) { /* tenta o próximo */ }
+  }
+  return null;
+}
+
 async function principal() {
   const op = argumentos(process.argv.slice(2));
-  const playwright = (() => {
-    for (const caminho of ['playwright-core', 'playwright']) {
-      try { return require(caminho); } catch (e) { /* tenta o próximo */ }
-    }
-    // Reserva: instalação fora do projeto (usada no meu teste local).
-    const alternativa = process.env.PLAYWRIGHT_CORE || '/tmp/pw/node_modules/playwright-core';
-    try { return require(alternativa); } catch (e) { return null; }
-  })();
+  const playwright = carregarPlaywright();
   if (!playwright) {
     console.error('✘ falta playwright-core: npm i playwright-core && npx playwright install chromium-headless-shell');
     return 3;
@@ -317,4 +327,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { subirServidor, roteiro, argumentos, duracaoDoVideo };
+module.exports = { subirServidor, roteiro, argumentos, duracaoDoVideo, carregarPlaywright };
