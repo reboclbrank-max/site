@@ -125,4 +125,53 @@ KIT_YOUTUBE=posts/kit-gameplay.json CONFIRMACAO=PUBLICAR \
   python3 tools/enviar-youtube.py ceifalume-gameplay
 ```
 
-Barreira: `python3 tools/testes-gameplay.py` (37 provas, sem rede).
+Barreira: `python3 tools/testes-gameplay.py` (65 provas, sem rede).
+
+## Economia do robô — o que foi medido antes e depois (27/10/2026)
+
+O dono cobrou: *"o agente comprar melhoria e escolher a semente de maior valor… com medida de
+moedas ganhas por minuto antes e depois, senão não conta como melhoria"*. Abaixo o que foi
+executado no jogo rodando, tudo conferido no save (`ceifalume-save.cfg`), nada estimado.
+
+**Como o dinheiro é lido.** O jogo grava em IndexedDB (`/userfs`, loja `FILE_DATA`, chave
+`/userfs/godot/app_userdata/Ceifalume/ceifalume-save.cfg`) — `moedas`, `dia`, `semente_selecionada`,
+`nivel_*`, `celeiro={...}`, `campos=[...]`. O agente lê esse arquivo antes de cada decisão de
+dinheiro. **Ganho ≠ saldo**: comprar melhoria derruba o saldo e não é prejuízo, então o número
+publicado é `(saldo final − saldo inicial) + gasto`.
+
+**Medições (mesma máquina, mesma build, `--segundos` igual, 12–24 fps):**
+
+| configuração | janela | execuções | moedas ganhas | **moedas/min** |
+|---|---|---|---|---|
+| antes — robô só por imagem, sem comprar nada | 150 s | 3 | 59 · 50 · 55 | **21,9** (média) |
+| depois — economia ligada (celeiro+poço) | 150 s | 3 | 62 · 56 · 58 | **23,5** |
+| depois — prioridade nova (poço) | 150 s | 3 | 55 · 55 · 55 | **22,0** |
+| depois — sobe para Milho cedo | 150 s | 1 | 34 | **13,6** |
+| antes — sem comprar nada | 900 s | 1 | 720 | **48,0** |
+| depois — compras + Milho com regra de caixa | 900 s | 1 | 711 | **47,4** |
+
+**Veredito honesto: ainda NÃO conta como melhoria.** Comprar melhoria e trocar de semente não
+aumentou o ganho por minuto; na janela longa ficou até um pouco abaixo. O que os testes provaram:
+
+1. **A compra funciona de verdade.** Nível sobe no save e o dinheiro cai (celeiro 41→11 moedas,
+   nível 0→1). O relatório só registra a compra quando o save confirma.
+2. **A troca de semente funciona**, mas o mecanismo não era o que parecia: a aba só deixa a
+   semente **pendente** e `semente_selecionada` só muda **no primeiro plantio** (medido: aba Milho
+   em (562,121) + plantar em (760,259) → 0 → 1). Tocar na sacola antes de plantar **desfaz** a
+   escolha — era isso que fazia o relatório dizer "Milho falhou" com a aba funcionando.
+3. **Trocar de semente sem caixa piora o jogo.** Com 25 moedas, subir para Milho e plantar uma vez
+   deixou o robô sem dinheiro, ele desceu para Nabo e fechou em 13,60/min. Daí a regra nova:
+   só troca quando o caixa paga a **rodada inteira** (custo × 4 células + 5 de folga) — 85 para o
+   Milho, 205 para o Tomate — e desce na hora se não pagar nem uma semente.
+4. **O gargalo não é comprar, é colher.** Na janela de 900 s o robô sem economia fez **36
+   colheitas** de Nabo e 404 decisões (a maioria "bico", +1 moeda por toque). Com Milho foram 18
+   colheitas e 411 decisões: o ciclo do Milho é mais longo e o bico continuou sendo a maior fonte.
+   Ou seja: o próximo ganho real está em **mais células** (a 5ª do "Comprar campo" ainda não está
+   mapeada — por isso o campo está catalogado mas não é comprado) e em **colher mais rápido**,
+   não em gastar moeda.
+
+Prova automatizada dessa parte: `tools/testes-gameplay.py` ganhou 15 provas de economia (leitor do
+save, prioridade de compra, celeiro que não rende não é comprado, semente mais cara que o caixa
+cobre, caixa curto desce de semente, e `ganhoDeMoedas()` devolvendo 64 para saldo 25→19 com gasto
+70 — e `null` quando não há leitura).
+
