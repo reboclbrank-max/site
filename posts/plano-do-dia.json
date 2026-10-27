@@ -1,35 +1,35 @@
 {
- "quando": "2026-10-27T00:26:05Z",
+ "quando": "2026-10-27T12:29:44Z",
  "meta_em_risco": {
   "meta": "itch: downloads",
   "falta": 54.0,
-  "por_dia": 3.18
+  "por_dia": 3.38
  },
  "ranking_de_risco": [
   {
    "meta": "itch: downloads",
    "falta": 54.0,
-   "por_dia": 3.18
+   "por_dia": 3.38
   },
   {
    "meta": "Instagram: seguidores",
    "falta": 50.0,
-   "por_dia": 2.94
+   "por_dia": 3.12
   },
   {
    "meta": "Bluesky: seguidores",
    "falta": 18.0,
-   "por_dia": 1.06
+   "por_dia": 1.12
   },
   {
    "meta": "YouTube: inscritos",
    "falta": 16.0,
-   "por_dia": 0.94
+   "por_dia": 1.0
   },
   {
    "meta": "Instagram: publicações",
    "falta": 10.0,
-   "por_dia": 0.59
+   "por_dia": 0.62
   }
  ],
  "formatos_a_evitar": [
