@@ -48,7 +48,34 @@ def ffmpeg():
 
 
 def main():
-    # 1. o roteiro
+    # 1. o agente que olha o estado e decide (o roteiro cego saiu em 27/10)
+    saida, erro = node(
+        "const m=require('./tools/gravar-gameplay.js');"
+        "const cel=(v,id)=>({id:id||'A',verde:v,centro:{x:500,y:300}});"
+        "const base={tutorial:0,titulo:0,celulas:[cel(0,'A'),cel(0,'B'),cel(0,'C'),cel(0,'D')]};"
+        "const r={"
+        " tutorial:m.decidir({...base,tutorial:0.4}).motivo,"
+        " titulo:m.decidir({...base,titulo:0.3}).motivo,"
+        " pronta:m.decidir({...base,celulas:[cel(0.12,'A'),cel(0,'B')]}),"
+        " vazia:m.decidir({...base}).tipo,"
+        " crescendo:m.decidir({...base,celulas:[cel(0.05,'A'),cel(0.04,'B')]}).motivo"
+        "};"
+        "console.log(JSON.stringify(r));")
+    ok("o decisor roda no Node", saida is not None, erro)
+    if saida:
+        d = json.loads(saida)
+        ok("tutorial visivel -> toca no tutorial", "tutorial" in d["tutorial"], d["tutorial"])
+        ok("tela de titulo -> toca em Jogar", "t" in d["titulo"], d["titulo"])
+        ok("celula madura -> colhe aquela celula", "pronta" in d["pronta"]["motivo"], d["pronta"])
+        ok("celula madura manda tocar no centro dela",
+           d["pronta"]["alvo"] == {"x": 500, "y": 300}, d["pronta"].get("alvo"))
+        ok("tudo vazio -> planta", d["vazia"] == "plantar", d["vazia"])
+        ok("tudo crescendo -> rende moeda no bico", "bico" in d["crescendo"], d["crescendo"])
+    fonte = open(os.path.join(RAIZ, "tools", "gravar-gameplay.js"), encoding="utf-8").read()
+    ok("o gravador decide pelo estado (nao por lista fixa)", "function decidir(" in fonte)
+    ok("o gravador grava o relatorio de decisoes ao lado do video", "-decisoes.json" in fonte)
+
+    # 2. o gravador não finge: sem biblioteca de navegador ele devolve null (código 3 no uso).
     saida, erro = node(
         "const m=require('./tools/gravar-gameplay.js');"
         "const vazio=m.carregarPlaywright(['/nao/existe/a','/nem/isto'],false);"
@@ -137,7 +164,7 @@ def main():
        "secrets.YT_CLIENT_ID" not in texto.split("publicar == 'PUBLICAR'")[0],
        "credencial citada antes do cadeado")
 
-    total = 28
+    total = 31
     print("\n%d/%d testes do vídeo de gameplay passaram" % (total - falhas, total))
     return 1 if falhas else 0
 

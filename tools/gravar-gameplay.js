@@ -111,45 +111,128 @@ function subirServidor({ porta = 0 } = {}) {
  *
  * Coordenadas lidas do build em 1280×720 (canvas ocupa a tela inteira).
  */
-const BOTAO_JOGAR = { x: 640, y: 484 };
-const BOTAO_ENTENDI = { x: 640, y: 331 };
-const SEMENTES = [{ x: 437, y: 120 }, { x: 531, y: 120 }, { x: 620, y: 120 }];
-const CAMPOS = [{ x: 300, y: 420 }, { x: 400, y: 500 }, { x: 500, y: 430 }, { x: 280, y: 560 }, { x: 560, y: 520 }, { x: 350, y: 470 }];
-const BICO = { x: 100, y: 481 };
-const VENDER = { x: 140, y: 400 };
-const MELHORIA = { x: 100, y: 600 };
+// ---------------------------------------------------------------------------------------
+// LEITURA DE ESTADO — o gravador deixou de ser cego em 27/10/2026.
+//
+// O build é Godot: não há DOM com o estado do jogo (o "save" vai para IndexedDB e só é
+// sincronizado de tempo em tempo). O que existe sempre é a IMAGEM. Então o estado é lido
+// do canvas, com regiões medidas no próprio jogo:
+//   • botão amarelo "Entendi, jogar!"  → tutorial aberto
+//   • caixa clara "Jogar"              → tela de título
+//   • fração de verde em cada célula   → semente crescendo / pronta para colher / vazia
+// Cada decisão daqui para baixo depende de uma dessas medidas — nenhuma é "tocar no escuro".
+// ---------------------------------------------------------------------------------------
 
-function roteiro(segundos) {
-  const acoes = [];
-  const push = (t, alvo, nota) => acoes.push({ t, tipo: 'clique', x: alvo.x, y: alvo.y, nota });
+const TELA = { largura: 1280, altura: 720 };
 
-  // fase 1 — atravessa título, splash e tutorial
-  const aquecimento = [BOTAO_JOGAR, BOTAO_ENTENDI, BOTAO_JOGAR, BOTAO_ENTENDI, BOTAO_JOGAR, BOTAO_ENTENDI, BOTAO_JOGAR, BOTAO_ENTENDI];
-  aquecimento.forEach((alvo, i) => push(1.0 + i * 1.7, alvo, 'avançar tela'));
+// regiões (x, y, largura, altura) em coordenadas de 1280x720
+const REGIAO_TUTORIAL = { x: 520, y: 298, w: 240, h: 56 };   // botão amarelo do tutorial
+const REGIAO_TITULO = { x: 500, y: 445, w: 290, h: 66 };      // caixa "Jogar" da capa
+const REGIAO_DIALOGO = { x: 330, y: 180, w: 620, h: 220 };    // caixa escura do tutorial
+const CELULAS = [
+  { id: 'A', x: 420, y: 205, w: 180, h: 130 },
+  { id: 'B', x: 680, y: 205, w: 180, h: 130 },
+  { id: 'C', x: 940, y: 205, w: 180, h: 130 },
+  { id: 'D', x: 420, y: 435, w: 180, h: 130 },
+  { id: 'E', x: 680, y: 435, w: 180, h: 130 }
+];
+const ALVO = {
+  tutorial: { x: 640, y: 331 },
+  titulo: { x: 640, y: 484 },
+  semente: { x: 437, y: 120 },
+  bico: { x: 100, y: 481 },
+  vender: { x: 140, y: 400 },
+  melhoria: { x: 100, y: 600 }
+};
+// limites de decisão — calibrados nos quadros de 27/10 (ver docs/VIDEO-GAMEPLAY.md)
+const LIMIAR = {
+  botao: 0.05,        // fração de amarelo/claro que já conta como botão visível
+  verdeVazio: 0.02,   // abaixo disso a célula está vazia
+  verdePronto: 0.085, // acima disso a planta já pode ser colhida
+  esperaCrescimento: 14000 // ms em que uma célula semeada ainda pode parecer vazia
+};
 
-  // fase 2 — ciclo de fazenda, repetido até o fim do tempo pedido
-  let t = 15.0;
-  let volta = 0;
-  while (t < segundos - 1.2) {
-    const semente = SEMENTES[volta % SEMENTES.length];
-    const campo = CAMPOS[volta % CAMPOS.length];
-    const campo2 = CAMPOS[(volta + 1) % CAMPOS.length];
-    push(t, semente, 'semente'); t += 0.7;
-    push(t, campo, 'plantar'); t += 0.8;
-    push(t, semente, 'semente'); t += 0.5;
-    push(t, campo2, 'plantar'); t += 0.8;
-    push(t, BICO, 'bico (+1 moeda)'); t += 0.9;
-    push(t, BICO, 'bico (+1 moeda)'); t += 0.9;
-    push(t, campo, 'colher'); t += 0.7;
-    push(t, campo2, 'colher'); t += 0.7;
-    push(t, VENDER, 'vender colheita'); t += 0.8;
-    // a cada duas voltas, uma melhoria (comprar campo / ampliar celeiro)
-    if (volta % 2 === 1) { push(t, MELHORIA, 'melhoria'); t += 0.8; }
-    // a cada quatro voltas, um toque de reforço nas telas iniciais
-    if (volta % 4 === 3) { push(t, BOTAO_JOGAR, 'reforço'); t += 0.6; push(t, BOTAO_ENTENDI, 'reforço'); t += 0.6; }
-    volta += 1;
+/** Conta, dentro de um recorte do canvas, quantos pixels são amarelos e quantos são claros. */
+const MEDIDOR = (regioes) => {
+  const cv = document.querySelector('canvas');
+  const c2 = document.createElement('canvas');
+  c2.width = cv.width;
+  c2.height = cv.height;
+  const g = c2.getContext('2d', { willReadFrequently: true });
+  g.drawImage(cv, 0, 0);
+  const sx = cv.width / 1280;
+  const sy = cv.height / 720;
+  const conta = (r, teste) => {
+    const d = g.getImageData(Math.round(r.x * sx), Math.round(r.y * sy),
+      Math.max(1, Math.round(r.w * sx)), Math.max(1, Math.round(r.h * sy))).data;
+    let n = 0;
+    let tot = 0;
+    for (let i = 0; i < d.length; i += 4) {
+      tot += 1;
+      if (teste(d[i], d[i + 1], d[i + 2])) n += 1;
+    }
+    return n / tot;
+  };
+  const amarelo = (r, c, b) => c > 150 && c > b + 60 && b < 140;   // dourado do jogo
+  const claro = (r, c, b) => r > 200 && c > 200 && b > 200;
+  const verde = (r, c, b) => c > 90 && c > r + 30 && c > b + 30;
+  const escuro = (r, c, b) => r < 40 && c < 45 && b < 60;
+  // ⚠️ O botão do tutorial é amarelo, mas o brilho de colheita TAMBÉM é amarelo e cai nessa
+  // mesma faixa da tela. Por isso o tutorial só conta quando a caixa escura dele está atrás
+  // (medido: 0,75 da região é escura com o tutorial aberto; 0,00 sem ele).
+  const dialogo = conta(regioes.dialogo, escuro);
+  return {
+    dialogo,
+    tutorial: dialogo > 0.35 ? conta(regioes.tutorial, amarelo) : 0,
+    titulo: conta(regioes.titulo, claro),
+    celulas: regioes.celulas.map((c) => ({
+      id: c.id,
+      verde: conta(c, verde),
+      centro: { x: Math.round(c.x + c.w / 2), y: Math.round(c.y + c.h / 2) }
+    }))
+  };
+};
+
+/**
+ * Agente: decide a cada passo olhando o estado. Devolve { acao, motivo } — e o registro do que
+ * foi decidido volta no relatório, para ninguém precisar acreditar na palavra do gravador.
+ */
+function decidir(estado, memoria = {}) {
+  if (estado.tutorial > LIMIAR.botao) {
+    return { tipo: 'toque', alvo: ALVO.tutorial, motivo: 'tutorial aberto (' + estado.tutorial.toFixed(2) + ')' };
   }
-  return acoes.filter((a) => a.t < segundos - 0.3);
+  if (estado.titulo > LIMIAR.botao) {
+    return { tipo: 'toque', alvo: ALVO.titulo, motivo: 'tela de título (' + estado.titulo.toFixed(2) + ')' };
+  }
+  const agora = memoria.agora || 0;
+  const ocupadas = memoria.ocupadas || {};
+  // madura: a visão decide (o broto é verde e cresce na tela)
+  const prontas = estado.celulas.filter((c) => c.verde >= LIMIAR.verdePronto);
+  if (prontas.length) {
+    const c = prontas[0];
+    return { tipo: 'colher', alvo: c.centro, celula: c.id,
+             motivo: 'célula ' + c.id + ' pronta (verde ' + c.verde.toFixed(3) + ')' };
+  }
+  // livre: a visão diz que não há verde E a memória diz que não semeei ali há pouco.
+  // Sem a memória o robô replanta a mesma célula para sempre: a semente leva ~12 s para
+  // aparecer como broto, e nesse tempo a célula parece vazia.
+  const livres = estado.celulas.filter((c) =>
+    c.verde <= LIMIAR.verdeVazio && (agora - (ocupadas[c.id] || -1e9)) > LIMIAR.esperaCrescimento);
+  if (livres.length) {
+    return { tipo: 'plantar', celula: livres[0], motivo: 'célula ' + livres[0].id + ' livre' };
+  }
+  const crescendo = estado.celulas.filter((c) => c.verde > LIMIAR.verdeVazio && c.verde < LIMIAR.verdePronto);
+  if (crescendo.length || estado.celulas.every((c) => (agora - (ocupadas[c.id] || -1e9)) <= LIMIAR.esperaCrescimento)) {
+    return { tipo: 'toque', alvo: ALVO.bico, motivo: 'tudo semeado ou crescendo: moeda no bico' };
+  }
+  return { tipo: 'toque', alvo: ALVO.vender, motivo: 'sem célula livre: vender' };
+}
+
+/** Toque que não depende do tipo de evento: clique de mouse E toque de dedo. */
+async function acionar(pagina, alvo) {
+  await pagina.mouse.click(alvo.x, alvo.y);
+  await pagina.waitForTimeout(120);
+  await pagina.touchscreen.tap(alvo.x, alvo.y);
 }
 
 function ffmpeg() {
@@ -249,28 +332,80 @@ async function principal() {
     // Deixa o jogo assentar (carregamento do .pck, primeira cena).
     await pagina.waitForTimeout(2500);
 
+    // ------- MALHA FECHADA: olhar → decidir → agir, até o tempo acabar -------
+    const decisoes = [];
+    const ocupadas = {};
     const inicioAcoes = Date.now();
-    for (const acao of roteiro(op.segundos)) {
-      const esperar = acao.t * 1000 - (Date.now() - inicioAcoes);
-      if (esperar > 0) await pagina.waitForTimeout(esperar);
+    const fimAcoes = inicioAcoes + op.segundos * 1000;
+    let colhidas = 0;
+    let plantadas = 0;
+    let toquesTela = 0;
+    while (Date.now() < fimAcoes) {
+      let estado;
       try {
-        if (acao.tipo === 'clique') {
-          // Toque, não mouse: medido em 27/10 — o build Godot responde ao evento de toque
-          // de forma consistente no headless; o clique de mouse dependia de hover prévio.
-          await pagina.touchscreen.tap(Math.round(acao.x), Math.round(acao.y));
-        } else {
-          await pagina.keyboard.press(acao.tecla);
-        }
-      } catch (e) { /* uma tecla perdida não invalida a captura */ }
+        estado = await pagina.evaluate(MEDIDOR, {
+          tutorial: REGIAO_TUTORIAL, titulo: REGIAO_TITULO,
+          dialogo: REGIAO_DIALOGO, celulas: CELULAS
+        });
+      } catch (e) {
+        await pagina.waitForTimeout(400);
+        continue;
+      }
+      const d = decidir(estado, { agora: Date.now() - inicioAcoes, ocupadas });
+      let acao;
+      if (d.tipo === 'plantar') {
+        await pagina.mouse.click(ALVO.semente.x, ALVO.semente.y);
+        await pagina.waitForTimeout(160);
+        await pagina.touchscreen.tap(ALVO.semente.x, ALVO.semente.y);
+        await pagina.waitForTimeout(260);
+        await acionar(pagina, d.celula.centro);
+        ocupadas[d.celula.id] = Date.now() - inicioAcoes;
+        plantadas += 1;
+        acao = 'semente + célula ' + d.celula.id;
+        await pagina.waitForTimeout(420);
+      } else if (d.tipo === 'colher') {
+        await acionar(pagina, d.alvo);
+        delete ocupadas[d.celula];
+        colhidas += 1;
+        acao = 'colher ' + d.celula;
+        await pagina.waitForTimeout(400);
+        await acionar(pagina, ALVO.vender);
+        acao += ' + vender';
+        await pagina.waitForTimeout(300);
+      } else if (d.tipo === 'toque') {
+        await acionar(pagina, d.alvo);
+        acao = 'toque em ' + d.alvo.x + ',' + d.alvo.y;
+        if (d.alvo === ALVO.tutorial || d.alvo === ALVO.titulo) toquesTela += 1;
+        await pagina.waitForTimeout(320);
+      }
+      decisoes.push({
+        t: +((Date.now() - inicioAcoes) / 1000).toFixed(1),
+        tutorial: +estado.tutorial.toFixed(3),
+        titulo: +estado.titulo.toFixed(3),
+        verdes: estado.celulas.map((c) => +c.verde.toFixed(3)),
+        motivo: d.motivo, acao
+      });
     }
-    const restante = op.segundos * 1000 - (Date.now() - inicioAcoes);
-    if (restante > 0) await pagina.waitForTimeout(restante);
+    const verdeFinal = (await pagina.evaluate(MEDIDOR, {
+      tutorial: REGIAO_TUTORIAL, titulo: REGIAO_TITULO,
+      dialogo: REGIAO_DIALOGO, celulas: CELULAS
+    })).celulas.map((c) => c.id + ':' + c.verde.toFixed(3)).join(' ');
 
     // Um quadro de prova, salvo ao lado do vídeo: serve para conferir a olho o que foi gravado.
     const quadro = op.saida.replace(/\.mp4$/i, '-quadro.png');
     fs.mkdirSync(path.dirname(quadro), { recursive: true });
     await pagina.screenshot({ path: quadro });
-    console.log('quadro de prova: ' + path.relative(RAIZ, quadro));
+    console.log('decisões: ' + decisoes.length + ' · plantadas: ' + plantadas +
+      ' · colhidas: ' + colhidas + ' · telas de abertura: ' + toquesTela);
+    console.log('últimas decisões: ' + JSON.stringify(decisoes.slice(-4)));
+    console.log('verde final por célula: ' + verdeFinal);
+    // o mesmo relatório vai num JSON, para o validador e o kit usarem sem depender do log
+    try {
+      fs.writeFileSync(op.saida.replace(/\.mp4$/i, '-decisoes.json'), JSON.stringify({
+        decisoes, plantadas, colhidas, telas: toquesTela, verde_final: verdeFinal,
+        limite: LIMIAR, celulas: CELULAS.map((c) => c.id)
+      }, null, 1));
+    } catch (e) { /* relatório é extra, não pode derrubar a captura */ }
 
     // ⚠️ A ordem importa: o Playwright só entrega o arquivo depois que a página fecha, e
     // apaga o temporário quando o navegador fecha. Salvar aqui, fechar o navegador depois.
@@ -326,4 +461,7 @@ if (require.main === module) {
   });
 }
 
-module.exports = { subirServidor, roteiro, argumentos, duracaoDoVideo, carregarPlaywright };
+module.exports = {
+  subirServidor, argumentos, duracaoDoVideo, carregarPlaywright,
+  decidir, LIMIAR, CELULAS, REGIAO_TUTORIAL, REGIAO_TITULO, REGIAO_DIALOGO, ALVO
+};
