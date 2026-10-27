@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-27T12:29:44Z",
+ "quando": "2026-10-27T12:39:44Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
@@ -203,7 +203,7 @@
   }
  ],
  "aprendizado": {
-  "quando": "2026-10-27T01:02:28Z",
+  "quando": "2026-10-27T12:39:44Z",
   "confiavel": false,
   "melhor_hora": null,
   "decisao": "manter",
@@ -286,14 +286,14 @@
   "ultima_publicacao": "2026-10-27T12:19:44Z",
   "ultima_medicao": "2026-10-27T11:59:44Z",
   "ultima_pesquisa": "2026-10-27T12:29:44Z",
-  "ultima_aprendizagem": null,
-  "pulsos": 7
+  "ultima_aprendizagem": "2026-10-27T12:39:44Z",
+  "pulsos": 8
  },
  "fila": {
   "publicar": "feito",
   "pesquisar": "feito",
   "medir": "feito",
-  "aprender": "pendente"
+  "aprender": "feito"
  },
  "_regras": [
   "número sem fonte medida não entra (NAO_OBSERVAVEL não é zero)",
