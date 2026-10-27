@@ -250,3 +250,6 @@ Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? 
 
 ## 26/10/2026 23:51 UTC
 Tática na PRANCHETA ⚽ ou colheita noturna no CEIFALUME 🌙? Dois projetos solo, feitos no Brasil com Godot. PRANCHETA: grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, cresce 8h offline. Qual seu estilo? #gamed
+
+## 27/10/2026 12:10 UTC
+Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: futebol tático na prancheta (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna onde a colheita cresce enquanto você dorme 🌙🌱 Feito com carinho aqui. #GamedevBR #Godo
