@@ -2005,3 +2005,28 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=20(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > Tática na PRANCHETA ⚽ ou colheita noturna no CEIFALUME 🌙? Dois projetos solo, feitos no Brasil com Godot. PRANCHETA: grátis no navegador/APK. CEIFALUM
+
+## 27/10/2026 12:10 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ post novo validado — motor=g4f auto |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ fale dos sons e musicas que combinam com CEIFALUME |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ⚪ configuracao de publicacao ausente |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | ⚪ configuracao de publicacao ausente |
+| nostr | ⚪ configuracao de publicacao ausente |
+| discord | ⚪ configuracao de publicacao ausente |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ sem GHPAT no ambiente |
+| censo mundial | ✅ sem GHPAT |
+| vigia da caixa (auto-recovery) | ✅ cofare sem gmail |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=20(api) · itch_downloads=46(api) · itch_visitas=184(api) · youtube_inscritos=24(api) · youtube_shorts=5(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
+
+> Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: futebol tático na prancheta (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna onde a colheita 
