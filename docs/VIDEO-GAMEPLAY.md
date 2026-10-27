@@ -26,21 +26,26 @@ tools/kit-gameplay.py   → pacote de envio (título/descrição/tags do kit ofi
    • workflow_dispatch com `publicar=PUBLICAR` → aí sim chama tools/enviar-youtube.py
 ```
 
-## Números medidos nesta máquina (27/10/2026)
+## Números medidos
+
+**No runner do GitHub (run 40508283212, 27/10/2026 13:02 UTC — o que vale):**
 
 | medida | valor |
 |---|---|
-| duração do arquivo | 44,8 s |
+| duração do arquivo | 49,3 s |
 | resolução / fps | 1280×720 / 24 |
-| tamanho | 1,0 MB (1.049.289 B) |
-| cores distintas (amostras de 160×90) | 1.273 |
-| movimento médio entre amostras | 1,53 (limite mínimo: 1,2) |
-| maior trecho parado | 6,5 s (a tela do tutorial) |
-| veredito do validador | ✔ passou |
+| tamanho | 1.091.867 B (artefato de 1.873.939 B com quadro + kit) |
+| cores distintas (amostras de 160×90) | 1.253 |
+| movimento médio entre amostras | 1,74 (mínimo exigido: 1,2) |
+| maior trecho parado | 7,0 s (a tela do tutorial) |
+| veredito do validador | ✔ passou (rodado de novo no artefato baixado) |
 
-O jogo **responde de verdade**: no vídeo as moedas saem de 25 → 26 com o botão "Fazer um bico"
-e um campo passa a mostrar "Nabo crescendo — 12s" com o broto na terra. Isso é ciclo de jogo,
-não tela parada.
+**Na minha máquina (primeira captura, mesmo código):** 44,8 s · 1.273 cores · movimento 1,53 ·
+maior trecho parado 6,5 s · ✔ passou.
+
+O jogo **responde de verdade**: as moedas saem de 25 → 26 com o botão "Fazer um bico" e um
+campo passa a mostrar "Nabo crescendo — 10s" com o broto na terra. Isso é ciclo de jogo, não
+tela parada.
 
 ## O que este pipeline NÃO faz
 
