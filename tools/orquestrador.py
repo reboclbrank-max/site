@@ -33,6 +33,7 @@ LOG = os.path.join(RAIZ, "posts", "log.md")
 
 INTERVALO_PUBLICACAO = datetime.timedelta(hours=2)
 INTERVALO_MEDICAO = datetime.timedelta(hours=6)
+FILA = os.path.join(RAIZ, "posts", "fila-tarefas.json")
 
 
 # ----------------------------------------------------------------- utilidades de tempo
@@ -200,16 +201,56 @@ def executar(acao, agora=None, rodar_fn=None):
     return 0, "nada a fazer (%s)" % acao
 
 
+def usar_fila(agora, estado):
+    """A fila tem prioridade sobre o relógio: se há tarefa vencida, ela manda.
+
+    Regra: medir/pesquisar/aprender/publicar só entram na fila quando o relógio pede
+    (evita tarefa eterna na frente), e uma tarefa por pulso.
+    """
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("fila", os.path.join(RAIZ, "tools", "fila-tarefas.py"))
+        fila = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(fila)
+    except Exception:
+        return None, None, None
+    dados = fila.carregar(FILA)
+    relogio, _ = decidir(agora, estado, ler_calendario())
+    if relogio != "dormir":
+        fila.adicionar(dados, relogio, motivo="decisão do relógio", chave="%s-%s" % (relogio, agora.strftime("%Y%m%d%H")))
+    tarefa = fila.pegar(dados)
+    fila.gravar(dados, FILA)
+    if not tarefa:
+        return None, None, None
+    return tarefa["tipo"], "fila: [%s] %s" % (tarefa["id"], tarefa.get("motivo", "")), (fila, dados, tarefa)
+
+
+def fechar_fila(trio, ok, resultado=""):
+    if not trio:
+        return
+    fila, dados, tarefa = trio
+    estado_tarefa = fila.concluir(dados, tarefa, ok, resultado)
+    fila.gravar(dados, FILA)
+    print("fila: tarefa %s -> %s" % (tarefa["id"], estado_tarefa))
+
+
 def main(argv):
     seco = "--seco" in argv          # decide e registra, mas não executa
     agora = agora_utc()
     estado = carregar_estado()
     calendario = ler_calendario()
     acao, motivo = decidir(agora, estado, calendario)
+    trio = None
+    if not seco:
+        da_fila, motivo_fila, trio = usar_fila(agora, estado)
+        if da_fila:
+            acao, motivo = da_fila, motivo_fila
 
     print("pulso %s · ação: %s · %s" % (iso(agora), acao, motivo))
     codigo, saida = (0, "modo seco") if seco else executar(acao, agora)
     print(saida)
+    if trio:
+        fechar_fila(trio, codigo == 0, saida)
 
     estado["pulsos"] = int(estado.get("pulsos", 0)) + 1
     if acao == "publicar" and codigo == 0:
