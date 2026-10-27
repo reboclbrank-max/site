@@ -10,7 +10,8 @@ Prova, sem rede e sem publicar nada:
   - a memória lê as fontes e responde por palavra-chave sem inventar;
   - a memória registra as 5 regras da casa;
   - o laço contínuo respeita o botão de parar (posts/PARAR) e o teto de pulsos;
-  - o workflow do bloco contínuo existe, tem cron, concorrência e roda o laço.
+  - o workflow do bloco contínuo existe, tem cron, concorrência e roda o laço;
+  - nenhum .json de posts/ ficou com marcador de conflito ou inválido (regressão de 27/10).
 """
 import importlib.util
 import json
@@ -116,7 +117,30 @@ def main():
     ok("workflow tem concorrência", "concurrency:" in texto)
     ok("workflow respeita o botão de parar", "PARAR" in texto or "loop-24h" in texto)
 
-    total = 21
+    # 7. integridade dos dados versionados
+    # Regressão real (27/10/2026): um rebase deixou marcador de conflito dentro de
+    # posts/memoria.json e o commit passou — o JSON ficou inválido e o chat leu lixo.
+    # Nenhum .json de posts/ pode ter marcador, e todos têm que parsear.
+    pasta_posts = os.path.join(RAIZ, "posts")
+    quebrados, marcados = [], []
+    for nome in sorted(os.listdir(pasta_posts)):
+        if not nome.endswith(".json"):
+            continue
+        try:
+            bruto = open(os.path.join(pasta_posts, nome), encoding="utf-8").read()
+        except Exception as erro:  # noqa: BLE001
+            quebrados.append(nome + ": ilegível (" + str(erro)[:30] + ")")
+            continue
+        if "<<<<<<<" in bruto or ">>>>>>>" in bruto:
+            marcados.append(nome)
+        try:
+            json.loads(bruto)
+        except Exception as erro:  # noqa: BLE001
+            quebrados.append(nome + ": " + str(erro)[:40])
+    ok("nenhum JSON de posts/ carrega marcador de conflito", not marcados, marcados)
+    ok("todos os JSON de posts/ parseiam", not quebrados, quebrados)
+
+    total = 23
     print("\n%d/%d testes do chat v2 (fila, memória, laço) passaram" % (total - falhas, total))
     return 1 if falhas else 0
 
