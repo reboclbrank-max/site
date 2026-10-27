@@ -27,6 +27,7 @@ const RAIZ = path.resolve(__dirname, '..');
 
 function argumentos(argv) {
   const o = {
+    url: '',
     rota: '/ceifalume/',
     saida: path.join(RAIZ, 'media', 'gameplay', 'ceifalume-gameplay.mp4'),
     segundos: 24,
@@ -38,7 +39,8 @@ function argumentos(argv) {
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
     const valor = () => argv[++i];
-    if (a === '--rota') o.rota = valor();
+    if (a === '--url') o.url = valor();
+    else if (a === '--rota') o.rota = valor();
     else if (a === '--saida') o.saida = path.resolve(valor());
     else if (a === '--segundos') o.segundos = Number(valor());
     else if (a === '--largura') o.largura = Number(valor());
@@ -280,10 +282,13 @@ async function principal() {
     return 3;
   }
 
-  const { servidor, porta } = await subirServidor();
-  const base = 'http://127.0.0.1:' + porta + op.rota;
+  // Com --url o build vem de fora (ex.: o PRANCHETA só existe publicado no itch.io);
+  // sem --url o jogo é servido do próprio repositório, com COOP+COEP para as threads.
+  const local = await subirServidor().catch(() => null);
+  const servidor = local ? local.servidor : { close() {} };
+  const base = op.url || ('http://127.0.0.1:' + local.porta + op.rota);
   const pastaTemp = fs.mkdtempSync(path.join(os.tmpdir(), 'gameplay-'));
-  console.log('servindo o repositório em ' + base);
+  console.log((op.url ? 'abrindo build externo: ' : 'servindo o repositório em ') + base);
 
   const navegador = await playwright.chromium.launch({
     args: [

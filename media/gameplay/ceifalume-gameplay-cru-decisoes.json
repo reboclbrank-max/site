@@ -1,0 +1,273 @@
+{
+ "decisoes": [
+  {
+   "t": 2.4,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "motivo": "célula A livre",
+   "acao": "semente + célula A"
+  },
+  {
+   "t": 4.8,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "motivo": "célula B livre",
+   "acao": "semente + célula B"
+  },
+  {
+   "t": 6.8,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "motivo": "célula C livre",
+   "acao": "semente + célula C"
+  },
+  {
+   "t": 8.5,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "motivo": "célula D livre",
+   "acao": "semente + célula D"
+  },
+  {
+   "t": 11.7,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "célula E livre",
+   "acao": "semente + célula E"
+  },
+  {
+   "t": 13.9,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "tudo semeado ou crescendo: moeda no bico",
+   "acao": "toque em 100,481"
+  },
+  {
+   "t": 15.8,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "tudo semeado ou crescendo: moeda no bico",
+   "acao": "toque em 100,481"
+  },
+  {
+   "t": 19,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "célula A livre",
+   "acao": "semente + célula A"
+  },
+  {
+   "t": 22.3,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "célula B livre",
+   "acao": "semente + célula B"
+  },
+  {
+   "t": 25.3,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "célula C livre",
+   "acao": "semente + célula C"
+  },
+  {
+   "t": 28.4,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "célula D livre",
+   "acao": "semente + célula D"
+  },
+  {
+   "t": 30.8,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "célula E livre",
+   "acao": "semente + célula E"
+  },
+  {
+   "t": 32.7,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "tudo semeado ou crescendo: moeda no bico",
+   "acao": "toque em 100,481"
+  },
+  {
+   "t": 35.5,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.006
+   ],
+   "motivo": "célula A livre",
+   "acao": "semente + célula A"
+  },
+  {
+   "t": 37.8,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0.094,
+    0.006
+   ],
+   "motivo": "célula D pronta (verde 0.094)",
+   "acao": "colher D + vender"
+  },
+  {
+   "t": 40.4,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0.094,
+    0.006
+   ],
+   "motivo": "célula D pronta (verde 0.094)",
+   "acao": "colher D + vender"
+  },
+  {
+   "t": 43.3,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0.095,
+    0.006
+   ],
+   "motivo": "célula D pronta (verde 0.095)",
+   "acao": "colher D + vender"
+  },
+  {
+   "t": 45.7,
+   "tutorial": 0,
+   "titulo": 0,
+   "verdes": [
+    0,
+    0,
+    0,
+    0.094,
+    0.006
+   ],
+   "motivo": "célula D pronta (verde 0.094)",
+   "acao": "colher D + vender"
+  }
+ ],
+ "plantadas": 11,
+ "colhidas": 4,
+ "telas": 0,
+ "verde_final": "A:0.000 B:0.000 C:0.000 D:0.095 E:0.006",
+ "limite": {
+  "botao": 0.05,
+  "verdeVazio": 0.02,
+  "verdePronto": 0.085,
+  "esperaCrescimento": 14000
+ },
+ "celulas": [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E"
+ ]
+}

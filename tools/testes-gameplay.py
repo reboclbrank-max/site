@@ -39,6 +39,26 @@ def node(script):
     return (r.stdout or "").strip(), None
 
 
+def _pares_ass(texto):
+    import re as _re
+    saida = []
+    for linha in texto.splitlines():
+        m = _re.match(r"Dialogue: 0,(\d+):(\d+):([\d.]+),(\d+):(\d+):([\d.]+),.*?,,.*?,,(.*)$", linha)
+        if m:
+            ini = int(m.group(1)) * 3600 + int(m.group(2)) * 60 + float(m.group(3))
+            fim = int(m.group(4)) * 3600 + int(m.group(5)) * 60 + float(m.group(6))
+            saida.append((ini, fim, m.group(7)))
+    return saida
+
+
+def _duracao_maxima(texto):
+    return max((f - i for i, f, _t in _pares_ass(texto)), default=0)
+
+
+def _textos(texto):
+    return [t for _i, _f, t in _pares_ass(texto)]
+
+
 def ffmpeg():
     import importlib.util
     spec = importlib.util.spec_from_file_location("val", os.path.join(RAIZ, "tools", "validar-video.py"))
@@ -139,6 +159,31 @@ def main():
            not any(x in (p["titulo"] + p["descricao"]).lower()
                    for x in ("em breve", "melhor do mundo", "garantido", "viral")))
 
+    # 4b. pós-produção: legenda, trilha e cartão
+    spec2 = __import__("importlib.util").util.spec_from_file_location(
+        "prod", os.path.join(RAIZ, "tools", "produzir-video.py"))
+    prod = __import__("importlib.util").util.module_from_spec(spec2)
+    spec2.loader.exec_module(prod)
+    decisoes = [{"t": 2.0, "motivo": "célula A livre"}, {"t": 6.0, "motivo": "célula B livre"},
+                {"t": 9.0, "motivo": "célula A pronta (verde 0.094)"},
+                {"t": 12.0, "motivo": "tudo semeado ou crescendo: moeda no bico"}]
+    ass = prod.montar_ass(decisoes, 20)
+    # duas decisões diferentes com a MESMA ação ("célula A livre" e "célula B livre" viram
+    # "plantando semente") não precisam de duas legendas seguidas iguais.
+    ok("a legenda vem das decisões do agente", ass.count("Dialogue:") == 3, ass.count("Dialogue:"))
+    ok("decisões repetidas no fim não duplicam legenda",
+       prod.montar_ass(decisoes + [{"t": 12.5, "motivo": "tudo semeado ou crescendo: moeda no bico"}], 20)
+       .count("Dialogue:") == 3)
+    ok("as legendas descrevem plantio, colheita e moeda",
+       {"plantando semente", "colhendo a planta madura", "fazendo bico: +1 moeda"} <= set(_textos(ass)),
+       _textos(ass))
+    ok("o estilo da legenda fica no rodapé e não cobre a tela",
+       "Style: Casa" in ass and "MarginV, Encoding" in ass)
+    ok("nenhuma legenda fica mais de 4 s na tela", _duracao_maxima(ass) <= 4.01, _duracao_maxima(ass))
+    ok("o texto da legenda é curto e legível", all(len(x) <= 48 for x in _textos(ass)), _textos(ass))
+    ok("o relatório de decisões sem movimento ainda gera legenda",
+       prod.montar_ass([], 20).count("Dialogue:") == 0)
+
     # 5. envio continua trancado
     env = dict(os.environ, KIT_YOUTUBE=os.path.join("posts", "kit-gameplay.json"), CONFIRMACAO="")
     r = subprocess.run([sys.executable, "tools/enviar-youtube.py", "ceifalume-gameplay"],
@@ -164,7 +209,7 @@ def main():
        "secrets.YT_CLIENT_ID" not in texto.split("publicar == 'PUBLICAR'")[0],
        "credencial citada antes do cadeado")
 
-    total = 31
+    total = 37
     print("\n%d/%d testes do vídeo de gameplay passaram" % (total - falhas, total))
     return 1 if falhas else 0
 
