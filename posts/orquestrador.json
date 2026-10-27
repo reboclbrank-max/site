@@ -2,10 +2,10 @@
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
  "ultima_publicacao": null,
- "ultima_medicao": "2026-10-27T00:30:50Z",
+ "ultima_medicao": "2026-10-27T00:31:19Z",
  "ultima_pesquisa": null,
  "ultima_aprendizagem": null,
- "pulsos": 1,
+ "pulsos": 2,
  "historico": [
   {
    "quando": "2026-10-27T00:30:50Z",
@@ -13,6 +13,13 @@
    "motivo": "medição vencida (intervalo de 6h)",
    "codigo": 0,
    "saida": "modo seco"
+  },
+  {
+   "quando": "2026-10-27T00:31:19Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261027T003050Z] placar e desempenho",
+   "codigo": 0,
+   "saida": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 184,\n   \"falta\": null,\n   \"status\": \"AC"
   }
  ]
 }
