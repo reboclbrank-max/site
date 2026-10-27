@@ -47,6 +47,9 @@ function argumentos(argv) {
     else if (a === '--altura') o.altura = Number(valor());
     else if (a === '--quadros') o.quadros = Number(valor());
     else if (a === '--manter-bruto') o.manterBruto = true;
+    // Linha de base para a comparação antes/depois: mesmo robô, mesmas leituras, mas sem as
+    // decisões de dinheiro (melhoria/semente). Serve só para medir, não é o modo de produção.
+    else if (a === '--sem-economia') o.semEconomia = true;
   }
   return o;
 }
@@ -148,6 +151,113 @@ const ALVO = {
   vender: { x: 140, y: 400 },
   melhoria: { x: 100, y: 600 }
 };
+// ECONOMIA — o jogo grava o estado em ceifalume-save.cfg (IndexedDB, "godot/app_userdata").
+// Até 27/10/2026 o agente jogava só pela imagem: sabia colher, mas não sabia quanto tinha no
+// bolso, qual semente estava escolhida nem que uma melhoria estava ao alcance. Com o save lido,
+// as decisões de dinheiro passam a ser medidas no próprio jogo, não estimadas na tela.
+const SAVE_CAMINHO = '/userfs/godot/app_userdata/Ceifalume/ceifalume-save.cfg';
+const LEITOR_SAVE = async (caminho) => {
+  const texto = await new Promise((resolver) => {
+    const abrir = indexedDB.open('/userfs');
+    abrir.onerror = () => resolver(null);
+    abrir.onsuccess = () => {
+      const pedido = abrir.result.transaction('FILE_DATA', 'readonly').objectStore('FILE_DATA')
+        .get(caminho);
+      pedido.onsuccess = () => {
+        const v = pedido.result;
+        if (!v || !v.contents) return resolver(null);
+        const bytes = v.contents instanceof Uint8Array ? v.contents : new Uint8Array(v.contents);
+        resolver(new TextDecoder('utf-8').decode(bytes));
+      };
+      pedido.onerror = () => resolver(null);
+    };
+  });
+  if (!texto) return null;
+  const numero = (campo) => {
+    const achado = texto.match(new RegExp(campo + '=([^\\n]+)'));
+    return achado ? Number(achado[1]) : null;
+  };
+  const celeiro = {};
+  const bloco = texto.match(/celeiro=\{([\s\S]*?)\}/);
+  if (bloco) {
+    bloco[1].split(',').forEach((linha) => {
+      const par = linha.match(/"([^"]+)"\s*:\s*(\d+)/);
+      if (par) celeiro[par[1]] = Number(par[2]);
+    });
+  }
+  const listaCampos = texto.match(/campos=\[([\s\S]*?)\]/);
+  return {
+    moedas: numero('moedas'),
+    campos: listaCampos ? (listaCampos[1].match(/\{/g) || []).length : null,
+    dia: numero('dia'),
+    semente: numero('semente_selecionada'),
+    niveis: {
+      celeiro: numero('nivel_celeiro'),
+      poco: numero('nivel_poco'),
+      lanterna: numero('nivel_lanterna'),
+      ajudante: numero('nivel_ajudante'),
+      composteira: numero('nivel_composteira'),
+      carroca: numero('nivel_carroca')
+    },
+    celeiro,
+    tutorial_visto: /tutorial_visto=true/.test(texto)
+  };
+};
+// Abas de semente e botões de melhoria, medidos na tela do jogo em 27/10/2026 (1280x720).
+// Os custos são os que o jogo MOSTRA no painel; a compra é conferida no save (nível sobe e o
+// dinheiro cai), então custo errado aparece como falha, não como sucesso imaginário.
+// `responde`: medido em 27/10/2026 tocando a aba e conferindo `semente_selecionada` no save.
+// O que parecia "aba que não funciona" era coordenada errada (y=112 em vez de y=121) e falta de
+// dinheiro — o jogo só deixa escolher a semente que o bolso cobre. Medido com 21 moedas:
+//   Nabo (440,121) já estava em 0 · Milho (562,121) trocou 0 -> 1 ✔
+//   Trigo (690,121) · Tomate (817,121) · Abóbora (968,121) · Flor (1121,121) não trocaram
+//   (custam 60 / 200 / 700 / 2500 — bem mais do que as 21 moedas da hora do teste)
+// A conferência é sempre no save: aba que não trocar de verdade fica marcada como falha naquela
+// captura e não é tentada de novo, então o robô não queima o vídeo insistindo numa aba travada.
+const SEMENTES = [
+  { indice: 0, nome: 'Nabo', custo: 5, venda: 8, alvo: { x: 440, y: 121 }, responde: true },
+  { indice: 1, nome: 'Milho', custo: 20, venda: 35, alvo: { x: 562, y: 121 }, responde: true },
+  { indice: 2, nome: 'Trigo', custo: 60, venda: 110, alvo: { x: 690, y: 121 }, responde: true },
+  { indice: 3, nome: 'Tomate', custo: 200, venda: 380, alvo: { x: 817, y: 121 }, responde: true },
+  { indice: 4, nome: 'Abóbora', custo: 700, venda: 1400, alvo: { x: 968, y: 121 }, responde: true },
+  { indice: 5, nome: 'Flor de Lume', custo: 2500, venda: 5500, alvo: { x: 1121, y: 121 }, responde: true }
+];
+// ORDEM = PRIORIDADE DE COMPRA, e a ordem é por efeito MEDÍDO em moedas, não por preço:
+//   1) Cavar Poço (40) — crescimento +10%: encurta o ciclo, e ciclo curto é mais colheita por
+//      minuto. É o único efeito que ataca direto o numerador da conta (moedas/min).
+//   2) Acender Lanterna (60) — +1 moeda em cada colheita: soma em toda venda, para sempre.
+//   3) Composteira (80) — 8% de colheita dupla: ganho esperado, porém probabilístico.
+//   4) Comprar campo (50) — +1 campo, mas o agente só enxerga as 4 células medidas; enquanto a
+//      5ª não estiver mapeada, o campo novo rende zero. Fica atrás do que rende na hora.
+//   5) Ampliar Celeiro (30) — capacidade 10 -> 20. O agente vende assim que colhe, então o
+//      celeiro nunca é gargalo. Fica CATALOGADO (a compra existe e é conferida no save) mas
+//      NÃO é comprado: gastar 30 moedas que atrasam o Poço é trocar efeito por nenhum.
+const MELHORIAS = [
+  { id: 'poco', nome: 'Cavar Poço', custo: 40, alvo: { x: 767, y: 606 },
+    porque: 'crescimento +10% (colhe antes, mais ciclos)' },
+  { id: 'lanterna', nome: 'Acender Lanterna', custo: 60, alvo: { x: 1120, y: 606 },
+    porque: '+1 moeda por colheita' },
+  { id: 'composteira', nome: 'Composteira', custo: 80, alvo: { x: 450, y: 688 },
+    porque: '8% de colheita dupla' },
+  { id: 'campo', nome: 'Comprar campo', custo: 50, alvo: { x: 170, y: 606 },
+    porque: '+1 campo (só rende depois que a 5ª célula for mapeada)' },
+  { id: 'celeiro', nome: 'Ampliar Celeiro', custo: 30, alvo: { x: 458, y: 606 },
+    comprar: false,
+    porque: 'capacidade 10 -> 20 (o agente vende logo, então não é gargalo)' }
+];
+// REGRA DE CAIXA PARA TROCAR DE SEMENTE (medida, não escolhida no gosto):
+// o robô planta em até 4 células por rodada, então trocar de semente só faz sentido quando o
+// caixa paga a rodada INTEIRA — custo × 4 — e ainda sobra um respiro. Teste de 27/10 que provou
+// isso: com 25 moedas o robô subiu para Milho, plantou 1 vez, ficou sem caixa, desceu para Nabo
+// e terminou o vídeo com 13,60 moedas/min (pior que o Nabo puro). Com a regra de 4× o caixa
+// espera o momento de trocar sem se descapitalizar: 20×4+5 = 85 para o Milho, 205 para o Tomate.
+const CELULAS_POR_RODADA = 4;
+const FOLGA_SEMENTE = 5;
+/** GANHO ≠ SALDO: comprar melhoria derruba o saldo e não é prejuízo. */
+function ganhoDeMoedas(inicial, final, gasto) {
+  if (typeof inicial !== 'number' || typeof final !== 'number') return null;
+  return final - inicial + (gasto || 0);
+}
 // limites de decisão — calibrados nos quadros de 27/10 (ver docs/VIDEO-GAMEPLAY.md)
 const LIMIAR = {
   botao: 0.02,        // fração de branco que já conta como letra "Jogar" visível
@@ -239,6 +349,56 @@ function decidir(estado, memoria = {}) {
   }
   const agora = memoria.agora || 0;
   const ocupadas = memoria.ocupadas || {};
+  const economia = memoria.economia || null;
+
+  // ---- decisões de DINHEIRO (medidas no save do próprio jogo) ----
+  // Ordem de prioridade: primeiro o que aumenta a produção por ciclo (celeiro, poço, campo),
+  // depois o que aumenta a receita (lanterna, composteira). A compra só acontece quando o
+  // dinheiro cobre o custo, e o laço confere no save que o nível realmente subiu.
+  if (economia && typeof economia.moedas === 'number') {
+    const melhoriasFeitas = memoria.melhoriasFeitas || {};
+    const compraveis = MELHORIAS.filter((m) => m.comprar !== false
+      && economia.moedas >= m.custo && !melhoriasFeitas[m.id]);
+    if (compraveis.length) {
+      const m = compraveis[0];
+      return { tipo: 'melhoria', melhoria: m, alvo: m.alvo,
+               motivo: 'comprar ' + m.nome + ' (' + m.custo + ' moedas · ' + m.porque + ')' };
+    }
+    // SEMENTE: a mais cara que o bolso cobre com folga — é onde está o dinheiro de verdade
+    // (Nabo vende 8, Milho 35, Tomate 380 por ciclo). Duas regras aprendidas na tela do jogo:
+    //  • a aba só deixa a semente PENDENTE; `semente_selecionada` no save muda no primeiro
+    //    plantio (medido: aba Milho em 562,121 + plantar em 760,259 → 0 -> 1). Por isso não se
+    //    confere nada no instante do toque — quem confere é o plantio seguinte;
+    //  • se o caixa não cobre mais a semente atual, o robô DESCE para a mais cara que cobre, em
+    //    vez de ficar tentando plantar o que não pode pagar.
+    const falhas = memoria.sementesFalhas || {};
+    const pendente = memoria.sementePendente ? memoria.sementePendente.indice : null;
+    const atual = SEMENTES.find((x) => x.indice === economia.semente) || null;
+    const cobre = (x) => economia.moedas >= x.custo * CELULAS_POR_RODADA + FOLGA_SEMENTE;
+    // Caso de emergência: se o caixa não paga nem UMA semente da atual, o robô não pode ficar
+    // travado (plantio recusado = célula vazia = zero de renda). Aí desce para a mais barata que
+    // paga um plantio, mesmo sem cobrir a rodada inteira.
+    const pagaUma = (x) => economia.moedas >= x.custo;
+    const opcoes = SEMENTES.filter((x) => x.responde !== false && !falhas[x.indice] && cobre(x));
+    const melhor = opcoes.length ? opcoes[opcoes.length - 1] : null;
+    if (atual && !pagaUma(atual)) {
+      const baratas = SEMENTES.filter((x) => pagaUma(x) && !falhas[x.indice]);
+      if (baratas.length) {
+        const barata = baratas[0];
+        if (barata.indice !== economia.semente && barata.indice !== pendente) {
+          return { tipo: 'semente', semente: barata, alvo: barata.alvo,
+                   motivo: 'caixa curto: voltar para ' + barata.nome + ' (paga ' + barata.custo + ')' };
+        }
+      }
+    }
+    const desce = atual && !cobre(atual);
+    if (melhor && melhor.indice !== economia.semente && melhor.indice !== pendente
+      && (desce || melhor.custo > atual.custo || !atual)) {
+      return { tipo: 'semente', semente: melhor, alvo: melhor.alvo,
+               motivo: (desce ? 'caixa curto: descer para ' : 'subir para ') + melhor.nome
+                 + ' (venda ' + melhor.venda + ' por ciclo)' };
+    }
+  }
   // PRONTA: o nabo maduro fica branco (medido: casca branca 0,027 no miolo, verde cai de 0,10
   // para 0,04). A leitura antiga exigia "verde alto" e por isso nunca colhia nada: no ponto de
   // colheita a planta deixa de ser verde.
@@ -278,8 +438,9 @@ function decidir(estado, memoria = {}) {
 }
 
 /** Toque que não depende do tipo de evento: clique de mouse E toque de dedo. */
-async function acionar(pagina, alvo) {
+async function acionar(pagina, alvo, duplo = true) {
   await pagina.mouse.click(alvo.x, alvo.y);
+  if (!duplo) return;
   await pagina.waitForTimeout(120);
   await pagina.touchscreen.tap(alvo.x, alvo.y);
 }
@@ -397,6 +558,14 @@ async function principal() {
     let tutorialDesde = 0;
     let segundosComTutorial = 0;
     let confirmacoesAnteriores = {};
+    let economiaInicial = null;
+    let economiaAtual = null;
+    const melhoriasFeitas = {};
+    const sementesFalhas = {};
+    let sementePendente = null;
+    const melhoriasCompras = [];
+    let economiaResumo = null;
+    const sementesTrocadas = [];
     while (Date.now() < fimAcoes) {
       let estado;
       try {
@@ -415,18 +584,45 @@ async function principal() {
         confirmacoes[c.id] = livre ? ((confirmacoesAnteriores[c.id] || 0) + 1) : 0;
       });
       confirmacoesAnteriores = confirmacoes;
-      const d = decidir(estado, { agora: Date.now() - inicioAcoes, ocupadas, confirmacoes });
+      // Estado de dinheiro lido do save (fonte da verdade do jogo, não da tela).
+      let economia = null;
+      try {
+        economia = await pagina.evaluate(LEITOR_SAVE, SAVE_CAMINHO);
+      } catch (e) { economia = null; }
+      if (economia) {
+        if (!economiaInicial) economiaInicial = economia;
+        economiaAtual = economia;
+      }
+      const d = decidir(estado, { agora: Date.now() - inicioAcoes, ocupadas, confirmacoes,
+        economia: op.semEconomia ? null : economia, melhoriasFeitas, sementesFalhas,
+        sementePendente });
       let acao;
       if (d.tipo === 'plantar') {
-        await pagina.mouse.click(ALVO.semente.x, ALVO.semente.y);
-        await pagina.waitForTimeout(160);
-        await pagina.touchscreen.tap(ALVO.semente.x, ALVO.semente.y);
-        await pagina.waitForTimeout(260);
+        // Com troca de semente pendente, NÃO toca na sacola: o toque na sacola devolve a semente
+        // salva e desfaz a aba escolhida (medido em 27/10 — a aba "funcionava" e o save continuava
+        // em Nabo). Sem pendência, a sacola abre o plantio como antes.
+        if (!sementePendente) {
+          await pagina.mouse.click(ALVO.semente.x, ALVO.semente.y);
+          await pagina.waitForTimeout(160);
+          await pagina.touchscreen.tap(ALVO.semente.x, ALVO.semente.y);
+          await pagina.waitForTimeout(260);
+        }
         await acionar(pagina, d.celula.centro);
         ocupadas[d.celula.id] = Date.now() - inicioAcoes;
         plantadas += 1;
         acao = 'semente + célula ' + d.celula.id;
         await pagina.waitForTimeout(420);
+        // CONFERÊNCIA DA TROCA DE SEMENTE: só o plantio grava `semente_selecionada` no save.
+        if (sementePendente) {
+          const agoraSave = await pagina.evaluate(LEITOR_SAVE, SAVE_CAMINHO);
+          const trocou = agoraSave && agoraSave.semente === sementePendente.indice;
+          if (trocou || Date.now() - sementePendente.desde > 12000) {
+            sementesTrocadas.push({ nome: sementePendente.nome, ok: !!trocou,
+              t: +((Date.now() - inicioAcoes) / 1000).toFixed(1) });
+            if (!trocou) sementesFalhas[sementePendente.indice] = true;
+            sementePendente = null;
+          }
+        }
       } else if (d.tipo === 'colher') {
         // Duas tentativas de propósito: o botão "Colher" fica no rodapé da caixa e o toque na
         // planta também colhe. Se o primeiro não pegar, o segundo pega.
@@ -440,6 +636,31 @@ async function principal() {
         await acionar(pagina, ALVO.vender);
         acao += ' + vender';
         await pagina.waitForTimeout(300);
+      } else if (d.tipo === 'melhoria') {
+        const antes = economiaAtual || {};
+        await acionar(pagina, d.alvo);
+        await pagina.waitForTimeout(700);
+        const depois = await pagina.evaluate(LEITOR_SAVE, SAVE_CAMINHO);
+        const nivel = (e) => (e && e.niveis && e.niveis[d.melhoria.id]) || 0;
+        const comprou = depois && (nivel(depois) > nivel(antes)
+          || (d.melhoria.id === 'campo' && depois.moedas < (antes.moedas || 0)));
+        if (comprou) {
+          melhoriasCompras.push({ id: d.melhoria.id, nome: d.melhoria.nome,
+            custo: (antes.moedas || 0) - (depois.moedas || 0),
+            t: +((Date.now() - inicioAcoes) / 1000).toFixed(1) });
+          melhoriasFeitas[d.melhoria.id] = true;
+          economiaAtual = depois;
+          acao = 'comprar ' + d.melhoria.nome + ' (nível ' + nivel(depois) + ')';
+        } else {
+          // Se a compra não pegou, não insiste para sempre: marca e segue jogando.
+          melhoriasFeitas[d.melhoria.id] = true;
+          acao = 'tentei comprar ' + d.melhoria.nome + ' (não pegou)';
+        }
+      } else if (d.tipo === 'semente') {
+        // UM toque só: clique + tap no mesmo lugar pode alternar a aba de volta.
+        await acionar(pagina, d.alvo, false);
+        sementePendente = { indice: d.semente.indice, nome: d.semente.nome, desde: Date.now() };
+        acao = 'aba da semente ' + d.semente.nome;
       } else if (d.tipo === 'toque') {
         await acionar(pagina, d.alvo);
         acao = 'toque em ' + d.alvo.x + ',' + d.alvo.y;
@@ -482,6 +703,7 @@ async function principal() {
         dialogo: +estado.dialogo.toFixed(3),
         titulo: +estado.titulo.toFixed(3),
         hud: +estado.hud.toFixed(3),
+        moedas: economia ? economia.moedas : null,
         verdes: estado.celulas.map((c) => +c.verde.toFixed(3)),
         cascas: estado.celulas.map((c) => +c.branco.toFixed(3)),
         barras: estado.celulas.map((c) => +c.ouroBotao.toFixed(3)),
@@ -508,6 +730,19 @@ async function principal() {
       await contexto.close();
       return 8;
     }
+    if (economiaInicial && economiaAtual) {
+      // GANHO ≠ SALDO. Comprar melhoria derruba o saldo e não é prejuízo: o que se mede é
+      // (saldo final - saldo inicial) + tudo o que foi gasto. Sem essa conta, o robô que
+      // investe apareceria pior que o que não investe.
+      const gasto = melhoriasCompras.reduce((s, m) => s + (m.custo || 0), 0);
+      const ganho = ganhoDeMoedas(economiaInicial.moedas, economiaAtual.moedas, gasto);
+      console.log('economia: saldo ' + economiaInicial.moedas + ' -> ' + economiaAtual.moedas
+        + ' · gasto ' + gasto + ' · GANHO ' + ganho + ' moedas em ' + op.segundos + ' s ('
+        + (ganho / (op.segundos / 60)).toFixed(2) + '/min) · melhorias: '
+        + (melhoriasCompras.map((m) => m.nome).join(', ') || 'nenhuma')
+        + ' · sementes: ' + (sementesTrocadas.map((s) => s.nome + (s.ok ? '' : '(falhou)')).join(', ') || 'nenhuma'));
+      economiaResumo = { gasto, ganho, ganho_por_minuto: +(ganho / (op.segundos / 60)).toFixed(2) };
+    }
     console.log('tutorial: ficou ' + segundosComTutorial.toFixed(1) + ' s na tela · fechou: '
       + (tutorialFechado ? 'sim' : 'não precisou') + ' · toques nele: ' + toquesTutorial);
 
@@ -515,6 +750,10 @@ async function principal() {
     const quadro = op.saida.replace(/\.mp4$/i, '-quadro.png');
     fs.mkdirSync(path.dirname(quadro), { recursive: true });
     await pagina.screenshot({ path: quadro });
+    if (economiaResumo) {
+      console.log('resumo da economia: ganho ' + economiaResumo.ganho + ' moedas · '
+        + economiaResumo.ganho_por_minuto + '/min · gasto em melhorias ' + economiaResumo.gasto);
+    }
     console.log('decisões: ' + decisoes.length + ' · plantadas: ' + plantadas +
       ' · colhidas: ' + colhidas + ' · telas de abertura: ' + toquesTela);
     console.log('últimas decisões: ' + JSON.stringify(decisoes.slice(-4)));
@@ -525,6 +764,13 @@ async function principal() {
         decisoes, plantadas, colhidas, telas: toquesTela, verde_final: verdeFinal,
         tutorial_segundos: +segundosComTutorial.toFixed(1), tutorial_fechou: tutorialFechado,
         tutorial_toques: toquesTutorial,
+        economia: {
+          inicio: economiaInicial,
+          fim: economiaAtual,
+          resumo: economiaResumo,
+          melhorias: melhoriasCompras,
+          sementes: sementesTrocadas
+        },
         limite: LIMIAR, celulas: CELULAS.map((c) => c.id)
       }, null, 1));
     } catch (e) { /* relatório é extra, não pode derrubar a captura */ }
@@ -585,5 +831,5 @@ if (require.main === module) {
 
 module.exports = {
   subirServidor, argumentos, duracaoDoVideo, carregarPlaywright,
-  decidir, LIMIAR, CELULAS, REGIAO_TUTORIAL, REGIAO_TITULO, REGIAO_DIALOGO, ALVO
+  decidir, ganhoDeMoedas, MELHORIAS, SEMENTES, LIMIAR, CELULAS, REGIAO_TUTORIAL, REGIAO_TITULO, REGIAO_DIALOGO, ALVO
 };
