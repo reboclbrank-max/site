@@ -12,5 +12,8 @@
     "texto": "posts/devlog-itch.json",
     "gatilho": "quando a build 0.2 subir (butler) — anunciar 0.1 duas vezes seria ruido",
     "fallback": "se a 0.2 nao sair ate 02/11/2026, publicar como esta: o devlog ja esta no blog da casa desde 26/10"
+  },
+  "_ciclos_no_dia": {
+    "26/10/2026": 1
   }
 }
