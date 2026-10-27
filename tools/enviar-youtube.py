@@ -44,8 +44,13 @@ def carregar_kit(caminho=KIT):
 
 
 def pacote_do_kit(dados, slug):
+    """Aceita tanto o slug do jogo quanto o id do pacote (ex.: "ceifalume-gameplay").
+
+    Sem isso, o vídeo de gameplay — que é do mesmo jogo mas de outro pacote — não teria
+    como ser escolhido sem duplicar o kit inteiro.
+    """
     for p in dados.get("pacotes") or []:
-        if p.get("slug") == slug:
+        if p.get("slug") == slug or p.get("id") == slug:
             return p
     return None
 
@@ -131,7 +136,12 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
     if str(confirmacao or "").strip().upper() != PALAVRA_CONFIRMACAO:
         return False, ("faltou a confirmação explícita (palavra %s): a casa não publica "
                        "sozinha" % PALAVRA_CONFIRMACAO)
-    dados = carregar_kit(os.path.join(raiz, "posts", "kit-youtube.json"))
+    # KIT_YOUTUBE permite apontar para outro kit (o do gameplay gravado, por exemplo) sem
+    # mexer no padrão. O caminho padrão continua sendo o kit oficial do YouTube.
+    caminho_kit = (os.environ.get("KIT_YOUTUBE")
+                   or os.environ.get("KIT")
+                   or os.path.join(raiz, "posts", "kit-youtube.json"))
+    dados = carregar_kit(caminho_kit)
     pacote = pacote_do_kit(dados, slug)
     erros = validar_antes(pacote, raiz=raiz,
                           validador=validador or _validador_do_kit())
