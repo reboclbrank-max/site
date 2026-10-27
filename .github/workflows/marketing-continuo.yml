@@ -39,6 +39,7 @@ jobs:
       - name: Barreiras offline (nenhuma toca a rede)
         run: |
           python3 tools/testes-v2.py
+          python3 tools/testes-gameplay.py
           python3 tools/testes-orquestrador.py
           python3 tools/testes-janela.py
 
