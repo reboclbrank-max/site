@@ -1,0 +1,61 @@
+name: marketing-continuo
+
+# Bloco contínuo: um job que fica trabalhando por horas, em vez de acordar a cada 15 min.
+# Isto é o mais perto de "processo sempre vivo" que o GitHub Actions permite (teto de 6 h
+# por job). 4 blocos por dia cobrem 24 h sem depender de cron curto.
+#
+# Travas:
+#   - posts/PARAR (commitando esse arquivo) encerra o bloco na hora;
+#   - janela 9-22h e teto de 5 publicações/dia continuam valendo (quem decide é o orquestrador);
+#   - concorrência serializada: dois blocos nunca rodam juntos;
+#   - não publica no itch nem envia vídeo ao YouTube (regras da casa).
+
+on:
+  schedule:
+    - cron: "5 0,6,12,18 * * *"
+  workflow_dispatch:
+    inputs:
+      pulsos:
+        description: "quantos pulsos neste bloco"
+        required: true
+        default: "30"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marketing-continuo
+  cancel-in-progress: false
+
+jobs:
+  bloco:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/testes-v2.py
+          python3 tools/testes-orquestrador.py
+          python3 tools/testes-janela.py
+
+      - name: Instala o que o postador precisa
+        run: pip install -q coincurve websocket-client
+
+      - name: Bloco contínuo
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID3 }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET3 }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN3 }}
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          NTFY_TOPICO: ${{ secrets.NTFY_TOPICO }}
+        run: python3 tools/loop-24h.py --pulsos "${{ github.event.inputs.pulsos || '30' }}" --intervalo 600
