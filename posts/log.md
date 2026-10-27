@@ -2030,3 +2030,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=20(api) · itch_downloads=46(api) · itch_visitas=184(api) · youtube_inscritos=24(api) · youtube_shorts=5(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
 
 > Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: futebol tático na prancheta (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna onde a colheita 
+
+## 27/10/2026 15:25 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ post novo validado — motor=g4f auto |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ convide pra apoiar seguindo e compartilhando |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 17951646549055 |
+| threads | ✅ publicado id 181016914371 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ✅ 1 resposta(s) enviada(s) de 2 pendente(s) |
+| cacador de oportunidades | ✅ 2 de 2 interacoes do dia (q=#indiedev) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
+| censo mundial | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=22(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> Dois mundos, um código feito com carinho no Brasil 🇧🇷✨ Desenhe jogadas e veja a partida rolar no **PRANCHETA** (grátis no navegador/APK, Godot) ou cui
