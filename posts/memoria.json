@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-27T12:10:05Z",
+ "quando": "2026-10-27T12:19:44Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
@@ -283,14 +283,14 @@
  "orquestrador": {
   "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
   "versao": 1,
-  "ultima_publicacao": "2026-10-27T12:09:44Z",
+  "ultima_publicacao": "2026-10-27T12:19:44Z",
   "ultima_medicao": "2026-10-27T11:59:44Z",
   "ultima_pesquisa": null,
   "ultima_aprendizagem": null,
-  "pulsos": 5
+  "pulsos": 6
  },
  "fila": {
-  "publicar": "pendente",
+  "publicar": "feito",
   "pesquisar": "pendente",
   "medir": "feito",
   "aprender": "pendente"
