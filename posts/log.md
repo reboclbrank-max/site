@@ -2056,3 +2056,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=22(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > Dois mundos, um código feito com carinho no Brasil 🇧🇷✨ Desenhe jogadas e veja a partida rolar no **PRANCHETA** (grátis no navegador/APK, Godot) ou cui
+
+## 27/10/2026 19:43 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ post novo validado — motor=g4f auto |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ retrospectiva rapida: o que a casa aprendeu essa semana |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | ✅ publicado id 180257364238 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ➖ cadencia diaria de interacao ja cumprida (2026-10-27) |
+| cacador de oportunidades | ➖ cadencia diaria de interacao ja cumprida (2026-10-27) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=22(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> Dois mundos, um dev brasileiro 🇧🇷✨ PRANCHETA: tático de futebol fictício, grátis no navegador/APK (Godot). CEIFALUME 0.1: fazenda noturna idle onde a 
