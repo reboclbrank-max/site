@@ -1,0 +1,108 @@
+name: gravar-prancheta
+
+# ⚽ Grava o PRANCHETA rodando (o segundo jogo da casa).
+#
+# Por que existe: até 27/10/2026 só o CEIFALUME tinha roteiro de gravação. O PRANCHETA existia
+# publicado no itch.io (Godot web dentro do iframe do itch) e nada mais — "gravar o PRANCHETA"
+# era promessa, não arquivo. O roteiro em tools/gravar-prancheta.js descobre o build atual na
+# página do itch, atravessa menu → carreira → clube → staff → prancheta → partida e confere cada
+# passo POR IMAGEM. Ele FALHA se menos de 4 passos essenciais mudarem a tela.
+#
+# REGRA DA CASA: gravar é produção, publicar não. O envio ao YouTube só com a palavra PUBLICAR.
+
+on:
+  workflow_dispatch:
+    inputs:
+      segundos:
+        description: "duração da gravação em segundos"
+        required: false
+        default: "80"
+      publicar:
+        description: "digite PUBLICAR para enviar ao YouTube (vazio = só gravar)"
+        required: false
+        default: ""
+  schedule:
+    - cron: "50 2,10,18 * * *"   # 3 gravações por dia, só gravação
+
+permissions:
+  contents: write      # só para o registro do que foi publicado, atrás do cadeado PUBLICAR
+
+concurrency:
+  group: gravar-prancheta
+  cancel-in-progress: false
+
+jobs:
+  gravar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Ferramentas de captura e de medida
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          npm install --no-save --no-audit --no-fund playwright-core@1
+          npx --yes playwright install --with-deps chromium-headless-shell
+
+      - name: Barreiras offline
+        run: |
+          node --check tools/gravar-prancheta.js
+          python3 tools/testes-prancheta.py
+          python3 tools/testes-gameplay.py
+
+      - name: Grava o PRANCHETA (build web do itch, roteiro medido)
+        run: |
+          node tools/gravar-prancheta.js \
+            --saida media/gameplay/prancheta-cru.mp4 \
+            --segundos "${{ github.event.inputs.segundos || '80' }}"
+
+      - name: Pós-produção (legenda, trilha, cartão final)
+        run: |
+          python3 tools/produzir-video.py \
+            media/gameplay/prancheta-cru.mp4 \
+            media/gameplay/prancheta-cru-decisoes.json \
+            media/gameplay/prancheta-gameplay.mp4 \
+            --trechos "4-24,28-48,60-79"
+
+      - name: Mede o vídeo final
+        run: python3 tools/validar-video.py media/gameplay/prancheta-gameplay.mp4
+
+      - name: Guarda o vídeo no repositório (é o arquivo que o envio usa)
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add media/gameplay/prancheta-gameplay.mp4 media/gameplay/prancheta-cru-decisoes.json
+          if git diff --cached --quiet; then
+            echo "vídeo sem mudança"
+            exit 0
+          fi
+          git commit -m "gameplay: PRANCHETA gravado ($(date -u +%d/%m\ %H:%M\ UTC))"
+          git push
+
+      - name: Guarda o vídeo e o quadro de prova
+        uses: actions/upload-artifact@v4
+        with:
+          name: gameplay-prancheta
+          path: |
+            media/gameplay/prancheta-gameplay.mp4
+            media/gameplay/prancheta-cru.mp4
+            media/gameplay/prancheta-cru-decisoes.json
+          retention-days: 14
+
+      - name: Resumo
+        run: |
+          {
+            echo "### PRANCHETA gravado"
+            echo
+            echo '```'
+            ffprobe -hide_banner -v error -show_entries format=duration,size:stream=width,height,r_frame_rate \
+              -of default=noprint_wrappers=1 media/gameplay/prancheta-gameplay.mp4
+            echo '```'
+            echo
+            echo "Envio ao YouTube: ${{ github.event.inputs.publicar == 'PUBLICAR' && 'pedido neste run' || 'não pedido — só gravação' }}"
+          } >> "$GITHUB_STEP_SUMMARY"

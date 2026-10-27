@@ -97,10 +97,15 @@ tempo do corte.
 - **Não joga bem.** O agente lê o estado (tutorial, título e o verde de 5 células) e decide
   colher/semear/ganhar moeda — mas não entende estratégia: não escolhe a semente mais cara,
   não compra melhoria na hora certa, não joga o PRANCHETA.
-- **O PRANCHETA ainda não tem roteiro.** O jogo só existe publicado no itch.io (o repositório
-  tem as páginas de marketing, não o build), e a tela inicial dele ("Carregar carreira") não
-  é a mesma do CEIFALUME. Faltam: baixar o build, medir as regiões dele e escrever o agente.
-  `tools/gravar-gameplay.js --url <endereço>` já abre build externo — o que falta é a medição.
+- ~~O PRANCHETA ainda não tem roteiro~~ — **resolvido em 27/10/2026.** `tools/gravar-prancheta.js`
+  descobre o build atual na página do itch (`html-classic.itch.zone/html/<id>/index.html`, o id
+  muda a cada versão), atravessa splash → menu → **Nova carreira** → aceitar convite de clube →
+  sugestão do staff → microciclo → prancheta tática → partida (instrução no intervalo, velocidade,
+  pular para o fim) e **confere cada passo por imagem**. Se menos de 4 passos essenciais mudarem a
+  tela, ele falha em vez de entregar vídeo parado. Regiões medidas em 1280×720:
+  nova carreira y≈87 · aceitar convite y≈179 · staff y≈232 · microciclo y≈612 · prancheta y≈259 ·
+  jogar y≈289 · instrução (110,608) · seguir (636,573) · rápida (700,685) · pular (900,705).
+  Workflow: `gravar-prancheta.yml` (3 gravações/dia, sem envio automático).
 - **Não publica sozinho.** Publicação continua exigindo a palavra `PUBLICAR`, como o resto da
   casa. O cron só grava.
 - **Trilha sintetizada, não música.** É um pad de três notas gerado pelo ffmpeg; a descrição

@@ -1,27 +1,31 @@
 1
-00:00:01,000 --> 00:00:05,000
-tela de abertura (sem HUD)
-
-2
-00:00:08,100 --> 00:00:12,100
+00:00:12,000 --> 00:00:16,000
 abrindo o jogo
 
+2
+00:00:17,900 --> 00:00:21,900
+aceitando o convite do clube
+
 3
-00:00:14,700 --> 00:00:18,700
-plantando semente
+00:00:24,200 --> 00:00:28,200
+montando a semana de treinos
 
 4
-00:00:25,500 --> 00:00:29,000
-vendendo a colheita
+00:00:29,800 --> 00:00:33,800
+abrindo a prancheta tática
 
 5
-00:00:29,000 --> 00:00:33,000
-fazendo bico: +1 moeda
+00:00:38,000 --> 00:00:41,300
+começando a partida
 
 6
-00:00:37,700 --> 00:00:41,700
-colhendo a planta madura
+00:00:41,300 --> 00:00:45,300
+acelerando a partida
 
 7
-00:00:51,100 --> 00:00:55,100
-vendendo a colheita
+00:00:46,900 --> 00:00:50,900
+partida em andamento
+
+8
+00:00:58,200 --> 00:00:59,000
+pulando para o resultado
