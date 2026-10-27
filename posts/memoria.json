@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-27T01:03:16Z",
+ "quando": "2026-10-27T11:59:55Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
@@ -284,10 +284,10 @@
   "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
   "versao": 1,
   "ultima_publicacao": "2026-10-27T00:41:19Z",
-  "ultima_medicao": "2026-10-27T00:31:19Z",
+  "ultima_medicao": "2026-10-27T11:59:44Z",
   "ultima_pesquisa": null,
   "ultima_aprendizagem": null,
-  "pulsos": 3
+  "pulsos": 4
  },
  "fila": {
   "publicar": "pendente",
