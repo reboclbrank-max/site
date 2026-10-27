@@ -29,7 +29,9 @@ on:
     - cron: "25 1,7,13,19 * * *"
 
 permissions:
-  contents: read
+  # write só por causa do registro do que foi publicado (posts/youtube-publicados.json), e esse
+  # passo está atrás do cadeado PUBLICAR. A gravação em si não escreve nada no repositório.
+  contents: write
 
 concurrency:
   group: gravar-gameplay
@@ -122,6 +124,23 @@ jobs:
           KIT_YOUTUBE: posts/kit-gameplay.json
         run: |
           python3 tools/enviar-youtube.py ceifalume-gameplay | tee /tmp/envio.txt
+
+      - name: Registra o que foi publicado (JSON público que o chat lê)
+        if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}
+        run: |
+          if [ ! -f posts/youtube-publicados.json ]; then
+            echo "sem registro para guardar (o envio pode ter falhado antes)"
+            exit 0
+          fi
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/youtube-publicados.json
+          if git diff --cached --quiet; then
+            echo "registro sem mudança"
+            exit 0
+          fi
+          git commit -m "registro: vídeo do gameplay publicado no YouTube ($(date -u +%d/%m %H:%M UTC))"
+          git push
           {
             echo "### Envio ao YouTube"
             echo
