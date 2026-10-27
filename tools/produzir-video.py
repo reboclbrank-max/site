@@ -27,6 +27,18 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # texto curto e verdadeiro para cada tipo de ação registrada pelo agente
 LEGENDAS = [
     (r"^tutorial", "abrindo o jogo"),
+    # PRANCHETA (o segundo jogo da casa, com roteiro desde 27/10/2026)
+    (r"^abrir o menu do jogo$", "abrindo o jogo"),
+    (r"^aceitar o convite do clube$", "aceitando o convite do clube"),
+    (r"^aplicar a sugestão do staff$", "aplicando a sugestão do staff"),
+    (r"^aplicar o microciclo", "montando a semana de treinos"),
+    (r"^abrir a prancheta$", "abrindo a prancheta tática"),
+    (r"^jogar com o plano", "começando a partida"),
+    (r"^dar instrução no intervalo$", "instrução no intervalo"),
+    (r"^seguir sem mexer$", "seguindo sem mexer"),
+    (r"^acelerar a partida$", "acelerando a partida"),
+    (r"^partida em andamento$", "partida em andamento"),
+    (r"^pular para o fim", "pulando para o resultado"),
     (r"^tela de t", "abrindo o jogo"),
     (r"^c[eé]lula (\w) livre$", "plantando semente"),
     (r"^c[eé]lula (\w) pronta", "colhendo a planta madura"),
