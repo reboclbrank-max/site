@@ -28,17 +28,21 @@ tools/kit-gameplay.py   → pacote de envio (título/descrição/tags do kit ofi
 
 ## Números medidos
 
-**No runner do GitHub (run 40508283212, 27/10/2026 13:02 UTC — o que vale):**
+**No runner do GitHub (run 40514754877, 27/10/2026 13:46 UTC — o que vale):**
 
 | medida | valor |
 |---|---|
-| duração do arquivo | 49,3 s |
+| duração do vídeo final | 52,1 s (cru: 51,5 s + 3 s de cartão − sobreposição) |
 | resolução / fps | 1280×720 / 24 |
-| tamanho | 1.091.867 B (artefato de 1.873.939 B com quadro + kit) |
-| cores distintas (amostras de 160×90) | 1.253 |
-| movimento médio entre amostras | 1,74 (mínimo exigido: 1,2) |
-| maior trecho parado | 7,0 s (a tela do tutorial) |
-| veredito do validador | ✔ passou (rodado de novo no artefato baixado) |
+| tamanho | 1,8 MB |
+| legendas | 6 linhas, geradas das decisões do agente |
+| trilha | sintetizada (média **-30,9 dB**, pico -21,5 dB) |
+| cartão final | presente (brilho médio 52) |
+| cores distintas / movimento | 1.297 cores · 1,67 |
+| maior trecho parado | 10,0 s |
+| validação de imagem | ✔ passou |
+| validação de apresentação (som + legenda + cartão) | ✔ passou |
+| decisões do agente na partida | plantou em 5 células, colheu 4 vezes, moedas mudando na tela |
 
 **Na minha máquina (primeira captura, mesmo código):** 44,8 s · 1.273 cores · movimento 1,53 ·
 maior trecho parado 6,5 s · ✔ passou.
@@ -49,14 +53,17 @@ tela parada.
 
 ## O que este pipeline NÃO faz
 
-- **Não joga bem.** O roteiro é determinístico e cego: ele toca em pontos fixos que eu medi na
-  tela. Não lê o estado do jogo, então não "decide" o que fazer — repete o ciclo do tutorial.
+- **Não joga bem.** O agente lê o estado (tutorial, título e o verde de 5 células) e decide
+  colher/semear/ganhar moeda — mas não entende estratégia: não escolhe a semente mais cara,
+  não compra melhoria na hora certa, não joga o PRANCHETA.
+- **O PRANCHETA ainda não tem roteiro.** O jogo só existe publicado no itch.io (o repositório
+  tem as páginas de marketing, não o build), e a tela inicial dele ("Carregar carreira") não
+  é a mesma do CEIFALUME. Faltam: baixar o build, medir as regiões dele e escrever o agente.
+  `tools/gravar-gameplay.js --url <endereço>` já abre build externo — o que falta é a medição.
 - **Não publica sozinho.** Publicação continua exigindo a palavra `PUBLICAR`, como o resto da
   casa. O cron só grava.
-- **Não cobre o PRANCHETA ainda.** O roteiro das coordenadas é do CEIFALUME; outro jogo precisa
-  de outro roteiro medido, e eu não vou fingir que um serve para o outro.
-- **Não substitui edição humana.** Sem cortes, sem trilha, sem legenda: é captura crua.
-  O YouTube aceita; o canal é que decide se vale publicar cru.
+- **Trilha sintetizada, não música.** É um pad de três notas gerado pelo ffmpeg; a descrição
+  do kit diz isso, para ninguém achar que é trilha composta.
 
 ## Como repetir à mão
 
