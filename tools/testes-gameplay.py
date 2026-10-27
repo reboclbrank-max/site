@@ -158,6 +158,33 @@ def main():
     ok("há corte de reserva mais largo quando o enxuto reprova",
        len(variantes) >= 2 and variantes[1][0][0] <= trechos[0][0], len(variantes))
 
+    # 2c. o que foi publicado fica registrado num JSON público (o chat lê esse arquivo)
+    spec_env = __import__("importlib.util").util.spec_from_file_location(
+        "env", os.path.join(RAIZ, "tools", "enviar-youtube.py"))
+    mod_env = __import__("importlib.util").util.module_from_spec(spec_env)
+    spec_env.loader.exec_module(mod_env)
+    import tempfile
+    with tempfile.TemporaryDirectory() as pasta:
+        os.makedirs(os.path.join(pasta, "posts"), exist_ok=True)
+        caminho = mod_env.registrar(pasta, "ceifalume-gameplay", "CEIFALUME", "abc123",
+                                    quando="2026-10-27T00:00:00Z", escrever=lambda *_: None)
+        guardado = json.load(open(caminho, encoding="utf-8"))
+        ok("o envio deixa registro público com o id do vídeo",
+           guardado["publicados"][0]["id"] == "abc123"
+           and guardado["publicados"][0]["url"] == "https://youtu.be/abc123", guardado)
+        mod_env.registrar(pasta, "ceifalume-gameplay", "CEIFALUME", "abc123",
+                          escrever=lambda *_: None)
+        guardado = json.load(open(caminho, encoding="utf-8"))
+        ok("registrar o mesmo vídeo duas vezes não duplica",
+           len(guardado["publicados"]) == 1, guardado["publicados"])
+    fonte_wf = open(os.path.join(RAIZ, ".github", "workflows", "gravar-gameplay.yml"),
+                    encoding="utf-8").read()
+    marca = "Registra o que foi publicado"
+    trecho_registro = fonte_wf.split(marca)[1][:400] if marca in fonte_wf else ""
+    ok("o workflow guarda o registro só depois da palavra PUBLICAR",
+       bool(trecho_registro) and "publicar == 'PUBLICAR'" in trecho_registro.split("run:")[0],
+       "registro sem cadeado")
+
     # 3. o validador reprova o que não é gameplay
     mod, binario = ffmpeg()
     if not binario:

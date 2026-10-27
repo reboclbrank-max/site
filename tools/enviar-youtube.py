@@ -9,6 +9,7 @@ O que ele faz: pega o pacote já validado em `posts/kit-youtube.json`, renova o 
 do refresh_token guardado nos segredos e faz o upload resumable. Tudo o que aparece no vídeo
 (título, descrição, tags) vem do kit — aqui não se inventa texto.
 """
+import datetime
 import json
 import os
 import sys
@@ -130,6 +131,37 @@ def enviar_bytes(url_sessao, caminho, abrir=None):
         return None, "envio recusado (%s): %s" % (e.code, e.read().decode("utf-8", "replace")[:200])
 
 
+def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print):
+    """Grava o que foi publicado em posts/youtube-publicados.json.
+
+    Por que existe (27/10/2026): o envio imprimia o link no log do run e nada ficava registrado.
+    O dono perguntava "o que já saiu?" e a resposta dependia de abrir o histórico do GitHub. Com
+    este registro, o chat responde (!youtube) lendo um JSON público — e o registro é do que
+    realmente voltou do YouTube (id devolvido pela API), não do que a gente achou que enviou.
+    """
+    destino = os.path.join(raiz, "posts", "youtube-publicados.json")
+    try:
+        atual = json.load(open(destino, encoding="utf-8"))
+    except Exception:
+        atual = {"publicados": []}
+    lista = atual.get("publicados") or []
+    lista = [x for x in lista if str(x.get("id")) != str(vid)]
+    lista.insert(0, {
+        "id": vid,
+        "url": "https://youtu.be/" + str(vid),
+        "slug": slug,
+        "titulo": (titulo or "")[:120],
+        "arquivo": arquivo or "",
+        "quando": quando or datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
+    })
+    atual["publicados"] = lista[:50]
+    os.makedirs(os.path.dirname(destino), exist_ok=True)
+    with open(destino, "w", encoding="utf-8") as f:
+        json.dump(atual, f, ensure_ascii=False, indent=1)
+    escrever("registro: posts/youtube-publicados.json (" + str(len(atual["publicados"])) + " vídeo(s))")
+    return destino
+
+
 def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
              iniciar=None, enviar=None, escrever=print):
     """Executa o envio. Devolve (ok, mensagem)."""
@@ -165,6 +197,13 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
     vid = (resultado or {}).get("id")
     if not vid:
         return False, "o YouTube não devolveu o id do vídeo"
+    if str(os.environ.get("YT_REGISTRO", "1")).strip() != "0":
+        try:
+            registrar(raiz, slug, pacote.get("titulo"), vid, arquivo=pacote.get("arquivo"),
+                      escrever=escrever)
+        except Exception as erro:
+            # o vídeo JÁ subiu: falhar aqui não pode esconder isso
+            escrever("aviso: não consegui registrar o envio (" + str(erro)[:120] + ")")
     return True, "publicado: https://youtu.be/" + vid
 
 
