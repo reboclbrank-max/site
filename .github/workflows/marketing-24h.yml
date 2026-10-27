@@ -1,0 +1,71 @@
+name: marketing-24h
+
+# Motor 24 horas: um pulso a cada ~15 minutos decide UMA ação e executa.
+#
+# O que este workflow NÃO faz (para não vender ilusão):
+#   - não é "a cada segundo": o cron do GitHub é melhor esforço e pode atrasar;
+#   - não publica fora da janela 9-22h (Brasília) nem acima do teto diário;
+#   - não posta no itch (Cloudflare barra IP de datacenter — medido);
+#   - não envia vídeo ao YouTube sem confirmação do dono (regra da casa).
+#
+# Cada pulso: mede (6h) → pesquisa (03h) → aprende (04h) → publica (janela) → dorme.
+# O estado fica em posts/orquestrador.json e é commitado: pulso atrasado não duplica post.
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marketing-24h
+  cancel-in-progress: false
+
+jobs:
+  pulso:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/testes-janela.py
+          python3 tools/testes-orquestrador.py
+          python3 tools/testes-autonomia-marketing.py
+          node tools/montar-bookmarklet.js --verificar
+          node tools/testes-bookmarklet-itch.js
+
+      - name: Pulso do orquestrador
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID3 }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET3 }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN3 }}
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          NTFY_TOPICO: ${{ secrets.NTFY_TOPICO }}
+        run: |
+          pip install -q coincurve websocket-client
+          python3 tools/orquestrador.py
+
+      - name: Registra o pulso no repositório
+        run: |
+          git config user.name "rebocl"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/orquestrador.json posts/calendario.json posts/plano-do-dia.json posts/aprendizado.json posts/log.md posts/posts-publicados.md 2>/dev/null || true
+          git commit -m "🤖 pulso 24h $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
+          for i in 1 2 3; do
+            if git pull --rebase -q origin main && git push -q origin main; then
+              echo "estado do pulso publicado"; break
+            fi
+            sleep 4
+          done
