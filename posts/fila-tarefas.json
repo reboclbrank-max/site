@@ -78,11 +78,11 @@
    "id": "publicar-20261027T120944Z",
    "tipo": "publicar",
    "prioridade": 60,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-10-27T12:09:44Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-10-27T12:19:44Z",
+   "resultado": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
    "motivo": "decisão do relógio",
    "chave": "publicar-2026102712"
   }
