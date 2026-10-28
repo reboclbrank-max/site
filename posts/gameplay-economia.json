@@ -92,5 +92,18 @@
     "agente": "tools/gravar-gameplay.js",
     "barreira": "tools/testes-gameplay.py",
     "documentacao": "docs/VIDEO-GAMEPLAY.md"
+  },
+  "verificado_no_ci": {
+    "run": "40619750789",
+    "commit_do_video": "d51ccb9",
+    "data": "2026-10-28T02:18:00Z",
+    "janela_segundos": 130,
+    "ganho_moedas": 597,
+    "moedas_por_minuto": 275.54,
+    "bicos": 795,
+    "bicos_por_minuto": 366.9,
+    "movimento_do_video": 1.56,
+    "minimo_de_movimento": 1.2,
+    "url_publica": "https://reboclbrank-max.github.io/site/media/gameplay/ceifalume-gameplay.mp4"
   }
 }
