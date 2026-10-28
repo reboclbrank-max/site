@@ -131,11 +131,11 @@ def main():
         " pobre:d(eco({moedas:20})).tipo,"
         " celeiroBarato:d(eco({moedas:35})).tipo,"
         " prioridade:d(eco({moedas:100}),{melhoriasFeitas:{poco:true}}).melhoria.id,"
-        " caro:d(eco({moedas:1000}),{melhoriasFeitas:todos}),"
-        " semente:d(eco({moedas:90}),{melhoriasFeitas:todos}),"
-        " rodadaCurta:d(eco({moedas:25}),{melhoriasFeitas:todos}).tipo,"
-        " tomate:d(eco({moedas:900}),{melhoriasFeitas:todos}),"
-        " semSemente:d(eco({moedas:900,semente:3}),{melhoriasFeitas:todos}).tipo,"
+        " caro:d(eco({moedas:1400}),{melhoriasFeitas:todos}),"
+        " milho:d(eco({moedas:200}),{melhoriasFeitas:todos}),"
+        " rodadaCurta:d(eco({moedas:90}),{melhoriasFeitas:todos}).tipo,"
+        " tomate:d(eco({moedas:1300}),{melhoriasFeitas:todos}),"
+        " semSemente:d(eco({moedas:1300,semente:3}),{melhoriasFeitas:todos}).tipo,"
         " zero:d(eco({moedas:0})).tipo,"
         " ganho:m.ganhoDeMoedas(25,19,70),"
         " semLeitura:m.ganhoDeMoedas(null,19,70)"
@@ -155,13 +155,13 @@ def main():
            e["prioridade"] == "lanterna", e["prioridade"])
         ok("com as melhorias feitas o robo troca a semente pelo maior valor",
            e["caro"]["tipo"] == "semente", e["caro"])
-        ok("com 1000 moedas a semente e o Tomate (custo 200 x 4 celulas + 5 = 805)",
+        ok("com 1400 moedas a semente e o Tomate (200 x 6 rodadas + 5 = 1205)",
            e["caro"]["semente"]["indice"] == 3, e["caro"]["semente"])
-        ok("com 90 moedas a semente ja sobe para o Milho (20 x 4 + 5 = 85)",
-           e["semente"]["semente"]["nome"] == "Milho", e["semente"]["semente"])
-        ok("com 25 moedas NAO sobe para o Milho (trocar sem caixa para a rodada piora o jogo)",
+        ok("com 200 moedas a semente sobe para o Milho (20 x 6 + 5 = 125)",
+           e["milho"]["semente"]["nome"] == "Milho", e["milho"]["semente"])
+        ok("com 90 moedas NAO sobe para o Milho (trocar sem caixa para 6 rodadas piora)",
            e["rodadaCurta"] != "semente", e["rodadaCurta"])
-        ok("com 900 moedas a semente escolhida sobe para o Tomate (venda 380)",
+        ok("com 1300 moedas a semente escolhida sobe para o Tomate (venda 380)",
            e["tomate"]["semente"]["nome"] == "Tomate", e["tomate"]["semente"])
         ok("semente ja escolhida nao e trocada de novo", e["semSemente"] != "semente",
            e["semSemente"])
@@ -171,8 +171,62 @@ def main():
            e["ganho"] == 64, e["ganho"])
         ok("sem leitura do save o ganho e null (nao vira numero inventado)",
            e["semLeitura"] is None, e["semLeitura"])
+    # 1c. FAZENDA PELO SAVE + BICO — medido em 27/10/2026.
+    # O save diz, celula por celula, o que esta plantado e se esta pronto; a leitura por cor
+    # inventava colheita (casca 0,015 na celula D) e o robo passava minutos colhendo celula que
+    # estava crescendo. E o bico nao tem espera: 60 ms entre toques rendeu 525 moedas/min.
+    saida, erro = node(
+        "const m=require('./tools/gravar-gameplay.js');"
+        "const base={tutorial:0,titulo:0,hud:0.084,celulas:[]};"
+        "const todos={poco:true,lanterna:true,composteira:true,campo:true,celeiro:true};"
+        "const eco=(lista,o)=>Object.assign({moedas:50,semente:0,camposLista:lista},o||{});"
+        "const d=(e,mem)=>m.decidir(base,Object.assign({confirmacoes:{},ocupadas:{},"
+        "economia:e,melhoriasFeitas:todos},mem||{}));"
+        "const cresce=[{planta:'nabo',pronto:false},{planta:'nabo',pronto:false}];"
+        "const r={"
+        " pronto:d(eco([{planta:'nabo',pronto:true},{planta:'nabo',pronto:false}])),"
+        " vazio:d(eco([{planta:'',pronto:false},{planta:'nabo',pronto:false}])),"
+        " crescendo:d(eco(cresce)).motivo,"
+        " recente:d(eco([{planta:'nabo',pronto:true}]),{agora:20000,colhidasHaPouco:{A:18000}}).motivo,"
+        " pixelMentiroso:d(eco(cresce,{}),{agora:20000,"
+        "colhidasHaPouco:{}}).tipo,"
+        " bicoMinimo:m.BICO.intervalo,"
+        " rajada:m.BICO.rajadaMs,"
+        " celulas:m.CELULAS.length,"
+        " quinta:m.CELULAS[4].id,"
+        " centroQuinta:Math.round(m.CELULAS[4].x+m.CELULAS[4].w/2)+','+"
+        "Math.round(m.CELULAS[4].y+m.CELULAS[4].h/2)"
+        "};"
+        "console.log(JSON.stringify(r));")
+    ok("o decisor de fazenda pelo save roda no Node", saida is not None, erro)
+    if saida:
+        f = json.loads(saida)
+        ok("save diz pronto -> colhe aquela celula", f["pronto"]["tipo"] == "colher", f["pronto"])
+        ok("quem colhe e o clique no CORPO da planta (nao na barra do rodape)",
+           f["pronto"]["alvo"] == f["pronto"]["alvo"] and f["pronto"]["prontas"][0]["alvo"]
+           == {"x": 510, "y": 260}, f["pronto"]["prontas"])
+        ok("save diz vazio -> planta aquela celula", f["vazio"]["tipo"] == "plantar", f["vazio"])
+        ok("save diz crescendo -> bico (nao inventa colheita)",
+           f["crescendo"].startswith("save: fazenda crescendo"), f["crescendo"])
+        ok("celula recem-colhida nao e colhida de novo (save atrasa 1-2 s)",
+           "vazia" in f["recente"] or f["recente"].startswith("save: fazenda"),
+           f["recente"])
+        ok("com o save na mao a leitura por pixel nao decide colheita",
+           f["pixelMentiroso"] in ("toque", "plantar"), f["pixelMentiroso"])
+        ok("o bico e tocado a cada 45 ms (medido: sem espera no jogo)", f["bicoMinimo"] == 45,
+           f["bicoMinimo"])
+        ok("a rajada de bico dura 8 s antes de olhar a fazenda de novo", f["rajada"] == 8000,
+           f["rajada"])
+        ok("o robo enxerga 5 celulas (a 5a foi mapeada comprando o campo)", f["celulas"] == 5,
+           f["celulas"])
+        ok("a 5a celula e a E, no ponto medido (755,486)",
+           f["quinta"] == "E" and f["centroQuinta"] == "755,486", f["centroQuinta"])
+
     fonte = open(os.path.join(RAIZ, "tools", "gravar-gameplay.js"), encoding="utf-8").read()
     ok("o gravador decide pelo estado (nao por lista fixa)", "function decidir(" in fonte)
+    ok("o gasto com semente entra na conta do ganho", "gastoSementes" in fonte)
+    ok("o ganho e conferido com o que saiu do bolso (melhorias + sementes)",
+       "gasto + gastoSementes" in fonte)
     ok("o gravador grava o relatorio de decisoes ao lado do video", "-decisoes.json" in fonte)
 
     # 2. o gravador não finge: sem biblioteca de navegador ele devolve null (código 3 no uso).
