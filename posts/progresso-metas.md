@@ -48,3 +48,6 @@
 
 ## 27/10/2026
 - bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=22(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_seguidores=SEM_API · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL | VARIACAO_OBSERVADA: bsky_seguidores -2 (sem atribuicao causal)
+
+## 28/10/2026
+- bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=24(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_seguidores=SEM_API · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL
