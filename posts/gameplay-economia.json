@@ -1,33 +1,92 @@
 {
-  "medido_em": "2026-10-27T21:10:00Z",
+  "medido_em": "2026-10-27T23:20:00Z",
   "jogo": "Ceifalume",
   "pergunta": "o robo que compra melhoria e escolhe a semente de maior valor ganha mais moedas por minuto?",
   "metodo": {
     "onde": "jogo rodando de verdade (Godot HTML5 headless, WebGL por software), servido do proprio repositorio",
     "leitura_do_dinheiro": "save do jogo em IndexedDB /userfs -> /userfs/godot/app_userdata/Ceifalume/ceifalume-save.cfg",
-    "ganho": "(saldo final - saldo inicial) + gasto em melhorias (comprar nao e prejuizo)",
+    "ganho": "(saldo final - saldo inicial) + gasto em melhorias + gasto em sementes",
     "antes": "mesmo robo sem as decisoes de dinheiro (flag --sem-economia)",
-    "depois": "robo com leitura do save, compra de melhoria e troca de semente"
+    "depois": "robo com leitura do save, compra de melhoria e troca de semente",
+    "bico": "rajadas de 8 s a cada 45 ms, com a fazenda decidida pelo save a cada rajada"
   },
   "janelas": [
-    { "configuracao": "antes", "segundos": 150, "execucoes": 3, "ganhos": [59, 50, 55], "moedas_por_minuto": 21.87 },
-    { "configuracao": "depois (celeiro+poco)", "segundos": 150, "execucoes": 3, "ganhos": [62, 56, 58], "moedas_por_minuto": 23.47 },
-    { "configuracao": "depois (prioridade poco)", "segundos": 150, "execucoes": 3, "ganhos": [55, 55, 55], "moedas_por_minuto": 22.0 },
-    { "configuracao": "depois (sobe para Milho cedo)", "segundos": 150, "execucoes": 1, "ganhos": [34], "moedas_por_minuto": 13.6 },
-    { "configuracao": "antes", "segundos": 900, "execucoes": 1, "ganhos": [720], "moedas_por_minuto": 48.0, "colhidas": 36, "decisoes": 404 },
-    { "configuracao": "depois (compras + Milho com regra de caixa)", "segundos": 900, "execucoes": 1, "ganhos": [711], "moedas_por_minuto": 47.4, "colhidas": 18, "decisoes": 411 }
+    {
+      "configuracao": "original (roda 88, so imagem)",
+      "segundos": 150,
+      "execucoes": 3,
+      "ganhos": [
+        59,
+        50,
+        55
+      ],
+      "moedas_por_minuto": 21.9
+    },
+    {
+      "configuracao": "original (roda 88)",
+      "segundos": 900,
+      "execucoes": 1,
+      "ganhos": [
+        720
+      ],
+      "moedas_por_minuto": 48.0
+    },
+    {
+      "configuracao": "hoje sem decisoes de dinheiro (--sem-economia)",
+      "segundos": 150,
+      "execucoes": 2,
+      "ganhos": [
+        691,
+        817
+      ],
+      "moedas_por_minuto": 301.6
+    },
+    {
+      "configuracao": "completo (bico + fazenda pelo save + compras + semente)",
+      "segundos": 150,
+      "execucoes": 2,
+      "ganhos": [
+        754,
+        792
+      ],
+      "moedas_por_minuto": 309.2
+    },
+    {
+      "configuracao": "hoje sem decisoes de dinheiro",
+      "segundos": 900,
+      "execucoes": 1,
+      "ganhos": [
+        5707
+      ],
+      "moedas_por_minuto": 380.5,
+      "bicos": 5085,
+      "colhidas": 64
+    },
+    {
+      "configuracao": "completo",
+      "segundos": 900,
+      "execucoes": 1,
+      "ganhos": [
+        6913
+      ],
+      "moedas_por_minuto": 460.9,
+      "bicos": 5202,
+      "colhidas": 20
+    }
   ],
-  "veredito": "nao conta como melhoria ainda: comprar melhoria e trocar de semente nao aumentou moedas/min (47,4 depois contra 48,0 antes em 900 s; 23,5 contra 21,9 em 150 s, dentro do ruido). O gargalo medido e a colheita (36 colheitas de Nabo contra 18 de Milho) e o toque de bico (+1 moeda), nao o gasto.",
+  "veredito": "conta como melhoria: 48,0 -> 460,9 moedas/min em 900 s (9,6x) e 21,9 -> 309,2 em 150 s (14x). A parte de comprar melhoria e escolher a semente de maior valor soma +21% sobre o robo que so faz bico+fazenda (380,5 -> 460,9 em 900 s).",
   "o_que_ficou_provado": [
-    "a compra de melhoria acontece e o save confirma (celeiro: moedas 41->11, nivel 0->1)",
-    "a aba de semente so deixa a semente pendente: semente_selecionada muda no primeiro plantio (aba Milho 562,121 + plantar 760,259 -> 0->1)",
-    "tocar na sacola antes de plantar desfaz a escolha da aba (era a causa do relatorio 'Milho falhou')",
-    "trocar de semente sem caixa piora: 13,60/min contra 21,9/min do Nabo puro"
+    "o bico nao tem tempo de espera: 60 ms entre toques rendeu 525,0 moedas/min; 1000 ms rendeu 57,0",
+    "quem colhe e o clique no corpo da planta; o clique na barra do rodape PLANTA uma semente nova",
+    "a fazenda tem de ser decidida pelo save (campos[i].pronto / campos[i].planta): a leitura por cor inventava colheita na celula D (casca 0,015 fixa)",
+    "a 5a celula existe e fica em (755,486): o save passa de 4 para 5 entradas em campos depois de Comprar campo",
+    "trocar de semente sem caixa para 6 rodadas piora: com 25 moedas o robo fechou em 13,60/min",
+    "comprar melhoria e escolher a semente agora soma +21% em 900 s sobre o robo que so faz bico e fazenda"
   ],
   "proximo_passo": [
-    "mapear a 5a celula do 'Comprar campo' (hoje o campo esta catalogado e nao e comprado porque o robo nao enxerga a celula nova)",
-    "medir o intervalo minimo do 'bico' (+1 moeda) e colher mais rapido",
-    "so depois medir de novo moedas/min com a mesma janela de 900 s"
+    "mapear a 6a celula antes de comprar o segundo campo",
+    "mandar os toques do bico em lote (hoje cada toque custa 45-60 ms de ida e volta e satura em ~340/min)",
+    "remedir sempre em 900 s com --sem-economia como linha de base"
   ],
   "arquivos": {
     "agente": "tools/gravar-gameplay.js",
