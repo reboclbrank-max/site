@@ -4,7 +4,7 @@
 
 ## 28/10/2026
 
-> Medição pública em 2026-10-28T02:31Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
+> Medição pública em 2026-10-28T05:46Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
 
 - **bsky_seguidores=32 · posts_proprios=300 · eng_medio=1.16 · promo: n=85 media=2.0 zero=14.1% · comentario: n=215 media=0.83 zero=41.9% · respostas_recebidas=41 promo_respostas=0 promo_pendentes=0**
 
@@ -15,9 +15,9 @@
 
 **Instagram (0 seguidores · 23 posts):** IMAGE n=23 média=0.09 zero=21
 
-**itch.io:** 46 download(s) e 187 visita(s) em 1/1 conta(s). Ceifalume: 40 · Prancheta: 6
+**itch.io:** 46 download(s) e 188 visita(s) em 1/1 conta(s). Ceifalume: 40 · Prancheta: 6
 
-**YouTube:** 24 inscrito(s) · 161 vídeo(s) · 5416 visualizaç(ões) · shorts=6 de 100 conferido(s)
+**YouTube:** 24 inscrito(s) · 161 vídeo(s) · 5424 visualizaç(ões) · shorts=6 de 100 conferido(s)
 **YouTube — o que o canal publica:** dos 100 vídeos lidos, **5 são dos jogos da casa** (268 views, média 53.6) e **95 são de outros jogos** (3473 views, média 36.6) — os da casa são 7.2% das visualizações.
 Melhores da casa: "Ceifalume: a horta acordou à noite 🌙 jog" (230) · "Desenhe a prancheta e decida a partida —" (22) · "Ceifalume — trailer oficial (jogo de faz" (11)
 
