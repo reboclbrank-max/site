@@ -4,16 +4,16 @@
 
 ## 28/10/2026
 
-> Medição pública em 2026-10-28T08:55Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
+> Medição pública em 2026-10-28T13:04Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
 
-- **bsky_seguidores=32 · posts_proprios=300 · eng_medio=1.16 · promo: n=85 media=2.0 zero=14.1% · comentario: n=215 media=0.83 zero=41.9% · respostas_recebidas=41 promo_respostas=0 promo_pendentes=0**
+- **bsky_seguidores=32 · posts_proprios=300 · eng_medio=1.16 · promo: n=85 media=2.0 zero=14.1% · comentario: n=215 media=0.82 zero=42.8% · respostas_recebidas=41 promo_respostas=0 promo_pendentes=0**
 
 | tipo | posts | engajamento médio | melhor | sem engajamento |
 |---|---|---|---|---|
 | conteúdo dos jogos | 85 | 2.0 | 4 | 12 (14.1%) |
-| comentário em post alheio | 215 | 0.83 | 3 | 90 (41.9%) |
+| comentário em post alheio | 215 | 0.82 | 3 | 92 (42.8%) |
 
-**Instagram (0 seguidores · 23 posts):** IMAGE n=23 média=0.09 zero=21
+**Instagram (0 seguidores · 24 posts):** IMAGE n=24 média=0.08 zero=22
 
 **itch.io:** 46 download(s) e 188 visita(s) em 1/1 conta(s). Ceifalume: 40 · Prancheta: 6
 
@@ -23,7 +23,7 @@ Melhores da casa: "Ceifalume: a horta acordou à noite 🌙 jog" (230) · "Desen
 
 **Conversa:** 40 conversa(s) lida(s). Respostas ao conteúdo da casa: 0 em 0 thread(s), 0 atendida(s), 0 pendente(s). Retorno do autor de post comentado: 41 em 39 thread(s) — é retribuição ao comentário, não fila de resposta.
 
-**Horário (Brasília):** 00h=1.12(n=8) · 01h=1.14(n=36) · 02h=2.0(n=4) · 04h=1.25(n=8) · 05h=1.0(n=11) · 07h=1.38(n=8) · 08h=1.52(n=23) · 09h=3.0(n=1) · 10h=0.92(n=12) · 11h=1.43(n=14) · 12h=0.84(n=25) · 13h=1.33(n=15) · 14h=0.5(n=20) · 15h=0.88(n=8) · 16h=1.09(n=11) · 17h=1.06(n=33) · 18h=1.4(n=15) · 19h=1.0(n=5) · 20h=1.26(n=27) · 21h=1.38(n=8) · 23h=1.75(n=8)
+**Horário (Brasília):** 00h=1.12(n=8) · 01h=1.14(n=36) · 02h=2.0(n=4) · 04h=1.25(n=8) · 05h=1.0(n=11) · 07h=1.38(n=8) · 08h=1.52(n=23) · 09h=3.0(n=1) · 10h=0.75(n=16) · 11h=1.7(n=10) · 12h=0.84(n=25) · 13h=1.33(n=15) · 14h=0.5(n=20) · 15h=0.88(n=8) · 16h=1.09(n=11) · 17h=1.06(n=33) · 18h=1.4(n=15) · 19h=1.0(n=5) · 20h=1.26(n=27) · 21h=1.38(n=8) · 23h=1.75(n=8)
 
 > ⚠ Amostra pequena por hora. Isso **não** sustenta escolher horário: a diferença está dentro do ruído. Só vale depois de acumular mais posts com este medidor ligado.
 
