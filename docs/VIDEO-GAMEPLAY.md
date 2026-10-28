@@ -127,53 +127,76 @@ KIT_YOUTUBE=posts/kit-gameplay.json CONFIRMACAO=PUBLICAR \
 
 Barreira: `python3 tools/testes-gameplay.py` (65 provas, sem rede).
 
-## Economia do robô — o que foi medido antes e depois (27/10/2026)
+## Jogar melhor — o que foi medido antes e depois (27/10/2026)
 
 O dono cobrou: *"o agente comprar melhoria e escolher a semente de maior valor… com medida de
-moedas ganhas por minuto antes e depois, senão não conta como melhoria"*. Abaixo o que foi
-executado no jogo rodando, tudo conferido no save (`ceifalume-save.cfg`), nada estimado.
+moedas ganhas por minuto antes e depois, senão não conta como melhoria"*. Tudo abaixo foi
+executado no jogo rodando, com o dinheiro lido no save (`ceifalume-save.cfg`), nada estimado.
 
-**Como o dinheiro é lido.** O jogo grava em IndexedDB (`/userfs`, loja `FILE_DATA`, chave
-`/userfs/godot/app_userdata/Ceifalume/ceifalume-save.cfg`) — `moedas`, `dia`, `semente_selecionada`,
-`nivel_*`, `celeiro={...}`, `campos=[...]`. O agente lê esse arquivo antes de cada decisão de
-dinheiro. **Ganho ≠ saldo**: comprar melhoria derruba o saldo e não é prejuízo, então o número
-publicado é `(saldo final − saldo inicial) + gasto`.
+**A régua (a mesma em todas as linhas):**
+`ganho = (saldo final − saldo inicial) + gasto em melhorias + gasto em sementes`, dividido pela
+janela. Saldo sozinho mente: comprar melhoria e semente derruba o saldo e não é prejuízo.
 
-**Medições (mesma máquina, mesma build, `--segundos` igual, 12–24 fps):**
-
-| configuração | janela | execuções | moedas ganhas | **moedas/min** |
+| robô | janela | execuções | ganho (moedas) | **moedas/min** |
 |---|---|---|---|---|
-| antes — robô só por imagem, sem comprar nada | 150 s | 3 | 59 · 50 · 55 | **21,9** (média) |
-| depois — economia ligada (celeiro+poço) | 150 s | 3 | 62 · 56 · 58 | **23,5** |
-| depois — prioridade nova (poço) | 150 s | 3 | 55 · 55 · 55 | **22,0** |
-| depois — sobe para Milho cedo | 150 s | 1 | 34 | **13,6** |
-| antes — sem comprar nada | 900 s | 1 | 720 | **48,0** |
-| depois — compras + Milho com regra de caixa | 900 s | 1 | 711 | **47,4** |
+| **original** (só imagem, 1 toque por decisão) | 150 s | 3 | 59 · 50 · 55 | **21,9** |
+| hoje **sem** decisões de dinheiro (`--sem-economia`) | 150 s | 2 | 691 · 817 | **301,6** (média) |
+| **completo** (bico + fazenda pelo save + compras + semente) | 150 s | 2 | 754 · 792 | **309,2** |
+| **original** | 900 s | 1 | 720 | **48,0** |
+| hoje **sem** decisões de dinheiro | 900 s | 1 | 5 707 | **380,5** |
+| **completo** | 900 s | 1 | 6 913 | **460,9** |
 
-**Veredito honesto: ainda NÃO conta como melhoria.** Comprar melhoria e trocar de semente não
-aumentou o ganho por minuto; na janela longa ficou até um pouco abaixo. O que os testes provaram:
+**Veredito: agora conta como melhoria.** 48,0 → 460,9 moedas/min na janela longa (**9,6×**) e
+21,9 → 309,2 na curta (**14×**). E a parte que o dono pediu nominalmente — comprar melhoria e
+escolher a semente de maior valor — soma em cima do bico: **+21%** na janela de 900 s
+(380,5 → 460,9) e +2,5% na de 150 s (dentro do ruído).
 
-1. **A compra funciona de verdade.** Nível sobe no save e o dinheiro cai (celeiro 41→11 moedas,
-   nível 0→1). O relatório só registra a compra quando o save confirma.
-2. **A troca de semente funciona**, mas o mecanismo não era o que parecia: a aba só deixa a
-   semente **pendente** e `semente_selecionada` só muda **no primeiro plantio** (medido: aba Milho
-   em (562,121) + plantar em (760,259) → 0 → 1). Tocar na sacola antes de plantar **desfaz** a
-   escolha — era isso que fazia o relatório dizer "Milho falhou" com a aba funcionando.
-3. **Trocar de semente sem caixa piora o jogo.** Com 25 moedas, subir para Milho e plantar uma vez
-   deixou o robô sem dinheiro, ele desceu para Nabo e fechou em 13,60/min. Daí a regra nova:
-   só troca quando o caixa paga a **rodada inteira** (custo × 4 células + 5 de folga) — 85 para o
-   Milho, 205 para o Tomate — e desce na hora se não pagar nem uma semente.
-4. **O gargalo não é comprar, é colher.** Na janela de 900 s o robô sem economia fez **36
-   colheitas** de Nabo e 404 decisões (a maioria "bico", +1 moeda por toque). Com Milho foram 18
-   colheitas e 411 decisões: o ciclo do Milho é mais longo e o bico continuou sendo a maior fonte.
-   Ou seja: o próximo ganho real está em **mais células** e em **colher mais rápido**, não em
-   gastar moeda. E isso foi visto no próprio CI: a gravação de 27/10 21:13 comprou *Cavar Poço* e
-   *Comprar campo* (89 moedas) e terminou com **30,00 moedas/min** e as mesmas 4 colheitas de
-   antes — o campo novo é comprado quando sobra caixa, mas ainda não rende, porque o robô só
-   enxerga as 4 células medidas em (510,259), (760,259), (1001,259) e (510,490).
+**Composição do ganho no vídeo de 900 s:** 5 202 moedas de bico (5 202 toques) + ~1 711 de fazenda
+(20 colheitas de Trigo/Tomate, venda 110/380) − nada. O bico ainda é a maior fonte, e isso é
+propriedade do jogo, não do robô.
 
-Prova automatizada dessa parte: `tools/testes-gameplay.py` ganhou 15 provas de economia (leitor do
-save, prioridade de compra, celeiro que não rende não é comprado, semente mais cara que o caixa
-cobre, caixa curto desce de semente, e `ganhoDeMoedas()` devolvendo 64 para saldo 25→19 com gasto
-70 — e `null` quando não há leitura).
+### O que estava errado (três medições que mudaram o agente)
 
+1. **O bico não tem espera.** Medido no jogo, 20 s por intervalo:
+   60 ms → **525,0 moedas/min** · 120 ms → 306,0 · 250 ms → 195,0 · 500 ms → 111,0 · 1000 ms → 57,0.
+   O robô antigo tocava uma vez a cada ~2,2 s (≈27/min). Agora ele faz **rajadas de 8 s** a cada
+   45 ms e volta a olhar a fazenda no fim da rajada.
+2. **Quem colhe é o clique no corpo da planta, não na barra do rodapé.** O clique em `y + h − 25`
+   **planta** uma semente nova na célula — era por isso que o robô "colhia" e o save continuava
+   com a planta madura no lugar (e o dinheiro caía, porque a semente era paga).
+3. **A fazenda tem de ser decidida pelo save, não pela cor.** Com Milho/Trigo a planta madura não
+   tem a casca branca do Nabo; e a célula D dava **casca 0,015 fixa** (limiar 0,012) e virava uma
+   colheita fantasma a cada volta — 346 "colheitas" e só 96 bicos/min em 900 s. Agora, com save na
+   mão, `campos[i].pronto` decide a colheita e `campos[i].planta === ""` decide o plantio; a
+   leitura por pixel só vale como reserva (quando o save não abre).
+
+### A 5ª célula (o campo comprado deixou de ser dinheiro jogado fora)
+
+`Comprar campo` (50 moedas) grava **5 entradas** em `campos` — conferido no save. A célula nova
+nasce embaixo, à direita da D: caixa em (640,372) 230×228, centro **(755,486)**. O robô agora
+enxerga cinco células e planta/colhe na nova. O preço sobe a cada compra (a 5ª custou 73 na tela),
+por isso a compra é uma vez por captura e a confirmação é sempre no save.
+
+### Regras de dinheiro que ficaram (todas com número atrás)
+
+- **Prioridade de compra por efeito medido:** Poço (crescimento +10%) → Lanterna (+1/colheita) →
+  Composteira (8% dupla) → Campo (+1 célula) → Celeiro (capacidade, que o robô nunca enche porque
+  vende na hora — catalogado, **não** comprado).
+- **Semente com histerese:** sobe para a mais cara que o caixa cobre para **6 rodadas**
+  (custo × 6 + 5 → 125 Milho, 365 Trigo, 1 205 Tomate) e só desce se não pagar **nenhuma** semente.
+  Sem a faixa larga o robô pulava Nabo → Trigo → Nabo a cada compra.
+- **Carência de 5 s** na célula recém-colhida e de 9 s na recém-plantada: o save atrasa 1–2 s e sem
+  isso o robô repetia a ação em cima da leitura velha.
+
+Prova automatizada: `tools/testes-gameplay.py` — **79/79**, incluindo o leitor do save, a prioridade
+de compra, a histerese da semente, a fazenda pelo save (pronto → colhe no centro da célula; vazio →
+planta; crescendo → bico), a carência da colheita, a 5ª célula em (755,486), o gasto de semente
+entrando no ganho e `ganhoDeMoedas()` devolvendo 64 para saldo 25→19 com 70 gastos.
+
+### Próximo passo (para não repetir o erro de comprar o que não rende)
+
+1. As células 6ª em diante ainda não têm coordenada; comprar campo sem mapear a célula é dinheiro
+   parado. Enquanto não houver mapa, a compra é uma só.
+2. O bico satura perto de **340 toques/min** por causa do custo do toque sintético (~45-60 ms de
+   ida e volta). Para subir mais é preciso mandar o toque em lote, sem esperar cada um.
+3. Remedir sempre na **mesma régua** (900 s, mesmo `--sem-economia` como linha de base).
