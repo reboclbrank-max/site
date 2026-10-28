@@ -2134,3 +2134,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=24(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grátis no navegador/APK) ou cuidar da lavoura que cresce enquanto você d B
+
+## 28/10/2026 20:20 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ⚪ fila de reserva — nenhum motor de texto respondeu (g4f auto: HTTP Error 504: Gateway Timeout; g4f lightning: HTTP Error 504: Gateway Timeout) |
+| destino editorial | ✅ rota oficial ceifalume |
+| tema do ciclo | ✅ lembre que o site lista os canais oficiais da casa |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | ✅ publicado id 181028284614 |
+| nostr | ✅ nota em 1 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ➖ cadencia diaria de interacao ja cumprida (2026-10-28) |
+| cacador de oportunidades | ➖ cadencia diaria de interacao ja cumprida (2026-10-28) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=24(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> 🌙 CEIFALUME é idle de fazenda noturna, grátis e sem instalar. · Plante antes de dormir; a lavoura cresce até 8 h com o jogo fechado.
