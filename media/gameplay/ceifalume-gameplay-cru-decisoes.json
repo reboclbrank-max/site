@@ -1,12 +1,14 @@
 {
  "decisoes": [
   {
-   "t": 1,
+   "t": 1.1,
    "tutorial": 0,
-   "dialogo": 0.294,
+   "dialogo": 0.21,
    "titulo": 0,
    "hud": 0,
+   "moedas": null,
    "verdes": [
+    0,
     0,
     0,
     0,
@@ -14,32 +16,6 @@
    ],
    "cascas": [
     0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0,
-    0.035,
-    0,
-    0
-   ],
-   "motivo": "tela de abertura (sem HUD)",
-   "acao": "toque em 640,484"
-  },
-  {
-   "t": 2.1,
-   "tutorial": 0,
-   "dialogo": 0.245,
-   "titulo": 0,
-   "hud": 0,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
     0,
     0,
     0,
@@ -49,18 +25,21 @@
     0.193,
     0.232,
     0,
+    0,
     0
    ],
    "motivo": "tela de abertura (sem HUD)",
    "acao": "toque em 640,484"
   },
   {
-   "t": 3.2,
+   "t": 2,
    "tutorial": 0,
-   "dialogo": 0.127,
+   "dialogo": 0.117,
    "titulo": 0,
    "hud": 0,
+   "moedas": null,
    "verdes": [
+    0,
     0,
     0,
     0,
@@ -70,24 +49,28 @@
     0,
     0,
     0,
+    0,
     0
    ],
    "barras": [
     0.194,
     0.234,
     0,
-    0.048
+    0.048,
+    0
    ],
    "motivo": "tela de abertura (sem HUD)",
    "acao": "toque em 640,484"
   },
   {
-   "t": 4.2,
+   "t": 2.8,
    "tutorial": 0,
    "dialogo": 0.05,
    "titulo": 0,
    "hud": 0,
+   "moedas": null,
    "verdes": [
+    0,
     0,
     0,
     0,
@@ -97,24 +80,28 @@
     0,
     0,
     0,
+    0,
     0
    ],
    "barras": [
     0.194,
     0.234,
     0,
-    0.048
+    0.048,
+    0
    ],
    "motivo": "tela de abertura (sem HUD)",
    "acao": "toque em 640,484"
   },
   {
-   "t": 5.3,
+   "t": 4,
    "tutorial": 0,
    "dialogo": 0.008,
    "titulo": 0,
    "hud": 0,
+   "moedas": null,
    "verdes": [
+    0,
     0,
     0,
     0,
@@ -124,24 +111,28 @@
     0,
     0,
     0,
+    0,
     0
    ],
    "barras": [
     0.194,
     0.234,
     0,
-    0.048
+    0.048,
+    0
    ],
    "motivo": "tela de abertura (sem HUD)",
    "acao": "toque em 640,484"
   },
   {
-   "t": 6.4,
+   "t": 5.2,
    "tutorial": 0,
    "dialogo": 0.016,
    "titulo": 0,
    "hud": 0,
+   "moedas": null,
    "verdes": [
+    0,
     0,
     0,
     0,
@@ -151,30 +142,35 @@
     0,
     0,
     0,
+    0,
     0
    ],
    "barras": [
     0.194,
     0.234,
     0,
-    0.048
+    0.048,
+    0
    ],
    "motivo": "tela de abertura (sem HUD)",
    "acao": "toque em 640,484"
   },
   {
-   "t": 7.4,
+   "t": 6.5,
    "tutorial": 0,
-   "dialogo": 0.067,
+   "dialogo": 0.07,
    "titulo": 0,
    "hud": 0,
+   "moedas": null,
    "verdes": [
+    0,
     0,
     0,
     0,
     0
    ],
    "cascas": [
+    0,
     0,
     0,
     0,
@@ -184,53 +180,30 @@
     0.194,
     0.234,
     0,
-    0.048
+    0.048,
+    0
    ],
    "motivo": "tela de abertura (sem HUD)",
    "acao": "toque em 640,484"
   },
   {
-   "t": 8.1,
-   "tutorial": 0,
-   "dialogo": 0.154,
-   "titulo": 0.058,
-   "hud": 0.001,
-   "verdes": [
-    0,
-    0.018,
-    0.001,
-    0.023
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0.031
-   ],
-   "barras": [
-    0.003,
-    0,
-    0,
-    0
-   ],
-   "motivo": "tela de título (0.06)",
-   "acao": "toque em 640,484"
-  },
-  {
-   "t": 12,
+   "t": 9.3,
    "tutorial": 0.585,
    "dialogo": 0.878,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": null,
    "verdes": [
     0,
     0,
     0,
-    0
+    0,
+    0.01
    ],
    "cascas": [
     0.091,
     0.045,
+    0,
     0,
     0
    ],
@@ -238,24 +211,28 @@
     0.284,
     0.32,
     0.014,
-    0
+    0,
+    0.077
    ],
    "motivo": "tutorial aberto (0.59)",
    "acao": "toque em 640,331 · tutorial saiu da tela"
   },
   {
-   "t": 14.7,
+   "t": 11.2,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 25,
    "verdes": [
     0,
     0,
     0,
-    0
+    0,
+    0.01
    ],
    "cascas": [
+    0,
     0,
     0,
     0,
@@ -265,51 +242,28 @@
     0,
     0,
     0,
-    0
+    0,
+    0.077
    ],
-   "motivo": "célula C livre",
-   "acao": "semente + célula C"
+   "motivo": "save: 4 célula(s) vazia(s) [A,B,C,D]",
+   "acao": "semente + célula(s) A,B,C,D"
   },
   {
-   "t": 17.7,
+   "t": 20.1,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 25,
    "verdes": [
     0,
     0,
     0,
-    0
+    0,
+    0.01
    ],
    "cascas": [
     0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0,
-    0,
-    0.011,
-    0
-   ],
-   "motivo": "célula A livre",
-   "acao": "semente + célula A"
-  },
-  {
-   "t": 20.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
     0,
     0,
     0,
@@ -317,1133 +271,185 @@
    ],
    "barras": [
     0.004,
+    0.006,
+    0.006,
     0,
-    0.031,
-    0
+    0.077
    ],
-   "motivo": "célula B livre",
-   "acao": "semente + célula B"
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 90 bicos (+90 moedas)"
   },
   {
-   "t": 23.7,
+   "t": 22,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 25,
    "verdes": [
     0,
     0,
     0,
-    0
+    0,
+    0.01
    ],
    "cascas": [
+    0,
     0,
     0,
     0,
     0
    ],
    "barras": [
-    0.028,
-    0.011,
-    0.054,
-    0
+    0.124,
+    0.114,
+    0.117,
+    0.118,
+    0.077
    ],
-   "motivo": "célula D livre",
-   "acao": "semente + célula D"
+   "motivo": "save: 4 célula(s) vazia(s) [A,B,C,D]",
+   "acao": "semente + célula(s) A,B,C,D"
   },
   {
-   "t": 25.5,
+   "t": 24,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 95,
    "verdes": [
     0,
     0,
     0,
-    0
+    0,
+    0.01
    ],
    "cascas": [
+    0,
     0,
     0,
     0,
     0
    ],
    "barras": [
-    0.052,
-    0.03,
-    0.077,
-    0.008
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 27.4,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.057,
-    0.037,
-    0.083,
-    0.012
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 29.2,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.068,
-    0.047,
-    0.094,
-    0.023
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 30.6,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.075,
-    0.053,
-    0.1,
-    0.03
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 32.3,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.084,
-    0.059,
-    0.107,
-    0.037
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 34,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.091,
-    0.065,
-    0.113,
-    0.043
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 35.6,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.098,
-    0.071,
-    0.119,
-    0.05
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 37.2,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.106,
-    0.08,
+    0.138,
     0.127,
-    0.059
+    0.13,
+    0.131,
+    0.077
    ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
+   "motivo": "comprar Cavar Poço (40 moedas · crescimento +10% (colhe antes, mais ciclos))",
+   "acao": "comprar Cavar Poço (nível 1)"
   },
   {
-   "t": 38.9,
+   "t": 26.1,
    "tutorial": 0,
-   "dialogo": 0.079,
+   "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 95,
    "verdes": [
     0,
     0,
     0,
-    0
+    0,
+    0.01
    ],
    "cascas": [
+    0,
     0,
     0,
     0,
     0
    ],
    "barras": [
-    0.113,
-    0.086,
-    0.134,
-    0.066
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 40.4,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.12,
-    0.092,
-    0.14,
-    0.073
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 42.1,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.127,
-    0.098,
+    0.156,
+    0.143,
     0.146,
-    0.08
+    0.149,
+    0.077
    ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
+   "motivo": "comprar Acender Lanterna (60 moedas · +1 moeda por colheita)",
+   "acao": "tentei comprar Acender Lanterna (não pegou)"
   },
   {
-   "t": 43.6,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.136,
-    0.106,
-    0.155,
-    0.088
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 45.5,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.142,
-    0.112,
-    0.161,
-    0.095
-   ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
-  },
-  {
-   "t": 46.8,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0.094,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.151,
-    0.122,
-    0.171,
-    0.106
-   ],
-   "motivo": "célula C crescendo (verde 0.094): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 48.7,
+   "t": 28.3,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 55,
    "verdes": [
+    0.101,
+    0.093,
     0,
     0,
-    0.094,
-    0
+    0.01
    ],
    "cascas": [
+    0,
     0,
     0,
     0,
     0
    ],
    "barras": [
-    0.158,
-    0.127,
     0.176,
-    0.111
+    0.161,
+    0.165,
+    0.17,
+    0.077
    ],
-   "motivo": "célula C crescendo (verde 0.094): bico",
-   "acao": "toque em 100,481"
+   "motivo": "comprar Comprar campo (50 moedas · +1 campo (só rende depois que a 5ª célula for mapeada))",
+   "acao": "comprar Comprar campo (nível 0)"
   },
   {
-   "t": 50.4,
+   "t": 37.3,
    "tutorial": 0,
-   "dialogo": 0.08,
+   "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0.094,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.167,
-    0.137,
-    0.186,
-    0.122
-   ],
-   "motivo": "célula C crescendo (verde 0.094): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 52,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0,
-    0.095,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.174,
-    0.141,
-    0.19,
-    0.127
-   ],
-   "motivo": "célula C crescendo (verde 0.095): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 53.7,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0,
-    0.094,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.181,
-    0.147,
-    0.197,
-    0.134
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 55.3,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.102,
-    0,
-    0.094,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.188,
-    0.153,
-    0.203,
-    0.14
-   ],
-   "motivo": "célula A crescendo (verde 0.102): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 57,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0,
-    0.094,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.194,
-    0.159,
-    0.209,
-    0.147
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 58.6,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.095,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.203,
-    0.168,
-    0.217,
-    0.156
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 60.3,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
+   "moedas": 55,
    "verdes": [
     0.1,
     0.092,
     0.094,
+    0.122,
     0
    ],
    "cascas": [
     0,
     0,
     0,
-    0
-   ],
-   "barras": [
-    0.208,
-    0.174,
-    0.222,
-    0.163
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 62,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
     0,
     0
    ],
    "barras": [
-    0.214,
-    0.178,
-    0.228,
-    0.167
+    0.199,
+    0.182,
+    0.184,
+    0.192,
+    0.075
    ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 86 bicos (+86 moedas)"
   },
   {
-   "t": 63.6,
+   "t": 38.7,
    "tutorial": 0,
-   "dialogo": 0.08,
+   "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.226,
-    0.188,
-    0.238,
-    0.178
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 65.3,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
+   "moedas": 9,
    "verdes": [
     0.1,
     0.092,
     0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
+    0.123,
     0
    ],
-   "barras": [
-    0.233,
-    0.194,
-    0.245,
-    0.185
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 67.2,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122
-   ],
    "cascas": [
     0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.237,
-    0.198,
-    0.249,
-    0.19
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 68.7,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.102,
-    0.093,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.246,
-    0.206,
-    0.257,
-    0.199
-   ],
-   "motivo": "célula A crescendo (verde 0.102): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 70.3,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.123
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.251,
-    0.21,
-    0.261,
-    0.203
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 72,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.257,
-    0.217,
-    0.268,
-    0.21
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 73.7,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.264,
-    0.223,
-    0.274,
-    0.217
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 75.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.269,
-    0.227,
-    0.278,
-    0.221
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 77.2,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.275,
-    0.233,
-    0.284,
-    0.228
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 78.8,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.095,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.282,
-    0.241,
-    0.291,
-    0.237
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 80.2,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.289,
-    0.245,
-    0.297,
-    0.241
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 81.9,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.295,
-    0.251,
-    0.303,
-    0.248
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 83.5,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.3,
-    0.255,
-    0.307,
-    0.255
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 85.2,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.093,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.307,
-    0.264,
-    0.314,
-    0.262
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 86.8,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.102,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.314,
-    0.268,
-    0.32,
-    0.266
-   ],
-   "motivo": "célula A crescendo (verde 0.102): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 88.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.095,
-    0.121
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.323,
-    0.276,
-    0.328,
-    0.275
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 89.9,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.095,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.327,
-    0.28,
-    0.333,
-    0.28
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 91.6,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
     0,
     0,
     0,
@@ -1451,452 +457,333 @@
    ],
    "barras": [
     0.332,
-    0.286,
-    0.337,
-    0.286
+    0.302,
+    0.31,
+    0.325,
+    0.075
    ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
+   "motivo": "save: 1 célula(s) vazia(s) [E]",
+   "acao": "semente + célula(s) E"
   },
   {
-   "t": 93.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.123
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.341,
-    0.292,
-    0.345,
-    0.293
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 95.1,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.093,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.345,
-    0.296,
-    0.349,
-    0.298
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 96.7,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.096,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.354,
-    0.305,
-    0.358,
-    0.307
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 98.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.361,
-    0.311,
-    0.364,
-    0.314
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 100.2,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.121
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.365,
-    0.315,
-    0.368,
-    0.318
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 101.8,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.093,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.37,
-    0.321,
-    0.374,
-    0.325
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 103.3,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.095,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.377,
-    0.327,
-    0.379,
-    0.332
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 105,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.383,
-    0.331,
-    0.385,
-    0.336
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 106.6,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.388,
-    0.335,
-    0.389,
-    0.341
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 108.3,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.395,
-    0.341,
-    0.395,
-    0.347
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 109.9,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.399,
-    0.345,
-    0.4,
-    0.352
-   ],
-   "motivo": "célula A crescendo (verde 0.101): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 111.8,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.406,
-    0.352,
-    0.403,
-    0.358
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 113.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.1,
-    0.092,
-    0.094,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.412,
-    0.358,
-    0.403,
-    0.367
-   ],
-   "motivo": "célula A crescendo (verde 0.100): bico",
-   "acao": "toque em 100,481"
-  },
-  {
-   "t": 117,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0.101,
-    0.092,
-    0.015,
-    0.122
-   ],
-   "cascas": [
-    0,
-    0,
-    0.032,
-    0
-   ],
-   "barras": [
-    0.419,
-    0.364,
-    0.403,
-    0.372
-   ],
-   "motivo": "célula C pronta (casca 0.032)",
-   "acao": "colher C + vender"
-  },
-  {
-   "t": 121,
+   "t": 47.8,
    "tutorial": 0,
    "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 9,
+   "verdes": [
+    0.1,
+    0.092,
+    0.094,
+    0.122,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.338,
+    0.309,
+    0.316,
+    0.332,
+    0.076
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 86 bicos (+86 moedas)"
+  },
+  {
+   "t": 49.9,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 90,
    "verdes": [
     0.038,
-    0.092,
+    0.035,
+    0.036,
     0,
-    0.122
+    0
    ],
    "cascas": [
     0.028,
-    0,
-    0,
+    0.026,
+    0.026,
+    0.037,
     0
    ],
    "barras": [
     0.444,
-    0.397,
-    0.025,
-    0.408
-   ],
-   "motivo": "célula A pronta (casca 0.028)",
-   "acao": "colher A + vender"
-  },
-  {
-   "t": 124.7,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "verdes": [
-    0,
-    0.035,
-    0,
-    0.124
-   ],
-   "cascas": [
-    0,
-    0.026,
-    0,
-    0
-   ],
-   "barras": [
-    0.023,
     0.407,
-    0.056,
-    0.442
+    0.403,
+    0.444,
+    0.161
    ],
-   "motivo": "célula B pronta (casca 0.026)",
-   "acao": "colher B + vender"
+   "motivo": "comprar Composteira (80 moedas · 8% de colheita dupla)",
+   "acao": "comprar Composteira (nível 1)"
   },
   {
-   "t": 128.3,
+   "t": 59,
    "tutorial": 0,
    "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 90,
    "verdes": [
+    0.038,
+    0.035,
+    0.036,
+    0,
+    0
+   ],
+   "cascas": [
+    0.028,
+    0.026,
+    0.026,
+    0.037,
+    0
+   ],
+   "barras": [
+    0.444,
+    0.407,
+    0.403,
+    0.444,
+    0.172
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 90 bicos (+90 moedas)"
+  },
+  {
+   "t": 61,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 95,
+   "verdes": [
+    0.038,
+    0.035,
+    0.036,
+    0,
+    0.078
+   ],
+   "cascas": [
+    0.028,
+    0.026,
+    0.026,
+    0.037,
+    0
+   ],
+   "barras": [
+    0.444,
+    0.407,
+    0.403,
+    0.444,
+    0.26
+   ],
+   "motivo": "save: 4 célula(s) pronta(s) [A,B,C,D]",
+   "acao": "colher A,B,C,D + vender"
+  },
+  {
+   "t": 70,
+   "tutorial": 0,
+   "dialogo": 0.078,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 95,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.078
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0,
+    0.27
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 87 bicos (+87 moedas)"
+  },
+  {
+   "t": 71.1,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 217,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.078
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0,
+    0.354
+   ],
+   "motivo": "subir para Milho (venda 35 por ciclo)",
+   "acao": "aba da semente Milho"
+  },
+  {
+   "t": 72.3,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 217,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.078
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0,
+    0.357
+   ],
+   "motivo": "save: 4 célula(s) vazia(s) [A,B,C,D]",
+   "acao": "semente + célula(s) A,B,C,D"
+  },
+  {
+   "t": 81.4,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 261,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.044
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0.022
+   ],
+   "barras": [
+    0,
+    0.002,
+    0.002,
+    0,
+    0.357
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 87 bicos (+87 moedas)"
+  },
+  {
+   "t": 83,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 261,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.044
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0.022
+   ],
+   "barras": [
+    0.03,
+    0.03,
+    0.031,
+    0.03,
+    0.357
+   ],
+   "motivo": "save: 2 célula(s) vazia(s) [C,D]",
+   "acao": "semente + célula(s) C,D"
+  },
+  {
+   "t": 84.3,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 308,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0.044
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0.022
+   ],
+   "barras": [
+    0.035,
+    0.033,
+    0.033,
+    0.032,
+    0.357
+   ],
+   "motivo": "save: 1 célula(s) pronta(s) [E]",
+   "acao": "colher E + vender"
+  },
+  {
+   "t": 93.3,
+   "tutorial": 0,
+   "dialogo": 0.078,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 308,
+   "verdes": [
+    0,
     0,
     0,
     0,
@@ -1906,24 +793,28 @@
     0,
     0,
     0,
-    0.037
+    0,
+    0
    ],
    "barras": [
-    0.057,
-    0.024,
-    0.088,
-    0.444
+    0.035,
+    0.035,
+    0.035,
+    0.035,
+    0.075
    ],
-   "motivo": "célula D pronta (casca 0.037)",
-   "acao": "colher D + vender"
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 88 bicos (+88 moedas)"
   },
   {
-   "t": 130.4,
+   "t": 94.4,
    "tutorial": 0,
    "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
+   "moedas": 320,
    "verdes": [
+    0,
     0,
     0,
     0,
@@ -1933,25 +824,351 @@
     0,
     0,
     0,
+    0,
     0
    ],
    "barras": [
-    0.091,
-    0.055,
-    0.121,
-    0.023
+    0.068,
+    0.065,
+    0.067,
+    0.066,
+    0.075
    ],
-   "motivo": "sem célula livre: vender",
-   "acao": "toque em 140,400"
+   "motivo": "subir para Milho (venda 35 por ciclo)",
+   "acao": "aba da semente Milho"
+  },
+  {
+   "t": 94.9,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 320,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.07,
+    0.065,
+    0.067,
+    0.068,
+    0.075
+   ],
+   "motivo": "save: 1 célula(s) vazia(s) [E]",
+   "acao": "semente + célula(s) E"
+  },
+  {
+   "t": 95.9,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 384,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.07,
+    0.067,
+    0.069,
+    0.068,
+    0.075
+   ],
+   "motivo": "subir para Trigo (venda 110 por ciclo)",
+   "acao": "aba da semente Trigo"
+  },
+  {
+   "t": 104.3,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 384,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.073,
+    0.067,
+    0.069,
+    0.07,
+    0.076
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 89 bicos (+89 moedas)"
+  },
+  {
+   "t": 113.6,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 387,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.106,
+    0.098,
+    0.1,
+    0.104,
+    0.097
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 87 bicos (+87 moedas)"
+  },
+  {
+   "t": 122.7,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 387,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.14,
+    0.129,
+    0.132,
+    0.138,
+    0.118
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 86 bicos (+86 moedas)"
+  },
+  {
+   "t": 131.7,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 564,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.174,
+    0.159,
+    0.163,
+    0.172,
+    0.14
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 89 bicos (+89 moedas)"
   }
  ],
- "plantadas": 4,
- "colhidas": 4,
- "telas": 9,
- "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000",
- "tutorial_segundos": 2.7,
+ "plantadas": 16,
+ "colhidas": 5,
+ "telas": 7,
+ "bicos": 965,
+ "bicos_por_minuto": 445.4,
+ "verde_final": "A:0.056 B:0.051 C:0.052 D:0.073 E:0.000",
+ "tutorial_segundos": 1.9,
  "tutorial_fechou": true,
  "tutorial_toques": 1,
+ "economia": {
+  "inicio": {
+   "moedas": 25,
+   "campos": 4,
+   "camposLista": [
+    {
+     "planta": "",
+     "pronto": false,
+     "tempo": 0
+    },
+    {
+     "planta": "",
+     "pronto": false,
+     "tempo": 0
+    },
+    {
+     "planta": "",
+     "pronto": false,
+     "tempo": 0
+    },
+    {
+     "planta": "",
+     "pronto": false,
+     "tempo": 0
+    }
+   ],
+   "dia": 1,
+   "semente": 0,
+   "niveis": {
+    "celeiro": 0,
+    "poco": 0,
+    "lanterna": 0,
+    "ajudante": 0,
+    "composteira": 0,
+    "carroca": 0
+   },
+   "celeiro": {
+    "Abóbora": 0,
+    "Flor de Lume": 0,
+    "Milho": 0,
+    "Nabo": 0,
+    "Tomate": 0,
+    "Trigo": 0
+   },
+   "tutorial_visto": true
+  },
+  "fim": {
+   "moedas": 564,
+   "campos": 5,
+   "camposLista": [
+    {
+     "planta": "milho",
+     "pronto": false,
+     "tempo": 39.14354583333334
+    },
+    {
+     "planta": "milho",
+     "pronto": false,
+     "tempo": 38.95771664587189
+    },
+    {
+     "planta": "milho",
+     "pronto": false,
+     "tempo": 38.85571433333333
+    },
+    {
+     "planta": "milho",
+     "pronto": false,
+     "tempo": 38.65742283333333
+    },
+    {
+     "planta": "milho",
+     "pronto": false,
+     "tempo": 18.794972166666646
+    }
+   ],
+   "dia": 1,
+   "semente": 2,
+   "niveis": {
+    "celeiro": 0,
+    "poco": 1,
+    "lanterna": 0,
+    "ajudante": 0,
+    "composteira": 1,
+    "carroca": 0
+   },
+   "celeiro": {
+    "Abóbora": 0,
+    "Flor de Lume": 0,
+    "Milho": 0,
+    "Nabo": 0,
+    "Tomate": 0,
+    "Trigo": 0
+   },
+   "tutorial_visto": true
+  },
+  "resumo": {
+   "gasto": 88,
+   "gasto_sementes": 110,
+   "ganho": 737,
+   "ganho_por_minuto": 340.15
+  },
+  "melhorias": [
+   {
+    "id": "poco",
+    "nome": "Cavar Poço",
+    "custo": 40,
+    "t": 24
+   },
+   {
+    "id": "campo",
+    "nome": "Comprar campo",
+    "custo": 50,
+    "t": 28.3
+   },
+   {
+    "id": "composteira",
+    "nome": "Composteira",
+    "custo": -2,
+    "t": 49.9
+   }
+  ],
+  "gasto_sementes": 110,
+  "sementes": [
+   {
+    "nome": "Milho",
+    "ok": true,
+    "t": 72.3
+   },
+   {
+    "nome": "Milho",
+    "ok": true,
+    "t": 94.9
+   }
+  ]
+ },
  "limite": {
   "botao": 0.02,
   "hud": 0.04,
@@ -1959,12 +1176,14 @@
   "verdeCrescendo": 0.03,
   "brancoPronto": 0.012,
   "barraOcupada": 0.02,
-  "esperaCrescimento": 4000
+  "carenciaColheita": 5000,
+  "esperaCrescimento": 9000
  },
  "celulas": [
   "A",
   "B",
   "C",
-  "D"
+  "D",
+  "E"
  ]
 }
