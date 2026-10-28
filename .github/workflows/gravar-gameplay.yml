@@ -88,6 +88,19 @@ jobs:
       - name: Monta o kit de envio do gameplay
         run: python3 tools/kit-gameplay.py
 
+      - name: Guarda o vídeo no repositório (é o arquivo que o envio e o chat usam)
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add media/gameplay/ceifalume-gameplay.mp4 \
+                  media/gameplay/ceifalume-gameplay-cru-decisoes.json
+          if git diff --cached --quiet; then
+            echo "vídeo sem mudança"
+            exit 0
+          fi
+          git commit -m "gameplay: CEIFALUME gravado ($(date -u +%d/%m\ %H:%M\ UTC))"
+          git push
+
       - name: Guarda o vídeo e o quadro de prova
         uses: actions/upload-artifact@v4
         with:
