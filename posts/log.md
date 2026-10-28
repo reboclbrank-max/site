@@ -2108,3 +2108,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=23(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > PRANCHETA: desenhe a bola parada e veja o jogo simular, grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, plantações crescem 8h offline Bas
+
+## 28/10/2026 13:04 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ⚪ fila de reserva — motor=g4f auto · convite da ponte anexado (motor não citou o Instagram) |
+| destino editorial | ✅ rota oficial prancheta |
+| tema do ciclo | ✅ convide a seguir a conta no Instagram para acompanhar as artes novas |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18089345468277 |
+| threads | ✅ publicado id 180829641743 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ➖ 1 resposta(s) pendente(s), nenhuma passou no freio de texto |
+| cacador de oportunidades | ✅ 3 de 3 interacoes do dia (q=#gamedev) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
+| censo mundial | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=24(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grátis no navegador/APK) ou cuidar da lavoura que cresce enquanto você d B

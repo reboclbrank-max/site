@@ -262,3 +262,6 @@ Dois mundos, um dev brasileiro 🇧🇷✨ PRANCHETA: tático de futebol fictíc
 
 ## 27/10/2026 22:17 UTC
 PRANCHETA: desenhe a bola parada e veja o jogo simular, grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, plantações crescem 8h offline Bastidores e artes novas também no Instagram — todos os canais no link.
+
+## 28/10/2026 13:04 UTC
+Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grátis no navegador/APK) ou cuidar da lavoura que cresce enquanto você d Bastidores e artes novas também no Instagram — todos os canais no link.
