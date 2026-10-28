@@ -188,7 +188,12 @@ por isso a compra é uma vez por captura e a confirmação é sempre no save.
 - **Carência de 5 s** na célula recém-colhida e de 9 s na recém-plantada: o save atrasa 1–2 s e sem
   isso o robô repetia a ação em cima da leitura velha.
 
-Prova automatizada: `tools/testes-gameplay.py` — **79/79**, incluindo o leitor do save, a prioridade
+**Conferido no CI (run 40619750789, 28/10 02:18 UTC):** gravação de 130 s → **597 moedas de ganho
+(275,54/min)**, 795 bicos (366,9/min), vídeo final com **movimento 1,56** (mínimo 1,20), 15
+legendas, trilha e cartão; commit `d51ccb9` guardou o MP4 no repositório e ele responde 200 em
+`media/gameplay/ceifalume-gameplay.mp4`.
+
+Prova automatizada: `tools/testes-gameplay.py` — **84/84**, incluindo o leitor do save, a prioridade
 de compra, a histerese da semente, a fazenda pelo save (pronto → colhe no centro da célula; vazio →
 planta; crescendo → bico), a carência da colheita, a 5ª célula em (755,486), o gasto de semente
 entrando no ganho e `ganhoDeMoedas()` devolvendo 64 para saldo 25→19 com 70 gastos.
