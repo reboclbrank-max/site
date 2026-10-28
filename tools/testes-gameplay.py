@@ -265,6 +265,29 @@ def main():
        and trechos[-1][0] <= 113.0 and trechos[-1][1] >= 128.3, trechos)
     ok("relatório sem colheita não inventa corte",
        mod_prod.trechos_automaticos([{"t": 1.0, "acao": "semente + célula A"}], 60.0) is None)
+    # 2b-2. o corte que mostra acao de verdade (o robo de 27/10 faz rajadas de bico e o filme
+    # cru fica quase parado: movimento 0,23-0,34 contra minimo 1,20).
+    rel_bico = [
+        {"t": 15.0, "acao": "semente + célula(s) A,B,C,D"},
+        {"t": 40.0, "acao": "rajada de 60 bicos (+60 moedas)"},
+        {"t": 62.0, "acao": "colher A,B,C,D + vender"},
+        {"t": 70.0, "acao": "comprar Cavar Poço (nível 1)"},
+        {"t": 95.0, "acao": "subir para Trigo (venda 110 por ciclo)"},
+    ]
+    eventos = mod_prod.trechos_dos_eventos(rel_bico, 120.0)
+    ok("o corte dos eventos pega plantar, colher, comprar e trocar semente",
+       eventos is not None and len(eventos) >= 3, eventos)
+    ok("o corte dos eventos NAO corta em cima das rajadas de bico",
+       eventos is not None and all(not (37 <= a <= 43) for a, _b, _v in eventos), eventos)
+    misto = mod_prod.trechos_mistos(rel_bico, 120.0)
+    ok("o corte misto existe quando ha evento", misto is not None, misto)
+    if misto:
+        lentos = [t for t in misto if t[2] == 1.0]
+        rapidos = [t for t in misto if t[2] > 1.0]
+        ok("acao em velocidade real (1x) e espera acelerada (3x)", lentos and rapidos, misto)
+        ok("o corte misto cobre o filme inteiro, sem buraco",
+           abs(sum(b - a for a, b, _v in misto) - 120.0) < 1.0, misto)
+
     variantes = mod_prod.variantes_do_corte(trechos, 135.0)
     ok("há corte de reserva mais largo quando o enxuto reprova",
        len(variantes) >= 2 and variantes[1][0][0] <= trechos[0][0], len(variantes))
