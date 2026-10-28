@@ -141,7 +141,12 @@ const CELULAS = [
   { id: 'A', x: 400, y: 157, w: 220, h: 205 },
   { id: 'B', x: 640, y: 157, w: 240, h: 205 },
   { id: 'C', x: 884, y: 157, w: 235, h: 205 },
-  { id: 'D', x: 400, y: 400, w: 220, h: 180 }
+  { id: 'D', x: 400, y: 400, w: 220, h: 180 },
+  // E: a quinta célula. Medida em 27/10 comprando "Comprar campo" (50 moedas): o save passou de
+  // 4 para 5 entradas em `campos` e a caixa "Clique para plantar" apareceu embaixo, à direita da
+  // D — em (640,372) 230×228, centro (755,486). Antes disso o robô comprava o campo e não
+  // enxergava a célula nova: pagava 50 e continuava plantando em 4.
+  { id: 'E', x: 640, y: 372, w: 230, h: 228 }
 ];
 const ALVO = {
   tutorial: { x: 640, y: 331 },
@@ -186,9 +191,21 @@ const LEITOR_SAVE = async (caminho) => {
     });
   }
   const listaCampos = texto.match(/campos=\[([\s\S]*?)\]/);
+  // `campos` é a lista de células na MESMA ordem da tela (medido em 27/10: plantar só na célula
+  // A grava `planta` na primeira entrada). Cada entrada diz o que está plantado e se está pronto,
+  // o que dispensa adivinhar colheita por cor: Trigo e Milho não têm a casca branca do Nabo e,
+  // com a leitura só por pixel, ficavam maduros na tela e nunca eram colhidos.
+  const camposLista = listaCampos
+    ? listaCampos[1].split('}').filter((t) => t.indexOf('planta') >= 0).map((t) => ({
+      planta: (t.match(/planta"?\s*:\s*"([^"]*)"/) || [, ''])[1],
+      pronto: /pronto"?\s*:\s*true/.test(t),
+      tempo: Number((t.match(/tempo"?\s*:\s*([\d.]+)/) || [, 0])[1]) || 0
+    }))
+    : null;
   return {
     moedas: numero('moedas'),
-    campos: listaCampos ? (listaCampos[1].match(/\{/g) || []).length : null,
+    campos: camposLista ? camposLista.length : null,
+    camposLista,
     dia: numero('dia'),
     semente: numero('semente_selecionada'),
     niveis: {
@@ -258,6 +275,17 @@ function ganhoDeMoedas(inicial, final, gasto) {
   if (typeof inicial !== 'number' || typeof final !== 'number') return null;
   return final - inicial + (gasto || 0);
 }
+// BICO — medido em 27/10/2026 (20 s por intervalo, moedas lidas no save):
+//   60 ms → 525,0 moedas/min · 120 ms → 306,0 · 250 ms → 195,0 · 500 ms → 111,0 · 1000 ms → 57,0
+// Ou seja: o botão "Fazer um bico (+1 moeda)" NÃO tem tempo de espera — cada toque paga 1 moeda.
+// O agente antigo dava 1 toque a cada ~2,2 s (≈27/min) e por isso a fazenda inteira rendia menos
+// que o dedo no bico. Agora o ócio entre colheitas vira rajada de bicos, que é o que um jogador
+// de verdade faz neste jogo.
+// Custo do toque medido no sandbox: ~58 ms de ida e volta + espera. A rajada é medida em TEMPO
+// (não em número fixo de toques) para que o robô fique ~2,5 s no bico por vez e volte a olhar a
+// fazenda: com 14 toques fixos o laço olhava a tela a cada 1,8 s e o overhead comia a renda.
+const BICO = { intervalo: 45, rajadaMs: 8000 };
+
 // limites de decisão — calibrados nos quadros de 27/10 (ver docs/VIDEO-GAMEPLAY.md)
 const LIMIAR = {
   botao: 0.02,        // fração de branco que já conta como letra "Jogar" visível
@@ -266,22 +294,30 @@ const LIMIAR = {
   verdeCrescendo: 0.03, // broto na tela (medido: 0,049 a 0,100)
   brancoPronto: 0.012,  // nabo maduro: casca branca no miolo (medido: 0,027 vs 0,000)
   barraOcupada: 0.02,   // barra dourada de progresso (medido: 0,046 já 3 s após semear; 0,000 vazia)
-  esperaCrescimento: 4000  // ms de carência depois de semear (a barra aparece em até 3 s)
+  carenciaColheita: 5000,  // ms em que a célula recém-colhida não é colhida de novo (save atrasa)
+  esperaCrescimento: 9000  // ms de carência depois de semear (sob gravação o relógio do jogo anda
+                           // devagar: a barra pode levar 6-8 s para aparecer; com 4 s o robô
+                           // replantava em cima da semente e reiniciava o crescimento)
 };
 
 /** Conta, dentro de um recorte do canvas, quantos pixels são amarelos e quantos são claros. */
 const MEDIDOR = (regioes) => {
   const cv = document.querySelector('canvas');
   const c2 = document.createElement('canvas');
-  c2.width = cv.width;
-  c2.height = cv.height;
   const g = c2.getContext('2d', { willReadFrequently: true });
-  g.drawImage(cv, 0, 0);
   const sx = cv.width / 1280;
   const sy = cv.height / 720;
+  // Só as regiões pedidas vão para o canvas auxiliar (antes o canvas inteiro era copiado a cada
+  // leitura: 160-200 ms por olhada, e o laço perde ~1/4 do tempo só olhando). O resultado é o
+  // mesmo pixel a pixel; muda só o custo.
   const conta = (r, teste) => {
-    const d = g.getImageData(Math.round(r.x * sx), Math.round(r.y * sy),
-      Math.max(1, Math.round(r.w * sx)), Math.max(1, Math.round(r.h * sy))).data;
+    const x = Math.round(r.x * sx);
+    const y = Math.round(r.y * sy);
+    const w = Math.max(1, Math.round(r.w * sx));
+    const h = Math.max(1, Math.round(r.h * sy));
+    if (c2.width !== w || c2.height !== h) { c2.width = w; c2.height = h; }
+    g.drawImage(cv, x, y, w, h, 0, 0, w, h);
+    const d = g.getImageData(0, 0, w, h).data;
     let n = 0;
     let tot = 0;
     for (let i = 0; i < d.length; i += 4) {
@@ -325,7 +361,10 @@ const MEDIDOR = (regioes) => {
         branco: conta(miolo, brancoCasca),
         ouroBotao: conta(rodape, ouro),
         centro: { x: Math.round(c.x + c.w / 2), y: Math.round(c.y + c.h / 2) },
-        colher: { x: Math.round(c.x + c.w / 2), y: Math.round(c.y + c.h - 25) }
+        // MEDIDO em 27/10: quem colhe é o clique no CORPO da planta (centro da caixa). O clique
+        // na barra do rodapé (y + h − 25) NÃO colhe: ele planta uma semente nova na célula — era
+        // por isso que o robô "colhia" e o save continuava com a planta madura no lugar.
+        colher: { x: Math.round(c.x + c.w / 2), y: Math.round(c.y + c.h / 2) }
       };
     })
   };
@@ -374,7 +413,10 @@ function decidir(estado, memoria = {}) {
     const falhas = memoria.sementesFalhas || {};
     const pendente = memoria.sementePendente ? memoria.sementePendente.indice : null;
     const atual = SEMENTES.find((x) => x.indice === economia.semente) || null;
-    const cobre = (x) => economia.moedas >= x.custo * CELULAS_POR_RODADA + FOLGA_SEMENTE;
+    // HISTERESE: subir exige caixa para 6 rodadas; descer só quando não paga nem UMA semente.
+    // Sem essa faixa larga o robô ficava pulando Nabo → Trigo → Nabo a cada compra (medido em
+    // 27/10: 4 trocas em 150 s, cada troca custando ~0,5 s de bico).
+    const cobre = (x) => economia.moedas >= x.custo * (CELULAS_POR_RODADA + 2) + FOLGA_SEMENTE;
     // Caso de emergência: se o caixa não paga nem UMA semente da atual, o robô não pode ficar
     // travado (plantio recusado = célula vazia = zero de renda). Aí desce para a mais barata que
     // paga um plantio, mesmo sem cobrir a rodada inteira.
@@ -399,6 +441,52 @@ function decidir(estado, memoria = {}) {
                  + ' (venda ' + melhor.venda + ' por ciclo)' };
     }
   }
+  // ---- FAZENDA PELO SAVE (fonte da verdade) ----
+  // O save diz, célula por célula, o que está plantado e se está pronto. Isso resolve o furo
+  // medido em 27/10: com semente melhor (Milho/Trigo) a planta madura não tem a casca branca do
+  // Nabo, a leitura por pixel não reconhecia a colheita e a célula ficava ocupada para sempre
+  // (900 s: 14 plantios e 9 colheitas, contra 72 e 68 do robô sem economia).
+  const centroDe = (c) => ({ x: Math.round(c.x + c.w / 2), y: Math.round(c.y + c.h / 2) });
+  const colherDe = centroDe;   // quem colhe é o clique no corpo da planta (ver MEDIDOR)
+  if (economia && Array.isArray(economia.camposLista) && economia.camposLista.length) {
+    const prontasSave = [];
+    const vaziasSave = [];
+    // O save demora 1-2 s para refletir a colheita. Sem esta carência o robô colhia a MESMA
+    // célula de novo na leitura velha (medido em 27/10: 169 colheitas em 900 s, a maioria clique
+    // repetido na planta, e o tempo que ia para o bico virou toque perdido).
+    const colhidasHaPouco = memoria.colhidasHaPouco || {};
+    economia.camposLista.forEach((campo, i) => {
+      const c = CELULAS[i];
+      if (!c) return;
+      if (campo.pronto && (agora - (colhidasHaPouco[c.id] || -1e9)) > LIMIAR.carenciaColheita) {
+        prontasSave.push({ id: c.id, alvo: colherDe(c) });
+      } else if (!campo.pronto && !campo.planta
+        && (agora - (ocupadas[c.id] || -1e9)) > LIMIAR.esperaCrescimento) {
+        vaziasSave.push({ id: c.id, centro: centroDe(c) });
+      }
+    });
+    if (prontasSave.length) {
+      return { tipo: 'colher', celula: prontasSave[0].id, alvo: prontasSave[0].alvo,
+               prontas: prontasSave,
+               motivo: 'save: ' + prontasSave.length + ' célula(s) pronta(s) ['
+                 + prontasSave.map((x) => x.id).join(',') + ']' };
+    }
+    if (vaziasSave.length) {
+      return { tipo: 'plantar', celula: { id: vaziasSave[0].id, centro: vaziasSave[0].centro },
+               livres: vaziasSave,
+               motivo: 'save: ' + vaziasSave.length + ' célula(s) vazia(s) ['
+                 + vaziasSave.map((x) => x.id).join(',') + ']' };
+    }
+  }
+  // SEM SAVE, a fazenda é decidida por pixel (reserva). COM save, NUNCA: a leitura por cor
+  // inventava colheita na célula D (casca 0,015 fixa, acima do limiar 0,012) e o robô passava
+  // minutos colhendo uma célula que estava só crescendo — 346 "colheitas" em 900 s e só 96
+  // bicos/min. O save diz exatamente o que está pronto; pixel fica para quando não há save.
+  const temSave = !!(economia && Array.isArray(economia.camposLista) && economia.camposLista.length);
+  if (temSave) {
+    // Nada pronto e nada vazio: a fazenda está crescendo. É bico, sem olhar cor nenhuma.
+    return { tipo: 'toque', alvo: ALVO.bico, motivo: 'save: fazenda crescendo, moeda no bico' };
+  }
   // PRONTA: o nabo maduro fica branco (medido: casca branca 0,027 no miolo, verde cai de 0,10
   // para 0,04). A leitura antiga exigia "verde alto" e por isso nunca colhia nada: no ponto de
   // colheita a planta deixa de ser verde.
@@ -406,7 +494,9 @@ function decidir(estado, memoria = {}) {
   if (prontas.length) {
     const c = prontas[0];
     return { tipo: 'colher', alvo: c.colher, celula: c.id, celulaCentro: c.centro,
-             motivo: 'célula ' + c.id + ' pronta (casca ' + c.branco.toFixed(3) + ')' };
+             prontas: prontas.map((x) => ({ id: x.id, alvo: x.colher })),
+             motivo: 'célula ' + c.id + ' pronta (casca ' + c.branco.toFixed(3) + ')'
+               + (prontas.length > 1 ? ' (+' + (prontas.length - 1) + ' prontas)' : '') };
   }
   // CRESCENDO: broto verde na tela — não replantar em cima, mas também não é hora de colher.
   const crescendo = estado.celulas.filter((c) => c.verde >= LIMIAR.verdeCrescendo);
@@ -429,12 +519,15 @@ function decidir(estado, memoria = {}) {
     !ocupada(c) && (confirmacoes[c.id] || 0) >= 2
     && (agora - (ocupadas[c.id] || -1e9)) > LIMIAR.esperaCrescimento);
   if (livres.length) {
-    return { tipo: 'plantar', celula: livres[0], motivo: 'célula ' + livres[0].id + ' livre' };
+    return { tipo: 'plantar', celula: livres[0],
+             livres: livres.map((c) => ({ id: c.id, centro: c.centro })),
+             motivo: 'célula ' + livres[0].id + ' livre'
+               + (livres.length > 1 ? ' (+' + (livres.length - 1) + ' livres)' : '') };
   }
-  if (estado.celulas.every((c) => (agora - (ocupadas[c.id] || -1e9)) <= LIMIAR.esperaCrescimento)) {
-    return { tipo: 'toque', alvo: ALVO.bico, motivo: 'tudo semeado ou crescendo: moeda no bico' };
-  }
-  return { tipo: 'toque', alvo: ALVO.vender, motivo: 'sem célula livre: vender' };
+  // Nada maduro, nada vazio para plantar: a fazenda está crescendo. Aqui é bico, SEMPRE — antes
+  // este ramo devolvia "vender" e o robô passava 30 s tocando em "Vender toda a colheita" com o
+  // celeiro vazio (medido no relatório de 27/10: 16 decisões seguidas de vender, zero moedas).
+  return { tipo: 'toque', alvo: ALVO.bico, motivo: 'fazenda crescendo: moeda no bico' };
 }
 
 /** Toque que não depende do tipo de evento: clique de mouse E toque de dedo. */
@@ -554,6 +647,10 @@ async function principal() {
     let plantadas = 0;
     let toquesTela = 0;
     let toquesTutorial = 0;
+    let bicosDados = 0;
+    let economiaCache = null;
+    const colhidasHaPouco = {};
+    let voltas = 0;
     let tutorialFechado = false;
     let tutorialDesde = 0;
     let segundosComTutorial = 0;
@@ -564,6 +661,7 @@ async function principal() {
     const sementesFalhas = {};
     let sementePendente = null;
     const melhoriasCompras = [];
+    let gastoSementes = 0;   // semente também é despesa: sem isso o ganho sai subestimado
     let economiaResumo = null;
     const sementesTrocadas = [];
     while (Date.now() < fimAcoes) {
@@ -584,18 +682,24 @@ async function principal() {
         confirmacoes[c.id] = livre ? ((confirmacoesAnteriores[c.id] || 0) + 1) : 0;
       });
       confirmacoesAnteriores = confirmacoes;
-      // Estado de dinheiro lido do save (fonte da verdade do jogo, não da tela).
-      let economia = null;
-      try {
-        economia = await pagina.evaluate(LEITOR_SAVE, SAVE_CAMINHO);
-      } catch (e) { economia = null; }
+      // Estado de dinheiro lido do save (fonte da verdade do jogo, não da tela). A leitura custa
+      // ~100 ms de ida e volta; com a rajada de bico valendo ~1 moeda a cada 130 ms, ler a cada
+      // duas voltas é dinheiro no bolso e não muda nenhuma decisão (as compras são planejadas).
+      voltas += 1;
+      let economia = economiaCache;
+      if (voltas % 2 === 1 || !economiaCache) {
+        try {
+          economia = await pagina.evaluate(LEITOR_SAVE, SAVE_CAMINHO);
+          economiaCache = economia;
+        } catch (e) { economia = economiaCache; }
+      }
       if (economia) {
         if (!economiaInicial) economiaInicial = economia;
         economiaAtual = economia;
       }
       const d = decidir(estado, { agora: Date.now() - inicioAcoes, ocupadas, confirmacoes,
         economia: op.semEconomia ? null : economia, melhoriasFeitas, sementesFalhas,
-        sementePendente });
+        sementePendente, colhidasHaPouco });
       let acao;
       if (d.tipo === 'plantar') {
         // Com troca de semente pendente, NÃO toca na sacola: o toque na sacola devolve a semente
@@ -603,15 +707,22 @@ async function principal() {
         // em Nabo). Sem pendência, a sacola abre o plantio como antes.
         if (!sementePendente) {
           await pagina.mouse.click(ALVO.semente.x, ALVO.semente.y);
-          await pagina.waitForTimeout(160);
-          await pagina.touchscreen.tap(ALVO.semente.x, ALVO.semente.y);
-          await pagina.waitForTimeout(260);
+          await pagina.waitForTimeout(120);
         }
-        await acionar(pagina, d.celula.centro);
-        ocupadas[d.celula.id] = Date.now() - inicioAcoes;
-        plantadas += 1;
-        acao = 'semente + célula ' + d.celula.id;
-        await pagina.waitForTimeout(420);
+        // PLANTA EM LOTE: todas as células que a mesma olhada viu livres, num passo só. Antes era
+        // uma por volta, e cada volta custa ~150 ms de leitura + 260 ms de espera.
+        const alvosPlantio = (d.livres && d.livres.length ? d.livres : [{ id: d.celula.id, centro: d.celula.centro }]);
+        // custo da semente usada neste plantio (tabela medida; o save mostra o índice escolhido)
+        const sementeAtual = SEMENTES.find((x) => x.indice === (economia && economia.semente))
+          || SEMENTES[0];
+        gastoSementes += alvosPlantio.length * sementeAtual.custo;
+        for (const alvo of alvosPlantio) {
+          await pagina.mouse.click(alvo.centro.x, alvo.centro.y);
+          ocupadas[alvo.id] = Date.now() - inicioAcoes;
+          plantadas += 1;
+          await pagina.waitForTimeout(150);
+        }
+        acao = 'semente + célula(s) ' + alvosPlantio.map((x) => x.id).join(',');
         // CONFERÊNCIA DA TROCA DE SEMENTE: só o plantio grava `semente_selecionada` no save.
         if (sementePendente) {
           const agoraSave = await pagina.evaluate(LEITOR_SAVE, SAVE_CAMINHO);
@@ -624,18 +735,22 @@ async function principal() {
           }
         }
       } else if (d.tipo === 'colher') {
-        // Duas tentativas de propósito: o botão "Colher" fica no rodapé da caixa e o toque na
-        // planta também colhe. Se o primeiro não pegar, o segundo pega.
-        await acionar(pagina, d.alvo);
-        await pagina.waitForTimeout(450);
-        await acionar(pagina, d.celulaCentro || d.alvo);
-        delete ocupadas[d.celula];
-        colhidas += 1;
-        acao = 'colher ' + d.celula;
-        await pagina.waitForTimeout(400);
-        await acionar(pagina, ALVO.vender);
-        acao += ' + vender';
-        await pagina.waitForTimeout(300);
+        // Um clique na planta colhe (medido: a barra do rodapé é o botão "Colher" e o corpo da
+        // planta também colhe). A versão antiga dava 6 toques com 1,15 s de espera entre eles e
+        // comia 2 s por colheita — tempo que agora vai para o bico.
+        // COLHE EM LOTE: todas as células maduras da mesma olhada, e vende uma vez no fim.
+        const alvosColheita = (d.prontas && d.prontas.length
+          ? d.prontas : [{ id: d.celula, alvo: d.alvo }]);
+        for (const alvo of alvosColheita) {
+          await pagina.mouse.click(alvo.alvo.x, alvo.alvo.y);
+          await pagina.waitForTimeout(160);
+          delete ocupadas[alvo.id];
+          colhidasHaPouco[alvo.id] = Date.now() - inicioAcoes;
+          colhidas += 1;
+        }
+        await pagina.mouse.click(ALVO.vender.x, ALVO.vender.y);
+        await pagina.waitForTimeout(150);
+        acao = 'colher ' + alvosColheita.map((x) => x.id).join(',') + ' + vender';
       } else if (d.tipo === 'melhoria') {
         const antes = economiaAtual || {};
         await acionar(pagina, d.alvo);
@@ -662,8 +777,23 @@ async function principal() {
         sementePendente = { indice: d.semente.indice, nome: d.semente.nome, desde: Date.now() };
         acao = 'aba da semente ' + d.semente.nome;
       } else if (d.tipo === 'toque') {
-        await acionar(pagina, d.alvo);
-        acao = 'toque em ' + d.alvo.x + ',' + d.alvo.y;
+        const noBico = d.alvo === ALVO.bico;
+        if (noBico) {
+          // RAJADA: um toque a cada BICO.intervalo, durante BICO.rajadaMs. `acionar` dá clique +
+          // tap (dois eventos por toque), então aqui é só clique — o tap duplicaria o toque.
+          const inicioRajada = Date.now();
+          let naRajada = 0;
+          while (Date.now() - inicioRajada < BICO.rajadaMs) {
+            await pagina.mouse.click(ALVO.bico.x, ALVO.bico.y);
+            naRajada += 1;
+            await pagina.waitForTimeout(BICO.intervalo);
+          }
+          bicosDados += naRajada;
+          acao = 'rajada de ' + naRajada + ' bicos (+' + naRajada + ' moedas)';
+        } else {
+          await acionar(pagina, d.alvo);
+          acao = 'toque em ' + d.alvo.x + ',' + d.alvo.y;
+        }
         if (d.alvo === ALVO.tutorial || d.alvo === ALVO.titulo) toquesTela += 1;
         // Abertura (splash do estúdio + capa) é só passagem: toque rápido, sem esperar 1 s por
         // toque. Antes o aquecimento comia 10 s dos 45 s de vídeo.
@@ -688,7 +818,7 @@ async function principal() {
         // Ritmo: a espera da plantação é longa (o tempo do jogo anda ~3x mais devagar sob
         // gravação). Alternar o bico a cada ~1 s mantém a tela viva e as moedas subindo, em vez
         // de 30 s de imagem praticamente parada.
-        await pagina.waitForTimeout(abertura ? 180 : 150);
+        if (!noBico) await pagina.waitForTimeout(abertura ? 180 : 150);
       }
       const agoraS = Date.now() - inicioAcoes;
       if (estado.tutorial > 0) {
@@ -735,13 +865,16 @@ async function principal() {
       // (saldo final - saldo inicial) + tudo o que foi gasto. Sem essa conta, o robô que
       // investe apareceria pior que o que não investe.
       const gasto = melhoriasCompras.reduce((s, m) => s + (m.custo || 0), 0);
-      const ganho = ganhoDeMoedas(economiaInicial.moedas, economiaAtual.moedas, gasto);
+      // Ganho = saldo final − saldo inicial + TUDO que saiu do bolso (melhorias + sementes).
+      const ganho = ganhoDeMoedas(economiaInicial.moedas, economiaAtual.moedas, gasto + gastoSementes);
       console.log('economia: saldo ' + economiaInicial.moedas + ' -> ' + economiaAtual.moedas
-        + ' · gasto ' + gasto + ' · GANHO ' + ganho + ' moedas em ' + op.segundos + ' s ('
+        + ' · gasto ' + gasto + ' (melhorias) + ' + gastoSementes + ' (sementes) · GANHO '
+        + ganho + ' moedas em ' + op.segundos + ' s ('
         + (ganho / (op.segundos / 60)).toFixed(2) + '/min) · melhorias: '
         + (melhoriasCompras.map((m) => m.nome).join(', ') || 'nenhuma')
         + ' · sementes: ' + (sementesTrocadas.map((s) => s.nome + (s.ok ? '' : '(falhou)')).join(', ') || 'nenhuma'));
-      economiaResumo = { gasto, ganho, ganho_por_minuto: +(ganho / (op.segundos / 60)).toFixed(2) };
+      economiaResumo = { gasto, gasto_sementes: gastoSementes, ganho,
+        ganho_por_minuto: +(ganho / (op.segundos / 60)).toFixed(2) };
     }
     console.log('tutorial: ficou ' + segundosComTutorial.toFixed(1) + ' s na tela · fechou: '
       + (tutorialFechado ? 'sim' : 'não precisou') + ' · toques nele: ' + toquesTutorial);
@@ -756,12 +889,15 @@ async function principal() {
     }
     console.log('decisões: ' + decisoes.length + ' · plantadas: ' + plantadas +
       ' · colhidas: ' + colhidas + ' · telas de abertura: ' + toquesTela);
+    console.log('bicos: ' + bicosDados + ' toques (+' + bicosDados + ' moedas) · '
+      + (bicosDados / (op.segundos / 60)).toFixed(1) + ' bicos/min');
     console.log('últimas decisões: ' + JSON.stringify(decisoes.slice(-4)));
     console.log('verde final por célula: ' + verdeFinal);
     // o mesmo relatório vai num JSON, para o validador e o kit usarem sem depender do log
     try {
       fs.writeFileSync(op.saida.replace(/\.mp4$/i, '-decisoes.json'), JSON.stringify({
-        decisoes, plantadas, colhidas, telas: toquesTela, verde_final: verdeFinal,
+        decisoes, plantadas, colhidas, telas: toquesTela, bicos: bicosDados,
+        bicos_por_minuto: +(bicosDados / (op.segundos / 60)).toFixed(1), verde_final: verdeFinal,
         tutorial_segundos: +segundosComTutorial.toFixed(1), tutorial_fechou: tutorialFechado,
         tutorial_toques: toquesTutorial,
         economia: {
@@ -769,6 +905,7 @@ async function principal() {
           fim: economiaAtual,
           resumo: economiaResumo,
           melhorias: melhoriasCompras,
+          gasto_sementes: gastoSementes,
           sementes: sementesTrocadas
         },
         limite: LIMIAR, celulas: CELULAS.map((c) => c.id)
@@ -831,5 +968,6 @@ if (require.main === module) {
 
 module.exports = {
   subirServidor, argumentos, duracaoDoVideo, carregarPlaywright,
-  decidir, ganhoDeMoedas, MELHORIAS, SEMENTES, LIMIAR, CELULAS, REGIAO_TUTORIAL, REGIAO_TITULO, REGIAO_DIALOGO, ALVO
+  decidir, ganhoDeMoedas, MELHORIAS, SEMENTES, BICO, LIMIAR, CELULAS, MEDIDOR, REGIAO_HUD,
+  REGIAO_TUTORIAL, REGIAO_TITULO, REGIAO_DIALOGO, ALVO
 };
