@@ -265,3 +265,6 @@ PRANCHETA: desenhe a bola parada e veja o jogo simular, grátis no navegador/APK
 
 ## 28/10/2026 13:04 UTC
 Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grátis no navegador/APK) ou cuidar da lavoura que cresce enquanto você d Bastidores e artes novas também no Instagram — todos os canais no link.
+
+## 28/10/2026 20:20 UTC
+🌙 CEIFALUME é idle de fazenda noturna, grátis e sem instalar. ⏎ Plante antes de dormir; a lavoura cresce até 8 h com o jogo fechado.
