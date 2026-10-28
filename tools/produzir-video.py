@@ -201,9 +201,79 @@ def trechos_automaticos(decisoes, duracao):
     return [(inicio1, fim1, 1.0), (inicio2, fim2, 1.0)]
 
 
+def trechos_dos_eventos(decisoes, duracao, janela=6.0, maximo=8):
+    """Corta em volta do que MUDA na tela: comprar melhoria, colher, plantar, trocar de semente.
+
+    Por que existe: depois de 27/10 o robô passou a fazer rajadas de bico no intervalo entre as
+    colheitas. A câmera fica quase parada nesse tempo (só o contador de moedas mexe), então um
+    corte pelo relógio entregou vídeo com movimento 0,64 (o mínimo é 1,20) e o pipeline reprovou —
+    corretamente. Este recorte escolhe justamente os segundos em que alguma coisa acontece.
+    """
+    marcas = []
+    for d in decisoes:
+        acao = str(d.get("acao") or "")
+        if any(k in acao for k in ("colher", "semente +", "comprar", "aba da semente")):
+            marcas.append(float(d.get("t", 0)))
+    if not marcas:
+        return None
+    janelas = []
+    for t in marcas:
+        ini = max(0.0, t - janela / 2)
+        fim = min(duracao, t + janela / 2)
+        if janelas and ini - janelas[-1][1] < 1.0:      # encosta na anterior: junta
+            janelas[-1] = (janelas[-1][0], max(janelas[-1][1], fim), 1.0)
+        else:
+            janelas.append((ini, fim, 1.0))
+    # se ficou longo demais, fica com os primeiros (a abertura + as primeiras colheitas)
+    total = []
+    for j in janelas:
+        total.append(j)
+        if len(total) >= maximo:
+            break
+    return total or None
+
+
+def trechos_mistos(decisoes, duracao, janela=4.0):
+    """Ação em velocidade real + espera acelerada. É o corte que ficou melhor no robô de 27/10.
+
+    As janelas em volta dos eventos (colher, plantar, comprar, trocar semente) rodam em 1x, porque
+    é nelas que a tela muda e o dono precisa ver o que o robô fez. Os vazios entre elas — rajadas
+    de bico, com só o contador de moedas mexendo — rodam em 3x: o tempo passa, as moedas sobem e o
+    filme não fica parado. Medido no cru de 900 s: 84,7 s de vídeo com movimento 1,67 (mínimo 1,20);
+    só os eventos em 2,5x davam 1,36 e o corte por relógio dava 0,64.
+    """
+    marcas = []
+    for d in decisoes:
+        texto = str(d.get("acao") or "")
+        if any(k in texto for k in ("colher", "semente +", "comprar", "aba da semente")):
+            marcas.append(float(d.get("t", 0)))
+    if not marcas:
+        return None
+    # janela de `janela` segundos em volta de cada evento, emendando as que se encostam
+    acao = []
+    for t in marcas:
+        ini = max(0.0, t - janela / 2)
+        fim = min(duracao, t + janela / 2)
+        if acao and ini - acao[-1][1] < 1.0:
+            acao[-1] = (acao[-1][0], max(acao[-1][1], fim), 1.0)
+        else:
+            acao.append((ini, fim, 1.0))
+    vazios = []
+    cursor = 0.0
+    for a, b, _v in acao:
+        if a - cursor > 2.0:
+            vazios.append((cursor, a, 3.0))
+        cursor = max(cursor, b)
+    if duracao - cursor > 2.0:
+        vazios.append((cursor, duracao, 3.0))
+    return sorted(acao + vazios)
+
+
 def variantes_do_corte(trechos, duracao):
-    """Do mais enxuto ao mais largo. Se a medida de movimento reprovar um, tenta o seguinte —
-    o que nunca acontece é entregar vídeo parado como se fosse gameplay."""
+    """Do mais enxuto ao mais largo, e por fim acelerado. Se a medida de movimento reprovar um,
+    tenta o seguinte — o que nunca acontece é entregar vídeo parado como se fosse gameplay.
+    A variante acelerada existe porque a espera da plantação é longa: em 2x ou 3x o mesmo trecho
+    mostra o crescimento e as moedas subindo, em vez de quase nada mudando entre quadros."""
     if not trechos:
         return []
     candidatos = [trechos]
@@ -211,6 +281,10 @@ def variantes_do_corte(trechos, duracao):
     candidatos.append(largos)
     tudo = [(max(0.0, trechos[0][0]), min(duracao, trechos[-1][1]), 1.0)]
     candidatos.append(tudo)
+    for velocidade in (2.0, 3.0):
+        candidatos.append([(ini, fim, velocidade) for ini, fim, _v in trechos])
+        candidatos.append([(max(0.0, ini - 6), min(duracao, fim + 6), velocidade)
+                           for ini, fim, _v in trechos])
     return candidatos
 
 
@@ -410,8 +484,18 @@ def main(argv):
         if not base:
             print("✘ o relatório não tem plantio e colheita: não sei o que cortar")
             return 1
+        # dois pontos de partida: os eventos (o que muda na tela) e o corte por plantio/colheita.
+        # Depois disso, as variantes de cada um (mais largo, acelerado).
+        eventos = trechos_dos_eventos(relatorio.get("decisoes") or [], dur or 0)
+        misto = trechos_mistos(relatorio.get("decisoes") or [], dur or 0)
+        candidatos = []
+        if misto:
+            candidatos.append(misto)
+        if eventos:
+            candidatos += variantes_do_corte(eventos, dur or 0)
+        candidatos += variantes_do_corte(base, dur or 0)
         aprovado = False
-        for numero, candidato in enumerate(variantes_do_corte(base, dur or 0), start=1):
+        for numero, candidato in enumerate(candidatos, start=1):
             print("corte %d: %s" % (numero, candidato))
             ok, _info, _problemas = produzir(cru, rel, saida, trechos=candidato)
             if not ok:
