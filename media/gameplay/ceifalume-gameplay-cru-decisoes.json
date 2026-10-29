@@ -1,9 +1,40 @@
 {
  "decisoes": [
   {
-   "t": 1,
+   "t": 1.1,
    "tutorial": 0,
-   "dialogo": 0.163,
+   "dialogo": 0.292,
+   "titulo": 0,
+   "hud": 0,
+   "moedas": null,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.006,
+    0.044,
+    0,
+    0,
+    0
+   ],
+   "motivo": "tela de abertura (sem HUD)",
+   "acao": "toque em 640,484"
+  },
+  {
+   "t": 2.3,
+   "tutorial": 0,
+   "dialogo": 0.217,
    "titulo": 0,
    "hud": 0,
    "moedas": null,
@@ -23,18 +54,18 @@
    ],
    "barras": [
     0.193,
-    0.234,
+    0.232,
     0,
-    0.044,
+    0,
     0
    ],
    "motivo": "tela de abertura (sem HUD)",
    "acao": "toque em 640,484"
   },
   {
-   "t": 1.7,
+   "t": 4.3,
    "tutorial": 0,
-   "dialogo": 0.082,
+   "dialogo": 0.122,
    "titulo": 0,
    "hud": 0,
    "moedas": null,
@@ -63,9 +94,9 @@
    "acao": "toque em 640,484"
   },
   {
-   "t": 2.3,
+   "t": 5.8,
    "tutorial": 0,
-   "dialogo": 0.021,
+   "dialogo": 0.029,
    "titulo": 0,
    "hud": 0,
    "moedas": null,
@@ -91,103 +122,103 @@
     0
    ],
    "motivo": "tela de abertura (sem HUD)",
-   "acao": "toque em 640,484"
-  },
-  {
-   "t": 3,
-   "tutorial": 0,
-   "dialogo": 0.005,
-   "titulo": 0,
-   "hud": 0,
-   "moedas": null,
-   "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.194,
-    0.234,
-    0,
-    0.048,
-    0
-   ],
-   "motivo": "tela de abertura (sem HUD)",
-   "acao": "toque em 640,484"
-  },
-  {
-   "t": 3.7,
-   "tutorial": 0,
-   "dialogo": 0.043,
-   "titulo": 0,
-   "hud": 0,
-   "moedas": null,
-   "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.194,
-    0.234,
-    0,
-    0.048,
-    0
-   ],
-   "motivo": "tela de abertura (sem HUD)",
-   "acao": "toque em 640,484"
-  },
-  {
-   "t": 4.6,
-   "tutorial": 0,
-   "dialogo": 0.156,
-   "titulo": 0.058,
-   "hud": 0,
-   "moedas": null,
-   "verdes": [
-    0,
-    0.018,
-    0.001,
-    0.023,
-    0.006
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0.031,
-    0.043
-   ],
-   "barras": [
-    0.003,
-    0,
-    0,
-    0,
-    0.002
-   ],
-   "motivo": "tela de título (0.06)",
    "acao": "toque em 640,484"
   },
   {
    "t": 7.1,
+   "tutorial": 0,
+   "dialogo": 0.003,
+   "titulo": 0,
+   "hud": 0,
+   "moedas": null,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.194,
+    0.234,
+    0,
+    0.048,
+    0
+   ],
+   "motivo": "tela de abertura (sem HUD)",
+   "acao": "toque em 640,484"
+  },
+  {
+   "t": 8.6,
+   "tutorial": 0,
+   "dialogo": 0.027,
+   "titulo": 0,
+   "hud": 0,
+   "moedas": null,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.194,
+    0.234,
+    0,
+    0.048,
+    0
+   ],
+   "motivo": "tela de abertura (sem HUD)",
+   "acao": "toque em 640,484"
+  },
+  {
+   "t": 10.5,
+   "tutorial": 0,
+   "dialogo": 0.077,
+   "titulo": 0,
+   "hud": 0,
+   "moedas": null,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.194,
+    0.234,
+    0,
+    0.048,
+    0
+   ],
+   "motivo": "tela de abertura (sem HUD)",
+   "acao": "toque em 640,484"
+  },
+  {
+   "t": 13.6,
    "tutorial": 0.585,
    "dialogo": 0.878,
    "titulo": 0,
@@ -218,7 +249,7 @@
    "acao": "toque em 640,331 · tutorial saiu da tela"
   },
   {
-   "t": 8.8,
+   "t": 15.8,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
@@ -249,7 +280,7 @@
    "acao": "semente + célula(s) A,B,C,D"
   },
   {
-   "t": 17.9,
+   "t": 24.9,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
@@ -270,22 +301,22 @@
     0
    ],
    "barras": [
-    0.006,
+    0.008,
     0.008,
     0.006,
     0,
     0.077
    ],
    "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 102 bicos (+102 moedas)"
+   "acao": "rajada de 70 bicos (+70 moedas)"
   },
   {
-   "t": 19.5,
+   "t": 34.3,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 25,
+   "moedas": 8,
    "verdes": [
     0,
     0,
@@ -302,26 +333,26 @@
    ],
    "barras": [
     0.127,
-    0.116,
-    0.117,
-    0.12,
+    0.114,
+    0.115,
+    0.118,
     0.077
    ],
-   "motivo": "save: 4 célula(s) vazia(s) [A,B,C,D]",
-   "acao": "semente + célula(s) A,B,C,D"
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 72 bicos (+72 moedas)"
   },
   {
-   "t": 21.4,
+   "t": 43.6,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 107,
+   "moedas": 8,
    "verdes": [
-    0,
-    0,
-    0,
-    0,
+    0.101,
+    0.092,
+    0.094,
+    0.122,
     0.01
    ],
    "cascas": [
@@ -332,27 +363,58 @@
     0
    ],
    "barras": [
-    0.142,
-    0.131,
-    0.132,
-    0.134,
+    0.251,
+    0.227,
+    0.23,
+    0.239,
+    0.077
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 73 bicos (+73 moedas)"
+  },
+  {
+   "t": 46.4,
+   "tutorial": 0,
+   "dialogo": 0.08,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 151,
+   "verdes": [
+    0.1,
+    0.092,
+    0.094,
+    0.122,
+    0.01
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.37,
+    0.337,
+    0.341,
+    0.361,
     0.077
    ],
    "motivo": "comprar Cavar Poço (40 moedas · crescimento +10% (colhe antes, mais ciclos))",
    "acao": "comprar Cavar Poço (nível 1)"
   },
   {
-   "t": 23.1,
+   "t": 48.9,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 107,
+   "moedas": 151,
    "verdes": [
-    0,
-    0,
-    0,
-    0,
+    0.1,
+    0.092,
+    0.096,
+    0.122,
     0.01
    ],
    "cascas": [
@@ -363,55 +425,24 @@
     0
    ],
    "barras": [
-    0.163,
-    0.149,
-    0.15,
-    0.154,
+    0.399,
+    0.364,
+    0.368,
+    0.39,
     0.077
    ],
    "motivo": "comprar Acender Lanterna (60 moedas · +1 moeda por colheita)",
    "acao": "comprar Acender Lanterna (nível 1)"
   },
   {
-   "t": 31.8,
+   "t": 51.4,
    "tutorial": 0,
    "dialogo": 0.08,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 7,
+   "moedas": 52,
    "verdes": [
     0.1,
-    0.092,
-    0.095,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.178,
-    0.163,
-    0.165,
-    0.172,
-    0.077
-   ],
-   "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 114 bicos (+114 moedas)"
-  },
-  {
-   "t": 40.5,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 7,
-   "verdes": [
-    0.101,
     0.092,
     0.094,
     0.122,
@@ -425,462 +456,90 @@
     0
    ],
    "barras": [
-    0.314,
-    0.286,
-    0.291,
-    0.307,
-    0.077
-   ],
-   "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 114 bicos (+114 moedas)"
-  },
-  {
-   "t": 42.5,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 125,
-   "verdes": [
-    0.021,
-    0.002,
-    0.094,
-    0.123,
-    0.01
-   ],
-   "cascas": [
-    0.032,
-    0.037,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.444,
-    0.407,
-    0.403,
-    0.44,
-    0.077
-   ],
-   "motivo": "comprar Composteira (80 moedas · 8% de colheita dupla)",
-   "acao": "comprar Composteira (nível 2)"
-  },
-  {
-   "t": 44.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 125,
-   "verdes": [
-    0.038,
-    0.035,
-    0.036,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0.028,
-    0.026,
-    0.026,
-    0.037,
-    0
-   ],
-   "barras": [
-    0.444,
-    0.407,
-    0.403,
-    0.444,
+    0.426,
+    0.386,
+    0.391,
+    0.415,
     0.077
    ],
    "motivo": "comprar Comprar campo (50 moedas · +1 campo (só rende depois que a 5ª célula for mapeada))",
    "acao": "comprar Comprar campo (nível 0)"
   },
   {
-   "t": 46.1,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 11,
-   "verdes": [
-    0.038,
-    0.035,
-    0.036,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0.028,
-    0.026,
-    0.026,
-    0.037,
-    0
-   ],
-   "barras": [
-    0.444,
-    0.407,
-    0.403,
-    0.444,
-    0.077
-   ],
-   "motivo": "save: 4 célula(s) pronta(s) [A,B,C,D]",
-   "acao": "colher A,B,C,D + vender"
-  },
-  {
-   "t": 54.9,
+   "t": 60.7,
    "tutorial": 0,
    "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 11,
+   "moedas": 52,
    "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0,
-    0,
-    0,
-    0,
-    0.077
-   ],
-   "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 114 bicos (+114 moedas)"
-  },
-  {
-   "t": 56.5,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 95,
-   "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0,
-    0,
-    0,
-    0,
-    0.077
-   ],
-   "motivo": "save: 4 célula(s) vazia(s) [A,B,C,D]",
-   "acao": "semente + célula(s) A,B,C,D"
-  },
-  {
-   "t": 65.2,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 95,
-   "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.006,
-    0.008,
-    0.006,
-    0,
-    0.077
-   ],
-   "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 115 bicos (+115 moedas)"
-  },
-  {
-   "t": 66,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 189,
-   "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.14,
-    0.129,
-    0.127,
-    0.131,
-    0.077
-   ],
-   "motivo": "subir para Milho (venda 35 por ciclo)",
-   "acao": "aba da semente Milho"
-  },
-  {
-   "t": 74.5,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 189,
-   "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.142,
-    0.133,
-    0.132,
-    0.136,
-    0.077
-   ],
-   "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 115 bicos (+115 moedas)"
-  },
-  {
-   "t": 83.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 303,
-   "verdes": [
-    0.1,
-    0.092,
+    0.038,
+    0.002,
     0.094,
     0.122,
-    0.01
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
     0
-   ],
-   "barras": [
-    0.28,
-    0.255,
-    0.257,
-    0.271,
-    0.077
-   ],
-   "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 114 bicos (+114 moedas)"
-  },
-  {
-   "t": 92.3,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 303,
-   "verdes": [
-    0.101,
-    0.092,
-    0.094,
-    0.122,
-    0.01
-   ],
-   "cascas": [
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   "barras": [
-    0.415,
-    0.38,
-    0.385,
-    0.408,
-    0.077
-   ],
-   "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 111 bicos (+111 moedas)"
-  },
-  {
-   "t": 93.1,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 533,
-   "verdes": [
-    0.038,
-    0.035,
-    0.036,
-    0,
-    0.01
    ],
    "cascas": [
     0.028,
-    0.026,
-    0.026,
     0.037,
+    0,
+    0,
     0
    ],
    "barras": [
     0.444,
     0.407,
     0.403,
-    0.444,
-    0.077
-   ],
-   "motivo": "subir para Trigo (venda 110 por ciclo)",
-   "acao": "aba da semente Trigo"
-  },
-  {
-   "t": 101.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 533,
-   "verdes": [
-    0.038,
-    0.035,
-    0.036,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0.028,
-    0.026,
-    0.026,
-    0.037,
-    0
-   ],
-   "barras": [
-    0.444,
-    0.407,
-    0.403,
-    0.444,
-    0.077
+    0.437,
+    0.075
    ],
    "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 111 bicos (+111 moedas)"
+   "acao": "rajada de 71 bicos (+71 moedas)"
   },
   {
-   "t": 103.1,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 643,
-   "verdes": [
-    0.038,
-    0.035,
-    0.036,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0.028,
-    0.026,
-    0.026,
-    0.037,
-    0
-   ],
-   "barras": [
-    0.444,
-    0.407,
-    0.403,
-    0.444,
-    0.077
-   ],
-   "motivo": "save: 4 célula(s) pronta(s) [A,B,C,D]",
-   "acao": "colher A,B,C,D + vender"
-  },
-  {
-   "t": 112,
+   "t": 62.9,
    "tutorial": 0,
    "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 643,
+   "moedas": 5,
    "verdes": [
+    0.038,
+    0.035,
+    0.036,
     0,
-    0,
-    0,
-    0,
-    0.01
+    0
    ],
    "cascas": [
-    0,
-    0,
-    0,
+    0.028,
+    0.026,
+    0.026,
     0.037,
     0
    ],
    "barras": [
-    0,
-    0,
-    0,
     0.444,
-    0.077
+    0.407,
+    0.403,
+    0.444,
+    0.075
    ],
-   "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 117 bicos (+117 moedas)"
+   "motivo": "save: 3 célula(s) pronta(s) [A,B,C]",
+   "acao": "colher A,B,C + vender"
   },
   {
-   "t": 113.1,
+   "t": 64.4,
    "tutorial": 0,
-   "dialogo": 0.08,
+   "dialogo": 0.078,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 819,
+   "moedas": 5,
    "verdes": [
     0,
     0,
     0,
     0,
-    0.01
+    0
    ],
    "cascas": [
     0,
@@ -894,24 +553,117 @@
     0,
     0,
     0.444,
-    0.077
+    0.075
+   ],
+   "motivo": "save: 1 célula(s) vazia(s) [E]",
+   "acao": "semente + célula(s) E"
+  },
+  {
+   "t": 67.4,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 116,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0.037,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0.444,
+    0.076
+   ],
+   "motivo": "comprar Composteira (80 moedas · 8% de colheita dupla)",
+   "acao": "comprar Composteira (nível 1)"
+  },
+  {
+   "t": 69,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 116,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0.037,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0.444,
+    0.095
    ],
    "motivo": "save: 1 célula(s) pronta(s) [D]",
    "acao": "colher D + vender"
   },
   {
-   "t": 114.4,
+   "t": 71.4,
+   "tutorial": 0,
+   "dialogo": 0.078,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 36,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0,
+    0.1
+   ],
+   "motivo": "save: 4 célula(s) vazia(s) [A,B,C,D]",
+   "acao": "semente + célula(s) A,B,C,D"
+  },
+  {
+   "t": 80.5,
    "tutorial": 0,
    "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 819,
+   "moedas": 36,
    "verdes": [
     0,
     0,
     0,
     0,
-    0.01
+    0
    ],
    "cascas": [
     0,
@@ -921,147 +673,333 @@
     0
    ],
    "barras": [
+    0.008,
+    0.009,
+    0.006,
     0,
-    0,
-    0,
-    0,
-    0.077
-   ],
-   "motivo": "save: 3 célula(s) vazia(s) [A,B,C]",
-   "acao": "semente + célula(s) A,B,C"
-  },
-  {
-   "t": 115.5,
-   "tutorial": 0,
-   "dialogo": 0.079,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 828,
-   "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0.002,
-    0.002,
-    0.001,
-    0,
-    0
-   ],
-   "barras": [
-    0,
-    0,
-    0,
-    0,
-    0.077
-   ],
-   "motivo": "save: 1 célula(s) vazia(s) [D]",
-   "acao": "semente + célula(s) D"
-  },
-  {
-   "t": 124.4,
-   "tutorial": 0,
-   "dialogo": 0.08,
-   "titulo": 0,
-   "hud": 0.084,
-   "moedas": 828,
-   "verdes": [
-    0,
-    0,
-    0,
-    0,
-    0.01
-   ],
-   "cascas": [
-    0.001,
-    0.001,
-    0.002,
-    0,
-    0
-   ],
-   "barras": [
-    0,
-    0.002,
-    0.002,
-    0,
-    0.077
+    0.111
    ],
    "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 116 bicos (+116 moedas)"
+   "acao": "rajada de 72 bicos (+72 moedas)"
   },
   {
-   "t": 125.1,
+   "t": 90,
    "tutorial": 0,
-   "dialogo": 0.08,
+   "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 766,
+   "moedas": 35,
    "verdes": [
     0,
     0,
     0,
     0,
-    0.01
+    0.079
    ],
    "cascas": [
-    0.001,
-    0.001,
-    0.001,
+    0,
+    0,
+    0,
     0,
     0
    ],
    "barras": [
-    0.011,
-    0.013,
-    0.013,
-    0.131,
-    0.077
+    0.149,
+    0.137,
+    0.136,
+    0.14,
+    0.202
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 70 bicos (+70 moedas)"
+  },
+  {
+   "t": 99.3,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 35,
+   "verdes": [
+    0.1,
+    0.092,
+    0.094,
+    0.122,
+    0.078
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0.298,
+    0.274,
+    0.276,
+    0.289,
+    0.297
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 70 bicos (+70 moedas)"
+  },
+  {
+   "t": 100.7,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 178,
+   "verdes": [
+    0.102,
+    0.093,
+    0.094,
+    0.122,
+    0.044
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0.022
+   ],
+   "barras": [
+    0.442,
+    0.403,
+    0.403,
+    0.433,
+    0.357
+   ],
+   "motivo": "subir para Milho (venda 35 por ciclo)",
+   "acao": "aba da semente Milho"
+  },
+  {
+   "t": 109.4,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 178,
+   "verdes": [
+    0.038,
+    0.006,
+    0.094,
+    0.123,
+    0.044
+   ],
+   "cascas": [
+    0.028,
+    0.035,
+    0,
+    0,
+    0.022
+   ],
+   "barras": [
+    0.444,
+    0.407,
+    0.403,
+    0.437,
+    0.357
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 71 bicos (+71 moedas)"
+  },
+  {
+   "t": 111.9,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0.001,
+   "hud": 0.084,
+   "moedas": 247,
+   "verdes": [
+    0.038,
+    0.035,
+    0.036,
+    0,
+    0.044
+   ],
+   "cascas": [
+    0.028,
+    0.026,
+    0.026,
+    0.037,
+    0.022
+   ],
+   "barras": [
+    0.444,
+    0.407,
+    0.403,
+    0.444,
+    0.357
+   ],
+   "motivo": "save: 4 célula(s) pronta(s) [A,B,C,E]",
+   "acao": "colher A,B,C,E + vender"
+  },
+  {
+   "t": 121.1,
+   "tutorial": 0,
+   "dialogo": 0.078,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 247,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0.037,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0.444,
+    0.075
+   ],
+   "motivo": "save: fazenda crescendo, moeda no bico",
+   "acao": "rajada de 72 bicos (+72 moedas)"
+  },
+  {
+   "t": 122.4,
+   "tutorial": 0,
+   "dialogo": 0.079,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 398,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0.037,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0.444,
+    0.075
    ],
    "motivo": "subir para Trigo (venda 110 por ciclo)",
    "acao": "aba da semente Trigo"
   },
   {
-   "t": 133.5,
+   "t": 123.5,
    "tutorial": 0,
-   "dialogo": 0.08,
+   "dialogo": 0.079,
    "titulo": 0,
    "hud": 0.084,
-   "moedas": 766,
+   "moedas": 398,
    "verdes": [
     0,
     0,
     0,
     0,
-    0.01
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0.037,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0.444,
+    0.075
+   ],
+   "motivo": "save: 1 célula(s) pronta(s) [D]",
+   "acao": "colher D + vender"
+  },
+  {
+   "t": 125.7,
+   "tutorial": 0,
+   "dialogo": 0.078,
+   "titulo": 0,
+   "hud": 0.084,
+   "moedas": 467,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "cascas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "barras": [
+    0,
+    0,
+    0,
+    0,
+    0.075
+   ],
+   "motivo": "save: 5 célula(s) vazia(s) [A,B,C,D,E]",
+   "acao": "semente + célula(s) A,B,C,D,E"
+  },
+  {
+   "t": 135.1,
+   "tutorial": 0,
+   "dialogo": 0.078,
+   "titulo": 0.002,
+   "hud": 0.084,
+   "moedas": 467,
+   "verdes": [
+    0,
+    0,
+    0,
+    0,
+    0
    ],
    "cascas": [
     0.001,
     0.001,
     0.001,
-    0,
-    0
+    0.001,
+    0.001
    ],
    "barras": [
-    0.011,
-    0.013,
-    0.013,
-    0.134,
-    0.077
+    0,
+    0.002,
+    0,
+    0,
+    0.075
    ],
    "motivo": "save: fazenda crescendo, moeda no bico",
-   "acao": "rajada de 114 bicos (+114 moedas)"
+   "acao": "rajada de 69 bicos (+69 moedas)"
   }
  ],
- "plantadas": 16,
+ "plantadas": 14,
  "colhidas": 9,
- "telas": 7,
- "bicos": 1357,
- "bicos_por_minuto": 626.3,
- "verde_final": "A:0.000 B:0.000 C:0.000 D:0.122 E:0.010",
- "tutorial_segundos": 1.7,
+ "telas": 8,
+ "bicos": 710,
+ "bicos_por_minuto": 327.7,
+ "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000",
+ "tutorial_segundos": 2.2,
  "tutorial_fechou": true,
  "tutorial_toques": 1,
  "economia": {
@@ -1111,88 +1049,93 @@
    "tutorial_visto": true
   },
   "fim": {
-   "moedas": 766,
-   "campos": 4,
+   "moedas": 467,
+   "campos": 5,
    "camposLista": [
     {
-     "planta": "trigo",
+     "planta": "",
      "pronto": false,
-     "tempo": 1.4701096666666678
+     "tempo": 0
     },
     {
-     "planta": "trigo",
+     "planta": "",
      "pronto": false,
-     "tempo": 1.3051096666666677
+     "tempo": 0
     },
     {
-     "planta": "trigo",
+     "planta": "",
      "pronto": false,
-     "tempo": 1.1450981666666662
+     "tempo": 0
     },
     {
-     "planta": "nabo",
+     "planta": "",
      "pronto": false,
-     "tempo": 0.40677633333333496
+     "tempo": 0
+    },
+    {
+     "planta": "",
+     "pronto": false,
+     "tempo": 0
     }
    ],
    "dia": 1,
-   "semente": 0,
+   "semente": 2,
    "niveis": {
     "celeiro": 0,
-    "poco": 1,
+    "poco": 2,
     "lanterna": 1,
     "ajudante": 0,
-    "composteira": 2,
+    "composteira": 1,
     "carroca": 0
    },
    "celeiro": {
     "Abóbora": 0,
     "Flor de Lume": 0,
     "Milho": 0,
-    "Nabo": 0,
+    "Nabo": 2,
     "Tomate": 0,
     "Trigo": 0
    },
    "tutorial_visto": true
   },
   "resumo": {
-   "gasto": 368,
-   "gasto_sementes": 300,
-   "ganho": 1409,
-   "ganho_por_minuto": 650.31
+   "gasto": 200,
+   "gasto_sementes": 345,
+   "ganho": 987,
+   "ganho_por_minuto": 455.54
   },
   "melhorias": [
    {
     "id": "poco",
     "nome": "Cavar Poço",
-    "custo": 40,
-    "t": 21.4
+    "custo": -29,
+    "t": 46.4
    },
    {
     "id": "lanterna",
     "nome": "Acender Lanterna",
-    "custo": 100,
-    "t": 23.1
-   },
-   {
-    "id": "composteira",
-    "nome": "Composteira",
-    "custo": 114,
-    "t": 42.5
+    "custo": 99,
+    "t": 48.9
    },
    {
     "id": "campo",
     "nome": "Comprar campo",
-    "custo": 114,
-    "t": 44.4
+    "custo": 50,
+    "t": 51.4
+   },
+   {
+    "id": "composteira",
+    "nome": "Composteira",
+    "custo": 80,
+    "t": 67.4
    }
   ],
-  "gasto_sementes": 300,
+  "gasto_sementes": 345,
   "sementes": [
    {
     "nome": "Trigo",
     "ok": true,
-    "t": 114.4
+    "t": 125.7
    }
   ]
  },
