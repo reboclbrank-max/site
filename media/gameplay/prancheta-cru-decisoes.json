@@ -3,86 +3,71 @@
  "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920",
  "decisoes": [
   {
-   "t": 14.7,
+   "t": 16.6,
    "motivo": "abrir o menu do jogo",
    "acao": "toque em 500,87"
   },
   {
-   "t": 19.5,
+   "t": 22.5,
    "motivo": "aceitar o convite do clube",
    "acao": "toque em 500,179"
   },
   {
-   "t": 23.5,
+   "t": 27.6,
    "motivo": "aplicar a sugestão do staff",
    "acao": "toque em 500,232"
   },
   {
-   "t": 27.2,
+   "t": 32.4,
    "motivo": "aplicar o microciclo da semana",
    "acao": "toque em 500,612"
   },
   {
-   "t": 31.5,
+   "t": 37.6,
    "motivo": "abrir a prancheta",
    "acao": "toque em 500,259"
   },
   {
-   "t": 37.4,
+   "t": 45.1,
    "motivo": "jogar com o plano recomendado",
    "acao": "toque em 500,289"
   },
   {
-   "t": 40.8,
+   "t": 49.5,
    "motivo": "dar instrução no intervalo",
    "acao": "toque em 110,608"
   },
   {
-   "t": 44.3,
+   "t": 54,
    "motivo": "seguir sem mexer",
    "acao": "toque em 636,573"
   },
   {
-   "t": 47.9,
+   "t": 58.6,
    "motivo": "acelerar a partida",
    "acao": "toque em 700,685"
   },
   {
-   "t": 51.9,
+   "t": 63.7,
    "motivo": "partida em andamento",
    "acao": "toque em 700,685"
   },
   {
-   "t": 55.8,
+   "t": 68.9,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 60,
+   "t": 74.1,
    "motivo": "partida em andamento",
    "acao": "toque em 110,608"
   },
   {
-   "t": 63.9,
-   "motivo": "partida em andamento",
-   "acao": "toque em 636,573"
-  },
-  {
-   "t": 67.9,
-   "motivo": "partida em andamento",
-   "acao": "toque em 700,685"
-  },
-  {
-   "t": 71.9,
-   "motivo": "partida em andamento",
-   "acao": "toque em 640,360"
-  },
-  {
-   "t": 76.5,
+   "t": 79.6,
    "motivo": "pular para o fim da partida",
    "acao": "toque em 900,705"
   }
  ],
- "passos_confirmados": 12,
- "toques_partida": 6
+ "passos_confirmados": 9,
+ "toques_partida": 3
 }
