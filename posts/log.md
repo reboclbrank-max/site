@@ -2186,3 +2186,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=25(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática na prancheta, simulação viva (Godot, grátis nav/APK). CEIFALUME 0.1: fazenda noturna idle que Ba
+
+## 29/10/2026 13:49 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ post novo validado — motor=g4f lightning |
+| destino editorial | ✅ rota oficial prancheta |
+| tema do ciclo | ✅ apresente o PRANCHETA pra quem curte manager de futebol |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 17911941012306 (arte reserva) |
+| threads | ✅ publicado id 181696732394 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ➖ cadencia diaria de interacao ja cumprida (2026-10-29) |
+| cacador de oportunidades | ➖ cadencia diaria de interacao ja cumprida (2026-10-29) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=26(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> E aí, comunidade! 🌟 Sou o REBOCL BRANK, desenvolvedor solo brasileiro. O PRANCHETA é um simulador de gestão de futebol 100% fictício: você desenha a b
