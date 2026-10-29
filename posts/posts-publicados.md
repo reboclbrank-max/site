@@ -268,3 +268,6 @@ Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grá
 
 ## 28/10/2026 20:20 UTC
 🌙 CEIFALUME é idle de fazenda noturna, grátis e sem instalar. ⏎ Plante antes de dormir; a lavoura cresce até 8 h com o jogo fechado.
+
+## 29/10/2026 00:53 UTC
+Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática na prancheta, simulação viva (Godot, grátis nav/APK). CEIFALUME 0.1: fazenda noturna idle que Bastidores e artes novas também no Instagram — todos os canais no link.
