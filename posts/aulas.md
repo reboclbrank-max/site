@@ -171,3 +171,5 @@
   Reavalie a legenda: seja mais emocional ou direto. Adicione chamadas visuais – foto ou vídeo de alta qualidade, cores vibrantes. Use hashtags relevantes e horários de pico. Publique conteúdo interativo (enquetes, perguntas). Analise dados: quem viu, quem curtiu. Ajuste a mensagem para o público que mais se conecta. Teste e iterе.
 - **29/10 — O que fazer quando um post nao engaja?**
   Reavalie a legenda: seja mais emocional ou direto. Adicione chamadas visuais – foto ou vídeo de alta qualidade, cores vibrantes. Use hashtags relevantes e horários de pico. Publique conteúdo interativo (enquetes, perguntas). Analise dados: quem viu, quem curtiu. Ajuste a mensagem para o público que mais se conecta. Teste e iterе.
+- **29/10 — O que fazer quando um post nao engaja?**
+  Reavalie a legenda: seja mais emocional ou direto. Adicione chamadas visuais – foto ou vídeo de alta qualidade, cores vibrantes. Use hashtags relevantes e horários de pico. Publique conteúdo interativo (enquetes, perguntas). Analise dados: quem viu, quem curtiu. Ajuste a mensagem para o público que mais se conecta. Teste e iterе.
