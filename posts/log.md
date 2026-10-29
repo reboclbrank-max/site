@@ -2160,3 +2160,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=24(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > 🌙 CEIFALUME é idle de fazenda noturna, grátis e sem instalar. · Plante antes de dormir; a lavoura cresce até 8 h com o jogo fechado.
+
+## 29/10/2026 00:53 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ⚪ fila de reserva — motor=g4f auto · convite da ponte anexado (motor não citou o Instagram) |
+| destino editorial | ✅ rota oficial canais |
+| tema do ciclo | ✅ convide a seguir a conta no Instagram para ver os bastidores dos jogos |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18339368935272 |
+| threads | ✅ publicado id 179152164545 |
+| nostr | ✅ nota em 1 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ✅ 1 resposta(s) enviada(s) de 2 pendente(s) |
+| cacador de oportunidades | ✅ 2 de 2 interacoes do dia (q=#screenshotsaturday) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
+| censo mundial | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=25(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática na prancheta, simulação viva (Godot, grátis nav/APK). CEIFALUME 0.1: fazenda noturna idle que Ba
