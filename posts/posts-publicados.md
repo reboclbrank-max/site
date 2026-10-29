@@ -271,3 +271,6 @@ Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grá
 
 ## 29/10/2026 00:53 UTC
 Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática na prancheta, simulação viva (Godot, grátis nav/APK). CEIFALUME 0.1: fazenda noturna idle que Bastidores e artes novas também no Instagram — todos os canais no link.
+
+## 29/10/2026 13:49 UTC
+E aí, comunidade! 🌟 Sou o REBOCL BRANK, desenvolvedor solo brasileiro. O PRANCHETA é um simulador de gestão de futebol 100% fictício: você desenha a bola parada na prancheta e vê a partida simular ao vivo ou instantâneo,
