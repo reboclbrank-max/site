@@ -107,6 +107,18 @@ def pagina():
                                     encoding="utf-8")).get("publicados") or []
     except (OSError, ValueError):
         pass
+    gosto = {}
+    try:
+        gosto = json.load(open(os.path.join(RAIZ, "posts", "perfil-de-gosto.json"),
+                               encoding="utf-8"))
+    except (OSError, ValueError):
+        pass
+    memoria_gosto = {}
+    try:
+        memoria_gosto = json.load(open(os.path.join(RAIZ, "posts", "memoria-de-gosto.json"),
+                                       encoding="utf-8"))
+    except (OSError, ValueError):
+        pass
     percebido = {}
     try:
         percebido = json.load(open(os.path.join(RAIZ, "posts", "percebido.json"),
@@ -238,6 +250,33 @@ def pagina():
             + _lista2(percebido.get("robo") or [], "O robô já assumiu")
             + _lista2(percebido.get("dono") or [], "Só o dono pode destravar"))
 
+    gosto_html = ""
+    if gosto.get("pesos"):
+        medidos = gosto.get("medidos") or []
+        linhas_gosto = "".join(
+            "<li><b>%s</b> <span class='mono'>peso %+d · %s</span></li>"
+            % (html.escape(nome.replace("_", " ")), int(peso),
+               "medido no feed" if nome in medidos else "escolha declarada")
+            for nome, peso in sorted(gosto["pesos"].items(), key=lambda kv: -kv[1]))
+        escolhas = (memoria_gosto.get("escolhas") or [])[-1:]
+        ultima = ""
+        if escolhas:
+            e = escolhas[-1]
+            res = (e.get("resultado") or {}).get("engajamento")
+            ultima = ("<p class='peq'>Última escolha (%s): <i>%s</i><br>"
+                      "<span class='mono'>%s · resultado medido: %s</span></p>"
+                      % (html.escape(str(e.get("quando", ""))), html.escape(str(e.get("texto", ""))[:160]),
+                         html.escape(str(e.get("justificativa", ""))),
+                         ("%s de engajamento" % res) if res is not None else "ainda não medido"))
+        gosto_html = (
+            "<h2>Como a casa escolhe (o gosto, com origem)</h2>"
+            "<p class='peq'>Cada traço abaixo tem peso e origem. <b>Medido</b> significa: existe "
+            "engajamento por post no feed e a diferença passou do desvio. <b>Declarado</b> é "
+            "escolha da casa, assumida como escolha — não como fato.</p>"
+            "<ul class='log'>%s</ul>%s"
+            "<p class='peq'>%d traço(s) medido(s) · amostra do feed: %d post(s).</p>"
+            % (linhas_gosto, ultima, len(medidos), gosto.get("amostra", 0)))
+
     agora = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
     return """<!DOCTYPE html>
 <html lang="pt-BR"><head><meta charset="UTF-8">
@@ -277,6 +316,7 @@ Página gerada pelo próprio repositório a cada rodada.</p>
 %(decisoes)s
 %(auditoria)s
 %(precisa)s
+%(gosto)s
 %(pend)s
 <footer>Gerado em %(agora)s pelo workflow postagem-diaria ·
 <a href="%(base)s/">site</a> · <a href="%(base)s/canais.html">canais oficiais</a> ·
@@ -284,7 +324,7 @@ Página gerada pelo próprio repositório a cada rodada.</p>
 </main></body></html>
 """ % {"base": BASE, "cartoes": cartoes_html, "canais": "".join(linhas_canal),
        "ultimo": ultimo_html, "decisoes": decisoes_html, "pend": pend_html,
-       "auditoria": audit_html, "precisa": precisa_html,
+       "auditoria": audit_html, "precisa": precisa_html, "gosto": gosto_html,
        "agora": agora}
 
 

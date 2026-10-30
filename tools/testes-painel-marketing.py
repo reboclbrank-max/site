@@ -100,6 +100,18 @@ ok("a página separa o que o robô assumiu do que só o dono destrava",
    "O robô já assumiu" in t and "Só o dono pode destravar" in t)
 ok("cada necessidade mostra como verificar", "verifica:" in t)
 
+ok("a página mostra o gosto com origem (medido × declarado)", "Como a casa escolhe" in t and "escolha declarada" in t)
+_mem_gosto = {}
+try:
+    import json as _json_pm, os as _os_pm
+    _mem_gosto = _json_pm.load(open(_os_pm.path.join(RAIZ, "posts", "memoria-de-gosto.json"),
+                                    encoding="utf-8"))
+except Exception:
+    _mem_gosto = {}
+# Se existe escolha registrada, a página TEM de mostrar; se não existe, não pode inventar.
+ok("a página mostra a última escolha quando existe — e não inventa quando não existe",
+   ("Última escolha" in t) == bool(_mem_gosto.get("escolhas")))
+
 ok("a página cita as pendências do dono quando existem",
    "depende do dono" in t or not os.path.exists(os.path.join(RAIZ, "posts", "pendencias-do-dono.json")))
 ok("não promete publicação sem prova (sem 'todos os canais ativos')", "todos os canais" not in t.lower())

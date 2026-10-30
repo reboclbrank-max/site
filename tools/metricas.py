@@ -725,6 +725,30 @@ def bloco_markdown(dados):
     return "\n".join(linhas) + "\n"
 
 
+def gravar_feed(dados, caminho=None):
+    """Grava o feed medido (post a post, com engajamento) para o juízo aprender o gosto.
+
+    Sem isso o "gosto" da casa seria declarado para sempre: aqui é o único lugar onde existe
+    engajamento POR POST — e é dele que `tools/juizo.py` tira (ou recusa) peso medido.
+    """
+    posts = []
+    for item in (dados.get("posts") or [])[:300]:
+        if not isinstance(item, dict):
+            continue
+        texto = (item.get("texto") or "").strip()
+        if not texto:
+            continue
+        posts.append({"texto": texto[:120], "engajamento": item.get("engajamento") or 0,
+                      "quando": item.get("quando"), "classe": item.get("classe")})
+    alvo = caminho or os.path.join(os.path.dirname(SAIDA) or ".", "feed-medido.json")
+    with open(alvo + ".tmp", "w", encoding="utf-8") as f:
+        json.dump({"medido_em": dados.get("medido_em"), "fonte": "API pública do Bluesky",
+                   "posts": posts}, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    os.replace(alvo + ".tmp", alvo)
+    return alvo
+
+
 def gravar(dados):
     """Reescreve a seção de HOJE sem duplicar (o workflow roda 8x/dia) e preserva o histórico."""
     import re
@@ -747,6 +771,10 @@ def gravar(dados):
     caminho = os.path.join(os.path.dirname(SAIDA) or ".", os.path.basename(SAIDA))
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(novo)
+    try:
+        gravar_feed(dados)
+    except Exception as erro:      # feed não gravado não pode derrubar a medição
+        print("aviso: feed medido não foi gravado (%s)" % str(erro)[:100])
     return caminho
 
 

@@ -321,6 +321,54 @@ def texto_gerado_seguro(texto, ja_publicados=""):
         return False
     return not ja_foi_publicado(texto, ja_publicados)
 
+def _juizo():
+    """Carrega tools/juizo.py. Se faltar ou falhar, devolve None — a casa não para por isso."""
+    try:
+        import importlib.util
+        caminho = os.path.join(os.path.dirname(os.path.abspath(__file__)), "juizo.py")
+        spec = importlib.util.spec_from_file_location("juizo", caminho)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    except Exception:
+        return None
+
+
+def escolher_melhor_texto(candidatos, ja_publicados, ultimo_texto=""):
+    """(texto, justificativa, detalhe). Escolhe entre candidatos com critério declarado.
+
+    Sem o módulo de juízo (ou se ele falhar), volta ao comportamento antigo: primeiro válido.
+    Escolher é diferente de aceitar a ordem de chegada — e o motivo fica no log.
+    """
+    def validador(t):
+        return texto_gerado_seguro(t, ja_publicados)
+
+    limpos = [" ".join(str(c or "").split())[:LIMITE_TEXTO_EDITORIAL] for c in (candidatos or [])]
+    j = _juizo()
+    if j is None:
+        for texto in limpos:
+            if texto and validador(texto):
+                return texto, "primeiro válido (juízo indisponível)", {
+                    "candidatos": len(limpos), "validos": 1}
+        return None, "nenhum candidato válido", {"candidatos": len(limpos), "validos": 0}
+    try:
+        pesos = (j.perfil() or {}).get("pesos")
+    except Exception:
+        pesos = None
+    return j.escolher(limpos, pesos=pesos, validador=validador, ultimo_texto=ultimo_texto)
+
+
+def revisar_texto(texto, limite=LIMITE_TEXTO_EDITORIAL):
+    """(texto, mudanças). Sem juízo, devolve o texto intacto — revisão não é obrigatória."""
+    j = _juizo()
+    if j is None:
+        return texto, []
+    try:
+        return j.revisar(texto, limite)
+    except Exception:
+        return texto, []
+
+
 def cria_container_com_reserva(criar, primaria, reservas):
     """Tenta a arte principal uma vez e, se a plataforma a recusar, um espelho próprio.
 
@@ -744,15 +792,50 @@ def main():
         pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
                   "ate 220 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + tema_atual + "." + contexto)
         gerado, motivo = cerebro_com_motivo(pedido[:550])
+        # ESCOLHA (30/10/2026): o robô não aceita mais o primeiro texto que aparece. Ele pede
+        # uma segunda versão com abertura diferente, pontua as duas e escolhe com justificativa.
+        candidatos = [gerado]
+        try:
+            quantos = int(os.environ.get("JUIZO_CANDIDATOS", "2"))
+        except Exception:
+            quantos = 2
+        if quantos > 1 and gerado:
+            try:
+                outro, motivo2 = cerebro_com_motivo(
+                    (pedido + " NAO comece com o mesmo recurso da versao anterior; "
+                              "comece pelo fato concreto do jogo.")[:560], tentativas=1)
+                if outro and outro.strip() != (gerado or "").strip():
+                    candidatos.append(outro)
+                    motivo = motivo + " + " + (motivo2 or "motor respondeu")
+            except Exception:
+                pass
         ciclo_do_dia = datetime.datetime.utcnow().hour // 3
         try:
             with open("posts/posts-publicados.md") as fpp:
                 ja_publicados = fpp.read().lower()
         except Exception:
             ja_publicados = ""
-        candidato_gerado = " ".join((gerado or "").strip().split())[:LIMITE_TEXTO_EDITORIAL]
-        motivo_geracao = motivo or "motor respondeu"
-        texto = candidato_gerado if texto_gerado_seguro(candidato_gerado, ja_publicados) else ""
+        ultimo_publicado = ""
+        try:
+            ultimo_publicado = [l.strip() for l in ja_publicados.splitlines() if l.strip()][-1]
+        except Exception:
+            ultimo_publicado = ""
+        escolhido, justificativa, detalhe_escolha = escolher_melhor_texto(
+            candidatos, ja_publicados, ultimo_texto=ultimo_publicado)
+        candidato_gerado = " ".join((escolhido or "").strip().split())[:LIMITE_TEXTO_EDITORIAL]
+        motivo_geracao = (motivo or "motor respondeu") + " · juízo: " + justificativa
+        texto = candidato_gerado if candidato_gerado and texto_gerado_seguro(
+            candidato_gerado, ja_publicados) else ""
+        if candidato_gerado and texto:
+            texto, mudancas = revisar_texto(texto)
+            if mudancas:
+                motivo_geracao += " · revisão: " + "; ".join(mudancas)
+            try:
+                _j = _juizo()
+                if _j is not None:
+                    _j.registrar_escolha(texto, justificativa, detalhe_escolha, revisao=mudancas)
+            except Exception:
+                pass
         if candidato_gerado and not texto:
             motivo_geracao = ("reprovado pelo crivo editorial "
                               "(tamanho, link, hashtag, fato vencido ou repetição)")

@@ -1,0 +1,182 @@
+{
+ "quando": "2026-10-30T23:19:42Z",
+ "_lei": "traço só pesa quando a amostra passa e a diferença supera o desvio; o resto fica marcado como escolha declarada, não como gosto aprendido.",
+ "pesos": {
+  "tem_pergunta": 1,
+  "pergunta_no_fim": 1,
+  "emoji_no_inicio": 0,
+  "cita_jogo": 2,
+  "chamada": 1,
+  "hashtag_1_ou_2": 1,
+  "sem_hashtag": 0,
+  "tamanho_ideal": 1,
+  "tem_numero": 1,
+  "tem_link": -1
+ },
+ "tracos": {
+  "tem_pergunta": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 1,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "pergunta_no_fim": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 1,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "emoji_no_inicio": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 0,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "cita_jogo": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 2,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "chamada": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 1,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "hashtag_1_ou_2": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 1,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "sem_hashtag": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 0,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "tamanho_ideal": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 1,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "tem_numero": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": 1,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  },
+  "tem_link": {
+   "com": {
+    "n": 0,
+    "media": null
+   },
+   "sem": {
+    "n": 0,
+    "media": null
+   },
+   "medido": false,
+   "direcao": null,
+   "base": "declarado",
+   "peso": -1,
+   "porque": "amostra insuficiente: 0 com / 0 sem (mínimo 15 de cada)"
+  }
+ },
+ "medidos": [],
+ "declarados": [
+  "tem_pergunta",
+  "pergunta_no_fim",
+  "emoji_no_inicio",
+  "cita_jogo",
+  "chamada",
+  "hashtag_1_ou_2",
+  "sem_hashtag",
+  "tamanho_ideal",
+  "tem_numero",
+  "tem_link"
+ ],
+ "amostra": 0
+}
