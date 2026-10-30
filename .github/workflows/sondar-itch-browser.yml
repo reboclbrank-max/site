@@ -1,0 +1,74 @@
+name: sondar-itch-browser
+
+# O 403 do painel do itch vem com o desafio JS da Cloudflare ("Just a moment..."). Medido em
+# 30/10 nos três runners (Ubuntu, macOS e Windows): 403 com e sem cookie. Mas desafio JS não é
+# bloqueio de IP — é página que se resolve sozinha quando existe um navegador de verdade.
+# Este workflow responde UMA pergunta: um Chromium de runner atravessa esse desafio e chega em
+# /dashboard com a sessão do dono?
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Instala o navegador de verdade
+        run: |
+          npm install --no-audit --no-fund playwright-core
+          npx playwright-core install --with-deps chromium-headless-shell
+
+      - name: Tenta entrar no painel com a sessão
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        run: |
+          node - <<'JS'
+          const { chromium } = require('playwright-core');
+          const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36';
+          const cru = (process.env.ITCH_COOKIE || '').trim();
+          console.log('cookie:', cru ? `presente (${cru.length} caracteres)` : 'AUSENTE');
+          const biscoitos = cru.split(';').map((p) => p.trim()).filter(Boolean).map((p) => {
+            const i = p.indexOf('=');
+            return { name: p.slice(0, i), value: p.slice(i + 1), domain: '.itch.io', path: '/', httpOnly: true, secure: true };
+          });
+          (async () => {
+            const navegador = await chromium.launch({ headless: true });
+            const contexto = await navegador.newContext({ userAgent: UA, locale: 'pt-BR' });
+            if (biscoitos.length) await contexto.addCookies(biscoitos);
+            const pagina = await contexto.newPage();
+            for (const url of ['https://itch.io/dashboard', 'https://itch.io/game/edit/5017404']) {
+              let status = 0;
+              try {
+                const r = await pagina.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+                status = r ? r.status() : 0;
+              } catch (e) { console.log('erro ao abrir', url, String(e).slice(0, 120)); }
+              for (let i = 0; i < 6; i++) {
+                await pagina.waitForTimeout(5000);
+                const titulo = await pagina.title();
+                const html = await pagina.content();
+                const desafio = /just a moment|checking your browser|attention required/i.test(html);
+                console.log(`${url} -> status ${status} · url ${pagina.url()} · titulo "${titulo}" · desafio ${desafio ? 'SIM' : 'nao'} · ${html.length} bytes`);
+                if (!desafio) break;
+              }
+              const html = await pagina.content();
+              console.log('  tem painel?', /dashboard|meus jogos|my games/i.test(html),
+                          '· tem login?', /log in|sign in/i.test(html),
+                          '· tem ceifalume?', /ceifalume/i.test(html));
+            }
+            await navegador.close();
+          })();
+          JS
+
+      - name: Resumo
+        if: always()
+        run: echo "sondagem com navegador concluída"
