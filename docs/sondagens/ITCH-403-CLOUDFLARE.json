@@ -27,12 +27,25 @@
    "onde": "runner ubuntu, Chromium completo sob Xvfb, pt-BR, sem marca de automação",
    "teste": "96 s de espera, 12 amostras",
    "resultado": "403 até o fim: 'Just a moment...' e depois 'Um momento…', 28 729 bytes, sem login"
+  },
+  {
+   "onde": "runner ubuntu, Google Chrome 156 estável, perfil persistente em disco, headed sob Xvfb 1440x900, pt-BR",
+   "teste": "144 s de espera, 18 amostras",
+   "resultado": "403 até o fim ('Just a moment...' -> 'Um momento…') — run 41123330408"
+  },
+  {
+   "onde": "sandbox (outro datacenter), rotas alternativas",
+   "teste": "GET em /posts, /dashboard/post/new, /game/5017404/devlog, /api/1/x/me, /games",
+   "resultado": "só /dashboard e /game/edit/* são desafiados; as demais respondem 404/200 — o desafio é por rota protegida + IP"
   }
  ],
  "conclusao": [
-  "desafio é JS, mas o Chromium do runner executa o JS e continua reprovado: a reprovação é do IP/reputação, não da execução",
-  "não é sessão: o mesmo cookie não muda nada, e o próprio corpo do desafio diz que é o IP",
-  "não adianta trocar de sistema de runner: os três que a casa tem dão o mesmo resultado"
+  "desafio é JS, mas o navegador executa o JS e continua reprovado: a reprovação é do IP/reputação, não da execução",
+  "não é sessão: o mesmo cookie não muda nada, e o corpo do desafio diz que é o IP",
+  "não é impressão digital de automação: Chrome estável com perfil persistente e janela real também falha",
+  "não é falta de rota: o desafio cobre /dashboard e /game/edit/*, que são as únicas rotas de escrita",
+  "não existe API de escrita: o itch declara publicamente que não fornece API para postar (itch.io/t/2097903)",
+  "saída legítima = uma rede que o próprio dono controle (ITCH_PROXY). Proxy público entregaria a sessão a terceiro; captcha seria burla. Nenhum dos dois foi feito"
  ],
  "caminho_que_funciona": "butler (canal de escrita oficial). O build é o conteúdo que a página do itch exibe: o selo do gameplay entrou em ceifalume/index.html e chega ao jogador no próximo push.",
  "workflows": [

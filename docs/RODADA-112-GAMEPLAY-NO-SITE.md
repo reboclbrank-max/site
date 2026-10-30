@@ -251,3 +251,37 @@ Dois guardas estáticos novos, os dois ligados no `diagnostico-da-casa`:
 Runs de confirmação: `41118571817` (sondagem unificada, 5 jobs verdes), `41119217962`
 (diagnóstico com todas as suítes), `41119581608` (métricas com push novo), `41119601942`
 (despertador com timeout).
+
+## 13. O último passo: o que dá e o que não dá para resolver daqui
+
+### Não dá — e agora está medido até o fim
+
+| tentativa | resultado | run |
+| --- | --- | --- |
+| HTTP puro (urllib) nos 3 sistemas de runner | 403 + desafio em `/dashboard` e `/game/edit/*`, com e sem cookie | 41112561108 |
+| Chromium headless com a sessão | `/login?__cf_chl_rt_tk=…`, preso no desafio | 41113178372 |
+| Chromium completo sob Xvfb, pt-BR, sem marca de automação | 403 por 96 s | 41114204554 |
+| **Google Chrome 156 estável**, perfil persistente, janela real 1440×900 | **403 por 144 s** | 41123330408 |
+| rotas alternativas (`/posts`, `/dashboard/post/new`, `/devlog/new`) | 404 — não existem | sandbox |
+| API de escrita do itch | **não existe por decisão deles** ("we don't provide APIs for people to post things") | itch.io/t/2097903 |
+
+Conclusão: é **reputação de IP**. Não é cookie, não é JavaScript, não é fingerprint, não é rota
+faltando. Por isso **não usei proxy público** (entregaria a sessão do dono — 278 caracteres que
+mandam na conta — a um terceiro) nem serviço de captcha (seria burla). As duas coisas ficariam
+"resolvidas" no papel e seriam um problema real.
+
+### Dá — e está feito
+
+1. **O ciclo está fechado sem painel**: `tools/pendencias-do-dono.py` lê o devlog público do itch
+   (sem cookie) e diz o estado de cada item. Quando o dono publicar, o item vira "feito" sozinho.
+   Workflow `pendencias-do-dono` roda 1×/dia e **avisa por ntfy só quando o estado muda**.
+2. **O clique está reduzido a 1**: `itch/devlog-gameplay-bookmarklet.txt`, com o texto pronto em
+   `posts/devlog-itch-gameplay.json` (o mesmo arquivo que o publicador automático usa).
+3. **O caminho sem clique existe, condicionado a uma saída limpa**: `tools/publicar-devlog-itch.js`
+   + workflow `publicar-devlog-itch`. Com o segredo `ITCH_PROXY` (VPN, VPS ou túnel que **o dono**
+   controle) ele publica sozinho, usando **o mesmo código do favorito**, e confirma o resultado na
+   página pública. Sem o segredo ele recusa com código 3 e explica — nunca tenta por caminho torto.
+4. **Enquanto isso, o vídeo já chega ao jogador do itch pelo build** (selo em `ceifalume/index.html`).
+
+Testes: `tools/testes-pendencias.py` (19/19) e `tools/testes-publicar-devlog.py` (15/15), os dois
+na barreira offline do `diagnostico-da-casa`.

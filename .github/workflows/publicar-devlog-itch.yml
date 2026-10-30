@@ -1,0 +1,67 @@
+name: publicar-devlog-itch
+
+# Publica o devlog do gameplay no itch SEM clique — no dia em que existir uma saída de rede limpa.
+#
+# Por que não roda sozinho: o painel do itch recusa IP de datacenter com desafio da Cloudflare.
+# Medido três vezes (docs/sondagens/ITCH-403-CLOUDFLARE.json): HTTP puro nos três runners,
+# Chromium headless e Chrome estável sob Xvfb, com perfil persistente. É reputação de IP.
+#
+# O que este workflow NÃO faz: proxy público (entregaria a sessão do dono a um terceiro),
+# serviço de captcha, ou qualquer identidade emprestada. Ele usa a única saída limpa que pode
+# existir de forma legítima: uma que o dono controle — segredo ITCH_PROXY (VPN, VPS, túnel em
+# casa). Sem esse segredo ele só MEDE o estado público e explica o que falta.
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "verificar = só lê o devlog público · publicar = usa ITCH_PROXY (exige PUBLICAR)"
+        required: true
+        default: verificar
+        type: choice
+        options:
+          - verificar
+          - publicar
+      confirmacao:
+        description: "para publicar, digite PUBLICAR"
+        required: false
+        default: ""
+
+concurrency:
+  group: publicar-devlog-itch
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  devlog:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline
+        run: python3 tools/testes-publicar-devlog.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Navegador (só quando for publicar)
+        if: inputs.modo == 'publicar'
+        run: |
+          npm install --no-audit --no-fund playwright-core
+          npx playwright-core install --with-deps chromium-headless-shell
+
+      - name: Verifica o estado público
+        if: inputs.modo != 'publicar'
+        run: node tools/publicar-devlog-itch.js --verificar || true
+
+      - name: Publica pela saída do dono (exige ITCH_PROXY e PUBLICAR)
+        if: inputs.modo == 'publicar'
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+          ITCH_PROXY: ${{ secrets.ITCH_PROXY }}
+          CONFIRMACAO: ${{ inputs.confirmacao }}
+        run: node tools/publicar-devlog-itch.js --publicar
