@@ -432,6 +432,12 @@ def main():
         ok("workflow do " + nome + " não faz push seco (tenta de novo depois do rebase)",
            bool(fonte) and "git push\n" not in fonte and "for tentativa in 1 2 3" in fonte,
            "push sem nova tentativa")
+        # Run 41090257198: as 3 tentativas falharam ("cannot rebase: You have unstaged changes")
+        # e o run terminou VERDE com o vídeo fora do repositório. Duas travas, então:
+        ok("workflow do " + nome + " tira as sobras da árvore antes do rebase",
+           "git stash push -u" in fonte, "rebase recusado por sobras")
+        ok("workflow do " + nome + " falha o run se o vídeo não entrar no repositório",
+           'if [ "$enviado" != "1" ]' in fonte and "::error::" in fonte, "falha silenciosa")
     ok("o cron só grava (não publica sozinho)",
        "secrets.YT_CLIENT_ID" not in texto.split("publicar == 'PUBLICAR'")[0],
        "credencial citada antes do cadeado")
