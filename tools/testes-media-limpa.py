@@ -104,6 +104,19 @@ def main():
     ok("o .gitignore impede o artefato de voltar", "media/gameplay/trecho-*.mp4" in ignorados
        and "media/gameplay/trilha.m4a" in ignorados, "regra ausente")
 
+    # Dependência de runtime não se versiona: quem precisa instala (os dois workflows de gravação
+    # rodam `npm install --no-save playwright-core@1`). 14 MB e 117 arquivos saíram do git em
+    # 30/10 por isso.
+    no_git = subprocess.run(["git", "ls-files", "node_modules"], cwd=RAIZ,
+                            capture_output=True, text=True)
+    ok("nenhuma dependência de runtime versionada (node_modules)",
+       not (no_git.stdout or "").strip(), "arquivos: %d" % len((no_git.stdout or "").split()))
+    ok("o .gitignore barra o node_modules de voltar", "node_modules/" in ignorados)
+    ok("os dois workflows que usam navegador instalam a dependência",
+       "npm install" in open(os.path.join(base_wf, "gravar-gameplay.yml"), encoding="utf-8").read()
+       and "npm install" in open(os.path.join(base_wf, "gravar-prancheta.yml"), encoding="utf-8").read(),
+       "workflow sem npm install")
+
     print("\n%d/%d verificações de higiene de media passaram" % (len(certos), len(certos) + len(falhas)))
     return 0 if not falhas else 1
 

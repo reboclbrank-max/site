@@ -10,3 +10,7 @@ media/gameplay/cartao.mp4
 media/gameplay/trilha.m4a
 media/gameplay/*-cru.mp4
 media/gameplay/prancheta-cru.mp4
+# Dependência de runtime NÃO se versiona: 14 MB / 117 arquivos de node_modules que os dois
+# workflows de gravação já instalam sozinhos (npm install --no-save playwright-core@1). Versionar
+# isso só faz todo clone e todo checkout de CI baixarem 14 MB à toa.
+node_modules/
