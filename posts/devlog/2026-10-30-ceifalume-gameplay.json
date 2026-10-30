@@ -1,0 +1,20 @@
+{
+  "slug": "ceifalume-gameplay",
+  "data": "30 de outubro de 2026",
+  "titulo": "O CEIFALUME jogando sozinho: 2 minutos de gameplay com as instruções na tela",
+  "resumo": "Gravei o jogo rodando no navegador, do plantio à colheita, com uma faixa fixa explicando o que fazer. Sem corte de tela e sem fala.",
+  "tags": ["gameplay", "video", "godot"],
+  "corpo": [
+    "Este vídeo não é trailer nem montagem: é o próprio jogo rodando no navegador, gravado por captura automática. O robô planta, espera a casca amadurecer, colhe, vende no bico e compra melhoria — e o relatório da partida registrou 16 sementes plantadas e 8 colhidas em 130 segundos.",
+    "O que muda em relação ao trailer é a faixa de instruções: ela fica presa no rodapé do começo ao fim, dizendo o que fazer naquele momento. A ideia é simples — quem abre o vídeo sem saber o que é o jogo precisa entender o jogo sem procurar explicação em outro lugar.",
+    {"lista": [
+      "2 minutos, 1280x720, com legenda em português;",
+      "instruções fixas no rodapé, medidas segundo a segundo (nenhum trecho fica sem ela);",
+      "as plantações continuam crescendo com o jogo fechado — a fazenda trabalha até 8 horas;",
+      "grátis, no navegador, sem conta."
+    ]},
+    "Assistir: https://youtu.be/GuE7af6dYo8",
+    "Jogar: https://rebocl-brank.itch.io/ceifalume",
+    "Se o vídeo te deixar com uma dúvida que a faixa não responde, escreve aí nos comentários — a próxima gravação usa a mesma captura automática, então a resposta pode virar instrução na tela."
+  ]
+}

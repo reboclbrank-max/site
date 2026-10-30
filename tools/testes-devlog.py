@@ -68,5 +68,22 @@ if os.path.exists(real):
 fonte = open(os.path.join(RAIZ, "tools", "devlog.py"), encoding="utf-8").read()
 ok("o gerador não contém segredo", "AIza" not in fonte and "GOCSPX" not in fonte)
 
+# O sitemap é a porta de entrada do buscador. Antes, só /blog/ estava lá: post novo não era
+# descoberto por ninguém. Agora cada post entra, e entrar duas vezes não duplica.
+import re as _re
+_sitemap = os.path.join(RAIZ, "sitemap.xml")
+_xml = open(_sitemap, encoding="utf-8").read()
+ok("o sitemap lista a página do diário", "%s/blog/" % d.BASE in _xml)
+_posts = d.carregar(RAIZ)
+ok("o sitemap lista cada post do diário",
+   all("%s/blog/%s.html" % (d.BASE, p["slug"]) in _xml for p in _posts),
+   str([p["slug"] for p in _posts]))
+ok("nenhum post aparece duas vezes no sitemap",
+   all(_xml.count("%s/blog/%s.html" % (d.BASE, p["slug"])) == 1 for p in _posts))
+ok("rodar o gerador de novo não duplica entrada",
+   d.atualizar_sitemap(_xml, _posts) == _xml)
+ok("o lastmod sai do nome do arquivo (data do post, não do run)",
+   "<lastmod>%s</lastmod>" % _posts[0]["arquivo"][:10] in _xml)
+
 print("\n%d/%d testes do devlog passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)

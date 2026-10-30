@@ -414,6 +414,15 @@ def main():
         ("workflow_dispatch", "pode ser rodado à mão"),
     ]:
         ok("workflow " + nome, marca in texto, marca)
+
+    # O dono pediu: se o robô não jogar, REPETE a captura em vez de entregar tela de abertura.
+    # O laço fica no workflow (é ele quem orquestra), com duas tentativas e resoluções diferentes.
+    ok("workflow repete a captura (não entrega a primeira que falhar)",
+       "for tentativa in 1 2" in texto, "sem laço de repetição")
+    ok("a repetição muda a resolução (outro caminho de canvas e de clique)",
+       "1600" in texto and "900" in texto, "mesma resolução nas duas tentativas")
+    ok("se as duas capturas falharem, o run para em vez de publicar",
+       "duas capturas seguidas não provaram plantio" in texto, "sem erro explícito")
     ok("o cron só grava (não publica sozinho)",
        "secrets.YT_CLIENT_ID" not in texto.split("publicar == 'PUBLICAR'")[0],
        "credencial citada antes do cadeado")
