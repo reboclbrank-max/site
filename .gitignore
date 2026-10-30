@@ -1,6 +1,6 @@
 __pycache__/
 *.pyc
-sonda-itch.js
+
 # Artefatos INTERMEDIÁRIOS da produção de vídeo: o pipeline (tools/produzir-video.py) cria e
 # consome durante o run. Versioná-los só engordou o repositório — 9,7 MB de arquivo que nenhuma
 # página e nenhum teste lê. O que fica versionado é o vídeo final e o relatório.
