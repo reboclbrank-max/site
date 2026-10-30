@@ -142,7 +142,19 @@ jobs:
             exit 0
           fi
           git commit -m "gameplay: CEIFALUME gravado ($(date -u +%d/%m\ %H:%M\ UTC))"
-          git push
+          # O push pode ser recusado se outro workflow commitar no main entre o checkout e
+          # aqui — foi exatamente o que derrubou o run 41030633953 (30/10 09:05), com o vídeo
+          # gravado e medido mas fora do repositório. Rebase e nova tentativa, 3 vezes.
+          for tentativa in 1 2 3; do
+            if git fetch -q origin main && git rebase -q origin/main && git push; then
+              echo "vídeo registrado no main (tentativa $tentativa)"
+              break
+            fi
+            echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          git log --oneline -1
 
       - name: Guarda o vídeo e o quadro de prova
         uses: actions/upload-artifact@v4
@@ -197,7 +209,19 @@ jobs:
             exit 0
           fi
           git commit -m "registro: vídeo do gameplay publicado no YouTube ($(date -u +%d/%m %H:%M UTC))"
-          git push
+          # O push pode ser recusado se outro workflow commitar no main entre o checkout e
+          # aqui — foi exatamente o que derrubou o run 41030633953 (30/10 09:05), com o vídeo
+          # gravado e medido mas fora do repositório. Rebase e nova tentativa, 3 vezes.
+          for tentativa in 1 2 3; do
+            if git fetch -q origin main && git rebase -q origin/main && git push; then
+              echo "vídeo registrado no main (tentativa $tentativa)"
+              break
+            fi
+            echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          git log --oneline -1
           {
             echo "### Envio ao YouTube"
             echo

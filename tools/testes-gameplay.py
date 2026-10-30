@@ -423,6 +423,15 @@ def main():
        "1600" in texto and "900" in texto, "mesma resolução nas duas tentativas")
     ok("se as duas capturas falharem, o run para em vez de publicar",
        "duas capturas seguidas não provaram plantio" in texto, "sem erro explícito")
+
+    # Push seco derrubou o PRANCHETA em 30/10 09:05 (run 41030633953): vídeo gravado, medido e
+    # fora do repositório, porque outro workflow commitou no main entre o checkout e o push.
+    for nome, arq in [("CEIFALUME", "gravar-gameplay.yml"), ("PRANCHETA", "gravar-prancheta.yml")]:
+        caminho = os.path.join(RAIZ, ".github", "workflows", arq)
+        fonte = open(caminho, encoding="utf-8").read() if os.path.exists(caminho) else ""
+        ok("workflow do " + nome + " não faz push seco (tenta de novo depois do rebase)",
+           bool(fonte) and "git push\n" not in fonte and "for tentativa in 1 2 3" in fonte,
+           "push sem nova tentativa")
     ok("o cron só grava (não publica sozinho)",
        "secrets.YT_CLIENT_ID" not in texto.split("publicar == 'PUBLICAR'")[0],
        "credencial citada antes do cadeado")
