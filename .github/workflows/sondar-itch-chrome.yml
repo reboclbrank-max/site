@@ -1,0 +1,53 @@
+name: sondar-itch-chrome
+
+# Última hipótese legítima para o painel do itch: Chrome de VERDADE (não Chromium), com perfil
+# persistente em disco, sob Xvfb, com locale e fuso do dono. O desafio da Cloudflare pode estar
+# reprovando a impressão digital do Chromium de automação, e não (só) o IP.
+#
+# Se este run passar, o passo que hoje depende do dono pode ser automatizado. Se não passar, a
+# conclusão fica fechada com três medições independentes: HTTP, Chromium e Chrome.
+#
+# Só faz GET. Não escreve, não posta, não muda nada no itch.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: sondar-itch-chrome
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  chrome:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Chrome estável + Xvfb
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb
+          npm install --no-audit --no-fund playwright-core
+          npx --yes playwright install --with-deps chrome
+          google-chrome --version || true
+
+      - name: Tenta o painel com Chrome real e perfil persistente
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        run: xvfb-run -a --server-args="-screen 0 1440x900x24" node tools/sonda-itch-navegador.js --chrome
+
+      - name: Guarda a prova
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: itch-chrome
+          path: |
+            /tmp/itch-chrome.png
+            /tmp/itch-chrome.html
+          if-no-files-found: warn

@@ -13,7 +13,9 @@
 const fs = require('fs');
 const { chromium } = require('playwright-core');
 
-const modo = process.argv.includes('--completo') ? 'completo' : 'headless';
+const modo = process.argv.includes('--chrome') ? 'chrome'
+           : process.argv.includes('--completo') ? 'completo'
+           : 'headless';
 const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) '
          + 'Chrome/128.0.0.0 Safari/537.36';
 const DESAFIO = /just a moment|um momento|checking your browser|attention required|verificando|cf-challenge|challenge-platform/i;
@@ -31,16 +33,33 @@ function biscoitosDoAmbiente() {
 
 (async () => {
   const biscoitos = biscoitosDoAmbiente();
-  const navegador = await chromium.launch({
-    headless: modo !== 'completo',
-    args: modo === 'completo'
-      ? ['--disable-blink-features=AutomationControlled', '--no-sandbox']
-      : [],
-  });
-  const contexto = await navegador.newContext({
-    userAgent: UA, locale: 'pt-BR', viewport: { width: 1366, height: 768 },
-    timezoneId: 'America/Sao_Paulo',
-  });
+  // No modo --chrome usamos Chrome de verdade (channel 'chrome') com perfil persistente em disco:
+  // é a configuração mais próxima de um navegador comum, e serve para saber se o desafio da
+  // Cloudflare reprova a impressão digital do Chromium de automação ou o IP.
+  const perfil = '/tmp/perfil-itch';
+  let navegador;
+  let contexto;
+  if (modo === 'chrome') {
+    contexto = await chromium.launchPersistentContext(perfil, {
+      channel: 'chrome',
+      headless: false,
+      args: ['--no-sandbox', '--start-maximized', '--disable-blink-features=AutomationControlled'],
+      locale: 'pt-BR',
+      timezoneId: 'America/Sao_Paulo',
+      viewport: { width: 1440, height: 900 },
+    });
+  } else {
+    navegador = await chromium.launch({
+      headless: modo !== 'completo',
+      args: modo === 'completo'
+        ? ['--disable-blink-features=AutomationControlled', '--no-sandbox']
+        : [],
+    });
+    contexto = await navegador.newContext({
+      userAgent: UA, locale: 'pt-BR', viewport: { width: 1366, height: 768 },
+      timezoneId: 'America/Sao_Paulo',
+    });
+  }
   if (modo === 'completo') {
     await contexto.addInitScript(() => {
       Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
@@ -58,7 +77,7 @@ function biscoitosDoAmbiente() {
       console.log('erro ao abrir', alvo, String(e).slice(0, 140));
     }
     // dá tempo de o desafio resolver sozinho, se for resolver
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < (modo === 'chrome' ? 18 : 10); i++) {
       const titulo = await pagina.title();
       const html = await pagina.content();
       const desafio = DESAFIO.test(titulo) || DESAFIO.test(html);
@@ -71,10 +90,11 @@ function biscoitosDoAmbiente() {
     console.log(`[${modo}] painel? ${/meus jogos|my games/i.test(html)}` +
                 ` · login? ${/entrar|log in|sign in/i.test(html)}` +
                 ` · ceifalume? ${/ceifalume/i.test(html)}`);
-    if (modo === 'completo') {
-      try { await pagina.screenshot({ path: '/tmp/itch.png' }); } catch (e) { /* segue */ }
-      try { fs.writeFileSync('/tmp/itch.html', html); } catch (e) { /* segue */ }
+    if (modo === 'completo' || modo === 'chrome') {
+      const suf = modo === 'chrome' ? '-chrome' : '';
+      try { await pagina.screenshot({ path: `/tmp/itch${suf}.png` }); } catch (e) { /* segue */ }
+      try { fs.writeFileSync(`/tmp/itch${suf}.html`, html); } catch (e) { /* segue */ }
     }
   }
-  await navegador.close();
+  if (modo === 'chrome') { await contexto.close(); } else { await navegador.close(); }
 })();
