@@ -319,7 +319,8 @@ Página gerada pelo próprio repositório a cada rodada.</p>
 %(gosto)s
 %(pend)s
 <footer>Gerado em %(agora)s pelo workflow postagem-diaria ·
-<a href="%(base)s/">site</a> · <a href="%(base)s/canais.html">canais oficiais</a> ·
+<a href="%(base)s/">site</a> · <a href="%(base)s/melhorias.html">melhorias</a> ·
+<a href="%(base)s/canais.html">canais oficiais</a> ·
 <a href="https://youtu.be/GuE7af6dYo8">gameplay do Ceifalume</a></footer>
 </main></body></html>
 """ % {"base": BASE, "cartoes": cartoes_html, "canais": "".join(linhas_canal),
