@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-30T23:20:02Z",
+ "quando": "2026-10-30T23:31:29Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
@@ -45,44 +45,20 @@
  "formatos": [
   {
    "formato": "conteúdo dos jogos",
-   "posts": 89,
-   "media": 1.91,
-   "zeros": 16,
-   "zeros_pct": 18.0
+   "posts": 90,
+   "media": 1.89,
+   "zeros": 17,
+   "zeros_pct": 18.9
   },
   {
    "formato": "comentário em post alheio",
-   "posts": 211,
+   "posts": 210,
    "media": 0.88,
-   "zeros": 88,
-   "zeros_pct": 41.7
+   "zeros": 87,
+   "zeros_pct": 41.4
   }
  ],
  "ultimos_ciclos": [
-  {
-   "quando": "29/10/2026 18:31 UTC",
-   "canais": {
-    "cerebro": "✅ post novo validado — motor=g4f auto",
-    "destino editorial": "✅ rota oficial catalogo",
-    "tema do ciclo": "✅ apresente o CEIFALUME 0.1 para quem curte idle de fazenda noturna",
-    "ntfy (push do dono)": "✅ push 200",
-    "telegram": "⚪ configuracao de publicacao ausente",
-    "bluesky": "✅ postado 200",
-    "mastodon": "⚪ configuracao de publicacao ausente",
-    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
-    "instagram": "➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC",
-    "threads": "✅ publicado id 179531273160",
-    "nostr": "✅ nota em 1 relays",
-    "discord": "⚪ configuracao de publicacao ausente",
-    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
-    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
-    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
-    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
-    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
-    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
-    "regua de metas (medicao)": "✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=26(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
-   }
-  },
   {
    "quando": "29/10/2026 23:30 UTC",
    "canais": {
@@ -178,21 +154,45 @@
     "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
     "regua de metas (medicao)": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
    }
+  },
+  {
+   "quando": "30/10/2026 23:22 UTC",
+   "canais": {
+    "cerebro": "✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (1 válidos): cita jogo, chamada, hashtag 1 ou 2 · 220 caracteres · abre diferente do último post",
+    "destino editorial": "✅ rota oficial catalogo",
+    "tema do ciclo": "✅ converse sobre vida de dev solo no Brasil e cite os jogos",
+    "ntfy (push do dono)": "✅ push 200",
+    "telegram": "⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT",
+    "bluesky": "✅ postado 200",
+    "mastodon": "⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN",
+    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
+    "instagram": "✅ postado id 17912366001303 (arte reserva)",
+    "threads": "✅ publicado id 180145477587",
+    "nostr": "✅ nota em 2 relays",
+    "discord": "⚪ falta o segredo DISCORD_WEBHOOK",
+    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)",
+    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)",
+    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
+    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
+    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
+    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
+    "regua de metas (medicao)": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=31(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
+   }
   }
  ],
  "aprendizado": {
-  "quando": "2026-10-30T22:50:54Z",
+  "quando": "2026-10-30T23:26:30Z",
   "confiavel": false,
   "melhor_hora": null,
   "decisao": "manter",
-  "motivo": "diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.22, desvio 0.51",
+  "motivo": "diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.22, desvio 0.50",
   "detalhe": {
    "horas_lidas": 21,
    "amostra_total": 300,
    "elegiveis": 2,
    "amostra_minima": 30,
    "mediana": 1.22,
-   "desvio": 0.5067776462773786,
+   "desvio": 0.5048989032413628,
    "melhor": {
     "hora": 1,
     "media": 1.22,
