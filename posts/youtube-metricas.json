@@ -1,19 +1,19 @@
 {
- "medido_em": "2026-10-30T01:20:29Z",
+ "medido_em": "2026-10-30T10:26:32Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
    "id": "2qsSknSyeAs",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
    "publicado_em": "2026-10-27T15:34:40Z",
-   "views": 3,
+   "views": 4,
    "likes": 0,
    "comentarios": 0
   }
  ],
  "totais": {
   "videos": 1,
-  "views": 3,
+  "views": 4,
   "likes": 0,
   "comentarios": 0
  }
