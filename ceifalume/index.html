@@ -414,7 +414,14 @@ progress#status-progress,
 		animation: none !important;
 	}
 }
-	</style>
+	#rb-gameplay{position:fixed;right:10px;bottom:10px;z-index:9999;
+  display:inline-flex;align-items:center;gap:6px;
+  font:600 13px/1 "Segoe UI",Roboto,Arial,sans-serif;color:#0a0a0a;background:#d4af37;
+  padding:8px 12px;border-radius:8px;text-decoration:none;opacity:.95;
+  box-shadow:0 2px 10px rgba(0,0,0,.55);transition:opacity .6s}
+#rb-gameplay.apagado{opacity:.45}
+#rb-gameplay:focus-visible{outline:2px solid #f0d97a;outline-offset:2px}
+</style>
 		<link id="-gd-engine-icon" rel="icon" type="image/png" href="icone-marca-32.png" />
 <link rel="apple-touch-icon" href="icone-marca-192.png"/>
 
@@ -424,6 +431,19 @@ progress#status-progress,
 			Toque em jogar. O navegador precisa de WebGL 2.
 		</canvas></div></div>
 
+
+		<!-- Selo do gameplay: a página do itch é montada a partir DESTE build (o itch não tem API
+		     para editar página nem para devlog), então o vídeo com as instruções chega ao jogador
+		     por aqui. Fica no canto, não cobre o canvas e não rouba clique do jogo. -->
+		<a id="rb-gameplay" href="https://youtu.be/GuE7af6dYo8" target="_blank" rel="noopener"
+		   title="Ver o gameplay gravado, com as instruções na tela">▶ gameplay com instruções</a>
+		<script>
+		  // depois do primeiro minuto o selo fica discreto, para não competir com a partida
+		  setTimeout(function () {
+		    var selo = document.getElementById('rb-gameplay');
+		    if (selo) selo.className = 'apagado';
+		  }, 60000);
+		</script>
 		<noscript>
 			Your browser does not support JavaScript.
 		</noscript>

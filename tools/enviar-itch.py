@@ -248,10 +248,20 @@ def enviar(slug, canal, confirmacao, raiz=RAIZ, identidade=None, executar=None, 
     if erros:
         return False, "build recusado: " + "; ".join(erros)
     alvo = alvo_do_canal(slug, canal)
-    # --hidden só vale para canal novo: o build fica no itch, mas não aparece como download
-    # imediato. Assim nada muda para o jogador sem o dono ver primeiro.
-    codigo, saida = rodar(["push", pasta, alvo, "--assume-yes", "--hidden"],
-                          identidade=identidade, executar=executar, chave=chave)
+    # Carimbo de versão (opcional): quando existe ceifalume/versao-build.json, ele vai como
+    # --userversion. É o que permite, depois, dizer QUAL build está no ar em vez de só um id.
+    argumentos = ["push", pasta, alvo, "--assume-yes", "--hidden"]
+    carimbo = os.path.join(pasta, "versao-build.json")
+    if os.path.exists(carimbo):
+        try:
+            with open(carimbo, encoding="utf-8") as f:
+                versao = str(json.load(f).get("versao") or "").strip()
+        except Exception:  # noqa: BLE001
+            versao = ""
+        if versao:
+            argumentos += ["--userversion", versao]
+            print("versão do envio:", versao)
+    codigo, saida = rodar(argumentos, identidade=identidade, executar=executar, chave=chave)
     if codigo != 0:
         return False, "envio recusado: " + saida[:400]
     return True, "enviado para %s — https://%s.itch.io/%s" % (
@@ -330,8 +340,11 @@ def main(argv):
                 print("   " + linha[:160])
             return 0 if ok else 1
         if modo == "push":
+            # a palavra vem do ambiente (o workflow passa CONFIRMACAO=PUBLICAR), nunca de uma
+            # constante no código: publicar é decisão, e a decisão tem que aparecer no run
+            confirmacao = os.environ.get("CONFIRMACAO", "")
             canal = argv[2] if len(argv) > 2 else "html5"
-            ok, msg = enviar(slug, canal, os.environ.get("CONFIRMACAO", ""), identidade=identidade)
+            ok, msg = enviar(slug, canal, confirmacao, identidade=identidade)
             print(("✓ " if ok else "✗ ") + msg)
             return 0 if ok else 1
         print("modo desconhecido:", modo)
