@@ -202,3 +202,15 @@ vídeo: 155,4 s · 2,7 MB · 1280x720 @ 24 fps
 
 Ou seja: com tempo suficiente, a colheita acontece **aqui também** — o "0 colhidas" era só a
 janela curta (55 s), não um defeito.
+
+## 11. Runs de fechamento
+
+| run | o que provou |
+| --- | --- |
+| 41115299289 (ensaio do itch) | `index.html` subiu para **22,27 KiB** (o selo) e o pacote continua 13 arquivos / 40,26 MiB |
+| 41115538652 (captura 130 s) | `decisões: 34 · plantadas: 11 · colhidas: 5` · **125/125 amostras** com instruções · `vídeo registrado no main (tentativa 1)` |
+| 41112561108 (sondar-ip-itch) | 403 nas duas rotas de painel em Ubuntu, macOS e Windows |
+| 41114204554 (sondar-itch-browser2) | 403 até o fim com Chromium sob Xvfb, pt-BR, sem marca de automação |
+
+O push com nova tentativa (10.2 → agora em produção) registrou **na primeira tentativa** — a
+correção do `git stash` + `exit 1` está funcionando de verdade, não só no papel.
