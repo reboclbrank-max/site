@@ -4,26 +4,26 @@
 
 ## 30/10/2026
 
-> Medição pública em 2026-10-30T15:58Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
+> Medição pública em 2026-10-30T18:03Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
 
-- **bsky_seguidores=32 · posts_proprios=300 · eng_medio=1.17 · promo: n=88 media=1.93 zero=17.0% · comentario: n=212 media=0.85 zero=42.5% · respostas_recebidas=39 promo_respostas=0 promo_pendentes=0**
+- **bsky_seguidores=32 · posts_proprios=300 · eng_medio=1.18 · promo: n=89 media=1.92 zero=16.9% · comentario: n=211 media=0.87 zero=41.7% · respostas_recebidas=39 promo_respostas=1 promo_pendentes=1**
 
 | tipo | posts | engajamento médio | melhor | sem engajamento |
 |---|---|---|---|---|
-| conteúdo dos jogos | 88 | 1.93 | 4 | 15 (17.0%) |
-| comentário em post alheio | 212 | 0.85 | 4 | 90 (42.5%) |
+| conteúdo dos jogos | 89 | 1.92 | 4 | 15 (16.9%) |
+| comentário em post alheio | 211 | 0.87 | 4 | 88 (41.7%) |
 
 **Instagram (0 seguidores · 28 posts):** IMAGE n=28 média=0.07 zero=26
 
 **itch.io:** 47 download(s) e 194 visita(s) em 1/1 conta(s). Ceifalume: 41 · Prancheta: 6
 
 **YouTube:** 24 inscrito(s) · 162 vídeo(s) · 5437 visualizaç(ões) · shorts=6 de 100 conferido(s)
-**YouTube — o que o canal publica:** dos 100 vídeos lidos, **6 são dos jogos da casa** (271 views, média 45.2) e **94 são de outros jogos** (3466 views, média 36.9) — os da casa são 7.3% das visualizações.
+**YouTube — o que o canal publica:** dos 100 vídeos lidos, **6 são dos jogos da casa** (273 views, média 45.5) e **94 são de outros jogos** (3466 views, média 36.9) — os da casa são 7.3% das visualizações.
 Melhores da casa: "Ceifalume: a horta acordou à noite 🌙 jog" (230) · "Desenhe a prancheta e decida a partida —" (22) · "Ceifalume — trailer oficial (jogo de faz" (11)
 
-**Conversa:** 40 conversa(s) lida(s). Respostas ao conteúdo da casa: 0 em 0 thread(s), 0 atendida(s), 0 pendente(s). Retorno do autor de post comentado: 39 em 38 thread(s) — é retribuição ao comentário, não fila de resposta.
+**Conversa:** 40 conversa(s) lida(s). Respostas ao conteúdo da casa: 1 em 1 thread(s), 0 atendida(s), 1 pendente(s). Retorno do autor de post comentado: 38 em 37 thread(s) — é retribuição ao comentário, não fila de resposta.
 
-**Horário (Brasília):** 00h=1.12(n=8) · 01h=1.22(n=36) · 02h=2.0(n=4) · 04h=1.25(n=8) · 05h=1.0(n=11) · 07h=1.38(n=8) · 08h=1.52(n=23) · 09h=3.0(n=1) · 10h=0.94(n=17) · 11h=1.7(n=10) · 12h=0.71(n=17) · 13h=1.33(n=15) · 14h=0.5(n=20) · 15h=0.78(n=9) · 16h=1.09(n=11) · 17h=1.03(n=34) · 18h=1.4(n=15) · 19h=1.0(n=5) · 20h=1.21(n=28) · 21h=1.42(n=12) · 23h=1.75(n=8)
+**Horário (Brasília):** 00h=1.12(n=8) · 01h=1.22(n=36) · 02h=2.0(n=4) · 04h=1.25(n=8) · 05h=1.0(n=11) · 07h=1.38(n=8) · 08h=1.52(n=23) · 09h=3.0(n=1) · 10h=0.94(n=17) · 11h=1.7(n=10) · 12h=1.0(n=16) · 13h=1.33(n=15) · 14h=0.5(n=20) · 15h=0.7(n=10) · 16h=1.09(n=11) · 17h=1.03(n=34) · 18h=1.4(n=15) · 19h=1.0(n=5) · 20h=1.21(n=28) · 21h=1.42(n=12) · 23h=1.75(n=8)
 
 > ⚠ Amostra pequena por hora. Isso **não** sustenta escolher horário: a diferença está dentro do ruído. Só vale depois de acumular mais posts com este medidor ligado.
 
