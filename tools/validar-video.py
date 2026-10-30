@@ -45,8 +45,11 @@ def ffmpeg(explicito=None):
     for c in candidatos:
         if c and os.path.exists(c):
             return c
-    if subprocess.run(["ffmpeg", "-version"], capture_output=True).returncode == 0:
-        return "ffmpeg"
+    try:
+        if subprocess.run(["ffmpeg", "-version"], capture_output=True).returncode == 0:
+            return "ffmpeg"
+    except FileNotFoundError:
+        pass
     try:
         saida = subprocess.run(
             [sys.executable, "-c", "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())"],
