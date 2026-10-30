@@ -112,3 +112,20 @@ O vídeo do repositório foi atualizado por esse run (116,4 s · brilho 43,0 · 
 movimento 1,59 · maior trecho parado 4,5 s · **116 de 116** amostras com instruções). O vídeo do
 YouTube continua sendo o do run que publicou (`GuE7af6dYo8`, 122,5 s); os dois são capturas
 reais do mesmo jogo, e cada run do cron substitui o arquivo do site pela captura mais nova.
+
+## 8. O que falta no itch é conteúdo, e ele está pronto em 1 clique
+
+O build já está no ar e idêntico ao repositório. O que a página do itch não tem é o **vídeo de
+gameplay**. Isso não é falta de chave: o itch não expõe API para editar página nem para postar
+devlog, e a Cloudflare responde 403 em `/dashboard` para IP de datacenter (run 41082945952 — o
+log diz explicitamente "não é a sessão, é o IP").
+
+Então o texto está pronto e o caminho é um favorito:
+
+- `posts/devlog-itch-gameplay.json` — título e corpo do devlog, com o link do vídeo;
+- `itch/devlog-gameplay-bookmarklet.txt` — favorito gerado por `tools/montar-bookmarklet.js`,
+  que abre a tela de postagens e envia pelo navegador do dono;
+- `posts/devlog-itch.json` (o devlog da 0.1, ainda não publicado) **não foi tocado** — há teste
+  garantindo isso.
+
+Seis verificações em `tools/testes-autonomia-marketing.py` cobrem esse pacote (75/75).
