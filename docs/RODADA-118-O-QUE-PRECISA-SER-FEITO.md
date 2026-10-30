@@ -57,12 +57,30 @@ não esconder a ausência em todo lugar.
    fora do loop.
 3. **Nada disso autoriza publicação sem `PUBLICAR`.** A percepção enfileira; a regra do dono manda.
 
+## O laço fechado (prova em CI, run `41142973857`)
+
+O pulso de 30/10 23:12 UTC executou:
+
+```
+percebido: 2 para o robô (0 enfileiradas) · 3 para o dono
+  robô · empurrar a meta: Instagram: seguidores — faltam 50 e o ritmo necessário é 3.85 por dia
+  dono · ligar o canal telegram — nunca publicou em 20 ciclos: falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT
+pulso 2026-10-30T23:12:00Z · ação: publicar · fila: [publicar-…] empurrar a meta: Instagram: seguidores
+fila: tarefa publicar-… -> feito
+```
+
+**Antes**, o pulso escolhia sempre `medir` (prioridade 90) e a necessidade percebida (`publicar`,
+60) ficava parada na fila: o olho via o problema e a mão fazia o de sempre. Corrigido — toda
+necessidade percebida sobe para **95** e passa na frente da rotina, inclusive as que já estavam
+pendentes de rodadas anteriores (`testes-perceber.py` cobre isso).
+
 ## Provas
 
 - `tools/testes-perceber.py` — **40/40**
 - `tools/testes-gameplay.py` — **98/98** (era 92/93, vermelho em CI 5×/dia)
 - `tools/testes-painel-marketing.py` — **28/28**
 - 29 suítes locais: **29 verdes** (todas)
+- `marketing-continuo` (vermelho 5×/dia) — barreira agora **success** no run `41142313297`
 - `marketing-24h.yml` roda `perceber.py` **antes** de `orquestrador.py` e commita
   `posts/percebido.{json,md}` + `posts/fila-tarefas.json`
 - `marketing.html` abre com **"O que precisa ser feito agora"**, separando o que o robô assumiu
