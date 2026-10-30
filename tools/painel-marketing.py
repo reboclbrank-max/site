@@ -43,6 +43,11 @@ def ler_log():
         texto = open(LOG, encoding="utf-8").read()
     except OSError:
         return []
+    return ciclos_do_texto(texto)
+
+
+def ciclos_do_texto(texto):
+    """Ciclos de um log em Markdown, ordenados do mais novo para o mais antigo."""
     ciclos = []
     for bloco in re.split(r"\n## ", texto):
         achado = re.match(r"(\d{2}/\d{2}/\d{4} \d{2}:\d{2} UTC)", bloco.strip())
