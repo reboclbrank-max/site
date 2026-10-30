@@ -93,3 +93,22 @@ ninguém achar. Cinco verificações novas (20/20), incluindo "rodar duas vezes 
   com 130 s, foram 8 — é a régua que vale.
 - Página do itch e devlog do itch: dependem do navegador do dono (Cloudflare).
 - `gravar-prancheta` falhou em 30/10 09:03 e **não** foi investigado nesta rodada.
+
+## 7. A repetição da captura foi exercitada (não é só código no workflow)
+
+Run 41086327532, disparo manual de 130 s com `publicar` vazio (nada foi publicado):
+
+```
+captura 1 de 2 (1280x720, 130s)
+escala dos cliques: 1.000 x 1.000 (1.000 = canvas em 1280x720)
+decisões: 33 · plantadas: 10 · colhidas: 6 · telas de abertura: 6
+✔ instruções presentes e estáveis em todas as 116 amostras
+```
+
+A primeira tentativa já passou no portão do plantio, então a segunda (1600×900) nem rodou — que é
+o comportamento desejado: repetir só quando a captura não prova que o jogo foi jogado.
+
+O vídeo do repositório foi atualizado por esse run (116,4 s · brilho 43,0 · 1 369 cores ·
+movimento 1,59 · maior trecho parado 4,5 s · **116 de 116** amostras com instruções). O vídeo do
+YouTube continua sendo o do run que publicou (`GuE7af6dYo8`, 122,5 s); os dois são capturas
+reais do mesmo jogo, e cada run do cron substitui o arquivo do site pela captura mais nova.
