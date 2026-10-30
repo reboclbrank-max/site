@@ -468,8 +468,35 @@ def canal(nome, fn):
             resultados.append((nome, "FALHOU", msg[:70]))
 
 
-def indisponivel(nome, detalhe="configuracao de publicacao ausente"):
-    """Separa credencial/capacidade ausente de uma trava anti-spam normal."""
+# Nome exato de cada segredo que liga cada canal. Sem isso o log dizia "configuracao de
+# publicacao ausente" e cada rodada virava uma investigação para descobrir o que faltava.
+SEGREDOS_DO_CANAL = {
+    "telegram": ["TELEGRAM_TOKEN", "TELEGRAM_CHAT"],
+    "mastodon": ["MASTODON_URL", "MASTODON_TOKEN"],
+    "discord": ["DISCORD_WEBHOOK"],
+    "bluesky": ["BLUESKY_HANDLE", "BLUESKY_APPPASS"],
+    "threads": ["THREADS_USER_ID", "THREADS_TOKEN"],
+    "instagram": ["IG_TOKEN", "IG_USER_ID"],
+    "nostr": ["NOSTR_KEY"],
+    "ntfy (push do dono)": ["NTFY_TOPIC"],
+}
+
+
+def segredos_que_faltam(nome):
+    """Quais segredos, pelo nome, ainda faltam para este canal publicar."""
+    faltam = [s for s in SEGREDOS_DO_CANAL.get(nome, []) if not os.environ.get(s)]
+    return faltam
+
+
+def indisponivel(nome, detalhe=None):
+    """Separa credencial/capacidade ausente de uma trava anti-spam normal.
+
+    O detalhe agora diz o NOME do segredo que falta (e nada além disso): transformar "canal
+    desligado" em "cole este segredo" é o que faz o dono conseguir ligar em 30 segundos.
+    """
+    if detalhe is None:
+        faltam = segredos_que_faltam(nome)
+        detalhe = ("falta o segredo " + " + ".join(faltam)) if faltam else "configuracao de publicacao ausente"
     resultados.append((nome, "INDISPONIVEL", detalhe))
 
 

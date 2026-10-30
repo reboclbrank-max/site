@@ -41,6 +41,7 @@ jobs:
           python3 tools/testes-enviar-itch.py
           python3 tools/testes-media-limpa.py
           python3 tools/testes-workflows.py
+          python3 tools/testes-painel-marketing.py
           python3 tools/testes-pendencias.py
           python3 tools/testes-publicar-devlog.py
 

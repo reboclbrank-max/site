@@ -32,12 +32,36 @@ jobs:
           node tools/montar-bookmarklet.js --verificar
           node tools/testes-bookmarklet-itch.js
           python3 tools/testes-administrar-youtube.py
+          python3 tools/testes-painel-marketing.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
           python3 tools/postador.py
           # Kit de envio do YouTube: PRODUZ, não publica. O envio depende do OAuth do dono.
           python3 tools/kit-youtube.py || echo "kit do YouTube com problema — registrado, sem publicar"
+          # O painel público é gerado do MESMO log que acabou de ser escrito: autonomia sem
+          # vitrine vira promessa. Ele é versionado e o site publica.
+          python3 tools/painel-marketing.py
+          git add marketing.html posts/log.md
+          if ! git diff --cached --quiet; then
+            git commit -q -m "marketing: painel e log do ciclo ($(date -u +%d/%m %H:%M UTC))"
+            git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+            enviado=0
+            for tentativa in 1 2 3; do
+              if git fetch -q origin main && git rebase -q origin/main && git push; then
+                echo "painel no main (tentativa $tentativa)"
+                enviado=1
+                break
+              fi
+              echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
+              git rebase --abort 2>/dev/null || true
+              sleep 5
+            done
+            if [ "$enviado" != "1" ]; then
+              echo "::error::3 tentativas e o painel não entrou no main"
+              exit 1
+            fi
+          fi
           # Devlog no site da casa: o itch não tem API para devlog, então o diário de bordo é
           # publicado onde não existe trava — por commit, no nosso próprio domínio.
           python3 tools/devlog.py
@@ -51,7 +75,10 @@ jobs:
             if git push; then ok=1; break; fi
             sleep 5
           done
-          [ "$ok" = "1" ] || echo "push falhou apos 3 tentativas (a proxima rodada cobre)"
+          if [ "$ok" != "1" ]; then
+            echo "::error::3 tentativas e o ciclo não entrou no main (o log ficaria só neste run)"
+            exit 1
+          fi
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           GHPAT: ${{ secrets.GHPAT }}
@@ -93,7 +120,10 @@ jobs:
             if git push; then ok=1; break; fi
             sleep 5
           done
-          [ "$ok" = "1" ] || echo "push da medição falhou (a próxima rodada cobre)"
+          if [ "$ok" != "1" ]; then
+            echo "::error::3 tentativas e a medição não entrou no main"
+            exit 1
+          fi
 
       - name: Acorda o vigia da casa (chat de e-mail)
         if: always()
