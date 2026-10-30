@@ -201,6 +201,20 @@ ok("o postador registra a escolha na memória de gosto", "registrar_escolha" in 
 ok("o feed medido é gravado pela medição (fonte do gosto aprendido)",
    "gravar_feed" in open(os.path.join(RAIZ, "tools", "metricas.py"), encoding="utf-8").read())
 
+# DOIS DEFEITOS MEDIDOS EM CI (30/10/2026), e o que impede a volta deles:
+# (a) `git stash push -u` levava embora o arquivo NOVO da memória do juízo (untracked) antes
+#     do commit — a memória existia no runner e não chegava ao repositório;
+# (b) `git add a b` com um caminho ausente aborta o add INTEIRO ("fatal: pathspec ... did not
+#     match any files"), então o feed medido e o perfil ficaram fora do commit sem aviso.
+_wf = open(os.path.join(RAIZ, ".github", "workflows", "postagem-diaria.yml"), encoding="utf-8").read()
+ok("o workflow não usa stash -u (não engole artefato novo)", "stash push -u" not in _wf)
+ok("o workflow adiciona arquivo por arquivo (caminho ausente não mata o add)",
+   "for _f in" in _wf and 'git add "$_f"' in _wf)
+ok("o workflow versiona feed, perfil e memória do juízo",
+   all(n in _wf for n in ("feed-medido.json", "perfil-de-gosto.json", "memoria-de-gosto.json")))
+ok("falha ao gravar a memória do juízo aparece no log (não é silenciosa)",
+   "memória do juízo não gravada" in _fonte)
+
 print()
 if FALHAS:
     print("%d de %d verificações do juízo FALHARAM" % (len(FALHAS), len(TOTAL)))

@@ -55,7 +55,9 @@ jobs:
           git add marketing.html posts/log.md posts/decisoes.json posts/decisoes.md posts/auditoria-inteligencia.json posts/auditoria-inteligencia.md posts/percebido.json posts/percebido.md posts/fila-tarefas.json
           if ! git diff --cached --quiet; then
             git commit -q -m "marketing: painel e log do ciclo ($(date -u +'%d/%m %H:%M UTC'))"
-            git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+            # Sem -u: artefato NOVO (não versionado ainda) não pode ser levado embora pelo stash,
+            # senão o juízo perde a memória dele antes do commit. Untracked não bloqueia rebase.
+            git stash push -q --keep-index -m "sobras-do-run" >/dev/null 2>&1 || true
             enviado=0
             for tentativa in 1 2 3; do
               if git fetch -q origin main && git rebase -q origin/main && git push; then
@@ -133,8 +135,12 @@ jobs:
           python3 tools/juizo.py || echo "juízo indisponível nesta rodada"
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
-          git add posts/desempenho.md posts/placar-metas.md posts/aprendizado.json \
-            posts/feed-medido.json posts/perfil-de-gosto.json posts/memoria-de-gosto.json 2>/dev/null || true
+          # Um `git add` por arquivo: com um caminho ausente o git aborta o add INTEIRO, e a
+          # medição (com o feed e o perfil do juízo) ficava fora do commit sem avisar.
+          for _f in posts/desempenho.md posts/placar-metas.md posts/aprendizado.json \
+                    posts/feed-medido.json posts/perfil-de-gosto.json posts/memoria-de-gosto.json; do
+            git add "$_f" 2>/dev/null || true
+          done
           git commit -m "📊 desempenho $(date -u +'%d/%m %H:%M')" || echo "sem mudança de medição"
           ok=0
           for i in 1 2 3; do

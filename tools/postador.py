@@ -834,8 +834,10 @@ def main():
                 _j = _juizo()
                 if _j is not None:
                     _j.registrar_escolha(texto, justificativa, detalhe_escolha, revisao=mudancas)
-            except Exception:
-                pass
+            except Exception as erro:
+                # Registro da escolha é memória, não publicação: falha aqui não derruba o ciclo —
+                # mas não pode ser silenciosa (memória que some sem aviso é pior que memória nenhuma).
+                motivo_geracao += " · memória do juízo não gravada (%s)" % str(erro)[:60]
         if candidato_gerado and not texto:
             motivo_geracao = ("reprovado pelo crivo editorial "
                               "(tamanho, link, hashtag, fato vencido ou repetição)")
