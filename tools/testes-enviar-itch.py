@@ -11,7 +11,9 @@ O que cerca:
   * jogo sem build declarado (PRANCHETA) é recusado em vez de "tentar e ver".
 """
 import importlib.util
+import json
 import os
+import pathlib
 import sys
 import tempfile
 
@@ -158,6 +160,25 @@ ok("mudança em NDJSON também é lida",
 ok("o status continua sendo somente leitura (nenhum push, nenhum commit)",
    all("push" not in c for c in _falso.chamadas), str(_falso.chamadas))
 
+# O carimbo de versão vai como --userversion (é o que permite dizer QUAL build está no ar) e o
+# usuário/nome do pacote NÃO pode conter segredo nem caminho absoluto.
+import shutil as _sh, tempfile as _tmp
+_carimbo = pathlib.Path(_tmp.mkdtemp())
+(_carimbo / "index.html").write_text("x")
+(_carimbo / "index.wasm").write_text("y")
+(_carimbo / "index.pck").write_text("z")
+(_carimbo / "versao-build.json").write_text('{"versao": "2026.10.30-1930"}', encoding="utf-8")
+_original = itch.BUILDS["ceifalume"]["pasta"]
+itch.BUILDS["ceifalume"]["pasta"] = str(_carimbo)
+_f_v = ButlerFalso()
+_ok_v, _msg_v = itch.enviar("ceifalume", "html5", "PUBLICAR", raiz=RAIZ, identidade="/x", executar=_f_v)
+itch.BUILDS["ceifalume"]["pasta"] = _original
+_linha_v = _f_v.chamadas[-1]
+ok("o carimbo de versão vai como --userversion", "--userversion" in _linha_v
+   and "2026.10.30-1930" in _linha_v, str(_linha_v))
+ok("o envio continua pedindo --assume-yes e --hidden", "--assume-yes" in _linha_v and "--hidden" in _linha_v)
+_sh.rmtree(_carimbo, ignore_errors=True)
+
 # ---------------------------------------------------------------- push exige palavra
 _falso2 = ButlerFalso()
 ok_n, msg_n = itch.enviar("ceifalume", "html5", "", raiz=RAIZ, identidade="/x", executar=_falso2)
@@ -217,6 +238,28 @@ if os.path.exists(_kit):
     ok("o kit manda marcar SharedArrayBuffer (build 4.0.10 exige)", "SharedArrayBuffer support" in _k)
     ok("o kit não promete página da PRANCHETA sem build", "PRANCHETA" in _k and "não há o que enviar" in _k)
     ok("o kit deixa claro que devlog é na mão", "não tem API" in _k or "sem API" in _k)
+
+# A página do itch é montada a partir DESTE build (o itch não tem API para editar página nem
+# devlog, e o desafio da Cloudflare não passa nem com navegador: medido em 30/10 nos três
+# sistemas de runner e com Chromium sob Xvfb, 96 s, locale pt-BR). Ou seja: o único jeito de o
+# jogador do itch ver o vídeo é o selo dentro do build.
+_build_html = open(os.path.join(RAIZ, "ceifalume", "index.html"), encoding="utf-8").read()
+ok("o build leva o vídeo de gameplay para dentro do jogo",
+   'href="https://youtu.be/GuE7af6dYo8"' in _build_html, "sem selo do gameplay")
+ok("o selo tem texto de botão (não é link solto)",
+   "gameplay com instruções" in _build_html, "sem rótulo")
+ok("o selo diz para onde leva (title acessível)",
+   "title=\"Ver o gameplay gravado" in _build_html, "sem title")
+ok("o selo não fica em cima do canvas nem come o clique do jogo",
+   "position:fixed" in _build_html and "bottom:10px" in _build_html
+   and "pointer-events:none" not in _build_html, "posicionamento suspeito")
+ok("o selo abre em aba nova sem entregar a sessão",
+   'rel="noopener"' in _build_html and 'target="_blank"' in _build_html, "link sem noopener")
+ok("o vídeo citado pelo selo é o que está no kit oficial",
+   "GuE7af6dYo8" in json.load(open(os.path.join(RAIZ, "posts", "kit-gameplay.json"),
+                                  encoding="utf-8"))["pacotes"][0]["descricao"]
+   or "GuE7af6dYo8" in open(os.path.join(RAIZ, "posts", "youtube-publicados.json"),
+                            encoding="utf-8").read(), "vídeo fora do registro")
 
 print("\n%d/%d testes do envio ao itch passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)

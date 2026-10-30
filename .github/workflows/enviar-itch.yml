@@ -63,6 +63,25 @@ jobs:
           /tmp/butler/butler version
           echo "BUTLER_PATH=/tmp/butler/butler" >> "$GITHUB_ENV"
 
+      # REQUISITO DO DONO: o vídeo de gameplay precisa chegar em quem joga. A página do itch não
+      # pode ser editada por servidor (sem API, e o desafio da Cloudflare não passa nem com
+      # Chromium real — medido em 30/10 nos 3 runners e sob Xvfb). O caminho que existe é o build:
+      # ele carrega o selo que abre o vídeo. Então todo push leva um carimbo de versão, e o
+      # carimbo entra num arquivo do pacote — é isso que faz o butler ver diferença e publicar.
+      - name: Carimba a versão do build (só no push confirmado)
+        if: inputs.modo == 'push'
+        run: |
+          data=$(date -u +%Y.%m.%d-%H%M)
+          python3 - "$data" <<'PY'
+          import json, sys
+          data = sys.argv[1]
+          with open("ceifalume/versao-build.json", "w", encoding="utf-8") as f:
+              json.dump({"versao": data, "selo_gameplay": "https://youtu.be/GuE7af6dYo8"}, f,
+                        ensure_ascii=False, indent=1)
+          print("build carimbado:", data)
+          PY
+          echo "VERSAO_BUILD=$data" >> "$GITHUB_ENV"
+
       - name: Status (somente leitura) ou envio confirmado
         env:
           ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
