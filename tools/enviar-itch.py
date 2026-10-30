@@ -163,7 +163,10 @@ def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=No
             # `butler status alvo:canal` devolve a mesma tabela de canais (medido em 30/10):
             # não é diff, então não respondia nada. Quem compara pasta local com o build no
             # ar é `butler diff <pasta> <alvo:canal>`.
-            cod, dif = rodar(["diff", _pasta, alvo_canal], identidade=identidade,
+            # ORDEM MEDIDA em 30/10 (run 41084326374): `butler diff <alvo:canal> <pasta>`. Ao
+            # contrário, o butler trata o alvo como caminho de pasta e devolve "walking source
+            # as directory: open rebocl-brank/ceifalume:html5: no such file".
+            cod, dif = rodar(["diff", alvo_canal, _pasta], identidade=identidade,
                              executar=executar, chave=chave)
             linhas.append("--- diferença de %s contra a pasta local ---" % alvo_canal)
             if cod == 0:
