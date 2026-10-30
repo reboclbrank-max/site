@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-30T20:24:46Z",
+ "quando": "2026-10-30T21:09:09Z",
  "itens": [
   {
    "id": "itch-devlog-gameplay",
@@ -31,7 +31,7 @@
   "itch-build-selo",
   "itch-devlog-gameplay"
  ],
- "mudou_desde_o_ultimo": false,
+ "mudou_desde_o_ultimo": true,
  "devlog_publico_titulos": [
   "1 semana de Ceifalume: o que vem na 0.2 (e eu quero sua opinião)",
   "0.1 no ar: a fazenda não dorme"

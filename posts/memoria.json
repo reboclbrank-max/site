@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-30T20:01:26Z",
+ "quando": "2026-10-30T21:09:10Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
@@ -46,9 +46,9 @@
   {
    "formato": "conteúdo dos jogos",
    "posts": 89,
-   "media": 1.92,
-   "zeros": 15,
-   "zeros_pct": 16.9
+   "media": 1.91,
+   "zeros": 16,
+   "zeros_pct": 18.0
   },
   {
    "formato": "comentário em post alheio",
@@ -59,30 +59,6 @@
   }
  ],
  "ultimos_ciclos": [
-  {
-   "quando": "29/10/2026 13:49 UTC",
-   "canais": {
-    "cerebro": "✅ post novo validado — motor=g4f lightning",
-    "destino editorial": "✅ rota oficial prancheta",
-    "tema do ciclo": "✅ apresente o PRANCHETA pra quem curte manager de futebol",
-    "ntfy (push do dono)": "✅ push 200",
-    "telegram": "⚪ configuracao de publicacao ausente",
-    "bluesky": "✅ postado 200",
-    "mastodon": "⚪ configuracao de publicacao ausente",
-    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
-    "instagram": "✅ postado id 17911941012306 (arte reserva)",
-    "threads": "✅ publicado id 181696732394",
-    "nostr": "✅ nota em 2 relays",
-    "discord": "⚪ configuracao de publicacao ausente",
-    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
-    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
-    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
-    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
-    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
-    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
-    "regua de metas (medicao)": "✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=26(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
-   }
-  },
   {
    "quando": "29/10/2026 18:31 UTC",
    "canais": {
@@ -170,6 +146,30 @@
     "threads": "✅ publicado id 180820440414",
     "nostr": "✅ nota em 2 relays",
     "discord": "⚪ configuracao de publicacao ausente",
+    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)",
+    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)",
+    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
+    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
+    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
+    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
+    "regua de metas (medicao)": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
+   }
+  },
+  {
+   "quando": "30/10/2026 21:04 UTC",
+   "canais": {
+    "cerebro": "✅ post novo validado — motor=g4f auto",
+    "destino editorial": "✅ rota oficial catalogo",
+    "tema do ciclo": "✅ converse sobre vida de dev solo no Brasil e cite os jogos",
+    "ntfy (push do dono)": "✅ push 200",
+    "telegram": "⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT",
+    "bluesky": "✅ postado 200",
+    "mastodon": "⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN",
+    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
+    "instagram": "➖ instagram ja postou ha 5.2h (minimo 6h entre posts)",
+    "threads": "✅ publicado id 181372609066",
+    "nostr": "✅ nota em 2 relays",
+    "discord": "⚪ falta o segredo DISCORD_WEBHOOK",
     "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)",
     "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)",
     "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",

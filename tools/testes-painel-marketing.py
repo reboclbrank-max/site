@@ -11,6 +11,7 @@ O painel é a vitrine da autonomia. Se ele mentir, a autonomia vira propaganda:
 """
 import importlib.util
 import os
+import datetime
 import re
 import sys
 import tempfile
@@ -50,10 +51,26 @@ ok("explica que a autonomia não pede aprovação", "sem aprovação manual" in 
 ok("mostra o último ciclo", "Último ciclo" in t)
 
 # O log é cronológico: o painel NÃO pode mostrar o primeiro bloco como se fosse o mais novo.
+# A checagem é sobre a ORDEM, não sobre uma data cravada (o log cresce a cada ciclo).
+def _dt(q):
+    return datetime.datetime.strptime(q.replace(" UTC", ""), "%d/%m/%Y %H:%M")
+
+
 _log = painel.ler_log()
+_datas = [_dt(c["quando"]) for c in _log if c.get("quando")]
 ok("os ciclos vêm do mais novo para o mais antigo",
-   len(_log) >= 2 and _log[0]["quando"] == "30/10/2026 18:03 UTC"
-   if _log else False, _log[0]["quando"] if _log else "sem log")
+   len(_datas) >= 2 and _datas == sorted(_datas, reverse=True),
+   "%d ciclos · topo=%s" % (len(_datas), _datas[0].strftime("%d/%m/%Y %H:%M") if _datas else "sem log"))
+
+# E o log de teste (fora de ordem) tem de sair ordenado do mais novo para o mais antigo.
+_fixture = (
+    "# Log\n\n## 01/01/2026 03:00 UTC\n\n| canal | resultado |\n| --- | --- |\n| bluesky | OK |\n\n"
+    "## 02/01/2026 03:00 UTC\n\n| canal | resultado |\n| --- | --- |\n| bluesky | OK |\n"
+)
+_cru = painel.ciclos_do_texto(_fixture)
+ok("o painel reordena mesmo quando o arquivo está fora de ordem",
+   [c["quando"] for c in _cru] == ["02/01/2026 03:00 UTC", "01/01/2026 03:00 UTC"],
+   [c["quando"] for c in _cru])
 ok("cada ciclo traz as linhas de canal", bool(_log) and "bluesky" in _log[0]["linhas"])
 
 _ok_bs, _ind_bs, _ = painel.contar(_log, "bluesky")
