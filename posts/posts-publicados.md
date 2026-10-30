@@ -283,3 +283,6 @@ Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática pura no Godot. 
 
 ## 30/10/2026 15:58 UTC
 💰 No CEIFALUME o preço do mercado muda todo dia. ⏎ Vender tudo de uma vez é o jeito fácil de ganhar menos.
+
+## 30/10/2026 18:03 UTC
+Tática na PRANCHETA (grátis, Godot, Brasil) ou lavoura noturna no CEIFALUME 0.1 (cresce 8h offline). Dois jeitos de jogar, uma paixão solo dev. 🇧🇷💚 #PRANCHETA #CEIFALUME
