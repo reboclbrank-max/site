@@ -2264,3 +2264,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=27(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática pura no Godot. Desenhe jogadas, simule grátis no navegador/APK. CEIFALUME 0.1: fazenda idle notu
+
+## 30/10/2026 15:58 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ⚪ fila de reserva — nenhum motor de texto respondeu (g4f auto: HTTP Error 504: Gateway Timeout; g4f lightning: HTTP Error 504: Gateway Timeout) |
+| destino editorial | ✅ rota oficial ceifalume |
+| tema do ciclo | ✅ explique por que o PRANCHETA ser 100% ficticio e um ponto forte |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ configuracao de publicacao ausente |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ configuracao de publicacao ausente |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18134864335669 (arte reserva) |
+| threads | ✅ publicado id 180248778959 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ configuracao de publicacao ausente |
+| respondedor de conversa | ➖ 4 resposta(s) pendente(s), nenhuma passou no freio de texto |
+| cacador de oportunidades | ✅ 3 de 3 interacoes do dia (q=#indiedev) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
+| censo mundial | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> 💰 No CEIFALUME o preço do mercado muda todo dia. · Vender tudo de uma vez é o jeito fácil de ganhar menos.
