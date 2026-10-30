@@ -1,6 +1,6 @@
 # Livro de decisões da casa
 
-Gerado em 2026-10-30T23:31:31Z a partir dos próprios registros do repositório.
+Gerado em 2026-10-30T23:53:16Z a partir dos próprios registros do repositório.
 
 > decidir com número na mão, declarar a recusa e nomear a ignorância. Decisão sem número não entra.
 
