@@ -107,6 +107,12 @@ def pagina():
                                     encoding="utf-8")).get("publicados") or []
     except (OSError, ValueError):
         pass
+    percebido = {}
+    try:
+        percebido = json.load(open(os.path.join(RAIZ, "posts", "percebido.json"),
+                                   encoding="utf-8"))
+    except (OSError, ValueError):
+        pass
     auditoria = {}
     try:
         auditoria = json.load(open(os.path.join(RAIZ, "posts", "auditoria-inteligencia.json"),
@@ -213,6 +219,25 @@ def pagina():
                c.get("ritual", 0), html.escape(str(rep.get("corte", "?"))),
                rep.get("repetidos", 0), rep.get("ciclos", 0), rep.get("pct", 0.0), linhas_aud))
 
+    precisa_html = ""
+    if percebido.get("contagem"):
+        def _lista2(itens, titulo):
+            if not itens:
+                return "<h3>%s</h3><p class='peq'>Nada nesta rodada.</p>" % titulo
+            corpo = "".join(
+                "<li><b>%s</b> — %s<br><span class='mono'>como: %s · verifica: %s</span></li>"
+                % (html.escape(i["o_que"]), html.escape(i["porque"]),
+                   html.escape(i["como"]), html.escape(i["verifica"]))
+                for i in itens)
+            return "<h3>%s (%d)</h3><ul class='log'>%s</ul>" % (titulo, len(itens), corpo)
+        precisa_html = (
+            "<h2>O que precisa ser feito agora</h2>"
+            "<p class='peq'>Isto não é o relógio da casa: é a leitura do estado, feita pelo "
+            "próprio ciclo. O robô já põe na fila o que ele pode resolver; o resto vem com o "
+            "nome do que falta.</p>"
+            + _lista2(percebido.get("robo") or [], "O robô já assumiu")
+            + _lista2(percebido.get("dono") or [], "Só o dono pode destravar"))
+
     agora = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
     return """<!DOCTYPE html>
 <html lang="pt-BR"><head><meta charset="UTF-8">
@@ -251,6 +276,7 @@ Página gerada pelo próprio repositório a cada rodada.</p>
 %(ultimo)s
 %(decisoes)s
 %(auditoria)s
+%(precisa)s
 %(pend)s
 <footer>Gerado em %(agora)s pelo workflow postagem-diaria ·
 <a href="%(base)s/">site</a> · <a href="%(base)s/canais.html">canais oficiais</a> ·
@@ -258,7 +284,7 @@ Página gerada pelo próprio repositório a cada rodada.</p>
 </main></body></html>
 """ % {"base": BASE, "cartoes": cartoes_html, "canais": "".join(linhas_canal),
        "ultimo": ultimo_html, "decisoes": decisoes_html, "pend": pend_html,
-       "auditoria": audit_html,
+       "auditoria": audit_html, "precisa": precisa_html,
        "agora": agora}
 
 

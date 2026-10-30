@@ -1,0 +1,59 @@
+{
+ "quando": "2026-10-30T23:04:38Z",
+ "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
+ "robo": [
+  {
+   "o_que": "empurrar a meta: Instagram: seguidores",
+   "porque": "faltam 50 e o ritmo necessário é 3.85 por dia",
+   "quem": "robô",
+   "como": "priorizar essa meta no próximo ciclo editorial",
+   "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
+   "tipo_fila": "publicar",
+   "chave": "meta-Instagram: seguidores"
+  },
+  {
+   "o_que": "empurrar a meta: itch: downloads",
+   "porque": "faltam 54 e o ritmo necessário é 4.15 por dia",
+   "quem": "robô",
+   "como": "priorizar essa meta no próximo ciclo editorial",
+   "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
+   "tipo_fila": "publicar",
+   "chave": "meta-itch: downloads"
+  }
+ ],
+ "dono": [
+  {
+   "o_que": "ligar o canal telegram",
+   "porque": "nunca publicou em 20 ciclos: falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT",
+   "quem": "dono",
+   "como": "criar o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT em Settings → Secrets → Actions",
+   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
+   "tipo_fila": null,
+   "chave": "dono-segredo-telegram"
+  },
+  {
+   "o_que": "ligar o canal mastodon",
+   "porque": "nunca publicou em 20 ciclos: falta o segredo MASTODON_URL + MASTODON_TOKEN",
+   "quem": "dono",
+   "como": "criar o segredo MASTODON_URL + MASTODON_TOKEN em Settings → Secrets → Actions",
+   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
+   "tipo_fila": null,
+   "chave": "dono-segredo-mastodon"
+  },
+  {
+   "o_que": "ligar o canal discord",
+   "porque": "nunca publicou em 20 ciclos: falta o segredo DISCORD_WEBHOOK",
+   "quem": "dono",
+   "como": "criar o segredo DISCORD_WEBHOOK em Settings → Secrets → Actions",
+   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
+   "tipo_fila": null,
+   "chave": "dono-segredo-discord"
+  }
+ ],
+ "enfileiradas": [],
+ "contagem": {
+  "robo": 2,
+  "dono": 3,
+  "enfileiradas": 0
+ }
+}

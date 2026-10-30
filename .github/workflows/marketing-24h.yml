@@ -36,6 +36,7 @@ jobs:
         run: |
           python3 tools/testes-janela.py
           python3 tools/testes-orquestrador.py
+          python3 tools/testes-perceber.py
           python3 tools/testes-autonomia-marketing.py
           node tools/montar-bookmarklet.js --verificar
           node tools/testes-bookmarklet-itch.js
@@ -55,13 +56,16 @@ jobs:
           NTFY_TOPICO: ${{ secrets.NTFY_TOPICO }}
         run: |
           pip install -q coincurve websocket-client
+          # O olho antes do relógio: perceber() enfileira o que está faltando (arquivo parado,
+          # canal cego, meta em risco, repetição alta). O pulso já dá prioridade à fila.
+          python3 tools/perceber.py
           python3 tools/orquestrador.py
 
       - name: Registra o pulso no repositório
         run: |
           git config user.name "rebocl"
           git config user.email "reboclbrank@gmail.com"
-          git add posts/orquestrador.json posts/calendario.json posts/plano-do-dia.json posts/aprendizado.json posts/log.md posts/posts-publicados.md 2>/dev/null || true
+          git add posts/orquestrador.json posts/calendario.json posts/plano-do-dia.json posts/aprendizado.json posts/log.md posts/posts-publicados.md posts/fila-tarefas.json posts/percebido.json posts/percebido.md 2>/dev/null || true
           git commit -m "🤖 pulso 24h $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
           for i in 1 2 3; do
             if git pull --rebase -q origin main && git push -q origin main; then

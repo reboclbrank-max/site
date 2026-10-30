@@ -47,6 +47,7 @@ jobs:
           python3 tools/testes-decisoes.py
           python3 tools/testes-aprender-horario.py
           python3 tools/testes-auditar-inteligencia.py
+          python3 tools/testes-perceber.py
 
       - name: Mede o que foi postado e o que voltou (só leitura)
         env:
