@@ -129,6 +129,18 @@ ok("canal sem build anterior é DIFERENTE (não 'igual por zero diferença')",
 ok("saída sem JSON não vira igualdade", itch.interpretar_preview("texto solto").startswith("DIFERENTE"))
 ok("butler mudo é INDEFINIDO, não sucesso", itch.interpretar_preview("").startswith("INDEFINIDO"))
 ok("a resposta traz os números medidos, não só o veredito", "0 novos" in itch.interpretar_preview(_igual))
+# O butler escreve NDJSON (um objeto por linha) e a linha do resultado vem no fim. Ler o arquivo
+# inteiro como um objeto só falhava — foi o que aconteceu no run 41085015285.
+_ndjson = "\n".join([
+    '{"level":"info","message":"• Comparing against build 2217549 on channel `html5`...","type":"log"}',
+    '{"level":"info","message":"SAME      -rw-r--r--  33.34 KiB icone-marca-512.png","type":"log"}',
+    _igual,
+])
+ok("linha de resultado do NDJSON é encontrada no fim da saída",
+   itch.interpretar_preview(_ndjson).startswith("IGUAL"), itch.interpretar_preview(_ndjson)[:120])
+_ndjson_muda = '{"level":"info","message":"• Hashing","type":"log"}\n' + _muda
+ok("mudança em NDJSON também é lida",
+   itch.interpretar_preview(_ndjson_muda).startswith("DIFERENTE"))
 ok("o status continua sendo somente leitura (nenhum push, nenhum commit)",
    all("push" not in c for c in _falso.chamadas), str(_falso.chamadas))
 
