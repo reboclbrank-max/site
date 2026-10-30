@@ -8,6 +8,10 @@ name: provar-youtube
 on:
   workflow_dispatch:
 
+concurrency:
+  group: provar-youtube
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

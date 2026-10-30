@@ -15,6 +15,10 @@ name: autorizar-youtube
 on:
   workflow_dispatch:
 
+concurrency:
+  group: autorizar-youtube
+  cancel-in-progress: false
+
 permissions:
   contents: write   # só para publicar o código de uso único em posts/codigo-autorizacao.txt
 

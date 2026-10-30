@@ -7,6 +7,10 @@ name: sondar-itch-navegador
 on:
   workflow_dispatch:
 
+concurrency:
+  group: sondar-itch-navegador
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

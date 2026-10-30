@@ -1,6 +1,14 @@
 {
  "publicados": [
   {
+   "id": "VIDEO123",
+   "url": "https://youtu.be/VIDEO123",
+   "slug": "ceifalume",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
+   "arquivo": "media/ceifalume/ceifalume-trailer-0.1.mp4",
+   "quando": "2026-10-30T19:49:12Z"
+  },
+  {
    "id": "GuE7af6dYo8",
    "url": "https://youtu.be/GuE7af6dYo8",
    "slug": "ceifalume-gameplay",

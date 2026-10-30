@@ -3,11 +3,16 @@ on:
   schedule:
     - cron: '9,29,49 * * * *'
   workflow_dispatch:
+concurrency:
+  group: despertador
+  cancel-in-progress: false
+
 permissions:
   contents: read
 jobs:
   acorda:
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - name: Chama o vigia do chat (e o turno, se preciso)
         run: |

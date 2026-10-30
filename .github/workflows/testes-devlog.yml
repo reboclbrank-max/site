@@ -15,6 +15,10 @@ on:
       - 'posts/devlog-itch.json'
       - '.github/workflows/testes-devlog.yml'
 
+concurrency:
+  group: testes-devlog
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

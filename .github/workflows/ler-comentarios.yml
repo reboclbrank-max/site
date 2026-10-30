@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "27 12 * * *"
+concurrency:
+  group: ler-comentarios
+  cancel-in-progress: false
+
 permissions:
   contents: read
 jobs:

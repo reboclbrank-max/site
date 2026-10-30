@@ -1,12 +1,12 @@
 {
- "quando": "2026-10-27T13:02:52Z",
+ "quando": "2026-10-30T19:49:10Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
    "alvo": "30",
-   "observado": "20",
-   "falta": "10",
-   "por_dia": "0.62",
+   "observado": "18",
+   "falta": "12",
+   "por_dia": "0.92",
    "status": "EM_CURSO"
   },
   {
@@ -14,39 +14,15 @@
    "alvo": "50",
    "observado": "0",
    "falta": "50",
-   "por_dia": "3.12",
+   "por_dia": "3.85",
    "status": "EM_CURSO"
-  },
-  {
-   "meta": "Bluesky: seguidores",
-   "alvo": "50",
-   "observado": "32",
-   "falta": "18",
-   "por_dia": "1.12",
-   "status": "EM_CURSO"
-  },
-  {
-   "meta": "YouTube: inscritos",
-   "alvo": "40",
-   "observado": "24",
-   "falta": "16",
-   "por_dia": "1.0",
-   "status": "EM_CURSO"
-  },
-  {
-   "meta": "YouTube: shorts",
-   "alvo": "4",
-   "observado": "5",
-   "falta": "0",
-   "por_dia": "—",
-   "status": "ATINGIDO"
   },
   {
    "meta": "itch: downloads",
    "alvo": "100",
    "observado": "46",
    "falta": "54",
-   "por_dia": "3.38",
+   "por_dia": "4.15",
    "status": "EM_CURSO"
   },
   {
@@ -60,7 +36,7 @@
   {
    "meta": "itch: visitas",
    "alvo": "—",
-   "observado": "184",
+   "observado": "175",
    "falta": "—",
    "por_dia": "—",
    "status": "ACOMPANHADA"
@@ -69,136 +45,138 @@
  "formatos": [
   {
    "formato": "conteúdo dos jogos",
-   "posts": 83,
-   "media": 2.05,
-   "zeros": 10,
-   "zeros_pct": 12.0
+   "posts": 89,
+   "media": 1.92,
+   "zeros": 15,
+   "zeros_pct": 16.9
   },
   {
    "formato": "comentário em post alheio",
-   "posts": 217,
-   "media": 0.84,
-   "zeros": 90,
-   "zeros_pct": 41.5
+   "posts": 211,
+   "media": 0.87,
+   "zeros": 88,
+   "zeros_pct": 41.7
   }
  ],
  "ultimos_ciclos": [
   {
-   "quando": "25/10/2026 23:18 UTC",
+   "quando": "29/10/2026 13:49 UTC",
    "canais": {
-    "cerebro": "✅ fila de reserva (gerado reprovado/indisponivel)",
+    "cerebro": "✅ post novo validado — motor=g4f lightning",
     "destino editorial": "✅ rota oficial prancheta",
+    "tema do ciclo": "✅ apresente o PRANCHETA pra quem curte manager de futebol",
     "ntfy (push do dono)": "✅ push 200",
     "telegram": "⚪ configuracao de publicacao ausente",
     "bluesky": "✅ postado 200",
     "mastodon": "⚪ configuracao de publicacao ausente",
     "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
-    "instagram": "✅ postado id 18088963826274 (arte reserva)",
-    "threads": "✅ publicado id 181484045595",
+    "instagram": "✅ postado id 17911941012306 (arte reserva)",
+    "threads": "✅ publicado id 181696732394",
     "nostr": "✅ nota em 2 relays",
     "discord": "⚪ configuracao de publicacao ausente",
-    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-25)",
-    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-25)",
+    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
+    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
     "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
     "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
     "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
     "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
-    "regua de metas (medicao)": "✅ bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=18(api) · itch_downloads=NAO_OBSERVAVEL · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL · youtube=NAO_OBSERVAVEL (fotografia ja r"
+    "regua de metas (medicao)": "✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=26(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
    }
   },
   {
-   "quando": "26/10/2026 04:53 UTC",
+   "quando": "29/10/2026 18:31 UTC",
    "canais": {
     "cerebro": "✅ post novo validado — motor=g4f auto",
     "destino editorial": "✅ rota oficial catalogo",
-    "tema do ciclo": "✅ fale da alegria do primeiro jogador que nao e da familia",
+    "tema do ciclo": "✅ apresente o CEIFALUME 0.1 para quem curte idle de fazenda noturna",
     "ntfy (push do dono)": "✅ push 200",
     "telegram": "⚪ configuracao de publicacao ausente",
     "bluesky": "✅ postado 200",
     "mastodon": "⚪ configuracao de publicacao ausente",
     "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
     "instagram": "➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC",
-    "threads": "✅ publicado id 180428200166",
+    "threads": "✅ publicado id 179531273160",
     "nostr": "✅ nota em 1 relays",
     "discord": "⚪ configuracao de publicacao ausente",
-    "respondedor de conversa": "➖ 3 resposta(s) pendente(s), nenhuma passou no freio de texto",
-    "cacador de oportunidades": "✅ 3 de 3 interacoes do dia (q=#screenshotsaturday)",
+    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
+    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
+    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
+    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
+    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
+    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
+    "regua de metas (medicao)": "✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=26(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
+   }
+  },
+  {
+   "quando": "29/10/2026 23:30 UTC",
+   "canais": {
+    "cerebro": "✅ post novo validado — motor=g4f auto",
+    "destino editorial": "✅ rota oficial catalogo",
+    "tema do ciclo": "✅ convide pra testar o PRANCHETA e contar qual modo prefere (lances ao vivo ou ins",
+    "ntfy (push do dono)": "✅ push 200",
+    "telegram": "⚪ configuracao de publicacao ausente",
+    "bluesky": "✅ postado 200",
+    "mastodon": "⚪ configuracao de publicacao ausente",
+    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
+    "instagram": "✅ postado id 18100088000401 (arte reserva)",
+    "threads": "✅ publicado id 180792946314",
+    "nostr": "✅ nota em 2 relays",
+    "discord": "⚪ configuracao de publicacao ausente",
+    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
+    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
+    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
+    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
+    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
+    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
+    "regua de metas (medicao)": "✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=27(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
+   }
+  },
+  {
+   "quando": "30/10/2026 15:58 UTC",
+   "canais": {
+    "cerebro": "⚪ fila de reserva — nenhum motor de texto respondeu (g4f auto: HTTP Error 504: Gateway Timeout; g4f lightning: HTTP Error 504: Gateway Timeout)",
+    "destino editorial": "✅ rota oficial ceifalume",
+    "tema do ciclo": "✅ explique por que o PRANCHETA ser 100% ficticio e um ponto forte",
+    "ntfy (push do dono)": "✅ push 200",
+    "telegram": "⚪ configuracao de publicacao ausente",
+    "bluesky": "✅ postado 200",
+    "mastodon": "⚪ configuracao de publicacao ausente",
+    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
+    "instagram": "✅ postado id 18134864335669 (arte reserva)",
+    "threads": "✅ publicado id 180248778959",
+    "nostr": "✅ nota em 2 relays",
+    "discord": "⚪ configuracao de publicacao ausente",
+    "respondedor de conversa": "➖ 4 resposta(s) pendente(s), nenhuma passou no freio de texto",
+    "cacador de oportunidades": "✅ 3 de 3 interacoes do dia (q=#indiedev)",
     "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
     "descobridor de redes": "✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee",
     "censo mundial": "✅ mundo medido: redes-ativas=52 · redes-mortas=35",
     "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
-    "regua de metas (medicao)": "✅ bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=18(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
+    "regua de metas (medicao)": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
    }
   },
   {
-   "quando": "26/10/2026 13:09 UTC",
-   "canais": {
-    "cerebro": "⚪ fila de reserva — motor=g4f auto · convite da ponte anexado (motor não citou o Instagram)",
-    "destino editorial": "✅ rota oficial canais",
-    "tema do ciclo": "✅ convide quem joga no navegador a seguir a conta no Instagram",
-    "ntfy (push do dono)": "✅ push 200",
-    "telegram": "⚪ configuracao de publicacao ausente",
-    "bluesky": "✅ postado 200",
-    "mastodon": "⚪ configuracao de publicacao ausente",
-    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
-    "instagram": "✅ postado id 18138821983727 (arte reserva)",
-    "threads": "✅ publicado id 181035173455",
-    "nostr": "✅ nota em 2 relays",
-    "discord": "⚪ configuracao de publicacao ausente",
-    "respondedor de conversa": "❌ HTTP Error 502: Bad Gateway",
-    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-26)",
-    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
-    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
-    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
-    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
-    "regua de metas (medicao)": "✅ bsky_seguidores=34(api) · ig_seguidores=0(api) · ig_posts=19(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
-   }
-  },
-  {
-   "quando": "26/10/2026 23:51 UTC",
+   "quando": "30/10/2026 18:03 UTC",
    "canais": {
     "cerebro": "✅ post novo validado — motor=g4f auto",
     "destino editorial": "✅ rota oficial catalogo",
-    "tema do ciclo": "✅ pergunte: futebol com amigos ou gerir o clube sozinho?",
+    "tema do ciclo": "✅ dica tatica curta que funciona no PRANCHETA",
     "ntfy (push do dono)": "✅ push 200",
     "telegram": "⚪ configuracao de publicacao ausente",
     "bluesky": "✅ postado 200",
-    "mastodon": "⚪ configuracao de publicacao ausente",
-    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
-    "instagram": "✅ postado id 17999192060824 (arte reserva)",
-    "threads": "✅ publicado id 179905979490",
-    "nostr": "✅ nota em 1 relays",
-    "discord": "⚪ configuracao de publicacao ausente",
-    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-26)",
-    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-26)",
-    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
-    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
-    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
-    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
-    "regua de metas (medicao)": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=20(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
-   }
-  },
-  {
-   "quando": "27/10/2026 12:10 UTC",
-   "canais": {
-    "cerebro": "✅ post novo validado — motor=g4f auto",
-    "destino editorial": "✅ rota oficial catalogo",
-    "tema do ciclo": "✅ fale dos sons e musicas que combinam com CEIFALUME",
-    "ntfy (push do dono)": "✅ push 200",
-    "telegram": "⚪ configuracao de publicacao ausente",
-    "bluesky": "⚪ configuracao de publicacao ausente",
     "mastodon": "⚪ configuracao de publicacao ausente",
     "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
     "instagram": "➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC",
-    "threads": "⚪ configuracao de publicacao ausente",
-    "nostr": "⚪ configuracao de publicacao ausente",
+    "threads": "✅ publicado id 180820440414",
+    "nostr": "✅ nota em 2 relays",
     "discord": "⚪ configuracao de publicacao ausente",
-    "cacador de oportunidades": "⚪ configuracao do canal ausente",
+    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)",
+    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)",
     "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
-    "descobridor de redes": "✅ sem GHPAT no ambiente",
-    "censo mundial": "✅ sem GHPAT",
-    "vigia da caixa (auto-recovery)": "✅ cofare sem gmail",
-    "regua de metas (medicao)": "✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=20(api) · itch_downloads=46(api) · itch_visitas=184(api) · youtube_inscritos=24(api) · youtube_shorts=5(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER"
+    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
+    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
+    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
+    "regua de metas (medicao)": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
    }
   }
  ],

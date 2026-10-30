@@ -3,6 +3,10 @@ name: conferir-comentarios
 # Só leitura + videos.rate com nota "none" (não altera nada).
 on:
   workflow_dispatch:
+concurrency:
+  group: conferir-comentarios
+  cancel-in-progress: false
+
 permissions:
   contents: read
 jobs:

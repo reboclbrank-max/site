@@ -2,6 +2,10 @@ name: limpar-youtube
 # Apaga os vídeos de sonda das minhas medições. Nunca toca em vídeo do dono.
 on:
   workflow_dispatch:
+concurrency:
+  group: limpar-youtube
+  cancel-in-progress: false
+
 permissions:
   contents: read
 jobs:

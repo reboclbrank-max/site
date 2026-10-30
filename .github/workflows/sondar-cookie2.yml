@@ -7,6 +7,10 @@ name: sondar-cookie2
 on:
   workflow_dispatch:
 
+concurrency:
+  group: sondar-cookie2
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
