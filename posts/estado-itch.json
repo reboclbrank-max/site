@@ -1,16 +1,15 @@
 {
-  "quando": "2026-10-26T18:41:03Z",
+  "quando": "2026-10-30T15:41:06Z",
   "modo": "ler",
   "caminho": "",
-  "cookie": "desconhecido",
+  "cookie": "2 cookie(s): itchio, itchio_token - 278 caracteres",
   "sessao": "",
-  "resultado": "FALHOU sem caminho de edicao: rode com 'caminho' preenchido ou com ITCH_COOKIE no repositorio",
+  "resultado": "",
   "resumo": [
-    "id do jogo pela API: 5017404",
-    "dashboard: HTTP 403",
-    "/dashboard/game/5017404/edit: HTTP 404",
-    "/dashboard/game/5017404: HTTP 404",
-    "FALHOU sem caminho de edicao: rode com 'caminho' preenchido ou com ITCH_COOKIE no repositorio"
+    "caminho de edicao: /dashboard/game/5017404/edit",
+    "cookie: 2 cookie(s): itchio, itchio_token - 278 caracteres",
+    "SEM RESPOSTA sessao: bloqueado pela Cloudflare: /dashboard devolve 403 a partir daqui, inclusive sem cookie — nao e a sessao, e o IP",
+    "· isto nao e sessao invalida: e o itch fechando a porta para este IP"
   ],
-  "run": "https://github.com/reboclbrank-max/site/actions/runs/40379876042"
+  "run": "https://github.com/reboclbrank-max/site/actions/runs/41082945952"
 }
