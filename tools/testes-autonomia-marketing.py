@@ -274,5 +274,34 @@ if _devlog_video.is_file():
     verifica("o calendário registra que esse passo é do dono, com o motivo",
              "403" in json.dumps(json.loads((RAIZ / "posts/calendario.json").read_text(encoding="utf-8")).get("_devlog_gameplay", {})))
 
+# Dedupe por CONTEÚDO (defeito medido em 30/10/2026 pela auditoria do diário)
+#
+# A auditoria mostrou o mesmo post 13 vezes nos últimos 40 ciclos. O dedupe antigo comparava o
+# texto como foi escrito: bastava o motor trocar o emoji, o separador ou a quebra de linha para
+# a repetição passar com ✅. Agora a comparação é pela assinatura (só letras e números).
+verifica("a assinatura ignora emoji, pontuação e acento",
+         postador.assinatura("⚽ Sou TÉCNICO, não jogador!") ==
+         postador.assinatura("Sou tecnico nao jogador"))
+verifica("a assinatura é vazia para texto vazio", postador.assinatura("") == "")
+_sep = "⚽ Sou TÉCNICO, não jogador. · PRANCHETA é um manager de futebol 100% fictício"
+verifica("dedupe pega a repetição mesmo com o separador trocado (· vs ⏎ vs quebra)",
+         postador.ja_foi_publicado(_sep, _sep.replace(" · ", " ⏎ "))
+         and postador.ja_foi_publicado(_sep, _sep.replace(" · ", "\n")))
+verifica("dedupe pega repetição mesmo quando o emoji muda",
+         postador.ja_foi_publicado("🌙 A fazenda não dorme: plante à luz da lanterna",
+                                   "A fazenda nao dorme: plante a luz da lanterna"))
+verifica("dedupe continua deixando passar texto de verdade novo",
+         not postador.ja_foi_publicado("🏆 No PRANCHETA o campeonato nasce do zero",
+                                       "A fazenda nao dorme: plante a luz da lanterna"))
+verifica("o crivo editorial reprova o repetido com emoji diferente",
+         not postador.texto_gerado_seguro("🌙 A fazenda não dorme: plante à luz da lanterna "
+                                          "e o mercado muda de preço todo dia",
+                                          "A fazenda nao dorme: plante a luz da lanterna e o "
+                                          "mercado muda de preco todo dia"))
+verifica("o postador usa a assinatura no dedupe",
+         "def assinatura(" in _fonte_postador
+         and "chave = assinatura(texto)[:tamanho]" in _fonte_postador
+         and "chave in assinatura(ja_publicados)" in _fonte_postador)
+
 print(f"{verificacoes-len(falhas)}/{verificacoes} verificações de autonomia de marketing passaram")
 sys.exit(1 if falhas else 0)

@@ -1,0 +1,271 @@
+{
+ "quando": "2026-10-30T22:49:29Z",
+ "repeticao_desde_o_conserto": {
+  "corte": "26/10/2026",
+  "ciclos": 16,
+  "repetidos": 1,
+  "pct": 6.2
+ },
+ "janela": 40,
+ "passos": [
+  {
+   "passo": "ntfy (push do dono)",
+   "classe": "ritual",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "ok"
+    ],
+    "confessa": 0
+   },
+   "ultimo": "✅ push 200"
+  },
+  {
+   "passo": "aula do cerebro",
+   "classe": "ritual",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "ok"
+    ],
+    "confessa": 0
+   },
+   "ultimo": "✅ licao gravada (6 perguntas no ciclo)"
+  },
+  {
+   "passo": "telegram",
+   "classe": "cego",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego"
+    ]
+   },
+   "ultimo": "⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT"
+  },
+  {
+   "passo": "mastodon",
+   "classe": "cego",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego"
+    ]
+   },
+   "ultimo": "⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN"
+  },
+  {
+   "passo": "discord",
+   "classe": "cego",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego"
+    ]
+   },
+   "ultimo": "⚪ falta o segredo DISCORD_WEBHOOK"
+  },
+  {
+   "passo": "bluesky",
+   "classe": "binário",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego",
+     "ok"
+    ],
+    "confessa": 0
+   },
+   "ultimo": "✅ postado 200"
+  },
+  {
+   "passo": "reel semanal",
+   "classe": "binário",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "espera",
+     "outro"
+    ],
+    "confessa": 0
+   },
+   "ultimo": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >"
+  },
+  {
+   "passo": "vigia da caixa (auto-recovery)",
+   "classe": "binário",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "ok"
+    ],
+    "confessa": 39
+   },
+   "ultimo": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)"
+  },
+  {
+   "passo": "cerebro",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "ok",
+     "outro"
+    ],
+    "resultados_distintos": 5,
+    "confessa": 0
+   },
+   "ultimo": "✅ post novo validado — motor=g4f auto"
+  },
+  {
+   "passo": "instagram",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "espera",
+     "ok"
+    ],
+    "resultados_distintos": 22,
+    "confessa": 0
+   },
+   "ultimo": "➖ instagram ja postou ha 5.2h (minimo 6h entre posts)"
+  },
+  {
+   "passo": "threads",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego",
+     "ok"
+    ],
+    "resultados_distintos": 40,
+    "confessa": 0
+   },
+   "ultimo": "✅ publicado id 181372609066"
+  },
+  {
+   "passo": "nostr",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego",
+     "ok"
+    ],
+    "resultados_distintos": 3,
+    "confessa": 0
+   },
+   "ultimo": "✅ nota em 2 relays"
+  },
+  {
+   "passo": "cacador de oportunidades",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego",
+     "espera",
+     "ok"
+    ],
+    "resultados_distintos": 18,
+    "confessa": 15
+   },
+   "ultimo": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)"
+  },
+  {
+   "passo": "descobridor de redes",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "ok"
+    ],
+    "resultados_distintos": 3,
+    "confessa": 29
+   },
+   "ultimo": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)"
+  },
+  {
+   "passo": "censo mundial",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "ok"
+    ],
+    "resultados_distintos": 3,
+    "confessa": 29
+   },
+   "ultimo": "✅ censo de hoje ja registrado (1 por dia)"
+  },
+  {
+   "passo": "regua de metas (medicao)",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego",
+     "ok"
+    ],
+    "resultados_distintos": 28,
+    "confessa": 0
+   },
+   "ultimo": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
+  },
+  {
+   "passo": "destino editorial",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 36,
+    "categorias": [
+     "ok"
+    ],
+    "resultados_distintos": 4,
+    "confessa": 0
+   },
+   "ultimo": "✅ rota oficial catalogo"
+  },
+  {
+   "passo": "respondedor de conversa",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 21,
+    "categorias": [
+     "espera",
+     "ok",
+     "outro"
+    ],
+    "resultados_distintos": 13,
+    "confessa": 13
+   },
+   "ultimo": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)"
+  },
+  {
+   "passo": "tema do ciclo",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 16,
+    "categorias": [
+     "ok"
+    ],
+    "resultados_distintos": 15,
+    "confessa": 0
+   },
+   "ultimo": "✅ converse sobre vida de dev solo no Brasil e cite os jogos"
+  }
+ ],
+ "contagem": {
+  "ritual": 2,
+  "cego": 3,
+  "binário": 3,
+  "adaptativo": 11
+ },
+ "texto": {
+  "ciclos": 40,
+  "distintos": 25,
+  "repeticao_pct": 37.5
+ },
+ "_lei": "inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos."
+}

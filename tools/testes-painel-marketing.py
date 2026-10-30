@@ -91,6 +91,10 @@ ok("a página mostra o que a casa se recusa a decidir", "se recusa a decidir" in
 ok("a página nomeia o que a casa não sabe", "não sabe (e diz)" in t)
 ok("cada decisão exibida cita a fonte do número", ".json" in t or "placar-metas.md" in t)
 
+ok("a página mostra onde a casa pensa e onde só repete", "Onde a casa pensa e onde ela só repete" in t)
+ok("a página mostra a repetição desde o conserto de dedupe", "conserto de dedupe" in t)
+ok("a página explica que ritual não é xingamento", "Ritual não é xingamento" in t)
+
 ok("a página cita as pendências do dono quando existem",
    "depende do dono" in t or not os.path.exists(os.path.join(RAIZ, "posts", "pendencias-do-dono.json")))
 ok("não promete publicação sem prova (sem 'todos os canais ativos')", "todos os canais" not in t.lower())

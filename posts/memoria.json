@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-30T21:21:08Z",
+ "quando": "2026-10-30T22:49:57Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
@@ -53,7 +53,7 @@
   {
    "formato": "comentário em post alheio",
    "posts": 211,
-   "media": 0.87,
+   "media": 0.88,
    "zeros": 88,
    "zeros_pct": 41.7
   }
@@ -181,21 +181,21 @@
   }
  ],
  "aprendizado": {
-  "quando": "2026-10-27T12:39:44Z",
+  "quando": "2026-10-30T22:24:27Z",
   "confiavel": false,
   "melhor_hora": null,
   "decisao": "manter",
-  "motivo": "diferença dentro do ruído: melhor 01h (1.14) vs mediana 1.25, desvio 0.48",
+  "motivo": "diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.22, desvio 0.51",
   "detalhe": {
    "horas_lidas": 21,
    "amostra_total": 300,
    "elegiveis": 2,
    "amostra_minima": 30,
-   "mediana": 1.25,
-   "desvio": 0.48344474437279594,
+   "mediana": 1.22,
+   "desvio": 0.5067776462773786,
    "melhor": {
     "hora": 1,
-    "media": 1.14,
+    "media": 1.22,
     "n": 36
    }
   },
