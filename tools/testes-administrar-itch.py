@@ -32,7 +32,15 @@ def ok(nome, condicao, detalhe=""):
 # ------------------------------------------------------------------ impressão digital
 local = adm.impressao("ceifalume")
 ok("a impressão do build real existe", local and local["arquivos"] == 13, local)
-ok("a impressão soma 42.216.445 bytes", local and local["bytes"] == 42216445, local)
+# O total em bytes NÃO é fixado à mão: em 30/10 o selo do gameplay somou ~1,1 KB ao index.html e
+# o teste caiu por número velho, não por defeito. O que importa é a impressão ser a soma REAL dos
+# arquivos do pacote e o pacote ter tamanho de jogo de verdade.
+_soma_real = sum(os.path.getsize(os.path.join(adm.RAIZ, "ceifalume", f))
+                 for f in os.listdir(os.path.join(adm.RAIZ, "ceifalume"))
+                 if os.path.isfile(os.path.join(adm.RAIZ, "ceifalume", f)))
+ok("a impressão é a soma real dos arquivos do pacote",
+   local and local["bytes"] == _soma_real, {"impressao": local, "soma": _soma_real})
+ok("o pacote tem tamanho de jogo de verdade (>10 MB)", local and local["bytes"] > 10_000_000, local)
 ok("a impressão é estável entre duas leituras", adm.impressao("ceifalume")["hash"] == local["hash"])
 ok("pasta inexistente devolve None", adm.impressao("nao-existe") is None)
 
