@@ -274,10 +274,26 @@ def normalizar_para_comparar(texto):
     return " ".join(t.lower().split())
 
 
+def assinatura(texto):
+    """Assinatura do texto para dedupe: só letras e números, sem acento, sem emoji, sem pontuação.
+
+    DEFEITO MEDIDO (30/10/2026): a auditoria do diário mostrou o MESMO post 13 vezes nos
+    últimos 40 ciclos — 37,5% do que saiu era repetição. O dedupe antigo comparava o começo
+    do texto como ele foi escrito, então bastava o motor trocar um emoji, um "·" ou uma
+    quebra de linha para a repetição passar batida e receber ✅. Comparar o texto cru é
+    comparar a embalagem; dedupe tem de comparar o conteúdo.
+    """
+    import unicodedata
+    t = unicodedata.normalize("NFD", str(texto or ""))
+    t = "".join(c for c in t if not unicodedata.combining(c))
+    t = unicodedata.normalize("NFC", t).lower()
+    return " ".join(re.sub(r"[^0-9a-z]+", " ", t).split())
+
+
 def ja_foi_publicado(texto, ja_publicados, tamanho=60):
-    """True se o começo deste texto já está no registro de publicados."""
-    chave = normalizar_para_comparar(texto)[:tamanho]
-    return bool(chave) and chave in normalizar_para_comparar(ja_publicados)
+    """True se o começo deste texto já está no registro de publicados (comparando conteúdo)."""
+    chave = assinatura(texto)[:tamanho]
+    return bool(chave) and chave in assinatura(ja_publicados)
 
 
 def texto_gerado_seguro(texto, ja_publicados=""):

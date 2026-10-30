@@ -107,6 +107,12 @@ def pagina():
                                     encoding="utf-8")).get("publicados") or []
     except (OSError, ValueError):
         pass
+    auditoria = {}
+    try:
+        auditoria = json.load(open(os.path.join(RAIZ, "posts", "auditoria-inteligencia.json"),
+                                   encoding="utf-8"))
+    except (OSError, ValueError):
+        pass
     livro = {}
     try:
         livro = json.load(open(os.path.join(RAIZ, "posts", "decisoes.json"), encoding="utf-8"))
@@ -184,6 +190,29 @@ def pagina():
             + _lista(livro.get("ignorancias"), "porque", "O que a casa não sabe (e diz)")
         )
 
+    audit_html = ""
+    if auditoria.get("passos"):
+        c = auditoria.get("contagem", {})
+        rep = auditoria.get("repeticao_desde_o_conserto", {})
+        linhas_aud = "".join(
+            "<li><b>%s</b> <span class='mono'>%s</span> — %s</li>"
+            % (html.escape(passo["passo"]), html.escape(passo["classe"]),
+               html.escape((passo.get("ultimo") or "")[:90]))
+            for passo in auditoria["passos"])
+        audit_html = (
+            "<h2>Onde a casa pensa e onde ela só repete</h2>"
+            "<p class='peq'>Medido no próprio diário, nos últimos %d ciclos: "
+            "<b>%d</b> passos adaptativos (o resultado varia), <b>%d</b> cegos (sempre "
+            "indisponível), <b>%d</b> ritual (resultado sempre igual). "
+            "Ritual não é xingamento: um push que sai igual todo ciclo está funcionando. "
+            "Ritual só é problema quando o passo diz que fez algo novo e não fez.</p>"
+            "<p class='peq'>Repetição de texto desde o conserto de dedupe (%s): "
+            "<b>%d de %d ciclos</b> (%.1f%%).</p>"
+            "<ul class='log'>%s</ul>"
+            % (auditoria.get("janela", 0), c.get("adaptativo", 0), c.get("cego", 0),
+               c.get("ritual", 0), html.escape(str(rep.get("corte", "?"))),
+               rep.get("repetidos", 0), rep.get("ciclos", 0), rep.get("pct", 0.0), linhas_aud))
+
     agora = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
     return """<!DOCTYPE html>
 <html lang="pt-BR"><head><meta charset="UTF-8">
@@ -221,6 +250,7 @@ Página gerada pelo próprio repositório a cada rodada.</p>
 <table><tr><td><b>canal</b></td><td><b>estado</b></td><td><b>precisa de</b></td></tr>%(canais)s</table>
 %(ultimo)s
 %(decisoes)s
+%(auditoria)s
 %(pend)s
 <footer>Gerado em %(agora)s pelo workflow postagem-diaria ·
 <a href="%(base)s/">site</a> · <a href="%(base)s/canais.html">canais oficiais</a> ·
@@ -228,6 +258,7 @@ Página gerada pelo próprio repositório a cada rodada.</p>
 </main></body></html>
 """ % {"base": BASE, "cartoes": cartoes_html, "canais": "".join(linhas_canal),
        "ultimo": ultimo_html, "decisoes": decisoes_html, "pend": pend_html,
+       "auditoria": audit_html,
        "agora": agora}
 
 
