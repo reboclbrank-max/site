@@ -106,23 +106,29 @@ ok("status sem canal também compara com a pasta local (não só lista)",
    "diferença de rebocl-brank/ceifalume:html5" in msg_s, msg_s[:160])
 ok("status diz DIFERENTE quando o butler aponta arquivos diferentes",
    "DIFERENTE" in msg_s, msg_s[:160])
-_falso_d = ButlerFalso(saida="")
+_igual = '{"channel":"html5","hasParent":true,"comparison":{"new":0,"modified":0,"deleted":0,"same":13}}'
+_muda = '{"channel":"html5","hasParent":true,"comparison":{"new":2,"modified":0,"deleted":0,"same":11}}'
+_novo = '{"channel":"html5","hasParent":false,"comparison":{"new":13,"modified":0,"deleted":0,"same":0}}'
+_falso_d = ButlerFalso(saida=_igual)
 _ok_d, _msg_d = itch.status("ceifalume", None, raiz=RAIZ, identidade="/x", executar=_falso_d)
-ok("status diz IGUAL (nada a enviar) quando o butler não aponta diferença",
+ok("status diz IGUAL (nada a enviar) quando o push-preview não aponta diferença",
    "IGUAL" in _msg_d and "nada a enviar" in _msg_d, _msg_d[:200])
-ok("a comparação usa butler diff (status não é diff)",
-   any("diff" in c for c in _falso.chamadas), str(_falso.chamadas))
-_diff = [c for c in _falso.chamadas if "diff" in c][0]
-ok("diff vai com o alvo ANTES da pasta (ordem que o butler aceita)",
-   _diff[-2] == "rebocl-brank/ceifalume:html5" and _diff[-1].endswith("ceifalume"), str(_diff))
-ok("diff vazio é lido como nada a enviar",
-   itch.interpretar_diff("").startswith("IGUAL"))
-ok("diff com arquivos é lido como mudança",
-   itch.interpretar_diff("- index.js\n+ index.pck").startswith("DIFERENTE"))
-ok("frase de 'up to date' numa linha só é lida como nada a enviar",
-   itch.interpretar_diff("Everything up to date").startswith("IGUAL"))
-ok("dúvida cai para DIFERENTE (não esconde atualização do jogador)",
-   itch.interpretar_diff("???\n???").startswith("DIFERENTE"))
+_falso_m = ButlerFalso(saida="")
+_ok_m, _msg_m = itch.status("ceifalume", None, raiz=RAIZ, identidade="/x", executar=_falso_m)
+ok("butler mudo não é lido como igualdade", "INDEFINIDO" in _msg_m, _msg_m[:200])
+_prev = [c for c in _falso.chamadas if "push-preview" in c][0]
+ok("a comparação usa push-preview (o único comando que compara com o build no ar)",
+   any("push-preview" in c for c in _falso.chamadas), str(_falso.chamadas))
+ok("push-preview vai com a pasta antes do alvo e pede JSON",
+   _prev[-2].endswith("ceifalume") and _prev[-1] == "rebocl-brank/ceifalume:html5"
+   and "--json" in _prev, str(_prev))
+ok("contagem toda em 'same' é lida como nada a enviar", itch.interpretar_preview(_igual).startswith("IGUAL"))
+ok("arquivo novo/modificado/apagado é lido como mudança", itch.interpretar_preview(_muda).startswith("DIFERENTE"))
+ok("canal sem build anterior é DIFERENTE (não 'igual por zero diferença')",
+   itch.interpretar_preview(_novo).startswith("DIFERENTE"))
+ok("saída sem JSON não vira igualdade", itch.interpretar_preview("texto solto").startswith("DIFERENTE"))
+ok("butler mudo é INDEFINIDO, não sucesso", itch.interpretar_preview("").startswith("INDEFINIDO"))
+ok("a resposta traz os números medidos, não só o veredito", "0 novos" in itch.interpretar_preview(_igual))
 ok("o status continua sendo somente leitura (nenhum push, nenhum commit)",
    all("push" not in c for c in _falso.chamadas), str(_falso.chamadas))
 

@@ -117,24 +117,36 @@ def alvo_do_canal(slug, canal):
     return "%s:%s" % (alvo["alvo"], canal) if alvo else None
 
 
-NADA_A_ENVIAR = ("nothing", "no changes", "up to date", "already", "nenhuma")
+def interpretar_preview(saida):
+    """Traduz `butler push-preview --json` em IGUAL ou DIFERENTE — com número, não com fé.
 
+    Medido em 30/10 (runs 41083714746 e 41084610596): `butler status alvo:canal` devolve a mesma
+    tabela de canais (não compara nada) e `butler diff` compara DUAS PASTAS LOCAIS (não olha o
+    itch). O único comando que compara a pasta local com o build que está no ar é
+    `butler push-preview`, que é autenticado e NÃO modifica nada no itch.
 
-def interpretar_diff(saida):
-    """Traduz a saída do `butler diff` em IGUAL ou DIFERENTE, sem adivinhar pelo tamanho.
-
-    Regra: só é IGUAL quando NENHUMA linha parece arquivo (as linhas de arquivo do butler
-    começam com um marcador de mudança ou são um caminho de arquivo). Qualquer dúvida cai em
-    DIFERENTE — errar para "tem coisa a enviar" custa um envio a mais; errar para "está tudo
-    igual" esconde uma atualização que o jogador deveria ter recebido.
+    O JSON traz comparison.new / modified / deleted / same. Zero nos três primeiros = o que o
+    jogador baixa é exatamente esta pasta. Qualquer dúvida cai em DIFERENTE: erra para o lado
+    que não esconde atualização.
     """
     texto = (saida or "").strip()
-    baixo = texto.casefold()
     if not texto:
-        return "IGUAL: o itch já tem exatamente esta pasta (nada a enviar)"
-    if any(m in baixo for m in NADA_A_ENVIAR) and "\n" not in texto:
-        return "IGUAL: o itch já tem exatamente esta pasta (nada a enviar) — " + texto
-    return "DIFERENTE: o envio mudaria estes arquivos\n" + texto[:1200]
+        return "INDEFINIDO: o butler não respondeu nada"
+    try:
+        dados = json.loads(texto[texto.index("{"):texto.rindex("}") + 1])
+        comp = dados.get("comparison") or {}
+        novos = int(comp.get("new") or 0)
+        mudados = int(comp.get("modified") or 0)
+        apagados = int(comp.get("deleted") or 0)
+        iguais = int(comp.get("same") or 0)
+    except Exception:  # noqa: BLE001
+        return "DIFERENTE (sem JSON para ler, então não dá para provar igualdade)\n" + texto[:800]
+    conta = "%d novos, %d modificados, %d apagados, %d iguais" % (novos, mudados, apagados, iguais)
+    if dados.get("hasParent") is False:
+        return "DIFERENTE: o canal não tem build anterior (todo o conteúdo é novo) — " + conta
+    if novos == 0 and mudados == 0 and apagados == 0:
+        return "IGUAL: o itch já tem exatamente esta pasta (nada a enviar) — " + conta
+    return "DIFERENTE: o envio mudaria o que o jogador baixa — " + conta
 
 
 def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=None):
@@ -163,14 +175,13 @@ def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=No
             # `butler status alvo:canal` devolve a mesma tabela de canais (medido em 30/10):
             # não é diff, então não respondia nada. Quem compara pasta local com o build no
             # ar é `butler diff <pasta> <alvo:canal>`.
-            # ORDEM MEDIDA em 30/10 (run 41084326374): `butler diff <alvo:canal> <pasta>`. Ao
-            # contrário, o butler trata o alvo como caminho de pasta e devolve "walking source
-            # as directory: open rebocl-brank/ceifalume:html5: no such file".
-            cod, dif = rodar(["diff", alvo_canal, _pasta], identidade=identidade,
-                             executar=executar, chave=chave)
+            # ORDEM: `butler push-preview <pasta> <alvo:canal>` (o --json é global, vem antes
+            # do subcomando). Autenticado, mas NÃO modifica nada no itch.
+            cod, dif = rodar(["--json", "push-preview", _pasta, alvo_canal],
+                             identidade=identidade, executar=executar, chave=chave)
             linhas.append("--- diferença de %s contra a pasta local ---" % alvo_canal)
             if cod == 0:
-                linhas.append(interpretar_diff(dif or ""))
+                linhas.append(interpretar_preview(dif or ""))
             else:
                 linhas.append("não consegui comparar: " + (dif or "")[:300])
         elif erros:
