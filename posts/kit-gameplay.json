@@ -3,9 +3,9 @@
   {
    "id": "ceifalume-gameplay",
    "slug": "ceifalume",
-   "arquivo": "media/gameplay/ceifalume-gameplay.mp4",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 1141867,
+   "bytes": 3039835,
    "capa": "media/ceifalume/perfil-rb-itch-630x500.png",
    "capa_existe": true,
    "dimensoes": [
@@ -14,7 +14,7 @@
    ],
    "formato": "vídeo normal (16:9)",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
-   "descricao": "CEIFALUME 0.1 — jogo idle de fazenda noturna.\n\nComo funciona: plante, colha e negocie à luz da lanterna.\nO que chama atenção: as plantações crescem por até 8 horas mesmo com o jogo fechado.\nOnde jogar: grátis no navegador ou no Android, sem conta.\nFeito com Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório), sem edição.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#indiedev #gamedev #godot #jogobrasileiro",
+   "descricao": "CEIFALUME 0.1 — jogo idle de fazenda noturna.\n\nComo funciona: plante, colha e negocie à luz da lanterna.\nO que chama atenção: as plantações crescem por até 8 horas mesmo com o jogo fechado.\nOnde jogar: grátis no navegador ou no Android, sem conta.\nFeito com Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#indiedev #gamedev #godot #jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -28,7 +28,7 @@
    "categoria": "Gaming",
    "visibilidade": "público",
    "feito_para_criancas": "não",
-   "origem": "Gameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório), sem edição."
+   "origem": "Gameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida."
   }
  ],
  "problemas": {}

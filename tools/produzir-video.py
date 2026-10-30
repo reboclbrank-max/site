@@ -90,11 +90,21 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Casa,DejaVu Sans,34,&H00E8E6E1,&H00E8E6E1,&H00101010,&H99000000,0,0,0,0,100,100,0.5,0,3,10,0,2,60,60,28,1
+Style: Casa,DejaVu Sans,34,&H00E8E6E1,&H00E8E6E1,&H00101010,&H99000000,0,0,0,0,100,100,0.5,0,3,10,0,2,60,60,@MARGEM_V@,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
+
+
+# A margem vertical é ajustável por ambiente: quando o vídeo recebe a faixa de instruções no
+# rodapé (tools/legenda-guia.js), a legenda sobe para não ficar embaixo dela. Padrão: 28.
+MARGEM_V_PADRAO = 28
+
+
+def estilo_ass():
+    return ESTILO_ASS.replace("@MARGEM_V@",
+                              str(int(os.environ.get("LEGENDA_MARGEM_V", MARGEM_V_PADRAO))))
 
 
 def _ass_tempo(segundos):
@@ -120,7 +130,7 @@ def montar_ass(decisoes, duracao_total):
         fim = max(fim, min(t + 1.2, proximo))
         linhas.append("Dialogue: 0,%s,%s,Casa,,0,0,0,,%s"
                       % (_ass_tempo(t), _ass_tempo(fim), texto.replace("{", "").replace("}", "")))
-    return ESTILO_ASS + "\n".join(linhas) + "\n"
+    return estilo_ass() + "\n".join(linhas) + "\n"
 
 
 def montar_srt(decisoes, duracao_total):
