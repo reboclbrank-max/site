@@ -156,7 +156,36 @@ def publicar(raiz=RAIZ, escrever=None):
         escritos.append(caminho)
     escrever(os.path.join(pasta, "index.html"), indice(posts))
     escritos.append(os.path.join(pasta, "index.html"))
+    # Cada post entra no sitemap com a data do próprio nome do arquivo (2026-10-30-...).
+    # Antes, só /blog/ aparecia: o buscador não descobria post nenhum, e o devlog do site era
+    # escrito para ninguém achar. A entrada é idempotente — rodar duas vezes não duplica.
+    sitemap = os.path.join(raiz, "sitemap.xml")
+    if os.path.exists(sitemap):
+        with open(sitemap, encoding="utf-8") as f:
+            antes = f.read()
+        depois = atualizar_sitemap(antes, posts)
+        if depois != antes:
+            escrever(sitemap, depois)
+            escritos.append(sitemap)
     return escritos
+
+
+def atualizar_sitemap(xml, posts, base=BASE):
+    """Acrescenta <url> de cada post do devlog que ainda não está no sitemap.
+
+    Data do lastmod vem do nome do arquivo (posts/devlog/AAAA-MM-DD-...). Se o nome não tiver
+    data, a entrada entra sem lastmod — melhor no sitemap sem data do que fora dele.
+    """
+    for p in posts:
+        endereco = "%s/blog/%s.html" % (base, p["slug"])
+        if endereco in xml:
+            continue
+        achado = re.match(r"(\d{4}-\d{2}-\d{2})", p.get("arquivo") or "")
+        lastmod = "<lastmod>%s</lastmod>" % achado.group(1) if achado else ""
+        entrada = ("  <url><loc>%s</loc>%s<changefreq>monthly</changefreq>"
+                   "<priority>0.6</priority></url>\n" % (endereco, lastmod))
+        xml = xml.replace("</urlset>", entrada + "</urlset>", 1)
+    return xml
 
 
 def _escrever(caminho, texto):
