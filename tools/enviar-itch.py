@@ -17,6 +17,7 @@ Regras que este arquivo respeita:
   * nada é inventado: sem butler, sem chave ou sem build, o script diz o motivo.
 """
 import json
+import re
 import os
 import shutil
 import subprocess
@@ -118,24 +119,39 @@ def alvo_do_canal(slug, canal):
 
 
 def interpretar_preview(saida):
-    """Traduz `butler push-preview --json` em IGUAL ou DIFERENTE — com número, não com fé.
+    """Traduz `butler push-preview` em IGUAL ou DIFERENTE — com número, não com fé.
 
-    Medido em 30/10 (runs 41083714746 e 41084610596): `butler status alvo:canal` devolve a mesma
-    tabela de canais (não compara nada) e `butler diff` compara DUAS PASTAS LOCAIS (não olha o
-    itch). O único comando que compara a pasta local com o build que está no ar é
-    `butler push-preview`, que é autenticado e NÃO modifica nada no itch.
+    O que NÃO compara com o itch, medido em 30/10:
+      * `butler status alvo:canal` devolve a mesma tabela de canais (run 41083714746);
+      * `butler diff` compara DUAS PASTAS LOCAIS — cmd/diff/diff.go recebe target/source/patch
+        (runs 41084326374 e 41084610596).
 
-    O JSON traz comparison.new / modified / deleted / same. Zero nos três primeiros = o que o
-    jogador baixa é exatamente esta pasta. Qualquer dúvida cai em DIFERENTE: erra para o lado
-    que não esconde atualização.
+    O que compara: `butler push-preview <pasta> <alvo:canal>` ("authenticated; doesn't modify
+    anything on itch.io", cmd/push/preview.go). Ele termina com uma linha de texto estável:
+
+        Comparison vs build 2217549: 0 new, 0 modified, 0 deleted, 13 unchanged
+
+    Isso é o que se lê aqui. Zero em new/modified/deleted = o que o jogador baixa é esta pasta.
+    Canal sem build anterior sai como "All N entries are new" e conta como DIFERENTE. Qualquer
+    dúvida cai em DIFERENTE: erra para o lado que não esconde atualização.
     """
     texto = (saida or "").strip()
     if not texto:
         return "INDEFINIDO: o butler não respondeu nada"
-    # O push-preview --json escreve NDJSON (uma linha JSON por evento: log, stat, result), e a
-    # linha do resultado — a única com "comparison" — vem no fim. Ler o arquivo inteiro como um
-    # único objeto falhava e a resposta saía "sem JSON para ler" (visto no run 41085015285).
-    dados = None
+    achado = re.search(r"Comparison vs build (\d+): (\d+) new, (\d+) modified, "
+                       r"(\d+) deleted, (\d+) unchanged", texto)
+    if achado:
+        pai, novos, mudados, apagados, iguais = (int(g) for g in achado.groups())
+        conta = "%d novos, %d modificados, %d apagados, %d iguais (contra o build %d)" % (
+            novos, mudados, apagados, iguais, pai)
+        if novos == 0 and mudados == 0 and apagados == 0:
+            return "IGUAL: o itch já tem exatamente esta pasta (nada a enviar) — " + conta
+        return "DIFERENTE: o envio mudaria o que o jogador baixa — " + conta
+    if re.search(r"All (\d+) entries are new \(no previous build\)", texto):
+        return ("DIFERENTE: o canal não tem build anterior (todo o conteúdo é novo) — "
+                + re.search(r"All (\d+) entries are new", texto).group(0))
+    # Reserva: se o butler for chamado com --json, o resultado vem em NDJSON e a linha útil é a
+    # que tem "comparison" (o arquivo inteiro não é um JSON só).
     for linha in texto.splitlines():
         linha = linha.strip()
         if not linha.startswith("{"):
@@ -144,25 +160,17 @@ def interpretar_preview(saida):
             objeto = json.loads(linha)
         except Exception:  # noqa: BLE001
             continue
-        if isinstance(objeto, dict) and isinstance(objeto.get("comparison"), dict):
-            dados = objeto
-    try:
-        if dados is None:
-            bruto = texto[texto.index("{"):texto.rindex("}") + 1]
-            dados = json.loads(bruto)
-        comp = dados.get("comparison") or {}
-        novos = int(comp.get("new") or 0)
-        mudados = int(comp.get("modified") or 0)
-        apagados = int(comp.get("deleted") or 0)
-        iguais = int(comp.get("same") or 0)
-    except Exception:  # noqa: BLE001
-        return "DIFERENTE (sem JSON para ler, então não dá para provar igualdade)\n" + texto[:800]
-    conta = "%d novos, %d modificados, %d apagados, %d iguais" % (novos, mudados, apagados, iguais)
-    if dados.get("hasParent") is False:
-        return "DIFERENTE: o canal não tem build anterior (todo o conteúdo é novo) — " + conta
-    if novos == 0 and mudados == 0 and apagados == 0:
-        return "IGUAL: o itch já tem exatamente esta pasta (nada a enviar) — " + conta
-    return "DIFERENTE: o envio mudaria o que o jogador baixa — " + conta
+        comp = objeto.get("comparison") if isinstance(objeto, dict) else None
+        if isinstance(comp, dict):
+            novos = int(comp.get("new") or 0)
+            mudados = int(comp.get("modified") or 0)
+            apagados = int(comp.get("deleted") or 0)
+            conta = "%d novos, %d modificados, %d apagados, %d iguais" % (
+                novos, mudados, apagados, int(comp.get("same") or 0))
+            if novos == 0 and mudados == 0 and apagados == 0:
+                return "IGUAL: o itch já tem exatamente esta pasta (nada a enviar) — " + conta
+            return "DIFERENTE: o envio mudaria o que o jogador baixa — " + conta
+    return "INDEFINIDO: não achei a linha de comparação na saída do butler\n" + texto[-600:]
 
 
 def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=None):
@@ -193,7 +201,7 @@ def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=No
             # ar é `butler diff <pasta> <alvo:canal>`.
             # ORDEM: `butler push-preview <pasta> <alvo:canal>` (o --json é global, vem antes
             # do subcomando). Autenticado, mas NÃO modifica nada no itch.
-            cod, dif = rodar(["--json", "push-preview", _pasta, alvo_canal],
+            cod, dif = rodar(["push-preview", _pasta, alvo_canal],
                              identidade=identidade, executar=executar, chave=chave)
             linhas.append("--- diferença de %s contra a pasta local ---" % alvo_canal)
             if cod == 0:
