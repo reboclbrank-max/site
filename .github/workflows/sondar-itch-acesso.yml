@@ -1,0 +1,128 @@
+name: sondar-itch-acesso
+
+# Uma porta só para responder UMA pergunta: dá para automatizar o painel do itch a partir de
+# servidor? Ele é o único lugar onde o devlog e a página podem ser publicados — e é o único passo
+# que hoje depende do navegador do dono.
+#
+# O que já foi medido (docs/sondagens/ITCH-403-CLOUDFLARE.json, 30/10/2026):
+#   * HTTP puro: 403 com desafio da Cloudflare em Ubuntu, macOS e Windows, com e sem cookie;
+#   * Chromium headless com o cookie: cai em /login?__cf_chl_rt_tk=… e fica no desafio;
+#   * Chromium completo sob Xvfb, pt-BR, sem marca de automação: 403 até o fim (96 s).
+# Resultado: é reputação de IP, não cookie nem JavaScript. Este workflow existe para poder
+# REPETIR a medida quando algo mudar (proxy autorizado, IP próprio, mudança no itch).
+#
+# Só faz GET. Não escreve, não posta, não muda nada no itch.
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "http = 3 sistemas · navegador = Chromium headless · navegador-xvfb = Chromium completo · tudo = os três"
+        required: true
+        default: http
+        type: choice
+        options:
+          - http
+          - navegador
+          - navegador-xvfb
+          - tudo
+
+concurrency:
+  group: sondar-itch-acesso
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  http:
+    if: inputs.modo == 'http' || inputs.modo == 'tudo'
+    strategy:
+      fail-fast: false
+      matrix:
+        sistema: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.sistema }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Mede o painel com e sem sessão (GET apenas)
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, urllib.request, urllib.error
+          cookie = os.environ.get("ITCH_COOKIE", "").strip()
+          UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/128.0.0.0 Safari/537.36")
+          DESAFIO = ("just a moment", "um momento", "checking your browser",
+                     "attention required", "verificando")
+          def req(url, com_cookie):
+              h = {"User-Agent": UA, "Accept": "text/html"}
+              if com_cookie and cookie:
+                  h["Cookie"] = cookie
+              r = urllib.request.Request(url, method="GET", headers=h)
+              try:
+                  resp = urllib.request.urlopen(r, timeout=45)
+                  corpo = resp.read(4000).decode("utf-8", "replace").lower()
+                  return (resp.status, "desafio" if any(d in corpo for d in DESAFIO) else "sem desafio")
+              except urllib.error.HTTPError as e:
+                  corpo = e.read(4000).decode("utf-8", "replace").lower()
+                  return (e.code, "desafio" if any(d in corpo for d in DESAFIO) else "sem desafio")
+              except Exception as e:
+                  return (0, str(e)[:80])
+          print("cookie:", ("presente (%d caracteres)" % len(cookie)) if cookie else "AUSENTE")
+          for url in ["https://itch.io/", "https://itch.io/dashboard",
+                      "https://itch.io/game/edit/5017404"]:
+              for com in (False, True):
+                  if com and not cookie:
+                      continue
+                  print("%-42s cookie=%-5s -> %s" % (url, com, req(url, com)))
+          PY
+
+  navegador:
+    if: inputs.modo == 'navegador' || inputs.modo == 'tudo'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Chromium headless shell
+        run: |
+          npm install --no-audit --no-fund playwright-core
+          npx playwright-core install --with-deps chromium-headless-shell
+      - name: Entra no painel com a sessão (headless)
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        run: node tools/sonda-itch-navegador.js --headless
+
+  navegador_xvfb:
+    if: inputs.modo == 'navegador-xvfb' || inputs.modo == 'tudo'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Chromium completo + Xvfb
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb
+          npm install --no-audit --no-fund playwright-core
+          npx playwright-core install --with-deps chromium
+      - name: Entra no painel como um navegador comum
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        run: xvfb-run -a --server-args="-screen 0 1366x768x24" node tools/sonda-itch-navegador.js --completo
+      - name: Guarda a prova
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: itch-painel
+          path: |
+            /tmp/itch.png
+            /tmp/itch.html
+          if-no-files-found: warn
