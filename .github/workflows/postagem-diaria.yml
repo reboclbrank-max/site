@@ -42,9 +42,11 @@ jobs:
           # O painel público é gerado do MESMO log que acabou de ser escrito: autonomia sem
           # vitrine vira promessa. Ele é versionado e o site publica.
           python3 tools/painel-marketing.py
+          git config user.name "casa-rebocl"
+          git config user.email "casa@rebocl.local"
           git add marketing.html posts/log.md
           if ! git diff --cached --quiet; then
-            git commit -q -m "marketing: painel e log do ciclo ($(date -u +%d/%m %H:%M UTC))"
+            git commit -q -m "marketing: painel e log do ciclo ($(date -u +'%d/%m %H:%M UTC'))"
             git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
             enviado=0
             for tentativa in 1 2 3; do
@@ -58,8 +60,10 @@ jobs:
               sleep 5
             done
             if [ "$enviado" != "1" ]; then
+              # Não aborta o ciclo: o devlog e o log do ciclo ainda têm de entrar. O run
+              # termina vermelho no fim, com o motivo medido.
               echo "::error::3 tentativas e o painel não entrou no main"
-              exit 1
+              painel_falhou=1
             fi
           fi
           # Devlog no site da casa: o itch não tem API para devlog, então o diário de bordo é
@@ -77,6 +81,10 @@ jobs:
           done
           if [ "$ok" != "1" ]; then
             echo "::error::3 tentativas e o ciclo não entrou no main (o log ficaria só neste run)"
+            exit 1
+          fi
+          if [ "${painel_falhou:-0}" = "1" ]; then
+            echo "::error::o ciclo entrou, mas o painel marketing.html ficou velho"
             exit 1
           fi
         env:
