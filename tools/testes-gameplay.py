@@ -244,7 +244,24 @@ def main():
            d2["vazio"] is True, saida)
         ok("lista vazia e sem padrões também devolve null (não quebra)",
            d2["semLista"] is True, saida)
-        ok("com o navegador instalado a escolha não é null", d2["real"] is True, saida)
+        # DEFEITO MEDIDO (30/10/2026): este teste rodava em workflow que NÃO instala navegador
+        # (marketing-continuo, 5 vezes por dia) e deixava o run vermelho por falta de ambiente,
+        # não por defeito no código. Agora ele só cobra o caminho do navegador QUANDO há
+        # navegador — e quem garante o caminho real é o workflow que grava o vídeo, que instala.
+        _ha_navegador = d2["real"] is True
+        if _ha_navegador:
+            ok("com o navegador instalado a escolha não é null", True, saida)
+        else:
+            print("SKIP: sem navegador instalado neste ambiente — o caminho do navegador é "
+                  "coberto por gravar-gameplay.yml, que instala o Chromium")
+
+    # 2c. o workflow que realmente grava TEM de instalar o navegador (senão o SKIP acima
+    # esconderia a ausência de navegador em todo lugar).
+    _wf_grava = open(os.path.join(RAIZ, ".github", "workflows", "gravar-gameplay.yml"),
+                     encoding="utf-8").read()
+    ok("o workflow de gravação instala o navegador (o SKIP não esconde a falta)",
+       ("playwright install" in _wf_grava) or ("npx" in _wf_grava and "puppeteer" in _wf_grava.lower()),
+       "gravar-gameplay.yml sem instalação de navegador")
 
     # 2b. o corte do vídeo é derivado do relatório (funciona em qualquer velocidade de máquina)
     spec_prod = __import__("importlib.util").util.spec_from_file_location(

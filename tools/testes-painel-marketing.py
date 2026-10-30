@@ -95,6 +95,11 @@ ok("a página mostra onde a casa pensa e onde só repete", "Onde a casa pensa e 
 ok("a página mostra a repetição desde o conserto de dedupe", "conserto de dedupe" in t)
 ok("a página explica que ritual não é xingamento", "Ritual não é xingamento" in t)
 
+ok("a página abre com o que precisa ser feito agora", "O que precisa ser feito agora" in t)
+ok("a página separa o que o robô assumiu do que só o dono destrava",
+   "O robô já assumiu" in t and "Só o dono pode destravar" in t)
+ok("cada necessidade mostra como verificar", "verifica:" in t)
+
 ok("a página cita as pendências do dono quando existem",
    "depende do dono" in t or not os.path.exists(os.path.join(RAIZ, "posts", "pendencias-do-dono.json")))
 ok("não promete publicação sem prova (sem 'todos os canais ativos')", "todos os canais" not in t.lower())

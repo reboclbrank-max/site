@@ -36,6 +36,7 @@ jobs:
           python3 tools/testes-decisoes.py
           python3 tools/testes-aprender-horario.py
           python3 tools/testes-auditar-inteligencia.py
+          python3 tools/testes-perceber.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
@@ -46,10 +47,11 @@ jobs:
           # vitrine vira promessa. Ele é versionado e o site publica.
           python3 tools/decisoes.py
           python3 tools/auditar-inteligencia.py
+          python3 tools/perceber.py
           python3 tools/painel-marketing.py
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
-          git add marketing.html posts/log.md posts/decisoes.json posts/decisoes.md posts/auditoria-inteligencia.json posts/auditoria-inteligencia.md
+          git add marketing.html posts/log.md posts/decisoes.json posts/decisoes.md posts/auditoria-inteligencia.json posts/auditoria-inteligencia.md posts/percebido.json posts/percebido.md posts/fila-tarefas.json
           if ! git diff --cached --quiet; then
             git commit -q -m "marketing: painel e log do ciclo ($(date -u +'%d/%m %H:%M UTC'))"
             git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
