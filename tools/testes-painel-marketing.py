@@ -85,6 +85,12 @@ _ok_i, _ind_i, _pulo_i = painel.contar(_log_falso, "instagram")
 ok("trava de janela conta como espera, não como falha", _pulo_i == 1 and _ind_i == 0, (_ok_i, _ind_i, _pulo_i))
 
 ok("não usa '0' como número medido quando não há medida", painel.metrica("nao_existe.json") is None)
+# O livro de decisões é a parte "sabedoria": decide com número, recusa o resto, nomeia a ignorância.
+ok("a página mostra o que a casa decide sozinha", "O que a casa decide sozinha" in t)
+ok("a página mostra o que a casa se recusa a decidir", "se recusa a decidir" in t)
+ok("a página nomeia o que a casa não sabe", "não sabe (e diz)" in t)
+ok("cada decisão exibida cita a fonte do número", ".json" in t or "placar-metas.md" in t)
+
 ok("a página cita as pendências do dono quando existem",
    "depende do dono" in t or not os.path.exists(os.path.join(RAIZ, "posts", "pendencias-do-dono.json")))
 ok("não promete publicação sem prova (sem 'todos os canais ativos')", "todos os canais" not in t.lower())

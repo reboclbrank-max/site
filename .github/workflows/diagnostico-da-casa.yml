@@ -44,6 +44,8 @@ jobs:
           python3 tools/testes-painel-marketing.py
           python3 tools/testes-pendencias.py
           python3 tools/testes-publicar-devlog.py
+          python3 tools/testes-decisoes.py
+          python3 tools/testes-aprender-horario.py
 
       - name: Mede o que foi postado e o que voltou (só leitura)
         env:
