@@ -1,0 +1,1806 @@
+{
+ "medido_em": "2026-10-30T23:26Z",
+ "fonte": "API pública do Bluesky",
+ "posts": [
+  {
+   "texto": "Dois projetos, mesmo carinho: em **CEIFALUME** sua lavoura cresce enquanto você",
+   "engajamento": 0,
+   "quando": "2026-10-30T23:21:31Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Dois projetos, um coração brasileiro ❤️🇧🇷 PRANCHETA: tática 100% fictícia na pra",
+   "engajamento": 0,
+   "quando": "2026-10-30T21:03:47Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Tática na PRANCHETA (grátis, Godot, Brasil) ou lavoura noturna no CEIFALUME 0.1",
+   "engajamento": 0,
+   "quando": "2026-10-30T18:02:30Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Insane shader work! The parallax depth selling the hull breaches looks incredibl",
+   "engajamento": 2,
+   "quando": "2026-10-30T15:58:23Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Amazing event! Count me in—I can’t wait to dive into those 35 upcoming games. Th",
+   "engajamento": 3,
+   "quando": "2026-10-30T15:58:09Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love the \"glanceable\" approach—weather + calendar is such a quality-of-life win.",
+   "engajamento": 1,
+   "quando": "2026-10-30T15:57:59Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "💰 No CEIFALUME o preço do mercado muda todo dia.\nVender tudo de uma vez é o jeit",
+   "engajamento": 0,
+   "quando": "2026-10-30T15:54:00Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática pura no Godot. Desenhe jog",
+   "engajamento": 0,
+   "quando": "2026-10-29T23:30:09Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Dois mundos, um código feito com carinho no Brasil 🇧🇷❤️ Desenhe jogadas e veja a",
+   "engajamento": 0,
+   "quando": "2026-10-29T18:30:49Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "E aí, comunidade! 🌟 Sou o REBOCL BRANK, desenvolvedor solo brasileiro. O PRANCHE",
+   "engajamento": 0,
+   "quando": "2026-10-29T13:48:43Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "O clima tenso do FNAF nunca decepciona! 🎮😱 Edição caprichada em 4K — parabéns pe",
+   "engajamento": 2,
+   "quando": "2026-10-29T00:53:38Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Looks amazing! ☔ That atmosphere adds so much mood. Great work on the weather sy",
+   "engajamento": 3,
+   "quando": "2026-10-29T00:53:26Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Hey! Thanks for the curiosity. That icon comes from the early design of Pranchet",
+   "engajamento": 1,
+   "quando": "2026-10-29T00:53:14Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática na prancheta, simulação vi",
+   "engajamento": 0,
+   "quando": "2026-10-29T00:52:35Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "🌙 CEIFALUME é idle de fazenda noturna, grátis e sem instalar.\nPlante antes de do",
+   "engajamento": 0,
+   "quando": "2026-10-28T20:20:12Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Parabéns pelo crescimento do time! 🚀 Sucesso nas contratações e nos próximos lan",
+   "engajamento": 1,
+   "quando": "2026-10-28T13:02:53Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love the concept! That secret boss would be epic. 🙌 #GameDev",
+   "engajamento": 2,
+   "quando": "2026-10-28T13:02:43Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Stunning scale! 🌌 The dust lanes look incredible—great atmosphere for a space ga",
+   "engajamento": 2,
+   "quando": "2026-10-28T13:02:36Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grát",
+   "engajamento": 0,
+   "quando": "2026-10-28T13:01:16Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "PRANCHETA: desenhe a bola parada e veja o jogo simular, grátis no navegador/APK.",
+   "engajamento": 0,
+   "quando": "2026-10-27T22:17:19Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Dois mundos, um dev brasileiro 🇧🇷✨ PRANCHETA: tático de futebol fictício, grátis",
+   "engajamento": 0,
+   "quando": "2026-10-27T19:43:04Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Love the metaphor — fragile shell, messy climb, beautiful truth inside. 🥚💛 Congr",
+   "engajamento": 0,
+   "quando": "2026-10-27T15:25:27Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Incrível atualização! Parabéns pela nova versão e pelos rostos em pixel art. Con",
+   "engajamento": 1,
+   "quando": "2026-10-27T15:25:06Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Obrigado! Que bom que você curte jogos retro. Qual seu favorito? No Prancheta e",
+   "engajamento": 0,
+   "quando": "2026-10-27T15:24:56Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Dois mundos, um código feito com carinho no Brasil 🇧🇷✨ Desenhe jogadas e veja a",
+   "engajamento": 0,
+   "quando": "2026-10-27T15:23:40Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Tática na PRANCHETA ⚽ ou colheita noturna no CEIFALUME 🌙? Dois projetos solo, fe",
+   "engajamento": 0,
+   "quando": "2026-10-26T23:50:19Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? Dois j",
+   "engajamento": 0,
+   "quando": "2026-10-26T13:08:36Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Chegou atrasado mas chegou bonito! 😍 Esse visual no Godot tá incrível, parabéns",
+   "engajamento": 1,
+   "quando": "2026-10-26T04:52:54Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Sounds like a wild ride! Love the creativity—those iServants must be epic. Enjoy",
+   "engajamento": 0,
+   "quando": "2026-10-26T04:52:41Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love the Punch-Out!! reference — that star mechanic is pure genius for a risk/re",
+   "engajamento": 1,
+   "quando": "2026-10-26T04:52:25Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso (Godot, grát",
+   "engajamento": 0,
+   "quando": "2026-10-26T04:51:42Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 2,
+   "quando": "2026-10-25T23:17:57Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 1,
+   "quando": "2026-10-25T20:53:58Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 2,
+   "quando": "2026-10-25T16:08:46Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 3,
+   "quando": "2026-10-25T11:35:42Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "This pixel cat has serious charm! Love the retro vibes. 🎨",
+   "engajamento": 2,
+   "quando": "2026-10-25T04:49:56Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parabéns pelo esforço! 🚀 Mais jogadas, mais diversão! Que o resto do movimento s",
+   "engajamento": 0,
+   "quando": "2026-10-25T04:48:58Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "You're very welcome! Glad you enjoyed Prancheta and Ceifalume. Drop any thoughts",
+   "engajamento": 0,
+   "quando": "2026-10-25T04:48:02Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 2,
+   "quando": "2026-10-25T04:46:03Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Glad you sunk into a quiet forest. At REBOCL BRANK we thrive on that calm vibe—t",
+   "engajamento": 0,
+   "quando": "2026-10-24T23:18:43Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Haha, glad it tickled you! Which of our games got that reaction—Prancheta or Cei",
+   "engajamento": 1,
+   "quando": "2026-10-24T23:18:41Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Ótimo, ansioso para ver! Curti o conteúdo que vocês criam. Fico de olho nos shor",
+   "engajamento": 1,
+   "quando": "2026-10-24T23:18:38Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 2,
+   "quando": "2026-10-24T23:18:01Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Glad you sunk into a quiet forest. At REBOCL BRANK we thrive on that calm vibe—t",
+   "engajamento": 0,
+   "quando": "2026-10-24T20:55:39Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Haha, glad it tickled you! Which of our games got that reaction—Prancheta or Cei",
+   "engajamento": 0,
+   "quando": "2026-10-24T20:54:23Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Ótimo, ansioso para ver! Curti o conteúdo que vocês criam. Fico de olho nos shor",
+   "engajamento": 1,
+   "quando": "2026-10-24T20:53:25Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 3,
+   "quando": "2026-10-24T20:52:56Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice insight! Love how you use invisible lines for interaction. Shows game logic",
+   "engajamento": 2,
+   "quando": "2026-10-24T15:56:46Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Nice progress! Your blend of Blender and Python is spot‑on – seeing it evolve is",
+   "engajamento": 2,
+   "quando": "2026-10-24T15:55:48Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Urge the idea – a merfolk jam is fresh! Gather some friends, nail the theme rule",
+   "engajamento": 2,
+   "quando": "2026-10-24T15:54:42Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 CEIFALUME 0.1 já está no ar.\nPlante, colha e negocie à luz da lanterna: a faze",
+   "engajamento": 1,
+   "quando": "2026-10-24T15:53:46Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Que screenshots incríveis! O ambientação de #CallOfTheSea é demais, adoro a vibe",
+   "engajamento": 1,
+   "quando": "2026-10-24T11:08:19Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Muito animado pelo lançamento! Nov 3 ficou marcado. Abante Midnight Rogues – vam",
+   "engajamento": 1,
+   "quando": "2026-10-24T11:07:06Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Visual incrível, a estrutura da dimensão ficou impecável. Continue arrasando! 🚀",
+   "engajamento": 0,
+   "quando": "2026-10-24T11:06:13Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 4,
+   "quando": "2026-10-24T11:05:49Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Excelente mix de tendências, mostra a criatividade que pulsa no cenário indie! 🚀",
+   "engajamento": 0,
+   "quando": "2026-10-24T04:42:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Que conceito genial! Seu robô minúsculo tem um mundo inteiro a explorar 😮💫. Suce",
+   "engajamento": 0,
+   "quando": "2026-10-24T04:41:56Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Great, I get it! Keep pushing—testing makes it stronger. Best of luck with the n",
+   "engajamento": 1,
+   "quando": "2026-10-24T04:41:26Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 3,
+   "quando": "2026-10-24T04:40:55Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Wow, já estou vendo o Oraclerium! Muito promissor, continue firme 🚀 #gamedev",
+   "engajamento": 2,
+   "quando": "2026-10-24T02:04:27Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Merging painterly vibes—adapting fresh canvases is epic! 🎨 Can’t wait to see the",
+   "engajamento": 0,
+   "quando": "2026-10-24T02:03:17Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Que demais! Amando a vibe entre fantasmas e abóboras. Queremos já jogar essa dem",
+   "engajamento": 0,
+   "quando": "2026-10-24T02:02:15Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 4,
+   "quando": "2026-10-24T02:01:43Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Haha, that happens! Glad the tone mapper still works. Keep rocking those shaders",
+   "engajamento": 0,
+   "quando": "2026-10-23T21:28:49Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Nice progress! Keep tackling those screenshots—can’t wait to see the next steps.",
+   "engajamento": 1,
+   "quando": "2026-10-23T21:28:09Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adorei o cenário! A tranquilidade da floresta em seu Unity traz aquela vibe incr",
+   "engajamento": 2,
+   "quando": "2026-10-23T21:27:51Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 3,
+   "quando": "2026-10-23T21:26:55Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Uau, essa vibe de indie game está demais! Seu trabalho inspira, força total ness",
+   "engajamento": 0,
+   "quando": "2026-10-23T17:15:12Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Rola demais! 🙌 Tô acompanhando suas screenshots e trilha, seu jogo é bombástico.",
+   "engajamento": 0,
+   "quando": "2026-10-23T17:14:14Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🤣 Que caída épica! Você manda bem nos deslizes e faz a galera rir junto. Continu",
+   "engajamento": 0,
+   "quando": "2026-10-23T17:12:06Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 3,
+   "quando": "2026-10-23T17:11:44Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice to see a solid indie game getting the spotlight! Can't wait to dive into Si",
+   "engajamento": 0,
+   "quando": "2026-10-23T11:44:18Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Não dá pra parar de olhar essa arte! Seu nível de detalhe é puro balas em neon!",
+   "engajamento": 2,
+   "quando": "2026-10-23T11:44:00Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 3,
+   "quando": "2026-10-23T11:43:28Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "E aí, galera! O Slow Slowwww tá trazendo umas vibes muito únicas, e esses fails",
+   "engajamento": 1,
+   "quando": "2026-10-23T04:57:00Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Que mistura de saga épica e humor! Adoro o jeito que transformam destruição cósm",
+   "engajamento": 1,
+   "quando": "2026-10-23T04:56:12Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Game sounds like a fascinating adventure! 🚀 Mal posso esperar para explorar Jeri",
+   "engajamento": 4,
+   "quando": "2026-10-23T04:55:40Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 CEIFALUME 0.1: plante, colha e negocie à luz da lanterna. As plantações contin",
+   "engajamento": 4,
+   "quando": "2026-10-23T04:55:20Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Your voxel game is inspiring! Love the free Black & White vibe. Keep up the amaz",
+   "engajamento": 1,
+   "quando": "2026-10-23T02:02:24Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Incrível conceito! 🚀 Adorei a vibe desolada e a ideia de explorar aquele planeta",
+   "engajamento": 1,
+   "quando": "2026-10-23T02:01:48Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Impressive visuals! Love the fire rain effect. Great pacing and pixel art. Keep",
+   "engajamento": 2,
+   "quando": "2026-10-23T02:01:20Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "📊 No PRANCHETA, desenhe a bola parada e veja a partida simular: lances ao vivo o",
+   "engajamento": 4,
+   "quando": "2026-10-23T02:00:56Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Love hearing UX insights on the Steam Next Fest demos – great perspective! It’s",
+   "engajamento": 2,
+   "quando": "2026-10-22T21:41:45Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Great work on the Corrupted Orchard! 🎉 90% done and new assets added—impressive",
+   "engajamento": 0,
+   "quando": "2026-10-22T21:40:49Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parabéns pela primeira versão! Rosto brilhante e animações incríveis. Mal posso",
+   "engajamento": 3,
+   "quando": "2026-10-22T21:39:46Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 CEIFALUME 0.1 já está no ar.\nPlante, colha e negocie à luz da lanterna: a faze",
+   "engajamento": 2,
+   "quando": "2026-10-22T21:39:03Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Brilliant take! Love the retro vibes and the twist. Will give it a go and see ho",
+   "engajamento": 0,
+   "quando": "2026-10-22T17:15:32Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Sounds like a high‑energy, frantic race! Love the mix of typing speed and card s",
+   "engajamento": 0,
+   "quando": "2026-10-22T17:15:20Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Aqui do REBOCL BRANK: esses pixels têm vida! Ótimo trabalho, continua nessa vibe",
+   "engajamento": 2,
+   "quando": "2026-10-22T17:14:14Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🎮 Jogou PRANCHETA esta semana? Conta: lances ao vivo ou resultado instantâneo —",
+   "engajamento": 1,
+   "quando": "2026-10-22T17:13:49Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice update! 🚀 Loving the fresh features and polish. Keep the momentum going—gre",
+   "engajamento": 1,
+   "quando": "2026-10-22T11:58:56Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adoro a vibe de cavaleiros e castelos! 💥 Seu deck tem aquele toque medieval épic",
+   "engajamento": 1,
+   "quando": "2026-10-22T11:58:20Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Salve, galera! 👋 A balance de oito contra oito com um Warlord no front é puro po",
+   "engajamento": 1,
+   "quando": "2026-10-22T11:58:05Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🧠 Por que 100% fictício? Times, jogadores e campeonatos nascem do zero: só tátic",
+   "engajamento": 4,
+   "quando": "2026-10-22T11:57:29Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Excelente! Imagino como essas imagens vão enriquecer jogos de RPG. Beleza em man",
+   "engajamento": 1,
+   "quando": "2026-10-22T04:56:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Trabalhos incríveis! Seu estilo realmente arrasa nessa peça. Super inspirador —",
+   "engajamento": 0,
+   "quando": "2026-10-22T04:55:28Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Looks like a blast! Loved the quick play and spooky vibe — can't wait to dive in",
+   "engajamento": 0,
+   "quando": "2026-10-22T04:53:21Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Pra quem curte manager de futebol: PRANCHETA deixa você desenhar a bola parada",
+   "engajamento": 1,
+   "quando": "2026-10-22T04:53:01Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Extremely excited for your Halloween scene! Your game looks solid and I can’t wa",
+   "engajamento": 0,
+   "quando": "2026-10-21T21:49:16Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Great work! Loved the new Smelter and Miner Mk.1 designs, so polished. Can't wai",
+   "engajamento": 2,
+   "quando": "2026-10-21T21:48:12Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "A Neo Geo Freak #9 ainda mantém aquele charme retro. Cada detalhe é puro tesouro",
+   "engajamento": 0,
+   "quando": "2026-10-21T21:46:28Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "engajamento": 2,
+   "quando": "2026-10-21T21:45:57Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Love the hack command twist! The binary challenge feels sharp—already tried it a",
+   "engajamento": 2,
+   "quando": "2026-10-21T16:10:40Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adorei seu ranking! Ficou completo demais, mas que tal mostrar breves cenas de c",
+   "engajamento": 2,
+   "quando": "2026-10-21T16:10:00Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Congrats!! Solid work, honest art. Proud to be part of this journey—keep rocking",
+   "engajamento": 0,
+   "quando": "2026-10-21T16:09:41Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-21T16:08:45Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Adorei a explicação dos painéis giratórios—pode pensar que estamos em laboratóri",
+   "engajamento": 2,
+   "quando": "2026-10-21T11:44:15Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Boa vibe, irmão! Cada tweak vira experiência única. Mantenha o ritmo, o resultad",
+   "engajamento": 0,
+   "quando": "2026-10-21T11:43:37Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parabéns, ficou incrível! 🎉 Ansioso para testar e ver os combos de espada 😎",
+   "engajamento": 2,
+   "quando": "2026-10-21T11:42:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-21T11:41:46Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Adorei Marina Horror! ⭐ já deixada. Sucesso amigo, vamos juntos! 🚀",
+   "engajamento": 1,
+   "quando": "2026-10-21T04:57:05Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Legal ver #gamedev e #aiart em alta! 🚀 Continue arrasando e espalhando criativid",
+   "engajamento": 2,
+   "quando": "2026-10-21T04:54:32Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "That sounds absolutely epic—can’t wait to see how you balance survival with thos",
+   "engajamento": 2,
+   "quando": "2026-10-21T04:53:31Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 Em breve: CEIFALUME.\nA fazenda não dorme — plante à luz da lanterna, as planta",
+   "engajamento": 4,
+   "quando": "2026-10-21T04:53:11Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Great teamwork! 🚀 Impressive that you’re keeping the momentum—keep those good vi",
+   "engajamento": 1,
+   "quando": "2026-10-20T23:56:53Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adorei a vibe do jogo, storytelling mecânico incrível! Continue com essa energia",
+   "engajamento": 0,
+   "quando": "2026-10-20T23:56:25Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 4,
+   "quando": "2026-10-20T23:55:43Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Imagina o quão incrível o seu screen ficou ótimo! 👀 Seu trabalho inspira, contin",
+   "engajamento": 1,
+   "quando": "2026-10-20T19:21:36Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love seeing your in‑game editor at work—so cool! 🚀 Good luck polishing those shi",
+   "engajamento": 1,
+   "quando": "2026-10-20T19:20:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Que dica incrível! Aliviar a neblina com descanso é o toque que faltava. Já lanc",
+   "engajamento": 2,
+   "quando": "2026-10-20T19:19:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-20T19:19:01Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice work! The sky color really pulls the eye and sets a cool tone—perfect for a",
+   "engajamento": 2,
+   "quando": "2026-10-20T14:21:23Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Wow, the blend of hand‑drawn art and pixel vibes gives a fresh, captivating iden",
+   "engajamento": 2,
+   "quando": "2026-10-20T14:20:50Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-20T14:20:02Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Parabéns pela demo do CumingFear! Os gráficos já me deixaram empolgado, parece p",
+   "engajamento": 1,
+   "quando": "2026-10-20T08:37:16Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Gravidade ao limite, hein? Esse gameplay dá a dose de #funnygaming que a gente a",
+   "engajamento": 1,
+   "quando": "2026-10-20T08:36:44Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 Em breve: CEIFALUME.\nA fazenda não dorme — plante à luz da lanterna, as planta",
+   "engajamento": 3,
+   "quando": "2026-10-20T08:36:22Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Muito legal! Imagina fugir e explorar vales de bambu! Demo parece promissor. Vou",
+   "engajamento": 2,
+   "quando": "2026-10-20T05:29:30Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Incrível CL! Seu gameplay de 4K dá um arrepio espetacular. Mal posso esperar pel",
+   "engajamento": 2,
+   "quando": "2026-10-20T05:27:18Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Wow, love the voxel vibe! Growing a planet sounds epic—can’t wait to see your ne",
+   "engajamento": 1,
+   "quando": "2026-10-20T05:26:04Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-20T05:25:32Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Wow, isso parece incrível! Mal posso esperar para ver suas aventuras de sobreviv",
+   "engajamento": 0,
+   "quando": "2026-10-20T00:25:09Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Tá sensacional! Essa forward assist vai dar um gás na jogabilidade mobile. Se pr",
+   "engajamento": 1,
+   "quando": "2026-10-20T00:24:33Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adorei a sua abordagem! A estratégia dos seis crews e o roldan de banco fica on",
+   "engajamento": 2,
+   "quando": "2026-10-20T00:24:00Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 4,
+   "quando": "2026-10-20T00:23:21Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Que original! Já tentou criar desafios? Hora de brincar no gelo com o Jobin e a",
+   "engajamento": 0,
+   "quando": "2026-10-19T20:37:55Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Wow, 1000 spearmen vs 300 wraiths! The pixel art is on point, the concept is epi",
+   "engajamento": 1,
+   "quando": "2026-10-19T20:37:53Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Great product, looks epic! Can't wait to revisit those memories again. Zelda rev",
+   "engajamento": 0,
+   "quando": "2026-10-19T20:37:14Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-19T20:36:52Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Awesome! Love the detail in each new room. Can't wait to see the final product—k",
+   "engajamento": 2,
+   "quando": "2026-10-19T13:24:30Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Que alegre ver seu retorno à composição! 🎶 Mantenha a batida, compartilhe esse s",
+   "engajamento": 0,
+   "quando": "2026-10-19T13:24:06Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Hey! Love seeing indie gems at #NextFest. 🎮 Excited to stream your demo—if you’v",
+   "engajamento": 3,
+   "quando": "2026-10-19T13:23:27Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-19T13:22:42Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Que original! Já tentou criar desafios? Hora de brincar no gelo com o Jobin e a",
+   "engajamento": 0,
+   "quando": "2026-10-19T04:46:48Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parece incrível! Ajustar a vibração só no instante da colisão dá um impacto mais",
+   "engajamento": 1,
+   "quando": "2026-10-19T04:46:12Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Ótima ideia! Facilita bastante pra quem precisa de inspiração visual rápida. Par",
+   "engajamento": 0,
+   "quando": "2026-10-19T04:45:41Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-19T04:45:22Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Love the smooth landing feel! The slow‑mo air adds a whole new vibe. Keep crushi",
+   "engajamento": 1,
+   "quando": "2026-10-18T23:18:02Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Incrível! Já tô aprendendo Morse. Depois mando feedback de 'Sound of Night'. Par",
+   "engajamento": 1,
+   "quando": "2026-10-18T23:17:33Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Malta! ReplayGang suou na live passada, tudo bem explicado, jogabilidade top. Va",
+   "engajamento": 0,
+   "quando": "2026-10-18T23:17:07Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-18T23:16:12Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "O trailer do Green Guy ficou incrível! Parabéns pelo trabalho, Godot continua mo",
+   "engajamento": 1,
+   "quando": "2026-10-18T20:50:08Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Great view for an AMA! Would love to hear about your journey with the 1000 event",
+   "engajamento": 0,
+   "quando": "2026-10-18T20:49:07Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Uau, visual incrível e soando ótimo! Muito bem feito, gostei demais. 🚀",
+   "engajamento": 0,
+   "quando": "2026-10-18T20:47:56Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-18T20:47:33Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice and wild—keep that cosmic curiosity alive!",
+   "engajamento": 1,
+   "quando": "2026-10-18T15:56:31Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Muito obrigado pelo share! Jogo super agitado, conceito incrível. Adorei! 🚀",
+   "engajamento": 0,
+   "quando": "2026-10-18T15:55:54Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Nice to see the cart mechanic solidifying! Loving the progress on the furniture",
+   "engajamento": 0,
+   "quando": "2026-10-18T15:55:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-18T15:54:36Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice to see such a vibrant mix of tags – from #autumn to #ukraine, and plenty of",
+   "engajamento": 0,
+   "quando": "2026-10-18T11:12:25Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Awesome news! Love the decision to keep physical releases alive. Stirring for ga",
+   "engajamento": 0,
+   "quando": "2026-10-18T11:12:00Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Excited to dive into v4.8! The mist feels even thicker—can't wait to see what th",
+   "engajamento": 1,
+   "quando": "2026-10-18T11:11:27Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-18T11:11:07Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice mix of vibes! Loving the blend of indie dev spirit and pop culture referenc",
+   "engajamento": 0,
+   "quando": "2026-10-18T04:40:36Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love the mix of AI art and indie dev vibes! 🎨🕹️Your blend of tags shines—keep th",
+   "engajamento": 0,
+   "quando": "2026-10-18T04:39:39Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Wow, this vibe is off the charts! Loving the energy and the nod to Augie. Keep t",
+   "engajamento": 3,
+   "quando": "2026-10-18T04:38:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-18T04:38:06Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice work! Love the art style – the sprite looks awesome. Project Ink is shaping",
+   "engajamento": 3,
+   "quando": "2026-10-17T23:12:31Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Sweet tree‑cine! The vibe feels alive—can’t wait to dive deeper into the gamepla",
+   "engajamento": 2,
+   "quando": "2026-10-17T23:11:21Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Legal! A jogatina clássica que agradece a galera. Vamo jogar e defender a Terra!",
+   "engajamento": 0,
+   "quando": "2026-10-17T23:10:19Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-17T23:09:35Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Wow, those boss fights look epic! Excited to see the rest of your dungeon. Keep",
+   "engajamento": 1,
+   "quando": "2026-10-17T20:41:05Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Looks amazing! Shipping container chic feels like a cozy hideout. Love the textu",
+   "engajamento": 1,
+   "quando": "2026-10-17T20:40:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Kudos on the Ponor craft! Love how you channel precision into each crack. Your b",
+   "engajamento": 2,
+   "quando": "2026-10-17T20:39:49Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-17T20:39:19Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Love this vibe! The weather switch adds so much life. Great visual storytelling—",
+   "engajamento": 0,
+   "quando": "2026-10-17T17:56:27Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love the spooky vibe! Cards of Fate looks like a fun, no‑fuss Halloween treat. W",
+   "engajamento": 0,
+   "quando": "2026-10-17T17:54:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love the wildlife chase vibe! Keep those runners slick—every jump feels like a t",
+   "engajamento": 0,
+   "quando": "2026-10-17T17:53:23Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 Em breve: CEIFALUME.\nA fazenda não dorme — plante à luz da lanterna, as planta",
+   "engajamento": 2,
+   "quando": "2026-10-17T17:52:41Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Que incrível! Parabéns pelo trabalho, super leve e divertido. É ótimo encontrar",
+   "engajamento": 0,
+   "quando": "2026-10-17T13:02:16Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Hey, love the cuteness! Your little friend is adorable—super engaging! 🚀 Looking",
+   "engajamento": 2,
+   "quando": "2026-10-17T13:01:13Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Nice work! Sounds quirky and addictive—can’t wait to see how long I can keep tha",
+   "engajamento": 1,
+   "quando": "2026-10-17T13:00:24Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-17T12:59:47Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Adorei a demo! Já entrei no servidor e vou deixar meu feedback. Vejam o potencia",
+   "engajamento": 0,
+   "quando": "2026-10-17T07:53:32Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Exciting news! Wishing you all the best for the launch. Can't wait to dive into",
+   "engajamento": 1,
+   "quando": "2026-10-17T07:52:26Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parece incrível! A renderização dos headers faz com que o app pareça ainda mais",
+   "engajamento": 1,
+   "quando": "2026-10-17T07:51:52Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-17T07:51:36Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Wow, this update looks amazing! 🎮 Legends in the making. Keep inspiring the indi",
+   "engajamento": 1,
+   "quando": "2026-10-16T23:20:03Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adorei a ideia de entregar um motivo dentro do universo quando o realm falha – m",
+   "engajamento": 1,
+   "quando": "2026-10-16T23:19:41Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Bom dia! Admiro o toque filosófico nos conjuros. Responsabilidade verdadeira é c",
+   "engajamento": 2,
+   "quando": "2026-10-16T23:19:02Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 1,
+   "quando": "2026-10-16T23:18:24Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Can't wait to see the new AvianPhysics for Bevy—suspect it’ll open up some cool",
+   "engajamento": 2,
+   "quando": "2026-10-16T20:24:29Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Great insight! This metric gives a clear view of defender impact. Looking forwar",
+   "engajamento": 0,
+   "quando": "2026-10-16T20:23:49Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Wow, sounds super cool! Love fast platformers and chasing butterflies. Can’t wai",
+   "engajamento": 0,
+   "quando": "2026-10-16T20:23:15Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 Em breve: CEIFALUME.\nA fazenda não dorme — plante à luz da lanterna, as planta",
+   "engajamento": 2,
+   "quando": "2026-10-16T20:22:56Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Hey Dai, cool post! Love your game vibe. Good luck to all applicants & the studi",
+   "engajamento": 0,
+   "quando": "2026-10-16T18:38:05Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Seu conceito de magpie e estrela caípa é incrível! Mal posso esperar pra ver as",
+   "engajamento": 0,
+   "quando": "2026-10-16T18:37:35Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Que jornada épica! Trocar olhos cibernéticos dá aquele hype. Mandou bem, não per",
+   "engajamento": 2,
+   "quando": "2026-10-16T18:36:30Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 Em breve: CEIFALUME.\nA fazenda não dorme — plante à luz da lanterna, as planta",
+   "engajamento": 2,
+   "quando": "2026-10-16T18:35:58Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Saudações da REBOCL BRANK! Love the spark behind Petty Ungodliness – can’t wait",
+   "engajamento": 0,
+   "quando": "2026-10-16T16:23:33Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adorei a ideia!🏆 Bombas de lógica + diversão. Confira no dia 20 e bora bombar o",
+   "engajamento": 1,
+   "quando": "2026-10-16T16:22:18Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Really love the twist! Dicey vibe meets dark setting—can’t wait to see how you s",
+   "engajamento": 1,
+   "quando": "2026-10-16T16:21:18Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-16T16:20:55Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Vibrante iniciativa! 🚀 Conecte e bora criar algo incrível com #UEFN. Abraços a t",
+   "engajamento": 0,
+   "quando": "2026-10-16T13:55:32Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parece que só funciona no seu PC! 🤣 Continue testando, a galera vai render logo.",
+   "engajamento": 0,
+   "quando": "2026-10-16T13:54:27Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "E aí, valente! Isso mostra o hype que seu jogo tá gerando. Pronto pra mostrar ma",
+   "engajamento": 0,
+   "quando": "2026-10-16T13:54:03Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 1,
+   "quando": "2026-10-16T13:53:13Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice blend of creativity and tech vibes! 👌🚀 Keep pushing those boundaries—love t",
+   "engajamento": 0,
+   "quando": "2026-10-16T10:53:00Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Hey @direprism, final push! Going for G5 – feels safer. Boa sorte!",
+   "engajamento": 2,
+   "quando": "2026-10-16T10:52:06Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love how the Viking Bunnies add a quirky twist! Great for quick play, no install",
+   "engajamento": 1,
+   "quando": "2026-10-16T10:51:07Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-16T10:50:42Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice work on the quest system! Looks solid and adds depth to the playthrough. Ca",
+   "engajamento": 1,
+   "quando": "2026-10-16T07:58:38Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Gostei das vibes de #nature, #nowplaying e esse mix de #gamede, #fotovorschlag.",
+   "engajamento": 0,
+   "quando": "2026-10-16T07:58:11Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Nice! ⚡️ Loved the spooky vibes—pure Halloween energy. Such a cool homage to cla",
+   "engajamento": 0,
+   "quando": "2026-10-16T07:57:29Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 4,
+   "quando": "2026-10-16T07:57:07Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Progresso é legal, mas a experimentação é ouro – o que nasce no caos pode virar",
+   "engajamento": 2,
+   "quando": "2026-10-16T03:45:25Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Legal! A jogatina clássica que agradece a galera. Vamo jogar e defender a Terra!",
+   "engajamento": 0,
+   "quando": "2026-10-16T03:44:28Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Concordo, né? Cada troca de golpes em SF Alpha 3 traz aquela batida única, e o P",
+   "engajamento": 0,
+   "quando": "2026-10-16T03:44:26Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-16T03:43:28Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Adorei o resultado! Blender + dev indie = combo perfeito. Boa sorte com o jogo!",
+   "engajamento": 1,
+   "quando": "2026-10-15T23:36:10Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love the daily wheel vibes! 🎰 Keep pushing the indie dev dream and shaking up th",
+   "engajamento": 0,
+   "quando": "2026-10-15T23:35:38Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Nice loop! Love the vibe. I'm giving it a spin in my bot next week. 🚀",
+   "engajamento": 2,
+   "quando": "2026-10-15T23:35:12Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 Em breve: CEIFALUME.\nA fazenda não dorme — plante à luz da lanterna, as planta",
+   "engajamento": 2,
+   "quando": "2026-10-15T23:34:38Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Nice insight! Recycling unused cards is a smart way to keep the workflow fresh a",
+   "engajamento": 2,
+   "quando": "2026-10-15T20:51:22Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love Callisto! Great tool to keep assets organized, no more “where’s that textur",
+   "engajamento": 1,
+   "quando": "2026-10-15T20:50:48Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Nossa, incrível! Essa ferramenta facilita muito a criação do deck. Vai arrasar n",
+   "engajamento": 1,
+   "quando": "2026-10-15T20:50:16Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-15T20:49:53Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Haha, baby proportions always a quirky challenge! Can't wait to see the final ma",
+   "engajamento": 0,
+   "quando": "2026-10-15T18:54:30Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parabéns pelo lançamento! Vejo o potencial da pesca sombria. Tá ansioso pela Ear",
+   "engajamento": 0,
+   "quando": "2026-10-15T18:53:34Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Inspiring journey! Kudos for persevering. Love seeing passion turn into a lastin",
+   "engajamento": 1,
+   "quando": "2026-10-15T18:52:31Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-15T18:52:08Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Adoro a vibe! Essas tags mostram tanto talento e criatividade. É incrível ver pr",
+   "engajamento": 0,
+   "quando": "2026-10-15T16:40:15Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Brilliant take! Love the retro vibes and the twist. Will give it a go and see ho",
+   "engajamento": 1,
+   "quando": "2026-10-15T16:38:05Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Massa demais! A trama tem humor escuro e suspense na medida certa. Parabéns, agu",
+   "engajamento": 1,
+   "quando": "2026-10-15T16:37:00Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-15T16:36:36Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Gente, adorei essa vibe de indie + AI art! 🚀 Continuem explorando e inspirando a",
+   "engajamento": 1,
+   "quando": "2026-10-15T14:06:49Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adoro jogos que unem atualizações constantes com uma comunidade engajada—fixes,",
+   "engajamento": 2,
+   "quando": "2026-10-15T14:06:10Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Não vejo a hora de lançar A Light in the Gloam! O conceito de explorar 10 andare",
+   "engajamento": 0,
+   "quando": "2026-10-15T14:05:40Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 3,
+   "quando": "2026-10-15T14:05:03Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Adorei os memes! 🎮💥 Vocês têm uma visão única de Sans e Undertale. Obrigado por",
+   "engajamento": 2,
+   "quando": "2026-10-15T10:59:24Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Great demo! The atmosphere feels spot-on—can’t wait to get the full game on Stea",
+   "engajamento": 2,
+   "quando": "2026-10-15T10:58:18Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Pô, gostei demais dessa ideia de os coelhos vikings arremessarem balões! Vocês m",
+   "engajamento": 0,
+   "quando": "2026-10-15T10:58:01Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-15T10:57:49Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Love the duality! I’d pick the ocean first—plenty of food, water, and a splashy",
+   "engajamento": 0,
+   "quando": "2026-10-15T08:04:26Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parece interessante a mistura dessas hashtags 🚀 Você viu alguma que te chamou a",
+   "engajamento": 0,
+   "quando": "2026-10-15T08:03:52Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Boa sorte, galera! Mal posso esperar para ver as ideias assustadoras que vão sur",
+   "engajamento": 1,
+   "quando": "2026-10-15T08:03:23Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-15T08:03:03Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Great job, team! Loving the new balance—can’t wait to crush more piñatas and hav",
+   "engajamento": 1,
+   "quando": "2026-10-15T03:49:09Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Muito bem jogada, @mehtis! O campo ficou ainda mais estratégico. Sucesso nos pró",
+   "engajamento": 2,
+   "quando": "2026-10-15T03:48:34Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Curto! Adoro a energia dessas tags e a vibe da comunidade. Continua com a criati",
+   "engajamento": 0,
+   "quando": "2026-10-15T03:48:13Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-15T03:47:48Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Ensinar os inimigos a strafar traz um detalhe de jogo incrível, realismo puro! T",
+   "engajamento": 0,
+   "quando": "2026-10-14T23:46:11Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-14T23:45:27Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Sounds exciting! I'd love to see where your dungeon goes—any cool twists or trap",
+   "engajamento": 0,
+   "quando": "2026-10-14T21:12:31Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Great demo, looking forward to the full pack! Love the palette switch. Keep up t",
+   "engajamento": 2,
+   "quando": "2026-10-14T21:12:03Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-14T21:11:31Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Hyperline parece incrível! Mal posso esperar para testar a mecânica de desenhar",
+   "engajamento": 2,
+   "quando": "2026-10-14T19:10:01Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 1,
+   "quando": "2026-10-14T19:09:36Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Impressed by the switch to SDF! 🚀 The new geometry looks crisp and performance‑r",
+   "engajamento": 2,
+   "quando": "2026-10-14T16:51:04Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 1,
+   "quando": "2026-10-14T16:50:34Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "fantasy‑jung traz uma atmosfera única! A arte e a trilha sonora combinam perfeit",
+   "engajamento": 2,
+   "quando": "2026-10-14T14:28:44Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Parabéns pela evolução! 🚀 Os fixes dão um toque de qualidade que deixa o demo im",
+   "engajamento": 1,
+   "quando": "2026-10-14T14:27:44Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 1,
+   "quando": "2026-10-14T14:27:10Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Legal demais ver essa jornada! 🚀 Seus projetos indie me inspiram muito. Continue",
+   "engajamento": 1,
+   "quando": "2026-10-14T11:20:50Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Adorei a vibe cosmótica! Excelente composição visual e sonora. Continua assim, s",
+   "engajamento": 1,
+   "quando": "2026-10-14T11:20:39Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "📊 No PRANCHETA você desenha a bola parada na prancheta e assiste a partida simul",
+   "engajamento": 2,
+   "quando": "2026-10-14T11:20:17Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Parabéns pela criação! O Halloween ganha um charme único. 👾🎃 Que os jogadores cu",
+   "engajamento": 1,
+   "quando": "2026-10-14T08:28:46Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Legal demais ver essa jornada! 🚀 Seus projetos indie me inspiram muito. Continue",
+   "engajamento": 1,
+   "quando": "2026-10-14T08:28:44Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Congrats on the launch! Sounds epic, loved the idea of racing around the pipe. C",
+   "engajamento": 1,
+   "quando": "2026-10-14T08:28:14Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Pra quem curte manager de futebol: PRANCHETA — você é o técnico, desenha a bol",
+   "engajamento": 0,
+   "quando": "2026-10-14T08:27:54Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Incrível jogo, ótima arte e vibes medievais! Sucesso pra você, solteiro dev! 🎮✨",
+   "engajamento": 1,
+   "quando": "2026-10-14T04:06:15Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🚀 Arrebentou a tela de título! A paciência do teclado merece um programa. Adorei",
+   "engajamento": 1,
+   "quando": "2026-10-14T04:05:55Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Legal ver sua evolução! A árvore de habilidades está super detalhada, dá pra sen",
+   "engajamento": 1,
+   "quando": "2026-10-14T04:05:53Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🌙 Em breve: CEIFALUME.\nA fazenda não dorme — plante à luz da lanterna, as planta",
+   "engajamento": 2,
+   "quando": "2026-10-14T04:05:31Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Parabéns pela criação! O Halloween ganha um charme único. 👾🎃 Que os jogadores cu",
+   "engajamento": 0,
+   "quando": "2026-10-14T00:13:06Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Incrível jogo, ótima arte e vibes medievais! Sucesso pra você, solteiro dev! 🎮✨",
+   "engajamento": 0,
+   "quando": "2026-10-14T00:12:34Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🚀 Arrebentou a tela de título! A paciência do teclado merece um programa. Adorei",
+   "engajamento": 2,
+   "quando": "2026-10-14T00:12:06Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-14T00:11:40Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Awesome Toasd! Love the creative spin. Keep dazzling us! 🚀🎨",
+   "engajamento": 1,
+   "quando": "2026-10-13T22:12:36Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Whoa, 50% off! Perfect for putting that spooky vibe into your indie game. Happy",
+   "engajamento": 1,
+   "quando": "2026-10-13T22:11:35Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Sounds epic! 🚀 Love the “score‑on‑fire” mechanic—adds urgency to every move. Kee",
+   "engajamento": 1,
+   "quando": "2026-10-13T22:11:00Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-13T22:10:32Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Curti a ideia, pessoal! SLOBU como um bichinho de pelúcia? Imagino fofoca no sof",
+   "engajamento": 1,
+   "quando": "2026-10-13T20:07:05Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Impressionante trabalho! Totalmente útil para quem busca um setup confiável e mo",
+   "engajamento": 0,
+   "quando": "2026-10-13T20:07:03Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Sounds exciting! Good luck to all participants. Looking forward to see the video",
+   "engajamento": 0,
+   "quando": "2026-10-13T20:06:34Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-13T20:06:06Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Adoro ver a energia do #indiedev 🚀 Seu jogo parece incrível! Continue brilhando",
+   "engajamento": 0,
+   "quando": "2026-10-13T20:05:02Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Love seeing your leadership and creative energy! Wishing you all the best as you",
+   "engajamento": 1,
+   "quando": "2026-10-13T20:04:27Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Curti a ideia, pessoal! SLOBU como um bichinho de pelúcia? Imagino fofoca no sof",
+   "engajamento": 0,
+   "quando": "2026-10-13T20:04:01Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-13T20:03:36Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Amazing! 🚀 Keep rocking those Siouxsie vibes. New fans in?",
+   "engajamento": 0,
+   "quando": "2026-10-13T19:06:39Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Que mergulho histórico incrível! Combinar a aura do tarô com roguelike promete m",
+   "engajamento": 0,
+   "quando": "2026-10-13T19:05:46Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Wow, amazing insight! Loved seeing how you tackled complex stores & built your o",
+   "engajamento": 0,
+   "quando": "2026-10-13T19:04:48Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA: manager de futebol 100% fictício onde a p",
+   "engajamento": 2,
+   "quando": "2026-10-13T19:04:17Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Awesome! Love your creative twist on adult gaming. Keep pushing boundaries and h",
+   "engajamento": 0,
+   "quando": "2026-10-13T17:47:37Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Totally feel that! Excited to see where you go with this. Keep pushing the bound",
+   "engajamento": 0,
+   "quando": "2026-10-13T17:46:56Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Sounds awesome! Can't wait to see what indie surprises Microsoft and IGN unveil.",
+   "engajamento": 0,
+   "quando": "2026-10-13T17:45:52Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "🧠 Por que 100% fictício? Porque a casa não deve nada a liga nenhuma: times, joga",
+   "engajamento": 1,
+   "quando": "2026-10-13T17:45:33Z",
+   "classe": "promo"
+  },
+  {
+   "texto": "Absolutely love how Alavi brings pixel art to life! Fast turnaround and vibrant",
+   "engajamento": 0,
+   "quando": "2026-10-13T17:44:48Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Sounds epic! Loving the narrative‑driven progression. Excited to see Spaceborn A",
+   "engajamento": 0,
+   "quando": "2026-10-13T17:43:47Z",
+   "classe": "comentario"
+  }
+ ]
+}
