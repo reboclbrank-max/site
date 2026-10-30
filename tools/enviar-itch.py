@@ -117,6 +117,26 @@ def alvo_do_canal(slug, canal):
     return "%s:%s" % (alvo["alvo"], canal) if alvo else None
 
 
+NADA_A_ENVIAR = ("nothing", "no changes", "up to date", "already", "nenhuma")
+
+
+def interpretar_diff(saida):
+    """Traduz a saída do `butler diff` em IGUAL ou DIFERENTE, sem adivinhar pelo tamanho.
+
+    Regra: só é IGUAL quando NENHUMA linha parece arquivo (as linhas de arquivo do butler
+    começam com um marcador de mudança ou são um caminho de arquivo). Qualquer dúvida cai em
+    DIFERENTE — errar para "tem coisa a enviar" custa um envio a mais; errar para "está tudo
+    igual" esconde uma atualização que o jogador deveria ter recebido.
+    """
+    texto = (saida or "").strip()
+    baixo = texto.casefold()
+    if not texto:
+        return "IGUAL: o itch já tem exatamente esta pasta (nada a enviar)"
+    if any(m in baixo for m in NADA_A_ENVIAR) and "\n" not in texto:
+        return "IGUAL: o itch já tem exatamente esta pasta (nada a enviar) — " + texto
+    return "DIFERENTE: o envio mudaria estes arquivos\n" + texto[:1200]
+
+
 def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=None):
     """SOMENTE LEITURA. Sem canal, o butler LISTA os canais que existem no jogo.
 
@@ -140,14 +160,14 @@ def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=No
         erros, _pasta = conferir_build(slug, raiz)
         if declarados and not erros:
             alvo_canal = alvo_do_canal(slug, declarados[0])
-            cod, dif = rodar(["status", alvo_canal], identidade=identidade,
+            # `butler status alvo:canal` devolve a mesma tabela de canais (medido em 30/10):
+            # não é diff, então não respondia nada. Quem compara pasta local com o build no
+            # ar é `butler diff <pasta> <alvo:canal>`.
+            cod, dif = rodar(["diff", _pasta, alvo_canal], identidade=identidade,
                              executar=executar, chave=chave)
             linhas.append("--- diferença de %s contra a pasta local ---" % alvo_canal)
             if cod == 0:
-                igual = not (dif or "").strip()
-                linhas.append("IGUAL: o itch já tem exatamente esta pasta "
-                              "(nada a enviar)" if igual
-                              else ("DIFERENTE: o envio mudaria estes arquivos\n" + dif[:1200]))
+                linhas.append(interpretar_diff(dif or ""))
             else:
                 linhas.append("não consegui comparar: " + (dif or "")[:300])
         elif erros:
