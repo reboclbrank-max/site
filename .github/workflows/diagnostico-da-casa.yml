@@ -49,6 +49,7 @@ jobs:
           python3 tools/testes-auditar-inteligencia.py
           python3 tools/testes-perceber.py
           python3 tools/testes-juizo.py
+          python3 tools/testes-melhorias.py
 
       - name: Mede o que foi postado e o que voltou (só leitura)
         env:

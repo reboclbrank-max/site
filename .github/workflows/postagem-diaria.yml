@@ -38,6 +38,7 @@ jobs:
           python3 tools/testes-auditar-inteligencia.py
           python3 tools/testes-perceber.py
           python3 tools/testes-juizo.py
+          python3 tools/testes-melhorias.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
@@ -50,9 +51,12 @@ jobs:
           python3 tools/auditar-inteligencia.py
           python3 tools/perceber.py
           python3 tools/painel-marketing.py
+          # Página pública das melhorias: lista as rodadas e mostra os números dos artefatos.
+          # Melhoria invisível é quase promessa — e não dá para discordar dela.
+          python3 tools/melhorias.py
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
-          git add marketing.html posts/log.md posts/decisoes.json posts/decisoes.md posts/auditoria-inteligencia.json posts/auditoria-inteligencia.md posts/percebido.json posts/percebido.md posts/fila-tarefas.json
+          git add marketing.html melhorias.html posts/log.md posts/decisoes.json posts/decisoes.md posts/auditoria-inteligencia.json posts/auditoria-inteligencia.md posts/percebido.json posts/percebido.md posts/fila-tarefas.json
           if ! git diff --cached --quiet; then
             git commit -q -m "marketing: painel e log do ciclo ($(date -u +'%d/%m %H:%M UTC'))"
             # Sem -u: artefato NOVO (não versionado ainda) não pode ser levado embora pelo stash,
