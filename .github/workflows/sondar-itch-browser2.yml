@@ -1,0 +1,91 @@
+name: sondar-itch-browser2
+
+# Segunda tentativa no desafio do itch, com a configuração mais parecida com um navegador humano:
+# Chromium COMPLETO (não o headless shell), rodando sob Xvfb com janela real, sem a marca de
+# automação, locale pt-BR. O desafio da Cloudflare aparece em português ("Um momento…") — o
+# detector da primeira sondagem estava em inglês e por isso disse "desafio nao".
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Chromium completo + Xvfb
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb
+          npm install --no-audit --no-fund playwright-core
+          npx playwright-core install --with-deps chromium
+
+      - name: Entra no painel como um navegador comum
+        env:
+          ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
+        run: |
+          cat > /tmp/sonda.js <<'JS'
+          const { chromium } = require('playwright-core');
+          const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36';
+          const cru = (process.env.ITCH_COOKIE || '').trim();
+          const DESAFIO = /just a moment|um momento|verificando|verifique|checking your browser|attention required|cf-challenge|challenge-platform/i;
+          const biscoitos = cru.split(';').map((p) => p.trim()).filter(Boolean).map((p) => {
+            const i = p.indexOf('=');
+            return { name: p.slice(0, i), value: p.slice(i + 1), domain: '.itch.io', path: '/', httpOnly: true, secure: true };
+          });
+          (async () => {
+            const navegador = await chromium.launch({
+              headless: false,
+              args: ['--disable-blink-features=AutomationControlled', '--no-sandbox'],
+            });
+            const contexto = await navegador.newContext({
+              userAgent: UA, locale: 'pt-BR', viewport: { width: 1366, height: 768 },
+              timezoneId: 'America/Sao_Paulo',
+            });
+            await contexto.addInitScript(() => {
+              Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+            });
+            if (biscoitos.length) await contexto.addCookies(biscoitos);
+            const pagina = await contexto.newPage();
+            let status = 0;
+            try {
+              const r = await pagina.goto('https://itch.io/dashboard', { waitUntil: 'domcontentloaded', timeout: 90000 });
+              status = r ? r.status() : 0;
+            } catch (e) { console.log('erro:', String(e).slice(0, 160)); }
+            for (let i = 0; i < 12; i++) {
+              const titulo = await pagina.title();
+              const html = await pagina.content();
+              const desafio = DESAFIO.test(titulo) || DESAFIO.test(html);
+              console.log(`t+${i * 8}s · status ${status} · url ${pagina.url()} · titulo "${titulo}" · bytes ${html.length} · desafio ${desafio ? 'SIM' : 'NAO'}`);
+              if (!desafio) break;
+              await pagina.waitForTimeout(8000);
+            }
+            const html = await pagina.content();
+            console.log('tem ceifalume?', /ceifalume/i.test(html),
+                        '· tem meus jogos?', /meus jogos|my games/i.test(html),
+                        '· tem entrar?', /entrar|log in|sign in/i.test(html));
+            await pagina.screenshot({ path: '/tmp/itch.png', fullPage: false });
+            require('fs').writeFileSync('/tmp/itch.html', html);
+            await navegador.close();
+          })();
+          JS
+          xvfb-run -a --server-args="-screen 0 1366x768x24" node /tmp/sonda.js
+
+      - name: Guarda a prova (página e captura)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: itch-painel
+          path: |
+            /tmp/itch.png
+            /tmp/itch.html
+          if-no-files-found: warn
