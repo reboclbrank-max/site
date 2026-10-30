@@ -110,6 +110,16 @@ _falso_d = ButlerFalso(saida="")
 _ok_d, _msg_d = itch.status("ceifalume", None, raiz=RAIZ, identidade="/x", executar=_falso_d)
 ok("status diz IGUAL (nada a enviar) quando o butler não aponta diferença",
    "IGUAL" in _msg_d and "nada a enviar" in _msg_d, _msg_d[:200])
+ok("a comparação usa butler diff (status não é diff)",
+   any("diff" in c for c in _falso.chamadas), str(_falso.chamadas))
+ok("diff vazio é lido como nada a enviar",
+   itch.interpretar_diff("").startswith("IGUAL"))
+ok("diff com arquivos é lido como mudança",
+   itch.interpretar_diff("- index.js\n+ index.pck").startswith("DIFERENTE"))
+ok("frase de 'up to date' numa linha só é lida como nada a enviar",
+   itch.interpretar_diff("Everything up to date").startswith("IGUAL"))
+ok("dúvida cai para DIFERENTE (não esconde atualização do jogador)",
+   itch.interpretar_diff("???\n???").startswith("DIFERENTE"))
 ok("o status continua sendo somente leitura (nenhum push, nenhum commit)",
    all("push" not in c for c in _falso.chamadas), str(_falso.chamadas))
 
