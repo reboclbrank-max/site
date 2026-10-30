@@ -4,7 +4,7 @@
 
 ## 30/10/2026
 
-> Medição pública em 2026-10-30T21:04Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
+> Medição pública em 2026-10-30T21:06Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
 
 - **bsky_seguidores=32 · posts_proprios=300 · eng_medio=1.18 · promo: n=89 media=1.91 zero=18.0% · comentario: n=211 media=0.87 zero=41.7% · respostas_recebidas=39 promo_respostas=1 promo_pendentes=1**
 
