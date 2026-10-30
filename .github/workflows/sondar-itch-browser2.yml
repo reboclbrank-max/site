@@ -33,7 +33,7 @@ jobs:
         env:
           ITCH_COOKIE: ${{ secrets.ITCH_COOKIE }}
         run: |
-          cat > /tmp/sonda.js <<'JS'
+          cat > ./sonda-itch.js <<'JS'
           const { chromium } = require('playwright-core');
           const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36';
           const cru = (process.env.ITCH_COOKIE || '').trim();
@@ -78,7 +78,8 @@ jobs:
             await navegador.close();
           })();
           JS
-          xvfb-run -a --server-args="-screen 0 1366x768x24" node /tmp/sonda.js
+          # o script roda DENTRO do repositório: node resolve node_modules pelo diretório do arquivo
+          xvfb-run -a --server-args="-screen 0 1366x768x24" node ./sonda-itch.js
 
       - name: Guarda a prova (página e captura)
         if: always()
