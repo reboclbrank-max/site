@@ -1,0 +1,66 @@
+name: pendencias-do-dono
+
+# Fecha o ciclo do único passo que sobra para o dono (publicar no painel do itch).
+#
+# O painel é bloqueado por reputação de IP para servidor — medido, não suposto
+# (docs/sondagens/ITCH-403-CLOUDFLARE.json). Mas o devlog do itch é PÚBLICO: dá para ver de fora
+# se o post saiu. Então este workflow:
+#   1. mede o estado sem painel e sem cookie;
+#   2. registra posts/pendencias-do-dono.json + .md no repositório;
+#   3. avisa por ntfy SÓ quando o conjunto de pendências muda (aviso diário igual vira ruído);
+#   4. quando o dono publicar, o próximo run marca "feito" sozinho — ninguém precisa avisar.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 12 * * *"   # 1 leitura por dia, meio-dia UTC
+
+concurrency:
+  group: pendencias-do-dono
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline
+        run: python3 tools/testes-pendencias.py
+
+      - name: Mede o que falta (leitura pública, sem cookie)
+        env:
+          PEDIR_AVISO: "1"
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python3 tools/pendencias-do-dono.py
+
+      - name: Guarda o relatório no repositório
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/pendencias-do-dono.json posts/pendencias-do-dono.md
+          if git diff --cached --quiet; then
+            echo "relatório sem mudança"
+            exit 0
+          fi
+          git commit -m "pendências do dono: estado medido ($(date -u +%d/%m %H:%M UTC))"
+          git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+          enviado=0
+          for tentativa in 1 2 3; do
+            if git fetch -q origin main && git rebase -q origin/main && git push; then
+              echo "relatório no main (tentativa $tentativa)"
+              enviado=1
+              break
+            fi
+            echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          if [ "$enviado" != "1" ]; then
+            echo "::error::3 tentativas e o relatório não entrou no main"
+            exit 1
+          fi
