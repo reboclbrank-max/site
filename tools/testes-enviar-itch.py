@@ -104,8 +104,8 @@ ok("status não pede confirmação (é leitura)", ok_s)
 # Em 30/10 o status saiu com a tabela de canais e nada mais, e a pergunta ficou sem resposta.
 ok("status sem canal também compara com a pasta local (não só lista)",
    "diferença de rebocl-brank/ceifalume:html5" in msg_s, msg_s[:160])
-ok("status diz DIFERENTE quando o butler aponta arquivos diferentes",
-   "DIFERENTE" in msg_s, msg_s[:160])
+ok("saída sem linha de comparação não é vendida como igualdade",
+   "INDEFINIDO" in msg_s, msg_s[:160])
 _igual = '{"channel":"html5","hasParent":true,"comparison":{"new":0,"modified":0,"deleted":0,"same":13}}'
 _muda = '{"channel":"html5","hasParent":true,"comparison":{"new":2,"modified":0,"deleted":0,"same":11}}'
 _novo = '{"channel":"html5","hasParent":false,"comparison":{"new":13,"modified":0,"deleted":0,"same":0}}'
@@ -119,14 +119,28 @@ ok("butler mudo não é lido como igualdade", "INDEFINIDO" in _msg_m, _msg_m[:20
 _prev = [c for c in _falso.chamadas if "push-preview" in c][0]
 ok("a comparação usa push-preview (o único comando que compara com o build no ar)",
    any("push-preview" in c for c in _falso.chamadas), str(_falso.chamadas))
-ok("push-preview vai com a pasta antes do alvo e pede JSON",
-   _prev[-2].endswith("ceifalume") and _prev[-1] == "rebocl-brank/ceifalume:html5"
-   and "--json" in _prev, str(_prev))
+ok("push-preview vai com a pasta antes do alvo",
+   _prev[-2].endswith("ceifalume") and _prev[-1] == "rebocl-brank/ceifalume:html5",
+   str(_prev))
+# A linha de resumo é a saída REAL medida no run 41085313350 do CI.
+_real = ("• Comparing against build 2217549 on channel `html5`...\n"
+         "SAME      -rw-r--r--  33.34 KiB icone-marca-512.png\n"
+         "Comparison vs build 2217549: 0 new, 0 modified, 0 deleted, 13 unchanged")
+ok("linha real do butler (0 new/0 modified/0 deleted) é lida como IGUAL",
+   itch.interpretar_preview(_real).startswith("IGUAL"), itch.interpretar_preview(_real)[:120])
+_real_muda = _real.replace("0 new, 0 modified, 0 deleted, 13 unchanged",
+                          "1 new, 0 modified, 0 deleted, 12 unchanged")
+ok("linha real com 1 novo é lida como DIFERENTE", itch.interpretar_preview(_real_muda).startswith("DIFERENTE"))
+ok("canal sem build anterior, em texto, é DIFERENTE",
+   itch.interpretar_preview("All 13 entries are new (no previous build)").startswith("DIFERENTE"))
+ok("saída sem linha de comparação é INDEFINIDO, não igualdade",
+   itch.interpretar_preview("• Hashing source files...").startswith("INDEFINIDO"))
 ok("contagem toda em 'same' é lida como nada a enviar", itch.interpretar_preview(_igual).startswith("IGUAL"))
 ok("arquivo novo/modificado/apagado é lido como mudança", itch.interpretar_preview(_muda).startswith("DIFERENTE"))
 ok("canal sem build anterior é DIFERENTE (não 'igual por zero diferença')",
    itch.interpretar_preview(_novo).startswith("DIFERENTE"))
-ok("saída sem JSON não vira igualdade", itch.interpretar_preview("texto solto").startswith("DIFERENTE"))
+ok("saída sem linha de comparação não vira igualdade",
+   itch.interpretar_preview("texto solto").startswith("INDEFINIDO"))
 ok("butler mudo é INDEFINIDO, não sucesso", itch.interpretar_preview("").startswith("INDEFINIDO"))
 ok("a resposta traz os números medidos, não só o veredito", "0 novos" in itch.interpretar_preview(_igual))
 # O butler escreve NDJSON (um objeto por linha) e a linha do resultado vem no fim. Ler o arquivo
