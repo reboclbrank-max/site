@@ -27,7 +27,8 @@ SAIDA = os.path.join(RAIZ, "posts", "kit-gameplay.json")
 # slug do jogo -> (arquivo do gameplay, título próprio, linha de origem)
 GAMEPLAY = {
     "ceifalume": {
-        "arquivo": "media/gameplay/ceifalume-gameplay.mp4",
+        # o arquivo do kit é o que tem as INSTRUÇÕES na tela (rodada 111): é esse que vai ao YouTube
+        "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
         "sufixo_titulo": " — gameplay gravado no navegador",
         "origem": ("Gameplay: gravado automaticamente do próprio jogo rodando no navegador "
                    "(build web do repositório). A trilha é sintetizada pelo próprio script de "

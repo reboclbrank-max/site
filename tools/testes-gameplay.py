@@ -355,7 +355,9 @@ def main():
     p, erros = kitg.pacote("ceifalume")
     ok("o gameplay tem pacote pronto", p is not None and not erros, erros)
     if p:
-        ok("o pacote aponta para o arquivo do gameplay", p["arquivo"].endswith("ceifalume-gameplay.mp4"), p["arquivo"])
+        # Rodada 111: o arquivo do kit é o que tem as INSTRUÇÕES de como jogar queimadas na tela.
+        ok("o pacote aponta para o vídeo com as instruções de como jogar",
+           p["arquivo"].endswith("ceifalume-gameplay-instrucoes.mp4"), p["arquivo"])
         ok("o pacote tem id próprio para o envio", p.get("id") == "ceifalume-gameplay", p.get("id"))
         ok("a descrição mantém os links oficiais",
            "https://reboclbrank-max.github.io/site/jogos/ceifalume/" in p["descricao"]

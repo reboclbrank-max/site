@@ -54,12 +54,16 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
           npm install --no-save --no-audit --no-fund playwright-core@1
           npx --yes playwright install --with-deps chromium-headless-shell
+          python3 -m pip install --quiet --disable-pip-version-check Pillow
 
       - name: Barreiras offline (nada toca a rede de publicação)
         run: |
           node --check tools/gravar-gameplay.js
-          python3 -m py_compile tools/validar-video.py tools/kit-gameplay.py
+          node --check tools/legenda-guia.js
+          python3 -m py_compile tools/validar-video.py tools/kit-gameplay.py \
+            tools/desenhar-faixa.py tools/validar-instrucoes.py
           python3 tools/testes-gameplay.py
+          python3 tools/testes-instrucoes-video.py
 
       - name: Grava o gameplay do CEIFALUME (agente olha o estado e decide)
         run: |
@@ -73,6 +77,10 @@ jobs:
       # movimento abaixo do mínimo, o script tenta um corte mais largo e, se nenhum passar,
       # termina em erro — vídeo parado não é entregue.
       - name: Pós-produção (corte automático, legenda, trilha, cartão final)
+        env:
+          # A faixa de instruções ocupa 150 px do rodapé: a legenda sobe para não ficar
+          # embaixo dela (medido: com 28 px ela ficava escondida).
+          LEGENDA_MARGEM_V: "176"
         run: |
           python3 tools/produzir-video.py \
             media/gameplay/ceifalume-gameplay-cru.mp4 \
@@ -81,6 +89,20 @@ jobs:
 
       - name: Mede o vídeo final (tela preta e imagem parada reprovam aqui)
         run: python3 tools/validar-video.py media/gameplay/ceifalume-gameplay.mp4
+
+      # REQUISITO DO DONO: "no vídeo as instruções de como jogar não saem da tela em momento
+      # algum". A faixa é queimada NO VÍDEO (não é legenda ativável) e depois MEDIDA: se sumir,
+      # encolher ou ficar ilegível em qualquer segundo, o run reprova e nada é publicado.
+      - name: Faixa de instruções fixa no rodapé (não sai da tela em momento algum)
+        run: |
+          node tools/legenda-guia.js \
+            --entrada media/gameplay/ceifalume-gameplay.mp4 \
+            --saida media/gameplay/ceifalume-gameplay-instrucoes.mp4
+
+      - name: Mede se as instruções estão na tela do começo ao fim
+        run: |
+          python3 tools/validar-video.py media/gameplay/ceifalume-gameplay-instrucoes.mp4
+          python3 tools/validar-instrucoes.py media/gameplay/ceifalume-gameplay-instrucoes.mp4
 
       - name: Confere que o vídeo tem legenda, som e cartão
         run: python3 tools/testes-video-final.py media/gameplay/ceifalume-gameplay.mp4
@@ -93,6 +115,7 @@ jobs:
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
           git add media/gameplay/ceifalume-gameplay.mp4 \
+                  media/gameplay/ceifalume-gameplay-instrucoes.mp4 \
                   media/gameplay/ceifalume-gameplay-cru-decisoes.json
           if git diff --cached --quiet; then
             echo "vídeo sem mudança"
@@ -107,6 +130,7 @@ jobs:
           name: gameplay-ceifalume
           path: |
             media/gameplay/ceifalume-gameplay.mp4
+            media/gameplay/ceifalume-gameplay-instrucoes.mp4
             media/gameplay/ceifalume-gameplay-cru.mp4
             media/gameplay/ceifalume-gameplay-cru-decisoes.json
             media/gameplay/legendas.ass
