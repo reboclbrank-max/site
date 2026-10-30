@@ -48,4 +48,19 @@ jobs:
             exit 0
           fi
           git commit -m "metricas do YouTube: $(date -u +%d/%m\ %H:%M\ UTC)"
-          git push
+          git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+          enviado=0
+          for tentativa in 1 2 3; do
+            if git fetch -q origin main && git rebase -q origin/main && git push; then
+              echo "registro no main (tentativa $tentativa)"
+              enviado=1
+              break
+            fi
+            echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          if [ "$enviado" != "1" ]; then
+            echo "::error::3 tentativas e o registro não entrou no main"
+            exit 1
+          fi

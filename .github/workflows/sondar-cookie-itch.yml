@@ -12,6 +12,10 @@ on:
         required: true
         default: "5017404"
 
+concurrency:
+  group: sondar-cookie-itch
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

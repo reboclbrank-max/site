@@ -10,12 +10,17 @@ name: diagnostico-da-casa
 on:
   workflow_dispatch:
 
+concurrency:
+  group: diagnostico-da-casa
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
 jobs:
   medir:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
@@ -35,6 +40,7 @@ jobs:
           python3 tools/testes-administrar-youtube.py
           python3 tools/testes-enviar-itch.py
           python3 tools/testes-media-limpa.py
+          python3 tools/testes-workflows.py
 
       - name: Mede o que foi postado e o que voltou (só leitura)
         env:

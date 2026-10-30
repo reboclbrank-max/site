@@ -7,6 +7,10 @@ name: sondar-login
 on:
   workflow_dispatch:
 
+concurrency:
+  group: sondar-login
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

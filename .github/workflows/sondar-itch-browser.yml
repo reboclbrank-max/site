@@ -9,6 +9,10 @@ name: sondar-itch-browser
 on:
   workflow_dispatch:
 
+concurrency:
+  group: sondar-itch-browser
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

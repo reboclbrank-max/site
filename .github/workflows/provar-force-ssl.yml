@@ -3,6 +3,10 @@ name: provar-force-ssl
 # Não responde nada: só lê.
 on:
   workflow_dispatch:
+concurrency:
+  group: provar-force-ssl
+  cancel-in-progress: false
+
 permissions:
   contents: read
 jobs:

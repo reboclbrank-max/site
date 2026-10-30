@@ -9,6 +9,10 @@ name: sondar-ip-itch
 on:
   workflow_dispatch:
 
+concurrency:
+  group: sondar-ip-itch
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

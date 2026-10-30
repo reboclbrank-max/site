@@ -13,11 +13,23 @@ O que este teste prova (e o que ele NAO prova):
 Roda com: python3 tools/testes-devlog-navegador.py
 """
 import json
+import os
 import pathlib
 import sys
 import re
 
-from playwright.sync_api import sync_playwright
+try:
+    from playwright.sync_api import sync_playwright
+except ModuleNotFoundError:
+    # Faltar a dependência numa máquina de trabalho não é defeito do repositório — mas no CI é,
+    # porque lá o playwright é instalado de propósito e a falta dele significaria que o teste
+    # nunca rodou. Por isso: aviso e saída limpa fora do CI; erro no CI.
+    if os.environ.get("CI"):
+        print("FALHA  playwright não está instalado no CI (o workflow instala de propósito)")
+        sys.exit(1)
+    print("○ teste do navegador → SKIP: sem playwright nesta máquina "
+          "(instale com: pip install playwright && playwright install chromium)")
+    sys.exit(0)
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 FAVORITO = (RAIZ / 'itch/devlog-bookmarklet.txt').read_text(encoding='utf-8').strip()

@@ -7,6 +7,10 @@ name: sondar-trava-youtube
 on:
   workflow_dispatch:
 
+concurrency:
+  group: sondar-trava-youtube
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

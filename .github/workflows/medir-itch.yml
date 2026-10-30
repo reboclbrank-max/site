@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: "0 13 * * *"
 
+concurrency:
+  group: medir-itch
+  cancel-in-progress: false
+
 permissions:
   contents: read
 

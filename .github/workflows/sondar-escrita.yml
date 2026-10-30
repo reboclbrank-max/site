@@ -8,6 +8,10 @@ name: sondar-escrita
 on:
   workflow_dispatch:
 
+concurrency:
+  group: sondar-escrita
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
