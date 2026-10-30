@@ -214,3 +214,40 @@ janela curta (55 s), não um defeito.
 
 O push com nova tentativa (10.2 → agora em produção) registrou **na primeira tentativa** — a
 correção do `git stash` + `exit 1` está funcionando de verdade, não só no papel.
+
+## 12. Limpeza e encanamento (o que melhorou, medido)
+
+Antes de mexer, medi. Duas ideias da minha própria lista morreram na medição:
+
+| ideia | medida | veredito |
+| --- | --- | --- |
+| deduplicar suítes repetidas entre workflows | as 21 suítes juntas custam **10,3 s** | ganho irrelevante, risco não se paga |
+| sparse checkout (não baixar os 41 MB de `ceifalume/`) | o checkout leva **2–4 s** por run | ganho irrelevante, risco de quebrar workflow que lê o build |
+
+O que realmente custou caro foi falha de encanamento — e foi ali que mexi:
+
+| defeito | estado antes | estado depois |
+| --- | --- | --- |
+| `git push` seco | `metricas-youtube` (o mesmo do PRANCHETA) | fetch+rebase+push, 3 tentativas, **`exit 1`** se não entrar — provado no run 41119581608 ("registro no main (tentativa 1)") |
+| `timeout-minutes` | faltava em `despertador` e `diagnostico-da-casa` | presente nos **30** workflows |
+| `concurrency` | faltava em 20 | presente nos **30**, com grupo nomeado |
+| suíte que estoura traceback sem a dependência | `testes-devlog-navegador` | avisa e sai limpa fora do CI; **falha no CI** (`CI=1`) |
+| suíte órfã (teste que nada executa) | sem guarda | `tools/testes-workflows.py` reprova órfã |
+| sondagens do itch | 3 workflows, script dentro do YAML | **1** com `modo` (http · navegador · navegador-xvfb · tudo) + `tools/sonda-itch-navegador.js` |
+| artefatos de vídeo intermediários no git | 17,4 MB | fora, com `testes-media-limpa.py` |
+| `node_modules/` versionado | 14 MB / 117 arquivos | fora (os 2 workflows já instalam) |
+
+Números finais: arquivos versionados **349 → 225**, `media/` **31 → 20 MB**, workflows **33 → 30**,
+suítes **21 → 23** (todas verdes aqui em 10,1 s).
+
+Dois guardas estáticos novos, os dois ligados no `diagnostico-da-casa`:
+
+- `tools/testes-workflows.py` (11 verificações): push seco, push sem trava, timeout, concurrency,
+  suíte órfã, segredo escrito no YAML, sondagem em cron. **Pegou a si mesmo** na primeira
+  execução, acusando "suíte órfã" — que era ele.
+- `tools/testes-media-limpa.py` (9): intermediário versionado, arquivo pesado órfão, e o vídeo
+  entregue sumindo do git.
+
+Runs de confirmação: `41118571817` (sondagem unificada, 5 jobs verdes), `41119217962`
+(diagnóstico com todas as suítes), `41119581608` (métricas com push novo), `41119601942`
+(despertador com timeout).
