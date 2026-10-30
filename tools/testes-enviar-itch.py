@@ -100,6 +100,19 @@ ok("status COM canal usa alvo usuario/jogo:canal",
    ok_c and _falso_c.chamadas[0][-1] == "rebocl-brank/ceifalume:html5", str(_falso_c.chamadas[0]))
 ok("status não pede confirmação (é leitura)", ok_s)
 
+# O status tem que RESPONDER a pergunta útil: o que está no itch é a pasta local?
+# Em 30/10 o status saiu com a tabela de canais e nada mais, e a pergunta ficou sem resposta.
+ok("status sem canal também compara com a pasta local (não só lista)",
+   "diferença de rebocl-brank/ceifalume:html5" in msg_s, msg_s[:160])
+ok("status diz DIFERENTE quando o butler aponta arquivos diferentes",
+   "DIFERENTE" in msg_s, msg_s[:160])
+_falso_d = ButlerFalso(saida="")
+_ok_d, _msg_d = itch.status("ceifalume", None, raiz=RAIZ, identidade="/x", executar=_falso_d)
+ok("status diz IGUAL (nada a enviar) quando o butler não aponta diferença",
+   "IGUAL" in _msg_d and "nada a enviar" in _msg_d, _msg_d[:200])
+ok("o status continua sendo somente leitura (nenhum push, nenhum commit)",
+   all("push" not in c for c in _falso.chamadas), str(_falso.chamadas))
+
 # ---------------------------------------------------------------- push exige palavra
 _falso2 = ButlerFalso()
 ok_n, msg_n = itch.enviar("ceifalume", "html5", "", raiz=RAIZ, identidade="/x", executar=_falso2)
