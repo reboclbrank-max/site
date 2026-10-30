@@ -112,6 +112,9 @@ ok("status diz IGUAL (nada a enviar) quando o butler não aponta diferença",
    "IGUAL" in _msg_d and "nada a enviar" in _msg_d, _msg_d[:200])
 ok("a comparação usa butler diff (status não é diff)",
    any("diff" in c for c in _falso.chamadas), str(_falso.chamadas))
+_diff = [c for c in _falso.chamadas if "diff" in c][0]
+ok("diff vai com o alvo ANTES da pasta (ordem que o butler aceita)",
+   _diff[-2] == "rebocl-brank/ceifalume:html5" and _diff[-1].endswith("ceifalume"), str(_diff))
 ok("diff vazio é lido como nada a enviar",
    itch.interpretar_diff("").startswith("IGUAL"))
 ok("diff com arquivos é lido como mudança",
