@@ -131,7 +131,28 @@ def status(slug, canal=None, raiz=RAIZ, identidade=None, executar=None, chave=No
     if canal is None:
         codigo, saida = rodar(["status", alvo_base], identidade=identidade, executar=executar,
                               chave=chave)
-        return (codigo == 0), (saida or "(sem saída)")[:800]
+        # A tabela de canais diz QUAL build está no ar, mas não responde a pergunta que
+        # importa: "o que está no itch é o que está no repositório?". Em 30/10 essa pergunta
+        # ficou sem resposta e o status saiu vazio de sentido. Então, depois da tabela,
+        # comparamos o primeiro canal declarado do jogo (html5) com a pasta local.
+        linhas = [(saida or "(sem saída)")[:800]]
+        declarados = [c for c in (BUILDS.get(slug) or {}).get("canais") or []]
+        erros, _pasta = conferir_build(slug, raiz)
+        if declarados and not erros:
+            alvo_canal = alvo_do_canal(slug, declarados[0])
+            cod, dif = rodar(["status", alvo_canal], identidade=identidade,
+                             executar=executar, chave=chave)
+            linhas.append("--- diferença de %s contra a pasta local ---" % alvo_canal)
+            if cod == 0:
+                igual = not (dif or "").strip()
+                linhas.append("IGUAL: o itch já tem exatamente esta pasta "
+                              "(nada a enviar)" if igual
+                              else ("DIFERENTE: o envio mudaria estes arquivos\n" + dif[:1200]))
+            else:
+                linhas.append("não consegui comparar: " + (dif or "")[:300])
+        elif erros:
+            linhas.append("não consegui comparar (build local incompleto): " + "; ".join(erros))
+        return (codigo == 0), "\n".join(linhas)[:2400]
     erros, _pasta = conferir_build(slug, raiz)
     if erros:
         return False, "; ".join(erros)
