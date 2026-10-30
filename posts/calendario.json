@@ -1,20 +1,27 @@
 {
-  "janela": {
-    "inicio": 9,
-    "fim": 22,
-    "fuso": "America/Fortaleza"
-  },
-  "teto_diario": 5,
-  "_por_que": "O relogio do postador rodava 24 horas: 8 ciclos por dia, incluindo 00h e 03h de Brasilia, quando quase ninguem esta acordado e o proprio feed esta vazio. A janela 9h-22h mantem os 5 ciclos que caem dentro dela (09, 12, 15, 18, 21 em Brasilia, que sao 12, 15, 18, 21, 00 UTC no cron atual) e corta os da madrugada. O teto de 5 e o proprio numero de ciclos que sobram: nao aumenta volume, so concentra na hora em que alguem pode ler.",
-  "_o_que_nao_sei": "A medicao por hora em posts/desempenho.md tem amostra pequena e o proprio relatorio avisa que a diferenca esta dentro do ruido. Entao esta janela NAO foi escolhida por engajamento medido: e prudencia de fuso horario, nao prova. Quando houver amostra suficiente (o medidor precisa de mais posts), a janela pode ser recalculada com dado.",
-  "_devlog": {
-    "estado": "pronto, esperando o gatilho",
-    "texto": "posts/devlog-itch.json",
-    "gatilho": "quando a build 0.2 subir (butler) — anunciar 0.1 duas vezes seria ruido",
-    "fallback": "se a 0.2 nao sair ate 02/11/2026, publicar como esta: o devlog ja esta no blog da casa desde 26/10"
-  },
-  "_ciclos_no_dia": {
-    "26/10/2026": 1,
-    "27/10/2026": 2
-  }
+ "janela": {
+  "inicio": 9,
+  "fim": 22,
+  "fuso": "America/Fortaleza"
+ },
+ "teto_diario": 5,
+ "_por_que": "O relogio do postador rodava 24 horas: 8 ciclos por dia, incluindo 00h e 03h de Brasilia, quando quase ninguem esta acordado e o proprio feed esta vazio. A janela 9h-22h mantem os 5 ciclos que caem dentro dela (09, 12, 15, 18, 21 em Brasilia, que sao 12, 15, 18, 21, 00 UTC no cron atual) e corta os da madrugada. O teto de 5 e o proprio numero de ciclos que sobram: nao aumenta volume, so concentra na hora em que alguem pode ler.",
+ "_o_que_nao_sei": "A medicao por hora em posts/desempenho.md tem amostra pequena e o proprio relatorio avisa que a diferenca esta dentro do ruido. Entao esta janela NAO foi escolhida por engajamento medido: e prudencia de fuso horario, nao prova. Quando houver amostra suficiente (o medidor precisa de mais posts), a janela pode ser recalculada com dado.",
+ "_devlog": {
+  "estado": "pronto, esperando o gatilho",
+  "texto": "posts/devlog-itch.json",
+  "gatilho": "quando a build 0.2 subir (butler) — anunciar 0.1 duas vezes seria ruido",
+  "fallback": "se a 0.2 nao sair ate 02/11/2026, publicar como esta: o devlog ja esta no blog da casa desde 26/10"
+ },
+ "_ciclos_no_dia": {
+  "26/10/2026": 1,
+  "27/10/2026": 2
+ },
+ "_devlog_gameplay": {
+  "estado": "pronto, esperando 1 clique do dono",
+  "texto": "posts/devlog-itch-gameplay.json",
+  "favorito": "itch/devlog-gameplay-bookmarklet.txt",
+  "por_que_o_dono": "a Cloudflare do itch devolve 403 em /dashboard para IP de datacenter (medido no run 41082945952: 'nao e a sessao, e o IP'); so o navegador dele alcança",
+  "nao_sobrescreve": "o devlog da 0.1 continua em posts/devlog-itch.json, intocado"
+ }
 }

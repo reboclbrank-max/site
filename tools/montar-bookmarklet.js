@@ -19,6 +19,9 @@ const PARES = [
   // devlog: descobre o formulario real do itch e posta (1 clique)
   { fonte: 'tools/devlog-itch-auto.js', destino: 'itch/devlog-bookmarklet.txt', rotulo: 'postar devlog (1 clique)', prefixo: 'javascript:',
     conteudo: 'posts/devlog-itch.json' },
+  // devlog do VIDEO de gameplay (30/10): texto próprio, para não sobrescrever o devlog da 0.1
+  { fonte: 'tools/devlog-itch-auto.js', destino: 'itch/devlog-gameplay-bookmarklet.txt', rotulo: 'postar devlog do gameplay (1 clique)', prefixo: 'javascript:',
+    conteudo: 'posts/devlog-itch-gameplay.json' },
 ];
 
 function minificar(codigo) {
