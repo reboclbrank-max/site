@@ -531,11 +531,85 @@ function decidir(estado, memoria = {}) {
 }
 
 /** Toque que não depende do tipo de evento: clique de mouse E toque de dedo. */
+/* ESCAPE DE TELA DE ABERTURA — conserto de 30/10/2026.
+   Sintoma medido no sandbox: em duas de três gravações o robô passou 90 s decidindo
+   "tela de abertura (sem HUD)" e tocando no mesmo ponto, sem chegar à fazenda; a gravação
+   saía sem plantio e sem colheita (o pipeline recusava o vídeo, mas o robô perdia o run).
+   Causa: o build às vezes não responde ao par clique+tap no mesmo ponto da capa (o canvas
+   ainda não tem foco, ou a camada de entrada do Godot ainda está subindo).
+   Correção: quando a abertura passa de ABERTURA_LIMITE segundos, alterna formas de entrada
+   que o jogo aceita (foco no canvas, Enter/Espaço, clique no centro, clique no "Jogar"),
+   sem tocar em nada que gaste dinheiro. E, se mesmo assim não sair, o run FALHA com motivo
+   claro em vez de gravar 130 s de capa. */
+const ABERTURA_LIMITE = 18;      // segundos aceitáveis na capa antes de escalar a entrada
+const ABERTURA_MAXIMA = 45;      // segundos até desistir (aí o problema não é foco)
+
+async function escaparDaAbertura(pagina, tentativa) {
+  const vp = pagina.viewportSize() || { width: 1280, height: 720 };
+  try { await pagina.bringToFront(); } catch (e) { /* sem janela visível: segue */ }
+  try {
+    await pagina.evaluate(() => {
+      const c = document.querySelector('canvas');
+      if (c) { c.setAttribute('tabindex', '0'); c.focus && c.focus(); }
+      if (document.body) document.body.focus && document.body.focus();
+    });
+  } catch (e) { /* página pode estar no meio da troca de cena */ }
+  // ordens diferentes a cada tentativa: o que não funcionou uma vez pode ser o que faltava
+  const acoes = [
+    async () => pagina.keyboard.press('Enter'),
+    async () => pagina.keyboard.press('Space'),
+    async () => pagina.mouse.click(Math.round(vp.width / 2), Math.round(vp.height / 2)),
+    async () => pagina.touchscreen.tap(Math.round(vp.width / 2), Math.round(vp.height / 2)),
+    async () => pagina.mouse.click(ponto(ALVO.titulo).x, ponto(ALVO.titulo).y),
+    async () => pagina.mouse.down({ button: 'left' }) && pagina.mouse.up({ button: 'left' })
+  ];
+  for (let i = 0; i < acoes.length; i += 1) {
+    const indice = (tentativa + i) % acoes.length;
+    try { await acoes[indice](); } catch (e) { /* ação indisponível nesta versão do Playwright */ }
+    await pagina.waitForTimeout(120);
+  }
+}
+
+/* ESCALA DAS COORDENADAS — conserto de 30/10/2026.
+   As regiões (MEDIDOR) já eram lidas em coordenadas de 1280×720 e escaladas pelo tamanho real do
+   canvas; os CLIQUES não eram. Rodando com --largura 960 --altura 540 o robô tocava em pontos
+   25% deslocados: ficava preso na capa ("tela de abertura (sem HUD)") ou tocava fora do botão do
+   tutorial. Medido no sandbox: 3 de 3 gravações em 960×540 terminaram sem colheita, e 3 de 3 em
+   1280×720 funcionaram. Aqui a mesma escala passa a valer para o clique. */
+const ESCALA = { x: 1, y: 1 };
+
+async function calibrarEscala(pagina) {
+  // O canvas do Godot NASCE 300×150 e só depois é esticado para preencher a viewport (medido:
+  // a primeira leitura dava 0,234 de escala e jogava todos os cliques para fora da tela).
+  // Então: espera o canvas ficar do tamanho da viewport e só então fixa a escala.
+  const vp = pagina.viewportSize() || { width: 1280, height: 720 };
+  let caixa = null;
+  for (let i = 0; i < 60; i += 1) {
+    caixa = await pagina.evaluate(() => {
+      const c = document.querySelector('canvas');
+      if (!c) return null;
+      const r = c.getBoundingClientRect();
+      return { w: Math.round(r.width), h: Math.round(r.height) };
+    }).catch(() => null);
+    if (caixa && caixa.w >= vp.width * 0.9 && caixa.h >= vp.height * 0.9) break;
+    await pagina.waitForTimeout(250);
+  }
+  if (!caixa || !caixa.w || !caixa.h) return ESCALA;
+  ESCALA.x = caixa.w / 1280;
+  ESCALA.y = caixa.h / 720;
+  return ESCALA;
+}
+
+function ponto(alvo) {
+  return { x: Math.round(alvo.x * ESCALA.x), y: Math.round(alvo.y * ESCALA.y) };
+}
+
 async function acionar(pagina, alvo, duplo = true) {
-  await pagina.mouse.click(alvo.x, alvo.y);
+  const p = ponto(alvo);
+  await pagina.mouse.click(p.x, p.y);
   if (!duplo) return;
   await pagina.waitForTimeout(120);
-  await pagina.touchscreen.tap(alvo.x, alvo.y);
+  await pagina.touchscreen.tap(p.x, p.y);
 }
 
 function ffmpeg() {
@@ -633,6 +707,9 @@ async function principal() {
       return 4;
     }
     console.log('canvas ' + canvas.w + 'x' + canvas.h + ' em ' + carregouEm + ' s');
+    const escala = await calibrarEscala(pagina);
+    console.log('escala dos cliques: ' + escala.x.toFixed(3) + ' x ' + escala.y.toFixed(3)
+      + ' (1.000 = canvas em 1280x720)');
     if (erros.length) console.log('avisos do navegador até aqui: ' + erros.slice(0, 3).join(' | '));
 
     // Deixa o jogo assentar (carregamento do .pck, primeira cena).
@@ -651,6 +728,8 @@ async function principal() {
     let economiaCache = null;
     const colhidasHaPouco = {};
     let voltas = 0;
+    let aberturaDesde = 0;      // ms em que a captura começou presa na abertura
+    let escapes = 0;
     let tutorialFechado = false;
     let tutorialDesde = 0;
     let segundosComTutorial = 0;
@@ -697,6 +776,25 @@ async function principal() {
         if (!economiaInicial) economiaInicial = economia;
         economiaAtual = economia;
       }
+      // Preso na abertura? Escala a forma de entrar (ver escaparDaAbertura).
+      const semHud = estado.hud <= LIMIAR.hud && estado.tutorial <= LIMIAR.botao;
+      if (semHud) {
+        if (!aberturaDesde) aberturaDesde = Date.now();
+        const preso = (Date.now() - aberturaDesde) / 1000;
+        if (preso > ABERTURA_LIMITE && escapes < 12 && preso % 4 < 0.6) {
+          escapes += 1;
+          console.log('escape ' + escapes + ': ' + preso.toFixed(0) + ' s sem HUD — tentando outra forma de entrar');
+          await escaparDaAbertura(pagina, escapes);
+        }
+        if (preso > ABERTURA_MAXIMA) {
+          console.error('✘ o jogo não saiu da tela de abertura em ' + preso.toFixed(0)
+            + ' s (o canvas existe, mas a fazenda nunca apareceu): gravação recusada');
+          await contexto.close();
+          return 9;
+        }
+      } else {
+        aberturaDesde = 0;
+      }
       const d = decidir(estado, { agora: Date.now() - inicioAcoes, ocupadas, confirmacoes,
         economia: op.semEconomia ? null : economia, melhoriasFeitas, sementesFalhas,
         sementePendente, colhidasHaPouco });
@@ -706,7 +804,7 @@ async function principal() {
         // salva e desfaz a aba escolhida (medido em 27/10 — a aba "funcionava" e o save continuava
         // em Nabo). Sem pendência, a sacola abre o plantio como antes.
         if (!sementePendente) {
-          await pagina.mouse.click(ALVO.semente.x, ALVO.semente.y);
+          await pagina.mouse.click(ponto(ALVO.semente).x, ponto(ALVO.semente).y);
           await pagina.waitForTimeout(120);
         }
         // PLANTA EM LOTE: todas as células que a mesma olhada viu livres, num passo só. Antes era
@@ -717,7 +815,7 @@ async function principal() {
           || SEMENTES[0];
         gastoSementes += alvosPlantio.length * sementeAtual.custo;
         for (const alvo of alvosPlantio) {
-          await pagina.mouse.click(alvo.centro.x, alvo.centro.y);
+          await pagina.mouse.click(ponto(alvo.centro).x, ponto(alvo.centro).y);
           ocupadas[alvo.id] = Date.now() - inicioAcoes;
           plantadas += 1;
           await pagina.waitForTimeout(150);
@@ -742,13 +840,13 @@ async function principal() {
         const alvosColheita = (d.prontas && d.prontas.length
           ? d.prontas : [{ id: d.celula, alvo: d.alvo }]);
         for (const alvo of alvosColheita) {
-          await pagina.mouse.click(alvo.alvo.x, alvo.alvo.y);
+          await pagina.mouse.click(ponto(alvo.alvo).x, ponto(alvo.alvo).y);
           await pagina.waitForTimeout(160);
           delete ocupadas[alvo.id];
           colhidasHaPouco[alvo.id] = Date.now() - inicioAcoes;
           colhidas += 1;
         }
-        await pagina.mouse.click(ALVO.vender.x, ALVO.vender.y);
+        await pagina.mouse.click(ponto(ALVO.vender).x, ponto(ALVO.vender).y);
         await pagina.waitForTimeout(150);
         acao = 'colher ' + alvosColheita.map((x) => x.id).join(',') + ' + vender';
       } else if (d.tipo === 'melhoria') {
@@ -784,7 +882,7 @@ async function principal() {
           const inicioRajada = Date.now();
           let naRajada = 0;
           while (Date.now() - inicioRajada < BICO.rajadaMs) {
-            await pagina.mouse.click(ALVO.bico.x, ALVO.bico.y);
+            await pagina.mouse.click(ponto(ALVO.bico).x, ponto(ALVO.bico).y);
             naRajada += 1;
             await pagina.waitForTimeout(BICO.intervalo);
           }
@@ -849,6 +947,14 @@ async function principal() {
     // PORTÃO DO TUTORIAL — o dono reprovou o vídeo de 27/10 porque o "COMO JOGAR" nunca saía
     // da tela. Enquanto esse portão existir, um vídeo com o tutorial aberto NÃO é entregue:
     // o gravador falha e o pipeline para aqui.
+    // PORTÃO DO JOGO — gravação sem plantio é gravação da capa, não gameplay. Falha aqui, com
+    // motivo, em vez de deixar o pipeline recusar depois (o custo é o mesmo; o diagnóstico não).
+    if (plantadas === 0) {
+      console.error('✘ nenhuma semente foi plantada em ' + op.segundos + ' s: a captura não chegou a jogar'
+        + ' (escala dos cliques ' + ESCALA.x.toFixed(3) + 'x' + ESCALA.y.toFixed(3) + ')');
+      await contexto.close();
+      return 9;
+    }
     if (estadoFinal.tutorial > 0) {
       console.error('✘ o tutorial ("COMO JOGAR") ainda está na tela no fim da captura');
       await contexto.close();

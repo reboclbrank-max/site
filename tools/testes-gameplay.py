@@ -418,6 +418,23 @@ def main():
        "secrets.YT_CLIENT_ID" not in texto.split("publicar == 'PUBLICAR'")[0],
        "credencial citada antes do cadeado")
 
+    # ---------- escala dos cliques (conserto de 30/10/2026) ----------
+    # As regiões eram lidas em coordenadas de 1280x720 e escaladas pelo canvas; os CLIQUES não.
+    # Em qualquer resolução diferente de 1280x720 o robô tocava fora do botão e a gravação saía
+    # sem plantio (medido: 3 de 3 em 960x540). Estes contratos impedem a volta do defeito.
+    import re
+    fonte = open(os.path.join(RAIZ, "tools", "gravar-gameplay.js"), encoding="utf-8").read()
+    cliques_crus = re.findall(r"mouse\.click\(\s*(?:ALVO|alvo)\.", fonte)
+    ok("nenhum clique usa coordenada fixa sem passar pela escala", not cliques_crus,
+       "%d clique(s) sem escala" % len(cliques_crus))
+    ok("existe calibração da escala pelo canvas real", "async function calibrarEscala" in fonte)
+    ok("a escala é calibrada depois de o canvas encher a viewport",
+       "calibrarEscala(pagina)" in fonte and "vp.width * 0.9" in fonte)
+    ok("gravação sem plantio falha com motivo (não vira vídeo de capa)",
+       "nenhuma semente foi plantada" in fonte and "return 9" in fonte)
+    ok("há escape quando o jogo fica preso na abertura",
+       "escaparDaAbertura" in fonte and "ABERTURA_MAXIMA" in fonte)
+
     print("\n%d/%d testes do vídeo de gameplay passaram" % (total - falhas, total))
     return 1 if falhas else 0
 
