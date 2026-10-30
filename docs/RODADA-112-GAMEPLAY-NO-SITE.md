@@ -129,3 +129,21 @@ Então o texto está pronto e o caminho é um favorito:
   garantindo isso.
 
 Seis verificações em `tools/testes-autonomia-marketing.py` cobrem esse pacote (75/75).
+
+## 9. Correções de última hora (achadas ao conferir se estava tudo resolvido)
+
+**O PRANCHETA estava caído desde 09:05** e ninguém tinha olhado: run 41030633953 gravou, mediu,
+aprovou o vídeo e morreu no `git push` — outro workflow commitou no `main` entre o checkout e o
+push. O CEIFALUME tinha o mesmo push seco, e no caso dele o push vem **antes** do envio ao
+YouTube: a publicação se perderia.
+
+Conserto em duas voltas, porque a primeira não bastou:
+
+| tentativa | o que aconteceu |
+| --- | --- |
+| laço de 3 tentativas com rebase | run 41090257198: as 3 falharam com `cannot rebase: You have unstaged changes` (sobras do run na árvore) e o run terminou **verde** com o vídeo fora do repositório |
+| + `git stash push -u` antes do rebase + `exit 1` se não entrar | run 41091136045: **"vídeo registrado no main (tentativa 1)"** |
+
+O commit está no `main` (`47aa163`): `media/gameplay/prancheta-gameplay.mp4` 1 085 022 →
+1 106 970 bytes. Quatro verificações novas em `tools/testes-gameplay.py` (97/98) travam o push
+seco e a falha silenciosa.
