@@ -36,6 +36,9 @@ HORAS_VELHO = 26        # depois de um dia sem atualizar, o arquivo está velho
 DIAS_PENDENTE = 2       # pendência do dono parada há 2 dias merece ser lembrada
 DIAS_KIT = 1            # vídeo pronto e não publicado por 1 dia já é atraso
 REPETICAO_MAX = 10.0    # % de repetição tolerado desde o conserto de dedupe
+# Necessidade percebida NÃO é rotina: ela passa na frente da tarefa de relógio (medir=90).
+# Sem isso o olho vê o problema e a mão continua fazendo o de sempre — teatro com log bonito.
+PRIORIDADE_NECESSIDADE = 95
 
 ARTEFATOS_VENCIVEIS = [
     ("posts/orquestrador.json", "memória do pulso", "medir"),
@@ -315,7 +318,15 @@ def perceber(agora=None, enfileirar=True):
                                             motivo=item["o_que"] + ": " + item["porque"],
                                             chave=item.get("chave"))
                 if criada:
+                    criada["prioridade"] = PRIORIDADE_NECESSIDADE
+                    criada["origem"] = "perceber"
                     enfileiradas.append(criada["id"])
+                else:
+                    # já pendente por uma rodada anterior: sobe a prioridade mesmo assim
+                    for t in dados["tarefas"]:
+                        if t.get("chave") == item.get("chave") and t.get("estado") == "pendente":
+                            t["prioridade"] = PRIORIDADE_NECESSIDADE
+                            t["origem"] = "perceber"
             fila_mod.gravar(dados, os.path.join(RAIZ, "posts", "fila-tarefas.json"))
         except Exception as erro:      # fila quebrada não pode derrubar o ciclo
             print("aviso: fila não aceitou as tarefas (%s)" % str(erro)[:120])

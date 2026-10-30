@@ -174,6 +174,18 @@ _dados2 = _fila.carregar(_fila.ARQUIVO)
 ok("enfileirar duas vezes não duplica (chave)",
    _fila.adicionar(_dados2, "publicar", motivo="teste", chave="meta-x") is None)
 
+# A necessidade tem de PASSAR NA FRENTE da rotina do relógio (medir=90), senão o olho vê
+# o problema e a mão faz o de sempre.
+_fila.adicionar(_dados2, "medir", motivo="rotina", chave="medir-teste")
+for _t in _dados2["tarefas"]:
+    if _t.get("chave") == "meta-x":
+        _t["prioridade"] = p.PRIORIDADE_NECESSIDADE
+_escolhida = _fila.proxima(_dados2)
+ok("necessidade percebida passa na frente da rotina de medir",
+   _escolhida and _escolhida.get("chave") == "meta-x", _escolhida)
+ok("a prioridade da necessidade é maior que a de qualquer tipo de rotina",
+   p.PRIORIDADE_NECESSIDADE > max(_fila.PRIORIDADES.values()))
+
 # ---------------------------------------------------------------- markdown e escrita
 _md = p.markdown(_real)
 ok("o markdown separa robô e dono", "O robô já colocou na fila" in _md and "Espera o dono" in _md)
