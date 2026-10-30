@@ -132,8 +132,24 @@ def interpretar_preview(saida):
     texto = (saida or "").strip()
     if not texto:
         return "INDEFINIDO: o butler não respondeu nada"
+    # O push-preview --json escreve NDJSON (uma linha JSON por evento: log, stat, result), e a
+    # linha do resultado — a única com "comparison" — vem no fim. Ler o arquivo inteiro como um
+    # único objeto falhava e a resposta saía "sem JSON para ler" (visto no run 41085015285).
+    dados = None
+    for linha in texto.splitlines():
+        linha = linha.strip()
+        if not linha.startswith("{"):
+            continue
+        try:
+            objeto = json.loads(linha)
+        except Exception:  # noqa: BLE001
+            continue
+        if isinstance(objeto, dict) and isinstance(objeto.get("comparison"), dict):
+            dados = objeto
     try:
-        dados = json.loads(texto[texto.index("{"):texto.rindex("}") + 1])
+        if dados is None:
+            bruto = texto[texto.index("{"):texto.rindex("}") + 1]
+            dados = json.loads(bruto)
         comp = dados.get("comparison") or {}
         novos = int(comp.get("new") or 0)
         mudados = int(comp.get("modified") or 0)
