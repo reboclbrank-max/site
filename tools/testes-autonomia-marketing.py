@@ -190,7 +190,9 @@ verifica("o motor de texto informa o motivo quando todos falham",
          callable(postador.cerebro_com_motivo))
 _fonte_postador = (RAIZ / "tools" / "postador.py").read_text(encoding="utf-8")
 verifica("o log do ciclo diz QUAL motor escreveu (ou por que nenhum escreveu)",
-         'motivo_geracao = motivo or "motor respondeu"' in _fonte_postador)
+         '"motor respondeu"' in _fonte_postador and "motivo_geracao = (motivo or" in _fonte_postador)
+verifica("o log do ciclo diz POR QUE escolheu aquele texto (juízo com justificativa)",
+         'juízo: " + justificativa' in _fonte_postador)
 verifica("a fila de reserva respeita o dedupe", "ja_foi_publicado(item[\"texto\"], ja_publicados)" in _fonte_postador)
 verifica("fila esgotada varia o fecho em vez de repetir a frase",
          "variacao_de_fecho(indice_tema)" in _fonte_postador)

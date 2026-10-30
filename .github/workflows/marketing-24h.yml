@@ -37,6 +37,7 @@ jobs:
           python3 tools/testes-janela.py
           python3 tools/testes-orquestrador.py
           python3 tools/testes-perceber.py
+          python3 tools/testes-juizo.py
           python3 tools/testes-autonomia-marketing.py
           node tools/montar-bookmarklet.js --verificar
           node tools/testes-bookmarklet-itch.js
