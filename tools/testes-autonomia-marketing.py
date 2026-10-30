@@ -259,5 +259,20 @@ verifica("a página diz que as instruções ficam na tela", "instruções" in _p
 verifica("o registro de publicação no YouTube cita esse vídeo",
          "GuE7af6dYo8" in (RAIZ / "posts/youtube-publicados.json").read_text(encoding="utf-8"))
 
+# O devlog do itch do vídeo precisa estar pronto para 1 clique — e não pode sobrescrever o da 0.1
+_devlog_video = RAIZ / "posts/devlog-itch-gameplay.json"
+verifica("existe o devlog do itch para o vídeo de gameplay", _devlog_video.is_file())
+if _devlog_video.is_file():
+    _dv = json.loads(_devlog_video.read_text(encoding="utf-8"))
+    verifica("o devlog do vídeo aponta para o vídeo publicado", "youtu.be/GuE7af6dYo8" in _dv["corpo"])
+    verifica("o devlog do vídeo tem versão própria (não é a da 0.1)",
+             _dv["versao"] != json.loads((RAIZ / "posts/devlog-itch.json").read_text(encoding="utf-8"))["versao"])
+    verifica("o favorito do devlog do vídeo foi montado",
+             (RAIZ / "itch/devlog-gameplay-bookmarklet.txt").is_file())
+    verifica("o devlog da 0.1 continua intocado", "a fazenda que trabalha" in
+             json.loads((RAIZ / "posts/devlog-itch.json").read_text(encoding="utf-8"))["titulo"])
+    verifica("o calendário registra que esse passo é do dono, com o motivo",
+             "403" in json.dumps(json.loads((RAIZ / "posts/calendario.json").read_text(encoding="utf-8")).get("_devlog_gameplay", {})))
+
 print(f"{verificacoes-len(falhas)}/{verificacoes} verificações de autonomia de marketing passaram")
 sys.exit(1 if falhas else 0)
