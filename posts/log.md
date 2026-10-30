@@ -2316,3 +2316,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
 
 > Tática na PRANCHETA (grátis, Godot, Brasil) ou lavoura noturna no CEIFALUME 0.1 (cresce 8h offline). Dois jeitos de jogar, uma paixão solo dev. 🇧🇷💚 #P
+
+## 30/10/2026 21:04 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ post novo validado — motor=g4f auto |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ converse sobre vida de dev solo no Brasil e cite os jogos |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ instagram ja postou ha 5.2h (minimo 6h entre posts) |
+| threads | ✅ publicado id 181372609066 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| respondedor de conversa | ➖ cadencia diaria de interacao ja cumprida (2026-10-30) |
+| cacador de oportunidades | ➖ cadencia diaria de interacao ja cumprida (2026-10-30) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> Dois projetos, um coração brasileiro ❤️🇧🇷 PRANCHETA: tática 100% fictícia na prancheta (grátis browser/APK, Godot). CEIFALUME 0.1: idle noturno onde "
