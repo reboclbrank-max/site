@@ -34,6 +34,7 @@ jobs:
           node tools/testes-bookmarklet-itch.js
           python3 tools/testes-administrar-youtube.py
           python3 tools/testes-enviar-itch.py
+          python3 tools/testes-media-limpa.py
 
       - name: Mede o que foi postado e o que voltou (só leitura)
         env:
