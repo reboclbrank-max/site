@@ -243,5 +243,21 @@ verifica("o destino do tema de ponte é o hub de canais",
 verifica("o log avisa quando o convite foi anexado",
          "convite da ponte anexado" in _fonte_postador)
 
+# O gameplay publicado tem que estar na página do jogo, não só no YouTube
+#
+# Em 30/10 o vídeo de 2 minutos com as instruções foi publicado (youtu.be/GuE7af6dYo8) e ficou
+# só no canal: quem chegava na página do jogo não via a prova de que o jogo roda. O teste trava
+# os três elos: página -> vídeo local, página -> YouTube, e o arquivo existe no repositório.
+_pagina_jogo = (RAIZ / "jogos/ceifalume/index.html").read_text(encoding="utf-8")
+verifica("a página do Ceifalume toca o gameplay gravado", "media/gameplay/ceifalume-gameplay-instrucoes.mp4" in _pagina_jogo)
+verifica("a página do Ceifalume leva ao gameplay no YouTube", "https://youtu.be/GuE7af6dYo8" in _pagina_jogo)
+verifica("o gameplay citado pela página existe no repositório",
+         (RAIZ / "media/gameplay/ceifalume-gameplay-instrucoes.mp4").is_file()
+         and (RAIZ / "media/gameplay/ceifalume-gameplay-instrucoes.mp4").stat().st_size > 1_000_000)
+verifica("o gameplay entrou no sameAs do schema VideoGame", _pagina_jogo.count("GuE7af6dYo8") >= 2)
+verifica("a página diz que as instruções ficam na tela", "instruções" in _pagina_jogo and "rodapé" in _pagina_jogo)
+verifica("o registro de publicação no YouTube cita esse vídeo",
+         "GuE7af6dYo8" in (RAIZ / "posts/youtube-publicados.json").read_text(encoding="utf-8"))
+
 print(f"{verificacoes-len(falhas)}/{verificacoes} verificações de autonomia de marketing passaram")
 sys.exit(1 if falhas else 0)

@@ -194,7 +194,8 @@ def listar_jogos(chave, get=None):
         return None, erro or "resposta inesperada"
     jogos = []
     for j in dados.get("games") or []:
-        jogos.append({"titulo": (j.get("title") or "")[:60],
+        jogos.append({"id": j.get("id"),
+                      "titulo": (j.get("title") or "")[:60],
                       "slug": j.get("url") or j.get("slug") or "",
                       "publicado": j.get("published"),
                       "downloads": j.get("downloads_count"),
@@ -229,8 +230,11 @@ def main(argv):
                 print("✗ não consegui listar os jogos:", erro)
                 return 1
             for j in jogos:
-                print("  %-28s slug=%-40s downloads=%s visitas=%s publicado=%s" % (
-                    j["titulo"], j["slug"] or "?", j["downloads"], j["visitas"], j["publicado"]))
+                print("  id=%-9s %-28s slug=%-40s downloads=%s visitas=%s publicado=%s" % (
+                    j.get("id") or "?", j["titulo"], j["slug"] or "?", j["downloads"],
+                    j["visitas"], j["publicado"]))
+            # O id é o que a edição de página (tools/itch-navegador.py) exige no caminho
+            # /dashboard/game/<id>/edit. Sem imprimi-lo, cada rodada começava adivinhando.
             return 0
         if modo == "status":
             ok_lista, lista = status(slug, None, identidade=None, chave=chave)
