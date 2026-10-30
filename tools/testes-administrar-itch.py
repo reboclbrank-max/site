@@ -31,7 +31,16 @@ def ok(nome, condicao, detalhe=""):
 
 # ------------------------------------------------------------------ impressão digital
 local = adm.impressao("ceifalume")
-ok("a impressão do build real existe", local and local["arquivos"] == 13, local)
+# Não fixar 13: o build ganha arquivo (o carimbo versao-build.json entra no push). O que importa é
+# a impressão cobrir o pacote inteiro e conter os arquivos sem os quais o jogo não abre.
+_obrigatorios = {"index.html", "index.js", "index.wasm", "index.pck"}
+_pasta_build = os.path.join(adm.RAIZ, "ceifalume")
+_esperados = len([f for f in os.listdir(_pasta_build) if os.path.isfile(os.path.join(_pasta_build, f))])
+ok("a impressão do build real existe", bool(local) and local["arquivos"] >= 4, local)
+ok("a impressão cobre todos os arquivos do pacote",
+   bool(local) and local["arquivos"] == _esperados, {"impressao": local, "pacote": _esperados})
+ok("o pacote tem os arquivos sem os quais o jogo não abre",
+   _obrigatorios <= set(os.listdir(_pasta_build)), _obrigatorios - set(os.listdir(_pasta_build)))
 # O total em bytes NÃO é fixado à mão: em 30/10 o selo do gameplay somou ~1,1 KB ao index.html e
 # o teste caiu por número velho, não por defeito. O que importa é a impressão ser a soma REAL dos
 # arquivos do pacote e o pacote ter tamanho de jogo de verdade.
