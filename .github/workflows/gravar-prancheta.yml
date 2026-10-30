@@ -85,17 +85,28 @@ jobs:
           fi
           git commit -m "gameplay: PRANCHETA gravado ($(date -u +%d/%m\ %H:%M\ UTC))"
           # O push pode ser recusado se outro workflow commitar no main entre o checkout e
-          # aqui — foi exatamente o que derrubou o run 41030633953 (30/10 09:05), com o vídeo
-          # gravado e medido mas fora do repositório. Rebase e nova tentativa, 3 vezes.
+          # aqui — foi o que derrubou o run 41030633953 (30/10 09:05) e o que quase repetiu no
+          # 41090257198. Duas lições medidas nesses dois runs:
+          #   1) rebase recusa com "You have unstaged changes" porque o run deixa sobras na
+          #      árvore (trechos, cru, quadro de prova) — então as sobras saem do caminho antes;
+          #   2) falhar nas 3 tentativas NÃO pode passar batido: sem o `exit 1` o run terminava
+          #      verde com o vídeo fora do repositório.
+          git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+          enviado=0
           for tentativa in 1 2 3; do
             if git fetch -q origin main && git rebase -q origin/main && git push; then
               echo "vídeo registrado no main (tentativa $tentativa)"
+              enviado=1
               break
             fi
             echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
             git rebase --abort 2>/dev/null || true
             sleep 5
           done
+          if [ "$enviado" != "1" ]; then
+            echo "::error::3 tentativas e o vídeo não entrou no main (o arquivo existe só neste run)"
+            exit 1
+          fi
           git log --oneline -1
 
       - name: Guarda o vídeo e o quadro de prova
