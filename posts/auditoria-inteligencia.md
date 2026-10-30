@@ -1,6 +1,6 @@
 # Onde a casa pensa e onde ela repete
 
-Gerado em 2026-10-30T22:50:43Z sobre os últimos **40 ciclos** do diário (`posts/log.md`).
+Gerado em 2026-10-30T23:22:14Z sobre os últimos **40 ciclos** do diário (`posts/log.md`).
 
 > inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos.
 
@@ -15,9 +15,9 @@ Gerado em 2026-10-30T22:50:43Z sobre os últimos **40 ciclos** do diário (`post
 | cego | 3 | sempre indisponível: falta olho, não falta vontade |
 | sem amostra | 0 | apareceu pouco na janela |
 
-**Texto publicado:** 40 ciclos, **25 textos distintos** — repetição de 37.5% na janela.
+**Texto publicado:** 40 ciclos, **26 textos distintos** — repetição de 35.0% na janela.
 
-**Desde o conserto de dedupe (26/10/2026):** 16 ciclos, 1 repetidos — **6.2%**.
+**Desde o conserto de dedupe (26/10/2026):** 17 ciclos, 1 repetidos — **5.9%**.
 
 ## Passo por passo
 
@@ -31,14 +31,14 @@ Gerado em 2026-10-30T22:50:43Z sobre os últimos **40 ciclos** do diário (`post
 | bluesky | **binário** | 40 | — | ✅ postado 200 |
 | reel semanal | **binário** | 40 | — | ➖ reel sai no sabado a noite BRT (um por semana — qualidade > |
 | vigia da caixa (auto-recovery) | **binário** | 40 | 39/40 | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
-| cerebro | **adaptativo** | 40 | — | ✅ post novo validado — motor=g4f auto |
-| instagram | **adaptativo** | 40 | — | ➖ instagram ja postou ha 5.2h (minimo 6h entre posts) |
-| threads | **adaptativo** | 40 | — | ✅ publicado id 181372609066 |
+| cerebro | **adaptativo** | 40 | — | ✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (1 válid |
+| instagram | **adaptativo** | 40 | — | ✅ postado id 17912366001303 (arte reserva) |
+| threads | **adaptativo** | 40 | — | ✅ publicado id 180145477587 |
 | nostr | **adaptativo** | 40 | — | ✅ nota em 2 relays |
-| cacador de oportunidades | **adaptativo** | 40 | 15/40 | ➖ cadencia diaria de interacao ja cumprida (2026-10-30) |
+| cacador de oportunidades | **adaptativo** | 40 | 16/40 | ➖ cadencia diaria de interacao ja cumprida (2026-10-30) |
 | descobridor de redes | **adaptativo** | 40 | 29/40 | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
 | censo mundial | **adaptativo** | 40 | 29/40 | ✅ censo de hoje ja registrado (1 por dia) |
-| regua de metas (medicao) | **adaptativo** | 40 | — | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_O |
-| destino editorial | **adaptativo** | 36 | — | ✅ rota oficial catalogo |
-| respondedor de conversa | **adaptativo** | 21 | 13/21 | ➖ cadencia diaria de interacao ja cumprida (2026-10-30) |
-| tema do ciclo | **adaptativo** | 16 | — | ✅ converse sobre vida de dev solo no Brasil e cite os jogos |
+| regua de metas (medicao) | **adaptativo** | 40 | — | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=31(api) · itch_downloads=NAO_O |
+| destino editorial | **adaptativo** | 37 | — | ✅ rota oficial catalogo |
+| respondedor de conversa | **adaptativo** | 22 | 14/22 | ➖ cadencia diaria de interacao ja cumprida (2026-10-30) |
+| tema do ciclo | **adaptativo** | 17 | — | ✅ converse sobre vida de dev solo no Brasil e cite os jogos |

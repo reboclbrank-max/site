@@ -1,10 +1,10 @@
 {
- "quando": "2026-10-30T22:50:43Z",
+ "quando": "2026-10-30T23:22:14Z",
  "repeticao_desde_o_conserto": {
   "corte": "26/10/2026",
-  "ciclos": 16,
+  "ciclos": 17,
   "repetidos": 1,
-  "pct": 6.2
+  "pct": 5.9
  },
  "janela": 40,
  "passos": [
@@ -112,10 +112,10 @@
      "ok",
      "outro"
     ],
-    "resultados_distintos": 5,
+    "resultados_distintos": 6,
     "confessa": 0
    },
-   "ultimo": "✅ post novo validado — motor=g4f auto"
+   "ultimo": "✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (1 válidos): cita jogo, chamada, hashtag 1 ou 2 · 220 caracteres · abre diferente do último post"
   },
   {
    "passo": "instagram",
@@ -129,7 +129,7 @@
     "resultados_distintos": 22,
     "confessa": 0
    },
-   "ultimo": "➖ instagram ja postou ha 5.2h (minimo 6h entre posts)"
+   "ultimo": "✅ postado id 17912366001303 (arte reserva)"
   },
   {
    "passo": "threads",
@@ -143,7 +143,7 @@
     "resultados_distintos": 40,
     "confessa": 0
    },
-   "ultimo": "✅ publicado id 181372609066"
+   "ultimo": "✅ publicado id 180145477587"
   },
   {
    "passo": "nostr",
@@ -170,7 +170,7 @@
      "ok"
     ],
     "resultados_distintos": 18,
-    "confessa": 15
+    "confessa": 16
    },
    "ultimo": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)"
   },
@@ -212,13 +212,13 @@
     "resultados_distintos": 28,
     "confessa": 0
    },
-   "ultimo": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=28(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
+   "ultimo": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=31(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
   },
   {
    "passo": "destino editorial",
    "classe": "adaptativo",
    "detalhe": {
-    "n": 36,
+    "n": 37,
     "categorias": [
      "ok"
     ],
@@ -231,14 +231,14 @@
    "passo": "respondedor de conversa",
    "classe": "adaptativo",
    "detalhe": {
-    "n": 21,
+    "n": 22,
     "categorias": [
      "espera",
      "ok",
      "outro"
     ],
     "resultados_distintos": 13,
-    "confessa": 13
+    "confessa": 14
    },
    "ultimo": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)"
   },
@@ -246,7 +246,7 @@
    "passo": "tema do ciclo",
    "classe": "adaptativo",
    "detalhe": {
-    "n": 16,
+    "n": 17,
     "categorias": [
      "ok"
     ],
@@ -264,8 +264,8 @@
  },
  "texto": {
   "ciclos": 40,
-  "distintos": 25,
-  "repeticao_pct": 37.5
+  "distintos": 26,
+  "repeticao_pct": 35.0
  },
  "_lei": "inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos."
 }
