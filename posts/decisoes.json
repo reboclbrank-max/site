@@ -1,0 +1,72 @@
+{
+ "quando": "2026-10-30T21:20:58Z",
+ "_lei": "decidir com número na mão, declarar a recusa e nomear a ignorância. Decisão sem número não entra.",
+ "decididas": [
+  {
+   "decisao": "priorizar a meta mais atrasada antes de qualquer vaidade",
+   "numero": "itch: downloads — faltam 54 (3.38 por dia até o prazo)",
+   "regra": "ranking de risco do plano do dia (falta ÷ dias restantes)",
+   "fonte": "posts/plano-do-dia.json"
+  },
+  {
+   "decisao": "parar de insistir no formato que mais devolve zero",
+   "numero": "comentário em post alheio: 41.5% de zeros em 217 tentativas",
+   "regra": "zero medido repetido é recusa, não azar",
+   "fonte": "posts/plano-do-dia.json"
+  },
+  {
+   "decisao": "meta batida — parar de empurrar e só manter",
+   "numero": "YouTube: shorts: 6 medido(s) contra alvo 4",
+   "regra": "quem bateu a meta não continua gastando esforço nela",
+   "fonte": "posts/placar-metas.md"
+  }
+ ],
+ "recusadas": [
+  {
+   "decisao": "trocar o horário de publicação",
+   "porque": "recusada por falta de prova: diferença dentro do ruído: melhor 01h (1.14) vs mediana 1.25, desvio 0.48",
+   "numero": "amostra total 300 · mínimo por hora 30 · horas elegíveis 2",
+   "fonte": "posts/aprendizado.json"
+  },
+  {
+   "decisao": "manter ou aposentar um canal que não devolve número",
+   "porque": "é escolha de vida do projeto, não conta de máquina — o robô entrega o número e não finge que decide",
+   "numero": "sem retorno em 17 dias:  Instagram: seguidores (0 medido(s), nada a mais desde 13/10), YouTube: inscritos (24 medido(s), nada a mais desde 13/10)",
+   "fonte": "posts/placar-metas.md"
+  },
+  {
+   "decisao": "publicar toque-rapido",
+   "porque": "vetado pelo dono (Toque Rápido foi uma criação que não deu certo. Fica em rascunho para sempre: nenhum robô publica, atualiza ou divulga. Pedido do dono, 26/10.) — a casa herda a regra e não a rediscute",
+   "numero": "pedido em 2026-10-26",
+   "fonte": "posts/nunca-publicar.json"
+  },
+  {
+   "decisao": "publicar toquerpido",
+   "porque": "vetado pelo dono (Toque Rápido foi uma criação que não deu certo. Fica em rascunho para sempre: nenhum robô publica, atualiza ou divulga. Pedido do dono, 26/10.) — a casa herda a regra e não a rediscute",
+   "numero": "pedido em 2026-10-26",
+   "fonte": "posts/nunca-publicar.json"
+  }
+ ],
+ "ignorancias": [
+  {
+   "pergunta": "quanto a meta \"itch: seguidores (aposentada)\" já andou?",
+   "porque": "o canal não publica esse número (nem API, nem página pública) — ausência de leitura não é zero",
+   "fonte": "posts/placar-metas.md"
+  },
+  {
+   "pergunta": "o texto do post é bom?",
+   "porque": "engajamento mede reação, não julgamento. Um post pode ter número e continuar sem graça — isso quem sabe é quem lê, não o log",
+   "fonte": "regra da casa (nenhum arquivo mede gosto)"
+  },
+  {
+   "pergunta": "vale a pena continuar existindo com esse público?",
+   "porque": "nenhuma métrica do repositório responde isso; o robô para na borda do dado",
+   "fonte": "regra da casa"
+  }
+ ],
+ "contagem": {
+  "decididas": 3,
+  "recusadas": 4,
+  "ignorancias": 3
+ }
+}

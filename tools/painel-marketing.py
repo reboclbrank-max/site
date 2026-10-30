@@ -107,6 +107,11 @@ def pagina():
                                     encoding="utf-8")).get("publicados") or []
     except (OSError, ValueError):
         pass
+    livro = {}
+    try:
+        livro = json.load(open(os.path.join(RAIZ, "posts", "decisoes.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        pass
     pendencias = {}
     try:
         pendencias = json.load(open(os.path.join(RAIZ, "posts", "pendencias-do-dono.json"),
@@ -158,6 +163,27 @@ def pagina():
                      "<p class='peq'>Atualizado em %s.</p>"
                      % (itens, html.escape(pendencias.get("quando", ""))))
 
+    decisoes_html = ""
+    if livro.get("decididas") or livro.get("recusadas"):
+        def _lista(itens, campo_valor, titulo):
+            if not itens:
+                return ""
+            corpo = "".join(
+                "<li><b>%s</b> — %s <span class='mono'>%s</span></li>"
+                % (html.escape(i.get("decisao") or i.get("pergunta", "")),
+                   html.escape(i.get(campo_valor, "")), html.escape(i.get("fonte", "")))
+                for i in itens)
+            return "<h3>%s (%d)</h3><ul class='log'>%s</ul>" % (titulo, len(itens), corpo)
+
+        decisoes_html = (
+            "<h2>As decisões, com o número atrás</h2>"
+            "<p class='peq'>Toda decisão abaixo cita o arquivo onde o número foi medido. Decisão "
+            "sem número não entra no livro.</p>"
+            + _lista(livro.get("decididas"), "numero", "O que a casa decide sozinha")
+            + _lista(livro.get("recusadas"), "porque", "O que a casa se recusa a decidir")
+            + _lista(livro.get("ignorancias"), "porque", "O que a casa não sabe (e diz)")
+        )
+
     agora = datetime.now(timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
     return """<!DOCTYPE html>
 <html lang="pt-BR"><head><meta charset="UTF-8">
@@ -182,6 +208,7 @@ td{padding:.5rem .4rem;border-bottom:1px solid var(--borda);vertical-align:top}
 td.ok{color:#7bd88f}td.off{color:#e08b8b}td.espera{color:var(--suave)}
 .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;color:var(--suave)}
 ul.log{list-style:none}ul.log li{border-bottom:1px solid var(--borda);padding:.35rem 0;font-size:.9rem}
+h3{color:var(--txt);font-size:.98rem;margin:1.2rem 0 .3rem}
 .peq{color:var(--suave);font-size:.85rem;margin-top:.6rem}
 a{color:var(--ouro)}
 footer{color:var(--suave);font-size:.8rem;border-top:1px solid var(--borda);margin-top:2.4rem;padding-top:1rem}
@@ -193,13 +220,15 @@ Página gerada pelo próprio repositório a cada rodada.</p>
 <h2>Canais</h2>
 <table><tr><td><b>canal</b></td><td><b>estado</b></td><td><b>precisa de</b></td></tr>%(canais)s</table>
 %(ultimo)s
+%(decisoes)s
 %(pend)s
 <footer>Gerado em %(agora)s pelo workflow postagem-diaria ·
 <a href="%(base)s/">site</a> · <a href="%(base)s/canais.html">canais oficiais</a> ·
 <a href="https://youtu.be/GuE7af6dYo8">gameplay do Ceifalume</a></footer>
 </main></body></html>
 """ % {"base": BASE, "cartoes": cartoes_html, "canais": "".join(linhas_canal),
-       "ultimo": ultimo_html, "pend": pend_html, "agora": agora}
+       "ultimo": ultimo_html, "decisoes": decisoes_html, "pend": pend_html,
+       "agora": agora}
 
 
 def main(argv):

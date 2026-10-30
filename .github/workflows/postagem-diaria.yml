@@ -33,6 +33,8 @@ jobs:
           node tools/testes-bookmarklet-itch.js
           python3 tools/testes-administrar-youtube.py
           python3 tools/testes-painel-marketing.py
+          python3 tools/testes-decisoes.py
+          python3 tools/testes-aprender-horario.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
@@ -41,10 +43,11 @@ jobs:
           python3 tools/kit-youtube.py || echo "kit do YouTube com problema — registrado, sem publicar"
           # O painel público é gerado do MESMO log que acabou de ser escrito: autonomia sem
           # vitrine vira promessa. Ele é versionado e o site publica.
+          python3 tools/decisoes.py
           python3 tools/painel-marketing.py
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
-          git add marketing.html posts/log.md
+          git add marketing.html posts/log.md posts/decisoes.json posts/decisoes.md
           if ! git diff --cached --quiet; then
             git commit -q -m "marketing: painel e log do ciclo ($(date -u +'%d/%m %H:%M UTC'))"
             git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
@@ -118,9 +121,12 @@ jobs:
           YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
         run: |
           python3 tools/metricas.py || echo "medição indisponível nesta rodada"
+          # O aprendizado de horário lia posts/desempenho.md e NUNCA era executado: a regra
+          # existia e ninguém a cobrava. Agora roda a cada medição e grava o motivo da decisão.
+          python3 tools/aprender-horario.py || echo "aprendizado de horário indisponível nesta rodada"
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
-          git add posts/desempenho.md posts/placar-metas.md 2>/dev/null || true
+          git add posts/desempenho.md posts/placar-metas.md posts/aprendizado.json 2>/dev/null || true
           git commit -m "📊 desempenho $(date -u +'%d/%m %H:%M')" || echo "sem mudança de medição"
           ok=0
           for i in 1 2 3; do
