@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-10-30T23:26Z",
+ "medido_em": "2026-10-30T23:53Z",
  "fonte": "API pública do Bluesky",
  "posts": [
   {
@@ -16,7 +16,7 @@
   },
   {
    "texto": "Tática na PRANCHETA (grátis, Godot, Brasil) ou lavoura noturna no CEIFALUME 0.1",
-   "engajamento": 0,
+   "engajamento": 1,
    "quando": "2026-10-30T18:02:30Z",
    "classe": "promo"
   },
