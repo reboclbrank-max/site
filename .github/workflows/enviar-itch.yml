@@ -75,7 +75,9 @@ jobs:
           python3 - "$data" <<'PY'
           import json, sys
           data = sys.argv[1]
-          with open("ceifalume/versao-build.json", "w", encoding="utf-8") as f:
+          # FORA da pasta enviada: carimbo dentro do pacote fazia o push-preview acusar
+          # "1 apagado" para sempre (medido no run 41151770746) e o status nunca dizer IGUAL.
+          with open("posts/versao-build.json", "w", encoding="utf-8") as f:
               json.dump({"versao": data, "selo_gameplay": "https://youtu.be/GuE7af6dYo8"}, f,
                         ensure_ascii=False, indent=1)
           print("build carimbado:", data)

@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T00:43:13Z",
+ "quando": "2026-10-31T00:45:57Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 103,
@@ -517,7 +517,7 @@
    "slug": "ceifalume",
    "id": "VIDEO123",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
-   "quando": "2026-10-31T00:43:11Z",
+   "quando": "2026-10-31T00:45:57Z",
    "link": "",
    "real": false
   },
@@ -673,7 +673,7 @@
    "arquivo": "marketing.html",
    "selo": {
     "bytes": 15519,
-    "sha256": "959250046441f883"
+    "sha256": "a8308115123c6e81"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
@@ -681,7 +681,7 @@
    "arquivo": "melhorias.html",
    "selo": {
     "bytes": 9065,
-    "sha256": "124d9c28d576ae31"
+    "sha256": "997d933d4f5ba96a"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -721,7 +721,7 @@
    "arquivo": "publicacoes.html",
    "selo": {
     "bytes": 14471,
-    "sha256": "f751629397ab7853"
+    "sha256": "6093b46d018c2827"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
