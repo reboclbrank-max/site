@@ -16,6 +16,7 @@ Regras que este arquivo respeita:
     de linha de comando (que apareceria em log de processo) e nunca em mensagem;
   * nada é inventado: sem butler, sem chave ou sem build, o script diz o motivo.
 """
+import hashlib
 import json
 import re
 import os
@@ -400,6 +401,67 @@ def o_jogador_ve_o_selo(slug, marcador="rb-gameplay", abrir=None):
                 bytes_do_index=len(pagina)), None
 
 
+ARQUIVOS_DO_JOGO = ["index.html", "index.js", "index.pck", "index.wasm"]
+
+
+def _baixar(url, timeout=180):
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read()
+
+
+def conferir_conteudo(slug, raiz=RAIZ, baixar=None, arquivos=None):
+    """O JOGO que o visitante do itch recebe é o mesmo que está no repositório?
+
+    POR QUE EXISTE (31/10/2026): o cofre dizia "o jogador NÃO abre este build" porque a página
+    embute um upload antigo — conclusão certa e MEDIDA INCOMPLETA. Comparando arquivo por
+    arquivo, o conteúdo do jogo (index.pck, index.js, index.wasm) é byte a byte IGUAL ao do
+    repositório; o que difere é só a casca HTML (o itch injeta o htmlgame.js dele e a casca
+    embutida não tem o selo). Sem essa comparação, a casa continuaria tratando como "antigo" um
+    jogo que está atualizado. Cada linha aqui é sha256 do arquivo servido contra o do repo.
+    """
+    baixar = baixar or _baixar
+    arquivos = arquivos or ARQUIVOS_DO_JOGO
+    pasta = (BUILDS.get(slug) or {}).get("pasta")
+    if not pasta:
+        return None, "build não declarado para %r" % slug
+    abre, erro = o_que_o_jogador_abre(slug)
+    if erro:
+        return None, erro
+    base = abre["embutido"].rsplit("/", 1)[0] + "/"
+    linhas = []
+    for nome in arquivos:
+        local = os.path.join(raiz, pasta, nome)
+        if not os.path.exists(local):
+            linhas.append({"arquivo": nome, "estado": "ausente no repositório", "repo": "",
+                           "itch": "", "bytes": 0})
+            continue
+        with open(local, "rb") as f:
+            conteudo_local = f.read()
+        sha_local = hashlib.sha256(conteudo_local).hexdigest()
+        try:
+            conteudo_itch = baixar(base + nome)
+        except Exception as e:  # noqa: BLE001
+            linhas.append({"arquivo": nome, "estado": "não consegui baixar do itch (%s)" % str(e)[:60],
+                           "repo": sha_local[:16], "itch": "", "bytes": len(conteudo_local)})
+            continue
+        sha_itch = hashlib.sha256(conteudo_itch).hexdigest()
+        linhas.append({"arquivo": nome,
+                       "estado": "IGUAL" if sha_itch == sha_local else "DIFERENTE",
+                       "repo": sha_local[:16], "itch": sha_itch[:16],
+                       "bytes": len(conteudo_local)})
+    # O jogo é o conteúdo, não a casca: index.html é a única peça que o itch reescreve.
+    nucleo = [l for l in linhas if l["arquivo"] != "index.html"
+              and not l["estado"].startswith("não consegui") and l["estado"] != "ausente no repositório"]
+    jogo_igual = bool(nucleo) and all(l["estado"] == "IGUAL" for l in nucleo)
+    casca = [l for l in linhas if l["arquivo"] == "index.html"]
+    return {"jogo": abre["jogo"], "pagina": abre["pagina"], "upload": abre["upload_id"],
+            "base": base, "arquivos": linhas, "jogo_igual_ao_repo": jogo_igual,
+            "casca_html_igual": bool(casca) and casca[0]["estado"] == "IGUAL",
+            "o_que_difere": [l["arquivo"] for l in linhas if l["estado"] == "DIFERENTE"]}, None
+
+
 def _get_json(url, chave):
     req = urllib.request.Request(url, headers={"Authorization": "Bearer " + chave,
                                                "Accept": "application/json",
@@ -416,7 +478,7 @@ def main(argv):
     slug = argv[1] if len(argv) > 1 else "ceifalume"
     chave = chave_do_ambiente()
     print("chave do itch:", resumo_de_chave(chave))
-    if not chave:
+    if not chave and modo not in ("conferir", "jogador"):
         print("✗ sem chave: defina ITCH_API_KEYS nos segredos do repositório")
         return 1
     identidade = arquivo_de_identidade(chave)
@@ -432,6 +494,21 @@ def main(argv):
                     j["visitas"], j["publicado"]))
             # O id é o que a edição de página (tools/itch-navegador.py) exige no caminho
             # /dashboard/game/<id>/edit. Sem imprimi-lo, cada rodada começava adivinhando.
+            return 0
+        if modo == "conferir":
+            # SOMENTE LEITURA: baixa o que a página serve e compara sha256 com o repositório.
+            resultado, erro = conferir_conteudo(slug)
+            if erro:
+                print("✗ não consegui conferir:", erro)
+                return 1
+            print("página %s — upload %s" % (resultado["pagina"], resultado["upload"]))
+            for l in resultado["arquivos"]:
+                print("  %-12s %-14s repo=%s itch=%s %8d B" % (
+                    l["arquivo"], l["estado"], l["repo"] or "-", l["itch"] or "-", l["bytes"]))
+            print("  jogo (conteúdo) igual ao repositório: %s" % (
+                "SIM" if resultado["jogo_igual_ao_repo"] else "NÃO"))
+            print("  casca html igual: %s" % ("SIM" if resultado["casca_html_igual"] else
+                                              "NÃO (o itch reescreve e injeta o htmlgame.js dele)"))
             return 0
         if modo == "jogador":
             # SOMENTE LEITURA: o que abre quando alguém clica em jogar, e o que a API tem.

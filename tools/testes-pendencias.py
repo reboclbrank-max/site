@@ -92,16 +92,36 @@ ok("o dono não fica com tarefa nenhuma nesta medição", rel["pendentes_em"] ==
 
 # O item que só existe porque medimos a PÁGINA do itch (não o log do butler).
 _pagina = [i for i in rel["itens"] if i["id"] == "itch-pagina-abre-build"][0]
-ok("existe um item sobre o que a página do itch realmente abre", _pagina is not None)
+ok("existe um item sobre o que a página do itch realmente entrega", _pagina is not None)
 ok("ele não conta como pendência do dono",
    "itch-pagina-abre-build" not in rel["pendentes_em"], rel["pendentes_em"])
-ok("a medida dele cita o upload antigo que a página abre",
-   "19268311" in _pagina["medido"], _pagina["medido"])
-ok("a medida dele diz que o upload NÃO tem o selo", "NÃO tem o selo" in _pagina["medido"],
-   _pagina["medido"])
-ok("ele cita a página pública do jogo como caminho que chega ao jogador",
-   any("site da casa" in c or "YouTube" in c for c in _pagina["coberto_em"]),
-   _pagina["coberto_em"])
+ok("com a conferência por sha256 mostrando conteúdo igual, o item é FEITO",
+   _pagina["estado"] == "feito", _pagina["estado"])
+ok("a medida dele mostra arquivo por arquivo (IGUAL/DIFERENTE)",
+   "IGUAL" in _pagina["medido"] and "DIFERENTE" in _pagina["medido"], _pagina["medido"])
+ok("a medida dele diz que o jogo que o jogador recebe é o do repositório",
+   "é o do repositório" in _pagina["medido"], _pagina["medido"])
+ok("a medida dele cita o GIF da descrição como caminho do vídeo",
+   "GIF da descrição" in _pagina["medido"], _pagina["medido"])
+
+# e se a conferência disser o contrário, o item volta a ser limitação medida (não tarefa)
+import json as _json
+_caminho_builds = os.path.join(pend.RAIZ, "posts", "itch-builds.json")
+_guardado_builds = open(_caminho_builds, encoding="utf-8").read()
+try:
+    _d = _json.loads(_guardado_builds)
+    _d["builds"][0]["conferencia_do_servido"]["jogo_igual_ao_repo"] = False
+    open(_caminho_builds, "w", encoding="utf-8").write(_json.dumps(_d))
+    _rel_dif = pend.montar()
+    _item_dif = [i for i in _rel_dif["itens"] if i["id"] == "itch-pagina-abre-build"][0]
+    ok("se o servido divergir do repositório, o item vira limitação medida (não tarefa)",
+       _item_dif["estado"] == "sem caminho automático"
+       and "itch-pagina-abre-build" not in _rel_dif["pendentes_em"], _item_dif["estado"])
+finally:
+    open(_caminho_builds, "w", encoding="utf-8").write(_guardado_builds)
+ok("quando o servido é igual, ele cita a conferência e o GIF como prova/caminho",
+   ("sha256" in _pagina["medido"] or "IGUAL" in _pagina["medido"])
+   and "GIF da descrição" in _pagina["medido"], _pagina["medido"])
 _cobertura_devlog = " ".join(_devlog.get("coberto_em") or [])
 ok("a cobertura do devlog não mente dizendo que o build do canal chega ao jogador",
    "build no ar (2257110)" not in _cobertura_devlog, _cobertura_devlog)

@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T01:15:00Z",
+ "quando": "2026-10-31T01:19:58Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 103,
@@ -7,8 +7,9 @@
   "canais_com_publicacao": 5,
   "videos_no_youtube": 2,
   "builds_no_itch": 1,
-  "builds_que_chegam_ao_jogador": 0,
-  "documentos": 14,
+  "builds_que_chegam_ao_jogador": 1,
+  "builds_conferidos_iguais": 1,
+  "documentos": 15,
   "paginas_publicas": 20,
   "arquivos_de_midia": 12
  },
@@ -519,7 +520,7 @@
    "slug": "ceifalume",
    "id": "VIDEO123",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
-   "quando": "2026-10-31T01:14:28Z",
+   "quando": "2026-10-31T01:15:18Z",
    "link": "",
    "real": false
   },
@@ -550,7 +551,7 @@
    "quando": "2026-10-31T00:46:17Z",
    "link": "https://rebocl-brank.itch.io/ceifalume",
    "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110; MAS o run 41153867292 (modo uploads) lista só os uploads 19268311 e 19268322, ambos de 16/09, e a pági",
-   "chega_ao_jogador": false,
+   "chega_ao_jogador": true,
    "pagina_abre": {
     "upload_id": "19268311",
     "nome": "ceifalume-0.1-web.zip",
@@ -559,7 +560,28 @@
     "index_bytes": 21639,
     "tem_selo": false
    },
-   "por_que_nao_chega": "a página do itch embute o upload 19268311 (16/09), não o canal html5. Marcar um canal como 'HTML5 / jogável no navegador' é feito só pelo painel do itch (docs/butler/pushing.html), e o painel responde 403 (Cloudflare) para IP de datacenter.",
+   "conferencia": {
+    "quando": "2026-10-31T01:18:38Z",
+    "modo": "enviar-itch.py conferir (só leitura: baixa o que a página serve e compara sha256)",
+    "pagina": "https://rebocl-brank.itch.io/ceifalume",
+    "upload_id": "19268311",
+    "arquivos": {
+     "index.html": "DIFERENTE",
+     "index.js": "IGUAL",
+     "index.pck": "IGUAL",
+     "index.wasm": "IGUAL"
+    },
+    "sha256_repo": {
+     "index.js": "8a7c7d57f7da69bb",
+     "index.pck": "2383cabce49cd3e6",
+     "index.wasm": "6ead2ac528d007fe"
+    },
+    "jogo_igual_ao_repo": true,
+    "casca_html_igual": false,
+    "selo_no_jogo_servido": false,
+    "selo_chega_por": "GIF da descrição, servido pelo nosso domínio: media/ceifalume/gif-jogo-ceifalume-640x360.gif"
+   },
+   "ressalva": "o upload que a página abre é o 19268311 (16/09), NÃO o do canal html5; porém o conteúdo do jogo servido (index.js, index.pck, index.wasm) é byte a byte igual ao do repositório — medido em 31/10/2026 por sha256. A casca HTML é a do itch (injeta htmlgame.js e não tem o selo), e o vídeo chega ao visita",
    "real": true
   }
  ],
@@ -669,6 +691,14 @@
    }
   },
   {
+   "arquivo": "docs/RODADA-125-CONFERENCIA-DO-SERVIDO.md",
+   "titulo": "Rodada 125 — \"resolva\": a medida que faltava (e a vez em que eu errei contra mim mesmo)",
+   "selo": {
+    "bytes": 4344,
+    "sha256": "11ec930e9548212c"
+   }
+  },
+  {
    "arquivo": "docs/VIDEO-GAMEPLAY.md",
    "titulo": "Vídeo de gameplay — o que agora é medido, não prometido",
    "selo": {
@@ -729,8 +759,8 @@
   {
    "arquivo": "melhorias.html",
    "selo": {
-    "bytes": 9710,
-    "sha256": "760fef160834cab6"
+    "bytes": 9966,
+    "sha256": "7189c6556eb8f78e"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -769,8 +799,8 @@
   {
    "arquivo": "publicacoes.html",
    "selo": {
-    "bytes": 15123,
-    "sha256": "47428a58828fe281"
+    "bytes": 15271,
+    "sha256": "2ade1a374c094338"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },

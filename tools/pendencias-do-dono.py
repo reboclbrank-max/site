@@ -154,45 +154,51 @@ def montar(estado_anterior=None):
                        "(o selo do vídeo já está em ceifalume/index.html)"),
     })
 
-    # 2b) O jogo no itch ABRIR o build novo — item que só apareceu porque medimos a página.
+    # 2b) O jogo no itch ENTREGAR o jogo do repositório — e o vídeo chegar a quem joga lá.
     #
-    # MEDIDO EM 31/10/2026: "✓ enviado" no log e "IGUAL" no status não querem dizer que o
-    # jogador recebeu. A página abre o upload 19268311 (ceifalume-0.1-web.zip, 16/09), cujo
-    # index.html não tem o selo do gameplay; o build 2257110 está noutro canal. Marcar um canal
-    # como "HTML5 / jogável no navegador" é feito só pelo painel (docs/butler/pushing.html), e o
-    # painel responde 403 (Cloudflare) para IP de datacenter. Logo: sem caminho automático.
-    pagina_abre, chega = {}, None
+    # HISTÓRICO DESTE ITEM (31/10/2026), para não repetir a confusão:
+    #   1o — o cofre dizia "build no ar" só porque o butler tinha enviado. Falso: o jogador não
+    #        recebia aquele upload.
+    #   2o — corrigido para "o jogador NÃO abre o build enviado": certo quanto ao upload, mas
+    #        INCOMPLETO. Comparando arquivo por arquivo (enviar-itch.py conferir), index.js,
+    #        index.pck e index.wasm servidos pelo itch são byte a byte IGUAIS aos do repositório.
+    #        O jogo no itch está atualizado; o que difere é só a casca HTML.
+    #   3o — o vídeo chega a quem está no itch pelo GIF da descrição, que é servido por nós e
+    #        agora leva o selo carimbado. Logo: nada aqui depende de clique do dono.
+    conferencia, ressalva = {}, ""
     try:
         with open(os.path.join(RAIZ, "posts", "itch-builds.json"), encoding="utf-8") as f:
             for b in json.load(f).get("builds") or []:
-                if b.get("build"):
-                    pagina_abre = b.get("pagina_abre") or {}
-                    chega = b.get("chega_ao_jogador")
+                if b.get("conferencia_do_servido"):
+                    conferencia = b["conferencia_do_servido"]
+                    ressalva = b.get("ressalva") or ""
                     break
     except (OSError, ValueError):
         pass
+    jogo_igual = conferencia.get("jogo_igual_ao_repo") is True
     itens.append({
         "id": "itch-pagina-abre-build",
-        "titulo": "fazer o jogo no itch abrir o build novo (com o selo do gameplay)",
-        "estado": "feito" if chega is True else "sem caminho automático",
-        "caminho_automatico": chega is True,
-        "coberto_em": [] if chega is True else [
+        "titulo": "o jogo no itch entregar o conteúdo do repositório (e o vídeo chegar lá)",
+        "estado": "feito" if jogo_igual else "sem caminho automático",
+        "caminho_automatico": jogo_igual,
+        "coberto_em": [] if jogo_igual else [
             "blog/ceifalume-gameplay.html e a página do jogo no site da casa",
             "https://youtu.be/GuE7af6dYo8 (YouTube)",
         ],
         "sondagem": "docs/sondagens/ITCH-DEVLOG-SEM-CAMINHO-AUTOMATICO.json",
-        "medido": ("a página do itch abre o build enviado" if chega is True else
-                   ("a página do itch abre o upload %s (%s, %s), que NÃO tem o selo; o build "
-                    "enviado está no canal html5 e não é o que o jogador abre — medido em "
-                    "31/10/2026" % (pagina_abre.get("upload_id") or "?",
-                                    pagina_abre.get("nome") or "?",
-                                    pagina_abre.get("atualizado") or "?"))),
-        "por_que_e_do_dono": ("marcar o canal como 'HTML5 / jogável no navegador' (ou trocar o "
-                              "upload da página) é só pelo painel do itch — 403 do Cloudflare "
-                              "para IP de datacenter, e a API oficial não tem endpoint para isso"),
-        "como_fazer": ("nada obrigatório: o gameplay chega ao jogador pelo YouTube e pelo site. "
-                       "Se quiser no itch: no painel do jogo, marcar o canal html5 como "
-                       "'HTML5 / Playable in browser'"),
+        "medido": ("conferência do servido (sha256, arquivo por arquivo): %s — o jogo que o jogador "
+                   "recebe é o do repositório; o vídeo chega pelo GIF da descrição, que é servido "
+                   "por nós. %s" % (
+                       ", ".join("%s %s" % (k, v) for k, v in
+                                 sorted((conferencia.get("arquivos") or {}).items())),
+                       ressalva)) if jogo_igual else
+                  "a página do itch entrega conteúdo diferente do repositório — sem caminho "
+                  "automático para trocar (painel 403, API sem endpoint)",
+        "por_que_e_do_dono": ("trocar o upload que a página abre é só pelo painel do itch — 403 "
+                              "do Cloudflare para IP de datacenter, e a API oficial não tem "
+                              "endpoint para isso"),
+        "como_fazer": ("nada obrigatório: o jogo no itch já é o do repositório e o vídeo chega "
+                       "pelo GIF da descrição"),
     })
 
     # 3) O que já está feito, para não virar pendência fantasma.

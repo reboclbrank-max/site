@@ -162,18 +162,39 @@ ok("o cofre separa 'no canal' de 'chega ao jogador'",
 ok("o resumo conta só os builds que CHEGAM ao jogador",
    "builds_que_chegam_ao_jogador" in _dados_builds["resumo"],
    list(_dados_builds["resumo"]))
-ok("build que a página não abre NÃO entra na conta de 'chega ao jogador'",
-   _dados_builds["resumo"]["builds_que_chegam_ao_jogador"] == 0,
-   _dados_builds["resumo"]["builds_que_chegam_ao_jogador"])
-ok("a página diz em letras claras que o jogador não abre o build",
-   "NÃO abre este build" in _htm_builds, _htm_builds[:200])
+# O critério mudou em 31/10/2026, com medida melhor: o que importa não é QUAL upload a página
+# abre, é se o CONTEÚDO servido é o do repositório (sha256 arquivo por arquivo).
+ok("build conferido com conteúdo igual conta como 'chega ao jogador'",
+   _dados_builds["resumo"]["builds_que_chegam_ao_jogador"]
+   == _dados_builds["resumo"]["builds_conferidos_iguais"],
+   (_dados_builds["resumo"]["builds_que_chegam_ao_jogador"],
+    _dados_builds["resumo"]["builds_conferidos_iguais"]))
+ok("o resumo mostra quantos builds foram CONFERIDOS no ar (sha256)",
+   _dados_builds["resumo"]["builds_conferidos_iguais"] >= 1,
+   _dados_builds["resumo"]["builds_conferidos_iguais"])
+ok("a página diz, em letras claras, que o jogo servido é o do repositório",
+   "o jogo que o jogador recebe é o do repositório" in _htm_builds, _htm_builds[:200])
+ok("a página mostra a conferência arquivo por arquivo",
+   "sha256 igual em" in _htm_builds and "index.pck" in _htm_builds, "")
+ok("a página avisa que a casca HTML é a do itch (sem o selo)",
+   "casca HTML" in _htm_builds and "GIF da descrição" in _htm_builds)
 ok("o markdown mostra o upload que a página abre de verdade",
    "19268311" in _md_builds, _md_builds[:200])
 _falso = {"resumo": dict(_dados_builds["resumo"]), "canais": {}, "posts": [], "videos": [],
           "paginas": [], "documentos": [], "quando": "2026-10-31T00:00:00Z",
-          "builds": [dict(_builds[0], chega_ao_jogador=True, pagina_abre={})]}
-ok("quando chega, a página diz que chega",
-   "o jogador abre este build" in p.pagina(_falso))
+          "builds": [dict(_builds[0], chega_ao_jogador=True, pagina_abre={},
+                          conferencia={"jogo_igual_ao_repo": True,
+                                       "arquivos": {"index.pck": "IGUAL"}},
+                          ressalva="")]}
+ok("quando o conteúdo é igual, a página diz que é igual",
+   "o jogo que o jogador recebe é o do repositório" in p.pagina(_falso))
+_divergente = {"resumo": dict(_dados_builds["resumo"]), "canais": {}, "posts": [], "videos": [],
+               "paginas": [], "documentos": [], "quando": "2026-10-31T00:00:00Z",
+               "builds": [dict(_builds[0], chega_ao_jogador=False, pagina_abre={},
+                               conferencia={}, ressalva="")]
+               + []}
+ok("build sem conferência e que não chega continua dito como tal",
+   "NÃO abre este build" in p.pagina(_divergente))
 
 # A imagem que a página do itch mostra é servida por nós e agora leva o selo do vídeo: ela é
 # publicação, então entra no cofre com hash — e a FONTE intocada não entra (não é publicada).
