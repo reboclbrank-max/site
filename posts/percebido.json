@@ -1,16 +1,7 @@
 {
- "quando": "2026-10-31T00:59:17Z",
+ "quando": "2026-10-31T01:45:03Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
-  {
-   "o_que": "empurrar a meta: Instagram: publicações",
-   "porque": "faltam 12 e o ritmo necessário é 1.0 por dia",
-   "quem": "robô",
-   "como": "priorizar essa meta no próximo ciclo editorial",
-   "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
-   "tipo_fila": "publicar",
-   "chave": "meta-Instagram: publicações"
-  },
   {
    "o_que": "empurrar a meta: Instagram: seguidores",
    "porque": "faltam 50 e o ritmo necessário é 4.17 por dia",
@@ -21,8 +12,26 @@
    "chave": "meta-Instagram: seguidores"
   },
   {
+   "o_que": "empurrar a meta: Bluesky: seguidores",
+   "porque": "faltam 18 e o ritmo necessário é 1.5 por dia",
+   "quem": "robô",
+   "como": "priorizar essa meta no próximo ciclo editorial",
+   "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
+   "tipo_fila": "publicar",
+   "chave": "meta-Bluesky: seguidores"
+  },
+  {
+   "o_que": "empurrar a meta: YouTube: inscritos",
+   "porque": "faltam 16 e o ritmo necessário é 1.33 por dia",
+   "quem": "robô",
+   "como": "priorizar essa meta no próximo ciclo editorial",
+   "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
+   "tipo_fila": "publicar",
+   "chave": "meta-YouTube: inscritos"
+  },
+  {
    "o_que": "empurrar a meta: itch: downloads",
-   "porque": "faltam 54 e o ritmo necessário é 4.5 por dia",
+   "porque": "faltam 53 e o ritmo necessário é 4.42 por dia",
    "quem": "robô",
    "como": "priorizar essa meta no próximo ciclo editorial",
    "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
@@ -61,7 +70,7 @@
  ],
  "enfileiradas": [],
  "contagem": {
-  "robo": 3,
+  "robo": 4,
   "dono": 3,
   "enfileiradas": 0
  }

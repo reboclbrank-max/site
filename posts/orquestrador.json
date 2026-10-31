@@ -1,11 +1,11 @@
 {
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
- "ultima_publicacao": "2026-10-27T12:19:44Z",
+ "ultima_publicacao": "2026-10-31T01:45:03Z",
  "ultima_medicao": "2026-10-30T23:05:41Z",
  "ultima_pesquisa": "2026-10-27T12:29:44Z",
  "ultima_aprendizagem": "2026-10-27T12:39:44Z",
- "pulsos": 10,
+ "pulsos": 11,
  "historico": [
   {
    "quando": "2026-10-27T00:30:50Z",
@@ -76,6 +76,13 @@
    "motivo": "fila: [medir-20261030T230541Z] decisão do relógio",
    "codigo": 0,
    "saida": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 194,\n   \"falta\": null,\n   \"status\": \"AC"
+  },
+  {
+   "quando": "2026-10-31T01:45:03Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261030T230327Z] empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 3.85 por dia",
+   "codigo": 0,
+   "saida": "janela: fora da janela (22h local; janela 09-22h)\nRESUMO: janela=PULADO (fora da janela (22h local; janela 09-22h))"
   }
  ]
 }
