@@ -338,6 +338,68 @@ def uploads_do_jogo(chave, jogo_id, get=None):
     return lista, None
 
 
+def _get_texto(url, abrir=None):
+    """GET simples, sem chave: a página pública do jogo não pede login."""
+    if abrir:
+        # injetável: aceita texto puro ou (texto, erro) — quem testa não precisa montar urllib
+        r = abrir(url)
+        return (r, None) if isinstance(r, str) else (r[0], r[1])
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36"})
+    try:
+        with urllib.request.urlopen(req, timeout=40) as r:
+            return r.read().decode("utf-8", "replace"), None
+    except Exception as e:  # noqa: BLE001
+        return None, str(e)[:80]
+
+
+def o_que_o_jogador_abre(slug, abrir=None):
+    """QUAL upload a página do itch realmente abre — medido, não suposto.
+
+    POR QUE EXISTE (31/10/2026): o log do butler dizia "✓ enviado" e o `status` dizia IGUAL,
+    mas a página do jogo continuava embutindo `html-classic.itch.zone/html/19268311/index.html`
+    — um upload de 16/09. Ou seja: o build novo existia num canal do itch e NÃO era o que o
+    jogador abria. "Publicado" que não chega a ninguém é falso-verde com outro nome.
+
+    Esta função lê a página pública e devolve o upload embutido (id e versão). É a única medida
+    que responde a pergunta que importa: o que abre quando alguém clica em jogar?
+    """
+    alvo = (BUILDS.get(slug) or {}).get("alvo")
+    if not alvo:
+        return None, "build não declarado para %r" % slug
+    usuario, jogo = alvo.split("/", 1)
+    url = "https://%s.itch.io/%s" % (usuario, jogo)
+    html, erro = _get_texto(url, abrir=abrir)
+    if erro or not html:
+        return None, erro or "página vazia"
+    achado = re.search(r"html(?:-classic)?\.itch\.zone/html/(\d+)/index\.html(?:\?v=(\d+))?",
+                       html)
+    if not achado:
+        return None, "a página respondeu, mas não achei o iframe do jogo"
+    upload, versao = achado.group(1), achado.group(2) or ""
+    embutido = "https://html-classic.itch.zone/html/%s/index.html" % upload
+    return {"jogo": jogo, "pagina": url, "upload_id": upload, "versao": versao,
+            "embutido": embutido}, None
+
+
+def o_jogador_ve_o_selo(slug, marcador="rb-gameplay", abrir=None):
+    """A pergunta que o log do butler NÃO responde: o upload que a página abre tem o selo?
+
+    Se o build novo está num canal e a página abre outro upload, o jogador não vê nada do que
+    foi enviado. Aqui isso vira número: baixa o index.html do upload embutido e procura o
+    marcador (`rb-gameplay`, o selo do gameplay).
+    """
+    abre, erro = o_que_o_jogador_abre(slug, abrir=abrir)
+    if erro:
+        return None, erro
+    pagina, erro2 = _get_texto(abre["embutido"] + (("?v=" + abre["versao"]) if abre["versao"] else ""),
+                               abrir=abrir)
+    if erro2 or not pagina:
+        return None, erro2 or "index.html do upload embutido veio vazio"
+    return dict(abre, tem_marcador=marcador in pagina, marcador=marcador,
+                bytes_do_index=len(pagina)), None
+
+
 def _get_json(url, chave):
     req = urllib.request.Request(url, headers={"Authorization": "Bearer " + chave,
                                                "Accept": "application/json",
@@ -370,6 +432,33 @@ def main(argv):
                     j["visitas"], j["publicado"]))
             # O id é o que a edição de página (tools/itch-navegador.py) exige no caminho
             # /dashboard/game/<id>/edit. Sem imprimi-lo, cada rodada começava adivinhando.
+            return 0
+        if modo == "jogador":
+            # SOMENTE LEITURA: o que abre quando alguém clica em jogar, e o que a API tem.
+            abre, erro = o_que_o_jogador_abre(slug)
+            if erro:
+                print("✗ não consegui ler a página do jogo:", erro)
+                return 1
+            print("página %s" % abre["pagina"])
+            print("  abre o upload %s%s — %s" % (
+                abre["upload_id"], (" (v=%s)" % abre["versao"]) if abre["versao"] else "",
+                abre["embutido"]))
+            selo, erro_selo = o_jogador_ve_o_selo(slug)
+            if erro_selo:
+                print("  (não consegui abrir o upload embutido: %s)" % erro_selo)
+            else:
+                print("  o upload que o jogador abre %s o selo do gameplay (%s)" % (
+                    "TEM" if selo["tem_marcador"] else "NÃO TEM", selo["marcador"]))
+            jogo_id = str((BUILDS.get(slug) or {}).get("jogo_id") or "")
+            if jogo_id:
+                lista, erro2 = uploads_do_jogo(chave, jogo_id)
+                if erro2:
+                    print("  (não consegui cruzar com a API: %s)" % erro2)
+                else:
+                    for u in lista:
+                        marca = "  ← é ESTE que o jogador abre" if str(u["id"]) == abre["upload_id"] else ""
+                        print("  upload %-10s %-26s %10s B  %s%s" % (
+                            u["id"], u["nome"], u["bytes"], u["atualizado"], marca))
             return 0
         if modo == "uploads":
             jogo = argv[2] if len(argv) > 2 else str((BUILDS.get(slug) or {}).get("jogo_id") or "")

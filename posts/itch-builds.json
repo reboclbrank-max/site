@@ -1,5 +1,5 @@
 {
- "_o_que_e": "builds de jogo levados ao itch.io pelo butler. Cada linha foi medida no log do run citado em 'prova' — build id e comparação com a pasta do repositório, não fé.",
+ "_o_que_e": "builds de jogo levados ao itch.io pelo butler. Cada linha foi medida no log do run citado em 'prova' e, desde 31/10/2026, também contra a PÁGINA: estar num canal não é o mesmo que chegar ao jogador — 'chega_ao_jogador' separa as duas coisas em vez de chamar as duas de publicado.",
  "builds": [
   {
    "slug": "ceifalume",
@@ -11,8 +11,20 @@
    "quando": "2026-10-31T00:46:17Z",
    "link": "https://rebocl-brank.itch.io/ceifalume",
    "selo_gameplay": "https://youtu.be/GuE7af6dYo8",
-   "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110",
-   "real": true
+   "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110; MAS o run 41153867292 (modo uploads) lista só os uploads 19268311 e 19268322, ambos de 16/09, e a página abre 19268311 — cujo index.html NÃO tem o selo do gameplay (modo jogador).",
+   "real": true,
+   "no_canal": true,
+   "pagina_abre": {
+    "upload_id": "19268311",
+    "nome": "ceifalume-0.1-web.zip",
+    "atualizado": "2026-09-16T21:03:17",
+    "bytes": 13035144,
+    "index_bytes": 21639,
+    "tem_selo": false
+   },
+   "chega_ao_jogador": false,
+   "por_que_nao_chega": "a página do itch embute o upload 19268311 (16/09), não o canal html5. Marcar um canal como 'HTML5 / jogável no navegador' é feito só pelo painel do itch (docs/butler/pushing.html), e o painel responde 403 (Cloudflare) para IP de datacenter. Medido em 31/10/2026."
   }
- ]
+ ],
+ "quando_medido": "2026-10-31T01:10:13Z"
 }

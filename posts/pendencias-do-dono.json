@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T01:07:33Z",
+ "quando": "2026-10-31T01:15:09Z",
  "itens": [
   {
    "id": "itch-devlog-gameplay",
@@ -7,9 +7,9 @@
    "estado": "sem caminho automático",
    "caminho_automatico": false,
    "coberto_em": [
-    "build no ar (2257110): ceifalume/index.html leva o selo ▶ gameplay com instruções",
-    "blog/ceifalume-gameplay.html (site da casa)",
-    "https://youtu.be/GuE7af6dYo8 (YouTube)"
+    "blog/ceifalume-gameplay.html (site da casa, sem trava nenhuma)",
+    "https://youtu.be/GuE7af6dYo8 (YouTube, público)",
+    "vídeo dentro da pasta do jogo (media/) — vai junto de qualquer build futuro"
    ],
    "medido_em": "2026-10-31",
    "sondagem": "docs/sondagens/ITCH-DEVLOG-SEM-CAMINHO-AUTOMATICO.json",
@@ -23,9 +23,23 @@
    "id": "itch-build-selo",
    "titulo": "subir o build com o selo do gameplay (modo push + PUBLICAR)",
    "estado": "feito",
-   "medido": "build 2257110 no ar (versão 2026.10.31-0046, https://rebocl-brank.itch.io/ceifalume) — push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110",
+   "medido": "build 2257110 no ar (versão 2026.10.31-0046, https://rebocl-brank.itch.io/ceifalume) — push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110; MAS o run 41153867292 (modo uploads) lista só os uploads 19268311 e 19268322, ambos de 16/09, e a página abre 19268311 — cujo index.html NÃO tem o selo do gameplay (modo jogador).",
    "por_que_e_do_dono": "build ao vivo substitui o que o jogador baixa; a regra da casa é não publicar por conta própria",
    "como_fazer": "workflow enviar-itch, jogo=ceifalume, modo=push, confirmacao=PUBLICAR (o selo do vídeo já está em ceifalume/index.html)"
+  },
+  {
+   "id": "itch-pagina-abre-build",
+   "titulo": "fazer o jogo no itch abrir o build novo (com o selo do gameplay)",
+   "estado": "sem caminho automático",
+   "caminho_automatico": false,
+   "coberto_em": [
+    "blog/ceifalume-gameplay.html e a página do jogo no site da casa",
+    "https://youtu.be/GuE7af6dYo8 (YouTube)"
+   ],
+   "sondagem": "docs/sondagens/ITCH-DEVLOG-SEM-CAMINHO-AUTOMATICO.json",
+   "medido": "a página do itch abre o upload 19268311 (ceifalume-0.1-web.zip, 2026-09-16T21:03:17), que NÃO tem o selo; o build enviado está no canal html5 e não é o que o jogador abre — medido em 31/10/2026",
+   "por_que_e_do_dono": "marcar o canal como 'HTML5 / jogável no navegador' (ou trocar o upload da página) é só pelo painel do itch — 403 do Cloudflare para IP de datacenter, e a API oficial não tem endpoint para isso",
+   "como_fazer": "nada obrigatório: o gameplay chega ao jogador pelo YouTube e pelo site. Se quiser no itch: no painel do jogo, marcar o canal html5 como 'HTML5 / Playable in browser'"
   },
   {
    "id": "youtube-gameplay",
@@ -37,7 +51,8 @@
  ],
  "pendentes_em": [],
  "sem_caminho_automatico_em": [
-  "itch-devlog-gameplay"
+  "itch-devlog-gameplay",
+  "itch-pagina-abre-build"
  ],
  "mudou_desde_o_ultimo": false,
  "devlog_publico_titulos": [

@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-10-31T00:59:23Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-10-31T01:15:00Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
@@ -13,9 +13,10 @@ Gerado em 2026-10-31T00:59:23Z. Este arquivo é o inventário do que já foi pub
 | canais que já publicaram | 5 |
 | vídeos no YouTube (com id real) | 2 |
 | builds no itch.io (com id real) | 1 |
-| documentos | 13 |
+| builds que o jogador do itch realmente abre | 0 |
+| documentos | 14 |
 | páginas públicas | 20 |
-| arquivos de mídia | 11 |
+| arquivos de mídia | 12 |
 
 ## Canal por canal
 
@@ -52,7 +53,8 @@ Gerado em 2026-10-31T00:59:23Z. Este arquivo é o inventário do que já foi pub
 | jogo | canal | build | versão | arquivos | quando |
 | --- | --- | --- | --- | --- | --- |
 | ceifalume | html5 | `2257110` | 2026.10.31-0046 | 13 | 2026-10-31T00:46:17Z |
-- prova de ceifalume:`2257110` — push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110
+- prova de ceifalume:`2257110` — push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110; MAS o run 41153867292 (modo uploads) lista só os uploads 19268311 e 19268322, ambos de 16/09, e a pági
+- o jogador abre este build: **não** — a página embute o upload `19268311` (`ceifalume-0.1-web.zip`, 2026-09-16T21:03:17). a página do itch embute o upload 19268311 (16/09), não o canal html5. Marcar um canal como 'HTML5 / jogável no navegador' é feito só pelo painel do itch (docs/butler/pushing.html), e o painel responde 403 (Cloudflare) para IP de datacenter.
 
 ## Páginas públicas
 
@@ -63,13 +65,13 @@ Gerado em 2026-10-31T00:59:23Z. Este arquivo é o inventário do que já foi pub
 | escola.html | 3343 | `0fc79cbc5841eb35` |
 | index.html | 13685 | `c0942bdf8ca12917` |
 | jogos.html | 3255 | `4b17c4ecdda44233` |
-| marketing.html | 14929 | `7b8358e3220c1a70` |
-| melhorias.html | 9623 | `f8ca3d94e31bf84c` |
+| marketing.html | 15067 | `91888e457ced60a3` |
+| melhorias.html | 9710 | `760fef160834cab6` |
 | museu.html | 226788 | `959bee2b9addade2` |
 | oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
 | postar.html | 10463 | `559892cc1dd855ec` |
 | privacidade.html | 2684 | `d4c4bce26a1c1093` |
-| publicacoes.html | 14835 | `4571efe080ac19d2` |
+| publicacoes.html | 15123 | `47428a58828fe281` |
 | termos.html | 2613 | `a1a98745bc144972` |
 | vitrina.html | 8285 | `18c36df607adeaa7` |
 | blog/ceifalume-01-o-que-e-que-vem.html | 2934 | `d3272d5e446e934a` |
@@ -94,7 +96,8 @@ Gerado em 2026-10-31T00:59:23Z. Este arquivo é o inventário do que já foi pub
 | docs/RODADA-120-MELHORIAS-PUBLICAS.md | Rodada 120 — as melhorias agora têm endereço público | `5e21091540ef080e` |
 | docs/RODADA-121-ARQUIVO-DAS-PUBLICACOES.md | Rodada 121 — o cofre: toda publicação fica salva, com prova | `e76fe6bef1f61536` |
 | docs/RODADA-122-PUBLICADO.md | Rodada 122 — o que estava travado foi resolvido e publicado | `63f9ba8f578e4764` |
-| docs/RODADA-123-ENTRAR-NO-MAIN.md | Rodada 123 — "resolva tudo": os runs vermelhos, o motivo deles e o conserto medido | `ab749d9185e13cf6` |
+| docs/RODADA-123-ENTRAR-NO-MAIN.md | Rodada 123 — "resolva tudo": os runs vermelhos, o motivo deles e o conserto medido | `1786c53dd2152ced` |
+| docs/RODADA-124-SELO-CHEGA-NO-ITCH.md | Rodada 124 — "resolva": o selo do gameplay agora chega a quem abre o jogo no itch | `b70ab0f9e5b903a5` |
 | docs/VIDEO-GAMEPLAY.md | Vídeo de gameplay — o que agora é medido, não prometido | `1dab0e5a47cf8301` |
 
 ## Últimos posts registrados (texto)

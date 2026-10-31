@@ -249,6 +249,48 @@ _pasta_temp = tempfile.mkdtemp()
 _erros_vazio, _ = itch.conferir_build("ceifalume", raiz=_pasta_temp)
 ok("build vazio é recusado antes da rede", any("ausente" in e for e in _erros_vazio), str(_erros_vazio))
 
+# ------------------------------------------- o que o JOGADOR abre (medido na página, não no log)
+# MEDIDO em 31/10/2026: "✓ enviado" e "IGUAL" não querem dizer que o jogador recebeu. A página
+# embutia o upload 19268311 (16/09) enquanto o build novo ficava num canal.
+_pagina_falsa = ('<div class="iframe_placeholder" data-iframe="&lt;iframe scrolling=&quot;no&quot; '
+                 'src=&quot;https://html-classic.itch.zone/html/19268311/index.html?v=1789592601'
+                 '&quot;&gt;&lt;/iframe&gt;"></div>')
+_abre, _erro = itch.o_que_o_jogador_abre("ceifalume", abrir=lambda u: _pagina_falsa)
+ok("lê da página QUAL upload o jogador abre",
+   _erro is None and _abre["upload_id"] == "19268311" and _abre["versao"] == "1789592601", _erro)
+ok("monta o endereço do upload embutido",
+   _abre["embutido"].endswith("/html/19268311/index.html"), _abre["embutido"])
+ok("página sem iframe não vira sucesso inventado",
+   itch.o_que_o_jogador_abre("ceifalume", abrir=lambda u: "<html>nada</html>")[0] is None)
+ok("a versão do iframe é lida quando existe",
+   itch.o_que_o_jogador_abre(
+       "ceifalume", abrir=lambda u: '<iframe src="https://html.itch.zone/html/7/index.html?v=42">'
+   )[0]["versao"] == "42")
+
+def _abrir_teste(url):
+    if "rebocl" in url:
+        return _pagina_falsa
+    return '<a id="rb-gameplay" href="https://youtu.be/GuE7af6dYo8">▶</a>'
+
+_selo, _erro_selo = itch.o_jogador_ve_o_selo("ceifalume", abrir=_abrir_teste)
+ok("acha o selo quando o upload que o jogador abre tem o selo",
+   _erro_selo is None and _selo["tem_marcador"] is True, _erro_selo)
+
+
+def _abrir_sem_selo(url):
+    if "rebocl" in url:
+        return _pagina_falsa
+    return "<html>jogo antigo, sem selo</html>"
+
+_selo2, _ = itch.o_jogador_ve_o_selo("ceifalume", abrir=_abrir_sem_selo)
+ok("diz que NÃO tem o selo quando o upload aberto é o antigo", _selo2["tem_marcador"] is False)
+ok("o marcador medido é o do selo do gameplay", _selo2["marcador"] == "rb-gameplay")
+ok("o modo jogador existe no programa", "modo == \"jogador\"" in open(
+    os.path.join(RAIZ, "tools", "enviar-itch.py"), encoding="utf-8").read())
+_wf_jogador = open(os.path.join(RAIZ, ".github", "workflows", "enviar-itch.yml"),
+                   encoding="utf-8").read()
+ok("o workflow oferece o modo jogador (só leitura)", "- jogador" in _wf_jogador)
+
 # ---------------------------------------------------------------- workflow: nada automático
 _wf = os.path.join(RAIZ, ".github", "workflows", "enviar-itch.yml")
 if os.path.exists(_wf):
@@ -259,7 +301,7 @@ if os.path.exists(_wf):
     # o ramo do run e a lista de modos do dispatch têm de casar: um modo que existe no run mas
     # não na lista volta 422 e o disparo não roda nada (aconteceu com "ensaio").
     _modos_run = set(re.findall(r'inputs\.modo \}\}" = "([a-z]+)"', texto))
-    _lista = set(re.findall(r'^          - (status|api|uploads|ensaio|push)$', texto, re.M))
+    _lista = set(re.findall(r'^          - (status|api|uploads|jogador|ensaio|push)$', texto, re.M))
     ok("todo modo do run está na lista do dispatch", _modos_run <= _lista,
        "run=" + str(sorted(_modos_run)) + " lista=" + str(sorted(_lista)))
     ok("o workflow roda a barreira antes de tocar a rede",

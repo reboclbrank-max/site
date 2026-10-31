@@ -155,6 +155,37 @@ _htm_builds = p.pagina(_dados_builds)
 ok("a página tem a seção de builds", "Builds no itch.io" in _htm_builds)
 ok("a página mostra o build de verdade", "2257110" in _htm_builds or any(
     b["build"] in _htm_builds for b in _dados_builds["builds"]))
+# Build no canal != build que o jogador abre. MEDIDO em 31/10/2026: o build 2257110 estava no
+# canal html5 e a página do itch continuava embutindo o upload 19268311, de 16/09, sem o selo.
+ok("o cofre separa 'no canal' de 'chega ao jogador'",
+   "chega_ao_jogador" in _builds[0] and "pagina_abre" in _builds[0], list(_builds[0]))
+ok("o resumo conta só os builds que CHEGAM ao jogador",
+   "builds_que_chegam_ao_jogador" in _dados_builds["resumo"],
+   list(_dados_builds["resumo"]))
+ok("build que a página não abre NÃO entra na conta de 'chega ao jogador'",
+   _dados_builds["resumo"]["builds_que_chegam_ao_jogador"] == 0,
+   _dados_builds["resumo"]["builds_que_chegam_ao_jogador"])
+ok("a página diz em letras claras que o jogador não abre o build",
+   "NÃO abre este build" in _htm_builds, _htm_builds[:200])
+ok("o markdown mostra o upload que a página abre de verdade",
+   "19268311" in _md_builds, _md_builds[:200])
+_falso = {"resumo": dict(_dados_builds["resumo"]), "canais": {}, "posts": [], "videos": [],
+          "paginas": [], "documentos": [], "quando": "2026-10-31T00:00:00Z",
+          "builds": [dict(_builds[0], chega_ao_jogador=True, pagina_abre={})]}
+ok("quando chega, a página diz que chega",
+   "o jogador abre este build" in p.pagina(_falso))
+
+# A imagem que a página do itch mostra é servida por nós e agora leva o selo do vídeo: ela é
+# publicação, então entra no cofre com hash — e a FONTE intocada não entra (não é publicada).
+_midia = [m["arquivo"] for m in _dados_builds["midia"]]
+ok("o GIF que o itch mostra entra no cofre, com hash",
+   any(a.endswith("gif-jogo-ceifalume-640x360.gif") for a in _midia), _midia)
+ok("a fonte intocada do GIF NÃO entra no cofre",
+   not any(a.endswith("-fonte.gif") for a in _midia), _midia)
+ok("o cofre guarda o selo (sha256) do GIF servido",
+   all(m.get("sha256") for m in _dados_builds["midia"]
+       if m["arquivo"].endswith("640x360.gif")), _dados_builds["midia"][:1])
+
 ok("a página diz quando não há build nenhum",
    "nenhum build enviado" in p.pagina(
        {"resumo": dict(_dados_builds["resumo"], builds_no_itch=0),

@@ -51,6 +51,7 @@ jobs:
           python3 tools/testes-juizo.py
           python3 tools/testes-melhorias.py
           python3 tools/testes-publicacoes.py
+          python3 tools/testes-gif-com-selo.py
           python3 tools/testes-entrar-no-main.py
 
       - name: Mede o que foi postado e o que voltou (só leitura)
