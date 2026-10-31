@@ -68,9 +68,4 @@ jobs:
           git config user.email "reboclbrank@gmail.com"
           git add posts/orquestrador.json posts/calendario.json posts/plano-do-dia.json posts/aprendizado.json posts/log.md posts/posts-publicados.md posts/fila-tarefas.json posts/percebido.json posts/percebido.md 2>/dev/null || true
           git commit -m "🤖 pulso 24h $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
-          for i in 1 2 3; do
-            if git pull --rebase -q origin main && git push -q origin main; then
-              echo "estado do pulso publicado"; break
-            fi
-            sleep 4
-          done
+          bash tools/entrar-no-main.sh "pulso 24h" || echo "pulso não entrou no main"

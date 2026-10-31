@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T00:48:51Z",
+ "quando": "2026-10-31T00:56:53Z",
  "itens": [
   {
    "id": "itch-devlog-gameplay",
@@ -14,8 +14,8 @@
   {
    "id": "itch-build-selo",
    "titulo": "subir o build com o selo do gameplay (modo push + PUBLICAR)",
-   "estado": "esperando o dono",
-   "medido": "página do jogo respondeu 200",
+   "estado": "feito",
+   "medido": "build 2257110 no ar (versão 2026.10.31-0046, https://rebocl-brank.itch.io/ceifalume) — push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110",
    "por_que_e_do_dono": "build ao vivo substitui o que o jogador baixa; a regra da casa é não publicar por conta própria",
    "como_fazer": "workflow enviar-itch, jogo=ceifalume, modo=push, confirmacao=PUBLICAR (o selo do vídeo já está em ceifalume/index.html)"
   },
@@ -28,7 +28,6 @@
   }
  ],
  "pendentes_em": [
-  "itch-build-selo",
   "itch-devlog-gameplay"
  ],
  "mudou_desde_o_ultimo": true,

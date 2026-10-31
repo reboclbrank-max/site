@@ -1,22 +1,21 @@
 # Pendências do dono
 
-Medido em 2026-10-31T00:48:51Z (o devlog do itch é público: dá para conferir de fora).
+Medido em 2026-10-31T00:56:53Z (o devlog do itch é público: dá para conferir de fora).
 
 | item | estado | como |
 | --- | --- | --- |
 | publicar o devlog do gameplay no itch | esperando o dono | abrir itch/devlog-gameplay-bookmarklet.txt como favorito em qualquer página do itch, logado; ele descobre o formulário e posta o texto de posts/devlog-itch-gameplay.json |
-| subir o build com o selo do gameplay (modo push + PUBLICAR) | esperando o dono | workflow enviar-itch, jogo=ceifalume, modo=push, confirmacao=PUBLICAR (o selo do vídeo já está em ceifalume/index.html) |
+| subir o build com o selo do gameplay (modo push + PUBLICAR) | feito | workflow enviar-itch, jogo=ceifalume, modo=push, confirmacao=PUBLICAR (o selo do vídeo já está em ceifalume/index.html) |
 | vídeo de gameplay no YouTube | feito | nada: já publicado |
 
 ## Por que só o dono pode
 
 - **publicar o devlog do gameplay no itch**: a Cloudflare do itch devolve 403 em /dashboard para IP de datacenter — medido em Ubuntu, macOS, Windows e com Chromium real (docs/sondagens/ITCH-403-CLOUDFLARE.json)
-- **subir o build com o selo do gameplay (modo push + PUBLICAR)**: build ao vivo substitui o que o jogador baixa; a regra da casa é não publicar por conta própria
 
 ## Medições
 
 - **publicar o devlog do gameplay no itch**: a página pública de devlog respondeu 200 e não tem o post do vídeo
-- **subir o build com o selo do gameplay (modo push + PUBLICAR)**: página do jogo respondeu 200
+- **subir o build com o selo do gameplay (modo push + PUBLICAR)**: build 2257110 no ar (versão 2026.10.31-0046, https://rebocl-brank.itch.io/ceifalume) — push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110
 - **vídeo de gameplay no YouTube**: registro em posts/youtube-publicados.json
 
 ## Posts já no devlog público

@@ -93,5 +93,42 @@ ok("o relatório não contém cookie nem chave",
    not any(p in json.dumps(_salvo).lower() for p in ("itch_cookie", "itcg", "api_key", "bearer")))
 ok("o .md foi escrito", os.path.getsize(pend.SAIDA_MD) > 200)
 
+# ---- o build no itch deixa de ser pendência FANTASMA quando há build com prova
+# MEDIDO (31/10/2026): o item ficava "esperando o dono" para sempre porque a única medida era
+# "a página respondeu 200" — verdade mesmo sem build nenhum. Com o build 2257110 no ar, o
+# relatório continuava pedindo ao dono o que já estava feito.
+import tempfile as _tf, shutil as _sh
+_tmp = _tf.mkdtemp()
+_orig_json = pend.os.path.join(pend.RAIZ, "posts", "itch-builds.json")
+_guardado = open(_orig_json, encoding="utf-8").read() if os.path.exists(_orig_json) else None
+try:
+    with open(_orig_json, "w", encoding="utf-8") as f:
+        json.dump({"builds": [{"slug": "ceifalume", "build": "2257110",
+                               "versao": "2026.10.31-0046",
+                               "link": "https://rebocl-brank.itch.io/ceifalume",
+                               "prova": "push run 41151936756; status run 41152028164 IGUAL"}]}, f)
+    _rel_com = pend.montar()
+    _item = [i for i in _rel_com["itens"] if i["id"] == "itch-build-selo"][0]
+    ok("com build e prova no registro, o item do build é FEITO", _item["estado"] == "feito",
+       _item["estado"])
+    ok("a medida do build cita o número do build", "2257110" in _item["medido"], _item["medido"])
+    ok("a medida do build cita a prova (run do push)", "41151936756" in _item["medido"],
+       _item["medido"])
+    with open(_orig_json, "w", encoding="utf-8") as f:
+        json.dump({"builds": [{"slug": "ceifalume", "build": "", "prova": ""}]}, f)
+    _rel_sem = pend.montar()
+    _item2 = [i for i in _rel_sem["itens"] if i["id"] == "itch-build-selo"][0]
+    ok("build sem id nem prova NÃO vira feito", _item2["estado"] != "feito", _item2["estado"])
+    with open(_orig_json, "w", encoding="utf-8") as f:
+        json.dump({"builds": [{"slug": "ceifalume", "build": "2257110", "prova": ""}]}, f)
+    ok("build com id mas SEM prova também não vira feito",
+       [i for i in pend.montar()["itens"] if i["id"] == "itch-build-selo"][0]["estado"] != "feito")
+finally:
+    if _guardado is None:
+        os.remove(_orig_json)
+    else:
+        open(_orig_json, "w", encoding="utf-8").write(_guardado)
+    _sh.rmtree(_tmp, ignore_errors=True)
+
 print("\n%d/%d verificações do medidor de pendências passaram" % (len(certos), len(certos) + len(falhas)))
 sys.exit(0 if not falhas else 1)

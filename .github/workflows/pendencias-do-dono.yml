@@ -49,18 +49,11 @@ jobs:
           fi
           git commit -m "pendências do dono: estado medido ($(date -u +%d/%m %H:%M UTC))"
           git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
-          enviado=0
-          for tentativa in 1 2 3; do
-            if git fetch -q origin main && git rebase -q origin/main && git push; then
-              echo "relatório no main (tentativa $tentativa)"
-              enviado=1
-              break
-            fi
-            echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
-            git rebase --abort 2>/dev/null || true
-            sleep 5
-          done
-          if [ "$enviado" != "1" ]; then
-            echo "::error::3 tentativas e o relatório não entrou no main"
+          # Quem entra no main é tools/entrar-no-main.sh: rebase quando dá, merge com o gerador
+          # reescrevendo o arquivo quando os dois lados mexeram no mesmo relatório. O laço de
+          # rebase antigo parava em conflito quando o ciclo regerava os mesmos arquivos.
+          GERAR="python3 tools/pendencias-do-dono.py" \
+            bash tools/entrar-no-main.sh "pendências do dono" || {
+            echo "::error::o relatório não entrou no main"
             exit 1
-          fi
+          }

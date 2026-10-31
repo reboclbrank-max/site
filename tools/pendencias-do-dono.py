@@ -100,14 +100,33 @@ def montar(estado_anterior=None):
         "favorito": "itch/devlog-gameplay-bookmarklet.txt",
     })
 
-    # 2) Build no ar com o selo do gameplay — também depende da palavra PUBLICAR.
+    # 2) Build no ar com o selo do gameplay.
+    #
+    # DEFEITO MEDIDO (31/10/2026): este item ficava "esperando o dono" PARA SEMPRE, porque a
+    # única medição era "a página do jogo respondeu 200" — que é verdade mesmo sem build nenhum.
+    # Resultado: o build entrou (2257110) e o relatório continuou pedindo ao dono o que já
+    # estava feito. Agora a medida é o registro com id de build E prova (run do push + run da
+    # conferência), o mesmo critério do cofre em tools/publicacoes.py.
+    build_no_ar = None
+    try:
+        with open(os.path.join(RAIZ, "posts", "itch-builds.json"), encoding="utf-8") as f:
+            for b in json.load(f).get("builds") or []:
+                if str(b.get("build") or "").strip() and str(b.get("prova") or "").strip():
+                    build_no_ar = b
+                    break
+    except (OSError, ValueError):
+        pass
     status_jogo, html_jogo = buscar(PAGINA_JOGO)
     itens.append({
         "id": "itch-build-selo",
         "titulo": "subir o build com o selo do gameplay (modo push + PUBLICAR)",
-        "estado": "esperando o dono",
-        "medido": ("página do jogo respondeu %s%s" % (
-            status_jogo, "" if status_jogo == 200 else " (sem leitura)")),
+        "estado": "feito" if build_no_ar else "esperando o dono",
+        "medido": ("build %s no ar (versão %s, %s) — %s" % (
+            build_no_ar.get("build"), build_no_ar.get("versao") or "sem carimbo",
+            build_no_ar.get("link") or PAGINA_JOGO, build_no_ar.get("prova"))
+            if build_no_ar else
+            ("página do jogo respondeu %s%s" % (
+                status_jogo, "" if status_jogo == 200 else " (sem leitura)"))),
         "por_que_e_do_dono": ("build ao vivo substitui o que o jogador baixa; a regra da casa é "
                               "não publicar por conta própria"),
         "como_fazer": ("workflow enviar-itch, jogo=ceifalume, modo=push, confirmacao=PUBLICAR "

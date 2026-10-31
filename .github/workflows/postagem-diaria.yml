@@ -40,6 +40,7 @@ jobs:
           python3 tools/testes-juizo.py
           python3 tools/testes-melhorias.py
           python3 tools/testes-publicacoes.py
+          python3 tools/testes-entrar-no-main.py
       - name: A casa posta sozinha
         run: |
           pip install -q coincurve websocket-client
@@ -66,21 +67,16 @@ jobs:
             # Sem -u: artefato NOVO (não versionado ainda) não pode ser levado embora pelo stash,
             # senão o juízo perde a memória dele antes do commit. Untracked não bloqueia rebase.
             git stash push -q --keep-index -m "sobras-do-run" >/dev/null 2>&1 || true
-            enviado=0
-            for tentativa in 1 2 3; do
-              if git fetch -q origin main && git rebase -q origin/main && git push; then
-                echo "painel no main (tentativa $tentativa)"
-                enviado=1
-                break
-              fi
-              echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
-              git rebase --abort 2>/dev/null || true
-              sleep 5
-            done
-            if [ "$enviado" != "1" ]; then
+            # DEFEITO MEDIDO (31/10/2026, runs 41128039668 e 41128399021): o laço "rebase e
+            # tenta de novo" parava em conflito TODA vez que o outro escritor regerava o mesmo
+            # arquivo. Agora quem entra no main é tools/entrar-no-main.sh: rebase quando dá,
+            # merge com regeneração pela fonte quando não dá (e recusa se o conflito for em
+            # arquivo que não é gerado).
+            if ! GERAR="python3 tools/melhorias.py && python3 tools/publicacoes.py && python3 tools/painel-marketing.py" \
+                 bash tools/entrar-no-main.sh "painel e log do ciclo"; then
               # Não aborta o ciclo: o devlog e o log do ciclo ainda têm de entrar. O run
               # termina vermelho no fim, com o motivo medido.
-              echo "::error::3 tentativas e o painel não entrou no main"
+              echo "::error::o painel não entrou no main"
               painel_falhou=1
             fi
           fi
@@ -91,16 +87,11 @@ jobs:
           git config user.email "casa@rebocl.local"
           git add posts/ blog/
           git commit -m "🤖 postagem automatica $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
-          ok=0
-          for i in 1 2 3; do
-            git pull --rebase --autostash -q origin main || true
-            if git push; then ok=1; break; fi
-            sleep 5
-          done
-          if [ "$ok" != "1" ]; then
-            echo "::error::3 tentativas e o ciclo não entrou no main (o log ficaria só neste run)"
+          GERAR="python3 tools/melhorias.py && python3 tools/publicacoes.py" \
+            bash tools/entrar-no-main.sh "ciclo e devlog" || {
+            echo "::error::o ciclo não entrou no main (o log ficaria só neste run)"
             exit 1
-          fi
+          }
           if [ "${painel_falhou:-0}" = "1" ]; then
             echo "::error::o ciclo entrou, mas o painel marketing.html ficou velho"
             exit 1
@@ -150,16 +141,10 @@ jobs:
             git add "$_f" 2>/dev/null || true
           done
           git commit -m "📊 desempenho $(date -u +'%d/%m %H:%M')" || echo "sem mudança de medição"
-          ok=0
-          for i in 1 2 3; do
-            git pull --rebase --autostash -q origin main || true
-            if git push; then ok=1; break; fi
-            sleep 5
-          done
-          if [ "$ok" != "1" ]; then
-            echo "::error::3 tentativas e a medição não entrou no main"
+          bash tools/entrar-no-main.sh "medição do ciclo" || {
+            echo "::error::a medição não entrou no main"
             exit 1
-          fi
+          }
 
       - name: Acorda o vigia da casa (chat de e-mail)
         if: always()
