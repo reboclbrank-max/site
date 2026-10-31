@@ -1,0 +1,60 @@
+name: enviar-youtube
+
+# Envia ao YouTube o vídeo de um jogo da casa, usando o pacote do kit.
+#
+# REGRA DA CASA: publicação só com pedido explícito. Por isso este workflow NÃO tem cron e
+# exige a palavra PUBLICAR no campo de confirmação — sem ela, o script sai com erro antes de
+# qualquer requisição. O kit (título, descrição, tags, arquivo) é a única fonte de texto.
+on:
+  workflow_dispatch:
+    inputs:
+      jogo:
+        description: "qual jogo enviar"
+        required: true
+        default: prancheta
+        type: choice
+        options:
+          - prancheta
+          - ceifalume
+      confirmacao:
+        description: "digite PUBLICAR para confirmar o envio"
+        required: true
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: enviar-youtube
+  cancel-in-progress: false
+
+jobs:
+  enviar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/testes-kit-youtube.py
+          python3 tools/testes-youtube-oauth.py
+
+      - name: O kit precisa estar válido antes de qualquer envio
+        run: python3 tools/kit-youtube.py
+
+      - name: Envia o vídeo do jogo escolhido
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          CONFIRMACAO: ${{ inputs.confirmacao }}
+        run: |
+          python3 tools/enviar-youtube.py "${{ inputs.jogo }}" | tee /tmp/envio.txt
+          {
+            echo "### Envio ao YouTube"
+            echo
+            echo '```'
+            cat /tmp/envio.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

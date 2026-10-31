@@ -1,0 +1,16 @@
+{
+  "quando": "2026-10-26T18:41:03Z",
+  "modo": "ler",
+  "caminho": "",
+  "cookie": "desconhecido",
+  "sessao": "",
+  "resultado": "FALHOU sem caminho de edicao: rode com 'caminho' preenchido ou com ITCH_COOKIE no repositorio",
+  "resumo": [
+    "id do jogo pela API: 5017404",
+    "dashboard: HTTP 403",
+    "/dashboard/game/5017404/edit: HTTP 404",
+    "/dashboard/game/5017404: HTTP 404",
+    "FALHOU sem caminho de edicao: rode com 'caminho' preenchido ou com ITCH_COOKIE no repositorio"
+  ],
+  "run": "https://github.com/reboclbrank-max/site/actions/runs/40379876042"
+}

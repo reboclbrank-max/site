@@ -135,3 +135,25 @@
   Use curiosidade + benefício: combine um verbo de ação, número ou pergunta, e o que importa ao jogador.   Exemplo: “Top 10 Hacks de FPS que vão deixar você invencível!”   Inclua o nome do jogo, benefício (ganho rápido, novidade) e um toque de urgência ou novidade. Evite frases genéricas; foque no que o jogador quer: poder, economia, diversão.
 - **24/10 — Como escrever titulo de post que atrai jogadores?**
   Use curiosidade + benefício: combine um verbo de ação, número ou pergunta, e o que importa ao jogador.   Exemplo: “Top 10 Hacks de FPS que vão deixar você invencível!”   Inclua o nome do jogo, benefício (ganho rápido, novidade) e um toque de urgência ou novidade. Evite frases genéricas; foque no que o jogador quer: poder, economia, diversão.
+- **24/10 — Como escrever titulo de post que atrai jogadores?**
+  Use curiosidade + benefício: combine um verbo de ação, número ou pergunta, e o que importa ao jogador.   Exemplo: “Top 10 Hacks de FPS que vão deixar você invencível!”   Inclua o nome do jogo, benefício (ganho rápido, novidade) e um toque de urgência ou novidade. Evite frases genéricas; foque no que o jogador quer: poder, economia, diversão.
+- **25/10 — Que horas o publico gamer brasileiro mais engaja?**
+  Em geral, o público gamer brasileiro entra em alta de segunda a quinta à noite, entre 20h e 23h, e nos fins de semana, de 18h a meia-noite. Algumas plataformas também têm pico matutino (10h‑12h) quando usuários abrem as sessões de jogo. Estude os charts da Twitch/TikTok Live para ajustes.
+- **25/10 — Que horas o publico gamer brasileiro mais engaja?**
+  Em geral, o público gamer brasileiro entra em alta de segunda a quinta à noite, entre 20h e 23h, e nos fins de semana, de 18h a meia-noite. Algumas plataformas também têm pico matutino (10h‑12h) quando usuários abrem as sessões de jogo. Estude os charts da Twitch/TikTok Live para ajustes.
+- **25/10 — Que horas o publico gamer brasileiro mais engaja?**
+  Em geral, o público gamer brasileiro entra em alta de segunda a quinta à noite, entre 20h e 23h, e nos fins de semana, de 18h a meia-noite. Algumas plataformas também têm pico matutino (10h‑12h) quando usuários abrem as sessões de jogo. Estude os charts da Twitch/TikTok Live para ajustes.
+- **25/10 — Que horas o publico gamer brasileiro mais engaja?**
+  Em geral, o público gamer brasileiro entra em alta de segunda a quinta à noite, entre 20h e 23h, e nos fins de semana, de 18h a meia-noite. Algumas plataformas também têm pico matutino (10h‑12h) quando usuários abrem as sessões de jogo. Estude os charts da Twitch/TikTok Live para ajustes.
+- **25/10 — Que horas o publico gamer brasileiro mais engaja?**
+  Em geral, o público gamer brasileiro entra em alta de segunda a quinta à noite, entre 20h e 23h, e nos fins de semana, de 18h a meia-noite. Algumas plataformas também têm pico matutino (10h‑12h) quando usuários abrem as sessões de jogo. Estude os charts da Twitch/TikTok Live para ajustes.
+- **26/10 — Como transformar quem comenta em seguidor fiel?**
+  Use o comentário como convite: responda rapidamente e com valor, personalize o tom, mostre agradecimento, dê um call‑to‑action suave, compartilhe conteúdo relevante e crie curiosidade. Mantenha a conversa leve, ofereça exclusividade e siga com novidades.
+- **26/10 — Como transformar quem comenta em seguidor fiel?**
+  Use o comentário como convite: responda rapidamente e com valor, personalize o tom, mostre agradecimento, dê um call‑to‑action suave, compartilhe conteúdo relevante e crie curiosidade. Mantenha a conversa leve, ofereça exclusividade e siga com novidades.
+- **26/10 — Como transformar quem comenta em seguidor fiel?**
+  Use o comentário como convite: responda rapidamente e com valor, personalize o tom, mostre agradecimento, dê um call‑to‑action suave, compartilhe conteúdo relevante e crie curiosidade. Mantenha a conversa leve, ofereça exclusividade e siga com novidades.
+- **27/10 — Por que dev indie brasileiro deve postar nas redes quase todo dia?**
+  Postar quase todo dia: mantém o algoritmo em alta, gera tráfego constante, reforça reputação, prova consistência, atrai patrocinadores, aumenta engajamento real e mantém a comunidade envolvida. Feedback rápido facilita melhorias rápidas no produto.
+- **27/10 — Por que dev indie brasileiro deve postar nas redes quase todo dia?**
+  Postar quase todo dia: mantém o algoritmo em alta, gera tráfego constante, reforça reputação, prova consistência, atrai patrocinadores, aumenta engajamento real e mantém a comunidade envolvida. Feedback rápido facilita melhorias rápidas no produto.

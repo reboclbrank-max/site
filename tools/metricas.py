@@ -436,6 +436,11 @@ def observado_youtube(chave=None, canal=None):
     return leitura, None
 
 
+# Duas semanas: é o prazo que o dono mesmo deu para o canal que não devolve nada deixar de
+# ser pergunta técnica e virar decisão dele.
+DIAS_PARA_VEREDITO = 14
+
+
 def placar_metas(observado, caminho=METAS, hoje=None):
     """Compara as metas aprovadas em 15/10 com o que foi medido. Não inventa nada.
 
@@ -457,6 +462,10 @@ def placar_metas(observado, caminho=METAS, hoje=None):
             prazo = None
     dias = (prazo - hoje).days if prazo else None
 
+    # Linha de partida (13/10): sem ela, "0 seguidores" não diz nada — o canal pode estar
+    # parado desde sempre ou ter perdido o que tinha. Com ela, o placar mostra o RETORNO.
+    partida = metas.get("linha_de_partida_13_10") or {}
+
     def linha(nome, alvo, chave, fonte):
         valor = (observado or {}).get(chave)
         falta = None
@@ -464,9 +473,22 @@ def placar_metas(observado, caminho=METAS, hoje=None):
         if isinstance(valor, (int, float)):
             falta = max(0, round(alvo - valor, 1))
             status = "ATINGIDO" if valor >= alvo else "EM_CURSO"
+        base = partida.get(chave)
+        delta = round(valor - base, 1) if isinstance(valor, (int, float)) and isinstance(base, (int, float)) else None
         return {"meta": nome, "alvo": alvo, "observado": valor, "falta": falta,
-                "status": status, "fonte": fonte, "por_dia": (
+                "status": status, "fonte": fonte, "partida": base, "delta": delta,
+                "por_dia": (
                     round(falta / dias, 2) if (falta and dias and dias > 0) else None)}
+
+    # Meta impossível de medir não fica eternamente em NAO_OBSERVAVEL: vira meta aposentada
+    # (com evidência) e o que É medido no lugar dela entra como linha ACOMPANHADA — com
+    # número e sem alvo inventado. Alvo é decisão do dono; leitura é obrigação do robô.
+    def linha_acompanhada(nome, chave, fonte, motivo):
+        valor = (observado or {}).get(chave)
+        return {"meta": nome, "alvo": "—", "observado": valor, "falta": None,
+                "status": "ACOMPANHADA" if isinstance(valor, (int, float)) else "SEM_LEITURA",
+                "fonte": fonte, "partida": None, "delta": None, "por_dia": None,
+                "motivo": motivo}
 
     linhas = []
     ig = metas.get("ig_30_dias", {})
@@ -480,16 +502,45 @@ def placar_metas(observado, caminho=METAS, hoje=None):
     if "seguidores" in bsky:
         linhas.append(linha("Bluesky: seguidores", bsky["seguidores"], "bsky_seguidores", "API pública do Bluesky"))
     if "inscritos" in yt:
-        linhas.append(linha("YouTube: inscritos", yt["inscritos"], "yt_inscritos", "sem leitura automática"))
+        linhas.append(linha("YouTube: inscritos", yt["inscritos"], "yt_inscritos", "YouTube Data API v3 (chave no runner)"))
     if "shorts" in yt:
-        linhas.append(linha("YouTube: shorts", yt["shorts"], "yt_shorts", "sem leitura automática"))
+        linhas.append(linha("YouTube: shorts", yt["shorts"], "yt_shorts", "YouTube Data API v3 (chave no runner)"))
     if "downloads" in itch:
-        linhas.append(linha("itch: downloads", itch["downloads"], "itch_downloads", "sem leitura automática"))
-    if "seguidores" in itch:
-        linhas.append(linha("itch: seguidores", itch["seguidores"], "itch_seguidores", "sem leitura automática"))
-    observavel = sum(1 for l in linhas if l["status"] != "SEM_LEITURA")
+        linhas.append(linha("itch: downloads", itch["downloads"], "itch_downloads", "api.itch.io/profile/games (chave no runner)"))
+    # 25/10/2026: `itch: seguidores` está APOSENTADA (metas.json). O itch não publica essa
+    # contagem em API nem em página pública — conferido em 5 caminhos. Ficar em
+    # NAO_OBSERVAVEL para sempre não informa nada e ainda parece culpa do robô.
+    aposentada = metas.get("_meta_aposentada_25_10") or {}
+    if "seguidores" in itch or aposentada:
+        alvo_hist = (itch.get("seguidores") if "seguidores" in itch
+                     else aposentada.get("alvo_original"))
+        linha_ap = linha_acompanhada(
+            "itch: seguidores (aposentada)", "itch_seguidores",
+            "SEM_API: o itch não publica seguidores (conferido em 25/10/2026)",
+            "aposentada em 25/10/2026 — " + (aposentada.get("motivo") or
+                                                "o itch não publica contagem de seguidores"))
+        linha_ap["alvo"] = alvo_hist if alvo_hist is not None else "—"
+        linhas.append(linha_ap)
+    if metas.get("itch_visitas"):
+        linhas.append(linha_acompanhada(
+            "itch: visitas", "itch_visitas", "api.itch.io/profile/games (chave no runner)",
+            "medida no lugar de itch: seguidores, sem alvo (alvo é decisão do dono)"))
+    # Meta aposentada não entra na conta de "sem leitura": ela não é mais meta a medir, é
+    # registro do que foi retirado e por quê. Contá-la como falha esconderia o progresso.
+    observavel = sum(1 for l in linhas
+                     if l["status"] != "SEM_LEITURA" and "aposentada" not in l["meta"])
+    dias_decorridos = None
+    if inicio:
+        try:
+            dias_decorridos = (hoje - datetime.date.fromisoformat(inicio)).days
+        except ValueError:
+            dias_decorridos = None
     return linhas, {"dias_restantes": dias, "prazo": prazo.isoformat() if prazo else None,
-                    "metas_com_leitura": observavel, "metas_sem_leitura": len(linhas) - observavel}
+                    "dias_decorridos": dias_decorridos,
+                    "metas_com_leitura": observavel,
+                    "metas_sem_leitura": sum(1 for l in linhas if l["status"] == "SEM_LEITURA"
+                                             and "aposentada" not in l["meta"]),
+                    "metas_aposentadas": sum(1 for l in linhas if "aposentada" in l["meta"])}
 
 
 def gravar_placar(linhas, contexto, hoje=None):
@@ -504,14 +555,38 @@ def gravar_placar(linhas, contexto, hoje=None):
     prazo = contexto.get("prazo") or "sem prazo definido"
     rodape = (f"\nPrazo: **{prazo}**" + (f" · {dias} dia(s) restante(s)" if dias is not None else "")
               + f" · {contexto['metas_com_leitura']} meta(s) com leitura, "
-                f"{contexto['metas_sem_leitura']} sem leitura automática.\n")
-    linhas_md = ["| meta | alvo | observado | falta | por dia | status |",
-                 "|---|---|---|---|---|---|"]
+                f"{contexto['metas_sem_leitura']} sem leitura automática"
+              + (f" · {contexto['metas_aposentadas']} aposentada(s) com o motivo no arquivo"
+                 if contexto.get("metas_aposentadas") else "") + ".\n")
+    # Decisão que o placar passa a tomar sozinho: canal medido, com partida conhecida, que
+    # não moveu um único número em N dias. Não atribui causa — só diz que o esforço não
+    # voltou, e nomeia a decisão (manter ou aposentar) que passa a ser do dono.
+    dias_dec = contexto.get("dias_decorridos")
+    parados = [l for l in linhas if l.get("delta") == 0 and isinstance(dias_dec, int)
+               and dias_dec >= DIAS_PARA_VEREDITO]
+    if parados:
+        rodape += ("\n> **Sem retorno em %d dias:** " % dias_dec
+                   + ", ".join("%s (%s medido(s), nada a mais desde 13/10)" % (
+                       l["meta"], l["observado"]) for l in parados)
+                   + ". O esforço não voltou número nenhum. Manter o canal ou aposentá-lo é "
+                     "decisão do dono, com este número na mão — o robô não decide isso e não "
+                     "vai fingir que decide.\n")
+    sem_api = [l for l in linhas if l["status"] == "SEM_LEITURA" and "SEM_API" in (l.get("fonte") or "")]
+    if sem_api:
+        rodape += ("\n> **Sem API, não sem robô:** " + ", ".join(l["meta"] for l in sem_api)
+                   + ". O itch não publica contagem de seguidores em API nem em página pública "
+                     "(5 caminhos conferidos em 25/10/2026). Essa meta está **aposentada** — o "
+                     "registro com o motivo ficou em `posts/metas.json` — e o que o itch mede de "
+                     "audiência (**itch: visitas**) entrou no placar como medida acompanhada, "
+                     "com número e sem alvo inventado.\n")
+    linhas_md = ["| meta | alvo | observado | falta | por dia | status | desde a partida |",
+                 "|---|---|---|---|---|---|---|"]
     for l in linhas:
         obs = "NAO_OBSERVAVEL" if l["observado"] is None else l["observado"]
         falta = "—" if l["falta"] is None else l["falta"]
         por_dia = "—" if not l["por_dia"] else l["por_dia"]
-        linhas_md.append(f"| {l['meta']} | {l['alvo']} | {obs} | {falta} | {por_dia} | {l['status']} |")
+        delta = "—" if l.get("delta") is None else ("+" + str(l["delta"]) if l["delta"] > 0 else str(l["delta"]))
+        linhas_md.append(f"| {l['meta']} | {l['alvo']} | {obs} | {falta} | {por_dia} | {l['status']} | {delta} |")
     texto = cab + "\n".join(linhas_md) + "\n" + rodape
     caminho = os.path.join(os.path.dirname(SAIDA_PLACAR) or ".", os.path.basename(SAIDA_PLACAR))
     with open(caminho, "w", encoding="utf-8") as f:
@@ -692,6 +767,7 @@ def main(argv):
         "ig_posts": (ig or {}).get("posts"),
         "ig_seguidores": (ig or {}).get("seguidores"),
         "itch_downloads": (itch or {}).get("downloads"),
+        "itch_visitas": (itch or {}).get("visitas"),
         "itch_seguidores": None,  # o itch não expõe seguidores por API
         "yt_inscritos": (yt or {}).get("inscritos"),
         "yt_shorts": (yt or {}).get("shorts"),
@@ -716,7 +792,7 @@ def main(argv):
     if linhas_metas:
         caminho_placar = gravar_placar(linhas_metas, contexto_metas)
         print(f"   instagram: {'sem leitura — ' + motivo_ig if motivo_ig else 'lido'}")
-        print(f"   itch: {'sem leitura — ' + motivo_itch if motivo_itch else str(itch['downloads']) + ' download(s)'}")
+        print(f"   itch: {'sem leitura — ' + motivo_itch if motivo_itch else str(itch['downloads']) + ' download(s) e ' + str(itch['visitas']) + ' visita(s)'}")
         print(f"   youtube: {'sem leitura — ' + motivo_yt if motivo_yt else str(yt['inscritos']) + ' inscrito(s)'}")
         if not motivo_yt and yt.get("videos_medidos"):
             vm = yt["videos_medidos"]

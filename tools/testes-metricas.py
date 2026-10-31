@@ -358,5 +358,147 @@ ok("vídeo sem título não quebra", metricas.resumo_youtube([{"titulo": "", "vi
 ok("canal vazio não vira média zero falsa",
    metricas.resumo_youtube([])["casa"]["media_views"] is None)
 
+# ---- 12. o placar não pode chamar de "sem leitura" o que é lido ---------------------------
+# Defeito medido em 25/10/2026: a coluna "fonte" dizia "sem leitura automática" para YouTube e
+# itch downloads, que o medidor lia normalmente (45 downloads, 24 inscritos). O dono leu esse
+# rótulo e concluiu que não havia leitura. Rótulo errado é medição errada.
+_meta_tmp = tempfile.mkdtemp()
+_arq_metas = os.path.join(_meta_tmp, "metas.json")
+with open(_arq_metas, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "yt_30_dias": {"inscritos": 40, "shorts": 4},
+               "itch_30_dias": {"downloads": 100, "seguidores": 10},
+               "bsky_30_dias": {"seguidores": 50}}, f)
+_linhas, _ctx = metricas.placar_metas(observado={"yt_inscritos": 24, "yt_shorts": 5,
+                                                 "itch_downloads": 45, "bsky_seguidores": 34,
+                                                 "ig_seguidores": 0, "ig_posts": 18},
+                                      caminho=_arq_metas)
+_por_meta = {(l["meta"].split(" (")[0]): l for l in _linhas}
+ok("YouTube inscritos não é rotulado 'sem leitura automática'",
+   "sem leitura" not in _por_meta["YouTube: inscritos"]["fonte"].lower(),
+   _por_meta["YouTube: inscritos"]["fonte"])
+ok("itch downloads não é rotulado 'sem leitura automática'",
+   "sem leitura" not in _por_meta["itch: downloads"]["fonte"].lower(),
+   _por_meta["itch: downloads"]["fonte"])
+ok("itch seguidores declara SEM_API com a data da conferência",
+   "SEM_API" in _por_meta["itch: seguidores"]["fonte"]
+   and "25/10/2026" in _por_meta["itch: seguidores"]["fonte"])
+ok("o que é lido aparece com número, não com NAO_OBSERVAVEL",
+   _por_meta["itch: downloads"]["observado"] == 45 and _por_meta["yt_inscritos"] if False else
+   (_por_meta["itch: downloads"]["observado"] == 45 and _por_meta["YouTube: inscritos"]["observado"] == 24))
+
+# ---- 13. o rodapé diz o que é impossível e qual o substituto medido -----------------------
+_saida = metricas.gravar_placar(_linhas, _ctx)
+_texto_placar = open(_saida, encoding="utf-8").read()
+ok("o placar avisa que itch seguidores não tem API", "não publica contagem de seguidores" in _texto_placar)
+ok("o placar registra que a troca pela visitas foi FEITA, não sugere de novo",
+   "itch: visitas" in _texto_placar and "aposentada" in _texto_placar)
+ok("o placar não inventa número para a meta impossível",
+   "NAO_OBSERVAVEL" in _texto_placar and "| itch: seguidores (aposentada) | 10 |" in _texto_placar,
+   _texto_placar[_texto_placar.find("itch"):][:120])
+
+# ---- 16. o placar mede o RETORNO desde a linha de partida --------------------------------
+# "0 seguidores" sozinho não diz nada: pode ser canal parado desde sempre. A coluna nova
+# mostra o que andou desde 13/10, e o rodapé nomeia a decisão quando nada andou.
+_arq_partida = os.path.join(_meta_tmp, "metas2.json")
+with open(_arq_partida, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "bsky_30_dias": {"seguidores": 50},
+               "itch_30_dias": {"downloads": 100, "seguidores": 10},
+               "yt_30_dias": {"inscritos": 40, "shorts": 4},
+               "linha_de_partida_13_10": {"ig_seguidores": 0, "bsky_seguidores": 13,
+                                          "itch_downloads": 44, "yt_inscritos": 24}}, f)
+_obs = {"ig_seguidores": 0, "ig_posts": 18, "bsky_seguidores": 34,
+        "itch_downloads": 46, "yt_inscritos": 24, "yt_shorts": 5}
+_l2, _c2 = metricas.placar_metas(observado=_obs, caminho=_arq_partida)
+_por2 = {(l["meta"].split(" (")[0]): l for l in _l2}
+ok("o placar calcula o quanto andou desde a partida", _por2["Bluesky: seguidores"]["delta"] == 21,
+   str(_por2["Bluesky: seguidores"].get("delta")))
+ok("canal que não moveu tem delta zero", _por2["Instagram: seguidores"]["delta"] == 0)
+ok("meta sem leitura não ganha delta inventado", _por2["itch: seguidores"]["delta"] is None)
+_c2["dias_decorridos"] = 20  # simula o prazo de duas semanas já vencido
+_saida2 = metricas.gravar_placar(_l2, _c2)
+_texto2 = open(_saida2, encoding="utf-8").read()
+ok("a tabela mostra a coluna 'desde a partida'", "desde a partida" in _texto2)
+ok("o placar diz em quantos dias nada voltou", "Sem retorno em" in _texto2, _texto2[-300:])
+ok("a decisão de manter ou aposentar é nomeada como do dono",
+   "decisão do dono" in _texto2 and "o robô não decide" in _texto2)
+# amostra curta NÃO vira veredicto: 2 dias de canal parado é cedo para aposentar nada
+_c3 = dict(_c2); _c3["dias_decorridos"] = 10
+_saida3 = metricas.gravar_placar(_l2, _c3)
+ok("poucos dias não viram veredicto de aposentadoria",
+   "Sem retorno em" not in open(_saida3, encoding="utf-8").read())
+
+# ---- 17. meta impossível é aposentada com substituto medido, não esquecida ----------------
+# Decisão tomada em 25/10/2026: `itch: seguidores` não tem como ser medida (o itch não publica
+# seguidores em API nem em página pública: 5 caminhos conferidos). Em vez de deixá-la em
+# NAO_OBSERVAVEL para sempre — que não informa nada e parece falha do robô — ela é aposentada
+# NO ARQUIVO, e o que o itch mede de audiência (visitas) entra como linha ACOMPANHADA, sem
+# alvo inventado.
+_arq_aposentada = os.path.join(_meta_tmp, "metas3.json")
+with open(_arq_aposentada, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "itch_30_dias": {"downloads": 100},
+               "itch_visitas": {"no_lugar_de": "itch_seguidores", "alvo": None},
+               "_meta_aposentada_25_10": {"meta": "itch: seguidores", "alvo_original": 10,
+                                          "motivo": "o itch não publica contagem de seguidores em API nem em página pública"},
+               "linha_de_partida_13_10": {"ig_seguidores": 0, "itch_downloads": 44}}, f)
+_obs3 = {"ig_seguidores": 0, "ig_posts": 18, "itch_downloads": 46, "itch_visitas": 175}
+_l3, _c3b = metricas.placar_metas(observado=_obs3, caminho=_arq_aposentada)
+_por3 = {l["meta"]: l for l in _l3}
+_por3["itch: seguidores (aposentada)"] = next(l for l in _l3 if l["meta"].startswith("itch: seguidores"))
+ok("a meta aposentada não some do placar sem registro",
+   "itch: seguidores (aposentada)" in _por3)
+ok("a meta aposentada diz por que foi aposentada",
+   ("não publica" in (_por3["itch: seguidores (aposentada)"].get("motivo") or "")
+    and "25/10/2026" in (_por3["itch: seguidores (aposentada)"].get("motivo") or "")))
+ok("as visitas do itch entram como medida acompanhada",
+   _por3["itch: visitas"]["status"] == "ACOMPANHADA" and _por3["itch: visitas"]["observado"] == 175)
+ok("a linha acompanhada não inventa alvo", _por3["itch: visitas"]["alvo"] == "—")
+ok("a linha acompanhada não inventa 'falta' nem 'por dia'",
+   _por3["itch: visitas"]["falta"] is None and _por3["itch: visitas"]["por_dia"] is None)
+ok("sem leitura, a acompanhada também não vira zero",
+   metricas.placar_metas(observado={"itch_visitas": None}, caminho=_arq_aposentada)[0][-1]["status"] == "SEM_LEITURA")
+_saida4 = metricas.gravar_placar(_l3, _c3b)
+_texto4 = open(_saida4, encoding="utf-8").read()
+ok("o placar mostra a visitas e o número do download", "| itch: visitas | — | 175 |" in _texto4, _texto4)
+ok("o placar não conta mais a aposentada como meta sem leitura",
+   "0 sem leitura automática" in _texto4 or "1 sem leitura automática" not in _texto4, _texto4[-400:])
+
+# ---- 14. o relatório diário do postador usa o MESMO medidor ------------------------------
+# Era aqui que nascia o "sem leitura automática": a régua do postador escrevia
+# itch_downloads=NAO_OBSERVAVEL e youtube=NAO_OBSERVAVEL à mão.
+_fonte_postador = open(os.path.join(RAIZ, "tools", "postador.py"), encoding="utf-8").read()
+ok("o postador mede o itch pelo medidor de verdade", "observado_itch()" in _fonte_postador)
+ok("o postador mede o YouTube pelo medidor de verdade", "observado_youtube()" in _fonte_postador)
+ok("o postador não escreve mais itch/youtube como NAO_OBSERVAVEL fixo",
+   '"itch_downloads=NAO_OBSERVAVEL",' not in _fonte_postador
+   and '"youtube=NAO_OBSERVAVEL",' not in _fonte_postador)
+ok("itch seguidores é declarado SEM_API no relatório diário", "itch_seguidores=SEM_API" in _fonte_postador)
+
+# ---- 15. a régua do dia realmente devolve número (função, não texto) ----------------------
+import types
+sys.path.insert(0, os.path.join(RAIZ, "tools"))
+import postador
+
+_falso = types.SimpleNamespace(
+    observado_itch=lambda: ({"downloads": 45, "visitas": 175}, None),
+    observado_youtube=lambda: ({"inscritos": 24, "shorts": 5}, None))
+_linhas_dia, _lidas = postador.medicoes_de_plataforma(medidor=_falso)
+ok("relatório do dia traz o download medido", "itch_downloads=45(api)" in _linhas_dia, str(_linhas_dia))
+ok("relatório do dia traz os inscritos medidos", "youtube_inscritos=24(api)" in _linhas_dia, str(_linhas_dia))
+ok("relatório do dia conta as leituras reais", _lidas == 2, str(_lidas))
+ok("relatório do dia declara itch seguidores como SEM_API", "itch_seguidores=SEM_API" in _linhas_dia)
+
+_sem = types.SimpleNamespace(observado_itch=lambda: (None, "sem chave no runtime"),
+                             observado_youtube=lambda: (None, "HTTP 403"))
+_linhas_sem, _lidas_sem = postador.medicoes_de_plataforma(medidor=_sem)
+ok("sem leitura, o motivo aparece em vez do silêncio",
+   "ITCH_API_KEYS" not in str(_linhas_sem) and "sem chave no runtime" in " ".join(_linhas_sem),
+   str(_linhas_sem))
+ok("sem leitura, nada é contado como lido", _lidas_sem == 0)
+ok("medidor quebrado não derruba o ciclo", postador.medicoes_de_plataforma(
+    medidor=types.SimpleNamespace(observado_itch=lambda: 1 / 0, observado_youtube=lambda: 1 / 0))[1] == 0)
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
-sys.exit(1 if falhas else 0)
+raise SystemExit(1 if falhas else 0)

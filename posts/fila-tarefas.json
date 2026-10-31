@@ -1,0 +1,90 @@
+{
+ "_o_que_e": "fila de tarefas da casa: prioridade, tentativas e resultado",
+ "versao": 1,
+ "tarefas": [
+  {
+   "id": "publicar-20261027T003050Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-10-27T00:30:50Z",
+   "executada": "2026-10-27T00:41:19Z",
+   "resultado": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
+   "motivo": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
+   "chave": "publicar-2026-10-27"
+  },
+  {
+   "id": "pesquisar-20261027T003050Z",
+   "tipo": "pesquisar",
+   "prioridade": 40,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-10-27T00:30:50Z",
+   "executada": "2026-10-27T12:29:44Z",
+   "resultado": "meta em risco: itch: downloads (falta 54.0 · 3.38/dia)\nformatos a evitar: comentário em post alheio\ntema do dia: ⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des\nhorário: sem prova estatística: mantém a janela do calendário\nplano gravado em posts/plano-do-dia.json",
+   "motivo": "meta em risco: itch: downloads",
+   "chave": "pesquisar-2026-10-27"
+  },
+  {
+   "id": "medir-20261027T003050Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-10-27T00:30:50Z",
+   "executada": "2026-10-27T00:31:19Z",
+   "resultado": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 184,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é dec",
+   "motivo": "placar e desempenho",
+   "chave": "medir-2026-10-27"
+  },
+  {
+   "id": "aprender-20261027T003050Z",
+   "tipo": "aprender",
+   "prioridade": 30,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-10-27T00:30:50Z",
+   "executada": "2026-10-27T12:39:44Z",
+   "resultado": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.14) vs mediana 1.25, desvio 0.48\ngravado em posts/aprendizado.json",
+   "motivo": "horário: só com prova",
+   "chave": "aprender-2026-10-27"
+  },
+  {
+   "id": "publicar-20261027T003119Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-10-27T00:31:19Z",
+   "executada": "2026-10-27T12:09:44Z",
+   "resultado": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strftime(\"%d/%m\"), perguntas[dia % len(perguntas)], aula[:400].replace(\"\\n\", \" \")))\n/home/runner/work/site/site/tools/postador.py:1310: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026102700"
+  },
+  {
+   "id": "medir-20261027T115944Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-10-27T11:59:44Z",
+   "executada": "2026-10-27T11:59:44Z",
+   "resultado": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 184,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é dec",
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026102711"
+  },
+  {
+   "id": "publicar-20261027T120944Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-10-27T12:09:44Z",
+   "executada": "2026-10-27T12:19:44Z",
+   "resultado": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026102712"
+  }
+ ]
+}

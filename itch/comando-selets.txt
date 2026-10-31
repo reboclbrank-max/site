@@ -1,0 +1,1 @@
+(()=>{const s=[...document.querySelectorAll('select')].map(e=>e.name+': '+[...e.options].map(o=>o.value+'='+o.textContent.trim()).join(', '));const t=s.join('\n');if(window.copy)copy(t);prompt('Selects da página (já copiei). Ctrl+V aqui no chat:',t);return s.length})()

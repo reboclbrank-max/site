@@ -223,3 +223,36 @@
 
 ## 24/10/2026 15:57 UTC
 🌙 CEIFALUME 0.1 já está no ar. ⏎ Plante, colha e negocie à luz da lanterna: a fazenda continua trabalhando até 8 h com o jogo fechado. ⏎ Grátis no navegador e Android, sem conta. ⏎ #indiedev #idle
+
+## 24/10/2026 23:18 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev
+
+## 25/10/2026 04:50 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev
+
+## 25/10/2026 11:35 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev
+
+## 25/10/2026 16:09 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev
+
+## 25/10/2026 20:54 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev
+
+## 25/10/2026 23:18 UTC
+⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev
+
+## 26/10/2026 04:53 UTC
+Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna que cresce enquanto você dorme 🌙🌱 Feito com carinho aqui no Brasil. #IndieDevBR #GodotEngine
+
+## 26/10/2026 13:09 UTC
+Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? Dois jeitos de jogar, ambos feitos com carinho no Brasil (Godot). Grátis n Bastidores e artes novas também no Instagram — todos os canais no link.
+
+## 26/10/2026 23:51 UTC
+Tática na PRANCHETA ⚽ ou colheita noturna no CEIFALUME 🌙? Dois projetos solo, feitos no Brasil com Godot. PRANCHETA: grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, cresce 8h offline. Qual seu estilo? #gamed
+
+## 27/10/2026 12:10 UTC
+Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: futebol tático na prancheta (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna onde a colheita cresce enquanto você dorme 🌙🌱 Feito com carinho aqui. #GamedevBR #Godo
+
+## 27/10/2026 15:25 UTC
+Dois mundos, um código feito com carinho no Brasil 🇧🇷✨ Desenhe jogadas e veja a partida rolar no **PRANCHETA** (grátis no navegador/APK, Godot) ou cuide da lavoura noturna no **CEIFALUME 0.1**: a fazenda não dorme, as co
