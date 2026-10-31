@@ -90,6 +90,22 @@ ok("nenhum item é ao mesmo tempo pendente e sem caminho",
 ok("o dono não fica com tarefa nenhuma nesta medição", rel["pendentes_em"] == [],
    rel["pendentes_em"])
 
+# O item que só existe porque medimos a PÁGINA do itch (não o log do butler).
+_pagina = [i for i in rel["itens"] if i["id"] == "itch-pagina-abre-build"][0]
+ok("existe um item sobre o que a página do itch realmente abre", _pagina is not None)
+ok("ele não conta como pendência do dono",
+   "itch-pagina-abre-build" not in rel["pendentes_em"], rel["pendentes_em"])
+ok("a medida dele cita o upload antigo que a página abre",
+   "19268311" in _pagina["medido"], _pagina["medido"])
+ok("a medida dele diz que o upload NÃO tem o selo", "NÃO tem o selo" in _pagina["medido"],
+   _pagina["medido"])
+ok("ele cita a página pública do jogo como caminho que chega ao jogador",
+   any("site da casa" in c or "YouTube" in c for c in _pagina["coberto_em"]),
+   _pagina["coberto_em"])
+_cobertura_devlog = " ".join(_devlog.get("coberto_em") or [])
+ok("a cobertura do devlog não mente dizendo que o build do canal chega ao jogador",
+   "build no ar (2257110)" not in _cobertura_devlog, _cobertura_devlog)
+
 # o aviso continua sendo sobre MUDANÇA de pendência de verdade
 _sem_mudanca = pend.montar({"pendentes_em": rel["pendentes_em"]})
 ok("NÃO avisa quando o estado é o mesmo", _sem_mudanca["mudou_desde_o_ultimo"] is False)

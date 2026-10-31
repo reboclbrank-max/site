@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T00:59:23Z",
+ "quando": "2026-10-31T01:15:00Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 103,
@@ -7,9 +7,10 @@
   "canais_com_publicacao": 5,
   "videos_no_youtube": 2,
   "builds_no_itch": 1,
-  "documentos": 13,
+  "builds_que_chegam_ao_jogador": 0,
+  "documentos": 14,
   "paginas_publicas": 20,
-  "arquivos_de_midia": 11
+  "arquivos_de_midia": 12
  },
  "canais": {
   "cerebro": {
@@ -518,7 +519,7 @@
    "slug": "ceifalume",
    "id": "VIDEO123",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
-   "quando": "2026-10-31T00:56:57Z",
+   "quando": "2026-10-31T01:14:28Z",
    "link": "",
    "real": false
   },
@@ -548,7 +549,17 @@
    "arquivos": 13,
    "quando": "2026-10-31T00:46:17Z",
    "link": "https://rebocl-brank.itch.io/ceifalume",
-   "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110",
+   "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110; MAS o run 41153867292 (modo uploads) lista só os uploads 19268311 e 19268322, ambos de 16/09, e a pági",
+   "chega_ao_jogador": false,
+   "pagina_abre": {
+    "upload_id": "19268311",
+    "nome": "ceifalume-0.1-web.zip",
+    "atualizado": "2026-09-16T21:03:17",
+    "bytes": 13035144,
+    "index_bytes": 21639,
+    "tem_selo": false
+   },
+   "por_que_nao_chega": "a página do itch embute o upload 19268311 (16/09), não o canal html5. Marcar um canal como 'HTML5 / jogável no navegador' é feito só pelo painel do itch (docs/butler/pushing.html), e o painel responde 403 (Cloudflare) para IP de datacenter.",
    "real": true
   }
  ],
@@ -645,8 +656,16 @@
    "arquivo": "docs/RODADA-123-ENTRAR-NO-MAIN.md",
    "titulo": "Rodada 123 — \"resolva tudo\": os runs vermelhos, o motivo deles e o conserto medido",
    "selo": {
-    "bytes": 5412,
-    "sha256": "ab749d9185e13cf6"
+    "bytes": 7389,
+    "sha256": "1786c53dd2152ced"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-124-SELO-CHEGA-NO-ITCH.md",
+   "titulo": "Rodada 124 — \"resolva\": o selo do gameplay agora chega a quem abre o jogo no itch",
+   "selo": {
+    "bytes": 4637,
+    "sha256": "b70ab0f9e5b903a5"
    }
   },
   {
@@ -702,16 +721,16 @@
   {
    "arquivo": "marketing.html",
    "selo": {
-    "bytes": 14929,
-    "sha256": "7b8358e3220c1a70"
+    "bytes": 15067,
+    "sha256": "91888e457ced60a3"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
   {
    "arquivo": "melhorias.html",
    "selo": {
-    "bytes": 9623,
-    "sha256": "f8ca3d94e31bf84c"
+    "bytes": 9710,
+    "sha256": "760fef160834cab6"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -750,8 +769,8 @@
   {
    "arquivo": "publicacoes.html",
    "selo": {
-    "bytes": 14835,
-    "sha256": "4571efe080ac19d2"
+    "bytes": 15123,
+    "sha256": "47428a58828fe281"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
@@ -875,6 +894,11 @@
    "arquivo": "media/prancheta/icone-192.png",
    "bytes": 5525,
    "sha256": "7c26192e10d81632"
+  },
+  {
+   "arquivo": "media/ceifalume/gif-jogo-ceifalume-640x360.gif",
+   "bytes": 2401340,
+   "sha256": "afaad5c6bf0bb43b"
   }
  ]
 }

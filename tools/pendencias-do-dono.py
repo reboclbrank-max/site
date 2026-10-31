@@ -100,9 +100,9 @@ def montar(estado_anterior=None):
         "estado": "feito" if saiu else "sem caminho automático",
         "caminho_automatico": True if saiu else False,
         "coberto_em": [] if saiu else [
-            "build no ar (2257110): ceifalume/index.html leva o selo ▶ gameplay com instruções",
-            "blog/ceifalume-gameplay.html (site da casa)",
-            "https://youtu.be/GuE7af6dYo8 (YouTube)",
+            "blog/ceifalume-gameplay.html (site da casa, sem trava nenhuma)",
+            "https://youtu.be/GuE7af6dYo8 (YouTube, público)",
+            "vídeo dentro da pasta do jogo (media/) — vai junto de qualquer build futuro",
         ],
         "medido_em": "2026-10-31",
         "sondagem": "docs/sondagens/ITCH-DEVLOG-SEM-CAMINHO-AUTOMATICO.json",
@@ -152,6 +152,47 @@ def montar(estado_anterior=None):
                               "não publicar por conta própria"),
         "como_fazer": ("workflow enviar-itch, jogo=ceifalume, modo=push, confirmacao=PUBLICAR "
                        "(o selo do vídeo já está em ceifalume/index.html)"),
+    })
+
+    # 2b) O jogo no itch ABRIR o build novo — item que só apareceu porque medimos a página.
+    #
+    # MEDIDO EM 31/10/2026: "✓ enviado" no log e "IGUAL" no status não querem dizer que o
+    # jogador recebeu. A página abre o upload 19268311 (ceifalume-0.1-web.zip, 16/09), cujo
+    # index.html não tem o selo do gameplay; o build 2257110 está noutro canal. Marcar um canal
+    # como "HTML5 / jogável no navegador" é feito só pelo painel (docs/butler/pushing.html), e o
+    # painel responde 403 (Cloudflare) para IP de datacenter. Logo: sem caminho automático.
+    pagina_abre, chega = {}, None
+    try:
+        with open(os.path.join(RAIZ, "posts", "itch-builds.json"), encoding="utf-8") as f:
+            for b in json.load(f).get("builds") or []:
+                if b.get("build"):
+                    pagina_abre = b.get("pagina_abre") or {}
+                    chega = b.get("chega_ao_jogador")
+                    break
+    except (OSError, ValueError):
+        pass
+    itens.append({
+        "id": "itch-pagina-abre-build",
+        "titulo": "fazer o jogo no itch abrir o build novo (com o selo do gameplay)",
+        "estado": "feito" if chega is True else "sem caminho automático",
+        "caminho_automatico": chega is True,
+        "coberto_em": [] if chega is True else [
+            "blog/ceifalume-gameplay.html e a página do jogo no site da casa",
+            "https://youtu.be/GuE7af6dYo8 (YouTube)",
+        ],
+        "sondagem": "docs/sondagens/ITCH-DEVLOG-SEM-CAMINHO-AUTOMATICO.json",
+        "medido": ("a página do itch abre o build enviado" if chega is True else
+                   ("a página do itch abre o upload %s (%s, %s), que NÃO tem o selo; o build "
+                    "enviado está no canal html5 e não é o que o jogador abre — medido em "
+                    "31/10/2026" % (pagina_abre.get("upload_id") or "?",
+                                    pagina_abre.get("nome") or "?",
+                                    pagina_abre.get("atualizado") or "?"))),
+        "por_que_e_do_dono": ("marcar o canal como 'HTML5 / jogável no navegador' (ou trocar o "
+                              "upload da página) é só pelo painel do itch — 403 do Cloudflare "
+                              "para IP de datacenter, e a API oficial não tem endpoint para isso"),
+        "como_fazer": ("nada obrigatório: o gameplay chega ao jogador pelo YouTube e pelo site. "
+                       "Se quiser no itch: no painel do jogo, marcar o canal html5 como "
+                       "'HTML5 / Playable in browser'"),
     })
 
     # 3) O que já está feito, para não virar pendência fantasma.

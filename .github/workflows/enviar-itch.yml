@@ -18,7 +18,7 @@ on:
         options:
           - ceifalume
       modo:
-        description: "api = lista jogos · uploads = uploads do jogo (só leitura) · status = só leitura · ensaio = dry-run · push = envia"
+        description: "api = lista jogos · uploads · jogador = o que a página abre (só leitura) · status · ensaio = dry-run · push = envia"
         required: true
         default: status
         type: choice
@@ -26,6 +26,7 @@ on:
           - status
           - api
           - uploads
+          - jogador
           - ensaio
           - push
       canal:
@@ -98,6 +99,8 @@ jobs:
             python3 tools/enviar-itch.py api | tee /tmp/itch.txt
           elif [ "${{ inputs.modo }}" = "uploads" ]; then
             python3 tools/enviar-itch.py uploads "${{ inputs.jogo }}" | tee /tmp/itch.txt
+          elif [ "${{ inputs.modo }}" = "jogador" ]; then
+            python3 tools/enviar-itch.py jogador "${{ inputs.jogo }}" | tee /tmp/itch.txt
           elif [ "${{ inputs.modo }}" = "ensaio" ]; then
             python3 tools/enviar-itch.py ensaio "${{ inputs.jogo }}" "${{ inputs.canal }}" | tee /tmp/itch.txt
           elif [ "${{ inputs.modo }}" = "push" ]; then

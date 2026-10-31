@@ -40,6 +40,7 @@ jobs:
           python3 tools/testes-juizo.py
           python3 tools/testes-melhorias.py
           python3 tools/testes-publicacoes.py
+          python3 tools/testes-gif-com-selo.py
           python3 tools/testes-entrar-no-main.py
       - name: A casa posta sozinha
         run: |
@@ -59,6 +60,9 @@ jobs:
           # Cofre das publicações: inventário com data, tamanho e sha256 de tudo o que saiu.
           # "Salvo" sem hash é só uma lista de nomes; o hash é o que prova que não mudou.
           python3 tools/publicacoes.py
+          # Selo do gameplay na imagem que a página do itch mostra (o itch não aceita automação
+          # na página; a imagem é servida por nós). Idempotente: sempre a partir da fonte.
+          python3 tools/gif-com-selo.py || echo "selo no GIF indisponível nesta rodada"
           git config user.name "casa-rebocl"
           git config user.email "casa@rebocl.local"
           git add marketing.html melhorias.html publicacoes.html posts/log.md posts/decisoes.json posts/decisoes.md posts/auditoria-inteligencia.json posts/auditoria-inteligencia.md posts/percebido.json posts/percebido.md posts/publicacoes.json docs/PUBLICACOES.md posts/fila-tarefas.json

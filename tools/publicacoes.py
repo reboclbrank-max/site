@@ -144,7 +144,13 @@ def builds_do_itch():
                       "build": ident, "versao": item.get("versao"),
                       "arquivos": item.get("arquivos"), "quando": item.get("quando"),
                       "link": item.get("link") or "",
-                      "prova": prova[:200],
+                      "prova": prova[:240],
+                      # Estar num canal do itch NÃO é o mesmo que chegar ao jogador: em
+                      # 31/10/2026 o build estava no canal html5 e a página abria outro upload
+                      # (19268311, de 16/09). Aqui as duas coisas ficam separadas.
+                      "chega_ao_jogador": item.get("chega_ao_jogador"),
+                      "pagina_abre": item.get("pagina_abre") or {},
+                      "por_que_nao_chega": (item.get("por_que_nao_chega") or "")[:240],
                       "real": bool(ident) and bool(prova)})
     return saida
 
@@ -169,6 +175,8 @@ def paginas():
     for padrao in ("*.html", "blog/*.html", "jogos/*/index.html"):
         for caminho in sorted(glob.glob(os.path.join(RAIZ, padrao))):
             rel = os.path.relpath(caminho, RAIZ).replace(os.sep, "/")
+            if rel.endswith("-fonte.gif"):
+                continue  # a fonte intocada não é publicada; só o que o site serve
             info = selo(rel)
             if not info:
                 continue
@@ -179,9 +187,14 @@ def paginas():
 
 def midia():
     itens = []
-    for padrao in ("media/*/*.mp4", "media/*.mp4", "media/*/*.png"):
+    # O GIF entra aqui de propósito: ele não é só mídia, é o que a página do itch MOSTRA ao
+    # jogador (a descrição do jogo aponta para este arquivo, servido pelo nosso domínio). Se ele
+    # mudar sem registro, muda o que o visitante do itch vê sem ninguém saber.
+    for padrao in ("media/*/*.mp4", "media/*.mp4", "media/*/*.png", "media/*/*.gif"):
         for caminho in sorted(glob.glob(os.path.join(RAIZ, padrao))):
             rel = os.path.relpath(caminho, RAIZ).replace(os.sep, "/")
+            if rel.endswith("-fonte.gif"):
+                continue  # a fonte intocada não é publicada; só o que o site serve
             info = selo(rel)
             if info:
                 itens.append({"arquivo": rel, **info})
@@ -205,6 +218,8 @@ def inventario():
                                          if n in CANAIS_DE_VERDADE and c["ok"]),
             "videos_no_youtube": len([v for v in videos if v["real"]]),
             "builds_no_itch": len([b for b in builds if b["real"]]),
+            "builds_que_chegam_ao_jogador": len([b for b in builds
+                                                 if b["real"] and b["chega_ao_jogador"] is True]),
             "documentos": len(documentos()),
             "paginas_publicas": len(paginas()),
             "arquivos_de_midia": len(midia()),
@@ -233,6 +248,7 @@ def markdown(dados):
         "| canais que já publicaram | %d |" % r["canais_com_publicacao"],
         "| vídeos no YouTube (com id real) | %d |" % r["videos_no_youtube"],
         "| builds no itch.io (com id real) | %d |" % r["builds_no_itch"],
+        "| builds que o jogador do itch realmente abre | %d |" % r["builds_que_chegam_ao_jogador"],
         "| documentos | %d |" % r["documentos"],
         "| páginas públicas | %d |" % r["paginas_publicas"],
         "| arquivos de mídia | %d |" % r["arquivos_de_midia"],
@@ -255,6 +271,15 @@ def markdown(dados):
                 b["arquivos"] if b["arquivos"] is not None else "—", b["quando"] or "—"))
         for b in dados["builds"]:
             linhas.append("- prova de %s:`%s` — %s" % (b["slug"], b["build"], b["prova"] or "sem prova"))
+            _p = b.get("pagina_abre") or {}
+            if b.get("chega_ao_jogador") is True:
+                linhas.append("- o jogador abre este build: sim")
+            elif b.get("chega_ao_jogador") is False:
+                linhas.append("- o jogador abre este build: **não** — a página embute o upload "
+                              "`%s` (`%s`, %s)%s" % (
+                                  _p.get("upload_id", "?"), _p.get("nome", "?"),
+                                  _p.get("atualizado", "?"),
+                                  (". " + b["por_que_nao_chega"]) if b.get("por_que_nao_chega") else ""))
     else:
         linhas.append("Nenhum build enviado até agora.")
     linhas += ["", "## Páginas públicas", "", "| arquivo | bytes | sha256 |", "| --- | --- | --- |"]
@@ -280,6 +305,7 @@ def pagina(dados):
             ("canais que publicaram", r["canais_com_publicacao"]),
             ("vídeos no YouTube", r["videos_no_youtube"]),
             ("builds no itch.io", r["builds_no_itch"]),
+            ("chegam ao jogador", r["builds_que_chegam_ao_jogador"]),
             ("páginas no ar", r["paginas_publicas"]),
             ("documentos", r["documentos"]),
         ])
@@ -297,13 +323,26 @@ def pagina(dados):
            ("<a href='%s'>%s</a>" % (html.escape(v["link"]), html.escape(v["id"]))) if v["link"]
            else "<span class='mono'>(sem id real)</span>")
         for v in dados["videos"])
-    linhas_builds = "".join(
-        "<li><b>%s</b> · canal %s · build <span class='mono'>%s</span> · versão %s · %s arquivos · %s</li>"
-        % (html.escape(str(b["slug"])), html.escape(str(b["canal"])), html.escape(b["build"]),
-           html.escape(str(b["versao"] or "—")), html.escape(str(b["arquivos"])),
-           ("<a href='%s'>%s</a>" % (html.escape(b["link"]), html.escape(b["link"]))) if b["link"]
-           else "<span class='mono'>(sem link)</span>")
-        for b in dados["builds"]) or "<li class='mono'>nenhum build enviado até agora</li>"
+    def _linha_build(b):
+        _p = b.get("pagina_abre") or {}
+        if b.get("chega_ao_jogador") is True:
+            _chega = "<span class='ok'>o jogador abre este build</span>"
+        elif b.get("chega_ao_jogador") is False:
+            _chega = ("<span class='off'>o jogador NÃO abre este build</span> — a página embute "
+                      "o upload <span class='mono'>%s</span> (%s, %s), sem o conteúdo enviado"
+                      % (html.escape(str(_p.get("upload_id") or "?")),
+                         html.escape(str(_p.get("nome") or "?")),
+                         html.escape(str(_p.get("atualizado") or "?"))))
+        else:
+            _chega = "<span class='mono'>não medido</span>"
+        return ("<li><b>%s</b> · canal %s · build <span class='mono'>%s</span> · versão %s · "
+                "%s arquivos · %s<br>%s</li>"
+                % (html.escape(str(b["slug"])), html.escape(str(b["canal"])), html.escape(b["build"]),
+                   html.escape(str(b["versao"] or "—")), html.escape(str(b["arquivos"])),
+                   ("<a href='%s'>%s</a>" % (html.escape(b["link"]), html.escape(b["link"])))
+                   if b["link"] else "<span class='mono'>(sem link)</span>", _chega))
+    linhas_builds = "".join(_linha_build(b) for b in dados["builds"]) \
+        or "<li class='mono'>nenhum build enviado até agora</li>"
     linhas_paginas = "".join(
         "<tr><td><a href='%s'>%s</a></td><td>%d</td><td class='mono'>%s</td></tr>"
         % (html.escape(p.get("url", "")), html.escape(p["arquivo"]), p["selo"]["bytes"],
