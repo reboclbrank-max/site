@@ -292,3 +292,6 @@ Duas paixões, um dev solo 🇧🇷 PRANCHETA: futebol fictício na prancheta, s
 
 ## 31/10/2026 18:16 UTC
 Tático ou aconchegante? Aqui tem os dois 🇧🇷 PRANCHETA: desenhe bolas paradas e simule (grátis no browser/APK, Godot). CEIFALUME 0.1: a fazenda não dorme, colheitas crescem 8h offline 🌙 Feito solo com carinho. #GamedevBR
+
+## 31/10/2026 21:23 UTC
+Dois projetos, muito café ☕ PRANCHETA: seu tático de bolso, desenha a jogada e vê simular (grátis no nav/APK). CEIFALUME 0.1: a fazenda noturna que cresce enquanto você dorme 🌙 Feitos no Godot, com orgulho daqui. #gamede
