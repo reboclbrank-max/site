@@ -85,6 +85,55 @@ def main():
                      if n.startswith(("sondar-", "provar-")) and re.search(r"^\s*-\s*cron:", s, re.M)]
     ok("sondagem não fica em cron", not cron_sondagem, cron_sondagem)
 
+    # 7. Quem escreve no main e REGERA arquivo usa o ajudante que sabe fazer merge.
+    #    MEDIDO (31/10/2026, runs 41128039668 e 41128399021): laço de rebase parava em conflito
+    #    todas as vezes que dois escritores regeravam o mesmo arquivo, e o run ficava vermelho
+    #    com o log do ciclo preso dentro dele.
+    escrevem = [n for n, s in wfs.items() if "git push" in s or "entrar-no-main.sh" in s]
+    sem_ajudante = [n for n in escrevem if "entrar-no-main.sh" not in wfs[n]
+                    and not n.startswith(("gravar-", "editar-itch"))]
+    ok("todo workflow que escreve no main usa o entrar-no-main (gravar-* manda binário e não "
+       "conflita em arquivo gerado)", not sem_ajudante, sem_ajudante)
+    ajudante = os.path.join(RAIZ, "tools", "entrar-no-main.sh")
+    ok("o ajudante existe e é executável", os.path.exists(ajudante) and os.access(ajudante, os.X_OK))
+    texto_ajudante = open(ajudante, encoding="utf-8").read() if os.path.exists(ajudante) else ""
+    ok("o ajudante recusa conflito em arquivo que não é gerado",
+       "git merge --abort" in texto_ajudante and "GERADOS=" in texto_ajudante)
+    ok("o ciclo diário não voltou ao laço de rebase cego",
+       "for tentativa in 1 2 3" not in wfs.get("postagem-diaria.yml", ""))
+    ok("o relatório de pendências usa o ajudante",
+       "entrar-no-main.sh" in wfs.get("pendencias-do-dono.yml", ""))
+    ok("as métricas do YouTube usam o ajudante",
+       "entrar-no-main.sh" in wfs.get("metricas-youtube.yml", ""))
+    ok("o pulso 24h usa o ajudante", "entrar-no-main.sh" in wfs.get("marketing-24h.yml", ""))
+    ok("o ciclo diário cobra o teste do ajudante",
+       "testes-entrar-no-main.py" in wfs.get("postagem-diaria.yml", ""))
+    ok("o diagnóstico da casa cobra o teste do ajudante",
+       "testes-entrar-no-main.py" in wfs.get("diagnostico-da-casa.yml", ""))
+
+    # 8. O `run:` de cada passo precisa ser shell VÁLIDO. Sintaxe quebrada só aparece quando o
+    #    run dispara — e aí já custou um ciclo. `bash -n` lê sem executar.
+    import glob as _glob, subprocess as _sp, yaml as _yaml
+    quebrados = []
+    for arquivo in sorted(_glob.glob(os.path.join(PASTA, "*.yml"))):
+        try:
+            doc = _yaml.safe_load(open(arquivo, encoding="utf-8"))
+        except Exception as e:  # noqa: BLE001
+            quebrados.append("%s: YAML inválido (%s)" % (os.path.basename(arquivo), str(e)[:60]))
+            continue
+        for trabalho in (doc.get("jobs") or {}).values():
+            for passo in trabalho.get("steps") or []:
+                corpo = passo.get("run")
+                if not isinstance(corpo, str):
+                    continue
+                # `${{ ... }}` é do GitHub, não do bash: troca por um valor inofensivo.
+                corpo = re.sub(r"\$\{\{[^}]*\}\}", "X", corpo)
+                r = _sp.run(["bash", "-n", "-c", corpo], capture_output=True, text=True)
+                if r.returncode != 0:
+                    quebrados.append("%s / %s: %s" % (
+                        os.path.basename(arquivo), passo.get("name"), r.stderr.strip()[:80]))
+    ok("todo bloco run: dos workflows é shell válido (bash -n)", not quebrados, quebrados)
+
     print("\n%d/%d verificações de higiene de workflow passaram"
           % (len(certos), len(certos) + len(falhas)))
     return 0 if not falhas else 1

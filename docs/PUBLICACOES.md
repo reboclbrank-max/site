@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-10-31T00:48:54Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-10-31T00:57:11Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
@@ -13,7 +13,7 @@ Gerado em 2026-10-31T00:48:54Z. Este arquivo é o inventário do que já foi pub
 | canais que já publicaram | 5 |
 | vídeos no YouTube (com id real) | 2 |
 | builds no itch.io (com id real) | 1 |
-| documentos | 12 |
+| documentos | 13 |
 | páginas públicas | 20 |
 | arquivos de mídia | 11 |
 
@@ -63,13 +63,13 @@ Gerado em 2026-10-31T00:48:54Z. Este arquivo é o inventário do que já foi pub
 | escola.html | 3343 | `0fc79cbc5841eb35` |
 | index.html | 13685 | `c0942bdf8ca12917` |
 | jogos.html | 3255 | `4b17c4ecdda44233` |
-| marketing.html | 15519 | `5fcd047e82b8b6df` |
-| melhorias.html | 9281 | `a03bb47e22d5aa5b` |
+| marketing.html | 15508 | `8c83d1d5263cd586` |
+| melhorias.html | 9623 | `8469727dc0651149` |
 | museu.html | 226788 | `959bee2b9addade2` |
 | oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
 | postar.html | 10463 | `559892cc1dd855ec` |
 | privacidade.html | 2684 | `d4c4bce26a1c1093` |
-| publicacoes.html | 14835 | `87862dd33fdde64f` |
+| publicacoes.html | 14835 | `7ea7db46d53cc2f7` |
 | termos.html | 2613 | `a1a98745bc144972` |
 | vitrina.html | 8285 | `18c36df607adeaa7` |
 | blog/ceifalume-01-o-que-e-que-vem.html | 2934 | `d3272d5e446e934a` |
@@ -94,6 +94,7 @@ Gerado em 2026-10-31T00:48:54Z. Este arquivo é o inventário do que já foi pub
 | docs/RODADA-120-MELHORIAS-PUBLICAS.md | Rodada 120 — as melhorias agora têm endereço público | `5e21091540ef080e` |
 | docs/RODADA-121-ARQUIVO-DAS-PUBLICACOES.md | Rodada 121 — o cofre: toda publicação fica salva, com prova | `e76fe6bef1f61536` |
 | docs/RODADA-122-PUBLICADO.md | Rodada 122 — o que estava travado foi resolvido e publicado | `63f9ba8f578e4764` |
+| docs/RODADA-123-ENTRAR-NO-MAIN.md | Rodada 123 — "resolva tudo": os runs vermelhos, o motivo deles e o conserto medido | `ab749d9185e13cf6` |
 | docs/VIDEO-GAMEPLAY.md | Vídeo de gameplay — o que agora é medido, não prometido | `1dab0e5a47cf8301` |
 
 ## Últimos posts registrados (texto)
