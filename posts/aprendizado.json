@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T05:48:04Z",
+ "quando": "2026-10-31T08:57:31Z",
  "confiavel": false,
  "melhor_hora": null,
  "decisao": "manter",
@@ -10,7 +10,7 @@
   "elegiveis": 2,
   "amostra_minima": 30,
   "mediana": 1.22,
-  "desvio": 0.4995757837594021,
+  "desvio": 0.4982859509246562,
   "melhor": {
    "hora": 1,
    "media": 1.22,
