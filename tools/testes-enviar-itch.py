@@ -167,15 +167,43 @@ _carimbo = pathlib.Path(_tmp.mkdtemp())
 (_carimbo / "index.html").write_text("x")
 (_carimbo / "index.wasm").write_text("y")
 (_carimbo / "index.pck").write_text("z")
-(_carimbo / "versao-build.json").write_text('{"versao": "2026.10.30-1930"}', encoding="utf-8")
+# sem carimbo dentro da pasta: ele mora fora do pacote (ver o defeito medido no run 41151770746)
 _original = itch.BUILDS["ceifalume"]["pasta"]
 itch.BUILDS["ceifalume"]["pasta"] = str(_carimbo)
 _f_v = ButlerFalso()
+_antes = os.environ.get("VERSAO_BUILD")
+os.environ["VERSAO_BUILD"] = "2026.10.31-0100"
 _ok_v, _msg_v = itch.enviar("ceifalume", "html5", "PUBLICAR", raiz=RAIZ, identidade="/x", executar=_f_v)
 itch.BUILDS["ceifalume"]["pasta"] = _original
+if _antes is None:
+    os.environ.pop("VERSAO_BUILD", None)
+else:
+    os.environ["VERSAO_BUILD"] = _antes
 _linha_v = _f_v.chamadas[-1]
-ok("o carimbo de versão vai como --userversion", "--userversion" in _linha_v
-   and "2026.10.30-1930" in _linha_v, str(_linha_v))
+ok("a versão do envio vai como --userversion", "--userversion" in _linha_v
+   and "2026.10.31-0100" in _linha_v, str(_linha_v))
+ok("o carimbo NÃO entra na pasta enviada (senão o push-preview acusa apagado para sempre)",
+   not (_carimbo / "versao-build.json").exists(), str(sorted(p.name for p in _carimbo.iterdir())))
+# e o fallback: sem env, lê posts/versao-build.json, que também está fora do pacote
+_original_env = os.environ.pop("VERSAO_BUILD", None)
+_carimbo_posts = os.path.join(RAIZ, "posts", "versao-build.json")
+_existia = os.path.exists(_carimbo_posts)
+_guardado = open(_carimbo_posts, encoding="utf-8").read() if _existia else None
+os.makedirs(os.path.dirname(_carimbo_posts), exist_ok=True)
+open(_carimbo_posts, "w", encoding="utf-8").write('{"versao": "2026.10.31-0101"}')
+_f_fb = ButlerFalso()
+itch.BUILDS["ceifalume"]["pasta"] = str(_carimbo)
+itch.enviar("ceifalume", "html5", "PUBLICAR", raiz=RAIZ, identidade="/x", executar=_f_fb)
+itch.BUILDS["ceifalume"]["pasta"] = _original
+ok("sem env, o carimbo é lido de posts/versao-build.json",
+   "--userversion" in _f_fb.chamadas[-1] and "2026.10.31-0101" in _f_fb.chamadas[-1],
+   str(_f_fb.chamadas[-1]))
+if _existia:
+    open(_carimbo_posts, "w", encoding="utf-8").write(_guardado)
+else:
+    os.remove(_carimbo_posts)
+if _original_env is not None:
+    os.environ["VERSAO_BUILD"] = _original_env
 # DEFEITO MEDIDO EM 31/10/2026 (run 41151339470): `--hidden` é recusado pelo itch em canal
 # que já existe — "hidden can only be set when creating a new channel" (400). E o build deve
 # ficar VISÍVEL, que é o ponto do envio com o selo do gameplay.

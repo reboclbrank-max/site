@@ -248,24 +248,33 @@ def enviar(slug, canal, confirmacao, raiz=RAIZ, identidade=None, executar=None, 
     if erros:
         return False, "build recusado: " + "; ".join(erros)
     alvo = alvo_do_canal(slug, canal)
-    # Carimbo de versão (opcional): quando existe ceifalume/versao-build.json, ele vai como
-    # --userversion. É o que permite, depois, dizer QUAL build está no ar em vez de só um id.
     # SEM `--hidden` — DEFEITO MEDIDO EM 31/10/2026 (run 41151339470):
     #   itch.io API error (400): /wharf/builds: hidden can only be set when creating a new channel
     # O itch só aceita `hidden` ao CRIAR canal; em canal existente a chamada é recusada com 400.
     # E o `hidden` esconderia justamente o que o dono pediu: o build com o selo do gameplay no ar.
     # Publicar é deixar visível — então o push vai sem a flag.
     argumentos = ["push", pasta, alvo, "--assume-yes"]
-    carimbo = os.path.join(pasta, "versao-build.json")
-    if os.path.exists(carimbo):
-        try:
-            with open(carimbo, encoding="utf-8") as f:
-                versao = str(json.load(f).get("versao") or "").strip()
-        except Exception:  # noqa: BLE001
-            versao = ""
-        if versao:
-            argumentos += ["--userversion", versao]
-            print("versão do envio:", versao)
+    # Carimbo de versão (opcional) vai como --userversion: é o que permite, depois, dizer QUAL
+    # build está no ar em vez de só um id.
+    #
+    # DEFEITO MEDIDO EM 31/10/2026 (run 41151770746): o carimbo morava DENTRO da pasta enviada,
+    # então o build no ar ficava com um arquivo a mais que o repositório não tem, e o
+    # `push-preview` — a única comparação confiável com o itch — respondia "1 apagado" para
+    # sempre. Ou seja, o status nunca conseguia dizer a verdade ("IGUAL"). O carimbo agora vive
+    # fora do pacote (env VERSAO_BUILD ou posts/versao-build.json) e a pasta enviada é
+    # exatamente a pasta do repositório, arquivo por arquivo.
+    versao = str(os.environ.get("VERSAO_BUILD") or "").strip()
+    if not versao:
+        carimbo = os.path.join(raiz, "posts", "versao-build.json")
+        if os.path.exists(carimbo):
+            try:
+                with open(carimbo, encoding="utf-8") as f:
+                    versao = str(json.load(f).get("versao") or "").strip()
+            except Exception:  # noqa: BLE001
+                versao = ""
+    if versao:
+        argumentos += ["--userversion", versao]
+        print("versão do envio:", versao)
     codigo, saida = rodar(argumentos, identidade=identidade, executar=executar, chave=chave)
     if codigo != 0:
         return False, "envio recusado: " + saida[:400]
