@@ -18,13 +18,14 @@ on:
         options:
           - ceifalume
       modo:
-        description: "api = lista jogos · status = só leitura · ensaio = dry-run do envio · push = envia"
+        description: "api = lista jogos · uploads = uploads do jogo (só leitura) · status = só leitura · ensaio = dry-run · push = envia"
         required: true
         default: status
         type: choice
         options:
           - status
           - api
+          - uploads
           - ensaio
           - push
       canal:
@@ -95,6 +96,8 @@ jobs:
         run: |
           if [ "${{ inputs.modo }}" = "api" ]; then
             python3 tools/enviar-itch.py api | tee /tmp/itch.txt
+          elif [ "${{ inputs.modo }}" = "uploads" ]; then
+            python3 tools/enviar-itch.py uploads "${{ inputs.jogo }}" | tee /tmp/itch.txt
           elif [ "${{ inputs.modo }}" = "ensaio" ]; then
             python3 tools/enviar-itch.py ensaio "${{ inputs.jogo }}" "${{ inputs.canal }}" | tee /tmp/itch.txt
           elif [ "${{ inputs.modo }}" = "push" ]; then

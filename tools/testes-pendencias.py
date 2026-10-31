@@ -64,13 +64,38 @@ rel = pend.montar({"pendentes_em": []})
 pend.buscar = _original
 
 ok("o relatório lista os itens", len(rel["itens"]) >= 2, len(rel["itens"]))
-ok("com o post ausente, o devlog fica pendente",
+ok("com o post ausente, o devlog fica visível e NÃO como feito",
    any(i["id"] == "itch-devlog-gameplay" and i["estado"] != "feito" for i in rel["itens"]))
 ok("o YouTube aparece como feito",
    any(i["id"] == "youtube-gameplay" and i["estado"] == "feito" for i in rel["itens"]))
-ok("avisa que o estado mudou quando a lista de pendentes muda", rel["mudou_desde_o_ultimo"] is True)
+
+# REGRA NOVA (31/10/2026): pendência é o que o dono PODE resolver. O devlog do itch não é: o
+# painel dá 403 (Cloudflare) para IP de datacenter e a API oficial não tem endpoint de devlog
+# (docs/sondagens/ITCH-DEVLOG-SEM-CAMINHO-AUTOMATICO.json). Pedir o impossível todo dia é o
+# jeito mais rápido de o dono parar de ler o aviso.
+_devlog = [i for i in rel["itens"] if i["id"] == "itch-devlog-gameplay"][0]
+ok("o devlog sem caminho automático não conta como pendência do dono",
+   "itch-devlog-gameplay" not in rel["pendentes_em"], rel["pendentes_em"])
+ok("ele também não se esconde: aparece na lista de sem caminho automático",
+   "itch-devlog-gameplay" in rel["sem_caminho_automatico_em"], rel["sem_caminho_automatico_em"])
+ok("o item sem caminho diz onde o conteúdo chega ao jogador",
+   len(_devlog.get("coberto_em") or []) >= 2, _devlog.get("coberto_em"))
+ok("o item sem caminho cita a sondagem que provou isso",
+   os.path.exists(os.path.join(pend.RAIZ, _devlog.get("sondagem") or "")),
+   _devlog.get("sondagem"))
+ok("a medida do devlog cita o 403 do Cloudflare e a falta de endpoint na API",
+   "403" in _devlog["medido"] and "API" in _devlog["medido"], _devlog["medido"])
+ok("nenhum item é ao mesmo tempo pendente e sem caminho",
+   not (set(rel["pendentes_em"]) & set(rel["sem_caminho_automatico_em"])))
+ok("o dono não fica com tarefa nenhuma nesta medição", rel["pendentes_em"] == [],
+   rel["pendentes_em"])
+
+# o aviso continua sendo sobre MUDANÇA de pendência de verdade
 _sem_mudanca = pend.montar({"pendentes_em": rel["pendentes_em"]})
 ok("NÃO avisa quando o estado é o mesmo", _sem_mudanca["mudou_desde_o_ultimo"] is False)
+_com_pendencia = pend.montar({"pendentes_em": ["itch-devlog-gameplay"]})
+ok("avisa quando a lista de pendências do dono muda de verdade",
+   _com_pendencia["mudou_desde_o_ultimo"] is True)
 
 # ---- quando o dono publicar, o medidor percebe sozinho
 pend.buscar = lambda url, timeout=30: (200, PAGINA_COM_POST if "devlog" in url else "<html>jogo</html>")

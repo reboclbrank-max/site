@@ -259,7 +259,7 @@ if os.path.exists(_wf):
     # o ramo do run e a lista de modos do dispatch têm de casar: um modo que existe no run mas
     # não na lista volta 422 e o disparo não roda nada (aconteceu com "ensaio").
     _modos_run = set(re.findall(r'inputs\.modo \}\}" = "([a-z]+)"', texto))
-    _lista = set(re.findall(r'^          - (status|api|ensaio|push)$', texto, re.M))
+    _lista = set(re.findall(r'^          - (status|api|uploads|ensaio|push)$', texto, re.M))
     ok("todo modo do run está na lista do dispatch", _modos_run <= _lista,
        "run=" + str(sorted(_modos_run)) + " lista=" + str(sorted(_lista)))
     ok("o workflow roda a barreira antes de tocar a rede",

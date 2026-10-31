@@ -36,6 +36,9 @@ BUILDS = {
         "alvo": "rebocl-brank/ceifalume",
         "pasta": "ceifalume",              # export web do Godot, na raiz do repositório
         "canais": ["html5", "web", "default"],
+        # id do jogo no itch (página /dashboard/game/5017404/edit). Serve para a leitura de
+        # uploads, que é o que responde "o que o jogador REALMENTE abre na página".
+        "jogo_id": 5017404,
         "precisa": ["index.html", "index.wasm", "index.pck"],
     },
     # PRANCHETA não aparece aqui de propósito: não existe build do PRANCHETA em nenhum
@@ -306,6 +309,35 @@ def listar_jogos(chave, get=None):
     return jogos, None
 
 
+def uploads_do_jogo(chave, jogo_id, get=None):
+    """SOMENTE LEITURA: os uploads que o itch tem do jogo, com canal e data.
+
+    POR QUE EXISTE (31/10/2026): a página do itch embute UM upload específico
+    (html-classic.itch.zone/html/19268311/index.html). O build que o butler empurrou pode não
+    ser esse upload — e aí o selo do gameplay não chega a quem joga, mesmo com "push enviado" no
+    log. Adivinhar isso é o erro que esta casa não quer: aqui a resposta vem da API oficial,
+    upload por upload, com id, nome, canal e data.
+    """
+    get = get or _get_json
+    if not chave:
+        return None, "sem chave"
+    dados, erro = get("https://api.itch.io/games/%s/uploads" % jogo_id, chave)
+    if erro or not isinstance(dados, dict):
+        return None, erro or "resposta inesperada"
+    lista = []
+    for u in dados.get("uploads") or []:
+        build = u.get("build") or {}
+        lista.append({"id": u.get("id"),
+                      "nome": (u.get("filename") or u.get("display_name") or "")[:60],
+                      "canal": build.get("channel") or u.get("channel") or "",
+                      "build_id": build.get("id"),
+                      "bytes": u.get("size"),
+                      "atualizado": (u.get("updated_at") or "")[:19],
+                      "plataforma": u.get("platform") or u.get("type") or "",
+                      "tipo": u.get("type") or ""})
+    return lista, None
+
+
 def _get_json(url, chave):
     req = urllib.request.Request(url, headers={"Authorization": "Bearer " + chave,
                                                "Accept": "application/json",
@@ -338,6 +370,20 @@ def main(argv):
                     j["visitas"], j["publicado"]))
             # O id é o que a edição de página (tools/itch-navegador.py) exige no caminho
             # /dashboard/game/<id>/edit. Sem imprimi-lo, cada rodada começava adivinhando.
+            return 0
+        if modo == "uploads":
+            jogo = argv[2] if len(argv) > 2 else str((BUILDS.get(slug) or {}).get("jogo_id") or "")
+            if not jogo:
+                print("✗ cadê o id do jogo? passe como 3o argumento ou declare em BUILDS")
+                return 2
+            lista, erro = uploads_do_jogo(chave, jogo)
+            if erro:
+                print("✗ não consegui listar os uploads:", erro)
+                return 1
+            for u in lista:
+                print("  id=%-10s canal=%-10s build=%-10s %8s B  %s  %s" % (
+                    u["id"], u["canal"] or "-", u["build_id"] or "-", u["bytes"],
+                    u["atualizado"] or "-", u["nome"]))
             return 0
         if modo == "status":
             ok_lista, lista = status(slug, None, identidade=None, chave=chave)
