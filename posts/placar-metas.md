@@ -4,14 +4,17 @@
 
 | meta | alvo | observado | falta | por dia | status | desde a partida |
 |---|---|---|---|---|---|---|
-| Instagram: publicações | 30 | 18 | 12 | 1.0 | EM_CURSO | — |
+| Instagram: publicações | 30 | 32 | 0 | — | ATINGIDO | +30 |
 | Instagram: seguidores | 50 | 0 | 50 | 4.17 | EM_CURSO | 0 |
-| itch: downloads | 100 | 46 | 54 | 4.5 | EM_CURSO | +2 |
+| Bluesky: seguidores | 50 | 32 | 18 | 1.5 | EM_CURSO | +19 |
+| YouTube: inscritos | 40 | 24 | 16 | 1.33 | EM_CURSO | 0 |
+| YouTube: shorts | 4 | 7 | 0 | — | ATINGIDO | — |
+| itch: downloads | 100 | 47 | 53 | 4.42 | EM_CURSO | +3 |
 | itch: seguidores (aposentada) | 10 | NAO_OBSERVAVEL | — | — | SEM_LEITURA | — |
-| itch: visitas | — | 175 | — | — | ACOMPANHADA | — |
+| itch: visitas | — | 197 | — | — | ACOMPANHADA | — |
 
-Prazo: **2026-11-12** · 12 dia(s) restante(s) · 4 meta(s) com leitura, 0 sem leitura automática · 1 aposentada(s) com o motivo no arquivo.
+Prazo: **2026-11-12** · 12 dia(s) restante(s) · 7 meta(s) com leitura, 0 sem leitura automática · 1 aposentada(s) com o motivo no arquivo.
 
-> **Sem retorno em 18 dias:** Instagram: seguidores (0 medido(s), nada a mais desde 13/10). O esforço não voltou número nenhum. Manter o canal ou aposentá-lo é decisão do dono, com este número na mão — o robô não decide isso e não vai fingir que decide.
+> **Sem retorno em 18 dias:** Instagram: seguidores (0 medido(s), nada a mais desde 13/10), YouTube: inscritos (24 medido(s), nada a mais desde 13/10). O esforço não voltou número nenhum. Manter o canal ou aposentá-lo é decisão do dono, com este número na mão — o robô não decide isso e não vai fingir que decide.
 
 > **Sem API, não sem robô:** itch: seguidores (aposentada). O itch não publica contagem de seguidores em API nem em página pública (5 caminhos conferidos em 25/10/2026). Essa meta está **aposentada** — o registro com o motivo ficou em `posts/metas.json` — e o que o itch mede de audiência (**itch: visitas**) entrou no placar como medida acompanhada, com número e sem alvo inventado.
