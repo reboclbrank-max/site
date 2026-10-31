@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T00:57:11Z",
+ "quando": "2026-10-31T00:59:20Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 103,
@@ -702,8 +702,8 @@
   {
    "arquivo": "marketing.html",
    "selo": {
-    "bytes": 15508,
-    "sha256": "8c83d1d5263cd586"
+    "bytes": 14929,
+    "sha256": "7b8358e3220c1a70"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
@@ -711,7 +711,7 @@
    "arquivo": "melhorias.html",
    "selo": {
     "bytes": 9623,
-    "sha256": "8469727dc0651149"
+    "sha256": "f8ca3d94e31bf84c"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -751,7 +751,7 @@
    "arquivo": "publicacoes.html",
    "selo": {
     "bytes": 14835,
-    "sha256": "7ea7db46d53cc2f7"
+    "sha256": "4571efe080ac19d2"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
