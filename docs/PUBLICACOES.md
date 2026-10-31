@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-10-31T00:45:57Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-10-31T00:48:54Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
@@ -12,7 +12,8 @@ Gerado em 2026-10-31T00:45:57Z. Este arquivo é o inventário do que já foi pub
 | posts sociais registrados | 96 |
 | canais que já publicaram | 5 |
 | vídeos no YouTube (com id real) | 2 |
-| documentos | 11 |
+| builds no itch.io (com id real) | 1 |
+| documentos | 12 |
 | páginas públicas | 20 |
 | arquivos de mídia | 11 |
 
@@ -46,6 +47,13 @@ Gerado em 2026-10-31T00:45:57Z. Este arquivo é o inventário do que já foi pub
 - ceifalume-gameplay `GuE7af6dYo8` — CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador · https://youtu.be/GuE7af6dYo8
 - ceifalume `2qsSknSyeAs` — CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador · https://youtu.be/2qsSknSyeAs
 
+## Builds no itch.io
+
+| jogo | canal | build | versão | arquivos | quando |
+| --- | --- | --- | --- | --- | --- |
+| ceifalume | html5 | `2257110` | 2026.10.31-0046 | 13 | 2026-10-31T00:46:17Z |
+- prova de ceifalume:`2257110` — push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110
+
 ## Páginas públicas
 
 | arquivo | bytes | sha256 |
@@ -55,13 +63,13 @@ Gerado em 2026-10-31T00:45:57Z. Este arquivo é o inventário do que já foi pub
 | escola.html | 3343 | `0fc79cbc5841eb35` |
 | index.html | 13685 | `c0942bdf8ca12917` |
 | jogos.html | 3255 | `4b17c4ecdda44233` |
-| marketing.html | 15519 | `a8308115123c6e81` |
-| melhorias.html | 9065 | `997d933d4f5ba96a` |
+| marketing.html | 15519 | `5fcd047e82b8b6df` |
+| melhorias.html | 9281 | `a03bb47e22d5aa5b` |
 | museu.html | 226788 | `959bee2b9addade2` |
 | oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
 | postar.html | 10463 | `559892cc1dd855ec` |
 | privacidade.html | 2684 | `d4c4bce26a1c1093` |
-| publicacoes.html | 14471 | `6093b46d018c2827` |
+| publicacoes.html | 14835 | `87862dd33fdde64f` |
 | termos.html | 2613 | `a1a98745bc144972` |
 | vitrina.html | 8285 | `18c36df607adeaa7` |
 | blog/ceifalume-01-o-que-e-que-vem.html | 2934 | `d3272d5e446e934a` |
@@ -85,6 +93,7 @@ Gerado em 2026-10-31T00:45:57Z. Este arquivo é o inventário do que já foi pub
 | docs/RODADA-119-MENTE-QUE-ESCOLHE.md | Rodada 119 — a mente que escolhe (juízo, gosto aprendido e revisão) | `570ca2cfa7af379c` |
 | docs/RODADA-120-MELHORIAS-PUBLICAS.md | Rodada 120 — as melhorias agora têm endereço público | `5e21091540ef080e` |
 | docs/RODADA-121-ARQUIVO-DAS-PUBLICACOES.md | Rodada 121 — o cofre: toda publicação fica salva, com prova | `e76fe6bef1f61536` |
+| docs/RODADA-122-PUBLICADO.md | Rodada 122 — o que estava travado foi resolvido e publicado | `63f9ba8f578e4764` |
 | docs/VIDEO-GAMEPLAY.md | Vídeo de gameplay — o que agora é medido, não prometido | `1dab0e5a47cf8301` |
 
 ## Últimos posts registrados (texto)

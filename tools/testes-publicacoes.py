@@ -124,6 +124,43 @@ ok("escrita atômica (sem .tmp)", not any(os.path.exists(v + ".tmp") for v in _a
 ok("o json gravado é legível e tem resumo",
    json.load(open(_alvos["SAIDA_JSON"], encoding="utf-8")).get("resumo", {}).get("ciclos_de_marketing"))
 
+# ---------------------------------------------------------------- builds do itch.io
+# Build de jogo é publicação: o jogador baixa aquilo. Então entra no cofre com id e prova.
+_builds = p.builds_do_itch()
+ok("o cofre lê os builds levados ao itch", isinstance(_builds, list) and len(_builds) >= 1,
+   str(len(_builds)))
+ok("build sem id não conta como publicado",
+   all(b["real"] for b in _builds if b["build"]) is True)
+_falso_build = {"builds": [{"slug": "x", "canal": "html5", "build": "", "prova": "nada"}]}
+_json_antigo = p.ler_json
+p.ler_json = lambda caminho: _falso_build if "itch-builds" in caminho else _json_antigo(caminho)
+try:
+    ok("build vazio não vira build real", p.builds_do_itch()[0]["real"] is False)
+finally:
+    p.ler_json = _json_antigo
+_json_antigo = p.ler_json
+p.ler_json = lambda caminho: _falso_build if "itch-builds" in caminho else _json_antigo(caminho)
+try:
+    ok("build sem prova (run do push) também não vira real",
+       p.builds_do_itch()[0]["real"] is False)
+finally:
+    p.ler_json = _json_antigo
+_dados_builds = p.inventario()
+ok("o resumo conta os builds", _dados_builds["resumo"]["builds_no_itch"] >= 1,
+   str(_dados_builds["resumo"]["builds_no_itch"]))
+_md_builds = p.markdown(_dados_builds)
+ok("o markdown tem a seção de builds", "## Builds no itch.io" in _md_builds)
+ok("o markdown mostra a prova do build", "push run" in _md_builds or "prova de" in _md_builds)
+_htm_builds = p.pagina(_dados_builds)
+ok("a página tem a seção de builds", "Builds no itch.io" in _htm_builds)
+ok("a página mostra o build de verdade", "2257110" in _htm_builds or any(
+    b["build"] in _htm_builds for b in _dados_builds["builds"]))
+ok("a página diz quando não há build nenhum",
+   "nenhum build enviado" in p.pagina(
+       {"resumo": dict(_dados_builds["resumo"], builds_no_itch=0),
+        "canais": {}, "posts": [], "videos": [], "builds": [],
+        "paginas": [], "documentos": [], "quando": "2026-10-31T00:00:00Z"}))
+
 _wf = open(os.path.join(RAIZ, ".github", "workflows", "postagem-diaria.yml"), encoding="utf-8").read()
 ok("o ciclo gera o cofre", "tools/publicacoes.py" in _wf)
 ok("o ciclo commita o cofre", "publicacoes.html" in _wf)
