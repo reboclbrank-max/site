@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T01:02:15Z",
+ "quando": "2026-10-31T00:59:23Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 103,
@@ -645,8 +645,8 @@
    "arquivo": "docs/RODADA-123-ENTRAR-NO-MAIN.md",
    "titulo": "Rodada 123 — \"resolva tudo\": os runs vermelhos, o motivo deles e o conserto medido",
    "selo": {
-    "bytes": 7389,
-    "sha256": "1786c53dd2152ced"
+    "bytes": 5412,
+    "sha256": "ab749d9185e13cf6"
    }
   },
   {
@@ -702,8 +702,8 @@
   {
    "arquivo": "marketing.html",
    "selo": {
-    "bytes": 15508,
-    "sha256": "8c83d1d5263cd586"
+    "bytes": 14929,
+    "sha256": "7b8358e3220c1a70"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
@@ -711,7 +711,7 @@
    "arquivo": "melhorias.html",
    "selo": {
     "bytes": 9623,
-    "sha256": "062762216636b991"
+    "sha256": "f8ca3d94e31bf84c"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -751,7 +751,7 @@
    "arquivo": "publicacoes.html",
    "selo": {
     "bytes": 14835,
-    "sha256": "ada80ba76a3d6e13"
+    "sha256": "4571efe080ac19d2"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
