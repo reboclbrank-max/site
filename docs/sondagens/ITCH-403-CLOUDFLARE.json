@@ -52,5 +52,17 @@
   "sondar-ip-itch.yml",
   "sondar-itch-browser.yml",
   "sondar-itch-browser2.yml"
- ]
+ ],
+ "complemento_31_10_2026": {
+  "pergunta": "e o JOGO que a página entrega? é o do repositório?",
+  "metodo": "tools/enviar-itch.py conferir — baixa o que a página serve e compara sha256 arquivo por arquivo",
+  "resultado": {
+   "index.html": "DIFERENTE (o itch reescreve e injeta htmlgame.js)",
+   "index.js": "IGUAL",
+   "index.pck": "IGUAL",
+   "index.wasm": "IGUAL"
+  },
+  "conclusao": "o conteúdo do jogo no itch está ATUALIZADO; só a casca HTML é do itch. O selo do gameplay não está na casca, mas chega ao visitante pelo GIF da descrição, que é servido por nós (media/ceifalume/gif-jogo-ceifalume-640x360.gif).",
+  "butler": "v15.32.0 não tem comando para marcar canal como HTML5/jogável no navegador (butler --help conferido em 31/10/2026); o itch.io/docs/butler/pushing.html diz que essa marcação é feita pelo site."
+ }
 }

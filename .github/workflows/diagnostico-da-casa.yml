@@ -72,6 +72,25 @@ jobs:
           echo "──────────── desempenho do dia ────────────"
           cat posts/desempenho.md
 
+      # O que a página do itch entrega é o jogo do repositório? Só leitura: baixa a casca e o
+      # pck (≈3,5 MB) e compara sha256. O wasm (38 MB) fica de fora do diagnóstico diário de
+      # propósito — o modo `conferir` do enviar-itch compara os quatro arquivos quando é preciso.
+      - name: Confere o que a página do itch entrega (só leitura)
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import importlib.util, json, os
+          spec = importlib.util.spec_from_file_location("itch", "tools/enviar-itch.py")
+          m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          r, erro = m.conferir_conteudo("ceifalume", arquivos=["index.html", "index.js", "index.pck"])
+          if erro:
+              print("não consegui conferir o itch:", erro); raise SystemExit(0)
+          for l in r["arquivos"]:
+              print("  %-12s %-12s repo=%s itch=%s" % (
+                  l["arquivo"], l["estado"], l["repo"], l["itch"]))
+          print("jogo igual ao repositório:", "SIM" if r["jogo_igual_ao_repo"] else "NÃO")
+          PY
+
       - name: Resumo no painel da execução
         if: always()
         run: |

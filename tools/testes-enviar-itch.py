@@ -291,6 +291,70 @@ _wf_jogador = open(os.path.join(RAIZ, ".github", "workflows", "enviar-itch.yml")
                    encoding="utf-8").read()
 ok("o workflow oferece o modo jogador (só leitura)", "- jogador" in _wf_jogador)
 
+# ------------------------------ o CONTEÚDO servido na página é o do repositório? (sha256)
+# MEDIDO em 31/10/2026: o cofre dizia "o jogador não abre este build" — certo quanto ao upload,
+# INCOMPLETO quanto ao jogo: index.pck, index.js e index.wasm servidos pelo itch são byte a byte
+# iguais aos do repositório; só a casca HTML (index.html) difere, porque o itch injeta o
+# htmlgame.js dele. Aqui isso é provado com arquivos de verdade, sem rede.
+_tmp_base = pathlib.Path(__import__("tempfile").mkdtemp())
+_meu = os.path.join(str(_tmp_base), "conferir")
+os.makedirs(_meu, exist_ok=True)
+_conteudo = {"index.html": b"<html>meu</html>", "index.js": b"JS", "index.pck": b"PCK",
+             "index.wasm": b"WASM"}
+for _n, _c in _conteudo.items():
+    open(os.path.join(_meu, _n), "wb").write(_c)
+_origem_conferir = itch.BUILDS["ceifalume"]["pasta"]
+itch.BUILDS["ceifalume"]["pasta"] = _meu
+_pagina_ok = ('<iframe src="https://html-classic.itch.zone/html/5/index.html"></iframe>')
+_original_abre = itch.o_que_o_jogador_abre
+
+
+def _abre_falso(slug, abrir=None):
+    return ({"jogo": "ceifalume", "pagina": "https://rebocl-brank.itch.io/ceifalume",
+             "upload_id": "5", "versao": "",
+             "embutido": "https://html-classic.itch.zone/html/5/index.html"}, None)
+
+
+itch.o_que_o_jogador_abre = _abre_falso
+try:
+    # 1) tudo igual (menos a casca que o itch reescreve) → jogo igual
+    _r, _e = itch.conferir_conteudo(
+        "ceifalume", raiz=str(_tmp_base),
+        baixar=lambda u: _conteudo[u.rsplit("/", 1)[-1]])
+    ok("conferir: conteúdo idêntico é lido como jogo igual ao repositório",
+       _e is None and _r["jogo_igual_ao_repo"] is True, _e or _r["arquivos"])
+    ok("conferir: cada arquivo traz o sha256 dos dois lados",
+       all(l["repo"] and l["itch"] for l in _r["arquivos"]
+           if l["estado"] in ("IGUAL", "DIFERENTE")), _r["arquivos"])
+
+    # 2) pck diferente → jogo diferente (o caso que importa de verdade)
+    _outro = dict(_conteudo, **{"index.pck": b"PCK VELHO"})
+    _r2, _ = itch.conferir_conteudo("ceifalume", raiz=str(_tmp_base),
+                                    baixar=lambda u: _outro[u.rsplit("/", 1)[-1]])
+    ok("conferir: pck diferente é lido como jogo DIFERENTE", _r2["jogo_igual_ao_repo"] is False)
+    ok("conferir: diz QUAL arquivo difere", _r2["o_que_difere"] == ["index.pck"],
+       _r2["o_que_difere"])
+
+    # 3) casca html diferente sozinha não condena o jogo
+    _so_casca = dict(_conteudo, **{"index.html": b"<html>casca do itch</html>"})
+    _r3, _ = itch.conferir_conteudo("ceifalume", raiz=str(_tmp_base),
+                                    baixar=lambda u: _so_casca[u.rsplit("/", 1)[-1]])
+    ok("conferir: casca html diferente NÃO faz o jogo ser tratado como antigo",
+       _r3["jogo_igual_ao_repo"] is True and _r3["casca_html_igual"] is False)
+
+    # 4) arquivo que não baixa não vira 'igual' por omissão
+    def _falha(u):
+        if u.endswith(".wasm"):
+            raise OSError("timeout")
+        return _conteudo[u.rsplit("/", 1)[-1]]
+
+    _r4, _ = itch.conferir_conteudo("ceifalume", raiz=str(_tmp_base), baixar=_falha)
+    ok("conferir: arquivo que não baixou não é contado como igual",
+       any(l["estado"].startswith("não consegui") for l in _r4["arquivos"]), _r4["arquivos"])
+finally:
+    itch.o_que_o_jogador_abre = _original_abre
+    itch.BUILDS["ceifalume"]["pasta"] = _origem_conferir
+
 # ---------------------------------------------------------------- workflow: nada automático
 _wf = os.path.join(RAIZ, ".github", "workflows", "enviar-itch.yml")
 if os.path.exists(_wf):
@@ -301,7 +365,7 @@ if os.path.exists(_wf):
     # o ramo do run e a lista de modos do dispatch têm de casar: um modo que existe no run mas
     # não na lista volta 422 e o disparo não roda nada (aconteceu com "ensaio").
     _modos_run = set(re.findall(r'inputs\.modo \}\}" = "([a-z]+)"', texto))
-    _lista = set(re.findall(r'^          - (status|api|uploads|jogador|ensaio|push)$', texto, re.M))
+    _lista = set(re.findall(r'^          - (status|api|uploads|jogador|conferir|ensaio|push)$', texto, re.M))
     ok("todo modo do run está na lista do dispatch", _modos_run <= _lista,
        "run=" + str(sorted(_modos_run)) + " lista=" + str(sorted(_lista)))
     ok("o workflow roda a barreira antes de tocar a rede",

@@ -150,7 +150,8 @@ def builds_do_itch():
                       # (19268311, de 16/09). Aqui as duas coisas ficam separadas.
                       "chega_ao_jogador": item.get("chega_ao_jogador"),
                       "pagina_abre": item.get("pagina_abre") or {},
-                      "por_que_nao_chega": (item.get("por_que_nao_chega") or "")[:240],
+                      "conferencia": item.get("conferencia_do_servido") or {},
+                      "ressalva": (item.get("ressalva") or item.get("por_que_nao_chega") or "")[:300],
                       "real": bool(ident) and bool(prova)})
     return saida
 
@@ -220,6 +221,10 @@ def inventario():
             "builds_no_itch": len([b for b in builds if b["real"]]),
             "builds_que_chegam_ao_jogador": len([b for b in builds
                                                  if b["real"] and b["chega_ao_jogador"] is True]),
+            # conferência do SERVIDO: o que a página entrega é o que está no repositório?
+            "builds_conferidos_iguais": len([b for b in builds
+                                             if (b.get("conferencia") or {}).get("jogo_igual_ao_repo")
+                                             is True]),
             "documentos": len(documentos()),
             "paginas_publicas": len(paginas()),
             "arquivos_de_midia": len(midia()),
@@ -249,6 +254,8 @@ def markdown(dados):
         "| vídeos no YouTube (com id real) | %d |" % r["videos_no_youtube"],
         "| builds no itch.io (com id real) | %d |" % r["builds_no_itch"],
         "| builds que o jogador do itch realmente abre | %d |" % r["builds_que_chegam_ao_jogador"],
+        "| builds conferidos: conteúdo servido = repositório (sha256) | %d |"
+        % r["builds_conferidos_iguais"],
         "| documentos | %d |" % r["documentos"],
         "| páginas públicas | %d |" % r["paginas_publicas"],
         "| arquivos de mídia | %d |" % r["arquivos_de_midia"],
@@ -272,7 +279,16 @@ def markdown(dados):
         for b in dados["builds"]:
             linhas.append("- prova de %s:`%s` — %s" % (b["slug"], b["build"], b["prova"] or "sem prova"))
             _p = b.get("pagina_abre") or {}
-            if b.get("chega_ao_jogador") is True:
+            _c = b.get("conferencia") or {}
+            if _c:
+                _arq = _c.get("arquivos") or {}
+                linhas.append("- conferência do servido (sha256, arquivo por arquivo): " + ", ".join(
+                    "%s %s" % (k, v) for k, v in sorted(_arq.items())))
+                linhas.append("- o conteúdo do jogo que o jogador recebe é o do repositório: **%s**"
+                              % ("sim" if _c.get("jogo_igual_ao_repo") else "não"))
+            if b.get("ressalva"):
+                linhas.append("- ressalva: " + b["ressalva"])
+            if b.get("chega_ao_jogador") is True and not b.get("ressalva"):
                 linhas.append("- o jogador abre este build: sim")
             elif b.get("chega_ao_jogador") is False:
                 linhas.append("- o jogador abre este build: **não** — a página embute o upload "
@@ -306,6 +322,7 @@ def pagina(dados):
             ("vídeos no YouTube", r["videos_no_youtube"]),
             ("builds no itch.io", r["builds_no_itch"]),
             ("chegam ao jogador", r["builds_que_chegam_ao_jogador"]),
+            ("conferidos no ar", r["builds_conferidos_iguais"]),
             ("páginas no ar", r["paginas_publicas"]),
             ("documentos", r["documentos"]),
         ])
@@ -325,7 +342,14 @@ def pagina(dados):
         for v in dados["videos"])
     def _linha_build(b):
         _p = b.get("pagina_abre") or {}
-        if b.get("chega_ao_jogador") is True:
+        _c = b.get("conferencia") or {}
+        if _c.get("jogo_igual_ao_repo") is True:
+            _arq = _c.get("arquivos") or {}
+            _chega = ("<span class='ok'>o jogo que o jogador recebe é o do repositório</span> — "
+                      "sha256 igual em %s; a casca HTML (<span class='mono'>index.html</span>) é a "
+                      "do itch, sem o selo — o vídeo chega pelo GIF da descrição"
+                      % html.escape(", ".join(k for k, v in sorted(_arq.items()) if v == "IGUAL")))
+        elif b.get("chega_ao_jogador") is True:
             _chega = "<span class='ok'>o jogador abre este build</span>"
         elif b.get("chega_ao_jogador") is False:
             _chega = ("<span class='off'>o jogador NÃO abre este build</span> — a página embute "

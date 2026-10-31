@@ -1,5 +1,5 @@
 {
- "_o_que_e": "builds de jogo levados ao itch.io pelo butler. Cada linha foi medida no log do run citado em 'prova' e, desde 31/10/2026, também contra a PÁGINA: estar num canal não é o mesmo que chegar ao jogador — 'chega_ao_jogador' separa as duas coisas em vez de chamar as duas de publicado.",
+ "_o_que_e": "builds de jogo levados ao itch.io pelo butler, com duas medidas separadas: o PUSH (o que o butler enviou, com id de build) e a CONFERÊNCIA DO SERVIDO (o que a página realmente entrega ao jogador, arquivo por arquivo, por sha256). Estar num canal não é o mesmo que chegar ao jogador — e chegar ao jogador não é o mesmo que ter o selo na casca. As três coisas ficam separadas em vez de virarem uma palavra só, 'publicado'.",
  "builds": [
   {
    "slug": "ceifalume",
@@ -11,7 +11,7 @@
    "quando": "2026-10-31T00:46:17Z",
    "link": "https://rebocl-brank.itch.io/ceifalume",
    "selo_gameplay": "https://youtu.be/GuE7af6dYo8",
-   "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110; MAS o run 41153867292 (modo uploads) lista só os uploads 19268311 e 19268322, ambos de 16/09, e a página abre 19268311 — cujo index.html NÃO tem o selo do gameplay (modo jogador).",
+   "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110; MAS o run 41153867292 (modo uploads) lista só os uploads 19268311 e 19268322, ambos de 16/09, e a página abre 19268311 — cujo index.html NÃO tem o selo do gameplay (modo jogador). | conferência do servido (31/10/2026): index.js/index.pck/index.wasm IGUAIS ao repositório por sha256; index.html diferente (casca do itch).",
    "real": true,
    "no_canal": true,
    "pagina_abre": {
@@ -22,8 +22,29 @@
     "index_bytes": 21639,
     "tem_selo": false
    },
-   "chega_ao_jogador": false,
-   "por_que_nao_chega": "a página do itch embute o upload 19268311 (16/09), não o canal html5. Marcar um canal como 'HTML5 / jogável no navegador' é feito só pelo painel do itch (docs/butler/pushing.html), e o painel responde 403 (Cloudflare) para IP de datacenter. Medido em 31/10/2026."
+   "chega_ao_jogador": true,
+   "conferencia_do_servido": {
+    "quando": "2026-10-31T01:18:38Z",
+    "modo": "enviar-itch.py conferir (só leitura: baixa o que a página serve e compara sha256)",
+    "pagina": "https://rebocl-brank.itch.io/ceifalume",
+    "upload_id": "19268311",
+    "arquivos": {
+     "index.html": "DIFERENTE",
+     "index.js": "IGUAL",
+     "index.pck": "IGUAL",
+     "index.wasm": "IGUAL"
+    },
+    "sha256_repo": {
+     "index.js": "8a7c7d57f7da69bb",
+     "index.pck": "2383cabce49cd3e6",
+     "index.wasm": "6ead2ac528d007fe"
+    },
+    "jogo_igual_ao_repo": true,
+    "casca_html_igual": false,
+    "selo_no_jogo_servido": false,
+    "selo_chega_por": "GIF da descrição, servido pelo nosso domínio: media/ceifalume/gif-jogo-ceifalume-640x360.gif"
+   },
+   "ressalva": "o upload que a página abre é o 19268311 (16/09), NÃO o do canal html5; porém o conteúdo do jogo servido (index.js, index.pck, index.wasm) é byte a byte igual ao do repositório — medido em 31/10/2026 por sha256. A casca HTML é a do itch (injeta htmlgame.js e não tem o selo), e o vídeo chega ao visitante pelo GIF da descrição, que é servido por nós e agora leva o selo carimbado."
   }
  ],
  "quando_medido": "2026-10-31T01:10:13Z"
