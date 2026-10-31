@@ -1,10 +1,19 @@
 {
- "quando": "2026-10-30T23:53:16Z",
+ "quando": "2026-10-31T00:21:50Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
+   "o_que": "empurrar a meta: Instagram: publicações",
+   "porque": "faltam 12 e o ritmo necessário é 1.0 por dia",
+   "quem": "robô",
+   "como": "priorizar essa meta no próximo ciclo editorial",
+   "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
+   "tipo_fila": "publicar",
+   "chave": "meta-Instagram: publicações"
+  },
+  {
    "o_que": "empurrar a meta: Instagram: seguidores",
-   "porque": "faltam 50 e o ritmo necessário é 3.85 por dia",
+   "porque": "faltam 50 e o ritmo necessário é 4.17 por dia",
    "quem": "robô",
    "como": "priorizar essa meta no próximo ciclo editorial",
    "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
@@ -13,7 +22,7 @@
   },
   {
    "o_que": "empurrar a meta: itch: downloads",
-   "porque": "faltam 54 e o ritmo necessário é 4.15 por dia",
+   "porque": "faltam 54 e o ritmo necessário é 4.5 por dia",
    "quem": "robô",
    "como": "priorizar essa meta no próximo ciclo editorial",
    "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
@@ -52,7 +61,7 @@
  ],
  "enfileiradas": [],
  "contagem": {
-  "robo": 2,
+  "robo": 3,
   "dono": 3,
   "enfileiradas": 0
  }

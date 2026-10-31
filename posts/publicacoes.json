@@ -1,12 +1,12 @@
 {
- "quando": "2026-10-31T00:20:58Z",
+ "quando": "2026-10-31T00:21:51Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 103,
   "posts_sociais_registrados": 96,
   "canais_com_publicacao": 5,
   "videos_no_youtube": 2,
-  "documentos": 10,
+  "documentos": 11,
   "paginas_publicas": 20,
   "arquivos_de_midia": 11
  },
@@ -517,7 +517,7 @@
    "slug": "ceifalume",
    "id": "VIDEO123",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
-   "quando": "2026-10-30T23:52:38Z",
+   "quando": "2026-10-31T00:21:16Z",
    "link": "",
    "real": false
   },
@@ -612,6 +612,14 @@
    }
   },
   {
+   "arquivo": "docs/RODADA-121-ARQUIVO-DAS-PUBLICACOES.md",
+   "titulo": "Rodada 121 — o cofre: toda publicação fica salva, com prova",
+   "selo": {
+    "bytes": 2131,
+    "sha256": "e76fe6bef1f61536"
+   }
+  },
+  {
    "arquivo": "docs/VIDEO-GAMEPLAY.md",
    "titulo": "Vídeo de gameplay — o que agora é medido, não prometido",
    "selo": {
@@ -664,16 +672,16 @@
   {
    "arquivo": "marketing.html",
    "selo": {
-    "bytes": 14678,
-    "sha256": "fd45123ae242186b"
+    "bytes": 14940,
+    "sha256": "1a422c3e0193f35a"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
   {
    "arquivo": "melhorias.html",
    "selo": {
-    "bytes": 8834,
-    "sha256": "1dc55fc871016152"
+    "bytes": 9065,
+    "sha256": "ed9491b169938670"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -713,7 +721,7 @@
    "arquivo": "publicacoes.html",
    "selo": {
     "bytes": 14471,
-    "sha256": "2f0eff9c1fb730a5"
+    "sha256": "911cea57dbf5caad"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
