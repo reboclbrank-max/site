@@ -126,6 +126,29 @@ def videos_youtube():
     return saida
 
 
+def builds_do_itch():
+    """Builds de jogo que foram para o itch.io — publicação de verdade, não post.
+
+    Fica fora dos canais de propósito: um build não é texto em rede social, é o que o jogador
+    baixa. Só conta como real quando o registro traz id de build e a prova (run do push + run
+    do status comparando com a pasta do repositório).
+    """
+    dados = ler_json("posts/itch-builds.json")
+    saida = []
+    for item in dados.get("builds") or []:
+        if not isinstance(item, dict):
+            continue
+        ident = str(item.get("build") or "").strip()
+        prova = str(item.get("prova") or "").strip()
+        saida.append({"slug": item.get("slug"), "canal": item.get("canal"),
+                      "build": ident, "versao": item.get("versao"),
+                      "arquivos": item.get("arquivos"), "quando": item.get("quando"),
+                      "link": item.get("link") or "",
+                      "prova": prova[:200],
+                      "real": bool(ident) and bool(prova)})
+    return saida
+
+
 def documentos():
     itens = []
     for caminho in sorted(glob.glob(os.path.join(RAIZ, "docs", "*.md"))):
@@ -170,6 +193,7 @@ def inventario():
     ciclos, canais = ciclos_por_canal()
     sociais = posts_sociais()
     videos = videos_youtube()
+    builds = builds_do_itch()
     return {
         "quando": agora_iso(),
         "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; "
@@ -180,6 +204,7 @@ def inventario():
             "canais_com_publicacao": sum(1 for n, c in canais.items()
                                          if n in CANAIS_DE_VERDADE and c["ok"]),
             "videos_no_youtube": len([v for v in videos if v["real"]]),
+            "builds_no_itch": len([b for b in builds if b["real"]]),
             "documentos": len(documentos()),
             "paginas_publicas": len(paginas()),
             "arquivos_de_midia": len(midia()),
@@ -187,6 +212,7 @@ def inventario():
         "canais": canais,
         "posts": sociais[:200],
         "videos": videos,
+        "builds": builds,
         "documentos": documentos(),
         "paginas": paginas(),
         "midia": midia(),
@@ -206,6 +232,7 @@ def markdown(dados):
         "| posts sociais registrados | %d |" % r["posts_sociais_registrados"],
         "| canais que já publicaram | %d |" % r["canais_com_publicacao"],
         "| vídeos no YouTube (com id real) | %d |" % r["videos_no_youtube"],
+        "| builds no itch.io (com id real) | %d |" % r["builds_no_itch"],
         "| documentos | %d |" % r["documentos"],
         "| páginas públicas | %d |" % r["paginas_publicas"],
         "| arquivos de mídia | %d |" % r["arquivos_de_midia"],
@@ -219,6 +246,17 @@ def markdown(dados):
     for v in dados["videos"]:
         linhas.append("- %s `%s` — %s%s" % (v["slug"], v["id"], v["titulo"],
                                             (" · " + v["link"]) if v["link"] else " · (sem id real)"))
+    linhas += ["", "## Builds no itch.io", ""]
+    if dados["builds"]:
+        linhas += ["| jogo | canal | build | versão | arquivos | quando |", "| --- | --- | --- | --- | --- | --- |"]
+        for b in dados["builds"]:
+            linhas.append("| %s | %s | `%s` | %s | %s | %s |" % (
+                b["slug"], b["canal"], b["build"], b["versao"] or "—",
+                b["arquivos"] if b["arquivos"] is not None else "—", b["quando"] or "—"))
+        for b in dados["builds"]:
+            linhas.append("- prova de %s:`%s` — %s" % (b["slug"], b["build"], b["prova"] or "sem prova"))
+    else:
+        linhas.append("Nenhum build enviado até agora.")
     linhas += ["", "## Páginas públicas", "", "| arquivo | bytes | sha256 |", "| --- | --- | --- |"]
     for p in dados["paginas"]:
         linhas.append("| %s | %d | `%s` |" % (p["arquivo"], p["selo"]["bytes"], p["selo"]["sha256"]))
@@ -241,6 +279,7 @@ def pagina(dados):
             ("posts sociais", r["posts_sociais_registrados"]),
             ("canais que publicaram", r["canais_com_publicacao"]),
             ("vídeos no YouTube", r["videos_no_youtube"]),
+            ("builds no itch.io", r["builds_no_itch"]),
             ("páginas no ar", r["paginas_publicas"]),
             ("documentos", r["documentos"]),
         ])
@@ -258,6 +297,13 @@ def pagina(dados):
            ("<a href='%s'>%s</a>" % (html.escape(v["link"]), html.escape(v["id"]))) if v["link"]
            else "<span class='mono'>(sem id real)</span>")
         for v in dados["videos"])
+    linhas_builds = "".join(
+        "<li><b>%s</b> · canal %s · build <span class='mono'>%s</span> · versão %s · %s arquivos · %s</li>"
+        % (html.escape(str(b["slug"])), html.escape(str(b["canal"])), html.escape(b["build"]),
+           html.escape(str(b["versao"] or "—")), html.escape(str(b["arquivos"])),
+           ("<a href='%s'>%s</a>" % (html.escape(b["link"]), html.escape(b["link"]))) if b["link"]
+           else "<span class='mono'>(sem link)</span>")
+        for b in dados["builds"]) or "<li class='mono'>nenhum build enviado até agora</li>"
     linhas_paginas = "".join(
         "<tr><td><a href='%s'>%s</a></td><td>%d</td><td class='mono'>%s</td></tr>"
         % (html.escape(p.get("url", "")), html.escape(p["arquivo"]), p["selo"]["bytes"],
@@ -304,6 +350,9 @@ footer{color:var(--suave);font-size:.8rem;border-top:1px solid var(--borda);marg
 <h2>Vídeos</h2>
 <ul class="log">%(videos)s</ul>
 
+<h2>Builds no itch.io</h2>
+<ul class="log">%(builds)s</ul>
+
 <h2>Páginas no ar</h2>
 <table><tr><td><b>arquivo</b></td><td><b>bytes</b></td><td><b>sha256</b></td></tr>%(paginas)s</table>
 
@@ -315,7 +364,7 @@ footer{color:var(--suave);font-size:.8rem;border-top:1px solid var(--borda);marg
 <a href="%(base)s/marketing.html">painel do marketing</a> ·
 <a href="%(base)s/">site</a></footer>
 </main></body></html>
-""" % {"base": BASE, "cartoes": cartoes, "canais": linhas_canais, "videos": linhas_videos,
+""" % {"base": BASE, "cartoes": cartoes, "canais": linhas_canais, "videos": linhas_videos, "builds": linhas_builds,
        "paginas": linhas_paginas, "posts": linhas_posts, "quando": dados["quando"]}
 
 

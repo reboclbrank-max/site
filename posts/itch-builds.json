@@ -1,0 +1,18 @@
+{
+ "_o_que_e": "builds de jogo levados ao itch.io pelo butler. Cada linha foi medida no log do run citado em 'prova' — build id e comparação com a pasta do repositório, não fé.",
+ "builds": [
+  {
+   "slug": "ceifalume",
+   "canal": "html5",
+   "alvo": "rebocl-brank/ceifalume:html5",
+   "build": "2257110",
+   "versao": "2026.10.31-0046",
+   "arquivos": 13,
+   "quando": "2026-10-31T00:46:17Z",
+   "link": "https://rebocl-brank.itch.io/ceifalume",
+   "selo_gameplay": "https://youtu.be/GuE7af6dYo8",
+   "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110",
+   "real": true
+  }
+ ]
+}

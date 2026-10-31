@@ -1,12 +1,13 @@
 {
- "quando": "2026-10-31T00:45:57Z",
+ "quando": "2026-10-31T00:48:54Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 103,
   "posts_sociais_registrados": 96,
   "canais_com_publicacao": 5,
   "videos_no_youtube": 2,
-  "documentos": 11,
+  "builds_no_itch": 1,
+  "documentos": 12,
   "paginas_publicas": 20,
   "arquivos_de_midia": 11
  },
@@ -517,7 +518,7 @@
    "slug": "ceifalume",
    "id": "VIDEO123",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
-   "quando": "2026-10-31T00:45:57Z",
+   "quando": "2026-10-31T00:48:54Z",
    "link": "",
    "real": false
   },
@@ -535,6 +536,19 @@
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
    "quando": "2026-10-27T15:34:14Z",
    "link": "https://youtu.be/2qsSknSyeAs",
+   "real": true
+  }
+ ],
+ "builds": [
+  {
+   "slug": "ceifalume",
+   "canal": "html5",
+   "build": "2257110",
+   "versao": "2026.10.31-0046",
+   "arquivos": 13,
+   "quando": "2026-10-31T00:46:17Z",
+   "link": "https://rebocl-brank.itch.io/ceifalume",
+   "prova": "push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110",
    "real": true
   }
  ],
@@ -620,6 +634,14 @@
    }
   },
   {
+   "arquivo": "docs/RODADA-122-PUBLICADO.md",
+   "titulo": "Rodada 122 — o que estava travado foi resolvido e publicado",
+   "selo": {
+    "bytes": 4581,
+    "sha256": "63f9ba8f578e4764"
+   }
+  },
+  {
    "arquivo": "docs/VIDEO-GAMEPLAY.md",
    "titulo": "Vídeo de gameplay — o que agora é medido, não prometido",
    "selo": {
@@ -673,15 +695,15 @@
    "arquivo": "marketing.html",
    "selo": {
     "bytes": 15519,
-    "sha256": "a8308115123c6e81"
+    "sha256": "5fcd047e82b8b6df"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
   {
    "arquivo": "melhorias.html",
    "selo": {
-    "bytes": 9065,
-    "sha256": "997d933d4f5ba96a"
+    "bytes": 9281,
+    "sha256": "a03bb47e22d5aa5b"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -720,8 +742,8 @@
   {
    "arquivo": "publicacoes.html",
    "selo": {
-    "bytes": 14471,
-    "sha256": "6093b46d018c2827"
+    "bytes": 14835,
+    "sha256": "87862dd33fdde64f"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
