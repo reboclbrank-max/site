@@ -124,6 +124,32 @@
    "motivo": "empurrar a meta: Instagram: publicações: faltam 12 e o ritmo necessário é 1.0 por dia",
    "chave": "meta-Instagram: publicações",
    "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261031T003907Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-10-31T00:39:07Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.5 por dia",
+   "chave": "meta-Bluesky: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261031T003907Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-10-31T00:39:07Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.33 por dia",
+   "chave": "meta-YouTube: inscritos",
+   "origem": "perceber"
   }
  ]
 }
