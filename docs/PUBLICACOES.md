@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-10-31T01:02:15Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-10-31T00:59:23Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
@@ -63,13 +63,13 @@ Gerado em 2026-10-31T01:02:15Z. Este arquivo é o inventário do que já foi pub
 | escola.html | 3343 | `0fc79cbc5841eb35` |
 | index.html | 13685 | `c0942bdf8ca12917` |
 | jogos.html | 3255 | `4b17c4ecdda44233` |
-| marketing.html | 15508 | `8c83d1d5263cd586` |
-| melhorias.html | 9623 | `062762216636b991` |
+| marketing.html | 14929 | `7b8358e3220c1a70` |
+| melhorias.html | 9623 | `f8ca3d94e31bf84c` |
 | museu.html | 226788 | `959bee2b9addade2` |
 | oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
 | postar.html | 10463 | `559892cc1dd855ec` |
 | privacidade.html | 2684 | `d4c4bce26a1c1093` |
-| publicacoes.html | 14835 | `ada80ba76a3d6e13` |
+| publicacoes.html | 14835 | `4571efe080ac19d2` |
 | termos.html | 2613 | `a1a98745bc144972` |
 | vitrina.html | 8285 | `18c36df607adeaa7` |
 | blog/ceifalume-01-o-que-e-que-vem.html | 2934 | `d3272d5e446e934a` |
@@ -94,7 +94,7 @@ Gerado em 2026-10-31T01:02:15Z. Este arquivo é o inventário do que já foi pub
 | docs/RODADA-120-MELHORIAS-PUBLICAS.md | Rodada 120 — as melhorias agora têm endereço público | `5e21091540ef080e` |
 | docs/RODADA-121-ARQUIVO-DAS-PUBLICACOES.md | Rodada 121 — o cofre: toda publicação fica salva, com prova | `e76fe6bef1f61536` |
 | docs/RODADA-122-PUBLICADO.md | Rodada 122 — o que estava travado foi resolvido e publicado | `63f9ba8f578e4764` |
-| docs/RODADA-123-ENTRAR-NO-MAIN.md | Rodada 123 — "resolva tudo": os runs vermelhos, o motivo deles e o conserto medido | `1786c53dd2152ced` |
+| docs/RODADA-123-ENTRAR-NO-MAIN.md | Rodada 123 — "resolva tudo": os runs vermelhos, o motivo deles e o conserto medido | `ab749d9185e13cf6` |
 | docs/VIDEO-GAMEPLAY.md | Vídeo de gameplay — o que agora é medido, não prometido | `1dab0e5a47cf8301` |
 
 ## Últimos posts registrados (texto)
