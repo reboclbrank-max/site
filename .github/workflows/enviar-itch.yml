@@ -83,6 +83,10 @@ jobs:
           echo "VERSAO_BUILD=$data" >> "$GITHUB_ENV"
 
       - name: Status (somente leitura) ou envio confirmado
+        # DEFEITO MEDIDO EM 31/10/2026 (run 41151339470): o passo usava `| tee` e o run ficou
+        # VERDE com o butler recusando o envio (400). Pipeline sem pipefail devolve o status do
+        # tee, não o do envio. Com pipefail, recusa do itch vira run vermelho.
+        shell: bash -o pipefail {0}
         env:
           ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
           CONFIRMACAO: ${{ inputs.confirmacao }}

@@ -176,7 +176,12 @@ itch.BUILDS["ceifalume"]["pasta"] = _original
 _linha_v = _f_v.chamadas[-1]
 ok("o carimbo de versão vai como --userversion", "--userversion" in _linha_v
    and "2026.10.30-1930" in _linha_v, str(_linha_v))
-ok("o envio continua pedindo --assume-yes e --hidden", "--assume-yes" in _linha_v and "--hidden" in _linha_v)
+# DEFEITO MEDIDO EM 31/10/2026 (run 41151339470): `--hidden` é recusado pelo itch em canal
+# que já existe — "hidden can only be set when creating a new channel" (400). E o build deve
+# ficar VISÍVEL, que é o ponto do envio com o selo do gameplay.
+ok("o envio pede --assume-yes", "--assume-yes" in _linha_v, str(_linha_v))
+ok("o envio NÃO pede --hidden (itch recusa em canal existente)",
+   "--hidden" not in _linha_v, str(_linha_v))
 _sh.rmtree(_carimbo, ignore_errors=True)
 
 # ---------------------------------------------------------------- push exige palavra
@@ -188,8 +193,12 @@ ok("palavra errada também não envia", ok_n2 is False and not _falso2.chamadas)
 ok_p, msg_p = itch.enviar("ceifalume", "html5", "PUBLICAR", raiz=RAIZ, identidade="/x", executar=_falso2)
 ok("com PUBLICAR, o push é chamado com --assume-yes", ok_p and "--assume-yes" in _falso2.chamadas[0],
    msg_p[:80])
-ok("o push entra em canal OCULTO (nada muda para o jogador sem o dono ver)",
-   "--hidden" in _falso2.chamadas[0], str(_falso2.chamadas[0]))
+ok("o push deixa o build VISÍVEL (publicar é aparecer, não esconder)",
+   "--hidden" not in _falso2.chamadas[0], str(_falso2.chamadas[0]))
+# E o run não pode ficar verde com o butler recusando: era o `| tee` sem pipefail.
+_wf_envio = open(os.path.join(RAIZ, ".github", "workflows", "enviar-itch.yml"), encoding="utf-8").read()
+ok("o passo do envio usa pipefail (recusa do butler vira run vermelho)",
+   "bash -o pipefail" in _wf_envio, "workflow sem pipefail")
 _f3 = ButlerFalso(saida="would push 12 files (3.9 MB)")
 ok_e, msg_e = itch.ensaio("ceifalume", "html5", raiz=RAIZ, identidade="/x", executar=_f3)
 ok("ensaio usa --dry-run e não envia nada", ok_e and "--dry-run" in _f3.chamadas[0], str(_f3.chamadas[0]))
