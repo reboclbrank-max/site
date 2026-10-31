@@ -81,21 +81,42 @@ def montar(estado_anterior=None):
     anterior = estado_anterior or {}
     itens = []
 
-    # 1) Devlog do itch com o vídeo — o único passo que sobra para o dono.
+    # 1) Devlog do itch com o vídeo.
+    #
+    # MEDIDO EM 31/10/2026 (docs/sondagens/ITCH-DEVLOG-SEM-CAMINHO-AUTOMATICO.json): este item
+    # NÃO é tarefa do dono, é uma limitação do itch:
+    #   * /dashboard e /game/edit/<id> → 403 com desafio do Cloudflare para IP de datacenter;
+    #   * a API oficial não tem endpoint de devlog (o api.itch.io responde 401 e NÃO tem
+    #     bloqueio de Cloudflare — se houvesse rota, ela seria usável; não há);
+    #   * o próprio itch diz que não oferece API de publicação, para não virar spam.
+    # Ficar pedindo o clique todo dia era empurrar no dono uma coisa que a casa não consegue
+    # fazer e que já está entregue por outros três canais. O item continua VISÍVEL aqui, com a
+    # medição, mas não conta como pendência.
     status, html = buscar(DEVLOG_PUBLICO)
     saiu = status == 200 and devlog_do_video_saiu(html)
     itens.append({
         "id": "itch-devlog-gameplay",
         "titulo": "publicar o devlog do gameplay no itch",
-        "estado": "feito" if saiu else "esperando o dono",
+        "estado": "feito" if saiu else "sem caminho automático",
+        "caminho_automatico": True if saiu else False,
+        "coberto_em": [] if saiu else [
+            "build no ar (2257110): ceifalume/index.html leva o selo ▶ gameplay com instruções",
+            "blog/ceifalume-gameplay.html (site da casa)",
+            "https://youtu.be/GuE7af6dYo8 (YouTube)",
+        ],
+        "medido_em": "2026-10-31",
+        "sondagem": "docs/sondagens/ITCH-DEVLOG-SEM-CAMINHO-AUTOMATICO.json",
         "medido": ("o post aparece em %s" % DEVLOG_PUBLICO) if saiu
-                  else ("a página pública de devlog respondeu %s e não tem o post do vídeo" % status),
+                  else ("a página pública de devlog respondeu %s e não tem o post; o painel do "
+                        "itch responde 403 (Cloudflare) para IP de datacenter e a API oficial "
+                        "não tem endpoint de devlog — medido em 31/10/2026" % status),
         "por_que_e_do_dono": ("a Cloudflare do itch devolve 403 em /dashboard para IP de "
                               "datacenter — medido em Ubuntu, macOS, Windows e com Chromium real "
                               "(docs/sondagens/ITCH-403-CLOUDFLARE.json)"),
-        "como_fazer": ("abrir itch/devlog-gameplay-bookmarklet.txt como favorito em qualquer "
-                       "página do itch, logado; ele descobre o formulário e posta o texto de "
-                       "posts/devlog-itch-gameplay.json"),
+        "como_fazer": ("nada obrigatório: o conteúdo já chega ao jogador pelo build, pelo blog "
+                       "e pelo YouTube. Se quiser a cópia editorial no itch: abrir "
+                       "itch/devlog-gameplay-bookmarklet.txt como favorito em qualquer página "
+                       "do itch, logado — ele acha o formulário e posta posts/devlog-itch-gameplay.json"),
         "texto_pronto": "posts/devlog-itch-gameplay.json",
         "favorito": "itch/devlog-gameplay-bookmarklet.txt",
     })
@@ -150,7 +171,11 @@ def montar(estado_anterior=None):
         "como_fazer": "nada: já publicado" if tem_video else "rodar o workflow com PUBLICAR",
     })
 
-    pendentes = [i for i in itens if i["estado"] != "feito"]
+    # Pendência é o que o dono pode resolver com um clique. O que não tem caminho automático e
+    # já está entregue em outro canal fica listado (para não esconder nada), mas fora da conta:
+    # pedir o impossível todo dia é o jeito mais rápido de a pessoa parar de ler o aviso.
+    pendentes = [i for i in itens if i["estado"] not in ("feito", "sem caminho automático")]
+    sem_caminho = [i for i in itens if i["estado"] == "sem caminho automático"]
     # Aviso só quando MUDA: 1 clique pendente todo dia vira ruído e a pessoa para de ler.
     estado_atual = sorted(i["id"] for i in pendentes)
     mudou = estado_atual != sorted(anterior.get("pendentes_em") or [])
@@ -158,6 +183,7 @@ def montar(estado_anterior=None):
         "quando": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "itens": itens,
         "pendentes_em": estado_atual,
+        "sem_caminho_automatico_em": sorted(i["id"] for i in sem_caminho),
         "mudou_desde_o_ultimo": mudou,
         "devlog_publico_titulos": posts_visiveis(html) if status == 200 else [],
     }
@@ -167,7 +193,7 @@ def montar(estado_anterior=None):
 def texto_do_aviso(relatorio):
     linhas = ["Pendência do dono (1 clique):"]
     for i in relatorio["itens"]:
-        if i["estado"] == "feito":
+        if i["estado"] != "esperando o dono":
             continue
         linhas.append("· %s — %s" % (i["titulo"], i["como_fazer"]))
     linhas.append("devlog público: " + DEVLOG_PUBLICO)
@@ -184,9 +210,23 @@ def escrever(relatorio):
     for i in relatorio["itens"]:
         linhas.append("| %s | %s | %s |" % (i["titulo"], i["estado"], i["como_fazer"]))
     linhas += ["", "## Por que só o dono pode", ""]
-    for i in relatorio["itens"]:
-        if i["estado"] != "feito":
-            linhas.append("- **%s**: %s" % (i["titulo"], i["por_que_e_do_dono"]))
+    _do_dono = [i for i in relatorio["itens"] if i["estado"] == "esperando o dono"]
+    if not _do_dono:
+        linhas.append("Nada. Nenhuma pendência depende de clique do dono nesta medição.")
+    for i in _do_dono:
+        linhas.append("- **%s**: %s" % (i["titulo"], i["por_que_e_do_dono"]))
+
+    # O que NÃO depende do dono não some daqui: fica com a medição e com onde o conteúdo chega.
+    linhas += ["", "## Sem caminho automático (medido, não pedido)", ""]
+    _sem = [i for i in relatorio["itens"] if i["estado"] == "sem caminho automático"]
+    if not _sem:
+        linhas.append("Nada nessa situação.")
+    for i in _sem:
+        linhas.append("- **%s** — %s" % (i["titulo"], i["medido"]))
+        if i.get("sondagem"):
+            linhas.append("  - sondagem: `%s`" % i["sondagem"])
+        for onde in i.get("coberto_em") or []:
+            linhas.append("  - chega ao jogador por: %s" % onde)
     linhas += ["", "## Medições", ""]
     for i in relatorio["itens"]:
         linhas.append("- **%s**: %s" % (i["titulo"], i["medido"]))
@@ -206,10 +246,12 @@ def main(argv):
         anterior = None
     relatorio = montar(anterior)
     escrever(relatorio)
+    _marca = {"feito": "✔", "sem caminho automático": "—", "esperando o dono": "…"}
     for i in relatorio["itens"]:
-        print("%-12s %-28s %s" % (("✔" if i["estado"] == "feito" else "…"), i["titulo"], i["medido"][:90]))
-    print("\npendentes: %d · mudou desde o último: %s"
-          % (len(relatorio["pendentes_em"]), "sim" if relatorio["mudou_desde_o_ultimo"] else "não"))
+        print("%-2s %-52s %s" % (_marca.get(i["estado"], "?"), i["titulo"], i["medido"][:110]))
+    print("\npendentes do dono: %d · sem caminho automático: %d · mudou desde o último: %s"
+          % (len(relatorio["pendentes_em"]), len(relatorio["sem_caminho_automatico_em"]),
+             "sim" if relatorio["mudou_desde_o_ultimo"] else "não"))
     if os.environ.get("PEDIR_AVISO") == "1" and relatorio["mudou_desde_o_ultimo"] and relatorio["pendentes_em"]:
         topico = os.environ.get("NTFY_TOPIC")
         if topico:
