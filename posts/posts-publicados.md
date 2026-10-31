@@ -289,3 +289,6 @@ Tática na PRANCHETA (grátis, Godot, Brasil) ou lavoura noturna no CEIFALUME 0.
 
 ## 31/10/2026 12:10 UTC
 Duas paixões, um dev solo 🇧🇷 PRANCHETA: futebol fictício na prancheta, simula ao vivo ou instantâneo, grátis no navegador/APK (Godot). CEIFALUME 0.1: a fazenda noturna que cresce até 8h offline 🌙 Feito com carinho no Bra
+
+## 31/10/2026 18:16 UTC
+Tático ou aconchegante? Aqui tem os dois 🇧🇷 PRANCHETA: desenhe bolas paradas e simule (grátis no browser/APK, Godot). CEIFALUME 0.1: a fazenda não dorme, colheitas crescem 8h offline 🌙 Feito solo com carinho. #GamedevBR
