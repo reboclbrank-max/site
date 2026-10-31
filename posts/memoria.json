@@ -1,13 +1,13 @@
 {
- "quando": "2026-10-31T01:20:12Z",
+ "quando": "2026-10-31T05:19:45Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
    "alvo": "30",
-   "observado": "18",
-   "falta": "12",
-   "por_dia": "1.0",
-   "status": "EM_CURSO"
+   "observado": "32",
+   "falta": "0",
+   "por_dia": "—",
+   "status": "ATINGIDO"
   },
   {
    "meta": "Instagram: seguidores",
@@ -18,11 +18,35 @@
    "status": "EM_CURSO"
   },
   {
+   "meta": "Bluesky: seguidores",
+   "alvo": "50",
+   "observado": "32",
+   "falta": "18",
+   "por_dia": "1.5",
+   "status": "EM_CURSO"
+  },
+  {
+   "meta": "YouTube: inscritos",
+   "alvo": "40",
+   "observado": "24",
+   "falta": "16",
+   "por_dia": "1.33",
+   "status": "EM_CURSO"
+  },
+  {
+   "meta": "YouTube: shorts",
+   "alvo": "4",
+   "observado": "7",
+   "falta": "0",
+   "por_dia": "—",
+   "status": "ATINGIDO"
+  },
+  {
    "meta": "itch: downloads",
    "alvo": "100",
-   "observado": "46",
-   "falta": "54",
-   "por_dia": "4.5",
+   "observado": "47",
+   "falta": "53",
+   "por_dia": "4.42",
    "status": "EM_CURSO"
   },
   {
@@ -36,7 +60,7 @@
   {
    "meta": "itch: visitas",
    "alvo": "—",
-   "observado": "175",
+   "observado": "197",
    "falta": "—",
    "por_dia": "—",
    "status": "ACOMPANHADA"
@@ -181,7 +205,7 @@
   }
  ],
  "aprendizado": {
-  "quando": "2026-10-31T00:59:30Z",
+  "quando": "2026-10-31T01:26:23Z",
   "confiavel": false,
   "melhor_hora": null,
   "decisao": "manter",
@@ -261,17 +285,17 @@
  "orquestrador": {
   "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
   "versao": 1,
-  "ultima_publicacao": "2026-10-27T12:19:44Z",
+  "ultima_publicacao": "2026-10-31T05:19:45Z",
   "ultima_medicao": "2026-10-30T23:05:41Z",
   "ultima_pesquisa": "2026-10-27T12:29:44Z",
   "ultima_aprendizagem": "2026-10-27T12:39:44Z",
-  "pulsos": 10
+  "pulsos": 12
  },
  "fila": {
-  "publicar": "pendente",
   "pesquisar": "feito",
-  "medir": "feito",
-  "aprender": "feito"
+  "medir": "pendente",
+  "aprender": "feito",
+  "publicar": "pendente"
  },
  "_regras": [
   "número sem fonte medida não entra (NAO_OBSERVAVEL não é zero)",
