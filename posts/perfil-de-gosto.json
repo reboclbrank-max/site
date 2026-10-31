@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T05:48:04Z",
+ "quando": "2026-10-31T08:57:31Z",
  "_lei": "traço só pesa quando a amostra passa e a diferença supera o desvio; o resto fica marcado como escolha declarada, não como gosto aprendido.",
  "pesos": {
   "tem_pergunta": 1,
@@ -21,7 +21,7 @@
    },
    "sem": {
     "n": 287,
-    "media": 1.21
+    "media": 1.22
    },
    "medido": false,
    "direcao": null,
@@ -57,8 +57,8 @@
    "direcao": 1,
    "base": "medido",
    "peso": 1,
-   "ganho": 1.38,
-   "desvio": 1.09
+   "ganho": 1.37,
+   "desvio": 1.1
   },
   "cita_jogo": {
    "com": {
@@ -73,7 +73,7 @@
    "direcao": null,
    "base": "declarado",
    "peso": 2,
-   "porque": "amostra ok, mas a diferença (0.90) está dentro do desvio (1.09): não vira gosto"
+   "porque": "amostra ok, mas a diferença (0.89) está dentro do desvio (1.10): não vira gosto"
   },
   "chamada": {
    "com": {
@@ -108,7 +108,7 @@
   "sem_hashtag": {
    "com": {
     "n": 289,
-    "media": 1.19
+    "media": 1.2
    },
    "sem": {
     "n": 11,
@@ -148,8 +148,8 @@
    "direcao": 1,
    "base": "medido",
    "peso": 1,
-   "ganho": 1.19,
-   "desvio": 1.09
+   "ganho": 1.18,
+   "desvio": 1.1
   },
   "tem_link": {
    "com": {
