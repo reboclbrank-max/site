@@ -80,6 +80,40 @@ depende de sessão humana logada, e o conteúdo dele já está publicado no blog
 - **todo bloco `run:` dos 32 workflows é shell válido** — `bash -n` em cada um, sem executar.
   Esse pegou um erro que eu mesmo quase introduzi nesta rodada.
 
+## O teste de fogo: o ciclo diário no ar, com o ajudante no caminho
+
+Run `41153030523` (success). O log mostra o ajudante encontrando exatamente a colisão que antes
+derrubava o ciclo — e saindo dela:
+
+```
+[painel e log do ciclo] regerando: python3 tools/melhorias.py && python3 tools/publicacoes.py …
+[painel e log do ciclo] no main por rebase (tentativa 1)
+[ciclo e devlog] push recusado: hint: use 'git pull' before pushing again
+[ciclo e devlog] conflito em arquivo gerado: docs/PUBLICACOES.md (fica a versão do main; o gerador reescreve)
+[ciclo e devlog] conflito em arquivo gerado: posts/publicacoes.json
+[ciclo e devlog] conflito em arquivo gerado: publicacoes.html
+[ciclo e devlog] regerando: python3 tools/melhorias.py && python3 tools/publicacoes.py
+[ciclo e devlog] no main por merge resolvido nos gerados (tentativa 2)
+[medição do ciclo] no main por rebase (tentativa 1)
+```
+
+Antes, esse mesmo conflito era o "3 tentativas e o ciclo não entrou no main". Depois do conserto:
+**run verde, os três blocos no main**. `diagnostico-da-casa` (`41153170075`) e `metricas-youtube`
+(`41153273006`) também verdes com o ajudante novo.
+
+O push recusado agora **aparece com o motivo** — e foi assim que eu descobri, no meu próprio
+teste, que o script de credencial em `/home/user/tools/` estava sem permissão de execução. Antes
+o script repetia "push recusado" seis vezes sem dizer nada.
+
+## O único pendente do dono, remedido hoje
+
+`https://itch.io/dashboard` → redireciona para `/login` e responde **403 com "Just a moment"
+(Cloudflare)**. Continua valendo o que foi medido em três sistemas e com Chromium real
+(`docs/sondagens/ITCH-403-CLOUDFLARE.json`): o painel do itch não abre para IP de datacenter.
+O material do clique está pronto e conferido: `itch/devlog-gameplay-bookmarklet.txt` (5.344 B) e
+`posts/devlog-itch-gameplay.json` (1.281 B). E o texto **não fica preso**: ele já está público em
+`blog/ceifalume-gameplay.html`, no site da casa.
+
 ## Números desta rodada
 
 | prova | resultado |
