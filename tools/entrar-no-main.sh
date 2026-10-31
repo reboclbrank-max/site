@@ -34,6 +34,16 @@ GERADOS='^(marketing\.html|melhorias\.html|publicacoes\.html|postar\.html|canais
 
 log() { echo "  [$MOTIVO] $*"; }
 
+# O motivo do push recusado precisa APARECER. Sem isto o script dizia "push recusado" seis
+# vezes e escondia a causa (credencial, proteção de branch, rede) — que é o mesmo falso-verde
+# que a rodada 122 caçou no `| tee`. Nada de token vaza: o git nunca o escreve na saída.
+empurrar() {
+  local saida
+  saida=$(git push -q origin HEAD:main 2>&1) && return 0
+  log "push recusado: $(printf '%s' "$saida" | tail -n 2 | tr '\n' ' ' | cut -c1-200)"
+  return 1
+}
+
 # DEFEITO CONHECIDO DA CASA: sem user.name/user.email o `git commit` morre com "empty ident
 # name" — e aqui isso apareceria como "push recusado", escondendo a causa. Se o workflow não
 # configurou identidade, o script configura uma, em vez de falhar por motivo invisível.
@@ -85,7 +95,7 @@ for n in $(seq 1 "$TENTATIVAS"); do
   if git rebase -q origin/main >/dev/null 2>&1; then
     regerar
     git commit -q --amend --no-edit >/dev/null 2>&1 || true
-    if git push -q origin HEAD:main 2>/dev/null; then
+    if empurrar; then
       log "no main por rebase (tentativa $n)"; exit 0
     fi
     log "push recusado depois do rebase (tentativa $n)"
@@ -97,14 +107,14 @@ for n in $(seq 1 "$TENTATIVAS"); do
   if git merge --no-edit origin/main >/dev/null 2>&1; then
     regerar
     commit_do_merge
-    if git push -q origin HEAD:main 2>/dev/null; then
+    if empurrar; then
       log "no main por merge (tentativa $n)"; exit 0
     fi
     log "push recusado depois do merge (tentativa $n)"
   elif resolver_conflitos; then
     regerar
     commit_do_merge
-    if git push -q origin HEAD:main 2>/dev/null; then
+    if empurrar; then
       log "no main por merge resolvido nos gerados (tentativa $n)"; exit 0
     fi
     log "push recusado depois do merge resolvido (tentativa $n)"
