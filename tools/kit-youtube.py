@@ -36,7 +36,11 @@ JOGOS = {
         "feito_com": "Godot, feito no Brasil",
         "link": "https://reboclbrank-max.github.io/site/jogos/prancheta/",
         # a casa não tem vídeo próprio do PRANCHETA além do reel vertical do Instagram
-        "video": "media/reel.mp4",
+        # PREFERÊNCIA MEDIDA (31/10/2026): o vídeo de gameplay gravado é 1280x720 (16:9) e tem
+        # 59 s; o reel é 1080x1350 (4:5), formato fora do padrão do YouTube. Entre publicar o
+        # certo e publicar o que estava mais à mão, o certo vence — o reel fica como reserva.
+        "video": "media/gameplay/prancheta-gameplay.mp4",
+        "video_reserva": "media/reel.mp4",
         "capa": "media/prancheta/capa-630x500.png",
         "tags": ["prancheta", "manager de futebol", "jogo de futebol", "jogo indie brasileiro",
                  "godot", "futebol ficticio", "jogo de navegador"],

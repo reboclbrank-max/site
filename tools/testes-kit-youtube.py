@@ -56,10 +56,18 @@ for slug, p in pacotes.items():
     # 6. o pacote é acionável: o dono tem passo a passo
     ok(f"{slug}: o dono recebe passo a passo", len(p["passos_do_dono"]) >= 4)
 
-# 7. formato declarado com honestidade (4:5 não é 9:16, e o kit diz isso)
-aviso = pacotes["prancheta"].get("aviso_formato") or ""
-ok("vertical fora do 9:16 é avisado, não escondido", "9:16" in aviso, aviso[:60])
-ok("16:9 não ganha aviso", pacotes["ceifalume"].get("aviso_formato") is None)
+# 7. formato declarado com honestidade. A REGRA é "vertical fora do 9:16 é avisado", testada
+# contra o arquivo 4:5 de verdade (media/reel.mp4) — não contra a escolha atual do kit, que
+# passou a preferir o gameplay 16:9 (31/10/2026). Testar a escolha em vez da regra fazia o
+# teste quebrar quando a escolha melhorava.
+_reel = kit.JOGOS["prancheta"].get("video_reserva", "media/reel.mp4")
+_d = kit.dimensoes_mp4(_reel)
+ok("a regra do aviso reconhece o 4:5 como vertical", bool(_d) and _d[1] > _d[0], _d)
+_aviso = ("vertical %dx%d" % _d) if (_d and _d[1] > _d[0] and abs(_d[0] / float(_d[1]) - 9 / 16.0) > 0.02) else None
+ok("vertical fora do 9:16 é avisado, não escondido", _aviso is not None, _aviso)
+ok("16:9 não ganha aviso",
+   all(p.get("aviso_formato") is None for p in pacotes.values()), 
+   {k: v.get("aviso_formato") for k, v in pacotes.items()})
 
 # 8. o kit NÃO envia nada: sem upload, sem OAuth, sem POST
 fonte = open(os.path.join(RAIZ, "tools", "kit-youtube.py"), encoding="utf-8").read()
@@ -82,5 +90,21 @@ _ruim3["arquivo"] = "media/nao-existe.mp4"
 _ruim3["arquivo_existe"] = False
 ok("arquivo ausente é recusado", any("ausente" in e for e in kit.validar(_ruim3)))
 
+# PREFERÊNCIA MEDIDA (31/10/2026): o kit do YouTube tem de apontar para o vídeo 16:9 quando ele
+# existe. Publicar o reel 4:5 por ser o arquivo mais à mão é escolher o errado por conveniência.
+_cfg = open(os.path.join(RAIZ, "tools", "kit-youtube.py"), encoding="utf-8").read()
+ok("o kit do YouTube prefere o gameplay 16:9 ao reel 4:5",
+         'media/gameplay/prancheta-gameplay.mp4' in _cfg
+         and _cfg.index('media/gameplay/prancheta-gameplay.mp4') < _cfg.index('"video_reserva"'))
+ok("o reel continua registrado como reserva (nada foi jogado fora)", '"video_reserva"' in _cfg)
+
 print("\n%d/%d testes do kit do YouTube passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)
+
+# PREFERÊNCIA MEDIDA (31/10/2026): o kit do YouTube tem de apontar para o vídeo 16:9 quando ele
+# existe. Publicar o reel 4:5 por ser o arquivo mais à mão é escolher o errado por conveniência.
+_cfg = open(os.path.join(RAIZ, "tools", "kit-youtube.py"), encoding="utf-8").read()
+ok("o kit do YouTube prefere o gameplay 16:9 ao reel 4:5",
+         'media/gameplay/prancheta-gameplay.mp4' in _cfg and
+         _cfg.index('media/gameplay/prancheta-gameplay.mp4') < _cfg.index('"video_reserva"'))
+ok("o reel continua registrado como reserva (nada foi jogado fora)", '"video_reserva"' in _cfg)

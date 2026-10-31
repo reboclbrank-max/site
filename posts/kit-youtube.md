@@ -5,20 +5,20 @@
 
 | jogo | arquivo | formato | título | tags |
 |---|---|---|---|---|
-| prancheta | media/reel.mp4 | Short (vertical) | PRANCHETA — simulador de gestão de futebol 100% fictício (jo | 7 |
+| prancheta | media/gameplay/prancheta-gameplay.mp4 | vídeo normal (16:9) | PRANCHETA — simulador de gestão de futebol 100% fictício (jo | 7 |
 | ceifalume | media/ceifalume/ceifalume-trailer-0.1.mp4 | vídeo normal (16:9) | CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie bra | 7 |
 
 ---
 
 ## PRANCHETA
 
-**Arquivo:** `media/reel.mp4` (1080×1350)
+**Arquivo:** `media/gameplay/prancheta-gameplay.mp4` (1280×720)
 
 **Passos do dono:**
 - 1. Abrir https://studio.youtube.com e escolher 'Criar > Enviar vídeos'
-- 2. Arrastar media/reel.mp4
+- 2. Arrastar media/gameplay/prancheta-gameplay.mp4
 - 3. Colar o título e a descrição deste pacote (copiar dos blocos abaixo)
-- 4. Marcar como Short e publicar
+- 4. Marcar como vídeo normal e publicar
 
 **Título (copiar):**
 

@@ -155,6 +155,14 @@ ok("o resultado medido é ligado à escolha", _apurados == 1
    and _depois["escolhas"][0]["resultado"]["engajamento"] == 7)
 _apurados2, _ = j.apurar_resultado(caminho=_caminho_mem, feed=_feed)
 ok("apurar duas vezes não duplica", _apurados2 == 0)
+# DEFEITO MEDIDO (31/10/2026): o arquivo dava 404 no repositório porque só nascia no ciclo que
+# publica — e os ciclos caíam na trava de cadência. Agora o lugar da memória existe sempre.
+_novo = os.path.join(tmp, "memoria-nova.json")
+ok("a memória é criada vazia quando não existe", j.garantir_memoria(_novo) is True
+   and os.path.exists(_novo))
+ok("a memória criada não inventa escolha", j.ler_memoria(_novo)["escolhas"] == [])
+ok("criar duas vezes não sobrescreve", j.garantir_memoria(_novo) is False)
+ok("a memória criada é legível e diz o que é", "_o_que_e" in json.load(open(_novo, encoding="utf-8")))
 ok("memória ausente devolve lista vazia (não explode)",
    j.ler_memoria(os.path.join(tmp, "nao-existe.json"))["escolhas"] == [])
 ok("memória corrompida devolve lista vazia",
