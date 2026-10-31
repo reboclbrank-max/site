@@ -1,0 +1,842 @@
+{
+ "quando": "2026-10-31T00:20:58Z",
+ "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
+ "resumo": {
+  "ciclos_de_marketing": 103,
+  "posts_sociais_registrados": 96,
+  "canais_com_publicacao": 5,
+  "videos_no_youtube": 2,
+  "documentos": 10,
+  "paginas_publicas": 20,
+  "arquivos_de_midia": 11
+ },
+ "canais": {
+  "cerebro": {
+   "ciclos": 100,
+   "ok": 52,
+   "ultimo": "✅ post novo criado",
+   "quando": "13/10/2026 03:02 UTC"
+  },
+  "destino editorial": {
+   "ciclos": 37,
+   "ok": 37,
+   "ultimo": "✅ rota oficial prancheta",
+   "quando": "21/10/2026 21:49 UTC"
+  },
+  "tema do ciclo": {
+   "ciclos": 17,
+   "ok": 17,
+   "ultimo": "✅ fale da alegria do primeiro jogador que nao e da familia",
+   "quando": "26/10/2026 04:53 UTC"
+  },
+  "ntfy (push do dono)": {
+   "ciclos": 103,
+   "ok": 103,
+   "ultimo": "✅ push 200",
+   "quando": "13/10/2026 02:27 UTC"
+  },
+  "telegram": {
+   "ciclos": 103,
+   "ok": 0,
+   "ultimo": "",
+   "quando": ""
+  },
+  "bluesky": {
+   "ciclos": 103,
+   "ok": 100,
+   "ultimo": "✅ postado 200",
+   "quando": "13/10/2026 02:45 UTC"
+  },
+  "mastodon": {
+   "ciclos": 103,
+   "ok": 0,
+   "ultimo": "",
+   "quando": ""
+  },
+  "reel semanal": {
+   "ciclos": 87,
+   "ok": 0,
+   "ultimo": "",
+   "quando": ""
+  },
+  "instagram": {
+   "ciclos": 94,
+   "ok": 33,
+   "ultimo": "✅ postado id 18118576288983",
+   "quando": "13/10/2026 14:18 UTC"
+  },
+  "threads": {
+   "ciclos": 101,
+   "ok": 100,
+   "ultimo": "✅ publicado id 181288261278",
+   "quando": "13/10/2026 02:45 UTC"
+  },
+  "nostr": {
+   "ciclos": 102,
+   "ok": 101,
+   "ultimo": "✅ nota em 2 relays (id 5ac6fe56d2)",
+   "quando": "13/10/2026 02:37 UTC"
+  },
+  "discord": {
+   "ciclos": 103,
+   "ok": 0,
+   "ultimo": "",
+   "quando": ""
+  },
+  "respondedor de conversa": {
+   "ciclos": 22,
+   "ok": 4,
+   "ultimo": "✅ 3 resposta(s) enviada(s) de 7 pendente(s)",
+   "quando": "24/10/2026 23:18 UTC"
+  },
+  "cacador de oportunidades": {
+   "ciclos": 100,
+   "ok": 82,
+   "ultimo": "✅ 1 interacoes (q=#gamedev)",
+   "quando": "13/10/2026 03:02 UTC"
+  },
+  "aula do cerebro": {
+   "ciclos": 100,
+   "ok": 100,
+   "ultimo": "✅ cerebro calado hoje",
+   "quando": "13/10/2026 03:02 UTC"
+  },
+  "descobridor de redes": {
+   "ciclos": 94,
+   "ok": 94,
+   "ultimo": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
+   "quando": "13/10/2026 13:42 UTC"
+  },
+  "censo mundial": {
+   "ciclos": 94,
+   "ok": 94,
+   "ultimo": "✅ censo de hoje ja registrado (1 por dia)",
+   "quando": "13/10/2026 13:42 UTC"
+  },
+  "vigia da caixa (auto-recovery)": {
+   "ciclos": 95,
+   "ok": 95,
+   "ultimo": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
+   "quando": "13/10/2026 03:42 UTC"
+  },
+  "regua de metas (medicao)": {
+   "ciclos": 91,
+   "ok": 90,
+   "ultimo": "✅ bsky_seg=13 ig_seg=0 ig_posts=4 itch_dl=? yt=PENDENTE-PORTA",
+   "quando": "13/10/2026 15:11 UTC"
+  }
+ },
+ "posts": [
+  {
+   "quando": "30/10/2026 18:03 UTC",
+   "texto": "Tática na PRANCHETA (grátis, Godot, Brasil) ou lavoura noturna no CEIFALUME 0.1 (cresce 8h offline). Dois jeitos de jogar, uma paixão solo dev. 🇧🇷💚 #PRANCHETA #CEIFALUME"
+  },
+  {
+   "quando": "30/10/2026 15:58 UTC",
+   "texto": "💰 No CEIFALUME o preço do mercado muda todo dia. ⏎ Vender tudo de uma vez é o jeito fácil de ganhar menos."
+  },
+  {
+   "quando": "29/10/2026 23:30 UTC",
+   "texto": "Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática pura no Godot. Desenhe jogadas, simule grátis no navegador/APK. CEIFALUME 0.1: fazenda idle noturna que não dorme — cresce 8h offline. #GodotEngine #IndieBR"
+  },
+  {
+   "quando": "29/10/2026 18:31 UTC",
+   "texto": "Dois mundos, um código feito com carinho no Brasil 🇧🇷❤️ Desenhe jogadas e veja a partida rolar no **PRANCHETA** (grátis no navegador/APK, Godot) ou cuide da lavoura que cresce enquanto você dorme no **CEIFALUME 0.1**. Su"
+  },
+  {
+   "quando": "29/10/2026 13:49 UTC",
+   "texto": "E aí, comunidade! 🌟 Sou o REBOCL BRANK, desenvolvedor solo brasileiro. O PRANCHETA é um simulador de gestão de futebol 100% fictício: você desenha a bola parada na prancheta e vê a partida simular ao vivo ou instantâneo,"
+  },
+  {
+   "quando": "29/10/2026 00:53 UTC",
+   "texto": "Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática na prancheta, simulação viva (Godot, grátis nav/APK). CEIFALUME 0.1: fazenda noturna idle que Bastidores e artes novas também no Instagram — todos os canais no link."
+  },
+  {
+   "quando": "28/10/2026 20:20 UTC",
+   "texto": "🌙 CEIFALUME é idle de fazenda noturna, grátis e sem instalar. ⏎ Plante antes de dormir; a lavoura cresce até 8 h com o jogo fechado."
+  },
+  {
+   "quando": "28/10/2026 13:04 UTC",
+   "texto": "Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grátis no navegador/APK) ou cuidar da lavoura que cresce enquanto você d Bastidores e artes novas também no Instagram — todos os canais no link."
+  },
+  {
+   "quando": "27/10/2026 22:17 UTC",
+   "texto": "PRANCHETA: desenhe a bola parada e veja o jogo simular, grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, plantações crescem 8h offline Bastidores e artes novas também no Instagram — todos os canais no link."
+  },
+  {
+   "quando": "27/10/2026 19:43 UTC",
+   "texto": "Dois mundos, um dev brasileiro 🇧🇷✨ PRANCHETA: tático de futebol fictício, grátis no navegador/APK (Godot). CEIFALUME 0.1: fazenda noturna idle onde a colheita cresce enquanto você dorme 🌙🌱 Feito com carinho aqui. #Gamede"
+  },
+  {
+   "quando": "27/10/2026 15:25 UTC",
+   "texto": "Dois mundos, um código feito com carinho no Brasil 🇧🇷✨ Desenhe jogadas e veja a partida rolar no **PRANCHETA** (grátis no navegador/APK, Godot) ou cuide da lavoura noturna no **CEIFALUME 0.1**: a fazenda não dorme, as co"
+  },
+  {
+   "quando": "27/10/2026 12:10 UTC",
+   "texto": "Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: futebol tático na prancheta (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna onde a colheita cresce enquanto você dorme 🌙🌱 Feito com carinho aqui. #GamedevBR #Godo"
+  },
+  {
+   "quando": "26/10/2026 23:51 UTC",
+   "texto": "Tática na PRANCHETA ⚽ ou colheita noturna no CEIFALUME 🌙? Dois projetos solo, feitos no Brasil com Godot. PRANCHETA: grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, cresce 8h offline. Qual seu estilo? #gamed"
+  },
+  {
+   "quando": "26/10/2026 13:09 UTC",
+   "texto": "Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? Dois jeitos de jogar, ambos feitos com carinho no Brasil (Godot). Grátis n Bastidores e artes novas também no Instagram — todos os canais no link."
+  },
+  {
+   "quando": "26/10/2026 04:53 UTC",
+   "texto": "Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna que cresce enquanto você dorme 🌙🌱 Feito com carinho aqui no Brasil. #IndieDevBR #GodotEngine"
+  },
+  {
+   "quando": "25/10/2026 23:18 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "25/10/2026 20:54 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "25/10/2026 16:09 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "25/10/2026 11:35 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "25/10/2026 04:50 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "24/10/2026 23:18 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "24/10/2026 15:57 UTC",
+   "texto": "🌙 CEIFALUME 0.1 já está no ar. ⏎ Plante, colha e negocie à luz da lanterna: a fazenda continua trabalhando até 8 h com o jogo fechado. ⏎ Grátis no navegador e Android, sem conta. ⏎ #indiedev #idle"
+  },
+  {
+   "quando": "24/10/2026 11:09 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "24/10/2026 04:42 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "24/10/2026 02:05 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "23/10/2026 21:28 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "23/10/2026 17:15 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "23/10/2026 11:44 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "23/10/2026 04:57 UTC",
+   "texto": "🌙 CEIFALUME 0.1: plante, colha e negocie à luz da lanterna. As plantações continuam até 8 h com o jogo fechado. ⏎ Grátis, sem conta, no navegador ou Android. ⏎ #gamedev #idle"
+  },
+  {
+   "quando": "23/10/2026 02:02 UTC",
+   "texto": "📊 No PRANCHETA, desenhe a bola parada e veja a partida simular: lances ao vivo ou resultado instantâneo, do jeito que o técnico prefere. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "22/10/2026 21:42 UTC",
+   "texto": "🌙 CEIFALUME 0.1 já está no ar. ⏎ Plante, colha e negocie à luz da lanterna: a fazenda continua trabalhando até 8 h com o jogo fechado. ⏎ Grátis no navegador e Android, sem conta. ⏎ #indiedev #idle"
+  },
+  {
+   "quando": "22/10/2026 17:15 UTC",
+   "texto": "🎮 Jogou PRANCHETA esta semana? Conta: lances ao vivo ou resultado instantâneo — qual é seu jeito de decidir? ⏎ Grátis no navegador ou APK."
+  },
+  {
+   "quando": "22/10/2026 11:59 UTC",
+   "texto": "🧠 Por que 100% fictício? Times, jogadores e campeonatos nascem do zero: só tática de verdade. ⏎ PRANCHETA é grátis no navegador ou APK. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "22/10/2026 04:57 UTC",
+   "texto": "⚽ Pra quem curte manager de futebol: PRANCHETA deixa você desenhar a bola parada e assistir à partida simular. Mundo 100% fictício, offline e grátis."
+  },
+  {
+   "quando": "21/10/2026 21:49 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "21/10/2026 16:10 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "21/10/2026 11:44 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "21/10/2026 04:58 UTC",
+   "texto": "🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idl"
+  },
+  {
+   "quando": "20/10/2026 23:57 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "20/10/2026 19:21 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "20/10/2026 14:21 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "20/10/2026 08:37 UTC",
+   "texto": "🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idl"
+  },
+  {
+   "quando": "20/10/2026 05:29 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "20/10/2026 00:25 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "19/10/2026 20:38 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "19/10/2026 13:24 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "19/10/2026 04:47 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "18/10/2026 23:20 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "18/10/2026 20:52 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "18/10/2026 15:58 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "18/10/2026 11:14 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "18/10/2026 04:42 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "17/10/2026 23:13 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "17/10/2026 20:42 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "17/10/2026 17:58 UTC",
+   "texto": "🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idl"
+  },
+  {
+   "quando": "17/10/2026 13:03 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "17/10/2026 07:54 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "16/10/2026 23:52 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "16/10/2026 21:37 UTC",
+   "texto": "🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idl"
+  },
+  {
+   "quando": "16/10/2026 19:24 UTC",
+   "texto": "🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idl"
+  },
+  {
+   "quando": "16/10/2026 16:34 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "16/10/2026 14:03 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "16/10/2026 10:58 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "16/10/2026 08:01 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "16/10/2026 03:48 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "15/10/2026 23:39 UTC",
+   "texto": "🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idl"
+  },
+  {
+   "quando": "15/10/2026 20:52 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "15/10/2026 18:56 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "15/10/2026 16:43 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "15/10/2026 14:07 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "15/10/2026 11:00 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "15/10/2026 08:04 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "15/10/2026 03:50 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "14/10/2026 23:47 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "14/10/2026 21:15 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "14/10/2026 19:11 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "14/10/2026 16:52 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "14/10/2026 14:29 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "14/10/2026 11:21 UTC",
+   "texto": "📊 No PRANCHETA você desenha a bola parada na prancheta e assiste a partida simular — lances ao vivo ou resultado instantâneo, do jeito que o técnico tem pressa (ou não). ⏎ #indiedev #gamedev"
+  },
+  {
+   "quando": "14/10/2026 08:29 UTC",
+   "texto": "⚽ Pra quem curte manager de futebol: PRANCHETA — você é o técnico, desenha a bola parada na prancheta e assiste a partida simular (ao vivo, lances ou instantâneo). 100% fictício, offline, grátis."
+  },
+  {
+   "quando": "14/10/2026 04:06 UTC",
+   "texto": "🌙 Em breve: CEIFALUME. ⏎ A fazenda não dorme — plante à luz da lanterna, as plantações crescem MESMO com o jogo fechado, e o mercado muda de preço todo dia. ⏎ Um idle de fazenda feito no Brasil. ⏎ #indiedev #gamedev #idl"
+  },
+  {
+   "quando": "13/10/2026 22:12 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "13/10/2026 20:07 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "13/10/2026 19:06 UTC",
+   "texto": "⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA: manager de futebol 100% fictício onde a prancheta é o controle — desenhe a bola parada e veja a partida simular ao vivo. ⏎ Grátis no navegador ou APK. Feito no Brasil com Godot. ⏎"
+  },
+  {
+   "quando": "13/10/2026 17:47 UTC",
+   "texto": "🧠 Por que 100% fictício? Porque a casa não deve nada a liga nenhuma: times, jogadores e campeonatos nascem do zero. Só tática de verdade. ⏎ PRANCHETA, grátis no navegador ou APK. ⏎ #indiedev #gamedev #indiebrasil"
+  },
+  {
+   "quando": "13/10/2026 15:30 UTC",
+   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? ⏎ Grátis no navegador ou APK."
+  },
+  {
+   "quando": "13/10/2026 15:19 UTC",
+   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? ⏎ Grátis no navegador ou APK."
+  },
+  {
+   "quando": "13/10/2026 15:11 UTC",
+   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? ⏎ Grátis no navegador ou APK."
+  },
+  {
+   "quando": "13/10/2026 15:06 UTC",
+   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? ⏎ Grátis no navegador ou APK."
+  },
+  {
+   "quando": "13/10/2026 14:18 UTC",
+   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? ⏎ Grátis no navegador ou APK."
+  },
+  {
+   "quando": "13/10/2026 14:13 UTC",
+   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? ⏎ Grátis no navegador ou APK."
+  },
+  {
+   "quando": "13/10/2026 13:42 UTC",
+   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? ⏎ Grátis no navegador ou APK."
+  },
+  {
+   "quando": "13/10/2026 03:42 UTC",
+   "texto": "🌙 Devlog CEIFALUME: plantações crescem MESMO com o jogo fechado — o relógio da fazenda não para. Acompanhe os devlogs da série no itch. ⏎ #gamedev #indiedev #idle"
+  },
+  {
+   "quando": "13/10/2026 03:26 UTC",
+   "texto": "🌙 Devlog CEIFALUME: plantações crescem MESMO com o jogo fechado — o relógio da fazenda não para. Acompanhe os devlogs da série no itch. ⏎ #gamedev #indiedev #idle"
+  },
+  {
+   "quando": "13/10/2026 03:17 UTC",
+   "texto": "🌙 Devlog CEIFALUME: plantações crescem MESMO com o jogo fechado — o relógio da fazenda não para. Acompanhe os devlogs da série no itch. ⏎ #gamedev #indiedev #idle"
+  },
+  {
+   "quando": "13/10/2026 03:10 UTC",
+   "texto": "🎮 Jogou PRANCHETA essa semana? Conta pra mim: lances ao vivo ou resultado instantâneo — qual o seu jeito de treinar? ⏎ Grátis no navegador ou APK."
+  }
+ ],
+ "videos": [
+  {
+   "slug": "ceifalume",
+   "id": "VIDEO123",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
+   "quando": "2026-10-30T23:52:38Z",
+   "link": "",
+   "real": false
+  },
+  {
+   "slug": "ceifalume-gameplay",
+   "id": "GuE7af6dYo8",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "quando": "2026-10-30T15:32:48Z",
+   "link": "https://youtu.be/GuE7af6dYo8",
+   "real": true
+  },
+  {
+   "slug": "ceifalume",
+   "id": "2qsSknSyeAs",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "quando": "2026-10-27T15:34:14Z",
+   "link": "https://youtu.be/2qsSknSyeAs",
+   "real": true
+  }
+ ],
+ "documentos": [
+  {
+   "arquivo": "docs/PLANO-MARKETING-24H.md",
+   "titulo": "Plano de marketing 24h — arquitetura medida",
+   "selo": {
+    "bytes": 7492,
+    "sha256": "b1c53a149afb0ca4"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-111-VIDEO-INSTRUCOES.md",
+   "titulo": "Rodada 111 — vídeo de gameplay com as instruções de como jogar na tela, sempre",
+   "selo": {
+    "bytes": 2780,
+    "sha256": "61e742ba0045e7f8"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-112-GAMEPLAY-NO-SITE.md",
+   "titulo": "Rodada 112 — o vídeo saiu do canal e chegou no site; a gravação parou de falhar calada",
+   "selo": {
+    "bytes": 16452,
+    "sha256": "36f2ba36d2dfab7d"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-115-MARKETING-AUTONOMO.md",
+   "titulo": "Rodada 115 — marketing autônomo: o que já roda sozinho, medido",
+   "selo": {
+    "bytes": 3825,
+    "sha256": "e64e8e5245bcc706"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-116-SABEDORIA-DAS-DECISOES.md",
+   "titulo": "Rodada 116 — a sabedoria das decisões (o que a casa decide, o que ela recusa, o que ela não sabe)",
+   "selo": {
+    "bytes": 4341,
+    "sha256": "8d82b4ab803b503d"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-117-INTELIGENCIA-MEDIDA.md",
+   "titulo": "Rodada 117 — a inteligência medida (não a prometida)",
+   "selo": {
+    "bytes": 3759,
+    "sha256": "14d7dea92fcea774"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-118-O-QUE-PRECISA-SER-FEITO.md",
+   "titulo": "Rodada 118 — o olho: saber o que precisa ser feito",
+   "selo": {
+    "bytes": 4980,
+    "sha256": "2bd2a1e7f665516f"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-119-MENTE-QUE-ESCOLHE.md",
+   "titulo": "Rodada 119 — a mente que escolhe (juízo, gosto aprendido e revisão)",
+   "selo": {
+    "bytes": 6577,
+    "sha256": "570ca2cfa7af379c"
+   }
+  },
+  {
+   "arquivo": "docs/RODADA-120-MELHORIAS-PUBLICAS.md",
+   "titulo": "Rodada 120 — as melhorias agora têm endereço público",
+   "selo": {
+    "bytes": 1845,
+    "sha256": "5e21091540ef080e"
+   }
+  },
+  {
+   "arquivo": "docs/VIDEO-GAMEPLAY.md",
+   "titulo": "Vídeo de gameplay — o que agora é medido, não prometido",
+   "selo": {
+    "bytes": 12227,
+    "sha256": "1dab0e5a47cf8301"
+   }
+  }
+ ],
+ "paginas": [
+  {
+   "arquivo": "canais.html",
+   "selo": {
+    "bytes": 7184,
+    "sha256": "1727c70fdc6b1779"
+   },
+   "url": "https://reboclbrank-max.github.io/site/canais.html"
+  },
+  {
+   "arquivo": "comite.html",
+   "selo": {
+    "bytes": 29820,
+    "sha256": "4fa39f17ee212e4d"
+   },
+   "url": "https://reboclbrank-max.github.io/site/comite.html"
+  },
+  {
+   "arquivo": "escola.html",
+   "selo": {
+    "bytes": 3343,
+    "sha256": "0fc79cbc5841eb35"
+   },
+   "url": "https://reboclbrank-max.github.io/site/escola.html"
+  },
+  {
+   "arquivo": "index.html",
+   "selo": {
+    "bytes": 13685,
+    "sha256": "c0942bdf8ca12917"
+   },
+   "url": "https://reboclbrank-max.github.io/site/"
+  },
+  {
+   "arquivo": "jogos.html",
+   "selo": {
+    "bytes": 3255,
+    "sha256": "4b17c4ecdda44233"
+   },
+   "url": "https://reboclbrank-max.github.io/site/jogos.html"
+  },
+  {
+   "arquivo": "marketing.html",
+   "selo": {
+    "bytes": 14678,
+    "sha256": "fd45123ae242186b"
+   },
+   "url": "https://reboclbrank-max.github.io/site/marketing.html"
+  },
+  {
+   "arquivo": "melhorias.html",
+   "selo": {
+    "bytes": 8834,
+    "sha256": "1dc55fc871016152"
+   },
+   "url": "https://reboclbrank-max.github.io/site/melhorias.html"
+  },
+  {
+   "arquivo": "museu.html",
+   "selo": {
+    "bytes": 226788,
+    "sha256": "959bee2b9addade2"
+   },
+   "url": "https://reboclbrank-max.github.io/site/museu.html"
+  },
+  {
+   "arquivo": "oauth-youtube.html",
+   "selo": {
+    "bytes": 3704,
+    "sha256": "0db038b5d8986d9b"
+   },
+   "url": "https://reboclbrank-max.github.io/site/oauth-youtube.html"
+  },
+  {
+   "arquivo": "postar.html",
+   "selo": {
+    "bytes": 10463,
+    "sha256": "559892cc1dd855ec"
+   },
+   "url": "https://reboclbrank-max.github.io/site/postar.html"
+  },
+  {
+   "arquivo": "privacidade.html",
+   "selo": {
+    "bytes": 2684,
+    "sha256": "d4c4bce26a1c1093"
+   },
+   "url": "https://reboclbrank-max.github.io/site/privacidade.html"
+  },
+  {
+   "arquivo": "publicacoes.html",
+   "selo": {
+    "bytes": 14471,
+    "sha256": "2f0eff9c1fb730a5"
+   },
+   "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
+  },
+  {
+   "arquivo": "termos.html",
+   "selo": {
+    "bytes": 2613,
+    "sha256": "a1a98745bc144972"
+   },
+   "url": "https://reboclbrank-max.github.io/site/termos.html"
+  },
+  {
+   "arquivo": "vitrina.html",
+   "selo": {
+    "bytes": 8285,
+    "sha256": "18c36df607adeaa7"
+   },
+   "url": "https://reboclbrank-max.github.io/site/vitrina.html"
+  },
+  {
+   "arquivo": "blog/ceifalume-01-o-que-e-que-vem.html",
+   "selo": {
+    "bytes": 2934,
+    "sha256": "d3272d5e446e934a"
+   },
+   "url": "https://reboclbrank-max.github.io/site/blog/ceifalume-01-o-que-e-que-vem.html"
+  },
+  {
+   "arquivo": "blog/ceifalume-gameplay.html",
+   "selo": {
+    "bytes": 3003,
+    "sha256": "f6696f117267397a"
+   },
+   "url": "https://reboclbrank-max.github.io/site/blog/ceifalume-gameplay.html"
+  },
+  {
+   "arquivo": "blog/ceifalume-no-navegador.html",
+   "selo": {
+    "bytes": 2346,
+    "sha256": "7f0b46d1fab5cc7d"
+   },
+   "url": "https://reboclbrank-max.github.io/site/blog/ceifalume-no-navegador.html"
+  },
+  {
+   "arquivo": "blog/index.html",
+   "selo": {
+    "bytes": 2699,
+    "sha256": "81a2c744b661b652"
+   },
+   "url": "https://reboclbrank-max.github.io/site/blog/"
+  },
+  {
+   "arquivo": "jogos/ceifalume/index.html",
+   "selo": {
+    "bytes": 11054,
+    "sha256": "9abc42d7e5b6016d"
+   },
+   "url": "https://reboclbrank-max.github.io/site/jogos/ceifalume/"
+  },
+  {
+   "arquivo": "jogos/prancheta/index.html",
+   "selo": {
+    "bytes": 10098,
+    "sha256": "a22499d46307f850"
+   },
+   "url": "https://reboclbrank-max.github.io/site/jogos/prancheta/"
+  }
+ ],
+ "midia": [
+  {
+   "arquivo": "media/ceifalume/ceifalume-trailer-0.1.mp4",
+   "bytes": 3473373,
+   "sha256": "e072a8546fd732f0"
+  },
+  {
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "bytes": 4545766,
+   "sha256": "eb7c171d624b7a79"
+  },
+  {
+   "arquivo": "media/gameplay/ceifalume-gameplay.mp4",
+   "bytes": 5265224,
+   "sha256": "ae4705b75293e516"
+  },
+  {
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "bytes": 1086162,
+   "sha256": "b8d7b0ea156f1220"
+  },
+  {
+   "arquivo": "media/reel.mp4",
+   "bytes": 1680460,
+   "sha256": "96c5abf1c5a8a1ec"
+  },
+  {
+   "arquivo": "media/ceifalume/perfil-rb-itch-630x500.png",
+   "bytes": 17397,
+   "sha256": "e46e1240d9531a36"
+  },
+  {
+   "arquivo": "media/ceifalume/shot-dia9-chuva-1280x720.png",
+   "bytes": 759314,
+   "sha256": "d446715e93c97054"
+  },
+  {
+   "arquivo": "media/ceifalume/shot-jogo-1280x720.png",
+   "bytes": 759851,
+   "sha256": "7a947b7c09036781"
+  },
+  {
+   "arquivo": "media/gameplay/cartao.png",
+   "bytes": 33942,
+   "sha256": "9f7d958b39483b81"
+  },
+  {
+   "arquivo": "media/prancheta/capa-630x500.png",
+   "bytes": 110213,
+   "sha256": "136fc65847d04ec7"
+  },
+  {
+   "arquivo": "media/prancheta/icone-192.png",
+   "bytes": 5525,
+   "sha256": "7c26192e10d81632"
+  }
+ ]
+}

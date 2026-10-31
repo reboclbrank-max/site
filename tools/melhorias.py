@@ -229,6 +229,7 @@ suíte falha, o ciclo não publica.</p>
 
 <footer>Gerado em %(agora)s pelo workflow postagem-diaria ·
 <a href="%(base)s/marketing.html">painel do marketing</a> ·
+<a href="%(base)s/publicacoes.html">arquivo de publicações</a> ·
 <a href="%(base)s/canais.html">canais oficiais</a> ·
 <a href="%(base)s/">site</a></footer>
 </main></body></html>

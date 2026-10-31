@@ -1,12 +1,12 @@
 {
- "quando": "2026-10-30T23:52:36Z",
+ "quando": "2026-10-31T00:21:14Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
    "alvo": "30",
    "observado": "18",
    "falta": "12",
-   "por_dia": "0.92",
+   "por_dia": "1.0",
    "status": "EM_CURSO"
   },
   {
@@ -14,7 +14,7 @@
    "alvo": "50",
    "observado": "0",
    "falta": "50",
-   "por_dia": "3.85",
+   "por_dia": "4.17",
    "status": "EM_CURSO"
   },
   {
@@ -22,7 +22,7 @@
    "alvo": "100",
    "observado": "46",
    "falta": "54",
-   "por_dia": "4.15",
+   "por_dia": "4.5",
    "status": "EM_CURSO"
   },
   {
@@ -46,9 +46,9 @@
   {
    "formato": "conteúdo dos jogos",
    "posts": 90,
-   "media": 1.89,
-   "zeros": 17,
-   "zeros_pct": 18.9
+   "media": 1.9,
+   "zeros": 16,
+   "zeros_pct": 17.8
   },
   {
    "formato": "comentário em post alheio",
@@ -181,7 +181,7 @@
   }
  ],
  "aprendizado": {
-  "quando": "2026-10-30T23:26:30Z",
+  "quando": "2026-10-30T23:53:25Z",
   "confiavel": false,
   "melhor_hora": null,
   "decisao": "manter",
@@ -192,7 +192,7 @@
    "elegiveis": 2,
    "amostra_minima": 30,
    "mediana": 1.22,
-   "desvio": 0.5048989032413628,
+   "desvio": 0.4995757837594021,
    "melhor": {
     "hora": 1,
     "media": 1.22,
