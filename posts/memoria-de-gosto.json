@@ -1,4 +1,15 @@
 {
  "_o_que_e": "memória das escolhas de texto: justificativa, candidatos, revisão e resultado medido",
- "escolhas": []
+ "escolhas": [
+  {
+   "quando": "2026-10-31T12:10:13Z",
+   "texto": "Duas paixões, um dev solo 🇧🇷 PRANCHETA: futebol fictício na prancheta, simula ao vivo ou instantâneo, grátis no navegador/APK (Godot). CEIFALUME 0.1: a fazenda noturna que cresce até 8h offline 🌙 Feito com carinho no Bra",
+   "justificativa": "escolhi o 1º de 2 (2 válidos): cita jogo, chamada, tem numero · 220 caracteres · abre diferente do último post",
+   "pontos": 5,
+   "candidatos": 2,
+   "validos": 2,
+   "revisao": [],
+   "resultado": null
+  }
+ ]
 }

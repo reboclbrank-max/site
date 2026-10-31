@@ -1,5 +1,5 @@
 {
- "quando": "2026-10-31T05:39:45Z",
+ "quando": "2026-10-31T12:10:16Z",
  "metas": [
   {
    "meta": "Instagram: publicações",
@@ -77,36 +77,12 @@
   {
    "formato": "comentário em post alheio",
    "posts": 210,
-   "media": 0.88,
+   "media": 0.89,
    "zeros": 87,
    "zeros_pct": 41.4
   }
  ],
  "ultimos_ciclos": [
-  {
-   "quando": "29/10/2026 23:30 UTC",
-   "canais": {
-    "cerebro": "✅ post novo validado — motor=g4f auto",
-    "destino editorial": "✅ rota oficial catalogo",
-    "tema do ciclo": "✅ convide pra testar o PRANCHETA e contar qual modo prefere (lances ao vivo ou ins",
-    "ntfy (push do dono)": "✅ push 200",
-    "telegram": "⚪ configuracao de publicacao ausente",
-    "bluesky": "✅ postado 200",
-    "mastodon": "⚪ configuracao de publicacao ausente",
-    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
-    "instagram": "✅ postado id 18100088000401 (arte reserva)",
-    "threads": "✅ publicado id 180792946314",
-    "nostr": "✅ nota em 2 relays",
-    "discord": "⚪ configuracao de publicacao ausente",
-    "respondedor de conversa": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
-    "cacador de oportunidades": "➖ cadencia diaria de interacao ja cumprida (2026-10-29)",
-    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
-    "descobridor de redes": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
-    "censo mundial": "✅ censo de hoje ja registrado (1 por dia)",
-    "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
-    "regua de metas (medicao)": "✅ bsky_seguidores=33(api) · ig_seguidores=0(api) · ig_posts=27(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
-   }
-  },
   {
    "quando": "30/10/2026 15:58 UTC",
    "canais": {
@@ -202,10 +178,33 @@
     "vigia da caixa (auto-recovery)": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
     "regua de metas (medicao)": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=31(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
    }
+  },
+  {
+   "quando": "31/10/2026 12:10 UTC",
+   "canais": {
+    "cerebro": "✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válidos): cita jogo, chamada, tem numero · 220 caracteres · abre diferente do último post",
+    "destino editorial": "✅ rota oficial catalogo",
+    "tema do ciclo": "✅ converse sobre vida de dev solo no Brasil e cite os jogos",
+    "ntfy (push do dono)": "✅ push 200",
+    "telegram": "⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT",
+    "bluesky": "⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS",
+    "mastodon": "⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN",
+    "reel semanal": "➖ reel sai no sabado a noite BRT (um por semana — qualidade >",
+    "instagram": "➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC",
+    "threads": "⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN",
+    "nostr": "⚪ falta o segredo NOSTR_KEY",
+    "discord": "⚪ falta o segredo DISCORD_WEBHOOK",
+    "cacador de oportunidades": "⚪ configuracao do canal ausente",
+    "aula do cerebro": "✅ licao gravada (6 perguntas no ciclo)",
+    "descobridor de redes": "✅ sem GHPAT no ambiente",
+    "censo mundial": "✅ sem GHPAT",
+    "vigia da caixa (auto-recovery)": "✅ cofare sem gmail",
+    "regua de metas (medicao)": "✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=32(api) · itch_downloads=47(api) · itch_visitas=197(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER"
+   }
   }
  ],
  "aprendizado": {
-  "quando": "2026-10-31T01:26:23Z",
+  "quando": "2026-10-31T08:57:31Z",
   "confiavel": false,
   "melhor_hora": null,
   "decisao": "manter",
@@ -216,7 +215,7 @@
    "elegiveis": 2,
    "amostra_minima": 30,
    "mediana": 1.22,
-   "desvio": 0.4995757837594021,
+   "desvio": 0.4982859509246562,
    "melhor": {
     "hora": 1,
     "media": 1.22,
@@ -285,17 +284,15 @@
  "orquestrador": {
   "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
   "versao": 1,
-  "ultima_publicacao": "2026-10-31T05:39:45Z",
+  "ultima_publicacao": "2026-10-31T12:09:40Z",
   "ultima_medicao": "2026-10-30T23:05:41Z",
   "ultima_pesquisa": "2026-10-27T12:29:44Z",
   "ultima_aprendizagem": "2026-10-27T12:39:44Z",
-  "pulsos": 14
+  "pulsos": 16
  },
  "fila": {
-  "pesquisar": "feito",
-  "medir": "pendente",
-  "aprender": "feito",
-  "publicar": "pendente"
+  "publicar": "pendente",
+  "medir": "pendente"
  },
  "_regras": [
   "número sem fonte medida não entra (NAO_OBSERVAVEL não é zero)",
