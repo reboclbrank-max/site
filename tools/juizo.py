@@ -259,6 +259,26 @@ def revisar(texto, limite=LIMITE_TEXTO):
 
 
 # ------------------------------------------------------------------ memória e resultado
+def garantir_memoria(caminho=None):
+    """Cria o arquivo da memória se ainda não existir — com a lista vazia, não com escolha falsa.
+
+    DEFEITO MEDIDO (31/10/2026): `posts/memoria-de-gosto.json` dava 404 no repositório porque o
+    arquivo só nascia no ciclo que PUBLICA, e os ciclos caíam na trava de cadência. Ausência de
+    arquivo não é ausência de memória: é memória sem lugar. Agora o lugar existe desde a primeira
+    medição e cada escolha só faz acrescentar.
+    """
+    alvo = caminho or MEMORIA
+    if os.path.exists(alvo):
+        return False
+    with open(alvo + ".tmp", "w", encoding="utf-8") as f:
+        json.dump({"_o_que_e": "memória das escolhas de texto: justificativa, candidatos, "
+                               "revisão e resultado medido",
+                   "escolhas": []}, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    os.replace(alvo + ".tmp", alvo)
+    return True
+
+
 def ler_memoria(caminho=None):
     try:
         with open(caminho or MEMORIA, encoding="utf-8") as f:
@@ -320,6 +340,7 @@ def main(argv):
         json.dump(p, f, ensure_ascii=False, indent=1)
         f.write("\n")
     os.replace(PERFIL_SAIDA + ".tmp", PERFIL_SAIDA)
+    criada = garantir_memoria()
     apurados, dados = apurar_resultado()
     print("juízo: %d traço(s) com peso medido · %d declarado(s) · amostra do feed: %d"
           % (len(p["medidos"]), len(p["declarados"]), p["amostra"]))
@@ -328,6 +349,8 @@ def main(argv):
         print("  medido: %s peso %+d (com %.2f vs sem %.2f, ganho %.2f > desvio %.2f)"
               % (nome, item["peso"], item["com"]["media"], item["sem"]["media"],
                  item["ganho"], item["desvio"]))
+    if criada:
+        print("memória de gosto criada (vazia): %s" % MEMORIA)
     print("escolhas registradas: %d · resultados apurados agora: %d"
           % (len(dados["escolhas"]), apurados))
     if not feed:

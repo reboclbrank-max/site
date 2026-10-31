@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-10-31T00:20:58Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-10-31T00:38:58Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
@@ -12,7 +12,7 @@ Gerado em 2026-10-31T00:20:58Z. Este arquivo é o inventário do que já foi pub
 | posts sociais registrados | 96 |
 | canais que já publicaram | 5 |
 | vídeos no YouTube (com id real) | 2 |
-| documentos | 10 |
+| documentos | 11 |
 | páginas públicas | 20 |
 | arquivos de mídia | 11 |
 
@@ -61,7 +61,7 @@ Gerado em 2026-10-31T00:20:58Z. Este arquivo é o inventário do que já foi pub
 | oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
 | postar.html | 10463 | `559892cc1dd855ec` |
 | privacidade.html | 2684 | `d4c4bce26a1c1093` |
-| publicacoes.html | 14471 | `2f0eff9c1fb730a5` |
+| publicacoes.html | 14471 | `911cea57dbf5caad` |
 | termos.html | 2613 | `a1a98745bc144972` |
 | vitrina.html | 8285 | `18c36df607adeaa7` |
 | blog/ceifalume-01-o-que-e-que-vem.html | 2934 | `d3272d5e446e934a` |
@@ -84,6 +84,7 @@ Gerado em 2026-10-31T00:20:58Z. Este arquivo é o inventário do que já foi pub
 | docs/RODADA-118-O-QUE-PRECISA-SER-FEITO.md | Rodada 118 — o olho: saber o que precisa ser feito | `2bd2a1e7f665516f` |
 | docs/RODADA-119-MENTE-QUE-ESCOLHE.md | Rodada 119 — a mente que escolhe (juízo, gosto aprendido e revisão) | `570ca2cfa7af379c` |
 | docs/RODADA-120-MELHORIAS-PUBLICAS.md | Rodada 120 — as melhorias agora têm endereço público | `5e21091540ef080e` |
+| docs/RODADA-121-ARQUIVO-DAS-PUBLICACOES.md | Rodada 121 — o cofre: toda publicação fica salva, com prova | `e76fe6bef1f61536` |
 | docs/VIDEO-GAMEPLAY.md | Vídeo de gameplay — o que agora é medido, não prometido | `1dab0e5a47cf8301` |
 
 ## Últimos posts registrados (texto)
