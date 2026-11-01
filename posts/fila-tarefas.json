@@ -383,11 +383,11 @@
    "id": "publicar-20261101T004517Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-01T00:45:17Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-01T06:08:04Z",
+   "resultado": "janela: fora da janela (03h local; janela 09-22h)\nRESUMO: janela=PULADO (fora da janela (03h local; janela 09-22h))",
    "motivo": "empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 4.55 por dia",
    "chave": "meta-Instagram: seguidores",
    "origem": "perceber"
@@ -415,6 +415,18 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "medir-2026110105"
+  },
+  {
+   "id": "medir-20261101T060804Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T06:08:04Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026110106"
   }
  ]
 }
