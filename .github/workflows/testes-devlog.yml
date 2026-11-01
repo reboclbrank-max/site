@@ -41,7 +41,7 @@ jobs:
       - name: Barreiras de sintaxe e contrato
         run: |
           node tools/montar-bookmarklet.js --verificar
-          node tools/testes-bookmarklet-itch.js
+          python3 tools/rodar-contratos-isolados.py tools/testes-bookmarklet-itch.js
 
       - name: Mede o favorito de devlog
-        run: python3 tools/testes-devlog-navegador.py
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-devlog-navegador.py

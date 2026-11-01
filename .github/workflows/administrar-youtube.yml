@@ -34,9 +34,9 @@ jobs:
 
       - name: Barreiras offline (nenhuma toca a rede)
         run: |
-          python3 tools/testes-administrar-youtube.py
-          python3 tools/testes-youtube-oauth.py
-          python3 tools/testes-kit-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-administrar-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-youtube-oauth.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-kit-youtube.py
 
       - name: Administra
         env:

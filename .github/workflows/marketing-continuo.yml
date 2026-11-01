@@ -37,13 +37,13 @@ jobs:
           fetch-depth: 0
 
       - name: Contrato de preservação de estado (offline)
-        run: python3 tools/testes-conciliacao-estado.py
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-conciliacao-estado.py
       - name: Barreiras offline (nenhuma toca a rede)
         run: |
-          python3 tools/testes-v2.py
-          python3 tools/testes-gameplay.py
-          python3 tools/testes-orquestrador.py
-          python3 tools/testes-janela.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-v2.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-gameplay.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-orquestrador.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-janela.py
 
       - name: Instala o que o postador precisa
         run: pip install -q coincurve websocket-client
