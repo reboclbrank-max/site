@@ -4,7 +4,7 @@
 
 ## 01/11/2026
 
-> Medição pública em 2026-11-01T08:00Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
+> Medição pública em 2026-11-01T13:29Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
 
 - **bsky_seguidores=32 · posts_proprios=300 · eng_medio=1.19 · promo: n=90 media=1.9 zero=17.8% · comentario: n=210 media=0.89 zero=41.4% · respostas_recebidas=40 promo_respostas=1 promo_pendentes=1**
 
@@ -13,13 +13,13 @@
 | conteúdo dos jogos | 90 | 1.9 | 4 | 16 (17.8%) |
 | comentário em post alheio | 210 | 0.89 | 4 | 87 (41.4%) |
 
-**Instagram (0 seguidores · 33 posts):** IMAGE n=30 média=0.0 zero=30
+**Instagram (0 seguidores · 34 posts):** IMAGE n=30 média=0.0 zero=30
 
 **itch.io:** 47 download(s) e 198 visita(s) em 1/1 conta(s). Ceifalume: 41 · Prancheta: 6
 
-**YouTube:** 24 inscrito(s) · 163 vídeo(s) · 5449 visualizaç(ões) · shorts=7 de 100 conferido(s)
-**YouTube — o que o canal publica:** dos 100 vídeos lidos, **7 são dos jogos da casa** (286 views, média 40.9) e **93 são de outros jogos** (3472 views, média 37.3) — os da casa são 7.6% das visualizações.
-Melhores da casa: "Ceifalume: a horta acordou à noite 🌙 jog" (230) · "Desenhe a prancheta e decida a partida —" (22) · "Ceifalume — trailer oficial (jogo de faz" (11)
+**YouTube:** 24 inscrito(s) · 163 vídeo(s) · 5454 visualizaç(ões) · shorts=7 de 100 conferido(s)
+**YouTube — o que o canal publica:** dos 100 vídeos lidos, **7 são dos jogos da casa** (288 views, média 41.1) e **93 são de outros jogos** (3472 views, média 37.3) — os da casa são 7.7% das visualizações.
+Melhores da casa: "Ceifalume: a horta acordou à noite 🌙 jog" (230) · "Desenhe a prancheta e decida a partida —" (22) · "PRANCHETA — simulador de gestão de futeb" (12)
 
 **Conversa:** 40 conversa(s) lida(s). Respostas ao conteúdo da casa: 1 em 1 thread(s), 0 atendida(s), 1 pendente(s). Retorno do autor de post comentado: 39 em 38 thread(s) — é retribuição ao comentário, não fila de resposta.
 
