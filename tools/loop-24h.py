@@ -37,19 +37,17 @@ def commitar(rotulo):
     codigo, _ = rodar(["git", "add", "posts/"])
     if codigo != 0:
         return False, "git add falhou"
-    codigo, _ = rodar(["git", "-c", "user.name=rebocl",
-                       "-c", "user.email=reboclbrank@gmail.com",
-                       "commit", "-m", "🤖 pulso %s" % rotulo])
-    if codigo != 0:
+    codigo, _ = rodar(["git", "diff", "--cached", "--quiet"])
+    if codigo == 0:
         return True, "nada a commitar"
-    for _ in range(3):
-        ok_pull, _ = rodar(["git", "pull", "--rebase", "-q", "origin", "main"])
-        if ok_pull == 0:
-            ok_push, saida = rodar(["git", "push", "-q", "origin", "main"])
-            if ok_push == 0:
-                return True, "estado publicado"
-        time.sleep(4)
-    return False, "não consegui publicar o estado"
+    if codigo != 1:
+        return False, "não consegui verificar o estado"
+    codigo, _ = rodar(["git", "-c", "user.name=rebocl", "-c", "user.email=reboclbrank@gmail.com",
+                       "commit", "-m", "pulso %s" % rotulo])
+    if codigo != 0:
+        return False, "commit falhou"
+    codigo, _ = rodar(["bash", "tools/entrar-no-main.sh", "pulso %s" % rotulo])
+    return (True, "estado publicado") if codigo == 0 else (False, "estado não confirmado")
 
 
 def main(argv):
@@ -71,9 +69,12 @@ def main(argv):
         codigo, saida = rodar([sys.executable, "tools/orquestrador.py"])
         print("--- pulso %d/%d (código %d)" % (i, pulsos, codigo))
         print(saida)
-        rodar([sys.executable, "tools/memoria.py"])
+        memoria_codigo, _ = rodar([sys.executable, "tools/memoria.py"])
         ok, msg = commitar("#%d" % i)
         print("estado: %s" % msg)
+        if not ok or codigo != 0 or memoria_codigo != 0:
+            print("pulso incompleto; falha visível, sem repetir efeitos neste bloco")
+            return 1
         if i == pulsos:
             break
         espera = max(0, intervalo - (time.time() - inicio))
