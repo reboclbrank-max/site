@@ -22,7 +22,7 @@ jobs:
       - name: Contrato de preservação de estado (offline)
         run: python3 tools/rodar-contratos-isolados.py tools/testes-conciliacao-estado.py
       - name: Dependências da barreira offline
-        run: python3 -m pip install --disable-pip-version-check Pillow==12.0.0
+        run: python3 -m pip install --disable-pip-version-check Pillow==12.0.0 PyYAML==6.0.2
       - name: Barreira offline de autonomia e marca
         run: |
           python3 tools/rodar-contratos-isolados.py tools/testes-autonomia-marketing.py
