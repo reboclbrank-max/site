@@ -586,11 +586,11 @@
    "id": "publicar-20261101T190355Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-01T19:03:55Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-01T22:06:54Z",
+   "resultado": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
    "motivo": "empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.45 por dia",
    "chave": "meta-YouTube: inscritos",
    "origem": "perceber"
@@ -632,6 +632,18 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "medir-2026110121"
+  },
+  {
+   "id": "medir-20261101T220654Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T22:06:54Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026110122"
   }
  ]
 }
