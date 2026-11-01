@@ -4,7 +4,7 @@
 
 | meta | alvo | observado | falta | por dia | status | desde a partida |
 |---|---|---|---|---|---|---|
-| Instagram: publicações | 30 | 33 | 0 | — | ATINGIDO | +31 |
+| Instagram: publicações | 30 | 34 | 0 | — | ATINGIDO | +32 |
 | Instagram: seguidores | 50 | 0 | 50 | 4.55 | EM_CURSO | 0 |
 | Bluesky: seguidores | 50 | 32 | 18 | 1.64 | EM_CURSO | +19 |
 | YouTube: inscritos | 40 | 24 | 16 | 1.45 | EM_CURSO | 0 |
