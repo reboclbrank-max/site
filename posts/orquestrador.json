@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-01T15:49:15Z",
  "ultima_pesquisa": "2026-10-27T12:29:44Z",
  "ultima_aprendizagem": "2026-10-27T12:39:44Z",
- "pulsos": 58,
+ "pulsos": 59,
  "historico": [
-  {
-   "quando": "2026-10-31T18:15:47Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261031T135403Z] empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.5 por dia",
-   "codigo": 0,
-   "saida": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strfti"
-  },
   {
    "quando": "2026-10-31T21:22:47Z",
    "acao": "publicar",
@@ -282,6 +275,13 @@
   },
   {
    "quando": "2026-11-01T17:49:15Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (11 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-01T17:59:15Z",
    "acao": "dormir",
    "motivo": "teto diario atingido (11 de 5)",
    "codigo": 0,
