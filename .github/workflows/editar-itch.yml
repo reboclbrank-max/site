@@ -53,10 +53,10 @@ jobs:
 
       - name: Barreiras offline (nenhuma toca a rede)
         run: |
-          python3 tools/testes-itch-navegador.py
-          python3 tools/testes-administrar-itch.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-itch-navegador.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-administrar-itch.py
           node tools/montar-bookmarklet.js --verificar
-          node tools/testes-bookmarklet-itch.js
+          python3 tools/rodar-contratos-isolados.py tools/testes-bookmarklet-itch.js
 
       - name: Le ou aplica
         env:
