@@ -1,6 +1,6 @@
 # Onde a casa pensa e onde ela repete
 
-Gerado em 2026-10-31T00:59:17Z sobre os últimos **40 ciclos** do diário (`posts/log.md`).
+Gerado em 2026-11-01T19:42:45Z sobre os últimos **40 ciclos** do diário (`posts/log.md`).
 
 > inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos.
 
@@ -8,16 +8,16 @@ Gerado em 2026-10-31T00:59:17Z sobre os últimos **40 ciclos** do diário (`post
 
 | classe | passos | o que significa |
 | --- | --- | --- |
-| adaptativo | 11 | o resultado varia: há leitura alimentando decisão |
-| binário | 3 | liga/desliga — varia pouco, mas varia |
+| adaptativo | 12 | o resultado varia: há leitura alimentando decisão |
+| binário | 2 | liga/desliga — varia pouco, mas varia |
 | fachada | 0 | diz ✅ todo ciclo, mas o próprio texto confessa que nada de novo foi feito |
 | ritual | 2 | sempre o mesmo resultado: nada entra, nada se aprende |
 | cego | 3 | sempre indisponível: falta olho, não falta vontade |
 | sem amostra | 0 | apareceu pouco na janela |
 
-**Texto publicado:** 40 ciclos, **26 textos distintos** — repetição de 35.0% na janela.
+**Texto publicado:** 40 ciclos, **28 textos distintos** — repetição de 30.0% na janela.
 
-**Desde o conserto de dedupe (26/10/2026):** 17 ciclos, 1 repetidos — **5.9%**.
+**Desde o conserto de dedupe (26/10/2026):** 23 ciclos, 1 repetidos — **4.3%**.
 
 ## Passo por passo
 
@@ -28,17 +28,17 @@ Gerado em 2026-10-31T00:59:17Z sobre os últimos **40 ciclos** do diário (`post
 | telegram | **cego** | 40 | — | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
 | mastodon | **cego** | 40 | — | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
 | discord | **cego** | 40 | — | ⚪ falta o segredo DISCORD_WEBHOOK |
-| bluesky | **binário** | 40 | — | ✅ postado 200 |
 | reel semanal | **binário** | 40 | — | ➖ reel sai no sabado a noite BRT (um por semana — qualidade > |
-| vigia da caixa (auto-recovery) | **binário** | 40 | 39/40 | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
-| cerebro | **adaptativo** | 40 | — | ✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (1 válid |
-| instagram | **adaptativo** | 40 | — | ✅ postado id 17912366001303 (arte reserva) |
-| threads | **adaptativo** | 40 | — | ✅ publicado id 180145477587 |
-| nostr | **adaptativo** | 40 | — | ✅ nota em 2 relays |
-| cacador de oportunidades | **adaptativo** | 40 | 16/40 | ➖ cadencia diaria de interacao ja cumprida (2026-10-30) |
-| descobridor de redes | **adaptativo** | 40 | 29/40 | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
-| censo mundial | **adaptativo** | 40 | 29/40 | ✅ censo de hoje ja registrado (1 por dia) |
-| regua de metas (medicao) | **adaptativo** | 40 | — | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=31(api) · itch_downloads=NAO_O |
-| destino editorial | **adaptativo** | 37 | — | ✅ rota oficial catalogo |
+| vigia da caixa (auto-recovery) | **binário** | 40 | 33/40 | ✅ cofare sem gmail |
+| cerebro | **adaptativo** | 40 | — | ✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válid |
+| destino editorial | **adaptativo** | 40 | — | ✅ rota oficial catalogo |
+| bluesky | **adaptativo** | 40 | — | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| instagram | **adaptativo** | 40 | — | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | **adaptativo** | 40 | — | ⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN |
+| nostr | **adaptativo** | 40 | — | ⚪ falta o segredo NOSTR_KEY |
+| cacador de oportunidades | **adaptativo** | 40 | 16/40 | ⚪ configuracao do canal ausente |
+| descobridor de redes | **adaptativo** | 40 | 25/40 | ✅ sem GHPAT no ambiente |
+| censo mundial | **adaptativo** | 40 | 25/40 | ✅ sem GHPAT |
+| regua de metas (medicao) | **adaptativo** | 40 | — | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=34(api) · itch_downloa |
+| tema do ciclo | **adaptativo** | 23 | — | ✅ pergunte qual time o torcedor torce e provoque amistoso no PRANCHETA |
 | respondedor de conversa | **adaptativo** | 22 | 14/22 | ➖ cadencia diaria de interacao ja cumprida (2026-10-30) |
-| tema do ciclo | **adaptativo** | 17 | — | ✅ converse sobre vida de dev solo no Brasil e cite os jogos |

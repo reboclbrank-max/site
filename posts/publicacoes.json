@@ -1,135 +1,159 @@
 {
- "quando": "2026-10-31T01:19:58Z",
+ "quando": "2026-11-01T19:42:50Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
-  "ciclos_de_marketing": 103,
-  "posts_sociais_registrados": 96,
+  "ciclos_de_marketing": 109,
+  "posts_sociais_registrados": 102,
   "canais_com_publicacao": 5,
   "videos_no_youtube": 2,
   "builds_no_itch": 1,
   "builds_que_chegam_ao_jogador": 1,
   "builds_conferidos_iguais": 1,
-  "documentos": 15,
+  "documentos": 16,
   "paginas_publicas": 20,
   "arquivos_de_midia": 12
  },
  "canais": {
   "cerebro": {
-   "ciclos": 100,
-   "ok": 52,
+   "ciclos": 106,
+   "ok": 56,
    "ultimo": "✅ post novo criado",
    "quando": "13/10/2026 03:02 UTC"
   },
   "destino editorial": {
-   "ciclos": 37,
-   "ok": 37,
+   "ciclos": 43,
+   "ok": 43,
    "ultimo": "✅ rota oficial prancheta",
    "quando": "21/10/2026 21:49 UTC"
   },
   "tema do ciclo": {
-   "ciclos": 17,
-   "ok": 17,
+   "ciclos": 23,
+   "ok": 23,
    "ultimo": "✅ fale da alegria do primeiro jogador que nao e da familia",
    "quando": "26/10/2026 04:53 UTC"
   },
   "ntfy (push do dono)": {
-   "ciclos": 103,
-   "ok": 103,
+   "ciclos": 109,
+   "ok": 109,
    "ultimo": "✅ push 200",
    "quando": "13/10/2026 02:27 UTC"
   },
   "telegram": {
-   "ciclos": 103,
+   "ciclos": 109,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "bluesky": {
-   "ciclos": 103,
+   "ciclos": 109,
    "ok": 100,
    "ultimo": "✅ postado 200",
    "quando": "13/10/2026 02:45 UTC"
   },
   "mastodon": {
-   "ciclos": 103,
+   "ciclos": 109,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "reel semanal": {
-   "ciclos": 87,
+   "ciclos": 93,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "instagram": {
-   "ciclos": 94,
-   "ok": 33,
+   "ciclos": 100,
+   "ok": 35,
    "ultimo": "✅ postado id 18118576288983",
    "quando": "13/10/2026 14:18 UTC"
   },
   "threads": {
-   "ciclos": 101,
+   "ciclos": 107,
    "ok": 100,
    "ultimo": "✅ publicado id 181288261278",
    "quando": "13/10/2026 02:45 UTC"
   },
   "nostr": {
-   "ciclos": 102,
+   "ciclos": 108,
    "ok": 101,
    "ultimo": "✅ nota em 2 relays (id 5ac6fe56d2)",
    "quando": "13/10/2026 02:37 UTC"
   },
   "discord": {
-   "ciclos": 103,
+   "ciclos": 109,
    "ok": 0,
    "ultimo": "",
    "quando": ""
+  },
+  "cacador de oportunidades": {
+   "ciclos": 106,
+   "ok": 82,
+   "ultimo": "✅ 1 interacoes (q=#gamedev)",
+   "quando": "13/10/2026 03:02 UTC"
+  },
+  "aula do cerebro": {
+   "ciclos": 106,
+   "ok": 106,
+   "ultimo": "✅ cerebro calado hoje",
+   "quando": "13/10/2026 03:02 UTC"
+  },
+  "descobridor de redes": {
+   "ciclos": 100,
+   "ok": 100,
+   "ultimo": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
+   "quando": "13/10/2026 13:42 UTC"
+  },
+  "censo mundial": {
+   "ciclos": 100,
+   "ok": 100,
+   "ultimo": "✅ censo de hoje ja registrado (1 por dia)",
+   "quando": "13/10/2026 13:42 UTC"
+  },
+  "vigia da caixa (auto-recovery)": {
+   "ciclos": 101,
+   "ok": 101,
+   "ultimo": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
+   "quando": "13/10/2026 03:42 UTC"
+  },
+  "regua de metas (medicao)": {
+   "ciclos": 97,
+   "ok": 96,
+   "ultimo": "✅ bsky_seg=13 ig_seg=0 ig_posts=4 itch_dl=? yt=PENDENTE-PORTA",
+   "quando": "13/10/2026 15:11 UTC"
   },
   "respondedor de conversa": {
    "ciclos": 22,
    "ok": 4,
    "ultimo": "✅ 3 resposta(s) enviada(s) de 7 pendente(s)",
    "quando": "24/10/2026 23:18 UTC"
-  },
-  "cacador de oportunidades": {
-   "ciclos": 100,
-   "ok": 82,
-   "ultimo": "✅ 1 interacoes (q=#gamedev)",
-   "quando": "13/10/2026 03:02 UTC"
-  },
-  "aula do cerebro": {
-   "ciclos": 100,
-   "ok": 100,
-   "ultimo": "✅ cerebro calado hoje",
-   "quando": "13/10/2026 03:02 UTC"
-  },
-  "descobridor de redes": {
-   "ciclos": 94,
-   "ok": 94,
-   "ultimo": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
-   "quando": "13/10/2026 13:42 UTC"
-  },
-  "censo mundial": {
-   "ciclos": 94,
-   "ok": 94,
-   "ultimo": "✅ censo de hoje ja registrado (1 por dia)",
-   "quando": "13/10/2026 13:42 UTC"
-  },
-  "vigia da caixa (auto-recovery)": {
-   "ciclos": 95,
-   "ok": 95,
-   "ultimo": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
-   "quando": "13/10/2026 03:42 UTC"
-  },
-  "regua de metas (medicao)": {
-   "ciclos": 91,
-   "ok": 90,
-   "ultimo": "✅ bsky_seg=13 ig_seg=0 ig_posts=4 itch_dl=? yt=PENDENTE-PORTA",
-   "quando": "13/10/2026 15:11 UTC"
   }
  },
  "posts": [
+  {
+   "quando": "01/11/2026 19:04 UTC",
+   "texto": "Da tática na PRANCHETA 📋 à fazenda que não dorme no CEIFALUME 0.1 🌙 Dois jogos 100% brasileiros, grátis no navegador (e APK!), feitos com carinho no Godot. Vem testar? 🇧🇷 #IndieBR #GodotEngine"
+  },
+  {
+   "quando": "01/11/2026 13:10 UTC",
+   "texto": "Dois jeitos de jogar por aqui: ⚽ **PRANCHETA** (grátis, browser/APK, Godot) pra desenhar a bola parada e ver o jogo simular. 🌙 **CEIFALUME 0.1** (já Bastidores e artes novas também no Instagram — todos os canais no link."
+  },
+  {
+   "quando": "01/11/2026 00:45 UTC",
+   "texto": "Feito no Brasil com Godot 🇧🇷 Dois mundos: PRANCHETA (tática de bola parada grátis no navegador/APK) e CEIFALUME 0.1 (fazenda noturna idle que cresce Bastidores e artes novas também no Instagram — todos os canais no link."
+  },
+  {
+   "quando": "31/10/2026 21:23 UTC",
+   "texto": "Dois projetos, muito café ☕ PRANCHETA: seu tático de bolso, desenha a jogada e vê simular (grátis no nav/APK). CEIFALUME 0.1: a fazenda noturna que cresce enquanto você dorme 🌙 Feitos no Godot, com orgulho daqui. #gamede"
+  },
+  {
+   "quando": "31/10/2026 18:16 UTC",
+   "texto": "Tático ou aconchegante? Aqui tem os dois 🇧🇷 PRANCHETA: desenhe bolas paradas e simule (grátis no browser/APK, Godot). CEIFALUME 0.1: a fazenda não dorme, colheitas crescem 8h offline 🌙 Feito solo com carinho. #GamedevBR"
+  },
+  {
+   "quando": "31/10/2026 12:10 UTC",
+   "texto": "Duas paixões, um dev solo 🇧🇷 PRANCHETA: futebol fictício na prancheta, simula ao vivo ou instantâneo, grátis no navegador/APK (Godot). CEIFALUME 0.1: a fazenda noturna que cresce até 8h offline 🌙 Feito com carinho no Bra"
+  },
   {
    "quando": "30/10/2026 18:03 UTC",
    "texto": "Tática na PRANCHETA (grátis, Godot, Brasil) ou lavoura noturna no CEIFALUME 0.1 (cresce 8h offline). Dois jeitos de jogar, uma paixão solo dev. 🇧🇷💚 #PRANCHETA #CEIFALUME"
@@ -520,7 +544,7 @@
    "slug": "ceifalume",
    "id": "VIDEO123",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
-   "quando": "2026-10-31T01:15:18Z",
+   "quando": "2026-10-31T01:20:12Z",
    "link": "",
    "real": false
   },
@@ -586,6 +610,14 @@
   }
  ],
  "documentos": [
+  {
+   "arquivo": "docs/INTEGRIDADE-ESTADO-2026-11-01.md",
+   "titulo": "Estado concorrente e resultado verificável",
+   "selo": {
+    "bytes": 2242,
+    "sha256": "f3dc873007266b89"
+   }
+  },
   {
    "arquivo": "docs/PLANO-MARKETING-24H.md",
    "titulo": "Plano de marketing 24h — arquitetura medida",
@@ -751,16 +783,16 @@
   {
    "arquivo": "marketing.html",
    "selo": {
-    "bytes": 15067,
-    "sha256": "91888e457ced60a3"
+    "bytes": 15919,
+    "sha256": "b41a2c71e31cff04"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
   {
    "arquivo": "melhorias.html",
    "selo": {
-    "bytes": 9966,
-    "sha256": "7189c6556eb8f78e"
+    "bytes": 10451,
+    "sha256": "333ae4941c209c1b"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -799,8 +831,8 @@
   {
    "arquivo": "publicacoes.html",
    "selo": {
-    "bytes": 15271,
-    "sha256": "2ade1a374c094338"
+    "bytes": 15262,
+    "sha256": "d20901562adaf5ab"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
@@ -877,18 +909,18 @@
   },
   {
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
-   "bytes": 4545766,
-   "sha256": "eb7c171d624b7a79"
+   "bytes": 4312547,
+   "sha256": "d723fca0f7f836c6"
   },
   {
    "arquivo": "media/gameplay/ceifalume-gameplay.mp4",
-   "bytes": 5265224,
-   "sha256": "ae4705b75293e516"
+   "bytes": 4958711,
+   "sha256": "d21040ff7dd351df"
   },
   {
    "arquivo": "media/gameplay/prancheta-gameplay.mp4",
-   "bytes": 1086162,
-   "sha256": "b8d7b0ea156f1220"
+   "bytes": 1095819,
+   "sha256": "91e5f09a40fb0fea"
   },
   {
    "arquivo": "media/reel.mp4",
