@@ -295,3 +295,6 @@ Tático ou aconchegante? Aqui tem os dois 🇧🇷 PRANCHETA: desenhe bolas para
 
 ## 31/10/2026 21:23 UTC
 Dois projetos, muito café ☕ PRANCHETA: seu tático de bolso, desenha a jogada e vê simular (grátis no nav/APK). CEIFALUME 0.1: a fazenda noturna que cresce enquanto você dorme 🌙 Feitos no Godot, com orgulho daqui. #gamede
+
+## 01/11/2026 00:45 UTC
+Feito no Brasil com Godot 🇧🇷 Dois mundos: PRANCHETA (tática de bola parada grátis no navegador/APK) e CEIFALUME 0.1 (fazenda noturna idle que cresce Bastidores e artes novas também no Instagram — todos os canais no link.

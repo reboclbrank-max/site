@@ -2443,3 +2443,28 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=33(api) · itch_downloads=47(api) · itch_visitas=197(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
 
 > Dois projetos, muito café ☕ PRANCHETA: seu tático de bolso, desenha a jogada e vê simular (grátis no nav/APK). CEIFALUME 0.1: a fazenda noturna que cr
+
+## 01/11/2026 00:45 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ⚪ fila de reserva — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válidos): cita jogo, chamada, hashtag 1 ou 2 · 206 caracteres · abre diferente do último post · convite da ponte anexado (motor não citou o Instagram) |
+| destino editorial | ✅ rota oficial canais |
+| tema do ciclo | ✅ convide a seguir a conta no Instagram para acompanhar as artes novas |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ❌ HTTP Error 400: Bad Request |
+| instagram | ➖ instagram ja postou ha 3.4h (minimo 6h entre posts) |
+| threads | ⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ sem GHPAT no ambiente |
+| censo mundial | ✅ sem GHPAT |
+| vigia da caixa (auto-recovery) | ✅ cofare sem gmail |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=33(api) · itch_downloads=47(api) · itch_visitas=197(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
+
+> Feito no Brasil com Godot 🇧🇷 Dois mundos: PRANCHETA (tática de bola parada grátis no navegador/APK) e CEIFALUME 0.1 (fazenda noturna idle que cresce B
