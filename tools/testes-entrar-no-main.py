@@ -178,7 +178,7 @@ def main():
     ok("o script roda com 'set -uo pipefail' (erro não passa verde)", "set -uo pipefail" in fonte)
     ok("o script desfaz o merge quando recusa", "git merge --abort" in fonte)
     ok("o script resolve só caminho declarado como gerado", "GERADOS=" in fonte
-       and "posts/[^/]+" in fonte)
+       and "posts/[^/]+" not in fonte and "conciliar-estado.py" in fonte)
     ok("o script tem teto de tentativas", "TENTATIVAS" in fonte)
 
     print()
