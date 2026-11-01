@@ -427,6 +427,70 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "medir-2026110106"
+  },
+  {
+   "id": "publicar-20261101T071025Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-01T07:10:25Z",
+   "executada": "2026-11-01T07:10:29Z",
+   "resultado": "janela: fora da janela (04h local; janela 09-22h)\nRESUMO: janela=PULADO (fora da janela (04h local; janela 09-22h))",
+   "motivo": "empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 4.55 por dia",
+   "chave": "meta-Instagram: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261101T071025Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T07:10:25Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.64 por dia",
+   "chave": "meta-Bluesky: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261101T071025Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T07:10:25Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.45 por dia",
+   "chave": "meta-YouTube: inscritos",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261101T071025Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T07:10:25Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: itch: downloads: faltam 53 e o ritmo necessário é 4.82 por dia",
+   "chave": "meta-itch: downloads",
+   "origem": "perceber"
+  },
+  {
+   "id": "medir-20261101T071029Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T07:10:29Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026110107"
   }
  ]
 }
