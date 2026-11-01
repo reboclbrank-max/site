@@ -304,3 +304,6 @@ Dois jeitos de jogar por aqui: ⚽ **PRANCHETA** (grátis, browser/APK, Godot) p
 
 ## 01/11/2026 19:04 UTC
 Da tática na PRANCHETA 📋 à fazenda que não dorme no CEIFALUME 0.1 🌙 Dois jogos 100% brasileiros, grátis no navegador (e APK!), feitos com carinho no Godot. Vem testar? 🇧🇷 #IndieBR #GodotEngine
+
+## 01/11/2026 21:57 UTC
+Tática na PRANCHETA ⚽ ou colheita noturna na CEIFALUME 🌙? Dois jogos, um dev solo brasileiro (Godot). Grátis no navegador/APK. Vem testar! #GameDevBR #GodotEngine
