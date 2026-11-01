@@ -23,8 +23,8 @@ jobs:
 
       - name: Barreiras offline (nenhuma toca a rede)
         run: |
-          python3 tools/testes-sondar-trava-youtube.py
-          python3 tools/testes-administrar-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-sondar-trava-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-administrar-youtube.py
 
       - name: Sonda a trava (sobe não listado, lê, apaga)
         env:

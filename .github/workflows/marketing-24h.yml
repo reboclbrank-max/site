@@ -33,16 +33,16 @@ jobs:
           fetch-depth: 0
 
       - name: Contrato de preservação de estado (offline)
-        run: python3 tools/testes-conciliacao-estado.py
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-bancada-isolada.py tools/testes-conciliacao-estado.py
       - name: Barreiras offline (nenhuma toca a rede)
         run: |
-          python3 tools/testes-janela.py
-          python3 tools/testes-orquestrador.py
-          python3 tools/testes-perceber.py
-          python3 tools/testes-juizo.py
-          python3 tools/testes-autonomia-marketing.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-janela.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-orquestrador.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-perceber.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-juizo.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-autonomia-marketing.py
           node tools/montar-bookmarklet.js --verificar
-          node tools/testes-bookmarklet-itch.js
+          python3 tools/rodar-contratos-isolados.py tools/testes-bookmarklet-itch.js
 
       - name: Pulso do orquestrador
         env:

@@ -37,8 +37,8 @@ jobs:
 
       - name: Barreiras offline (nenhuma toca a rede)
         run: |
-          python3 tools/testes-kit-youtube.py
-          python3 tools/testes-youtube-oauth.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-kit-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-youtube-oauth.py
 
       - name: O kit precisa estar válido antes de qualquer envio
         run: python3 tools/kit-youtube.py
