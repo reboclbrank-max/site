@@ -1,10 +1,10 @@
 {
- "quando": "2026-10-31T00:59:17Z",
+ "quando": "2026-11-01T19:42:45Z",
  "repeticao_desde_o_conserto": {
   "corte": "26/10/2026",
-  "ciclos": 17,
+  "ciclos": 23,
   "repetidos": 1,
-  "pct": 5.9
+  "pct": 4.3
  },
  "janela": 40,
  "passos": [
@@ -66,19 +66,6 @@
    "ultimo": "⚪ falta o segredo DISCORD_WEBHOOK"
   },
   {
-   "passo": "bluesky",
-   "classe": "binário",
-   "detalhe": {
-    "n": 40,
-    "categorias": [
-     "cego",
-     "ok"
-    ],
-    "confessa": 0
-   },
-   "ultimo": "✅ postado 200"
-  },
-  {
    "passo": "reel semanal",
    "classe": "binário",
    "detalhe": {
@@ -99,9 +86,9 @@
     "categorias": [
      "ok"
     ],
-    "confessa": 39
+    "confessa": 33
    },
-   "ultimo": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)"
+   "ultimo": "✅ cofare sem gmail"
   },
   {
    "passo": "cerebro",
@@ -112,41 +99,26 @@
      "ok",
      "outro"
     ],
-    "resultados_distintos": 6,
+    "resultados_distintos": 12,
     "confessa": 0
    },
-   "ultimo": "✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (1 válidos): cita jogo, chamada, hashtag 1 ou 2 · 220 caracteres · abre diferente do último post"
+   "ultimo": "✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válidos): cita jogo, chamada, hashtag 1 ou 2 · 192 caracteres · abre diferente do último post"
   },
   {
-   "passo": "instagram",
+   "passo": "destino editorial",
    "classe": "adaptativo",
    "detalhe": {
     "n": 40,
     "categorias": [
-     "espera",
      "ok"
     ],
-    "resultados_distintos": 22,
+    "resultados_distintos": 4,
     "confessa": 0
    },
-   "ultimo": "✅ postado id 17912366001303 (arte reserva)"
+   "ultimo": "✅ rota oficial catalogo"
   },
   {
-   "passo": "threads",
-   "classe": "adaptativo",
-   "detalhe": {
-    "n": 40,
-    "categorias": [
-     "cego",
-     "ok"
-    ],
-    "resultados_distintos": 40,
-    "confessa": 0
-   },
-   "ultimo": "✅ publicado id 180145477587"
-  },
-  {
-   "passo": "nostr",
+   "passo": "bluesky",
    "classe": "adaptativo",
    "detalhe": {
     "n": 40,
@@ -157,7 +129,49 @@
     "resultados_distintos": 3,
     "confessa": 0
    },
-   "ultimo": "✅ nota em 2 relays"
+   "ultimo": "⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS"
+  },
+  {
+   "passo": "instagram",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "espera",
+     "ok"
+    ],
+    "resultados_distintos": 23,
+    "confessa": 0
+   },
+   "ultimo": "➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC"
+  },
+  {
+   "passo": "threads",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego",
+     "ok"
+    ],
+    "resultados_distintos": 35,
+    "confessa": 0
+   },
+   "ultimo": "⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN"
+  },
+  {
+   "passo": "nostr",
+   "classe": "adaptativo",
+   "detalhe": {
+    "n": 40,
+    "categorias": [
+     "cego",
+     "ok"
+    ],
+    "resultados_distintos": 4,
+    "confessa": 0
+   },
+   "ultimo": "⚪ falta o segredo NOSTR_KEY"
   },
   {
    "passo": "cacador de oportunidades",
@@ -172,7 +186,7 @@
     "resultados_distintos": 18,
     "confessa": 16
    },
-   "ultimo": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)"
+   "ultimo": "⚪ configuracao do canal ausente"
   },
   {
    "passo": "descobridor de redes",
@@ -183,9 +197,9 @@
      "ok"
     ],
     "resultados_distintos": 3,
-    "confessa": 29
+    "confessa": 25
    },
-   "ultimo": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)"
+   "ultimo": "✅ sem GHPAT no ambiente"
   },
   {
    "passo": "censo mundial",
@@ -196,9 +210,9 @@
      "ok"
     ],
     "resultados_distintos": 3,
-    "confessa": 29
+    "confessa": 25
    },
-   "ultimo": "✅ censo de hoje ja registrado (1 por dia)"
+   "ultimo": "✅ sem GHPAT"
   },
   {
    "passo": "regua de metas (medicao)",
@@ -212,20 +226,20 @@
     "resultados_distintos": 28,
     "confessa": 0
    },
-   "ultimo": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=31(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
+   "ultimo": "✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=34(api) · itch_downloads=47(api) · itch_visitas=199(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER"
   },
   {
-   "passo": "destino editorial",
+   "passo": "tema do ciclo",
    "classe": "adaptativo",
    "detalhe": {
-    "n": 37,
+    "n": 23,
     "categorias": [
      "ok"
     ],
-    "resultados_distintos": 4,
+    "resultados_distintos": 17,
     "confessa": 0
    },
-   "ultimo": "✅ rota oficial catalogo"
+   "ultimo": "✅ pergunte qual time o torcedor torce e provoque amistoso no PRANCHETA"
   },
   {
    "passo": "respondedor de conversa",
@@ -241,31 +255,18 @@
     "confessa": 14
    },
    "ultimo": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)"
-  },
-  {
-   "passo": "tema do ciclo",
-   "classe": "adaptativo",
-   "detalhe": {
-    "n": 17,
-    "categorias": [
-     "ok"
-    ],
-    "resultados_distintos": 15,
-    "confessa": 0
-   },
-   "ultimo": "✅ converse sobre vida de dev solo no Brasil e cite os jogos"
   }
  ],
  "contagem": {
   "ritual": 2,
   "cego": 3,
-  "binário": 3,
-  "adaptativo": 11
+  "binário": 2,
+  "adaptativo": 12
  },
  "texto": {
   "ciclos": 40,
-  "distintos": 26,
-  "repeticao_pct": 35.0
+  "distintos": 28,
+  "repeticao_pct": 30.0
  },
  "_lei": "inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos."
 }
