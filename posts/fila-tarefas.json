@@ -445,11 +445,11 @@
    "id": "publicar-20261101T071025Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-01T07:10:25Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-01T13:09:15Z",
+   "resultado": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strftime(\"%d/%m\"), perguntas[dia % len(perguntas)], aula[:400].replace(\"\\n\", \" \")))\n/home/runner/work/site/site/tools/postador.py:1438: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
    "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.64 por dia",
    "chave": "meta-Bluesky: seguidores",
    "origem": "perceber"
@@ -491,6 +491,18 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "medir-2026110107"
+  },
+  {
+   "id": "medir-20261101T130915Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T13:09:15Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026110113"
   }
  ]
 }

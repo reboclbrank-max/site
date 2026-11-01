@@ -298,3 +298,6 @@ Dois projetos, muito café ☕ PRANCHETA: seu tático de bolso, desenha a jogada
 
 ## 01/11/2026 00:45 UTC
 Feito no Brasil com Godot 🇧🇷 Dois mundos: PRANCHETA (tática de bola parada grátis no navegador/APK) e CEIFALUME 0.1 (fazenda noturna idle que cresce Bastidores e artes novas também no Instagram — todos os canais no link.
+
+## 01/11/2026 13:10 UTC
+Dois jeitos de jogar por aqui: ⚽ **PRANCHETA** (grátis, browser/APK, Godot) pra desenhar a bola parada e ver o jogo simular. 🌙 **CEIFALUME 0.1** (já Bastidores e artes novas também no Instagram — todos os canais no link.
