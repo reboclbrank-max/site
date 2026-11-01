@@ -30,17 +30,21 @@ TENTATIVAS="${TENTATIVAS:-6}"
 : "${GERAR:=}"
 
 # Só estes caminhos podem ser resolvidos automaticamente, porque são SAÍDA de gerador.
-GERADOS='^(marketing\.html|melhorias\.html|publicacoes\.html|postar\.html|canais\.html|vitrina\.html|comite\.html|sitemap\.xml|index\.html|blog/|posts/[^/]+\.(json|md)|docs/PUBLICACOES\.md)$'
+GERADOS='^(marketing\.html|melhorias\.html|publicacoes\.html|posts/publicacoes\.json|docs/PUBLICACOES\.md)$'
+DIR_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 log() { echo "  [$MOTIVO] $*"; }
 
 # O motivo do push recusado precisa APARECER. Sem isto o script dizia "push recusado" seis
 # vezes e escondia a causa (credencial, proteção de branch, rede) — que é o mesmo falso-verde
-# que a rodada 122 caçou no `| tee`. Nada de token vaza: o git nunca o escreve na saída.
+# que a rodada 122 caçou no `| tee`. Não reproduzimos stderr: pode conter URL autenticada.
 empurrar() {
   local saida
   saida=$(git push -q origin HEAD:main 2>&1) && return 0
-  log "push recusado: $(printf '%s' "$saida" | tail -n 2 | tr '\n' ' ' | cut -c1-200)"
+  local motivo="transporte/servidor"
+  if printf '%s' "$saida" | grep -Eqi 'authentication|permission|denied|403|401'; then motivo="autenticação/permissão";
+  elif printf '%s' "$saida" | grep -Eqi 'non-fast-forward|fetch first|rejected'; then motivo="concorrência/rejeição"; fi
+  log "push recusado: $motivo; detalhes sensíveis omitidos"
   return 1
 }
 
@@ -52,19 +56,18 @@ empurrar() {
 
 regerar() {
   [ -z "$GERAR" ] && return 0
-  log "regerando: $GERAR"
-  bash -c "$GERAR" >/dev/null 2>&1 || log "aviso: gerador saiu com erro (o arquivo do main fica)"
-  git add -u >/dev/null 2>&1 || true
+  log "regerando saídas"
+  bash -c "$GERAR" >/dev/null 2>&1 || { log "gerador falhou; não publico como sucesso"; return 1; }
+  git add -u >/dev/null 2>&1
 }
 
 commit_do_merge() {
-  if ! git diff --cached --quiet; then
-    git commit -q -m "$MOTIVO: merge com o main" >/dev/null 2>&1 || true
-  elif ! git rev-parse -q --verify MERGE_HEAD >/dev/null; then
-    : # nada pendente
-  fi
   if git rev-parse -q --verify MERGE_HEAD >/dev/null 2>&1; then
-    git commit -q --no-edit >/dev/null 2>&1 || true
+    git commit -q --no-edit >/dev/null 2>&1
+  elif ! git diff --cached --quiet; then
+    git commit -q -m "$MOTIVO: estado conciliado" >/dev/null 2>&1
+  else
+    return 0
   fi
 }
 
@@ -72,11 +75,12 @@ resolver_conflitos() {
   local sobra="" f
   while IFS= read -r f; do
     [ -z "$f" ] && continue
-    if printf '%s' "$f" | grep -Eq "$GERADOS"; then
-      # fica a versão do main (o gerador reescreve logo depois, se a fonte mudou)
-      git checkout --theirs -- "$f" 2>/dev/null || git checkout --ours -- "$f" 2>/dev/null || true
-      git add -- "$f" >/dev/null 2>&1 || true
-      log "conflito em arquivo gerado: $f (fica a versão do main; o gerador reescreve)"
+    if printf '%s' "$f" | grep -Eq "$GERADOS" && [ -n "$GERAR" ]; then
+      git checkout --theirs -- "$f" >/dev/null 2>&1 && git add -- "$f" || return 1
+      log "saída regenerável: $f; gerador obrigatório antes do push"
+    elif python3 "$DIR_SCRIPT/conciliar-estado.py" "$f" >/dev/null 2>&1; then
+      git add -- "$f" || return 1
+      log "estado conciliado sem descartar alterações: $f"
     else
       sobra="$sobra $f"
     fi
@@ -93,8 +97,8 @@ for n in $(seq 1 "$TENTATIVAS"); do
 
   # 1. caminho barato: rebase sem conflito
   if git rebase -q origin/main >/dev/null 2>&1; then
-    regerar
-    git commit -q --amend --no-edit >/dev/null 2>&1 || true
+    regerar || { git merge --abort >/dev/null 2>&1 || true; exit 1; }
+    git commit -q --amend --no-edit >/dev/null 2>&1 || exit 1
     if empurrar; then
       log "no main por rebase (tentativa $n)"; exit 0
     fi
@@ -105,15 +109,15 @@ for n in $(seq 1 "$TENTATIVAS"); do
 
   # 2. merge: resolve gerado, reescreve pela fonte, recusa o resto
   if git merge --no-edit origin/main >/dev/null 2>&1; then
-    regerar
-    commit_do_merge
+    regerar || { git merge --abort >/dev/null 2>&1 || true; exit 1; }
+    commit_do_merge || { git merge --abort >/dev/null 2>&1 || true; exit 1; }
     if empurrar; then
       log "no main por merge (tentativa $n)"; exit 0
     fi
     log "push recusado depois do merge (tentativa $n)"
   elif resolver_conflitos; then
-    regerar
-    commit_do_merge
+    regerar || { git merge --abort >/dev/null 2>&1 || true; exit 1; }
+    commit_do_merge || { git merge --abort >/dev/null 2>&1 || true; exit 1; }
     if empurrar; then
       log "no main por merge resolvido nos gerados (tentativa $n)"; exit 0
     fi

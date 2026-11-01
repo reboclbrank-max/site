@@ -32,6 +32,8 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Contrato de preservação de estado (offline)
+        run: python3 tools/testes-conciliacao-estado.py
       - name: Barreiras offline (nenhuma toca a rede)
         run: |
           python3 tools/testes-janela.py
