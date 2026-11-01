@@ -301,3 +301,6 @@ Feito no Brasil com Godot 🇧🇷 Dois mundos: PRANCHETA (tática de bola parad
 
 ## 01/11/2026 13:10 UTC
 Dois jeitos de jogar por aqui: ⚽ **PRANCHETA** (grátis, browser/APK, Godot) pra desenhar a bola parada e ver o jogo simular. 🌙 **CEIFALUME 0.1** (já Bastidores e artes novas também no Instagram — todos os canais no link.
+
+## 01/11/2026 19:04 UTC
+Da tática na PRANCHETA 📋 à fazenda que não dorme no CEIFALUME 0.1 🌙 Dois jogos 100% brasileiros, grátis no navegador (e APK!), feitos com carinho no Godot. Vem testar? 🇧🇷 #IndieBR #GodotEngine
