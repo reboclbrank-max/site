@@ -644,6 +644,58 @@
    "resultado": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 199,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é dec",
    "motivo": "decisão do relógio",
    "chave": "medir-2026110122"
+  },
+  {
+   "id": "publicar-20261101T225020Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-01T22:50:20Z",
+   "executada": "2026-11-01T22:50:20Z",
+   "resultado": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
+   "motivo": "empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 4.55 por dia",
+   "chave": "meta-Instagram: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261101T225020Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T22:50:20Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.64 por dia",
+   "chave": "meta-Bluesky: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261101T225020Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T22:50:20Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.45 por dia",
+   "chave": "meta-YouTube: inscritos",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261101T225020Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-01T22:50:20Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: itch: downloads: faltam 53 e o ritmo necessário é 4.82 por dia",
+   "chave": "meta-itch: downloads",
+   "origem": "perceber"
   }
  ]
 }
