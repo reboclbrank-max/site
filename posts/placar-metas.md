@@ -11,7 +11,7 @@
 | YouTube: shorts | 4 | 7 | 0 | — | ATINGIDO | — |
 | itch: downloads | 100 | 47 | 53 | 4.82 | EM_CURSO | +3 |
 | itch: seguidores (aposentada) | 10 | NAO_OBSERVAVEL | — | — | SEM_LEITURA | — |
-| itch: visitas | — | 198 | — | — | ACOMPANHADA | — |
+| itch: visitas | — | 199 | — | — | ACOMPANHADA | — |
 
 Prazo: **2026-11-12** · 11 dia(s) restante(s) · 7 meta(s) com leitura, 0 sem leitura automática · 1 aposentada(s) com o motivo no arquivo.
 
