@@ -2518,3 +2518,28 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=34(api) · itch_downloads=47(api) · itch_visitas=199(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
 
 > Da tática na PRANCHETA 📋 à fazenda que não dorme no CEIFALUME 0.1 🌙 Dois jogos 100% brasileiros, grátis no navegador (e APK!), feitos com carinho no G
+
+## 01/11/2026 21:57 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válidos): cita jogo, chamada, hashtag 1 ou 2 · 162 caracteres · abre diferente do último post |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ pergunte qual time o torcedor torce e provoque amistoso no PRANCHETA |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18012422810995 (arte reserva) |
+| threads | ⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ sem GHPAT no ambiente |
+| censo mundial | ✅ sem GHPAT |
+| vigia da caixa (auto-recovery) | ✅ cofare sem gmail |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=35(api) · itch_downloads=47(api) · itch_visitas=199(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
+
+> Tática na PRANCHETA ⚽ ou colheita noturna na CEIFALUME 🌙? Dois jogos, um dev solo brasileiro (Godot). Grátis no navegador/APK. Vem testar! #GameDevBR 
