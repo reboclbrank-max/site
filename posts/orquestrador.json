@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-02T16:23:30Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 101,
+ "pulsos": 102,
  "historico": [
-  {
-   "quando": "2026-11-01T22:06:54Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261101T190355Z] empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.45 por dia",
-   "codigo": 0,
-   "saida": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)"
-  },
   {
    "quando": "2026-11-01T22:16:54Z",
    "acao": "publicar",
@@ -282,6 +275,13 @@
   },
   {
    "quando": "2026-11-02T16:53:30Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (8 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-02T17:03:30Z",
    "acao": "dormir",
    "motivo": "teto diario atingido (8 de 5)",
    "codigo": 0,
