@@ -1,6 +1,6 @@
 # Livro de decisões da casa
 
-Gerado em 2026-11-02T09:49:02Z a partir dos próprios registros do repositório.
+Gerado em 2026-11-02T11:15:27Z a partir dos próprios registros do repositório.
 
 > decidir com número na mão, declarar a recusa e nomear a ignorância. Decisão sem número não entra.
 
@@ -17,7 +17,7 @@ Gerado em 2026-11-02T09:49:02Z a partir dos próprios registros do repositório.
 
 | decisão | por que não | número | fonte |
 | --- | --- | --- | --- |
-| trocar o horário de publicação | recusada por falta de prova: diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.17, desvio 0.49 | amostra total 300 · mínimo por hora 30 · horas elegíveis 2 | `posts/aprendizado.json` |
+| trocar o horário de publicação | recusada por falta de prova: diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.22, desvio 0.49 | amostra total 300 · mínimo por hora 30 · horas elegíveis 2 | `posts/aprendizado.json` |
 | manter ou aposentar um canal que não devolve número | é escolha de vida do projeto, não conta de máquina — o robô entrega o número e não finge que decide | sem retorno em 20 dias:  Instagram: seguidores (0 medido(s), nada a mais desde 13/10), YouTube: inscritos (24 medido(s), nada a mais desde 13/10) | `posts/placar-metas.md` |
 | publicar toque-rapido | vetado pelo dono (Toque Rápido foi uma criação que não deu certo. Fica em rascunho para sempre: nenhum robô publica, atualiza ou divulga. Pedido do dono, 26/10.) — a casa herda a regra e não a rediscute | pedido em 2026-10-26 | `posts/nunca-publicar.json` |
 | publicar toquerpido | vetado pelo dono (Toque Rápido foi uma criação que não deu certo. Fica em rascunho para sempre: nenhum robô publica, atualiza ou divulga. Pedido do dono, 26/10.) — a casa herda a regra e não a rediscute | pedido em 2026-10-26 | `posts/nunca-publicar.json` |

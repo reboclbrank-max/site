@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-02T09:49:02Z",
+ "quando": "2026-11-02T11:15:27Z",
  "_lei": "decidir com número na mão, declarar a recusa e nomear a ignorância. Decisão sem número não entra.",
  "decididas": [
   {
@@ -30,7 +30,7 @@
  "recusadas": [
   {
    "decisao": "trocar o horário de publicação",
-   "porque": "recusada por falta de prova: diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.17, desvio 0.49",
+   "porque": "recusada por falta de prova: diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.22, desvio 0.49",
    "numero": "amostra total 300 · mínimo por hora 30 · horas elegíveis 2",
    "fonte": "posts/aprendizado.json"
   },
