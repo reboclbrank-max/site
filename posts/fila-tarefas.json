@@ -814,11 +814,11 @@
    "id": "publicar-20261102T094902Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-02T09:49:02Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-02T16:03:30Z",
+   "resultado": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
    "motivo": "empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 5.0 por dia",
    "chave": "meta-Instagram: seguidores",
    "origem": "perceber"
@@ -834,6 +834,18 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "medir-2026110215"
+  },
+  {
+   "id": "medir-20261102T160330Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-02T16:03:30Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026110216"
   }
  ]
 }
