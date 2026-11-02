@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-02T06:26:23Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 77,
+ "pulsos": 78,
  "historico": [
-  {
-   "quando": "2026-11-01T14:29:15Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261101T141651Z] empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.64 por dia",
-   "codigo": 0,
-   "saida": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)"
-  },
   {
    "quando": "2026-11-01T14:39:15Z",
    "acao": "publicar",
@@ -286,6 +279,13 @@
    "motivo": "fila: [aprender-20261102T070623Z] decisão do relógio",
    "codigo": 0,
    "saida": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.17, desvio 0.49\ngravado em posts/aprendizado.json"
+  },
+  {
+   "quando": "2026-11-02T07:16:23Z",
+   "acao": "dormir",
+   "motivo": "fora da janela (04h local)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
   }
  ]
 }
