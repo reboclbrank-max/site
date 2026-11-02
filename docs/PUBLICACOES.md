@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-11-02T21:43:48Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-11-02T21:43:52Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
