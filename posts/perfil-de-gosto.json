@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-02T00:49:44Z",
+ "quando": "2026-11-02T09:49:17Z",
  "_lei": "traço só pesa quando a amostra passa e a diferença supera o desvio; o resto fica marcado como escolha declarada, não como gosto aprendido.",
  "pesos": {
   "tem_pergunta": 1,
@@ -21,7 +21,7 @@
    },
    "sem": {
     "n": 288,
-    "media": 1.22
+    "media": 1.23
    },
    "medido": false,
    "direcao": null,
@@ -36,7 +36,7 @@
    },
    "sem": {
     "n": 299,
-    "media": 1.19
+    "media": 1.2
    },
    "medido": false,
    "direcao": null,
@@ -51,13 +51,13 @@
    },
    "sem": {
     "n": 223,
-    "media": 0.83
+    "media": 0.85
    },
    "medido": true,
    "direcao": 1,
    "base": "medido",
    "peso": 1,
-   "ganho": 1.39,
+   "ganho": 1.37,
    "desvio": 1.1
   },
   "cita_jogo": {
@@ -67,13 +67,13 @@
    },
    "sem": {
     "n": 205,
-    "media": 0.92
+    "media": 0.94
    },
    "medido": false,
    "direcao": null,
    "base": "declarado",
    "peso": 2,
-   "porque": "amostra ok, mas a diferença (0.85) está dentro do desvio (1.10): não vira gosto"
+   "porque": "amostra ok, mas a diferença (0.83) está dentro do desvio (1.10): não vira gosto"
   },
   "chamada": {
    "com": {
@@ -82,7 +82,7 @@
    },
    "sem": {
     "n": 296,
-    "media": 1.2
+    "media": 1.21
    },
    "medido": false,
    "direcao": null,
@@ -97,7 +97,7 @@
    },
    "sem": {
     "n": 290,
-    "media": 1.19
+    "media": 1.2
    },
    "medido": false,
    "direcao": null,
@@ -108,7 +108,7 @@
   "sem_hashtag": {
    "com": {
     "n": 289,
-    "media": 1.2
+    "media": 1.21
    },
    "sem": {
     "n": 11,
@@ -127,7 +127,7 @@
    },
    "sem": {
     "n": 300,
-    "media": 1.19
+    "media": 1.2
    },
    "medido": false,
    "direcao": null,
@@ -138,17 +138,17 @@
   "tem_numero": {
    "com": {
     "n": 79,
-    "media": 2.03
+    "media": 2.04
    },
    "sem": {
     "n": 221,
-    "media": 0.89
+    "media": 0.9
    },
    "medido": true,
    "direcao": 1,
    "base": "medido",
    "peso": 1,
-   "ganho": 1.13,
+   "ganho": 1.14,
    "desvio": 1.1
   },
   "tem_link": {
@@ -158,7 +158,7 @@
    },
    "sem": {
     "n": 300,
-    "media": 1.19
+    "media": 1.2
    },
    "medido": false,
    "direcao": null,
