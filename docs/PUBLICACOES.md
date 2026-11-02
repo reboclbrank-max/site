@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-11-02T11:15:38Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-11-02T21:43:47Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
@@ -8,8 +8,8 @@ Gerado em 2026-11-02T11:15:38Z. Este arquivo é o inventário do que já foi pub
 
 | o quê | quantos |
 | --- | --- |
-| ciclos de marketing | 111 |
-| posts sociais registrados | 103 |
+| ciclos de marketing | 113 |
+| posts sociais registrados | 105 |
 | canais que já publicaram | 5 |
 | vídeos no YouTube (com id real) | 2 |
 | builds no itch.io (com id real) | 1 |
@@ -23,25 +23,25 @@ Gerado em 2026-11-02T11:15:38Z. Este arquivo é o inventário do que já foi pub
 
 | canal | ciclos | publicou | último resultado |
 | --- | --- | --- | --- |
-| ntfy (push do dono) | 111 | 111 | ✅ push 200 |
-| aula do cerebro | 108 | 108 | ✅ cerebro calado hoje |
-| vigia da caixa (auto-recovery) | 103 | 103 | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
-| nostr | 110 | 102 | ✅ nota em 2 relays (id 5ac6fe56d2) |
-| descobridor de redes | 102 | 102 | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
-| censo mundial | 102 | 102 | ✅ censo de hoje ja registrado (1 por dia) |
-| bluesky | 111 | 101 | ✅ postado 200 |
-| threads | 109 | 101 | ✅ publicado id 181288261278 |
-| regua de metas (medicao) | 99 | 98 | ✅ bsky_seg=13 ig_seg=0 ig_posts=4 itch_dl=? yt=PENDENTE-PORTA |
-| cacador de oportunidades | 108 | 83 | ✅ 1 interacoes (q=#gamedev) |
-| cerebro | 108 | 58 | ✅ post novo criado |
-| destino editorial | 45 | 45 | ✅ rota oficial prancheta |
-| instagram | 102 | 36 | ✅ postado id 18118576288983 |
-| tema do ciclo | 25 | 25 | ✅ fale da alegria do primeiro jogador que nao e da familia |
+| ntfy (push do dono) | 113 | 113 | ✅ push 200 |
+| aula do cerebro | 110 | 110 | ✅ cerebro calado hoje |
+| vigia da caixa (auto-recovery) | 105 | 105 | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| descobridor de redes | 104 | 104 | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | 104 | 104 | ✅ censo de hoje ja registrado (1 por dia) |
+| nostr | 112 | 102 | ✅ nota em 2 relays (id 5ac6fe56d2) |
+| bluesky | 113 | 101 | ✅ postado 200 |
+| threads | 111 | 101 | ✅ publicado id 181288261278 |
+| regua de metas (medicao) | 101 | 100 | ✅ bsky_seg=13 ig_seg=0 ig_posts=4 itch_dl=? yt=PENDENTE-PORTA |
+| cacador de oportunidades | 110 | 83 | ✅ 1 interacoes (q=#gamedev) |
+| cerebro | 110 | 60 | ✅ post novo criado |
+| destino editorial | 47 | 47 | ✅ rota oficial prancheta |
+| instagram | 104 | 37 | ✅ postado id 18118576288983 |
+| tema do ciclo | 27 | 27 | ✅ fale da alegria do primeiro jogador que nao e da familia |
 | respondedor de conversa | 23 | 5 | ✅ 3 resposta(s) enviada(s) de 7 pendente(s) |
-| telegram | 111 | 0 |  |
-| mastodon | 111 | 0 |  |
-| reel semanal | 95 | 0 |  |
-| discord | 111 | 0 |  |
+| telegram | 113 | 0 |  |
+| mastodon | 113 | 0 |  |
+| reel semanal | 97 | 0 |  |
+| discord | 113 | 0 |  |
 
 ## Vídeos
 
@@ -68,13 +68,13 @@ Gerado em 2026-11-02T11:15:38Z. Este arquivo é o inventário do que já foi pub
 | escola.html | 3343 | `0fc79cbc5841eb35` |
 | index.html | 13685 | `c0942bdf8ca12917` |
 | jogos.html | 3255 | `4b17c4ecdda44233` |
-| marketing.html | 16084 | `54562ae4d0ecc544` |
-| melhorias.html | 10451 | `a0295be9be70a6a8` |
+| marketing.html | 15843 | `b2a9e8f4dd854939` |
+| melhorias.html | 10451 | `2d11b1ea04c5f4ee` |
 | museu.html | 226788 | `959bee2b9addade2` |
 | oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
 | postar.html | 10463 | `559892cc1dd855ec` |
 | privacidade.html | 2684 | `d4c4bce26a1c1093` |
-| publicacoes.html | 15254 | `819cbf2e12a04308` |
+| publicacoes.html | 15253 | `79d94f4ece433d6d` |
 | termos.html | 2613 | `a1a98745bc144972` |
 | vitrina.html | 8285 | `18c36df607adeaa7` |
 | blog/ceifalume-01-o-que-e-que-vem.html | 2934 | `d3272d5e446e934a` |
@@ -107,6 +107,8 @@ Gerado em 2026-11-02T11:15:38Z. Este arquivo é o inventário do que já foi pub
 
 ## Últimos posts registrados (texto)
 
+- **02/11/2026 19:48 UTC** — Dois jogos, um coração brasileiro ❤️🇧🇷 PRANCHETA: futebol tático na prancheta, grátis no nav/APK (Godot). CEIFALUME 0.1: fazenda idle noturna que cresce enquant
+- **02/11/2026 15:36 UTC** — Ei! Do REBOCL BRANK: PRANCHETA, simulador 100% fictício de futebol onde você desenha a bola parada na prancheta e ve a partida simular grátis no navegador ou AP
 - **01/11/2026 21:57 UTC** — Tática na PRANCHETA ⚽ ou colheita noturna na CEIFALUME 🌙? Dois jogos, um dev solo brasileiro (Godot). Grátis no navegador/APK. Vem testar! #GameDevBR #GodotEngi
 - **01/11/2026 19:04 UTC** — Da tática na PRANCHETA 📋 à fazenda que não dorme no CEIFALUME 0.1 🌙 Dois jogos 100% brasileiros, grátis no navegador (e APK!), feitos com carinho no Godot. Vem 
 - **01/11/2026 13:10 UTC** — Dois jeitos de jogar por aqui: ⚽ **PRANCHETA** (grátis, browser/APK, Godot) pra desenhar a bola parada e ver o jogo simular. 🌙 **CEIFALUME 0.1** (já Bastidores 
@@ -130,5 +132,3 @@ Gerado em 2026-11-02T11:15:38Z. Este arquivo é o inventário do que já foi pub
 - **26/10/2026 13:09 UTC** — Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? Dois jeitos de jogar, ambos feitos com carinho no Brasil (Godot). Grátis n Bastidores 
 - **26/10/2026 04:53 UTC** — Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna que cresce enquanto você dorme 🌙🌱
 - **25/10/2026 23:18 UTC** — ⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Fei
-- **25/10/2026 20:54 UTC** — ⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Fei
-- **25/10/2026 16:09 UTC** — ⚽ Sou TÉCNICO, não jogador. ⏎ PRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular. ⏎ Grátis no navegador ou APK. Fei

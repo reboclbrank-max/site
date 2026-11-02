@@ -1,6 +1,6 @@
 # Onde a casa pensa e onde ela repete
 
-Gerado em 2026-11-02T11:15:27Z sobre os últimos **40 ciclos** do diário (`posts/log.md`).
+Gerado em 2026-11-02T21:43:42Z sobre os últimos **40 ciclos** do diário (`posts/log.md`).
 
 > inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos.
 
@@ -17,7 +17,7 @@ Gerado em 2026-11-02T11:15:27Z sobre os últimos **40 ciclos** do diário (`post
 
 **Texto publicado:** 40 ciclos, **29 textos distintos** — repetição de 27.5% na janela.
 
-**Desde o conserto de dedupe (26/10/2026):** 25 ciclos, 1 repetidos — **4.0%**.
+**Desde o conserto de dedupe (26/10/2026):** 27 ciclos, 1 repetidos — **3.7%**.
 
 ## Passo por passo
 
@@ -29,16 +29,16 @@ Gerado em 2026-11-02T11:15:27Z sobre os últimos **40 ciclos** do diário (`post
 | mastodon | **cego** | 40 | — | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
 | discord | **cego** | 40 | — | ⚪ falta o segredo DISCORD_WEBHOOK |
 | reel semanal | **binário** | 40 | — | ➖ reel sai no sabado a noite BRT (um por semana — qualidade > |
-| vigia da caixa (auto-recovery) | **binário** | 40 | 32/40 | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| vigia da caixa (auto-recovery) | **binário** | 40 | 30/40 | ✅ cofare sem gmail |
 | cerebro | **adaptativo** | 40 | — | ✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válid |
 | destino editorial | **adaptativo** | 40 | — | ✅ rota oficial catalogo |
-| bluesky | **adaptativo** | 40 | — | ✅ postado 200 |
-| instagram | **adaptativo** | 40 | — | ➖ instagram ja postou ha 2.8h (minimo 6h entre posts) |
-| threads | **adaptativo** | 40 | — | ✅ publicado id 181361407875 |
-| nostr | **adaptativo** | 40 | — | ✅ nota em 2 relays |
-| cacador de oportunidades | **adaptativo** | 40 | 16/40 | ✅ 2 de 2 interacoes do dia (q=#indiedev) |
-| descobridor de redes | **adaptativo** | 40 | 23/40 | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
-| censo mundial | **adaptativo** | 40 | 23/40 | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
-| regua de metas (medicao) | **adaptativo** | 40 | — | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=35(api) · itch_downloads=NAO_O |
-| tema do ciclo | **adaptativo** | 25 | — | ✅ explique o APK: por que tambem funciona no celular sem internet |
+| bluesky | **adaptativo** | 40 | — | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| instagram | **adaptativo** | 40 | — | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | **adaptativo** | 40 | — | ⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN |
+| nostr | **adaptativo** | 40 | — | ⚪ falta o segredo NOSTR_KEY |
+| cacador de oportunidades | **adaptativo** | 40 | 16/40 | ⚪ configuracao do canal ausente |
+| descobridor de redes | **adaptativo** | 40 | 22/40 | ✅ sem GHPAT no ambiente |
+| censo mundial | **adaptativo** | 40 | 22/40 | ✅ sem GHPAT |
+| regua de metas (medicao) | **adaptativo** | 40 | — | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=36(api) · itch_downloa |
+| tema do ciclo | **adaptativo** | 27 | — | ✅ fale das plantacoes noturnas do CEIFALUME |
 | respondedor de conversa | **adaptativo** | 23 | 14/23 | ✅ 1 resposta(s) enviada(s) de 1 pendente(s) |
