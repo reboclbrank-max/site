@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-02T06:26:23Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 83,
+ "pulsos": 84,
  "historico": [
-  {
-   "quando": "2026-11-01T15:29:15Z",
-   "acao": "medir",
-   "motivo": "fila: [medir-20261101T060804Z] decisão do relógio",
-   "codigo": 0,
-   "saida": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 198,\n   \"falta\": null,\n   \"status\": \"AC"
-  },
   {
    "quando": "2026-11-01T15:39:15Z",
    "acao": "medir",
@@ -282,6 +275,13 @@
   },
   {
    "quando": "2026-11-02T08:06:23Z",
+   "acao": "dormir",
+   "motivo": "fora da janela (05h local)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-02T08:16:23Z",
    "acao": "dormir",
    "motivo": "fora da janela (05h local)",
    "codigo": 0,
