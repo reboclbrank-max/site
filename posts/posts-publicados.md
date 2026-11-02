@@ -310,3 +310,6 @@ Tática na PRANCHETA ⚽ ou colheita noturna na CEIFALUME 🌙? Dois jogos, um d
 
 ## 02/11/2026 15:36 UTC
 Ei! Do REBOCL BRANK: PRANCHETA, simulador 100% fictício de futebol onde você desenha a bola parada na prancheta e ve a partida simular grátis no navegador ou APK. CEIFALUME 0.1, o idle noturno de fazenda onde "a fazenda
+
+## 02/11/2026 19:48 UTC
+Dois jogos, um coração brasileiro ❤️🇧🇷 PRANCHETA: futebol tático na prancheta, grátis no nav/APK (Godot). CEIFALUME 0.1: fazenda idle noturna que cresce enquanto você dorme 🌙 Feitos com Godot por aqui. #GamedevBR #IndieD
