@@ -745,6 +745,18 @@
    "resultado": "meta em risco: itch: downloads (falta 53.0 · 5.3/dia)\nformatos a evitar: comentário em post alheio\ntema do dia: ⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des\nhorário: sem prova estatística: mantém a janela do calendário\nplano gravado em posts/plano-do-dia.json",
    "motivo": "decisão do relógio",
    "chave": "pesquisar-2026110206"
+  },
+  {
+   "id": "aprender-20261102T070623Z",
+   "tipo": "aprender",
+   "prioridade": 30,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-02T07:06:23Z",
+   "executada": "2026-11-02T07:06:23Z",
+   "resultado": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.17, desvio 0.49\ngravado em posts/aprendizado.json",
+   "motivo": "decisão do relógio",
+   "chave": "aprender-2026110207"
   }
  ]
 }
