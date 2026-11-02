@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-02T16:23:30Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 99,
+ "pulsos": 100,
  "historico": [
-  {
-   "quando": "2026-11-01T19:03:55Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261101T190355Z] empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 4.55 por dia",
-   "codigo": 0,
-   "saida": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strfti"
-  },
   {
    "quando": "2026-11-01T21:56:54Z",
    "acao": "publicar",
@@ -282,6 +275,13 @@
   },
   {
    "quando": "2026-11-02T16:33:30Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (8 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-02T16:43:30Z",
    "acao": "dormir",
    "motivo": "teto diario atingido (8 de 5)",
    "codigo": 0,
