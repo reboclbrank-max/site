@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-02T09:49:11Z",
+ "quando": "2026-11-02T11:15:32Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 111,
@@ -788,7 +788,7 @@
    "arquivo": "marketing.html",
    "selo": {
     "bytes": 16084,
-    "sha256": "206612de9ce2e536"
+    "sha256": "54562ae4d0ecc544"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
@@ -796,7 +796,7 @@
    "arquivo": "melhorias.html",
    "selo": {
     "bytes": 10451,
-    "sha256": "ada2c58292140590"
+    "sha256": "a0295be9be70a6a8"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -836,7 +836,7 @@
    "arquivo": "publicacoes.html",
    "selo": {
     "bytes": 15254,
-    "sha256": "bad656919ced57fd"
+    "sha256": "371e0004cbe6a24e"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
@@ -923,8 +923,8 @@
   },
   {
    "arquivo": "media/gameplay/prancheta-gameplay.mp4",
-   "bytes": 1092156,
-   "sha256": "e0f8d2a37f55d2cc"
+   "bytes": 1108246,
+   "sha256": "94ed22dc0e175258"
   },
   {
    "arquivo": "media/reel.mp4",
