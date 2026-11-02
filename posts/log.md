@@ -2543,3 +2543,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=35(api) · itch_downloads=47(api) · itch_visitas=199(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
 
 > Tática na PRANCHETA ⚽ ou colheita noturna na CEIFALUME 🌙? Dois jogos, um dev solo brasileiro (Godot). Grátis no navegador/APK. Vem testar! #GameDevBR 
+
+## 02/11/2026 00:49 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válidos): cita jogo, chamada, hashtag 1 ou 2 · 220 caracteres · abre diferente do último post |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ explique o APK: por que tambem funciona no celular sem internet |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ✅ postado 200 |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ instagram ja postou ha 2.8h (minimo 6h entre posts) |
+| threads | ✅ publicado id 181361407875 |
+| nostr | ✅ nota em 2 relays |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| respondedor de conversa | ✅ 1 resposta(s) enviada(s) de 1 pendente(s) |
+| cacador de oportunidades | ✅ 2 de 2 interacoes do dia (q=#indiedev) |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
+| censo mundial | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=35(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s |
+
+> Da prancheta tática à fazenda que não dorme 🌙⚽ PRANCHETA: desenhe a bola parada e veja o jogo simular (grátis, Godot, Brasil). CEIFALUME 0.1: plantaçõ
