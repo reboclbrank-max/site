@@ -757,6 +757,58 @@
    "resultado": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.17, desvio 0.49\ngravado em posts/aprendizado.json",
    "motivo": "decisão do relógio",
    "chave": "aprender-2026110207"
+  },
+  {
+   "id": "publicar-20261102T093104Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-02T09:31:04Z",
+   "executada": "2026-11-02T09:31:05Z",
+   "resultado": "janela: fora da janela (06h local; janela 09-22h)\nRESUMO: janela=PULADO (fora da janela (06h local; janela 09-22h))",
+   "motivo": "empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 5.0 por dia",
+   "chave": "meta-Instagram: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261102T093104Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-02T09:31:04Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.8 por dia",
+   "chave": "meta-Bluesky: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261102T093104Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-02T09:31:04Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.6 por dia",
+   "chave": "meta-YouTube: inscritos",
+   "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261102T093104Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-02T09:31:04Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: itch: downloads: faltam 53 e o ritmo necessário é 5.3 por dia",
+   "chave": "meta-itch: downloads",
+   "origem": "perceber"
   }
  ]
 }
