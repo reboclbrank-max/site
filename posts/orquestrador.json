@@ -3,17 +3,10 @@
  "versao": 1,
  "ultima_publicacao": "2026-11-02T06:06:23Z",
  "ultima_medicao": "2026-11-02T06:26:23Z",
- "ultima_pesquisa": "2026-10-27T12:29:44Z",
+ "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-10-27T12:39:44Z",
- "pulsos": 73,
+ "pulsos": 74,
  "historico": [
-  {
-   "quando": "2026-11-01T13:59:15Z",
-   "acao": "medir",
-   "motivo": "fila: [medir-20261031T120940Z] decisão do relógio",
-   "codigo": 0,
-   "saida": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 198,\n   \"falta\": null,\n   \"status\": \"AC"
-  },
   {
    "quando": "2026-11-01T14:09:15Z",
    "acao": "medir",
@@ -286,6 +279,13 @@
    "motivo": "fila: [medir-20261102T060623Z] decisão do relógio",
    "codigo": 0,
    "saida": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 199,\n   \"falta\": null,\n   \"status\": \"AC"
+  },
+  {
+   "quando": "2026-11-02T06:36:23Z",
+   "acao": "pesquisar",
+   "motivo": "fila: [pesquisar-20261102T062623Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "meta em risco: itch: downloads (falta 53.0 · 5.3/dia)\nformatos a evitar: comentário em post alheio\ntema do dia: ⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des\nhorário"
   }
  ]
 }
