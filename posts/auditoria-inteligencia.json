@@ -1,10 +1,10 @@
 {
- "quando": "2026-11-01T19:42:45Z",
+ "quando": "2026-11-02T00:49:23Z",
  "repeticao_desde_o_conserto": {
   "corte": "26/10/2026",
-  "ciclos": 23,
+  "ciclos": 25,
   "repetidos": 1,
-  "pct": 4.3
+  "pct": 4.0
  },
  "janela": 40,
  "passos": [
@@ -86,9 +86,9 @@
     "categorias": [
      "ok"
     ],
-    "confessa": 33
+    "confessa": 32
    },
-   "ultimo": "✅ cofare sem gmail"
+   "ultimo": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)"
   },
   {
    "passo": "cerebro",
@@ -99,10 +99,10 @@
      "ok",
      "outro"
     ],
-    "resultados_distintos": 12,
+    "resultados_distintos": 13,
     "confessa": 0
    },
-   "ultimo": "✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válidos): cita jogo, chamada, hashtag 1 ou 2 · 192 caracteres · abre diferente do último post"
+   "ultimo": "✅ post novo validado — motor=g4f auto + motor=g4f auto · juízo: escolhi o 1º de 2 (2 válidos): cita jogo, chamada, hashtag 1 ou 2 · 220 caracteres · abre diferente do último post"
   },
   {
    "passo": "destino editorial",
@@ -129,7 +129,7 @@
     "resultados_distintos": 3,
     "confessa": 0
    },
-   "ultimo": "⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS"
+   "ultimo": "✅ postado 200"
   },
   {
    "passo": "instagram",
@@ -140,10 +140,10 @@
      "espera",
      "ok"
     ],
-    "resultados_distintos": 23,
+    "resultados_distintos": 24,
     "confessa": 0
    },
-   "ultimo": "➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC"
+   "ultimo": "➖ instagram ja postou ha 2.8h (minimo 6h entre posts)"
   },
   {
    "passo": "threads",
@@ -154,10 +154,10 @@
      "cego",
      "ok"
     ],
-    "resultados_distintos": 35,
+    "resultados_distintos": 34,
     "confessa": 0
    },
-   "ultimo": "⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN"
+   "ultimo": "✅ publicado id 181361407875"
   },
   {
    "passo": "nostr",
@@ -171,7 +171,7 @@
     "resultados_distintos": 4,
     "confessa": 0
    },
-   "ultimo": "⚪ falta o segredo NOSTR_KEY"
+   "ultimo": "✅ nota em 2 relays"
   },
   {
    "passo": "cacador de oportunidades",
@@ -183,10 +183,10 @@
      "espera",
      "ok"
     ],
-    "resultados_distintos": 18,
+    "resultados_distintos": 17,
     "confessa": 16
    },
-   "ultimo": "⚪ configuracao do canal ausente"
+   "ultimo": "✅ 2 de 2 interacoes do dia (q=#indiedev)"
   },
   {
    "passo": "descobridor de redes",
@@ -197,9 +197,9 @@
      "ok"
     ],
     "resultados_distintos": 3,
-    "confessa": 25
+    "confessa": 23
    },
-   "ultimo": "✅ sem GHPAT no ambiente"
+   "ultimo": "✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee"
   },
   {
    "passo": "censo mundial",
@@ -210,9 +210,9 @@
      "ok"
     ],
     "resultados_distintos": 3,
-    "confessa": 25
+    "confessa": 23
    },
-   "ultimo": "✅ sem GHPAT"
+   "ultimo": "✅ mundo medido: redes-ativas=52 · redes-mortas=35"
   },
   {
    "passo": "regua de metas (medicao)",
@@ -226,35 +226,35 @@
     "resultados_distintos": 28,
     "confessa": 0
    },
-   "ultimo": "✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=34(api) · itch_downloads=47(api) · itch_visitas=199(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER"
+   "ultimo": "✅ bsky_seguidores=32(api) · ig_seguidores=0(api) · ig_posts=35(api) · itch_downloads=NAO_OBSERVAVEL(sem chave no runtime (ITCH_API_KEYS ausente)) · youtube=NAO_OBSERVAVEL(sem chave no runtime (YT_API_KEY ausente)) · itch_s"
   },
   {
    "passo": "tema do ciclo",
    "classe": "adaptativo",
    "detalhe": {
-    "n": 23,
+    "n": 25,
     "categorias": [
      "ok"
     ],
-    "resultados_distintos": 17,
+    "resultados_distintos": 18,
     "confessa": 0
    },
-   "ultimo": "✅ pergunte qual time o torcedor torce e provoque amistoso no PRANCHETA"
+   "ultimo": "✅ explique o APK: por que tambem funciona no celular sem internet"
   },
   {
    "passo": "respondedor de conversa",
    "classe": "adaptativo",
    "detalhe": {
-    "n": 22,
+    "n": 23,
     "categorias": [
      "espera",
      "ok",
      "outro"
     ],
-    "resultados_distintos": 13,
+    "resultados_distintos": 14,
     "confessa": 14
    },
-   "ultimo": "➖ cadencia diaria de interacao ja cumprida (2026-10-30)"
+   "ultimo": "✅ 1 resposta(s) enviada(s) de 1 pendente(s)"
   }
  ],
  "contagem": {
@@ -265,8 +265,8 @@
  },
  "texto": {
   "ciclos": 40,
-  "distintos": 28,
-  "repeticao_pct": 30.0
+  "distintos": 29,
+  "repeticao_pct": 27.5
  },
  "_lei": "inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos."
 }
