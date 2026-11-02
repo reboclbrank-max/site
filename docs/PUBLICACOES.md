@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-11-02T00:49:33Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-11-02T09:49:06Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
@@ -68,13 +68,13 @@ Gerado em 2026-11-02T00:49:33Z. Este arquivo é o inventário do que já foi pub
 | escola.html | 3343 | `0fc79cbc5841eb35` |
 | index.html | 13685 | `c0942bdf8ca12917` |
 | jogos.html | 3255 | `4b17c4ecdda44233` |
-| marketing.html | 16089 | `2275388f1d11b74a` |
-| melhorias.html | 10451 | `657b9cce98aa55c1` |
+| marketing.html | 16084 | `206612de9ce2e536` |
+| melhorias.html | 10451 | `ada2c58292140590` |
 | museu.html | 226788 | `959bee2b9addade2` |
 | oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
 | postar.html | 10463 | `559892cc1dd855ec` |
 | privacidade.html | 2684 | `d4c4bce26a1c1093` |
-| publicacoes.html | 15254 | `e6e9c8abbf605207` |
+| publicacoes.html | 15254 | `07a548bfd858d8b7` |
 | termos.html | 2613 | `a1a98745bc144972` |
 | vitrina.html | 8285 | `18c36df607adeaa7` |
 | blog/ceifalume-01-o-que-e-que-vem.html | 2934 | `d3272d5e446e934a` |
