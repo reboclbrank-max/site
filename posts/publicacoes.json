@@ -1,9 +1,9 @@
 {
- "quando": "2026-11-01T19:42:54Z",
+ "quando": "2026-11-02T00:49:29Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
-  "ciclos_de_marketing": 109,
-  "posts_sociais_registrados": 102,
+  "ciclos_de_marketing": 111,
+  "posts_sociais_registrados": 103,
   "canais_com_publicacao": 5,
   "videos_no_youtube": 2,
   "builds_no_itch": 1,
@@ -15,121 +15,125 @@
  },
  "canais": {
   "cerebro": {
-   "ciclos": 106,
-   "ok": 56,
+   "ciclos": 108,
+   "ok": 58,
    "ultimo": "✅ post novo criado",
    "quando": "13/10/2026 03:02 UTC"
   },
   "destino editorial": {
-   "ciclos": 43,
-   "ok": 43,
+   "ciclos": 45,
+   "ok": 45,
    "ultimo": "✅ rota oficial prancheta",
    "quando": "21/10/2026 21:49 UTC"
   },
   "tema do ciclo": {
-   "ciclos": 23,
-   "ok": 23,
+   "ciclos": 25,
+   "ok": 25,
    "ultimo": "✅ fale da alegria do primeiro jogador que nao e da familia",
    "quando": "26/10/2026 04:53 UTC"
   },
   "ntfy (push do dono)": {
-   "ciclos": 109,
-   "ok": 109,
+   "ciclos": 111,
+   "ok": 111,
    "ultimo": "✅ push 200",
    "quando": "13/10/2026 02:27 UTC"
   },
   "telegram": {
-   "ciclos": 109,
+   "ciclos": 111,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "bluesky": {
-   "ciclos": 109,
-   "ok": 100,
+   "ciclos": 111,
+   "ok": 101,
    "ultimo": "✅ postado 200",
    "quando": "13/10/2026 02:45 UTC"
   },
   "mastodon": {
-   "ciclos": 109,
+   "ciclos": 111,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "reel semanal": {
-   "ciclos": 93,
+   "ciclos": 95,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "instagram": {
-   "ciclos": 100,
-   "ok": 35,
+   "ciclos": 102,
+   "ok": 36,
    "ultimo": "✅ postado id 18118576288983",
    "quando": "13/10/2026 14:18 UTC"
   },
   "threads": {
-   "ciclos": 107,
-   "ok": 100,
+   "ciclos": 109,
+   "ok": 101,
    "ultimo": "✅ publicado id 181288261278",
    "quando": "13/10/2026 02:45 UTC"
   },
   "nostr": {
-   "ciclos": 108,
-   "ok": 101,
+   "ciclos": 110,
+   "ok": 102,
    "ultimo": "✅ nota em 2 relays (id 5ac6fe56d2)",
    "quando": "13/10/2026 02:37 UTC"
   },
   "discord": {
-   "ciclos": 109,
+   "ciclos": 111,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
+  "respondedor de conversa": {
+   "ciclos": 23,
+   "ok": 5,
+   "ultimo": "✅ 3 resposta(s) enviada(s) de 7 pendente(s)",
+   "quando": "24/10/2026 23:18 UTC"
+  },
   "cacador de oportunidades": {
-   "ciclos": 106,
-   "ok": 82,
+   "ciclos": 108,
+   "ok": 83,
    "ultimo": "✅ 1 interacoes (q=#gamedev)",
    "quando": "13/10/2026 03:02 UTC"
   },
   "aula do cerebro": {
-   "ciclos": 106,
-   "ok": 106,
+   "ciclos": 108,
+   "ok": 108,
    "ultimo": "✅ cerebro calado hoje",
    "quando": "13/10/2026 03:02 UTC"
   },
   "descobridor de redes": {
-   "ciclos": 100,
-   "ok": 100,
+   "ciclos": 102,
+   "ok": 102,
    "ultimo": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
    "quando": "13/10/2026 13:42 UTC"
   },
   "censo mundial": {
-   "ciclos": 100,
-   "ok": 100,
+   "ciclos": 102,
+   "ok": 102,
    "ultimo": "✅ censo de hoje ja registrado (1 por dia)",
    "quando": "13/10/2026 13:42 UTC"
   },
   "vigia da caixa (auto-recovery)": {
-   "ciclos": 101,
-   "ok": 101,
+   "ciclos": 103,
+   "ok": 103,
    "ultimo": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
    "quando": "13/10/2026 03:42 UTC"
   },
   "regua de metas (medicao)": {
-   "ciclos": 97,
-   "ok": 96,
+   "ciclos": 99,
+   "ok": 98,
    "ultimo": "✅ bsky_seg=13 ig_seg=0 ig_posts=4 itch_dl=? yt=PENDENTE-PORTA",
    "quando": "13/10/2026 15:11 UTC"
-  },
-  "respondedor de conversa": {
-   "ciclos": 22,
-   "ok": 4,
-   "ultimo": "✅ 3 resposta(s) enviada(s) de 7 pendente(s)",
-   "quando": "24/10/2026 23:18 UTC"
   }
  },
  "posts": [
+  {
+   "quando": "01/11/2026 21:57 UTC",
+   "texto": "Tática na PRANCHETA ⚽ ou colheita noturna na CEIFALUME 🌙? Dois jogos, um dev solo brasileiro (Godot). Grátis no navegador/APK. Vem testar! #GameDevBR #GodotEngine"
+  },
   {
    "quando": "01/11/2026 19:04 UTC",
    "texto": "Da tática na PRANCHETA 📋 à fazenda que não dorme no CEIFALUME 0.1 🌙 Dois jogos 100% brasileiros, grátis no navegador (e APK!), feitos com carinho no Godot. Vem testar? 🇧🇷 #IndieBR #GodotEngine"
@@ -783,8 +787,8 @@
   {
    "arquivo": "marketing.html",
    "selo": {
-    "bytes": 15919,
-    "sha256": "b41a2c71e31cff04"
+    "bytes": 16089,
+    "sha256": "2275388f1d11b74a"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
@@ -792,7 +796,7 @@
    "arquivo": "melhorias.html",
    "selo": {
     "bytes": 10451,
-    "sha256": "333ae4941c209c1b"
+    "sha256": "657b9cce98aa55c1"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -831,8 +835,8 @@
   {
    "arquivo": "publicacoes.html",
    "selo": {
-    "bytes": 15262,
-    "sha256": "d20901562adaf5ab"
+    "bytes": 15254,
+    "sha256": "e6e9c8abbf605207"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
@@ -919,8 +923,8 @@
   },
   {
    "arquivo": "media/gameplay/prancheta-gameplay.mp4",
-   "bytes": 1095819,
-   "sha256": "91e5f09a40fb0fea"
+   "bytes": 1092156,
+   "sha256": "e0f8d2a37f55d2cc"
   },
   {
    "arquivo": "media/reel.mp4",
