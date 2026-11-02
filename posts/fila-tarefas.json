@@ -738,11 +738,11 @@
    "id": "pesquisar-20261102T062623Z",
    "tipo": "pesquisar",
    "prioridade": 40,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-02T06:26:23Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-02T06:36:23Z",
+   "resultado": "meta em risco: itch: downloads (falta 53.0 · 5.3/dia)\nformatos a evitar: comentário em post alheio\ntema do dia: ⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des\nhorário: sem prova estatística: mantém a janela do calendário\nplano gravado em posts/plano-do-dia.json",
    "motivo": "decisão do relógio",
    "chave": "pesquisar-2026110206"
   }
