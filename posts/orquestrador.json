@@ -1,19 +1,12 @@
 {
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
- "ultima_publicacao": "2026-11-02T15:43:30Z",
+ "ultima_publicacao": "2026-11-02T15:53:30Z",
  "ultima_medicao": "2026-11-02T06:26:23Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 94,
+ "pulsos": 95,
  "historico": [
-  {
-   "quando": "2026-11-01T17:19:15Z",
-   "acao": "dormir",
-   "motivo": "teto diario atingido (11 de 5)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-01T17:29:15Z",
    "acao": "dormir",
@@ -284,6 +277,13 @@
    "quando": "2026-11-02T15:43:30Z",
    "acao": "publicar",
    "motivo": "fila: [publicar-20261102T093104Z] empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.6 por dia",
+   "codigo": 0,
+   "saida": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)"
+  },
+  {
+   "quando": "2026-11-02T15:53:30Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261102T093104Z] empurrar a meta: itch: downloads: faltam 53 e o ritmo necessário é 5.3 por dia",
    "codigo": 0,
    "saida": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)"
   }
