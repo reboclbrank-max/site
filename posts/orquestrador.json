@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-02T16:23:30Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 116,
+ "pulsos": 117,
  "historico": [
-  {
-   "quando": "2026-11-02T07:06:23Z",
-   "acao": "aprender",
-   "motivo": "fila: [aprender-20261102T070623Z] decisão do relógio",
-   "codigo": 0,
-   "saida": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.17, desvio 0.49\ngravado em posts/aprendizado.json"
-  },
   {
    "quando": "2026-11-02T07:16:23Z",
    "acao": "dormir",
@@ -282,6 +275,13 @@
   },
   {
    "quando": "2026-11-02T19:23:30Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (8 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-02T19:33:30Z",
    "acao": "dormir",
    "motivo": "teto diario atingido (8 de 5)",
    "codigo": 0,
