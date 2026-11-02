@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-02T16:23:30Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 110,
+ "pulsos": 111,
  "historico": [
-  {
-   "quando": "2026-11-02T06:06:23Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261102T004923Z] empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 4.55 por dia",
-   "codigo": 0,
-   "saida": "janela: fora da janela (03h local; janela 09-22h)\nRESUMO: janela=PULADO (fora da janela (03h local; janela 09-22h))"
-  },
   {
    "quando": "2026-11-02T06:16:23Z",
    "acao": "medir",
@@ -282,6 +275,13 @@
   },
   {
    "quando": "2026-11-02T18:23:30Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (8 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-02T18:33:30Z",
    "acao": "dormir",
    "motivo": "teto diario atingido (8 de 5)",
    "codigo": 0,
