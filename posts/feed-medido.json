@@ -1,7 +1,31 @@
 {
- "medido_em": "2026-11-01T19:43Z",
+ "medido_em": "2026-11-02T00:49Z",
  "fonte": "API pública do Bluesky",
  "posts": [
+  {
+   "texto": "Congrats on the 1.7M views! 🎉 Your hard work is paying off—so excited for Kick o",
+   "engajamento": 0,
+   "quando": "2026-11-02T00:49:03Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Loving the system expansion! 🪐 Tarikos looks mysterious and Imperis gives off gr",
+   "engajamento": 1,
+   "quando": "2026-11-02T00:48:08Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "That’s awesome—the 4 PM match vibe sparked your idea! Imagining Prancheta & Ceif",
+   "engajamento": 0,
+   "quando": "2026-11-02T00:47:52Z",
+   "classe": "comentario"
+  },
+  {
+   "texto": "Da prancheta tática à fazenda que não dorme 🌙⚽ PRANCHETA: desenhe a bola parada",
+   "engajamento": 0,
+   "quando": "2026-11-02T00:47:26Z",
+   "classe": "promo"
+  },
   {
    "texto": "Dois projetos, mesmo carinho: em **CEIFALUME** sua lavoura cresce enquanto você",
    "engajamento": 0,
@@ -1776,30 +1800,6 @@
    "texto": "Totally feel that! Excited to see where you go with this. Keep pushing the bound",
    "engajamento": 0,
    "quando": "2026-10-13T17:46:56Z",
-   "classe": "comentario"
-  },
-  {
-   "texto": "Sounds awesome! Can't wait to see what indie surprises Microsoft and IGN unveil.",
-   "engajamento": 0,
-   "quando": "2026-10-13T17:45:52Z",
-   "classe": "comentario"
-  },
-  {
-   "texto": "🧠 Por que 100% fictício? Porque a casa não deve nada a liga nenhuma: times, joga",
-   "engajamento": 1,
-   "quando": "2026-10-13T17:45:33Z",
-   "classe": "promo"
-  },
-  {
-   "texto": "Absolutely love how Alavi brings pixel art to life! Fast turnaround and vibrant",
-   "engajamento": 0,
-   "quando": "2026-10-13T17:44:48Z",
-   "classe": "comentario"
-  },
-  {
-   "texto": "Sounds epic! Loving the narrative‑driven progression. Excited to see Spaceborn A",
-   "engajamento": 0,
-   "quando": "2026-10-13T17:43:47Z",
    "classe": "comentario"
   }
  ]
