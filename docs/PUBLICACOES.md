@@ -1,6 +1,6 @@
 # O que a casa publicou (arquivo)
 
-Gerado em 2026-11-03T08:41:57Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+Gerado em 2026-11-03T08:42:00Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
 
 > tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
 
@@ -69,7 +69,7 @@ Gerado em 2026-11-03T08:41:57Z. Este arquivo é o inventário do que já foi pub
 | index.html | 13685 | `c0942bdf8ca12917` |
 | jogos.html | 3255 | `4b17c4ecdda44233` |
 | marketing.html | 15816 | `fb07f42b1471e1f1` |
-| melhorias.html | 10451 | `2a12cd2cdc4525a3` |
+| melhorias.html | 10451 | `bc27c5d055141ac9` |
 | museu.html | 226788 | `959bee2b9addade2` |
 | oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
 | postar.html | 10463 | `559892cc1dd855ec` |

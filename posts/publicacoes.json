@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-03T08:41:57Z",
+ "quando": "2026-11-03T08:42:00Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
   "ciclos_de_marketing": 114,
@@ -808,7 +808,7 @@
    "arquivo": "melhorias.html",
    "selo": {
     "bytes": 10451,
-    "sha256": "2a12cd2cdc4525a3"
+    "sha256": "bc27c5d055141ac9"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
