@@ -1,6 +1,6 @@
 # Livro de decisões da casa
 
-Gerado em 2026-11-02T21:43:42Z a partir dos próprios registros do repositório.
+Gerado em 2026-11-03T06:51:58Z a partir dos próprios registros do repositório.
 
 > decidir com número na mão, declarar a recusa e nomear a ignorância. Decisão sem número não entra.
 
@@ -10,7 +10,7 @@ Gerado em 2026-11-02T21:43:42Z a partir dos próprios registros do repositório.
 | --- | --- | --- | --- |
 | priorizar a meta mais atrasada antes de qualquer vaidade | itch: downloads — faltam 53 (5.3 por dia até o prazo) | ranking de risco do plano do dia (falta ÷ dias restantes) | `posts/plano-do-dia.json` |
 | parar de insistir no formato que mais devolve zero | comentário em post alheio: 41.0% de zeros em 210 tentativas | zero medido repetido é recusa, não azar | `posts/plano-do-dia.json` |
-| meta batida — parar de empurrar e só manter | Instagram: publicações: 35 medido(s) contra alvo 30 | quem bateu a meta não continua gastando esforço nela | `posts/placar-metas.md` |
+| meta batida — parar de empurrar e só manter | Instagram: publicações: 36 medido(s) contra alvo 30 | quem bateu a meta não continua gastando esforço nela | `posts/placar-metas.md` |
 | meta batida — parar de empurrar e só manter | YouTube: shorts: 7 medido(s) contra alvo 4 | quem bateu a meta não continua gastando esforço nela | `posts/placar-metas.md` |
 
 ## O que a casa se recusa a decidir (4)

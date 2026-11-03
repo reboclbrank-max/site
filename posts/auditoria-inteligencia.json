@@ -1,10 +1,10 @@
 {
- "quando": "2026-11-02T21:43:42Z",
+ "quando": "2026-11-03T06:51:58Z",
  "repeticao_desde_o_conserto": {
   "corte": "26/10/2026",
-  "ciclos": 27,
+  "ciclos": 28,
   "repetidos": 1,
-  "pct": 3.7
+  "pct": 3.6
  },
  "janela": 40,
  "passos": [
@@ -86,7 +86,7 @@
     "categorias": [
      "ok"
     ],
-    "confessa": 30
+    "confessa": 29
    },
    "ultimo": "✅ cofare sem gmail"
   },
@@ -140,10 +140,10 @@
      "espera",
      "ok"
     ],
-    "resultados_distintos": 24,
+    "resultados_distintos": 25,
     "confessa": 0
    },
-   "ultimo": "➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC"
+   "ultimo": "✅ postado id 17964502362079 (arte reserva)"
   },
   {
    "passo": "threads",
@@ -154,7 +154,7 @@
      "cego",
      "ok"
     ],
-    "resultados_distintos": 32,
+    "resultados_distintos": 31,
     "confessa": 0
    },
    "ultimo": "⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN"
@@ -183,7 +183,7 @@
      "espera",
      "ok"
     ],
-    "resultados_distintos": 17,
+    "resultados_distintos": 16,
     "confessa": 16
    },
    "ultimo": "⚪ configuracao do canal ausente"
@@ -197,7 +197,7 @@
      "ok"
     ],
     "resultados_distintos": 3,
-    "confessa": 22
+    "confessa": 21
    },
    "ultimo": "✅ sem GHPAT no ambiente"
   },
@@ -210,7 +210,7 @@
      "ok"
     ],
     "resultados_distintos": 3,
-    "confessa": 22
+    "confessa": 21
    },
    "ultimo": "✅ sem GHPAT"
   },
@@ -223,16 +223,16 @@
      "cego",
      "ok"
     ],
-    "resultados_distintos": 29,
+    "resultados_distintos": 30,
     "confessa": 0
    },
-   "ultimo": "✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=36(api) · itch_downloads=47(api) · itch_visitas=201(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER"
+   "ultimo": "✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=37(api) · itch_downloads=47(api) · itch_visitas=201(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER"
   },
   {
    "passo": "tema do ciclo",
    "classe": "adaptativo",
    "detalhe": {
-    "n": 27,
+    "n": 28,
     "categorias": [
      "ok"
     ],
@@ -265,8 +265,8 @@
  },
  "texto": {
   "ciclos": 40,
-  "distintos": 29,
-  "repeticao_pct": 27.5
+  "distintos": 30,
+  "repeticao_pct": 25.0
  },
  "_lei": "inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos."
 }
