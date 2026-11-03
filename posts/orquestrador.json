@@ -1,19 +1,12 @@
 {
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
- "ultima_publicacao": "2026-11-03T01:22:54Z",
+ "ultima_publicacao": "2026-11-03T02:02:15Z",
  "ultima_medicao": "2026-11-03T01:42:54Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 126,
+ "pulsos": 127,
  "historico": [
-  {
-   "quando": "2026-11-02T08:46:23Z",
-   "acao": "dormir",
-   "motivo": "fora da janela (05h local)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-02T08:56:23Z",
    "acao": "dormir",
@@ -286,6 +279,13 @@
    "motivo": "fora da janela (22h local)",
    "codigo": 0,
    "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-03T02:02:15Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261103T020215Z] empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 5.0 por dia",
+   "codigo": 0,
+   "saida": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)"
   }
  ]
 }
