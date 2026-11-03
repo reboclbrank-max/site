@@ -1,6 +1,6 @@
 # Onde a casa pensa e onde ela repete
 
-Gerado em 2026-11-03T06:51:58Z sobre os últimos **40 ciclos** do diário (`posts/log.md`).
+Gerado em 2026-11-03T08:41:52Z sobre os últimos **40 ciclos** do diário (`posts/log.md`).
 
 > inteligência se mede por mudança de comportamento; passo que nunca muda não é inteligente, é ritual — e ritual com '✅' é o mais enganoso de todos.
 
