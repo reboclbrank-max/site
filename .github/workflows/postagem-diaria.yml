@@ -1,22 +1,23 @@
 name: postagem-diaria
 on:
-  schedule:
-    - cron: '13,33,53 * * * *'   # pulso: acorda o vigia do chat (job separado, não posta)
-    # GitHub documenta congestionamento no início da hora; mantém 8 ciclos/dia,
-    # mas os distribui no minuto 17 para reduzir atraso/queda de execução.
-    - cron: '17 0,3,6,9,12,15,18,21 * * *'
+  # Fase 0: publicação e retaguarda agendadas permanecem contidas no código.
   workflow_dispatch:
+    inputs:
+      confirmacao:
+        description: "Digite PUBLICAR para autorizar este ciclo legado"
+        required: true
+        type: string
 permissions:
   contents: write
-# Pulso técnico e ciclo de marketing não podem disputar a única vaga pendente.
-# O dispatch de retaguarda entra no grupo do postador; o pulso apenas o coordena.
+# Somente o ciclo manual confirmado permanece; a concorrência é estável e previsível.
 concurrency:
-  group: ${{ github.event.schedule == '13,33,53 * * * *' && 'postagem-acorda' || 'postagem-diaria' }}
+  group: postagem-diaria
   cancel-in-progress: false
 jobs:
   postar:
-    if: github.event.schedule != '13,33,53 * * * *'
+    if: github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR'
     runs-on: ubuntu-24.04
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
       - name: Contrato de preservação de estado (offline)
@@ -157,29 +158,6 @@ jobs:
       - name: Acorda o vigia da casa (chat de e-mail)
         if: always()
         continue-on-error: true
-        run: |
-          curl -s -o /dev/null -w "vigia do chat: %{http_code}\n" -X POST \
-            -H "Authorization: Bearer ${{ secrets.GHPAT }}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/reboclbrank-max/chat/actions/workflows/vigia.yml/dispatches \
-            -d '{"ref":"main"}' || true
-
-  acorda:
-    if: github.event.schedule == '13,33,53 * * * *'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 3
-    steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-      - name: Lê o último ciclo público no main atual
-        run: |
-          git fetch -q origin main
-          git show origin/main:posts/log.md > /tmp/posts-log.md
-      - name: Retaguarda conservadora da cadência de marketing
-        run: python3 tools/retaguarda-postagem.py /tmp/posts-log.md
-        env:
-          GHPAT: ${{ secrets.GHPAT }}
-      - name: Acorda o vigia da casa (chat de e-mail)
-        if: always()
         run: |
           curl -s -o /dev/null -w "vigia do chat: %{http_code}\n" -X POST \
             -H "Authorization: Bearer ${{ secrets.GHPAT }}" \

@@ -112,7 +112,7 @@ def main():
     caminho_wf = os.path.join(RAIZ, ".github", "workflows", "marketing-continuo.yml")
     texto = open(caminho_wf, encoding="utf-8").read() if os.path.exists(caminho_wf) else ""
     ok("workflow do bloco contínuo existe", bool(texto))
-    ok("workflow tem cron", "cron:" in texto)
+    ok("workflow contido não tem cron e exige PUBLICAR", "cron:" not in texto and "schedule:" not in texto and "inputs.confirmacao == 'PUBLICAR'" in texto)
     ok("workflow roda o laço", "tools/loop-24h.py" in texto)
     ok("workflow tem concorrência", "concurrency:" in texto)
     ok("workflow respeita o botão de parar", "PARAR" in texto or "loop-24h" in texto)

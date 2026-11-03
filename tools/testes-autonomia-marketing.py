@@ -162,9 +162,9 @@ verifica("renovação Threads não põe token na URL", "refresh_access_token?gra
 workflow = (RAIZ / ".github" / "workflows" / "postagem-diaria.yml").read_text(encoding="utf-8")
 verifica("política de autonomia existe", (RAIZ / "AUTONOMIA-MARKETING.md").is_file())
 verifica("workflow usa checkout fixado", "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09" in workflow)
-verifica("workflow mantém exatamente pulso e 8 ciclos planejados", workflow.count("- cron:") == 2 and "cron: '17 0,3,6,9,12,15,18,21 * * *'" in workflow)
-verifica("pulso e postagem usam concorrências separadas", "group: ${{ github.event.schedule == '13,33,53 * * * *' && 'postagem-acorda' || 'postagem-diaria' }}" in workflow)
-verifica("pulso usa retaguarda fail-closed", "python3 tools/retaguarda-postagem.py /tmp/posts-log.md" in workflow and "timeout-minutes: 3" in workflow and "Retaguarda conservadora da cadência de marketing\n        run:" in workflow)
+verifica("contenção remove agendas e exige PUBLICAR", "schedule:" not in workflow and "cron:" not in workflow and "inputs.confirmacao == 'PUBLICAR'" in workflow)
+verifica("contenção usa concorrência única e previsível", "group: postagem-diaria" in workflow and "github.event.schedule" not in workflow)
+verifica("retaguarda agendada não sobrevive à contenção", "\n  acorda:\n" not in workflow and "retaguarda-postagem.py /tmp/posts-log.md" not in workflow)
 
 # ---------------------------------------------------------------------------------------
 # Conteúdo repetido no ar (defeito medido em 26/10/2026)
