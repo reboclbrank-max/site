@@ -313,3 +313,6 @@ Ei! Do REBOCL BRANK: PRANCHETA, simulador 100% fictício de futebol onde você d
 
 ## 02/11/2026 19:48 UTC
 Dois jogos, um coração brasileiro ❤️🇧🇷 PRANCHETA: futebol tático na prancheta, grátis no nav/APK (Godot). CEIFALUME 0.1: fazenda idle noturna que cresce enquanto você dorme 🌙 Feitos com Godot por aqui. #GamedevBR #IndieD
+
+## 03/11/2026 00:53 UTC
+PRANCHETA: futebol tático 100% fictício, desenhe a bola parada e simule (Godot, grátis nav/APK) 🇧🇷 CEIFALUME 0.1: fazenda noturna idle, a lavoura cresce 8h offline 🌙 Dois projetos, um dev solo brasileiro. #GodotEngine #I
