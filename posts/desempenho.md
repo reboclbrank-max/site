@@ -4,7 +4,7 @@
 
 ## 03/11/2026
 
-> Medição pública em 2026-11-03T06:52Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
+> Medição pública em 2026-11-03T08:42Z · fonte: API pública do Bluesky (sem token). Descreve o que foi visto; não atribui causa e não é prova de entrega.
 
 - **bsky_seguidores=32 · posts_proprios=300 · eng_medio=1.2 · promo: n=90 media=1.89 zero=18.9% · comentario: n=210 media=0.9 zero=40.5% · respostas_recebidas=40 promo_respostas=1 promo_pendentes=1**
 
@@ -17,7 +17,7 @@
 
 **itch.io:** 48 download(s) e 203 visita(s) em 1/1 conta(s). Ceifalume: 41 · Prancheta: 7
 
-**YouTube:** 24 inscrito(s) · 163 vídeo(s) · 5468 visualizaç(ões) · shorts=7 de 100 conferido(s)
+**YouTube:** 24 inscrito(s) · 163 vídeo(s) · 5471 visualizaç(ões) · shorts=7 de 100 conferido(s)
 **YouTube — o que o canal publica:** dos 100 vídeos lidos, **7 são dos jogos da casa** (292 views, média 41.7) e **93 são de outros jogos** (3473 views, média 37.3) — os da casa são 7.8% das visualizações.
 Melhores da casa: "Ceifalume: a horta acordou à noite 🌙 jog" (230) · "Desenhe a prancheta e decida a partida —" (22) · "PRANCHETA — simulador de gestão de futeb" (14)
 
