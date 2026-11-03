@@ -71,9 +71,11 @@ jobs:
       # canvas do Godot). Só o que passa no portão do plantio é aceito: em 30/10, sem a escala,
       # 3 de 3 rodadas em 960x540 ficavam sem plantio; com a escala, 960/800/1280 plantaram.
       - name: Grava o gameplay do CEIFALUME (agente olha o estado e decide)
+        env:
+          SEGUNDOS_PEDIDO: ${{ github.event.inputs.segundos || '130' }}
         run: |
           set -o pipefail
-          SEGUNDOS="${{ github.event.inputs.segundos || '130' }}"
+          SEGUNDOS="$SEGUNDOS_PEDIDO"
           ok=0
           for tentativa in 1 2; do
             if [ "$tentativa" = "1" ]; then L=1280; A=720; else L=1600; A=900; fi
@@ -182,6 +184,8 @@ jobs:
           retention-days: 14
 
       - name: Resumo
+        env:
+          STATUS_PUBLICACAO: ${{ github.event.inputs.publicar == 'PUBLICAR' && 'pedido neste run' || 'não pedido — só gravação' }}
         run: |
           {
             echo "### Gameplay gravado"
@@ -191,7 +195,7 @@ jobs:
               -of default=noprint_wrappers=1 media/gameplay/ceifalume-gameplay.mp4
             echo '```'
             echo
-            echo "Envio ao YouTube: ${{ github.event.inputs.publicar == 'PUBLICAR' && 'pedido neste run' || 'não pedido — só gravação' }}"
+            echo "Envio ao YouTube: $STATUS_PUBLICACAO"
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Envia ao YouTube (só com a palavra PUBLICAR)

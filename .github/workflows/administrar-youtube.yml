@@ -45,8 +45,9 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
           YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          MODO_PEDIDO: ${{ inputs.modo }}
         run: |
-          MODO="${{ inputs.modo }}"
+          MODO="$MODO_PEDIDO"
           if [ -z "$MODO" ]; then MODO=auto; fi
           echo "modo: $MODO"
           python3 tools/administrar-youtube.py "$MODO" | tee /tmp/yt.txt || true
