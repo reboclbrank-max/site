@@ -57,8 +57,9 @@ jobs:
       - name: Administra (agendado roda sempre em auto)
         env:
           ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          MODO_PEDIDO: ${{ inputs.modo }}
         run: |
-          MODO="${{ inputs.modo }}"
+          MODO="$MODO_PEDIDO"
           if [ -z "$MODO" ]; then MODO=auto; fi
           echo "modo: $MODO"
           python3 tools/administrar-itch.py "$MODO" ceifalume | tee /tmp/adm.txt

@@ -58,10 +58,12 @@ jobs:
           python3 tools/rodar-contratos-isolados.py tools/testes-gameplay.py
 
       - name: Grava o PRANCHETA (build web do itch, roteiro medido)
+        env:
+          SEGUNDOS_PEDIDO: ${{ github.event.inputs.segundos || '80' }}
         run: |
           node tools/gravar-prancheta.js \
             --saida media/gameplay/prancheta-cru.mp4 \
-            --segundos "${{ github.event.inputs.segundos || '80' }}"
+            --segundos "$SEGUNDOS_PEDIDO"
 
       - name: Pós-produção (legenda, trilha, cartão final)
         run: |
@@ -120,6 +122,8 @@ jobs:
           retention-days: 14
 
       - name: Resumo
+        env:
+          STATUS_PUBLICACAO: ${{ github.event.inputs.publicar == 'PUBLICAR' && 'pedido neste run' || 'não pedido — só gravação' }}
         run: |
           {
             echo "### PRANCHETA gravado"
@@ -129,5 +133,5 @@ jobs:
               -of default=noprint_wrappers=1 media/gameplay/prancheta-gameplay.mp4
             echo '```'
             echo
-            echo "Envio ao YouTube: ${{ github.event.inputs.publicar == 'PUBLICAR' && 'pedido neste run' || 'não pedido — só gravação' }}"
+            echo "Envio ao YouTube: $STATUS_PUBLICACAO"
           } >> "$GITHUB_STEP_SUMMARY"

@@ -65,4 +65,5 @@ jobs:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           NTFY_TOPICO: ${{ secrets.NTFY_TOPICO }}
-        run: python3 tools/loop-24h.py --pulsos "${{ github.event.inputs.pulsos || '30' }}" --intervalo 600
+          PULSOS_PEDIDO: ${{ github.event.inputs.pulsos || '30' }}
+        run: python3 tools/loop-24h.py --pulsos "$PULSOS_PEDIDO" --intervalo 600
