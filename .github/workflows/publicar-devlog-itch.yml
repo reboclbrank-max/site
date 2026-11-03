@@ -44,7 +44,7 @@ jobs:
       - name: Barreiras offline
         run: python3 tools/rodar-contratos-isolados.py tools/testes-publicar-devlog.py
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "20"
 
