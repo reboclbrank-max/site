@@ -40,6 +40,22 @@ def fontes():
 def main():
     wfs = fontes()
     ok("os workflows foram lidos", len(wfs) >= 20, len(wfs))
+    # O YAML é analisado sem executar scripts: parâmetros de workflow_dispatch
+    # entram via env, nunca como fragmentos de shell que o Bash interpreta.
+    import yaml as _yaml_entradas
+    diretos = []
+    padrao = re.compile(r"\$\{\{\s*(?:inputs|github\.event\.inputs)\.")
+    for nome, fonte in wfs.items():
+        doc = _yaml_entradas.safe_load(fonte) or {}
+        for trabalho in (doc.get("jobs") or {}).values():
+            for passo in (trabalho.get("steps") or []):
+                corpo = passo.get("run") or ""
+                if padrao.search(corpo):
+                    diretos.append((nome, passo.get("name", "sem nome")))
+    ok("inputs de workflow nao entram diretamente em shell", not diretos, diretos)
+    ok("detector de injecao reprova fixture",
+       bool(padrao.search('echo "' + '${' + '{ inputs.texto }}' + '"')))
+
 
     # 1. Push tem que sobreviver a outro commit no main e NUNCA falhar calado.
     secos = [n for n, s in wfs.items()

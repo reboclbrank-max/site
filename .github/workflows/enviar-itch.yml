@@ -95,24 +95,27 @@ jobs:
         env:
           ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
           CONFIRMACAO: ${{ inputs.confirmacao }}
+          MODO_PEDIDO: ${{ inputs.modo }}
+          JOGO_PEDIDO: ${{ inputs.jogo }}
+          CANAL_PEDIDO: ${{ inputs.canal }}
         run: |
-          if [ "${{ inputs.modo }}" = "api" ]; then
+          if [ "$MODO_PEDIDO" = "api" ]; then
             python3 tools/enviar-itch.py api | tee /tmp/itch.txt
-          elif [ "${{ inputs.modo }}" = "uploads" ]; then
-            python3 tools/enviar-itch.py uploads "${{ inputs.jogo }}" | tee /tmp/itch.txt
-          elif [ "${{ inputs.modo }}" = "jogador" ]; then
-            python3 tools/enviar-itch.py jogador "${{ inputs.jogo }}" | tee /tmp/itch.txt
-          elif [ "${{ inputs.modo }}" = "conferir" ]; then
-            python3 tools/enviar-itch.py conferir "${{ inputs.jogo }}" | tee /tmp/itch.txt
-          elif [ "${{ inputs.modo }}" = "ensaio" ]; then
-            python3 tools/enviar-itch.py ensaio "${{ inputs.jogo }}" "${{ inputs.canal }}" | tee /tmp/itch.txt
-          elif [ "${{ inputs.modo }}" = "push" ]; then
-            python3 tools/enviar-itch.py push "${{ inputs.jogo }}" "${{ inputs.canal }}" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "uploads" ]; then
+            python3 tools/enviar-itch.py uploads "$JOGO_PEDIDO" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "jogador" ]; then
+            python3 tools/enviar-itch.py jogador "$JOGO_PEDIDO" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "conferir" ]; then
+            python3 tools/enviar-itch.py conferir "$JOGO_PEDIDO" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "ensaio" ]; then
+            python3 tools/enviar-itch.py ensaio "$JOGO_PEDIDO" "$CANAL_PEDIDO" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "push" ]; then
+            python3 tools/enviar-itch.py push "$JOGO_PEDIDO" "$CANAL_PEDIDO" | tee /tmp/itch.txt
           else
-            python3 tools/enviar-itch.py status "${{ inputs.jogo }}" | tee /tmp/itch.txt
+            python3 tools/enviar-itch.py status "$JOGO_PEDIDO" | tee /tmp/itch.txt
           fi
           {
-            echo "### itch.io — ${{ inputs.modo }} (${{ inputs.jogo }})"
+            echo "### itch.io — $MODO_PEDIDO ($JOGO_PEDIDO)"
             echo
             echo '```'
             cat /tmp/itch.txt

@@ -49,8 +49,9 @@ jobs:
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           CONFIRMACAO: ${{ inputs.confirmacao }}
+          JOGO_PEDIDO: ${{ inputs.jogo }}
         run: |
-          python3 tools/enviar-youtube.py "${{ inputs.jogo }}" | tee /tmp/envio.txt
+          python3 tools/enviar-youtube.py "$JOGO_PEDIDO" | tee /tmp/envio.txt
           {
             echo "### Envio ao YouTube"
             echo
