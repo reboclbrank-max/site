@@ -140,7 +140,7 @@ def main():
         if ref.startswith("./"):
             return True  # Ação local está no mesmo commit do checkout.
         if ref.startswith("docker://"):
-            return bool(re.fullmatch(r"docker://[^\\s@]+@sha256:[0-9a-f]{64}", ref))
+            return bool(re.fullmatch(r"docker://[^\s@]+@sha256:[0-9a-f]{64}", ref))
         return bool(re.fullmatch(r"(?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]+@[0-9a-f]{40}", ref))
 
     ok("validador distingue commit fixo de tag móvel",
@@ -150,10 +150,16 @@ def main():
        and not referencia_imutavel("actions/upload-artifact@main")
        and not referencia_imutavel("docker://exemplo/imagem:latest"))
 
+    ok("scanner identifica uses aninhado ou em passo direto",
+       bool(re.match(r"^\s*(?:-\s*)?uses:\s*(\S+)",
+                     "        uses: actions/setup-node@v4"))
+       and bool(re.match(r"^\s*(?:-\s*)?uses:\s*(\S+)",
+                         "      - uses: actions/upload-artifact@v4")))
+
     referencias_moveis = []
     for nome, yaml_workflow in wfs.items():
         for numero_linha, linha in enumerate(yaml_workflow.splitlines(), 1):
-            candidato = re.match(r"^\\s*(?:-\\s*)?uses:\\s*(\\S+)", linha)
+            candidato = re.match(r"^\s*(?:-\s*)?uses:\s*(\S+)", linha)
             if candidato and not referencia_imutavel(candidato.group(1)):
                 referencias_moveis.append("%s:%d (%s)" % (
                     nome, numero_linha, candidato.group(1)))
