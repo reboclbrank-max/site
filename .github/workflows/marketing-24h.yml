@@ -12,9 +12,13 @@ name: marketing-24h
 # O estado fica em posts/orquestrador.json e é commitado: pulso atrasado não duplica post.
 
 on:
-  schedule:
-    - cron: "*/15 * * * *"
+  # Fase 0: nenhum gatilho agendado. Reativar o workflow não retoma publicações.
   workflow_dispatch:
+    inputs:
+      confirmacao:
+        description: "Digite PUBLICAR para autorizar este ciclo legado"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -25,6 +29,7 @@ concurrency:
 
 jobs:
   pulso:
+    if: github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:

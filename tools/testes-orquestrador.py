@@ -176,7 +176,7 @@ def main():
     caminho_wf = os.path.join(RAIZ, ".github", "workflows", "marketing-24h.yml")
     texto = open(caminho_wf, encoding="utf-8").read() if os.path.exists(caminho_wf) else ""
     ok("workflow 24h existe", bool(texto))
-    ok("workflow 24h tem cron", "cron:" in texto)
+    ok("workflow 24h contido exige confirmação, sem cron", "cron:" not in texto and "schedule:" not in texto and "inputs.confirmacao == 'PUBLICAR'" in texto)
     ok("workflow 24h roda o orquestrador", "tools/orquestrador.py" in texto)
     ok("workflow 24h tem concorrência (não duplica pulso)", "concurrency:" in texto)
     ok("workflow 24h commita o estado", "git commit" in texto)
