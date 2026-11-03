@@ -1,9 +1,9 @@
 {
- "quando": "2026-11-02T21:43:52Z",
+ "quando": "2026-11-03T06:52:03Z",
  "_lei": "tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.",
  "resumo": {
-  "ciclos_de_marketing": 113,
-  "posts_sociais_registrados": 105,
+  "ciclos_de_marketing": 114,
+  "posts_sociais_registrados": 106,
   "canais_com_publicacao": 5,
   "videos_no_youtube": 2,
   "builds_no_itch": 1,
@@ -15,110 +15,110 @@
  },
  "canais": {
   "cerebro": {
-   "ciclos": 110,
-   "ok": 60,
+   "ciclos": 111,
+   "ok": 61,
    "ultimo": "✅ post novo criado",
    "quando": "13/10/2026 03:02 UTC"
   },
   "destino editorial": {
-   "ciclos": 47,
-   "ok": 47,
+   "ciclos": 48,
+   "ok": 48,
    "ultimo": "✅ rota oficial prancheta",
    "quando": "21/10/2026 21:49 UTC"
   },
   "tema do ciclo": {
-   "ciclos": 27,
-   "ok": 27,
+   "ciclos": 28,
+   "ok": 28,
    "ultimo": "✅ fale da alegria do primeiro jogador que nao e da familia",
    "quando": "26/10/2026 04:53 UTC"
   },
   "ntfy (push do dono)": {
-   "ciclos": 113,
-   "ok": 113,
+   "ciclos": 114,
+   "ok": 114,
    "ultimo": "✅ push 200",
    "quando": "13/10/2026 02:27 UTC"
   },
   "telegram": {
-   "ciclos": 113,
+   "ciclos": 114,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "bluesky": {
-   "ciclos": 113,
+   "ciclos": 114,
    "ok": 101,
    "ultimo": "✅ postado 200",
    "quando": "13/10/2026 02:45 UTC"
   },
   "mastodon": {
-   "ciclos": 113,
+   "ciclos": 114,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "reel semanal": {
-   "ciclos": 97,
+   "ciclos": 98,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "instagram": {
-   "ciclos": 104,
-   "ok": 37,
+   "ciclos": 105,
+   "ok": 38,
    "ultimo": "✅ postado id 18118576288983",
    "quando": "13/10/2026 14:18 UTC"
   },
   "threads": {
-   "ciclos": 111,
+   "ciclos": 112,
    "ok": 101,
    "ultimo": "✅ publicado id 181288261278",
    "quando": "13/10/2026 02:45 UTC"
   },
   "nostr": {
-   "ciclos": 112,
+   "ciclos": 113,
    "ok": 102,
    "ultimo": "✅ nota em 2 relays (id 5ac6fe56d2)",
    "quando": "13/10/2026 02:37 UTC"
   },
   "discord": {
-   "ciclos": 113,
+   "ciclos": 114,
    "ok": 0,
    "ultimo": "",
    "quando": ""
   },
   "cacador de oportunidades": {
-   "ciclos": 110,
+   "ciclos": 111,
    "ok": 83,
    "ultimo": "✅ 1 interacoes (q=#gamedev)",
    "quando": "13/10/2026 03:02 UTC"
   },
   "aula do cerebro": {
-   "ciclos": 110,
-   "ok": 110,
+   "ciclos": 111,
+   "ok": 111,
    "ultimo": "✅ cerebro calado hoje",
    "quando": "13/10/2026 03:02 UTC"
   },
   "descobridor de redes": {
-   "ciclos": 104,
-   "ok": 104,
+   "ciclos": 105,
+   "ok": 105,
    "ultimo": "✅ pesquisa de hoje ja registrada (1 ciclo por dia)",
    "quando": "13/10/2026 13:42 UTC"
   },
   "censo mundial": {
-   "ciclos": 104,
-   "ok": 104,
+   "ciclos": 105,
+   "ok": 105,
    "ultimo": "✅ censo de hoje ja registrado (1 por dia)",
    "quando": "13/10/2026 13:42 UTC"
   },
   "vigia da caixa (auto-recovery)": {
-   "ciclos": 105,
-   "ok": 105,
+   "ciclos": 106,
+   "ok": 106,
    "ultimo": "✅ sem link de recovery hoje (vigia volta no proximo ciclo)",
    "quando": "13/10/2026 03:42 UTC"
   },
   "regua de metas (medicao)": {
-   "ciclos": 101,
-   "ok": 100,
+   "ciclos": 102,
+   "ok": 101,
    "ultimo": "✅ bsky_seg=13 ig_seg=0 ig_posts=4 itch_dl=? yt=PENDENTE-PORTA",
    "quando": "13/10/2026 15:11 UTC"
   },
@@ -130,6 +130,10 @@
   }
  },
  "posts": [
+  {
+   "quando": "03/11/2026 00:53 UTC",
+   "texto": "PRANCHETA: futebol tático 100% fictício, desenhe a bola parada e simule (Godot, grátis nav/APK) 🇧🇷 CEIFALUME 0.1: fazenda noturna idle, a lavoura cresce 8h offline 🌙 Dois projetos, um dev solo brasileiro. #GodotEngine #I"
+  },
   {
    "quando": "02/11/2026 19:48 UTC",
    "texto": "Dois jogos, um coração brasileiro ❤️🇧🇷 PRANCHETA: futebol tático na prancheta, grátis no nav/APK (Godot). CEIFALUME 0.1: fazenda idle noturna que cresce enquanto você dorme 🌙 Feitos com Godot por aqui. #GamedevBR #IndieD"
@@ -795,8 +799,8 @@
   {
    "arquivo": "marketing.html",
    "selo": {
-    "bytes": 15843,
-    "sha256": "b2a9e8f4dd854939"
+    "bytes": 15813,
+    "sha256": "3b46ec119d33ad15"
    },
    "url": "https://reboclbrank-max.github.io/site/marketing.html"
   },
@@ -804,7 +808,7 @@
    "arquivo": "melhorias.html",
    "selo": {
     "bytes": 10451,
-    "sha256": "2d11b1ea04c5f4ee"
+    "sha256": "b84bb5d8872984e4"
    },
    "url": "https://reboclbrank-max.github.io/site/melhorias.html"
   },
@@ -843,8 +847,8 @@
   {
    "arquivo": "publicacoes.html",
    "selo": {
-    "bytes": 15253,
-    "sha256": "0c5acc05c02c85c4"
+    "bytes": 15255,
+    "sha256": "6af40fed424ef1cd"
    },
    "url": "https://reboclbrank-max.github.io/site/publicacoes.html"
   },
