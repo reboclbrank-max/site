@@ -11,10 +11,13 @@ name: marketing-continuo
 #   - não publica no itch nem envia vídeo ao YouTube (regras da casa).
 
 on:
-  schedule:
-    - cron: "5 0,6,12,18 * * *"
+  # Fase 0: nenhum bloco automático; somente uma execução humana explícita.
   workflow_dispatch:
     inputs:
+      confirmacao:
+        description: "Digite PUBLICAR para autorizar este ciclo legado"
+        required: true
+        type: string
       pulsos:
         description: "quantos pulsos neste bloco"
         required: true
@@ -29,6 +32,7 @@ concurrency:
 
 jobs:
   bloco:
+    if: github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR'
     runs-on: ubuntu-24.04
     timeout-minutes: 355
     steps:
