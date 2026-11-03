@@ -2,18 +2,11 @@
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
  "ultima_publicacao": "2026-11-03T01:22:54Z",
- "ultima_medicao": "2026-11-03T01:32:54Z",
+ "ultima_medicao": "2026-11-03T01:42:54Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 124,
+ "pulsos": 125,
  "historico": [
-  {
-   "quando": "2026-11-02T08:26:23Z",
-   "acao": "dormir",
-   "motivo": "fora da janela (05h local)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-02T08:36:23Z",
    "acao": "dormir",
@@ -284,6 +277,13 @@
    "quando": "2026-11-03T01:32:54Z",
    "acao": "medir",
    "motivo": "fila: [medir-20261103T005254Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 202,\n   \"falta\": null,\n   \"status\": \"A"
+  },
+  {
+   "quando": "2026-11-03T01:42:54Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261103T010254Z] decisão do relógio",
    "codigo": 0,
    "saida": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 202,\n   \"falta\": null,\n   \"status\": \"A"
   }

@@ -928,11 +928,11 @@
    "id": "medir-20261103T010254Z",
    "tipo": "medir",
    "prioridade": 90,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-03T01:02:54Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-03T01:42:54Z",
+   "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 202,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
    "motivo": "decisão do relógio",
    "chave": "medir-2026110301"
   }
