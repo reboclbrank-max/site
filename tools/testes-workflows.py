@@ -134,6 +134,32 @@ def main():
                         os.path.basename(arquivo), passo.get("name"), r.stderr.strip()[:80]))
     ok("todo bloco run: dos workflows é shell válido (bash -n)", not quebrados, quebrados)
 
+    # 9. Imutabilidade dos steps: uma tag móvel pode apontar para outro código no
+    # próximo cron, inclusive num workflow que tem acesso a credenciais.
+    def referencia_imutavel(ref):
+        if ref.startswith("./"):
+            return True  # Ação local está no mesmo commit do checkout.
+        if ref.startswith("docker://"):
+            return bool(re.fullmatch(r"docker://[^\\s@]+@sha256:[0-9a-f]{64}", ref))
+        return bool(re.fullmatch(r"(?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]+@[0-9a-f]{40}", ref))
+
+    ok("validador distingue commit fixo de tag móvel",
+       referencia_imutavel("actions/setup-node@" + "a" * 40)
+       and referencia_imutavel("./.github/actions/minha-acao")
+       and not referencia_imutavel("actions/setup-node@v4")
+       and not referencia_imutavel("actions/upload-artifact@main")
+       and not referencia_imutavel("docker://exemplo/imagem:latest"))
+
+    referencias_moveis = []
+    for nome, yaml_workflow in wfs.items():
+        for numero_linha, linha in enumerate(yaml_workflow.splitlines(), 1):
+            candidato = re.match(r"^\\s*(?:-\\s*)?uses:\\s*(\\S+)", linha)
+            if candidato and not referencia_imutavel(candidato.group(1)):
+                referencias_moveis.append("%s:%d (%s)" % (
+                    nome, numero_linha, candidato.group(1)))
+    ok("todas as Actions e workflows reutilizáveis apontam para SHA imutável",
+       not referencias_moveis, referencias_moveis)
+
     print("\n%d/%d verificações de higiene de workflow passaram"
           % (len(certos), len(certos) + len(falhas)))
     return 0 if not falhas else 1
