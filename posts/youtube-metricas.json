@@ -1,27 +1,19 @@
 {
- "medido_em": "2026-11-04T01:38:24Z",
+ "medido_em": "2026-11-04T11:32:29Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
-   "id": "GuE7af6dYo8",
+   "id": "f5kQFOQs0To",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
-   "publicado_em": "2026-10-30T15:33:10Z",
-   "views": 3,
-   "likes": 0,
-   "comentarios": 0
-  },
-  {
-   "id": "2qsSknSyeAs",
-   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
-   "publicado_em": "2026-10-27T15:34:40Z",
-   "views": 8,
+   "publicado_em": "2026-11-04T05:17:56Z",
+   "views": 0,
    "likes": 0,
    "comentarios": 0
   }
  ],
  "totais": {
-  "videos": 2,
-  "views": 11,
+  "videos": 1,
+  "views": 0,
   "likes": 0,
   "comentarios": 0
  }
