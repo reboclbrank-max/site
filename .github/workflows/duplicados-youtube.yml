@@ -1,0 +1,69 @@
+name: duplicados-youtube
+
+# Tira do ar vídeo repetido do canal — só os ids escritos, só com a palavra certa.
+#
+# POR QUE EXISTE (04/11/2026): o mesmo gameplay do CEIFALUME foi publicado três vezes com o
+# mesmo título (27/10, 30/10 e 04/11). Vídeo repetido divide clique. `limpar-youtube.yml` não
+# serve: ele apaga só vídeo de SONDA e nunca toca em vídeo do dono — e é assim que tem de ser.
+#
+# REGRA DA CASA: não há cron e não há varredura. O alvo é uma lista escrita à mão, e a ação só
+# acontece com a palavra no campo de confirmação:
+#   privar -> digite PRIVAR  (tira do ar público, mas o arquivo e as views ficam; reverter é
+#             à mão no YouTube Studio — este script não reverte, de propósito)
+#   apagar -> digite APAGAR  (permanente, não volta)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "ids dos vídeos, separados por vírgula"
+        required: true
+      acao:
+        description: "privar (tira do ar, guarda o arquivo) ou apagar (remove de vez)"
+        required: true
+        default: privar
+        type: choice
+        options:
+          - privar
+          - apagar
+      confirmacao:
+        description: "digite PRIVAR ou APAGAR — tem de ser igual à ação escolhida"
+        required: true
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: duplicados-youtube
+  cancel-in-progress: false
+
+jobs:
+  ajustar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 -m py_compile tools/duplicados-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-duplicados-youtube.py
+
+      - name: Ajusta somente os vídeos informados
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          IDS: ${{ inputs.ids }}
+          ACAO: ${{ inputs.acao }}
+          CONFIRMACAO: ${{ inputs.confirmacao }}
+        run: |
+          python3 tools/duplicados-youtube.py | tee /tmp/ajuste.txt
+          {
+            echo "### Ajuste de vídeos repetidos"
+            echo
+            echo '```'
+            cat /tmp/ajuste.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
