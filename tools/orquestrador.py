@@ -34,6 +34,13 @@ LOG = os.path.join(RAIZ, "posts", "log.md")
 INTERVALO_PUBLICACAO = datetime.timedelta(hours=2)
 INTERVALO_MEDICAO = datetime.timedelta(hours=6)
 FILA = os.path.join(RAIZ, "posts", "fila-tarefas.json")
+# Botão de desligar da casa: existir este arquivo é ordem de parar tudo. Vale para o pulso
+# agendado também — cron não é dono, e desligar precisa ser mais fácil que ligar.
+PARAR = os.path.join(RAIZ, "posts", "PARAR")
+
+
+def pediu_para_parar(caminho=PARAR):
+    return os.path.exists(caminho)
 
 
 # ----------------------------------------------------------------- utilidades de tempo
@@ -236,6 +243,9 @@ def fechar_fila(trio, ok, resultado=""):
 
 def main(argv):
     seco = "--seco" in argv          # decide e registra, mas não executa
+    if pediu_para_parar():
+        print("pulso cancelado: posts/PARAR existe — a casa não faz nada até alguém apagar")
+        return 0
     agora = agora_utc()
     estado = carregar_estado()
     calendario = ler_calendario()

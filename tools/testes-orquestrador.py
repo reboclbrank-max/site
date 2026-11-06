@@ -176,12 +176,18 @@ def main():
     caminho_wf = os.path.join(RAIZ, ".github", "workflows", "marketing-24h.yml")
     texto = open(caminho_wf, encoding="utf-8").read() if os.path.exists(caminho_wf) else ""
     ok("workflow 24h existe", bool(texto))
-    ok("workflow 24h contido exige confirmação, sem cron", "cron:" not in texto and "schedule:" not in texto and "inputs.confirmacao == 'PUBLICAR'" in texto)
+    # 06/11/2026: o dono autorizou a cadência. O contrato antigo exigia "sem cron"; o novo
+    # exige o que importa: o cron acorda, mas quem decide continua sendo o orquestrador
+    # (janela + teto) e o portão, e o pulso manual segue exigindo o dono e a palavra.
+    ok("workflow 24h tem cadência agendada", "schedule:" in texto and "cron:" in texto)
+    ok("workflow 24h só agenda no main", "github.ref == 'refs/heads/main'" in texto)
+    ok("workflow 24h mantém o pulso manual com confirmação", "inputs.confirmacao == 'PUBLICAR'" in texto)
+    ok("workflow 24h não publica por conta própria: chama o orquestrador", "python3 tools/orquestrador.py" in texto)
     ok("workflow 24h roda o orquestrador", "tools/orquestrador.py" in texto)
     ok("workflow 24h tem concorrência (não duplica pulso)", "concurrency:" in texto)
     ok("workflow 24h commita o estado", "git commit" in texto)
 
-    total = 21
+    total = 24
     print("\n%d/%d testes do orquestrador 24h passaram" % (total - falhas, total))
     return 1 if falhas else 0
 

@@ -12,11 +12,23 @@ name: marketing-24h
 # O estado fica em posts/orquestrador.json e é commitado: pulso atrasado não duplica post.
 
 on:
-  # Fase 0: nenhum gatilho agendado. Reativar o workflow não retoma publicações.
+  # CADÊNCIA LIGADA (06/11/2026, autorização expressa do dono).
+  #
+  # O cron acorda o robô; ele NÃO publica por ter acordado. Quem decide é o orquestrador
+  # (medir → pesquisar → aprender → publicar → dormir), e quem autoriza é o portão de
+  # publicação. Fora da janela 9-22h, acima do teto diário ou com texto repetido, o pulso
+  # termina sem publicar — e registra o motivo.
+  #
+  # Escolha de intervalo: 20 minutos. É o suficiente para um pulso cair dentro da janela,
+  # não gasta runner à toa e continua abaixo do teto de 5 publicações por dia, que é do
+  # orquestrador, não do cron.
+  schedule:
+    - cron: "*/20 * * * *"
+  # O caminho manual continua existindo — para quando o dono quiser forçar um ciclo.
   workflow_dispatch:
     inputs:
       confirmacao:
-        description: "Digite PUBLICAR para autorizar este ciclo legado"
+        description: "Digite PUBLICAR para rodar um pulso agora"
         required: true
         type: string
 
@@ -29,7 +41,10 @@ concurrency:
 
 jobs:
   pulso:
-    if: github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR'
+    # Pulso agendado roda sozinho; pulso manual continua exigindo o dono e a palavra.
+    if: >-
+      (github.event_name == 'schedule' && github.ref == 'refs/heads/main') ||
+      (github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR')
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
