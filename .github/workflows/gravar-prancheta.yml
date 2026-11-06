@@ -210,7 +210,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Ensaio do envio (roda todos os portões e não publica)
-        shell: bash -o pipefail {0}
+        shell: bash -o pipefail -e {0}
         # O caminho de envio do PRANCHETA nunca tinha rodado. Ensaio valida kit, arquivo, capa,
         # impressão, título novo e a régua do texto — e para antes de pedir token. Não usa
         # segredo nenhum: se o ensaio depender de credencial, ele não prova nada.
@@ -229,9 +229,13 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           echo "código do ensaio: $codigo"
+          # ENSAIO QUE RECUSA NÃO É RUN VERDE (06/11/2026): o run 42310268259 mostrou
+          # "código do ensaio: 1" (KeyError) e terminou success. O código do ensaio agora é o
+          # código do passo.
+          exit "$codigo"
 
       - name: Envia ao YouTube (só com a palavra PUBLICAR)
-        shell: bash -o pipefail {0}
+        shell: bash -o pipefail -e {0}
         # Até 06/11/2026 este workflow tinha o campo PUBLICAR e NENHUM passo de envio: o resumo
         # dizia "pedido neste run" e nada saía. Promessa falsa. Agora o envio é este passo, com
         # o mesmo cadeado e o mesmo portão do CEIFALUME (o vídeo só sobe se for novo).

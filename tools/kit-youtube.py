@@ -135,7 +135,7 @@ def descricao(slug):
         "",
         "Canal de dev solo: bastidores, versões e o que quebrou no caminho.",
         "",
-        "#jogobrasileiro #godot #ceifalume",
+        "#jogobrasileiro #godot",
     ]
     texto = "\n".join(linhas)
     return texto[:LIMITE_DESCRICAO]

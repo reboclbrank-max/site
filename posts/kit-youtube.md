@@ -44,7 +44,7 @@ Todos os canais da casa: https://reboclbrank-max.github.io/site/canais.html
 
 Canal de dev solo: bastidores, versões e o que quebrou no caminho.
 
-#jogobrasileiro #godot #ceifalume
+#jogobrasileiro #godot
 ```
 
 **Tags (copiar):**

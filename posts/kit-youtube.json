@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-11-06T23:31:36+00:00",
+ "gerado_em": "2026-11-06T23:44:58+00:00",
  "por_que": "envio por API exige OAuth do dono; a chave da casa é só de leitura. Este kit reduz o trabalho do dono a colar e clicar — e nada é enviado pelo robô.",
  "pacotes": [
   {
@@ -15,7 +15,7 @@
    "formato": "vídeo normal (16:9)",
    "aviso_formato": null,
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)",
-   "descricao": "CEIFALUME 0.1 — jogo idle de fazenda noturna.\n\nComo funciona: plante, colha e negocie à luz da lanterna.\nO que chama atenção: as plantações crescem por até 8 horas mesmo com o jogo fechado.\nOnde jogar: grátis no navegador ou no Android, sem conta.\nFeito com Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#jogobrasileiro #godot #ceifalume",
+   "descricao": "CEIFALUME 0.1 — jogo idle de fazenda noturna.\n\nComo funciona: plante, colha e negocie à luz da lanterna.\nO que chama atenção: as plantações crescem por até 8 horas mesmo com o jogo fechado.\nOnde jogar: grátis no navegador ou no Android, sem conta.\nFeito com Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#jogobrasileiro #godot",
    "tags": [
     "ceifalume",
     "jogo de fazenda",

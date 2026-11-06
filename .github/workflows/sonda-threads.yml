@@ -38,7 +38,7 @@ jobs:
         run: python3 tools/rodar-contratos-isolados.py tools/testes-sonda-threads.py
 
       - name: Sonda de verdade (para antes do publish)
-        shell: bash -o pipefail {0}
+        shell: bash -o pipefail -e {0}
         env:
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}

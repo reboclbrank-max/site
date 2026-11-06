@@ -55,7 +55,7 @@ jobs:
           echo "BUTLER_PATH=/tmp/butler/butler" >> "$GITHUB_ENV"
 
       - name: Administra (agendado roda sempre em auto)
-        shell: bash -o pipefail {0}
+        shell: bash -o pipefail -e {0}
         env:
           ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
           MODO_PEDIDO: ${{ inputs.modo }}

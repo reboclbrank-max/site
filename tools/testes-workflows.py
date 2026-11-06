@@ -58,7 +58,16 @@ def passos_com_tee(fonte):
         fim = ini + 1
         while fim < len(linhas) and not re.match(r"^\s*-\s+(name|uses):", linhas[fim]):
             fim += 1
-        achados.append((linha.strip(), "pipefail" in "\n".join(linhas[ini:fim])))
+        corpo = "\n".join(linhas[ini:fim])
+        # `shell: bash -o pipefail {0}` NÃO basta: sem `-e` o bash segue depois da pipeline que
+        # falhou e o passo termina com o status do último comando (medido em 06/11/2026, run
+        # 42313566675 — recusa "porta fechada" impressa no log e run VERDE). Precisa de -e.
+        protegido = ("pipefail" in corpo
+                     and ("-eo pipefail" in corpo or "-epipefail" in corpo
+                          or re.search(r"-o\s+pipefail\s+-e", corpo) is not None
+                          or re.search(r"set\s+-e", corpo) is not None
+                          or re.search(r"set\s+-[a-z]*e[a-z]*\s+-o\s+pipefail", corpo) is not None))
+        achados.append((linha.strip(), bool(protegido)))
     return achados
 
 
