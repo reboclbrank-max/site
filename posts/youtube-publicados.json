@@ -4,7 +4,7 @@
    "id": "HmbEdojjhsU",
    "url": "https://youtu.be/HmbEdojjhsU",
    "slug": "ceifalume-gameplay",
-   "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
    "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNa gravação desta partida: 15 mudas plantadas e 8 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha",
    "angulo": "como_funciona:ceifalume-8h",
    "fato": "ceifalume-8h",
@@ -16,7 +16,15 @@
     "toques_por_minuto": 618
    },
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
-   "quando": "2026-11-06T16:29:50Z"
+   "quando": "2026-11-06T16:29:50Z",
+   "correcoes": [
+    {
+     "campo": "titulo",
+     "de": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+     "para": "Como funciona: as plantações crescem e as vendas acontecem",
+     "quando": "2026-11-06T16:46:08Z"
+    }
+   ]
   },
   {
    "id": "L2UIYmofEiE",
