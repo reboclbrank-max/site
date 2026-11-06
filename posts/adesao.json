@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-06T16:18:02Z",
+ "quando": "2026-11-06T16:30:41Z",
  "regra": {
   "janela_horas": 72,
   "criterio": "views do vídeo novo > mediana de views dos vídeos que o canal já tinha antes dele e inscritos ganhos >= 1 na mesma janela",
@@ -14,11 +14,11 @@
   "inscritos_ganhos": null
  },
  "video_novo": {
-  "id": "L2UIYmofEiE",
-  "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
-  "angulo": "pergunta",
-  "quando": "2026-11-06T16:16:47Z",
-  "publicado_em": "2026-11-06T16:17:08Z",
+  "id": "HmbEdojjhsU",
+  "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+  "angulo": "como_funciona:ceifalume-8h",
+  "quando": "2026-11-06T16:29:50Z",
+  "publicado_em": "2026-11-06T16:30:04Z",
   "views": 0,
   "likes": 0,
   "comentarios": 0
@@ -50,7 +50,7 @@
   ]
  },
  "veredito": "AINDA_MEDINDO",
- "motivo": "0.0 horas no ar de 72 — a régua só fecha no fim da janela",
+ "motivo": "4 vídeo(s) na janela; o primeiro veredito fecha em 2026-11-07T05:17:32Z",
  "numeros": {
   "views_novo": 0,
   "mediana_base": 9.0,
@@ -58,7 +58,121 @@
   "horas_no_ar": 0.0,
   "janela_horas": 72
  },
+ "video_novo_veredito": {
+  "veredito": "AINDA_MEDINDO",
+  "motivo": "0.0 horas no ar de 72 — a régua só fecha no fim da janela",
+  "numeros": {
+   "views_novo": 0,
+   "mediana_base": 9.0,
+   "inscritos_ganhos": null,
+   "horas_no_ar": 0.0,
+   "janela_horas": 72
+  }
+ },
+ "videos": [
+  {
+   "id": "HmbEdojjhsU",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+   "angulo": "como_funciona:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "quando": "2026-11-06T16:29:50Z",
+   "fecha_em": "2026-11-09T16:29:50Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 9.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "0.0 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 9.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 0.0,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "L2UIYmofEiE",
+   "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
+   "angulo": "pergunta",
+   "fato": null,
+   "quando": "2026-11-06T16:16:47Z",
+   "fecha_em": "2026-11-09T16:16:47Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 10.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "0.2 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 10.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 0.2,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "03313IcXvEo",
+   "titulo": "6 colheitas em 2 min de CEIFALUME 0.1",
+   "angulo": "numeros",
+   "fato": null,
+   "quando": "2026-11-06T16:08:00Z",
+   "fecha_em": "2026-11-09T16:08:00Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 11.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "0.4 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 11.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 0.4,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "f5kQFOQs0To",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "angulo": null,
+   "fato": null,
+   "quando": "2026-11-04T05:17:32Z",
+   "fecha_em": "2026-11-07T05:17:32Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 11.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "59.2 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 11.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 59.2,
+    "janela_horas": 72
+   }
+  }
+ ],
+ "inscritos_por_video": {
+  "HmbEdojjhsU": 24,
+  "L2UIYmofEiE": 24,
+  "03313IcXvEo": 24,
+  "f5kQFOQs0To": 24
+ },
  "publicados_medidos": [
+  {
+   "id": "HmbEdojjhsU",
+   "publicado_em": "2026-11-06T16:30:04Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "L2UIYmofEiE",
    "publicado_em": "2026-11-06T16:17:08Z",

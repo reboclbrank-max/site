@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-06T16:18:02Z",
+ "medido_em": "2026-11-06T16:30:41Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "HmbEdojjhsU",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+   "publicado_em": "2026-11-06T16:30:04Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "L2UIYmofEiE",
    "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
@@ -28,7 +36,7 @@
   }
  ],
  "totais": {
-  "videos": 3,
+  "videos": 4,
   "views": 0,
   "likes": 0,
   "comentarios": 0
