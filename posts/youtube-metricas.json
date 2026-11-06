@@ -1,7 +1,23 @@
 {
- "medido_em": "2026-11-06T11:27:13Z",
+ "medido_em": "2026-11-06T16:18:02Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "L2UIYmofEiE",
+   "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
+   "publicado_em": "2026-11-06T16:17:08Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "03313IcXvEo",
+   "titulo": "6 colheitas em 2 min de CEIFALUME 0.1",
+   "publicado_em": "2026-11-06T16:08:17Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "f5kQFOQs0To",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
@@ -12,7 +28,7 @@
   }
  ],
  "totais": {
-  "videos": 1,
+  "videos": 3,
   "views": 0,
   "likes": 0,
   "comentarios": 0

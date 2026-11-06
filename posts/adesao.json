@@ -1,0 +1,90 @@
+{
+ "quando": "2026-11-06T16:18:02Z",
+ "regra": {
+  "janela_horas": 72,
+  "criterio": "views do vídeo novo > mediana de views dos vídeos que o canal já tinha antes dele e inscritos ganhos >= 1 na mesma janela",
+  "mede": "views, likes, comentários e inscritos (todos públicos)",
+  "nao_mede": "tempo de exibição, retenção e origem do tráfego (só com OAuth do dono)"
+ },
+ "canal": {
+  "id": "UCQdxKtfRnqNLd1ZOs9B6eaQ",
+  "nome": "Rebocl Brank",
+  "inscritos": 24,
+  "inscritos_base": 24,
+  "inscritos_ganhos": null
+ },
+ "video_novo": {
+  "id": "L2UIYmofEiE",
+  "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
+  "angulo": "pergunta",
+  "quando": "2026-11-06T16:16:47Z",
+  "publicado_em": "2026-11-06T16:17:08Z",
+  "views": 0,
+  "likes": 0,
+  "comentarios": 0
+ },
+ "base_da_regua": {
+  "videos_comparados": 49,
+  "mediana_views": 9.0,
+  "views": [
+   230,
+   182,
+   134,
+   102,
+   96,
+   90,
+   60,
+   57,
+   35,
+   25,
+   23,
+   22,
+   19,
+   18,
+   18,
+   18,
+   17,
+   14,
+   14,
+   14
+  ]
+ },
+ "veredito": "AINDA_MEDINDO",
+ "motivo": "0.0 horas no ar de 72 — a régua só fecha no fim da janela",
+ "numeros": {
+  "views_novo": 0,
+  "mediana_base": 9.0,
+  "inscritos_ganhos": null,
+  "horas_no_ar": 0.0,
+  "janela_horas": 72
+ },
+ "publicados_medidos": [
+  {
+   "id": "L2UIYmofEiE",
+   "publicado_em": "2026-11-06T16:17:08Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "03313IcXvEo",
+   "publicado_em": "2026-11-06T16:08:17Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "f5kQFOQs0To",
+   "publicado_em": "2026-11-04T05:17:56Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "GuE7af6dYo8"
+  },
+  {
+   "id": "2qsSknSyeAs"
+  }
+ ]
+}
