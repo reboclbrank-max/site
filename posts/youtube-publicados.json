@@ -1,6 +1,24 @@
 {
  "publicados": [
   {
+   "id": "FRCzgqUlMFY",
+   "url": "https://youtu.be/FRCzgqUlMFY",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "descricao": "A chuva rega de graça: não custa água nem moeda.\n\nNa gravação desta partida: 10 mudas plantadas e 4 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "angulo": "como_funciona:ceifalume-chuva",
+   "fato": "ceifalume-chuva",
+   "numeros": {
+    "plantadas": 10,
+    "colhidas": 4,
+    "toques": 1074,
+    "minutos": 2,
+    "toques_por_minuto": 537
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T20:04:19Z"
+  },
+  {
    "id": "PRyg0Ncz5U8",
    "url": "https://youtu.be/PRyg0Ncz5U8",
    "slug": "ceifalume-gameplay",
