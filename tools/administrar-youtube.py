@@ -196,10 +196,63 @@ def auto(ambiente=None, get=None, put=None, kit=None, renovar=None):
     return linhas, True
 
 
+def corrigir(ambiente=None, video_id=None, titulo=None, descricao=None, get=None, put=None,
+             renovar=None):
+    """Corrige título/descrição de UM vídeo já publicado. Nunca publica, nunca apaga.
+
+    POR QUE EXISTE (06/11/2026): o primeiro vídeo de um assunto novo subiu com o título cortado
+    no meio do sentido ("… por até 8"), porque o resumo do fato cortava a frase num número
+    solto. O defeito foi corrigido na origem; este modo conserta o que já está no ar, com o id
+    dito explicitamente e só o campo pedido.
+    """
+    if not video_id:
+        return ["corrigir: falta o id do vídeo — nada é tocado"], False
+    if not (titulo or descricao):
+        return ["corrigir: falta --titulo ou --descricao — nada é tocado"], False
+    if titulo is not None and not (4 <= len(titulo) <= 100):
+        return ["corrigir: título fora da faixa (4-100 caracteres) — nada é tocado"], False
+    token, erro = acesso(ambiente, renovar=renovar)
+    if not token:
+        return ["youtube: " + erro], False
+    videos, erro2 = meus_videos(token, get=get)
+    if erro2:
+        return ["youtube: " + erro2], False
+    video = next((v for v in (videos or []) if v.get("id") == video_id), None)
+    if not video:
+        return ["corrigir: o vídeo %s não está na conta — nada é tocado" % video_id], False
+    snippet = video.get("snippet") or {}
+    dif = {}
+    if titulo is not None and snippet.get("title") != titulo:
+        dif["title"] = titulo
+    if descricao is not None and snippet.get("description") != descricao:
+        dif["description"] = descricao
+    if not dif:
+        return ["corrigir: nada a mudar em %s (já está assim)" % video_id], True
+    ok, erro3 = aplicar_metadados(token, video, dif, put=put)
+    if not ok:
+        return ["corrigir: a API recusou — " + str(erro3 or "sem detalhe")[:140]], False
+    return ["corrigir: %s %s atualizado (%s)" % (video_id, "=".join(sorted(dif)),
+                                                 "título" if "title" in dif else "descrição")], True
+
+
 def main(argv):
     modo = argv[1] if len(argv) > 1 else "estado"
+    if modo == "corrigir":
+        resto = argv[2:]
+        video_id = resto[0] if resto and not resto[0].startswith("--") else None
+        titulo = descricao = None
+        if "--titulo" in resto:
+            titulo = resto[resto.index("--titulo") + 1] if len(resto) > resto.index("--titulo") + 1 else None
+        if "--descricao" in resto:
+            i = resto.index("--descricao")
+            descricao = resto[i + 1] if len(resto) > i + 1 else None
+        linhas, concluido = corrigir(video_id=video_id, titulo=titulo, descricao=descricao)
+        for linha in linhas:
+            print(linha)
+        print(("✓ " if concluido else "✗ ") + "corrigir")
+        return 0 if concluido else 1
     if modo not in ("estado", "auto"):
-        print("uso: administrar-youtube.py estado|auto")
+        print("uso: administrar-youtube.py estado|auto|corrigir <id> --titulo/--descricao")
         return 2
     linhas, concluido = (estado() if modo == "estado" else auto())
     for linha in linhas:

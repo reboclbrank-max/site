@@ -17,6 +17,17 @@ on:
         options:
           - estado
           - auto
+          - corrigir
+      # Correção de UM vídeo já publicado, com o id dito. Nasceu do título que subiu cortado no
+      # meio do sentido em 06/11/2026 (HmbEdojjhsU). Sem id e sem texto, nada é tocado.
+      corrigir_id:
+        description: "id do vídeo a corrigir (só no modo corrigir)"
+        required: false
+        default: ""
+      corrigir_titulo:
+        description: "novo título (vazio = não mexe no título)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -46,11 +57,18 @@ jobs:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
           YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
           MODO_PEDIDO: ${{ inputs.modo }}
+          CORRIGIR_ID: ${{ inputs.corrigir_id }}
+          CORRIGIR_TITULO: ${{ inputs.corrigir_titulo }}
         run: |
           MODO="$MODO_PEDIDO"
           if [ -z "$MODO" ]; then MODO=auto; fi
           echo "modo: $MODO"
-          python3 tools/administrar-youtube.py "$MODO" | tee /tmp/yt.txt || true
+          if [ "$MODO" = "corrigir" ]; then
+            python3 tools/administrar-youtube.py corrigir "$CORRIGIR_ID" --titulo "$CORRIGIR_TITULO" \
+              | tee /tmp/yt.txt || true
+          else
+            python3 tools/administrar-youtube.py "$MODO" | tee /tmp/yt.txt || true
+          fi
           {
             echo "### YouTube — administração ($MODO)"
             echo

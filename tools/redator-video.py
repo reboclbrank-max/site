@@ -347,15 +347,36 @@ def _maiuscula(texto):
     return texto[:1].upper() + texto[1:] if texto else texto
 
 
+VAZIAS_NO_FIM = {"a", "o", "as", "os", "de", "da", "do", "das", "dos", "e", "ou", "com", "sem",
+                 "por", "para", "pra", "em", "no", "na", "nos", "nas", "um", "uma", "que", "ate",
+                 "até", "ao", "aos", "se", "sob", "sobre", "entre"}
+
+
 def _resumo(texto, limite=58):
-    """Primeiras palavras da afirmação, para caber no título sem virar frase cortada."""
-    palavras = str(texto or "").split()
+    """Primeiras palavras da afirmação, sem cortar no meio do sentido.
+
+    Medido em 06/11/2026: o corte cru produziu o título "Como funciona: as plantações crescem e
+    as vendas acontecem por até 8" — frase pendurada num número solto. Título de vídeo é a
+    primeira coisa que o leitor vê; cortar assim é defeito, não estilo. Agora o fim vazio
+    (preposição, artigo, conjunção ou número solto) cai fora.
+    """
+    inteiro = str(texto or "")
+    # 1ª escolha: cortar numa fronteira natural (vírgula, dois pontos, ponto e vírgula) antes do
+    # limite — é assim que uma frase é interrompida sem perder o sentido.
+    corte = max(inteiro.rfind(",", 0, limite), inteiro.rfind(":", 0, limite),
+                inteiro.rfind(";", 0, limite))
+    if corte >= max(12, int(limite * 0.55)):
+        return inteiro[:corte].strip().rstrip(",;:")
+    palavras = inteiro.split()
     saida = ""
     for palavra in palavras:
         if len(saida) + len(palavra) + 1 > limite:
             break
         saida = (saida + " " + palavra).strip()
-    return saida.rstrip(",.;:") or str(texto or "")[:limite]
+    palavras = saida.rstrip(",.;:").split()
+    while palavras and (palavras[-1].lower() in VAZIAS_NO_FIM or palavras[-1].isdigit()):
+        palavras.pop()
+    return " ".join(palavras) or " ".join(str(texto or "").split()[:4])
 
 
 def fatos_da_casa(raiz=RAIZ):

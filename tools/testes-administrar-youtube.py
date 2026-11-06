@@ -191,5 +191,73 @@ linhas_x, ok_x = adm.estado_por_chave({"YT_API_KEY": "k", "YT_CHANNEL_ID": "UC1"
 ok("exceção na leitura vira linha de log, não pilha de erro",
    ok_x is False and "falhou" in linhas_x[0] and "TypeError" in linhas_x[0], linhas_x)
 
+# ------------------------------------------------------------------ corrigir UM vídeo
+# Nasceu de um defeito real: em 06/11/2026 o vídeo HmbEdojjhsU subiu com o título cortado no
+# meio do sentido ("... por até 8"). Corrigir o que já está no ar exige um caminho explícito,
+# com id dito, um campo só, e nenhuma publicação nova.
+AMB = {"YT_REFRESH_TOKEN": "r", "YT_CLIENT_ID": "i", "YT_CLIENT_SECRET": "s"}
+
+
+class GetComVideo:
+    def __init__(self, items):
+        self.items = items
+
+    def __call__(self, url, token, metodo="GET", corpo=None, timeout=45):
+        if "/channels" in url:
+            return canal_ok, None
+        if "search" in url:
+            return {"items": [{"id": {"videoId": v["id"]}} for v in self.items]}, None
+        return {"items": self.items}, None
+
+
+VIDEO_NO_AR = {"id": "v1", "snippet": {"title": "título cortado por até 8",
+                                       "description": "descrição boa", "tags": ["a", "b"],
+                                       "categoryId": "20"}, "status": {"privacyStatus": "public"}}
+
+linhas_c, feito_c = adm.corrigir(ambiente=AMB, video_id=None, titulo="novo",
+                                 get=GetComVideo([VIDEO_NO_AR]), put=PutFalso(), renovar=renovar_falso)
+ok("corrigir sem id não toca em nada", feito_c is False and "falta o id" in linhas_c[0], linhas_c)
+
+linhas_c, feito_c = adm.corrigir(ambiente=AMB, video_id="v1", get=GetComVideo([VIDEO_NO_AR]),
+                                 put=PutFalso(), renovar=renovar_falso)
+ok("corrigir sem campo pedido não toca em nada",
+   feito_c is False and "falta --titulo" in linhas_c[0], linhas_c)
+
+put_c = PutFalso()
+linhas_c, feito_c = adm.corrigir(ambiente=AMB, video_id="NAO_E_MEU", titulo="novo",
+                                 get=GetComVideo([VIDEO_NO_AR]), put=put_c, renovar=renovar_falso)
+ok("corrigir vídeo que não é da conta é recusado", feito_c is False and "não está na conta" in linhas_c[0],
+   linhas_c)
+ok("e nesse caso nenhum PUT é enviado", put_c.corpo is None)
+
+linhas_c, feito_c = adm.corrigir(ambiente=AMB, video_id="v1", descricao="descrição boa",
+                                 get=GetComVideo([VIDEO_NO_AR]), put=PutFalso(), renovar=renovar_falso)
+ok("corrigir para o mesmo texto não chama a API", feito_c is True and "nada a mudar" in linhas_c[0],
+   linhas_c)
+
+put_c = PutFalso()
+linhas_c, feito_c = adm.corrigir(ambiente=AMB, video_id="v1", titulo="título inteiro",
+                                 get=GetComVideo([VIDEO_NO_AR]), put=put_c, renovar=renovar_falso)
+ok("corrigir título manda só o título", feito_c is True and sorted(put_c.corpo["snippet"]) ==
+   ["categoryId", "description", "tags", "title"], put_c.corpo)
+ok("e mantém a descrição e as tags do vídeo",
+   put_c.corpo["snippet"]["description"] == "descrição boa" and put_c.corpo["snippet"]["tags"] == ["a", "b"],
+   put_c.corpo["snippet"])
+ok("e usa PUT no vídeo certo", put_c.metodo == "PUT" and put_c.corpo["id"] == "v1", put_c.corpo)
+
+linhas_c, feito_c = adm.corrigir(ambiente=AMB, video_id="v1", titulo="x" * 200,
+                                 get=GetComVideo([VIDEO_NO_AR]), put=PutFalso(), renovar=renovar_falso)
+ok("título fora da faixa é recusado antes de qualquer chamada",
+   feito_c is False and "fora da faixa" in linhas_c[0], linhas_c)
+
+fonte_adm = open(os.path.join(RAIZ, "tools", "administrar-youtube.py"), encoding="utf-8").read()
+ok("corrigir nunca publica (não existe videos.insert no caminho)",
+   "videos?part=snippet" in fonte_adm and "uploadType" not in fonte_adm)
+
+wf_adm = open(os.path.join(RAIZ, ".github", "workflows", "administrar-youtube.yml"),
+              encoding="utf-8").read()
+ok("o workflow permite pedir a correção de um vídeo",
+   "corrigir_id" in wf_adm and "corrigir_titulo" in wf_adm)
+
 print("\n%d/%d testes do administrador do YouTube passaram" % (certos[0], certos[0] + falhas[0]))
 sys.exit(1 if falhas[0] else 0)
