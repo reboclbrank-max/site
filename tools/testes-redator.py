@@ -423,6 +423,32 @@ checar("todo uso da memória tem ângulo, assunto, canal e data",
       (_usos_reais or [])[:2])
 
 
+
+# ---- corte no limite: nunca deixar frase pendurada ------------------------------------------
+# Medido em 06/11/2026: o primeiro texto gerado com o portão de estilo ligado terminou em
+# "…pode fazer até 5 trocas e dar." — corte de 170 caracteres no meio da frase. Era o mesmo
+# defeito dos 88 posts antigos (82% sem pontuação no fim).
+_longas = [
+    "Qual ferramenta da Prancheta do Android você acha mais útil para acompanhar as trocas de "
+    "jogadores da temporada inteira sem perder o fio da partida no meio do caminho.",
+    "Um texto longo sem nenhum ponto final que vai sendo escrito e escrito e escrito até passar "
+    "do limite de caracteres sem parar nunca e continuar por muito tempo ainda.",
+    "A colheita da noite rende mais quando o celeiro já está no nível dois, e o poco ajuda; "
+    "mas o composto custa caro e o retorno só aparece depois de duas partidas inteiras.",
+]
+for _t in _longas:
+    for _lim in (170, 150, 120, 90):
+        _c = redator._cortar_com_sentido(_t, _lim)
+        checar("corte em %d respeita o limite (%r…)" % (_lim, _c[:22]), len(_c) <= _lim, len(_c))
+        checar("corte em %d termina em pontuação ou reticência" % _lim, _c.strip()[-1] in ".!?…",
+               _c[-16:])
+        _ult = redator._sem_acento(_c.rstrip(".!?…").split()[-1]) if _c.strip() else ""
+        checar("corte em %d não deixa preposição solta" % _lim,
+               _ult not in redator.PALAVRAS_SOLTAS, _ult)
+
+checar("texto curto passa inteiro e sem reticência",
+      redator._cortar_com_sentido("Texto curto.", 170) == "Texto curto.")
+
 certos = sum(1 for _, ok in resultados if ok)
 print("%d/%d contratos do redator passaram" % (certos, len(resultados)))
 raise SystemExit(0 if certos == len(resultados) else 1)

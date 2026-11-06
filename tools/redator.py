@@ -353,6 +353,49 @@ def escolher_pautas(fatos, repertorio=None, quantas=CANDIDATOS, hoje=None, exclu
 
 
 # ------------------------------------------------------------------ pedido ao motor
+PALAVRAS_SOLTAS = {
+    "e", "ou", "mas", "que", "de", "do", "da", "dos", "das", "para", "pra", "por", "com",
+    "sem", "em", "no", "na", "nos", "nas", "um", "uma", "o", "a", "os", "as", "ao", "à",
+    "se", "como", "quando", "porque", "ate", "até", "mais", "muito", "tão",
+}
+
+
+def _cortar_com_sentido(texto, limite):
+    """Corta no limite SEM deixar frase pendurada.
+
+    Defeito medido em 06/11/2026, na primeira geração com o portão de estilo ligado:
+    "…o técnico pode fazer até 5 trocas e dar." — o corte em 170 caracteres pegou a frase no
+    meio e a palavra final virou "dar". Texto que termina assim parece robô truncado, e é
+    exatamente o defeito dos 88 posts antigos (82% terminavam sem pontuação).
+
+    Ordem: fim de frase (". ", "! ", "? ") → fim de oração (", ") → palavra inteira, sem
+    deixar preposição/conjunção solta.
+    """
+    t = " ".join(str(texto or "").split())
+    if len(t) <= limite:
+        return t
+    corte = t[:limite]
+    for marca in (". ", "! ", "? "):
+        fim = corte.rfind(marca)
+        if fim >= limite * 0.45:
+            return corte[:fim + 1].strip()
+    fim = corte.rfind(", ")
+    if fim >= limite * 0.55:
+        return corte[:fim].rstrip(" ,;:—") + "."
+    if " " in corte:
+        corte = corte[:corte.rfind(" ")]
+    pedacos = corte.rstrip(" ,;:—").split()
+    while len(pedacos) > 3 and _sem_acento(pedacos[-1]) in PALAVRAS_SOLTAS:
+        pedacos.pop()
+    return " ".join(pedacos).rstrip(" ,;:—") + "…"
+
+
+def _sem_acento(texto):
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", texto or "")
+                   if unicodedata.category(c) != "Mn").lower()
+
+
 def _encurtar(texto, limite):
     """Corta em limite de palavra: pedido cortado no meio de palavra confunde o motor."""
     texto = " ".join(str(texto or "").split())
@@ -432,9 +475,7 @@ def limpar_texto(texto, limite=220):
     t = re.sub(r"^(post|texto|legenda)\s*[:\-]\s*", "", t, flags=re.I)
     t = t.strip().strip('"').strip("“”").strip()
     if len(t) > limite:
-        corte = t[:limite]
-        fim = max(corte.rfind(". "), corte.rfind("! "), corte.rfind("? "))
-        t = (corte[:fim + 1] if fim > 40 else corte.rstrip(" ,.;:—")).strip()
+        t = _cortar_com_sentido(t, limite)
     return t
 
 
