@@ -1,19 +1,12 @@
 {
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
- "ultima_publicacao": "2026-11-03T09:33:31Z",
+ "ultima_publicacao": "2026-11-06T06:22:57Z",
  "ultima_medicao": "2026-11-03T01:42:54Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 128,
+ "pulsos": 129,
  "historico": [
-  {
-   "quando": "2026-11-02T09:06:23Z",
-   "acao": "dormir",
-   "motivo": "fora da janela (06h local)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-02T09:16:23Z",
    "acao": "dormir",
@@ -286,6 +279,13 @@
    "motivo": "fila: [publicar-20261103T020215Z] empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.8 por dia",
    "codigo": 0,
    "saida": "janela: fora da janela (06h local; janela 09-22h)\nRESUMO: janela=PULADO (fora da janela (06h local; janela 09-22h))"
+  },
+  {
+   "quando": "2026-11-06T06:22:57Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261103T020215Z] empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.6 por dia",
+   "codigo": 0,
+   "saida": "janela: fora da janela (03h local; janela 09-22h)\nRESUMO: janela=PULADO (fora da janela (03h local; janela 09-22h))"
   }
  ]
 }
