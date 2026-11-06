@@ -1,6 +1,16 @@
 {
  "publicados": [
   {
+   "id": "03313IcXvEo",
+   "url": "https://youtu.be/03313IcXvEo",
+   "slug": "ceifalume-gameplay",
+   "titulo": "6 colheitas em 2 min de CEIFALUME 0.1",
+   "descricao": "Em 2 minutos de gravação o agente plantou 13 mudas e colheu 6, sem esperar parado em nenhum momento.\n\nCada célula do campo tem o seu próprio tempo de crescimento, e o celeiro guarda o que sobra.\n\nForam 725 toques na tela, cerca de 362 por minuto, distribuídos entre semear e colher.\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintet",
+   "angulo": "numeros",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T16:08:00Z"
+  },
+  {
    "id": "f5kQFOQs0To",
    "url": "https://youtu.be/f5kQFOQs0To",
    "slug": "ceifalume-gameplay",

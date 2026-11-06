@@ -1,0 +1,12 @@
+{
+ "_o_que_e": "impressão sha256 de cada vídeo já enviado ao YouTube — é isto que impede o mesmo vídeo de subir duas vezes",
+ "enviados": [
+  {
+   "sha256": "83536fa844fd0f675bc2353f1398e80469676d927da34a38dd5aca12829afb3e",
+   "slug": "ceifalume-gameplay",
+   "id": "03313IcXvEo",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T16:08:00Z"
+  }
+ ]
+}
