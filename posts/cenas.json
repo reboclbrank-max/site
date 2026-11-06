@@ -1,4 +1,38 @@
 {
  "_o_que_e": "uma linha por partida gravada; assinatura igual = partida repetida (o vídeo novo não seria novo)",
- "partidas": []
+ "partidas": [
+  {
+   "quando": "2026-11-06T18:14:22Z",
+   "estrategia": "nabo",
+   "assinatura": "b7a21c8180c7",
+   "resumo": {
+    "estrategia": "nabo",
+    "plantadas": 18,
+    "colhidas": 9,
+    "bicos": 717,
+    "sementes": [],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 28.3
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 12,
+      "t": 51.4
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 62,
+      "t": 53.9
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
+  }
+ ]
 }
