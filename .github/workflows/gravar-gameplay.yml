@@ -63,6 +63,7 @@ jobs:
           python3 -m py_compile tools/validar-video.py tools/kit-gameplay.py \
             tools/desenhar-faixa.py tools/validar-instrucoes.py
           python3 tools/rodar-contratos-isolados.py tools/testes-gameplay.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-envio-automatico-youtube.py
           python3 tools/rodar-contratos-isolados.py tools/testes-instrucoes-video.py
 
       # REQUISITO DO DONO: se o robô não jogar, a gravação NÃO é entregue. Antes bastava uma
@@ -198,6 +199,33 @@ jobs:
             echo "Envio ao YouTube: $STATUS_PUBLICACAO"
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Envia ao YouTube no automático (o portão do vídeo decide)
+        # Caminho agendado. O vídeo só sobe se for comprovadamente NOVO: o sha256 do arquivo
+        # não pode estar em posts/videos-enviados.json. Em 06/11/2026 o canal tinha 163 vídeos
+        # e o mesmo título de gameplay foi ao ar três vezes — palavra humana não impedia isso.
+        # Recusa aqui é comportamento normal e NÃO derruba o run.
+        # `publicar == 'AUTOMATICO'` existe só para provar o portão sob demanda, sem upload
+        # garantido: se o vídeo for novo, ele sobe — e é isso que o dono quer.
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.publicar == 'AUTOMATICO' }}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          CONFIRMACAO: AUTOMATICO
+          KIT_YOUTUBE: posts/kit-gameplay.json
+        run: |
+          set +e
+          python3 tools/enviar-youtube.py ceifalume-gameplay | tee /tmp/envio-auto.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Portão do vídeo"
+            echo '```'
+            cat /tmp/envio-auto.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código do envio: $codigo"
+          exit 0
+
       - name: Envia ao YouTube (só com a palavra PUBLICAR)
         if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}
         env:
@@ -210,7 +238,7 @@ jobs:
           python3 tools/enviar-youtube.py ceifalume-gameplay | tee /tmp/envio.txt
 
       - name: Registra o que foi publicado (JSON público que o chat lê)
-        if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}
+        if: ${{ github.event.inputs.publicar == 'PUBLICAR' || github.event.inputs.publicar == 'AUTOMATICO' || github.event_name == 'schedule' }}
         run: |
           if [ ! -f posts/youtube-publicados.json ]; then
             echo "sem registro para guardar (o envio pode ter falhado antes)"
@@ -219,6 +247,7 @@ jobs:
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
           git add posts/youtube-publicados.json
+          [ -e posts/videos-enviados.json ] && git add posts/videos-enviados.json || true
           if git diff --cached --quiet; then
             echo "registro sem mudança"
             exit 0
