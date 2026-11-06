@@ -1,79 +1,84 @@
 {
  "jogo": "prancheta",
- "estrategia": "pressao_rapida",
+ "estrategia": "posse_normal",
  "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920",
  "decisoes": [
   {
-   "t": 15.4,
+   "t": 14.8,
    "motivo": "abrir o menu do jogo",
    "acao": "toque em 500,87"
   },
   {
-   "t": 20.8,
+   "t": 19.8,
    "motivo": "aceitar o convite do clube",
    "acao": "toque em 500,179"
   },
   {
-   "t": 25.1,
+   "t": 23.7,
    "motivo": "aplicar a sugestão do staff",
    "acao": "toque em 500,232"
   },
   {
-   "t": 29.5,
+   "t": 27.4,
    "motivo": "aplicar o microciclo da semana",
    "acao": "toque em 500,612"
   },
   {
-   "t": 34.3,
+   "t": 31.6,
    "motivo": "abrir a prancheta",
    "acao": "toque em 500,259"
   },
   {
-   "t": 41.3,
+   "t": 37.6,
    "motivo": "jogar com o plano recomendado",
    "acao": "toque em 500,289"
   },
   {
+   "t": 41.1,
+   "motivo": "seguir sem mexer (sem instrução)",
+   "acao": "toque em 636,573"
+  },
+  {
    "t": 45.3,
-   "motivo": "dar instrução no intervalo (pressionar)",
-   "acao": "toque em 110,608"
-  },
-  {
-   "t": 49.4,
-   "motivo": "acelerar a partida",
-   "acao": "toque em 700,685"
-  },
-  {
-   "t": 54,
-   "motivo": "partida em andamento",
-   "acao": "toque em 700,685"
-  },
-  {
-   "t": 58.5,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 63,
+   "t": 49.5,
    "motivo": "partida em andamento",
    "acao": "toque em 110,608"
   },
   {
-   "t": 67.5,
+   "t": 53.8,
    "motivo": "partida em andamento",
    "acao": "toque em 636,573"
   },
   {
-   "t": 72.1,
+   "t": 58,
    "motivo": "partida em andamento",
-   "acao": "toque em 700,685"
+   "acao": "toque em 640,360"
   },
   {
-   "t": 77.3,
-   "motivo": "pular para o fim da partida",
-   "acao": "toque em 900,705"
+   "t": 62.1,
+   "motivo": "partida em andamento",
+   "acao": "toque em 640,360"
+  },
+  {
+   "t": 66.3,
+   "motivo": "partida em andamento",
+   "acao": "toque em 110,608"
+  },
+  {
+   "t": 70.4,
+   "motivo": "partida em andamento",
+   "acao": "toque em 636,573"
+  },
+  {
+   "t": 74.5,
+   "motivo": "partida em andamento",
+   "acao": "toque em 640,360"
   }
  ],
- "passos_confirmados": 11,
- "toques_partida": 5
+ "passos_confirmados": 13,
+ "toques_partida": 8
 }
