@@ -74,6 +74,15 @@ def horas_desde(quando, agora=None):
     return round((fim - inicio).total_seconds() / 3600.0, 1)
 
 
+def fecha_em(quando, janela_horas=None):
+    """Quando o veredito daquele vídeo fecha (publicação + janela), em ISO-8601."""
+    inicio = instante(quando)
+    if inicio is None:
+        return None
+    janela = REGRA["janela_horas"] if janela_horas is None else janela_horas
+    return (inicio + datetime.timedelta(hours=janela)).isoformat().replace("+00:00", "Z")
+
+
 def mediana(valores):
     """Mediana dos inteiros. None quando a lista está vazia (não é zero: é ausência)."""
     numeros = [int(v) for v in valores if isinstance(v, (int, float))]
@@ -184,6 +193,18 @@ def inscritos_de_referencia(anterior, inscritos_agora):
     return int(inscritos_agora or 0), None
 
 
+def inscritos_por_video(anterior, inscritos_agora):
+    """{id: inscritos no momento em que aquele vídeo foi visto pela primeira vez}.
+
+    Sem isso o ganho de inscritos de um vídeo seria atribuído ao vídeo seguinte — número certo
+    com dono errado é mentira do mesmo jeito.
+    """
+    guardado = {}
+    if isinstance(anterior, dict) and isinstance(anterior.get("inscritos_por_video"), dict):
+        guardado = {str(k): v for k, v in anterior["inscritos_por_video"].items() if isinstance(v, int)}
+    return guardado
+
+
 def medir(chave, raiz=RAIZ, agora=None, abrir=urllib.request.urlopen):
     """Monta o relatório inteiro. Devolve dict pronto para gravar."""
     agora = agora or agora_utc()
@@ -218,6 +239,51 @@ def medir(chave, raiz=RAIZ, agora=None, abrir=urllib.request.urlopen):
     except (OSError, ValueError):
         anterior = None
     base_inscritos, ganho = inscritos_de_referencia(anterior, inscritos)
+    # Cada vídeo é julgado na PRÓPRIA janela. Antes disso, só o mais novo era julgado: se um
+    # vídeo novo subisse antes das 72 h do anterior, o anterior nunca recebia veredito — o
+    # trabalho ficava sem resposta e ninguém percebia.
+    por_video_inscritos = inscritos_por_video(anterior, inscritos)
+    julgados = []
+    for item in meus:
+        vid = item["id"]
+        dado = stats.get(vid)
+        if not dado:
+            continue
+        if vid not in por_video_inscritos and isinstance(inscritos, int):
+            por_video_inscritos[vid] = inscritos
+        nascimento = item.get("quando") or dado.get("publicado_em")
+        corte_do_video = instante(nascimento) or corte
+        base_do_video = [v["views"] for outro, v in do_canal.items()
+                         if outro != vid and instante(v.get("publicado_em")) and corte_do_video
+                         and instante(v.get("publicado_em")) < corte_do_video]
+        ganho_do_video = None
+        if isinstance(inscritos, int) and isinstance(por_video_inscritos.get(vid), int):
+            ganho_do_video = inscritos - por_video_inscritos[vid]
+        estado_v, motivo_v, numeros_v = veredito(dado["views"], mediana(base_do_video),
+                                                 ganho_do_video, horas_desde(nascimento, agora))
+        julgados.append({"id": vid, "titulo": item.get("titulo"), "angulo": item.get("angulo"),
+                         "fato": item.get("fato"), "quando": nascimento,
+                         "fecha_em": fecha_em(nascimento),
+                         "views": dado["views"], "likes": dado["likes"],
+                         "comentarios": dado["comentarios"],
+                         "inscritos_ganhos": ganho_do_video,
+                         "mediana_base": mediana(base_do_video),
+                         "veredito": estado_v, "motivo": motivo_v, "numeros": numeros_v})
+    provados = [v for v in julgados if v["veredito"] == "PROVADO"]
+    fechados = [v for v in julgados if v["veredito"] == "NAO_PROVADO"]
+    if provados:
+        agregado = "PROVADO"
+        motivo_geral = "%d vídeo(s) bateram a régua: %s" % (
+            len(provados), "; ".join("%s … %s" % (v["id"], v["motivo"]) for v in provados[:3]))
+    elif fechados:
+        agregado = "NAO_PROVADO"
+        motivo_geral = "%d vídeo(s) fecharam a janela sem bater a régua: %s" % (
+            len(fechados), "; ".join("%s em %s" % (v["id"], v["fecha_em"]) for v in fechados[:3]))
+    else:
+        agregado = "AINDA_MEDINDO"
+        motivo_geral = "%d vídeo(s) na janela; o primeiro veredito fecha em %s" % (
+            len(julgados), min((v["fecha_em"] or "" for v in julgados), default="—"))
+    # O veredito do conjunto continua sendo o do vídeo mais novo, que é o que o resumo mostra.
     estado, motivo, numeros = veredito(stats[novo["id"]]["views"], base_mediana, ganho, horas)
     return {
         "quando": agora.isoformat().replace("+00:00", "Z"),
@@ -228,9 +294,12 @@ def medir(chave, raiz=RAIZ, agora=None, abrir=urllib.request.urlopen):
                        "quando": novo.get("quando"), **stats[novo["id"]]},
         "base_da_regua": {"videos_comparados": len(base), "mediana_views": base_mediana,
                           "views": sorted(base, reverse=True)[:20]},
-        "veredito": estado,
-        "motivo": motivo,
+        "veredito": agregado,
+        "motivo": motivo_geral,
         "numeros": numeros,
+        "video_novo_veredito": {"veredito": estado, "motivo": motivo, "numeros": numeros},
+        "videos": julgados,
+        "inscritos_por_video": por_video_inscritos,
         "publicados_medidos": [{"id": i["id"], **stats.get(i["id"], {})} for i in meus],
     }
 
@@ -260,6 +329,10 @@ def main(argv):
                                                             dados["base_da_regua"]["mediana_views"] or 0))
     print("inscritos: %s (ganho medido: %s)" % (dados["canal"]["inscritos"],
                                                 dados["canal"]["inscritos_ganhos"]))
+    for v in dados.get("videos") or []:
+        print("  %s (%s): %s views em %s h · %s · fecha %s"
+              % (v["id"], v.get("angulo") or "sem ângulo", v["views"],
+                 v["numeros"].get("horas_no_ar"), v["veredito"], v.get("fecha_em")))
     print("VEREDITO: %s — %s" % (dados["veredito"], dados["motivo"]))
     return 0
 

@@ -79,14 +79,18 @@ ok("sem número do vídeo não há veredito", estado == "AINDA_MEDINDO", estado)
 CHAMADAS = []
 
 
-def api_falsa(novo_existe=True, views_novo=18, inscritos=25):
+def api_falsa(novo_existe=True, views_novo=18, inscritos=25, nossos=None):
     """Uma YouTube Data API de mentira, que responde pelo parâmetro `id=` de verdade."""
     CATALOGO = {
-        "03313IcXvEo": {"publicado_em": "2026-11-06T16:08:00Z", "canal": "UCcanal"},
         "VID_ANTIGO": {"publicado_em": "2026-10-01T10:00:00Z", "views": 30},
         "VID_ANTIGO2": {"publicado_em": "2026-10-20T10:00:00Z", "views": 40},
         "VID_ANTIGO3": {"publicado_em": "2026-10-25T10:00:00Z", "views": 8},
     }
+    meus = nossos if nossos is not None else {"03313IcXvEo": {"publicado_em": "2026-11-06T16:08:00Z",
+                                                              "views": views_novo}}
+    for vid, dado in meus.items():
+        CATALOGO[vid] = {"publicado_em": dado["publicado_em"], "views": dado.get("views", 0),
+                         "canal": "UCcanal"}
 
     def abrir(url, timeout=30):
         CHAMADAS.append(url)
@@ -120,7 +124,7 @@ def api_falsa(novo_existe=True, views_novo=18, inscritos=25):
                                                          "channelTitle": "Rebocl Brank",
                                                          "publishedAt": dado["publicado_em"]}})
                     continue
-                views = views_novo if vid == "03313IcXvEo" else dado.get("views", 0)
+                views = dado.get("views", 0)
                 itens.append({"id": vid,
                               "snippet": {"publishedAt": dado["publicado_em"]},
                               "statistics": {"viewCount": str(views), "likeCount": "2",
@@ -130,8 +134,8 @@ def api_falsa(novo_existe=True, views_novo=18, inscritos=25):
             return Resposta({"items": [{"contentDetails": {"relatedPlaylists": {"uploads": "UUcanal"}},
                                         "statistics": {"subscriberCount": str(inscritos)}}]})
         if url.startswith(ma.URL_ITENS):
-            return Resposta({"items": [{"contentDetails": {"videoId": v}} for v in
-                                       ("03313IcXvEo", "VID_ANTIGO3", "VID_ANTIGO2", "VID_ANTIGO")]})
+            ordem = tuple(meus) + ("VID_ANTIGO3", "VID_ANTIGO2", "VID_ANTIGO")
+            return Resposta({"items": [{"contentDetails": {"videoId": v}} for v in ordem]})
         raise AssertionError("URL inesperada: " + url)
     return abrir
 
@@ -227,6 +231,44 @@ ok("o medidor não faz POST (não publica, não altera vídeo)",
 ok("o medidor só usa os endpoints de leitura",
    all(endpoint.startswith("https://www.googleapis.com/youtube/v3/") for endpoint in
        (ma.URL_VIDEOS, ma.URL_CANAIS, ma.URL_ITENS)))
+
+# ---- 12. cada vídeo é julgado na PRÓPRIA janela, e o resultado não se perde
+TRES = {"VID_A": {"publicado_em": "2026-11-01T10:00:00Z", "views": 5},   # janela fechada, poucas views
+        "VID_B": {"publicado_em": "2026-11-08T10:00:00Z", "views": 30}}  # janela aberta
+tmp3 = bancada([{"id": "VID_B", "titulo": "novo", "angulo": "pergunta",
+                 "quando": "2026-11-08T10:00:00Z"},
+                {"id": "VID_A", "titulo": "antigo", "angulo": "numeros",
+                 "quando": "2026-11-01T10:00:00Z"}])
+dados3 = ma.medir("chave", raiz=tmp3, agora=AGORA, abrir=api_falsa(nossos=TRES))
+por_id = {v["id"]: v for v in dados3["videos"]}
+ok("todos os vídeos publicados são julgados (não só o mais novo)",
+   set(por_id) == {"VID_A", "VID_B"}, list(por_id))
+ok("o vídeo com janela fechada e poucas views é NAO_PROVADO",
+   por_id["VID_A"]["veredito"] == "NAO_PROVADO", por_id["VID_A"]["motivo"])
+ok("o vídeo dentro da janela continua AINDA_MEDINDO",
+   por_id["VID_B"]["veredito"] == "AINDA_MEDINDO", por_id["VID_B"]["motivo"])
+ok("o conjunto assume o pior fechado quando um já foi reprovado pela régua",
+   dados3["veredito"] == "NAO_PROVADO", dados3["veredito"])
+ok("cada vídeo diz quando o veredito dele fecha",
+   por_id["VID_A"]["fecha_em"] == "2026-11-04T10:00:00Z", por_id["VID_A"]["fecha_em"])
+# VID_A (01/11) só pode ser comparado com o que já existia antes dele — um vídeo antigo, 30 views.
+# VID_B (08/11) compara com os três antigos (8, 30, 40) e com o VID_A (5): mediana 19.
+ok("a mediana da base de cada vídeo usa só os anteriores a ele",
+   por_id["VID_A"]["mediana_base"] == 30.0 and por_id["VID_B"]["mediana_base"] == 19.0,
+   (por_id["VID_A"]["mediana_base"], por_id["VID_B"]["mediana_base"]))
+ok("o relatório guarda os inscritos de referência por vídeo",
+   set(dados3["inscritos_por_video"]) == {"VID_A", "VID_B"}, dados3["inscritos_por_video"])
+
+# a referência de inscritos não se perde na leitura seguinte
+with open(os.path.join(tmp3, "posts", "adesao.json"), "w", encoding="utf-8") as f:
+    json.dump({"inscritos_por_video": {"VID_A": 20, "VID_B": 24}, "inscritos_base": 20}, f)
+dados4 = ma.medir("chave", raiz=tmp3, agora=depois, abrir=api_falsa(nossos=TRES, inscritos=28))
+ok("a referência antiga de inscritos é preservada (o ganho não é zerado a cada leitura)",
+   dados4["inscritos_por_video"].get("VID_A") == 20, dados4["inscritos_por_video"])
+ok("o ganho por vídeo é medido contra a referência daquele vídeo",
+   {v["id"]: v["inscritos_ganhos"] for v in dados4["videos"]}.get("VID_A") == 8,
+   {v["id"]: v["inscritos_ganhos"] for v in dados4["videos"]})
+shutil.rmtree(tmp3, ignore_errors=True)
 
 # ---- 13. o workflow mede e versiona
 wf = open(os.path.join(RAIZ, ".github", "workflows", "metricas-youtube.yml"), encoding="utf-8").read()

@@ -2,18 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "pergunta",
+   "angulo": "como_funciona:ceifalume-8h",
+   "fato": "ceifalume-8h",
    "numeros": {
-    "plantadas": 9,
-    "colhidas": 9,
-    "toques": 806,
+    "plantadas": 15,
+    "colhidas": 8,
+    "toques": 1236,
     "minutos": 2,
-    "toques_por_minuto": 403
+    "toques_por_minuto": 618
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4022923,
+   "bytes": 3624563,
    "capa": "media/ceifalume/perfil-rb-itch-630x500.png",
    "capa_existe": true,
    "dimensoes": [
@@ -21,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
-   "descricao": "Quanto cabe em 2 minutos de uma fazenda que cresce enquanto você olha para outro lado?\n\nNesta partida deu 9 colheitas, 9 mudas semeadas e 806 toques espalhados pelo terreno.\n\nA resposta curta é que o limite não é a pressa: é o tempo de cada planta.\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNa gravação desta partida: 15 mudas plantadas e 8 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#indiedev",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -39,8 +40,208 @@
    "origem": "Gameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
    "recusas_do_redator": [
     {
+     "angulo": "como_funciona:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "onde_jogar:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "quanto_rende:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "quem_fe_z:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "o_que_tem_dentro:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "por_que_gratis:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "como_foi_gravado:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "o_que_muda_depois:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "requisito:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "genero:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "bastidor_do_dia:oficio-godot",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "como_funciona:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "onde_jogar:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "quanto_rende:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "quem_fe_z:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "o_que_tem_dentro:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "por_que_gratis:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "como_foi_gravado:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "o_que_muda_depois:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "requisito:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "genero:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "bastidor_do_dia:oficio-discord",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "como_funciona:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "onde_jogar:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "quanto_rende:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "quem_fe_z:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "o_que_tem_dentro:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "por_que_gratis:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "como_foi_gravado:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "o_que_muda_depois:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "requisito:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "genero:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "bastidor_do_dia:oficio-apk-fora-de-loja",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "como_funciona:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "onde_jogar:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "quanto_rende:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "quem_fe_z:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "o_que_tem_dentro:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "por_que_gratis:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "como_foi_gravado:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "o_que_muda_depois:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "requisito:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "genero:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
+     "angulo": "bastidor_do_dia:prancheta-trailer",
+     "motivo": "fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por post"
+    },
+    {
      "angulo": "numeros",
-     "motivo": "mesmo ângulo do último vídeo publicado (numeros) — o ângulo roda"
+     "motivo": "título quase igual a um já publicado (0.97)"
+    },
+    {
+     "angulo": "pergunta",
+     "motivo": "mesmo ângulo do último vídeo publicado (pergunta) — o ângulo roda"
+    },
+    {
+     "angulo": "comparacao",
+     "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ]
   }

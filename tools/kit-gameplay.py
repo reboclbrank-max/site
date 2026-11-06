@@ -173,12 +173,15 @@ def pacote(slug):
     # e o portão do envio recusa a repetição com número e motivo.
     escolha_redator, recusas = texto_do_video(slug, RAIZ)
     angulo = (escolha_redator or {}).get("angulo")
+    fato = (escolha_redator or {}).get("fato")
     if escolha_redator:
         titulo, descricao = escolha_redator["titulo"], escolha_redator["descricao"]
 
     p = {
         "id": slug + "-gameplay",
         "angulo": angulo,
+        # qual fato da casa sustentou o texto (o redator não repete fato já usado)
+        "fato": fato,
         # os números vão junto: é com eles que o próximo vídeo pode comparar partidas
         "numeros": (escolha_redator or {}).get("numeros"),
         "slug": slug,

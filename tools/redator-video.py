@@ -203,6 +203,211 @@ ANGULOS = [
         ],
     },
 ]
+
+# ------------------------------------------------------------------ perguntas do leitor
+# O banco de formas não pode ser limitado ao número de modelos que alguém digitou. Cada
+# PERGUNTA abaixo é uma forma diferente de abrir o mesmo assunto — intenções de leitor
+# distintas, não sinônimos. O assunto vem de um FATO real da casa (posts/fatos.json), com
+# origem e data, que ainda não foi usado em vídeo. Forma × fato é o estoque.
+PERGUNTAS_DO_LEITOR = [
+    {
+        "id": "como_funciona",
+        "hashtags": ["#indiedev"],
+        "titulo": lambda fa, f: "Como funciona: %s" % _resumo(fa["afirmacao"]),
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Na gravação desta partida: %d mudas plantadas e %d colheitas em %d minutos."
+            % (f["plantadas"], f["colhidas"], f["minutos"]),
+            "O dado não veio de fórum: veio do próprio jogo, medido durante a captura.",
+        ],
+    },
+    {
+        "id": "onde_jogar",
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda fa, f: "Onde jogar %s sem instalar loja" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "A partida do vídeo saiu do build web: %d colheitas em %d minutos de tela."
+            % (f["colhidas"], f["minutos"]),
+            "Nada de cadastro, compra ou espera para abrir o jogo.",
+        ],
+    },
+    {
+        "id": "quanto_rende",
+        "hashtags": [],
+        "titulo": lambda fa, f: "Quanto rende %s em %d minutos" % (f["nome_curto"], f["minutos"]),
+        "corpo": lambda fa, f: [
+            "A conta da partida: %d mudas, %d colheitas e %d toques em %d minutos."
+            % (f["plantadas"], f["colhidas"], f["toques"], f["minutos"]),
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Todo número deste vídeo vem do relatório da gravação, não de estimativa.",
+        ],
+    },
+    {
+        "id": "quem_fe_z",
+        "hashtags": ["#godot", "#indiedev"],
+        "titulo": lambda fa, f: "Quem fez %s e por quê" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Uma pessoa só, em português do Brasil, com o jogo rodando no navegador durante a gravação.",
+            "O vídeo mostra a partida medida: %d colheitas e %d mudas plantadas." % (
+                f["colhidas"], f["plantadas"]),
+        ],
+    },
+    {
+        "id": "o_que_tem_dentro",
+        "hashtags": ["#godot"],
+        "titulo": lambda fa, f: "O que tem dentro de %s" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "O que aparece na tela desta gravação é a partida de verdade: %d toques no campo." % f["toques"],
+            "Sem corte de tela e sem fala: a legenda descreve a decisão tomada no momento.",
+        ],
+    },
+    {
+        "id": "por_que_gratis",
+        "hashtags": [],
+        "titulo": lambda fa, f: "Por que %s é grátis de verdade" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "A pergunta é justa. A resposta: %s." % fa["afirmacao"],
+            "Nesta gravação, %d colheitas saíram de %d mudas, sem nada bloqueado por pagamento."
+            % (f["colhidas"], f["plantadas"]),
+            "O que sustenta a casa é o trabalho aparecer, não o jogador pagar.",
+        ],
+    },
+    {
+        "id": "como_foi_gravado",
+        "hashtags": ["#godot", "#jogobrasileiro"],
+        "titulo": lambda fa, f: "Como este vídeo de %s foi gravado" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "Nada aqui foi editado à mão: o build web rodou no navegador e um agente decidiu cada toque.",
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "O relatório da gravação fecha em %d mudas e %d colheitas." % (f["plantadas"], f["colhidas"]),
+        ],
+    },
+    {
+        "id": "o_que_muda_depois",
+        "hashtags": ["#indiedev", "#idlefarm"],
+        "titulo": lambda fa, f: "O que muda em %s depois de %d minutos" % (f["nome_curto"], f["minutos"]),
+        "corpo": lambda fa, f: [
+            "Em %d minutos de partida o campo passou por %d mudas e %d colheitas." % (
+                f["minutos"], f["plantadas"], f["colhidas"]),
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Quem joga vê a diferença no próprio terreno, não em número de fórum.",
+        ],
+    },
+    {
+        "id": "onde_esta_a_comunidade",
+        "hashtags": ["#indiedev", "#godot", "#comunidade"],
+        "titulo": lambda fa, f: "Onde falar com quem fez %s" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Quem fez o jogo responde por lá — e o vídeo mostra o que essa pessoa construiu: %d colheitas na partida."
+            % f["colhidas"],
+            "O convite é para conversar sobre o jogo, não para inflar número.",
+        ],
+    },
+    {
+        "id": "requisito",
+        "hashtags": ["#navegador"],
+        "titulo": lambda fa, f: "O que %s pede para rodar" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Não pediu nada aqui: o build abriu no navegador e a gravação rodou %d toques em %d minutos."
+            % (f["toques"], f["minutos"]),
+            "Sem conta, sem instalação obrigatória e sem fila de espera.",
+        ],
+    },
+    {
+        "id": "genero",
+        "hashtags": [],
+        "titulo": lambda fa, f: "%s é idle farm — e o que isso quer dizer" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "Idle farm é o jogo que continua enquanto você não está olhando. Aqui, %s." % fa["afirmacao"],
+            "Na partida gravada isso aparece nos números: %d mudas e %d colheitas em %d minutos."
+            % (f["plantadas"], f["colhidas"], f["minutos"]),
+            "Nada de reflexo rápido: o ritmo é o do campo.",
+        ],
+    },
+    {
+        "id": "bastidor_do_dia",
+        "hashtags": ["#godot", "#indiedev"],
+        "titulo": lambda fa, f: "Bastidor de %s: o que está por trás da partida" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "O vídeo é uma gravação crua de build web, feita por um agente que lê o estado da tela.",
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "O que dá para medir da partida: %d toques no campo e %d colheitas." % (f["toques"], f["colhidas"]),
+        ],
+    },
+]
+
+
+def _maiuscula(texto):
+    texto = str(texto or "").strip()
+    return texto[:1].upper() + texto[1:] if texto else texto
+
+
+def _resumo(texto, limite=58):
+    """Primeiras palavras da afirmação, para caber no título sem virar frase cortada."""
+    palavras = str(texto or "").split()
+    saida = ""
+    for palavra in palavras:
+        if len(saida) + len(palavra) + 1 > limite:
+            break
+        saida = (saida + " " + palavra).strip()
+    return saida.rstrip(",.;:") or str(texto or "")[:limite]
+
+
+def fatos_da_casa(raiz=RAIZ):
+    """Os fatos com origem e data que podem virar assunto de vídeo (posts/fatos.json)."""
+    try:
+        with open(os.path.join(raiz, "posts", "fatos.json"), encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return []
+    itens = dados.get("fatos") if isinstance(dados, dict) else dados
+    saida = []
+    for item in itens or []:
+        if not isinstance(item, dict):
+            continue
+        # O vídeo é do gameplay do Ceifalume: fato de outro jogo da casa viraria "dois assuntos
+        # no mesmo post", que o portão recusa — e com razão.
+        if (item.get("assunto") or "").strip().lower() not in ("ceifalume", "casa", "oficio"):
+            continue
+        if item.get("classe") == "numero":
+            continue  # número de OUTRA gravação: usaria um valor que não é o desta partida
+        # Fato cuja origem é outro jogo não serve: ao citar a fonte, o texto falaria de dois
+        # jogos e o portão recusaria — com razão (um assunto por post).
+        texto_do_fato = "%s %s %s" % (item.get("afirmacao") or "", item.get("origem") or "",
+                                      item.get("assunto") or "")
+        outros = [j for j in ("prancheta",) if item.get("assunto") != j and j in texto_do_fato.lower()]
+        if outros:
+            continue
+        if not (item.get("afirmacao") and item.get("origem") and item.get("id")):
+            continue
+        saida.append(item)
+    return saida
+
+
+def angulos_de_fato(fatos_usados, fatos=None, raiz=RAIZ):
+    """Pergunta do leitor × fato ainda não usado. Um ângulo por par, na ordem declarada."""
+    usados = set(fatos_usados or ())
+    disponiveis = [x for x in (fatos if fatos is not None else fatos_da_casa(raiz))
+                   if x.get("id") not in usados]
+    angulos = []
+    for fato in disponiveis:
+        for pergunta in PERGUNTAS_DO_LEITOR:
+            angulos.append({
+                "id": "%s:%s" % (pergunta["id"], fato["id"]),
+                "precisa": (),
+                "hashtags": pergunta["hashtags"],
+                "fato": fato["id"],
+                "titulo": (lambda fa, f, _p=pergunta: _p["titulo"](fa, f)),
+                "corpo": (lambda fa, f, _p=pergunta: _p["corpo"](fa, f)),
+                "_fato": fato,
+            })
+    return angulos
+
 FECHAMENTO = "Canal de dev solo: bastidores, versões e o que quebrou no caminho."
 PROIBIDOS = ("garantido", "viral", "imperdivel", "imperdível", "melhor do mundo",
              "nao perca", "não perca", "em breve", "clique aqui")
@@ -311,13 +516,23 @@ def links_do_kit(slug, raiz=RAIZ):
 def texto_do_angulo(angulo, fatos, raiz=RAIZ):
     """(titulo, descricao) daquele ângulo. Descrição sempre com origem, links e hashtags."""
     j = fatos["_fatos_do_jogo"]
-    titulo = angulo["titulo"](fatos, j)
-    corpo = [str(x).strip() for x in angulo["corpo"](fatos, j) if str(x).strip()]
+    if angulo.get("_fato"):
+        fatos = dict(fatos, **{"_fato_da_casa": angulo["_fato"]})
+        titulo = angulo["titulo"](angulo["_fato"], fatos)
+        corpo = [str(x).strip() for x in angulo["corpo"](angulo["_fato"], fatos) if str(x).strip()]
+    else:
+        titulo = angulo["titulo"](fatos, j)
+        corpo = [str(x).strip() for x in angulo["corpo"](fatos, j) if str(x).strip()]
     kitg = _kit_gameplay()
     kit = _kit_youtube()
     info = (getattr(kitg, "GAMEPLAY", {}) or {}).get(fatos["slug"]) or {}
     origem = info.get("origem") or ""
     partes = ["\n\n".join(corpo)]
+    fato_da_casa = angulo.get("_fato") or {}
+    if fato_da_casa:
+        # Todo fato citado carrega a fonte: sem isso o vídeo afirma e o leitor não confere.
+        partes.append("Fonte: %s (conferido em %s)." % (fato_da_casa.get("origem"),
+                                                        fato_da_casa.get("quando")))
     if origem:
         partes.append(origem)
     partes.append(FECHAMENTO)
@@ -396,9 +611,16 @@ def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None)
         if isinstance(item.get("numeros"), dict) and item["numeros"].get("colhidas") is not None:
             fatos["_anterior"] = dict(item["numeros"], quando=item.get("quando"))
             break
+    usados = {x.get("fato") for x in hist if isinstance(x, dict) and x.get("fato")}
+    do_fato = angulos_de_fato(usados, raiz=raiz)
+    # O canal não deve emendar dez vídeos sobre a própria partida: alterna assunto (fato da casa)
+    # com número (partida). Se o último vídeo foi de fato, tenta a partida primeiro — e vice-versa.
+    ultimo_teve_fato = bool(hist and isinstance(hist[0], dict) and hist[0].get("fato"))
+    candidatos = ([a for a in do_fato] + list(ANGULOS)) if not ultimo_teve_fato \
+        else (list(ANGULOS) + list(do_fato))
     recusas = []
     aprovados = []
-    for angulo in ANGULOS:
+    for angulo in candidatos:
         faltando = [c for c in (angulo.get("precisa") or ()) if fatos.get(c) in (None, "", [])]
         if faltando:
             recusas.append({"angulo": angulo["id"],
@@ -418,7 +640,8 @@ def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None)
         if not decisao.get("publica"):
             recusas.append({"angulo": angulo["id"], "motivo": str(decisao.get("motivo") or "recusado")})
             continue
-        aprovados.append({"angulo": angulo["id"], "titulo": titulo, "descricao": descricao,
+        aprovados.append({"angulo": angulo["id"], "fato": angulo.get("fato"),
+                          "titulo": titulo, "descricao": descricao,
                           "numeros": {k: fatos[k] for k in ("plantadas", "colhidas", "toques",
                                                             "minutos", "toques_por_minuto")}})
     if aprovados:

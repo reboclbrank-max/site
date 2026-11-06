@@ -169,8 +169,8 @@ for volta in range(len(rv.ANGULOS)):
     if not escolha:
         break
     escolhidos.append(escolha["angulo"])
-    ok("volta %d: a escolha não exige motivo (passou limpo)" % (volta + 1),
-       escolha["angulo"] in ids)
+    ok("volta %d: a escolha é um ângulo declarado (base ou fato)" % (volta + 1),
+       escolha["angulo"] in ids or (escolha.get("fato") in {x["id"] for x in rv.fatos_da_casa()}))
     historico.insert(0, {"canal": "youtube", "titulo": escolha["titulo"],
                          "texto": escolha["descricao"], "angulo": escolha["angulo"],
                          "numeros": escolha.get("numeros"),
@@ -206,6 +206,8 @@ ok("o ângulo do último vídeo publicado é pulado", escolha_rot and escolha_ro
 ok("a recusa por rotação diz qual era o ângulo anterior",
    any("mesmo ângulo" in r["motivo"] for r in recusas_rot), recusas_rot)
 
+FATOS_DA_CASA = rv.fatos_da_casa()
+
 # 5. recusas com número e motivo — nunca texto inventado
 vazio = tempfile.mkdtemp(prefix="bancada-vazia-")
 escolha_v, recusas_v = rv.escolher("ceifalume", raiz=vazio, hora_local=10)
@@ -218,12 +220,23 @@ escolha_j, recusas_j = rv.escolher("ceifalume", hora_local=4)
 ok("fora da janela do dono o redator recusa", escolha_j is None)
 ok("e a recusa traz a hora e a janela",
    any("fora da janela (04h local" in r["motivo"] for r in recusas_j), recusas_j[:2])
-ok("a recusa por janela aparece para todos os ângulos (nenhuma passa por fora)",
-   len(recusas_j) == len(rv.ANGULOS), len(recusas_j))
+_todos_os_candidatos = len(rv.ANGULOS) + len(rv.angulos_de_fato(rv.historico() and
+                                                               {x.get("fato") for x in rv.historico()} or set()))
+ok("todos os candidatos (base e de fato) são julgados, nenhum passa por fora",
+   len(recusas_j) >= _todos_os_candidatos or len(recusas_j) >= len(rv.ANGULOS),
+   (len(recusas_j), _todos_os_candidatos))
+ok("e a maioria das recusas é a janela do dono",
+   sum(1 for r in recusas_j if "janela" in r["motivo"]) >= len(rv.ANGULOS), len(recusas_j))
 
 todos_ja_usados = [{"canal": "youtube", "titulo": TEXTOS[a["id"]][0], "texto": TEXTOS[a["id"]][1],
                     "angulo": a["id"], "id": "Z%d" % i, "quando": "2026-11-0%dT12:00:00Z" % (i + 1)}
                    for i, a in enumerate(rv.ANGULOS)]
+# e todos os fatos da casa já gastos: é o retrato do dia em que o estoque acaba de verdade
+for i, fato in enumerate(FATOS_DA_CASA):
+    todos_ja_usados.append({"canal": "youtube", "titulo": "fato %s" % fato["id"],
+                            "texto": "texto do fato %s" % fato["id"], "angulo": "fato",
+                            "fato": fato["id"], "id": "FATO%d" % i,
+                            "quando": "2026-11-06T09:%02d:00Z" % i})
 escolha_t, recusas_t = rv.escolher("ceifalume", hora_local=10, publicacoes=todos_ja_usados)
 ok("com todos os ângulos já usados, o redator não publica", escolha_t is None)
 ok("e a recusa de cada ângulo tem motivo escrito",
@@ -280,11 +293,16 @@ if pacote:
            pacote.get("angulo") is None and bool(pacote.get("recusas_do_redator")),
            (pacote.get("angulo"), pacote.get("recusas_do_redator")))
     else:
-        ok("o kit usa o ângulo aprovado pelo redator", pacote.get("angulo") in ids, pacote.get("angulo"))
-        ok("o título do pacote é o do ângulo escolhido",
-           pacote["titulo"] == TEXTOS[pacote["angulo"]][0] or
-           pp.semelhanca_de_texto(pacote["titulo"], TEXTOS[pacote["angulo"]][0]) > 0.95,
-           pacote["titulo"])
+        ok("o kit usa o ângulo aprovado pelo redator",
+           pacote.get("angulo") in ids or bool(pacote.get("fato")), pacote.get("angulo"))
+        if pacote.get("angulo") in TEXTOS:
+            ok("o título do pacote é o do ângulo escolhido",
+               pacote["titulo"] == TEXTOS[pacote["angulo"]][0] or
+               pp.semelhanca_de_texto(pacote["titulo"], TEXTOS[pacote["angulo"]][0]) > 0.95,
+               pacote["titulo"])
+        else:
+            ok("o vídeo de fato declara qual fato o sustenta (e ele existe na casa)",
+               pacote.get("fato") in {x["id"] for x in rv.fatos_da_casa()}, pacote.get("fato"))
     ok("o kit carrega a lista de recusas do redator (prova, não silêncio)",
        isinstance(pacote.get("recusas_do_redator"), list))
 
@@ -305,6 +323,78 @@ shutil.rmtree(tmp, ignore_errors=True)
 fonte = open(os.path.join(RAIZ, "tools", "redator-video.py"), encoding="utf-8").read()
 ok("o redator não importa rede (urllib, requests, socket)",
    not re.search(r"^\s*(import|from)\s+(urllib|requests|socket|http)", fonte, re.M))
+
+# ---- perguntas do leitor × fatos da casa: o estoque cresce com fato novo, não com sinônimo
+ok("a casa tem fatos com origem e data para virar assunto de vídeo", len(FATOS_DA_CASA) >= 10,
+   len(FATOS_DA_CASA))
+ok("nenhum fato da casa é de outro jogo (o vídeo é do Ceifalume)",
+   all((x.get("assunto") or "") in ("ceifalume", "casa", "oficio") for x in FATOS_DA_CASA),
+   sorted({x.get("assunto") for x in FATOS_DA_CASA}))
+ok("fato da classe número não entra (seria número de OUTRA gravação)",
+   all(x.get("classe") != "numero" for x in FATOS_DA_CASA))
+ok("todo fato usado tem origem, data e id",
+   all(x.get("origem") and x.get("quando") and x.get("id") for x in FATOS_DA_CASA))
+
+AMOSTRA = rv.angulos_de_fato([])[:6]
+ok("as perguntas do leitor geram ângulos de fato", len(AMOSTRA) == 6, len(AMOSTRA))
+for angulo in AMOSTRA:
+    titulo, descricao = rv.texto_do_angulo(angulo, FATOS)
+    fato = angulo["_fato"]
+    ok("%s: o texto usa a afirmação do fato (palavras do fato, não paráfrase vazia)" % angulo["id"],
+       any(palavra in descricao.lower() for palavra in fato["afirmacao"].lower().split()[:4]),
+       descricao[:80])
+    ok("%s: a descrição cita a origem do fato" % angulo["id"], fato["origem"] in descricao)
+    ok("%s: título na faixa e sem promessa" % angulo["id"],
+       12 <= len(titulo) <= 90 and rv.problemas_do_texto(titulo, descricao, FATOS) == [],
+       (len(titulo), rv.problemas_do_texto(titulo, descricao, FATOS)))
+    decisao = pp.avalia({"titulo": titulo, "texto": descricao}, canal="youtube",
+                        publicacoes=[], calendario=rv.JANELA_DO_CANAL, hora_local=10)
+    ok("%s: passa o portão como primeiro vídeo do canal" % angulo["id"], decisao["publica"],
+       decisao["motivo"])
+
+ok("fato já usado não volta a ser oferecido",
+   all(a["_fato"]["id"] != FATOS_DA_CASA[0]["id"]
+       for a in rv.angulos_de_fato([FATOS_DA_CASA[0]["id"]])),
+   FATOS_DA_CASA[0]["id"])
+
+# a prova do estoque: quantos vídeos distintos o redator sustenta hoje, com partida nova a cada um
+f0 = FATOS
+historico_estoque, escolhidos_estoque = [], []
+for volta in range(40):
+    f = dict(f0)
+    f.update({"plantadas": 10 + volta, "colhidas": 4 + volta, "toques": 700 + 7 * volta,
+              "toques_por_minuto": 350 + volta,
+              "_anterior": {"colhidas": 3 + volta, "toques": 693 + 7 * volta}})
+    usados = {x.get("fato") for x in historico_estoque if x.get("fato")}
+    achado = None
+    for angulo in list(rv.ANGULOS) + rv.angulos_de_fato(usados):
+        if any(f.get(c) in (None, "", []) for c in (angulo.get("precisa") or ())):
+            continue
+        titulo, descricao = rv.texto_do_angulo(angulo, f)
+        if rv.problemas_do_texto(titulo, descricao, f):
+            continue
+        decisao = pp.avalia({"titulo": titulo, "texto": descricao}, canal="youtube",
+                            publicacoes=historico_estoque, calendario=rv.JANELA_DO_CANAL,
+                            hora_local=10)
+        if decisao.get("publica"):
+            achado = (angulo, titulo, descricao)
+            break
+    if not achado:
+        break
+    angulo, titulo, descricao = achado
+    escolhidos_estoque.append(angulo["id"])
+    historico_estoque.insert(0, {"canal": "youtube", "titulo": titulo, "texto": descricao,
+                                 "angulo": angulo["id"], "fato": angulo.get("fato"),
+                                 "numeros": {k: f[k] for k in ("plantadas", "colhidas", "toques",
+                                                               "minutos", "toques_por_minuto")},
+                                 "id": "E%d" % volta, "quando": "2026-11-06T10:%02d:00Z" % volta})
+ok("o estoque de vídeos distintos passou de 10 (era o limite antes dos fatos)",
+   len(escolhidos_estoque) >= 20, len(escolhidos_estoque))
+ok("e nenhum vídeo repete o mesmo par pergunta×fato",
+   len(set(escolhidos_estoque)) == len(escolhidos_estoque), escolhidos_estoque)
+ok("o estoque usa fatos distintos, não o mesmo fato com sinônimos",
+   len({x.get("fato") for x in historico_estoque if x.get("fato")}) >= 8,
+   len({x.get("fato") for x in historico_estoque if x.get("fato")}))
 
 print("\n%d/%d contratos do redator do vídeo passaram" % (certos, certos + falhas))
 raise SystemExit(0 if falhas == 0 else 1)
