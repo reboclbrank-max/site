@@ -79,7 +79,7 @@ def hora_local_do_canal(agora=None):
 ANGULOS = [
     {
         "id": "numeros",
-        "hashtags": ["#indiedev"],
+        "hashtags": ["#jogobrasileiro"],
         "titulo": lambda f, j: "%d colheitas em %d min de %s" % (f["colhidas"], f["minutos"], f["nome"]),
         "corpo": lambda f, j: [
             "Em %d minutos de gravação o agente plantou %d mudas e colheu %d, sem esperar parado em nenhum momento."
@@ -103,7 +103,7 @@ ANGULOS = [
     },
     {
         "id": "rotulo",
-        "hashtags": ["#indiedev", "#godot"],
+        "hashtags": ["#godot", "#jogobrasileiro"],
         "titulo": lambda f, j: "%s: %d toques e %d colheitas na partida de %d min" % (
             f["nome_curto_upper"], f["toques"], f["colhidas"], f["minutos"]),
         "corpo": lambda f, j: [
@@ -127,7 +127,7 @@ ANGULOS = [
     },
     {
         "id": "bastidor",
-        "hashtags": ["#indiedev", "#godot", "#jogobrasileiro"],
+        "hashtags": ["#godot", "#jogobrasileiro"],
         "titulo": lambda f, j: "Como um agente joga %s sozinho: %d min de gravação" % (
             f["nome_curto"], f["minutos"]),
         "corpo": lambda f, j: [
@@ -140,7 +140,7 @@ ANGULOS = [
     {
         "id": "moedas",
         "precisa": ("moedas_inicio", "moedas_fim"),
-        "hashtags": ["#idlefarm"],
+        "hashtags": ["#jogobrasileiro"],
         "titulo": lambda f, j: "De %d a %d moedas em %d min de %s" % (
             f["moedas_inicio"], f["moedas_fim"], f["minutos"], f["nome_curto"]),
         "corpo": lambda f, j: [
@@ -166,7 +166,7 @@ ANGULOS = [
     {
         "id": "tutorial",
         "precisa": ("tutorial_segundos", "telas"),
-        "hashtags": ["#godot", "#indiegame"],
+        "hashtags": ["#godot", "#gamedevbr"],
         "titulo": lambda f, j: "Tutorial de %s resolvido em %s segundo" % (
             f["nome_curto"], str(f["tutorial_segundos"]).replace(".", ",")),
         "corpo": lambda f, j: [
@@ -191,7 +191,7 @@ ANGULOS = [
     {
         "id": "comparacao",
         "precisa": ("_anterior",),
-        "hashtags": ["#indiedev", "#registro"],
+        "hashtags": ["#devlog", "#jogobrasileiro"],
         "titulo": lambda f, j: "%d colheitas contra %d da partida anterior" % (
             f["colhidas"], f["_anterior"]["colhidas"]),
         "corpo": lambda f, j: [
@@ -212,7 +212,7 @@ ANGULOS = [
 PERGUNTAS_DO_LEITOR = [
     {
         "id": "como_funciona",
-        "hashtags": ["#indiedev"],
+        "hashtags": ["#jogobrasileiro"],
         "titulo": lambda fa, f: "Como funciona: %s" % _resumo(fa["afirmacao"]),
         "corpo": lambda fa, f: [
             "%s." % _maiuscula(fa["afirmacao"]),
@@ -245,7 +245,7 @@ PERGUNTAS_DO_LEITOR = [
     },
     {
         "id": "quem_fe_z",
-        "hashtags": ["#godot", "#indiedev"],
+        "hashtags": ["#godot", "#gamedevbr"],
         "titulo": lambda fa, f: "Quem fez %s e por quê" % f["nome_curto"],
         "corpo": lambda fa, f: [
             "%s." % _maiuscula(fa["afirmacao"]),
@@ -287,7 +287,7 @@ PERGUNTAS_DO_LEITOR = [
     },
     {
         "id": "o_que_muda_depois",
-        "hashtags": ["#indiedev", "#idlefarm"],
+        "hashtags": ["#jogobrasileiro", "#ceifalume"],
         "titulo": lambda fa, f: "O que muda em %s depois de %d minutos" % (f["nome_curto"], f["minutos"]),
         "corpo": lambda fa, f: [
             "Em %d minutos de partida o campo passou por %d mudas e %d colheitas." % (
@@ -298,7 +298,7 @@ PERGUNTAS_DO_LEITOR = [
     },
     {
         "id": "onde_esta_a_comunidade",
-        "hashtags": ["#indiedev", "#godot", "#comunidade"],
+        "hashtags": ["#godot", "#comunidade"],
         "titulo": lambda fa, f: "Onde falar com quem fez %s" % f["nome_curto"],
         "corpo": lambda fa, f: [
             "%s." % _maiuscula(fa["afirmacao"]),
@@ -331,7 +331,7 @@ PERGUNTAS_DO_LEITOR = [
     },
     {
         "id": "bastidor_do_dia",
-        "hashtags": ["#godot", "#indiedev"],
+        "hashtags": ["#godot", "#gamedevbr"],
         "titulo": lambda fa, f: "Bastidor de %s: o que está por trás da partida" % f["nome_curto"],
         "corpo": lambda fa, f: [
             "O vídeo é uma gravação crua de build web, feita por um agente que lê o estado da tela.",
