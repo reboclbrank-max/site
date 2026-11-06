@@ -204,6 +204,42 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ]
+  },
+  {
+   "id": "prancheta-gameplay",
+   "slug": "prancheta",
+   "angulo": "roteiro_do_agente",
+   "origem_do_texto": "redator:roteiro_do_agente",
+   "estrategia": "pressao_rapida",
+   "vinheta": "58f401f0dc03",
+   "numeros": {
+    "passos": 14,
+    "passos_confirmados": 11,
+    "toques_partida": 5
+   },
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "capa": "media/gameplay/prancheta-capa.png",
+   "dimensoes": [
+    1280,
+    720
+   ],
+   "formato": "vídeo normal (16:9)",
+   "titulo": "14 passos do menu à prancheta, 11 confirmados por imagem",
+   "descricao": "A gravação atravessa o jogo do começo ao fim: menu, nova carreira, convite de clube, sugestão do staff, microciclo da semana e, por fim, a prancheta tática.\n\nSão 14 passos, e 11 deles foram confirmados por MUDANÇA DE TELA — o gravador compara o quadro antes e depois de cada toque, então passo que não muda nada não conta.\n\nO jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no APK.\n\nFonte: posts/cenas.json (partida 58f401f0dc03, conferida em 2026-11-06T23:16:25Z).\n\nGameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#prancheta #godot",
+   "tags": [
+    "prancheta",
+    "manager de futebol",
+    "jogo de futebol",
+    "jogo indie brasileiro",
+    "godot",
+    "futebol ficticio",
+    "jogo de navegador"
+   ],
+   "idioma": "pt-BR",
+   "categoria": "Gaming",
+   "visibilidade": "público",
+   "feito_para_criancas": "não",
+   "origem": "Gameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida."
   }
  ],
  "problemas": {}
