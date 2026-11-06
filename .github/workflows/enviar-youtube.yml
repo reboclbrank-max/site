@@ -5,17 +5,22 @@ name: enviar-youtube
 # REGRA DA CASA: publicação só com pedido explícito. Por isso este workflow NÃO tem cron e
 # exige a palavra PUBLICAR no campo de confirmação — sem ela, o script sai com erro antes de
 # qualquer requisição. O kit (título, descrição, tags, arquivo) é a única fonte de texto.
+#
+# PORTA FECHADA (06/11/2026): este workflow envia o arquivo que está COMMITADO no repositório.
+# O vídeo do PRANCHETA é gravado a cada run, então o que está no git é sempre uma partida velha
+# — pedir "prancheta" aqui é recusado, com o motivo, pelo próprio tools/enviar-youtube.py.
+# Quem grava e envia o PRANCHETA é o gravar-prancheta.yml, no mesmo run.
 on:
   workflow_dispatch:
     inputs:
       jogo:
-        description: "qual jogo enviar"
+        description: "qual jogo enviar (prancheta só pelo gravar-prancheta.yml)"
         required: true
-        default: prancheta
+        default: ceifalume
         type: choice
         options:
-          - prancheta
           - ceifalume
+          - prancheta
       confirmacao:
         description: "digite PUBLICAR para confirmar o envio"
         required: true

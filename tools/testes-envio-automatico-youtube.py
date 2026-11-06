@@ -149,6 +149,39 @@ checar("ENSAIO recusa pacote inválido e diz que recusaria", recusou is False, m
 checar("a recusa do ensaio é sobre o portão, não sobre envio",
        "recusado" in msg_ruim.lower() or "RECUSARIA" in msg_ruim, msg_ruim)
 
+# 0a. PORTA FECHADA do PRANCHETA (06/11/2026)
+# O kit manual envia o arquivo COMMITADO; o vídeo do PRANCHETA é gravado a cada run. Enquanto a
+# porta estava aberta, "PUBLICAR prancheta" subia uma partida velha com texto velho — e parecia
+# envio do dia. Contrato: recusa com motivo, manda para o workflow certo e não pede token.
+_kit_fechado = {"pacotes": [], "fora_do_kit": {"prancheta": {
+    "motivo": "o vídeo deste jogo é gravado a cada run; o que está no repositório é sempre uma "
+              "partida velha",
+    "workflow": "gravar-prancheta.yml (grava a partida e envia no mesmo run)"}}}
+raiz_porta = bancada(kit=_kit_fechado)
+_porta_ok, _porta_msg = enviar.executar(
+    "prancheta", "PUBLICAR", raiz=str(raiz_porta), renovar=_token_proibido,
+    validador=validador_ok, iniciar=_token_proibido, enviar=_token_proibido,
+    escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("pedir prancheta no kit manual é recusado", _porta_ok is False, _porta_msg)
+checar("a recusa diz que a porta está fechada e qual é a porta certa",
+       "porta fechada" in _porta_msg and "gravar-prancheta.yml" in _porta_msg, _porta_msg)
+checar("a recusa não pede token (acontece antes de qualquer credencial)",
+       "token" not in _porta_msg.lower() and "porta fechada" in _porta_msg, _porta_msg)
+_porta_ok2, _porta_msg2 = enviar.executar(
+    "prancheta-gameplay", "ENSAIO", raiz=str(raiz_porta), renovar=_token_proibido,
+    validador=validador_ok, iniciar=_token_proibido, enviar=_token_proibido,
+    escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("o id do pacote (prancheta-gameplay) cai na mesma porta fechada",
+       _porta_ok2 is False and "porta fechada" in _porta_msg2, _porta_msg2)
+_kit_vazio = {"pacotes": []}
+raiz_vazia = bancada(kit=_kit_vazio)
+_ok_v, _msg_v = enviar.executar("nao-existe", "PUBLICAR", raiz=str(raiz_vazia),
+                                renovar=_token_proibido, validador=validador_ok,
+                                iniciar=_token_proibido, enviar=_token_proibido,
+                                escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("pacote inexistente recusa diferente de porta fechada",
+       _ok_v is False and "não tem o pacote" in _msg_v, _msg_v)
+
 # 0b. a capa aplicada é a DO PACOTE (06/11/2026)
 # O ensaio do PRANCHETA mostrou que caminho_da_capa() caía num padrão do CEIFALUME: o vídeo de
 # futebol ia ao ar com a capa da fazenda. Contrato: a capa sai do pacote; o padrão do CEIFALUME

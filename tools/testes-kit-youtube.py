@@ -32,8 +32,26 @@ def ok(nome, cond, detalhe=""):
 dados = kit.montar()
 pacotes = {p["slug"]: p for p in dados["pacotes"]}
 
-# 1. todo jogo tem pacote, e nenhum pacote é recusado
-ok("todo jogo da casa tem pacote", set(pacotes) == set(kit.JOGOS), str(sorted(pacotes)))
+# 1. todo jogo tem pacote OU está fora de propósito, com motivo escrito
+_fora = dados.get("fora_do_kit") or {}
+ok("todo jogo da casa tem pacote ou está declarado fora do kit",
+   set(pacotes) | set(_fora) == set(kit.JOGOS) and not (set(pacotes) & set(_fora)),
+   str((sorted(pacotes), sorted(_fora))))
+# PORTA FECHADA (06/11/2026): o kit manual envia o que está COMMITADO. O vídeo do PRANCHETA é
+# gravado a cada run, então o commit é sempre uma partida velha — a porta certa é o
+# gravar-prancheta.yml, que grava e envia no mesmo run.
+ok("o PRANCHETA está fora do kit manual", "prancheta" in _fora, str(sorted(_fora)))
+ok("o motivo de estar fora está escrito (não é 'não achei')",
+   "partida velha" in str(_fora.get("prancheta", {}).get("motivo")), str(_fora))
+_wf_fora = str(_fora.get("prancheta", {}).get("workflow", "")).split()[0]
+ok("o kit aponta o workflow certo de envio",
+   _wf_fora == "gravar-prancheta.yml"
+   and os.path.exists(os.path.join(RAIZ, ".github", "workflows", _wf_fora)), _wf_fora)
+_pacotes_gp = [p for p in kit.JOGOS if str(kit.JOGOS[p].get("video", "")).startswith("media/gameplay/")]
+ok("nenhum jogo do kit manual aponta para vídeo gravado (media/gameplay/)",
+   all(j in _fora for j in _pacotes_gp), _pacotes_gp)
+ok("o vídeo gravado do PRANCHETA não mora no repositório",
+   not os.path.exists(os.path.join(RAIZ, "media", "gameplay", "prancheta-gameplay.mp4")))
 ok("nenhum pacote recusado pelas regras da casa", dados["problemas"] == {}, str(dados["problemas"]))
 
 for slug, p in pacotes.items():
@@ -78,14 +96,15 @@ ok("o kit não faz requisição de rede", "urlopen" not in fonte and "requests" 
 ok("a razão do bloqueio está escrita no próprio kit", "OAuth" in fonte)
 
 # 9. o validador recusa de propósito (senão a barreira não prova nada)
-_ruim = dict(pacotes["prancheta"])
+_pr = kit.pacote("prancheta")
+_ruim = dict(_pr)
 _ruim["titulo"] = "PRANCHETA é o melhor do mundo"
 ok("promessa vazia é recusada pelo validador", "promessa" in " ".join(kit.validar(_ruim)),
    str(kit.validar(_ruim)))
-_ruim2 = dict(pacotes["prancheta"])
+_ruim2 = dict(_pr)
 _ruim2["descricao"] = "PRANCHETA, jogo de futebol."
 ok("descrição fraca é recusada", any("curta" in e for e in kit.validar(_ruim2)))
-_ruim3 = dict(pacotes["prancheta"])
+_ruim3 = dict(_pr)
 _ruim3["arquivo"] = "media/nao-existe.mp4"
 _ruim3["arquivo_existe"] = False
 ok("arquivo ausente é recusado", any("ausente" in e for e in kit.validar(_ruim3)))

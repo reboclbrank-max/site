@@ -451,6 +451,15 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
                    or os.path.join(raiz, "posts", "kit-youtube.json"))
     dados = carregar_kit(caminho_kit)
     pacote = pacote_do_kit(dados, slug)
+    if pacote is None:
+        # PORTA FECHADA (06/11/2026): pedir um jogo que não está no kit não é "não achei" — é
+        # uma porta que a casa fechou de propósito. A recusa diz qual é a porta certa.
+        fora = dados.get("fora_do_kit") or {}
+        chave = slug if slug in fora else str(slug).split("-")[0]
+        if chave in fora:
+            return False, ("porta fechada: %s não sai por este caminho (%s). Use %s"
+                           % (slug, fora[chave].get("motivo"), fora[chave].get("workflow")))
+        return False, "o kit " + caminho_kit + " não tem o pacote " + str(slug)
     erros = validar_antes(pacote, raiz=raiz,
                           validador=validador or _validador_do_kit())
     if erros:

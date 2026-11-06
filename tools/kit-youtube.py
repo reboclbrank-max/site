@@ -41,6 +41,12 @@ JOGOS = {
         # certo e publicar o que estava mais à mão, o certo vence — o reel fica como reserva.
         "video": "media/gameplay/prancheta-gameplay.mp4",
         "video_reserva": "media/reel.mp4",
+        # PORTA FECHADA (06/11/2026). O vídeo do PRANCHETA é GRAVADO a cada run; o que fica no
+        # repositório é sempre uma partida velha. Enquanto este kit manual apontava para ele,
+        # "PUBLICAR" aqui subia um vídeo de ontem com o texto de ontem — e o dono achava que
+        # tinha acabado de publicar a partida de hoje. Este jogo saiu do kit manual: quem grava
+        # e envia é o gravar-prancheta.yml, no mesmo run, com o portão antividéo.
+        "envio_por": "gravar-prancheta.yml (grava a partida e envia no mesmo run)",
         "capa": "media/prancheta/capa-630x500.png",
         "tags": ["prancheta", "manager de futebol", "jogo de futebol", "jogo indie brasileiro",
                  "godot", "futebol ficticio", "jogo de navegador"],
@@ -215,8 +221,15 @@ def validar(p):
 
 
 def montar():
-    pacotes, problemas = [], {}
+    pacotes, problemas, fora = [], {}, {}
     for slug in JOGOS:
+        # Jogo com `envio_por` não entra no kit manual — e o motivo vai no arquivo, para quem
+        # abrir o kit ler em vez de adivinhar.
+        if JOGOS[slug].get("envio_por"):
+            fora[slug] = {"motivo": ("o vídeo deste jogo é gravado a cada run; o que está no "
+                                     "repositório é sempre uma partida velha"),
+                          "workflow": JOGOS[slug]["envio_por"]}
+            continue
         p = pacote(slug)
         erros = validar(p)
         if erros:
@@ -228,6 +241,7 @@ def montar():
                     "Este kit reduz o trabalho do dono a colar e clicar — e nada é enviado "
                     "pelo robô."),
         "pacotes": pacotes,
+        "fora_do_kit": fora,
         "problemas": problemas,
     }
     return resultado
@@ -243,6 +257,11 @@ def escrever(dados):
         linhas += ["## Pacotes recusados (corrigir antes de usar)", ""]
         for slug, erros in dados["problemas"].items():
             linhas.append("- **%s**: %s" % (slug, "; ".join(erros)))
+        linhas.append("")
+    if dados.get("fora_do_kit"):
+        linhas += ["## Fora do kit manual (de propósito)", ""]
+        for slug, d in dados["fora_do_kit"].items():
+            linhas.append("- **%s**: %s. Quem envia é `%s`." % (slug, d["motivo"], d["workflow"]))
         linhas.append("")
     linhas += ["| jogo | arquivo | formato | título | tags |", "|---|---|---|---|---|"]
     for p in dados["pacotes"]:
@@ -273,6 +292,8 @@ def main(argv):
         print("   %-10s %-22s %s" % (p["slug"], p["formato"], estado))
     if dados["problemas"]:
         print("   problemas:", json.dumps(dados["problemas"], ensure_ascii=False))
+    for slug, d in dados.get("fora_do_kit", {}).items():
+        print("   %-10s fora do kit manual: %s" % (slug, d["workflow"]))
     print("   gravado em", os.path.relpath(caminho, RAIZ))
     return 0 if not dados["problemas"] else 1
 
