@@ -24,6 +24,7 @@ do refresh_token guardado nos segredos e faz o upload resumable. Tudo o que apar
 import datetime
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -97,6 +98,9 @@ def ja_enviado(sha, raiz=RAIZ):
 
 
 def registrar_impressao(sha, slug, vid, arquivo, raiz=RAIZ, quando=None, escrever=print):
+    if not id_plausivel(vid):
+        escrever("aviso: impressão não registrada — id %r não tem cara de id do YouTube" % (vid,))
+        return None
     dados = ler_registro(raiz)
     lista = [x for x in (dados.get("enviados") or []) if isinstance(x, dict) and x.get("sha256") != sha]
     lista.insert(0, {"sha256": sha, "slug": slug, "id": vid, "arquivo": arquivo,
@@ -300,6 +304,19 @@ def _resumo_da_descricao(texto, limite=600):
     return corte.rsplit(" ", 1)[0].rstrip(" ,;:") + "…"
 
 
+def id_plausivel(vid):
+    """Id do YouTube tem 11 caracteres de base64url. Registro é fato: id que não tem essa cara
+    não entra.
+
+    POR QUE ISSO EXISTE (06/11/2026): um teste que rodava contra o repositório de verdade gravou
+    {"id": "VIDEO123"} em posts/youtube-publicados.json e em posts/videos-enviados.json. A partir
+    daí o portão antividéo passou a recusar o trailer real do CEIFALUME como "vídeo idêntico já
+    publicado (youtu.be/VIDEO123)" — um envio travado por causa de uma linha de teste. Id de
+    vídeo de mentira não entra mais; e o teste que gravava nele foi para uma bancada.
+    """
+    return bool(re.fullmatch(r"[A-Za-z0-9_-]{11}", str(vid or "")))
+
+
 def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print, descricao=None,
               angulo=None, numeros=None, fato=None):
     """Grava o que foi publicado em posts/youtube-publicados.json.
@@ -309,6 +326,9 @@ def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print
     este registro, o chat responde (!youtube) lendo um JSON público — e o registro é do que
     realmente voltou do YouTube (id devolvido pela API), não do que a gente achou que enviou.
     """
+    if not id_plausivel(vid):
+        escrever("aviso: id %r não tem cara de id do YouTube — não entra no registro" % (vid,))
+        return None
     destino = os.path.join(raiz, "posts", "youtube-publicados.json")
     try:
         atual = json.load(open(destino, encoding="utf-8"))

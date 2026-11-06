@@ -317,13 +317,13 @@ def main():
     import tempfile
     with tempfile.TemporaryDirectory() as pasta:
         os.makedirs(os.path.join(pasta, "posts"), exist_ok=True)
-        caminho = mod_env.registrar(pasta, "ceifalume-gameplay", "CEIFALUME", "abc123",
+        caminho = mod_env.registrar(pasta, "ceifalume-gameplay", "CEIFALUME", "kQ1wEr7tYuI",
                                     quando="2026-10-27T00:00:00Z", escrever=lambda *_: None)
         guardado = json.load(open(caminho, encoding="utf-8"))
         ok("o envio deixa registro público com o id do vídeo",
-           guardado["publicados"][0]["id"] == "abc123"
-           and guardado["publicados"][0]["url"] == "https://youtu.be/abc123", guardado)
-        mod_env.registrar(pasta, "ceifalume-gameplay", "CEIFALUME", "abc123",
+           guardado["publicados"][0]["id"] == "kQ1wEr7tYuI"
+           and guardado["publicados"][0]["url"] == "https://youtu.be/kQ1wEr7tYuI", guardado)
+        mod_env.registrar(pasta, "ceifalume-gameplay", "CEIFALUME", "kQ1wEr7tYuI",
                           escrever=lambda *_: None)
         guardado = json.load(open(caminho, encoding="utf-8"))
         ok("registrar o mesmo vídeo duas vezes não duplica",

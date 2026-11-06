@@ -20,7 +20,12 @@ import os
 import re
 import sys
 
+import importlib.util as _iu
+
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_spec = _iu.spec_from_file_location("enviar_youtube", os.path.join(RAIZ, "tools", "enviar-youtube.py"))
+enviar = _iu.module_from_spec(_spec)
+_spec.loader.exec_module(enviar)
 REGISTRO = os.path.join(RAIZ, "posts", "youtube-publicados.json")
 WORKFLOW = os.path.join(RAIZ, ".github", "workflows", "gravar-gameplay.yml")
 
@@ -95,6 +100,18 @@ ok("descrição guardada diz se está inteira ou é parcial",
    all(("descricao_completa" in p) for p in (publicados or []) if (p.get("descricao") or "").strip()),
    str([p.get("url") for p in (publicados or []) if (p.get("descricao") or "").strip()
         and "descricao_completa" not in p]))
+
+
+# ID PLAUSÍVEL (06/11/2026): o registro já teve um envio falso de id "VIDEO123" gravado por um
+# teste que rodava contra o repositório de verdade. Ele travou o envio do trailer do CEIFALUME
+# ("vídeo idêntico já publicado, youtu.be/VIDEO123"). Id do YouTube tem 11 caracteres de base64url.
+_implausiveis = [p.get("id") for p in (publicados or [])
+                 if not re.fullmatch(r"[A-Za-z0-9_-]{11}", str(p.get("id") or ""))]
+ok("todo id no registro tem cara de id do YouTube (11 caracteres)", not _implausiveis,
+   str(_implausiveis[:5]))
+ok("a ferramenta de envio recusa registrar id implausível",
+   hasattr(enviar, "id_plausivel") and enviar.id_plausivel("VIDEO123") is False
+   and enviar.id_plausivel("dQw4w9WgXcQ") is True)
 
 
 print("%d/%d contratos do registro do YouTube passaram" % (certos, certos + falhas))

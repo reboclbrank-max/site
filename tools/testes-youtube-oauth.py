@@ -11,6 +11,8 @@ O que este teste cerca:
 """
 import importlib.util
 import os
+import pathlib
+import tempfile
 import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -198,7 +200,23 @@ def _enviar_falso(url, caminho):
 
 
 os.environ.update({"YT_CLIENT_ID": "c", "YT_CLIENT_SECRET": "s", "YT_REFRESH_TOKEN": "r"})
-ok_upload, msg_upload = envio.executar("ceifalume", "PUBLICAR", raiz=RAIZ, renovar=_renovar_falso,
+# BANCADA (06/11/2026). Até hoje esta linha rodava com raiz=RAIZ — o repositório de VERDADE — e
+# cada execução gravava um envio falso de id "VIDEO123" em posts/youtube-publicados.json e
+# posts/videos-enviados.json. Rodei a suíte localmente às 23:35Z e commitei a sujeira (99aab5d);
+# em CI ela nunca aparece porque o runner é descartável. Registro é fato: teste não escreve nele.
+import shutil as _shutil
+_tmp = pathlib.Path(tempfile.mkdtemp(prefix="oauth-bancada-"))
+(_tmp / "posts").mkdir(parents=True, exist_ok=True)
+(_tmp / "media" / "ceifalume").mkdir(parents=True, exist_ok=True)
+_shutil.copy(os.path.join(RAIZ, "posts", "kit-youtube.json"), _tmp / "posts" / "kit-youtube.json")
+for _rel in ("media/ceifalume/ceifalume-trailer-0.1.mp4",
+             "media/ceifalume/perfil-rb-itch-630x500.png"):
+    _origem = os.path.join(RAIZ, _rel)
+    if os.path.exists(_origem):
+        _shutil.copy(_origem, _tmp / _rel)
+RAIZ_PROPRIA = str(_tmp)
+
+ok_upload, msg_upload = envio.executar("ceifalume", "PUBLICAR", raiz=RAIZ_PROPRIA, renovar=_renovar_falso,
                                        iniciar=_iniciar_falso, enviar=_enviar_falso,
                                        escrever=lambda *_: None)
 ok("com PUBLICAR e kit válido, o envio completa", ok_upload and "youtu.be/VIDEO123" in msg_upload, msg_upload)

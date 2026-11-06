@@ -350,7 +350,8 @@ if pacote:
 
 tmp = tempfile.mkdtemp(prefix="bancada-registro-")
 os.makedirs(os.path.join(tmp, "posts"), exist_ok=True)
-enviar.registrar(tmp, "ceifalume", "título de teste", "VID1", arquivo="media/x.mp4",
+# id com cara de id do YouTube (11 caracteres): o registro recusa placeholder desde 06/11/2026
+enviar.registrar(tmp, "ceifalume", "título de teste", "kQ1wEr7tYuI", arquivo="media/x.mp4",
                  descricao="descrição de teste", angulo="pergunta", escrever=lambda *_: None)
 gravado = json.load(open(os.path.join(tmp, "posts", "youtube-publicados.json"), encoding="utf-8"))
 primeiro = gravado["publicados"][0]

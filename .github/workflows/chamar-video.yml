@@ -46,6 +46,7 @@ jobs:
           python3 tools/rodar-contratos-isolados.py tools/testes-chamar-video.py
 
       - name: Chama o vídeo (o portão decide)
+        shell: bash -o pipefail {0}
         env:
           BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
           BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}

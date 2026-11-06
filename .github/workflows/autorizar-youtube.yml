@@ -42,6 +42,7 @@ jobs:
         run: python3 tools/youtube_oauth.py limpar-codigo
 
       - name: Pede o código ao Google e espera a aprovação do dono
+        shell: bash -o pipefail {0}
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}

@@ -37,6 +37,31 @@ def fontes():
             for f in sorted(glob.glob(os.path.join(PASTA, "*.yml")))}
 
 
+def passos_com_tee(fonte):
+    """Passos que mandam a saída de um script da casa para `| tee` e o que os protege.
+
+    DEFEITO MEDIDO (06/11/2026, runs 42312905574 e 42312907718): `python3 tools/enviar-youtube.py
+    ... | tee` devolve o status do TEE, não o do envio. O PRANCHETA recusou ("porta fechada"),
+    o CEIFALUME recusou ("vídeo idêntico já publicado") e os DOIS runs ficaram VERDES — exatamente
+    a mentira que a regra "falha de envio nunca vira sucesso" proíbe. O enviar-itch.yml já tinha
+    apanhado disso em 31/10/2026; os outros não.
+    """
+    linhas = fonte.split("\n")
+    achados = []
+    for i, linha in enumerate(linhas):
+        if not re.search(r"python3 tools/[\w.-]+\.py.*\|\s*tee", linha) or "|| true" in linha:
+            continue
+        ini = next((j for j in range(i, -1, -1) if re.match(r"^\s*-\s+name:", linhas[j])), None)
+        if ini is None:
+            achados.append((linha.strip(), False))
+            continue
+        fim = ini + 1
+        while fim < len(linhas) and not re.match(r"^\s*-\s+(name|uses):", linhas[fim]):
+            fim += 1
+        achados.append((linha.strip(), "pipefail" in "\n".join(linhas[ini:fim])))
+    return achados
+
+
 def main():
     wfs = fontes()
     ok("os workflows foram lidos", len(wfs) >= 20, len(wfs))
@@ -196,6 +221,12 @@ def main():
                     nome, numero_linha, candidato.group(1)))
     ok("todas as Actions e workflows reutilizáveis apontam para SHA imutável",
        not referencias_moveis, referencias_moveis)
+
+    # PIPE: nenhum passo esconde o código de saída atrás de `| tee`
+    for nome, fonte in fontes().items():
+        for linha, protegido in passos_com_tee(fonte):
+            ok("%s: `| tee` não engole o código de saída (%s)" % (nome, linha[:44]), protegido,
+               "sem pipefail no passo")
 
     print("\n%d/%d verificações de higiene de workflow passaram"
           % (len(certos), len(certos) + len(falhas)))

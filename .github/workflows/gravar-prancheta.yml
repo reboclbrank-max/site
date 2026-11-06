@@ -210,6 +210,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Ensaio do envio (roda todos os portões e não publica)
+        shell: bash -o pipefail {0}
         # O caminho de envio do PRANCHETA nunca tinha rodado. Ensaio valida kit, arquivo, capa,
         # impressão, título novo e a régua do texto — e para antes de pedir token. Não usa
         # segredo nenhum: se o ensaio depender de credencial, ele não prova nada.
@@ -230,6 +231,7 @@ jobs:
           echo "código do ensaio: $codigo"
 
       - name: Envia ao YouTube (só com a palavra PUBLICAR)
+        shell: bash -o pipefail {0}
         # Até 06/11/2026 este workflow tinha o campo PUBLICAR e NENHUM passo de envio: o resumo
         # dizia "pedido neste run" e nada saía. Promessa falsa. Agora o envio é este passo, com
         # o mesmo cadeado e o mesmo portão do CEIFALUME (o vídeo só sobe se for novo).

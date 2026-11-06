@@ -25,6 +25,11 @@ spec = importlib.util.spec_from_file_location("enviar_youtube", RAIZ / "tools" /
 enviar = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(enviar)
 
+# ID DO DUBLÊ (06/11/2026): era "VIDEO123" — 8 caracteres, cara de teste. O registro passou a
+# recusar id sem cara de id do YouTube (11 caracteres de base64url), então um dublê de mentira
+# deixava de exercitar o caminho de registro. Este parece de verdade e continua sendo inventado.
+ID_DUBLE = "kJ8mQ2xTz9A"
+
 resultados = []
 
 
@@ -78,7 +83,7 @@ def dublês(ok=True):
 
     def enviar_bytes(url, caminho):
         chamadas["enviar"] += 1
-        return ({"id": "VIDEO123"}, None) if ok else (None, "falhou no meio")
+        return ({"id": "kJ8mQ2xTz9A"}, None) if ok else (None, "falhou no meio")
 
     return renovar, iniciar, enviar_bytes, chamadas
 
@@ -213,17 +218,17 @@ with tempfile.TemporaryDirectory() as tmp:
 # 2. automático com vídeo novo
 raiz = bancada()
 ok, msg, _ = rodar(raiz, "AUTOMATICO")
-checar("automático com vídeo novo envia", ok is True and "VIDEO123" in msg, msg)
+checar("automático com vídeo novo envia", ok is True and "kJ8mQ2xTz9A" in msg, msg)
 registro = json.loads((raiz / "posts" / "videos-enviados.json").read_text(encoding="utf-8"))
 checar("o envio grava a impressão sha256", len(registro["enviados"]) == 1
       and len(registro["enviados"][0]["sha256"]) == 64, registro.get("enviados"))
-checar("a impressão aponta o vídeo que subiu", registro["enviados"][0]["id"] == "VIDEO123")
+checar("a impressão aponta o vídeo que subiu", registro["enviados"][0]["id"] == "kJ8mQ2xTz9A")
 sha_primeiro = registro["enviados"][0]["sha256"]
 
 # 3. o mesmo vídeo, de novo, no automático
 ok, msg, _ = rodar(raiz, "AUTOMATICO")
 checar("o MESMO vídeo não sobe duas vezes", ok is False and "já publicado" in msg, msg)
-checar("e o motivo diz qual vídeo já existe", "VIDEO123" in msg, msg)
+checar("e o motivo diz qual vídeo já existe", "kJ8mQ2xTz9A" in msg, msg)
 checar("recusar não apaga nem duplica a impressão existente",
       len(json.loads((raiz / "posts" / "videos-enviados.json").read_text())["enviados"]) == 1)
 
@@ -394,7 +399,7 @@ def aplicar(token, vid, caminho):
 ok, msg, _ = rodar(raiz, "AUTOMATICO", aplicar_capa=aplicar)
 checar("com capa desenhada, o envio aplica a capa", ok is True and len(chamadas_capa) == 1, msg)
 checar("a capa vai para o vídeo que acabou de subir",
-      bool(chamadas_capa) and chamadas_capa[0][1] == "VIDEO123", chamadas_capa)
+      bool(chamadas_capa) and chamadas_capa[0][1] == "kJ8mQ2xTz9A", chamadas_capa)
 checar("a capa aplicada é a capa daquele vídeo",
       bool(chamadas_capa) and chamadas_capa[0][2].endswith("ceifalume-capa.png"), chamadas_capa)
 

@@ -273,6 +273,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Envia ao YouTube no automático (o portão do vídeo decide)
+        shell: bash -o pipefail {0}
         # Caminho agendado. O vídeo só sobe se for comprovadamente NOVO: o sha256 do arquivo
         # não pode estar em posts/videos-enviados.json. Em 06/11/2026 o canal tinha 163 vídeos
         # e o mesmo título de gameplay foi ao ar três vezes — palavra humana não impedia isso.
@@ -300,6 +301,7 @@ jobs:
           exit 0
 
       - name: Envia ao YouTube (só com a palavra PUBLICAR)
+        shell: bash -o pipefail {0}
         if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}

@@ -49,6 +49,7 @@ jobs:
         run: python3 tools/kit-youtube.py
 
       - name: Envia o vídeo do jogo escolhido
+        shell: bash -o pipefail {0}
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
