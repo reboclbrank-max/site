@@ -203,6 +203,7 @@ jobs:
                   media/gameplay/ceifalume-gameplay-instrucoes.mp4 \
                   media/gameplay/ceifalume-gameplay-cru-decisoes.json \
                   media/gameplay/ceifalume-capa.png \
+                  posts/kit-gameplay.json \
                   posts/cenas.json
           if git diff --cached --quiet; then
             echo "vídeo sem mudança"
