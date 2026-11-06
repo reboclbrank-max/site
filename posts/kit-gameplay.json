@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "onde_jogar:ceifalume-8h",
-   "fato": "ceifalume-8h",
+   "angulo": "como_funciona:ceifalume-chuva",
+   "fato": "ceifalume-chuva",
    "numeros": {
-    "plantadas": 13,
-    "colhidas": 9,
-    "toques": 640,
+    "plantadas": 10,
+    "colhidas": 4,
+    "toques": 1074,
     "minutos": 2,
-    "toques_por_minuto": 320
+    "toques_por_minuto": 537
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4118331,
+   "bytes": 4034162,
    "capa": "media/ceifalume/perfil-rb-itch-630x500.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Onde jogar CEIFALUME sem instalar loja",
-   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nA partida do vídeo saiu do build web: 9 colheitas em 2 minutos de tela.\n\nNada de cadastro, compra ou espera para abrir o jogo.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "descricao": "A chuva rega de graça: não custa água nem moeda.\n\nNa gravação desta partida: 10 mudas plantadas e 4 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -41,7 +41,151 @@
    "recusas_do_redator": [
     {
      "angulo": "como_funciona:ceifalume-8h",
-     "motivo": "mesmo ângulo do último vídeo publicado (como_funciona:ceifalume-8h) — o ângulo roda"
+     "motivo": "título já publicado neste canal: Como funciona: as plantações crescem e as vendas acontecem"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-8h",
+     "motivo": "mesmo ângulo do último vídeo publicado (onde_jogar:ceifalume-8h) — o ângulo roda"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-8h",
+     "motivo": "texto repetido: 0.73 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "quem_fe_z:ceifalume-8h",
+     "motivo": "texto repetido: 0.71 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-8h",
+     "motivo": "texto repetido: 0.67 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-8h",
+     "motivo": "texto repetido: 0.68 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-8h",
+     "motivo": "texto repetido: 0.72 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "o_que_muda_depois:ceifalume-8h",
+     "motivo": "texto repetido: 0.75 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:ceifalume-8h",
+     "motivo": "texto repetido: 0.71 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "requisito:ceifalume-8h",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "genero:ceifalume-8h",
+     "motivo": "texto repetido: 0.67 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "bastidor_do_dia:ceifalume-8h",
+     "motivo": "texto repetido: 0.75 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-chuva",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-tutorial",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:ceifalume-tutorial",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-apk",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:ceifalume-apk",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-anuncio",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:ceifalume-anuncio",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-save",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:ceifalume-save",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-versao",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:ceifalume-versao",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "bastidor_do_dia:ceifalume-versao",
+     "motivo": "texto repetido: 0.62 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "onde_jogar:oficio-devlog",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:oficio-devlog",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:casa-canais",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:casa-canais",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:casa-newsletter",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:casa-newsletter",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:casa-telegram",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "requisito:casa-telegram",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "onde_jogar:casa-site-gratis",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "o_que_muda_depois:casa-site-gratis",
+     "motivo": "texto repetido: 0.62 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "bastidor_do_dia:casa-site-gratis",
+     "motivo": "texto repetido: 0.63 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
     },
     {
      "angulo": "numeros",
@@ -52,44 +196,14 @@
      "motivo": "título já publicado neste canal: Quantas colheitas cabem em 2 minutos de CEIFALUME?"
     },
     {
+     "angulo": "moedas",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
      "angulo": "comparacao",
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ]
-  },
-  {
-   "id": "prancheta-gameplay",
-   "slug": "prancheta",
-   "estrategia": "contra_ataque",
-   "vinheta": "00705ec6dba5",
-   "numeros": {
-    "passos": 13,
-    "passos_confirmados": 10,
-    "toques_partida": 4
-   },
-   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
-   "capa": "media/gameplay/prancheta-capa.png",
-   "dimensoes": [
-    1280,
-    720
-   ],
-   "formato": "vídeo normal (16:9)",
-   "titulo": "PRANCHETA: ritmo rápido e a virada sem instrução · 4 toques",
-   "descricao": "Gravação automática do PRANCHETA: o agente atravessou menu, carreira, escolha de clube e staff até a prancheta tática, e jogou a partida com o plano recomendado.\n\nA cena desta vez foi \"contra_ataque\": 13 passos, 10 confirmados por mudança de tela.\n\nNa partida foram 4 toques registrados pelo gravador.\n\nFonte: posts/cenas.json (partida 00705ec6dba5, conferida em 2026-11-06).\n\nJogo: PRANCHETA — simulador de gestão de futebol 100% fictício, Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#prancheta #godot",
-   "tags": [
-    "prancheta",
-    "manager de futebol",
-    "jogo de futebol",
-    "jogo indie brasileiro",
-    "godot",
-    "futebol ficticio",
-    "jogo de navegador"
-   ],
-   "idioma": "pt-BR",
-   "categoria": "Gaming",
-   "visibilidade": "público",
-   "feito_para_criancas": "não",
-   "origem": "Gameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida."
   }
  ],
  "problemas": {}
