@@ -88,6 +88,14 @@ jobs:
         run: |
           git config user.name "rebocl"
           git config user.email "reboclbrank@gmail.com"
-          git add posts/orquestrador.json posts/calendario.json posts/plano-do-dia.json posts/aprendizado.json posts/log.md posts/posts-publicados.md posts/fila-tarefas.json posts/percebido.json posts/percebido.md posts/repertorio.json posts/portao-decisoes.jsonl 2>/dev/null || true
+          # Um `git add` por arquivo: caminho ausente aborta o add INTEIRO, e o pulso
+          # inteiro deixava de ser versionado (medido em 06/11/2026, pulso 129:
+          # "nada a commitar" com cinco arquivos modificados na árvore).
+          for f in posts/orquestrador.json posts/calendario.json posts/plano-do-dia.json \
+                   posts/aprendizado.json posts/log.md posts/posts-publicados.md \
+                   posts/fila-tarefas.json posts/percebido.json posts/percebido.md \
+                   posts/repertorio.json posts/portao-decisoes.jsonl; do
+            [ -e "$f" ] && git add "$f" || true
+          done
           git commit -m "🤖 pulso 24h $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
           bash tools/entrar-no-main.sh "pulso 24h" || echo "pulso não entrou no main"
