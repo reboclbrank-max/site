@@ -86,12 +86,14 @@ checar("a decisão traz número, não adjetivo", "semelhanca_maxima" in r["numer
 
 # 9. primeira publicação do canal não é bloqueada por falta de histórico
 r = portao.avalia(cand("O primeiro devlog da prancheta", "texto inicial do canal devlog"),
-                  canal="devlog", publicacoes=HISTORICO, calendario=CAL, hora_local=14)
+                  canal="devlog", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  nota_juizo=0.9)
 checar("primeira do canal é declarada, não bloqueada", r["publica"] is True and r["numeros"].get("primeira_do_canal") is True)
 
 # 10. o canal é respeitado: histórico de um canal não barra o outro
 r = portao.avalia(cand("O jogo que nasceu de uma ideia simples", "texto"),
-                  canal="youtube", publicacoes=HISTORICO, calendario=CAL, hora_local=14)
+                  canal="youtube", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  nota_juizo=0.9)
 checar("histórico de site não barra youtube", r["publica"] is True)
 
 # ---- 11. ESTILO: os defeitos que já foram publicados agora são recusa ----------------------
@@ -100,12 +102,12 @@ checar("histórico de site não barra youtube", r["publica"] is True)
 bom = "Ceifalume: plantar flor de lume junto à abóbora abre a colheita de 30 para 20 segundos"
 r = portao.avalia(cand(bom, bom),
                   canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
-                  credencial_disponivel=True)
+                  credencial_disponivel=True, nota_juizo=0.9)
 checar("texto limpo passa no estilo e publica", r["publica"] is True, r["motivo"])
 
 r = portao.avalia(cand(bom, "Quer achar a gente? Só na **Prancheta**, lá tem tudo"),
                   canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
-                  credencial_disponivel=True)
+                  credencial_disponivel=True, nota_juizo=0.9)
 checar("markdown cru no bluesky recusa", r["publica"] is False and "markdown" in r["motivo"], r["motivo"])
 
 r = portao.avalia(cand(bom, "quer achar a gente de verdade? so na prancheta, la tem tudo"),
@@ -128,7 +130,7 @@ checar("hashtag em inglês recusa", r["publica"] is False and "inglês" in r["mo
 
 r = portao.avalia(cand(bom, bom + " #Ceifalume #JogoBrasileiro"),
                   canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
-                  credencial_disponivel=True)
+                  credencial_disponivel=True, nota_juizo=0.9)
 checar("hashtag da casa em português passa", r["publica"] is True, r["motivo"])
 
 r = portao.avalia(cand(bom, bom + " Fora dali, é risco."),
@@ -149,8 +151,44 @@ checar("caixa alta gritada recusa", r["publica"] is False and "caixa alta" in r[
 # o site RENDERIZA markdown: a mesma marca não é defeito lá
 r = portao.avalia(cand("Um devlog sobre o plantio da flor de lume",
                        "o **plantio** da flor de lume mudou o tempo de colheita do campo inteiro"),
-                  canal="site", publicacoes=HISTORICO, calendario=CAL, hora_local=14)
+                  canal="site", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  nota_juizo=0.9)
 checar("no site o markdown não é defeito", r["publica"] is True, r["motivo"])
+
+# ---- 12. A NOTA DEIXOU DE SER OPCIONAL (06/11/2026) ---------------------------------------
+# O dono recusou o limite "o portão não mede graça". Agora o portão calcula a nota sozinho, com
+# régua declarada e mínimo calibrado (juizo.NOTA_MINIMA / NOTA_MINIMA_DESCRICAO).
+r = portao.avalia(cand("Como a flor de lume adianta a colheita do Ceifalume",
+                       "O milho do Ceifalume leva 116 segundos para ficar pronto. Colher na hora "
+                       "certa mantém o celeiro girando. Grátis no navegador. #ceifalume"),
+                  canal="site", publicacoes=HISTORICO, calendario=CAL, hora_local=14)
+checar("o portão calcula a nota quando ninguém passa nota",
+       r["numeros"].get("nota_juizo") is not None and r["publica"] is True,
+       (r["numeros"].get("nota_juizo"), r["motivo"]))
+
+ruim = ("Dois mundos, um dev brasileiro. PRANCHETA é tática e CEIFALUME é fazenda idle, "
+        "os dois feitos no Godot, os dois grátis, os dois da casa")
+r = portao.avalia(cand("Dois mundos um dev brasileiro", ruim), canal="site",
+                  publicacoes=[], calendario=CAL, hora_local=14)
+checar("a nota baixa recusa com número no motivo",
+       r["publica"] is False and ("juízo" in r["motivo"] or "assunto" in r["motivo"]),
+       r["motivo"])
+checar("a recusa por nota traz a nota e o mínimo", "nota_juizo" in r["numeros"],
+       r["numeros"].get("nota_juizo"))
+
+# descrição de vídeo tem régua própria: link e fonte contam a favor, hashtag não é exigida
+s_desc = ("As plantações crescem por até 8 horas com o jogo fechado. A partida do vídeo fez "
+          "9 colheitas em 2 minutos.\n\nFonte: posts/cenas.json (partida 62da85d4dd28, "
+          "conferida em 2026-11-06).\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/")
+r = portao.avalia(cand("Onde jogar CEIFALUME sem instalar loja", s_desc), canal="youtube",
+                  publicacoes=HISTORICO, calendario=CAL, hora_local=14)
+checar("descrição de vídeo usa a régua de descrição e passa",
+       r["publica"] is True and r["numeros"].get("nota_juizo", 0) >= 0.73, r["motivo"])
+cortada = s_desc[:120] + "…"
+r = portao.avalia(cand("Onde jogar CEIFALUME sem instalar loja", cortada), canal="youtube",
+                  publicacoes=HISTORICO, calendario=CAL, hora_local=14)
+checar("descrição cortada em reticências é recusada pela régua",
+       r["publica"] is False and "juízo" in r["motivo"], r["motivo"])
 
 certos = sum(1 for _, ok in resultados if ok)
 print("%d/%d contratos do portão de publicação passaram" % (certos, len(resultados)))

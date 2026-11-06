@@ -36,7 +36,13 @@ def checar(nome, condicao, detalhe=""):
 
 PACOTE = {"id": "ceifalume-gameplay", "slug": "ceifalume", "arquivo": "media/video.mp4",
           "titulo": "CEIFALUME 0.1 — gameplay gravado no navegador",
-          "descricao": "descrição do vídeo", "tags": ["indie", "godot"],
+          # descrição REALISTA de propósito: desde 06/11/2026 o portão mede a descrição pela
+          # régua de descrição (fonte, número, link, sem corte). Fixture falsa mediria a fixture.
+          "descricao": ("As plantações crescem por até 8 horas com o jogo fechado. A partida do "
+                        "vídeo fez 9 colheitas em 2 minutos.\n\nFonte: posts/cenas.json "
+                        "(partida 62da85d4dd28, conferida em 2026-11-06).\n\nJogar: "
+                        "https://reboclbrank-max.github.io/site/jogos/ceifalume/"),
+          "tags": ["indie", "godot"],
           "capa": "media/capa.png", "dimensoes": [1280, 720],
           "formato": "vídeo normal (16:9)"}
 

@@ -59,6 +59,18 @@ def tracos(texto):
         "tamanho_ideal": 120 <= len(t) <= 200,
         "tem_numero": bool(re.search(r"\d", t)),
         "tem_link": bool(re.search(r"https?://|www\.", baixo)),
+        # ---- traços acrescentados em 06/11/2026, cada um com o defeito que o motivou ----
+        # 88 dos 107 posts antigos terminavam sem pontuação (corte seco em ~220 caracteres).
+        # hashtag e link no fim são hábito da casa: para medir pontuação, eles saem antes da conta
+        "termina_com_pontuacao": bool(re.search(
+            r"[.!?…]\s*$",
+            re.sub(r"(\s*(#[\wÀ-ÿ]+|https?://\S+))+\s*$", "", t))),
+        # 14 posts tinham a mesma estrutura "dois jogos / dois mundos / um dev solo".
+        "sem_molde_de_dois_jogos": not re.search(
+            r"dois (jogos|mundos|projetos)|um dev solo|duas paix", baixo),
+        # o mesmo texto saiu 40 vezes: abertura repetida é o sintoma visível do molde.
+        "abertura_propria": not any(baixo.startswith(m) for m in (
+            "dois mundos", "dois jogos", "dois projetos", "da tática", "ei!", "🎮 jogou")),
     }
 
 
@@ -75,7 +87,79 @@ PESOS_DECLARADOS = {
     "tamanho_ideal": +1,
     "tem_numero": +1,
     "tem_link": -1,       # link no corpo cansa no menor canal (o destino entra depois)
+    "termina_com_pontuacao": +2,   # frase que termina no meio é o defeito nº 1 da casa
+    "sem_molde_de_dois_jogos": +2, # o molde do "dois jogos" é a assinatura da repetição
+    "abertura_propria": +1,
 }
+
+# ---- RÉGUA DA DESCRIÇÃO DE VÍDEO ------------------------------------------------------------
+# A régua de post não serve para descrição: descrição de vídeo DEVE ter link, e não precisa de
+# hashtag. Julgar descrição pela régua de post seria medir a coisa errada com número bonito.
+# Esta régua foi declarada a partir do que as descrições da casa são (fonte, número, link,
+# frase inteira) e o mínimo foi calibrado nas descrições reais de posts/youtube-publicados.json:
+# das 4 guardadas, três foram cortadas em "…" (0,727 · 0,364 · 0,364) e a íntegra tira 1,000.
+# Com 0,73 a régua recusa as três cortadas e aprova a inteira — é a cicatriz virada em medida.
+PESOS_DESCRICAO = {
+    "cita_fonte": +2,            # "Fonte: jogos/..." é o que separa descrição de propaganda
+    "tem_numero": +2,            # número medido (colheitas, minutos, decisões)
+    "tem_link": +1,              # na descrição o link é obrigatório, não defeito
+    "sem_corte_seco": +2,        # descrição cortada em "…" é o defeito real de 3 vídeos
+    "cita_jogo": +2,
+    "sem_clickbait": +1,         # "VOCÊ NÃO VAI ACREDITAR" e afins
+    "tamanho_de_descricao": +1,  # entre 80 e 900 caracteres
+}
+SOMA_DESCRICAO = 11.0
+NOTA_MINIMA_DESCRICAO = 0.73
+
+
+def tracos_descricao(texto):
+    t = (texto or "").strip()
+    baixo = t.lower()
+    return {
+        "cita_fonte": bool(re.search(r"fonte:\s*\S+", baixo)),
+        "tem_numero": bool(re.search(r"\d", t)),
+        "tem_link": bool(re.search(r"https?://|www\.", baixo)),
+        # "…" aqui é CORTE, não pausa: as 3 descrições antigas terminam exatamente assim.
+        "sem_corte_seco": not t.rstrip().endswith(("…", "...")),
+        "cita_jogo": any(n in baixo for n in ("ceifalume", "prancheta", "pelle", "brasa")),
+        "sem_clickbait": not re.search(
+            r"voce nao vai acreditar|você não vai acreditar|chocante|imperdível|imperdivel", baixo),
+        "tamanho_de_descricao": 80 <= len(t) <= 900,
+    }
+
+
+def nota_descricao(texto, pesos=None):
+    pesos = pesos or PESOS_DESCRICAO
+    tr = tracos_descricao(texto)
+    total = sum(pesos.get(n, 0) for n, v in tr.items() if v)
+    contrib = [(1, n, pesos.get(n, 0)) for n, v in tr.items() if v]
+    valor = max(0.0, min(1.0, total / SOMA_DESCRICAO))
+    return round(valor, 3), {"pontos": total, "teto": SOMA_DESCRICAO,
+                             "contribuicoes": contrib}
+
+
+# A MESMA RÉGUA, normalizada em 0..1, e a nota mínima para publicar. O mínimo não é gosto: é a
+# MEDIANA do que a casa já publicou antes do conserto (13/10 a 06/11) somada de um passo: 106
+# posts do molde dão mediana 0,538 e 75% ficam abaixo de 0,615. Com 0,65 a régua recusa ~78% do
+# que a casa publicava antes e aprova os textos escritos depois do conserto (0,692). Calibração
+# medida, não escolhida no gosto — e há contrato cobrando os dois lados.
+NOTA_MINIMA = 0.65
+SOMA_MAXIMA = 10.0     # soma dos pesos positivos declarados (base da normalização)
+
+
+def nota(texto, pesos=None, soma_maxima=None):
+    """(nota 0..1, detalhe). Nota é a régua DECLARADA acima, normalizada — não é opinião.
+
+    O que ela mede: pergunta, jogo citado, chamada, hashtag na medida, tamanho, número,
+    pontuação no fim, um assunto só, abertura própria. O que ela NÃO mede: se o texto é
+    engraçado, bonito ou verdadeiro — verdade é o portão (fato inventado) que cuida, e graça
+    absoluta ninguém mede. Aqui existe uma régua com número, calibrada na história da casa.
+    """
+    pesos = pesos or PESOS_DECLARADOS
+    total, contribuicoes = pontuar(texto, pesos)
+    teto = float(soma_maxima or sum(w for w in pesos.values() if w > 0) or SOMA_MAXIMA)
+    valor = max(0.0, min(1.0, total / teto)) if teto else 0.0
+    return round(valor, 3), {"pontos": total, "teto": teto, "contribuicoes": contribuicoes}
 
 
 # ------------------------------------------------------------------ aprender o gosto

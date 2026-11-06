@@ -54,7 +54,9 @@ SEMELHANCA_MAXIMA = 0.62      # acima disso, é repetição
 TITULO_SEMELHANCA_MAXIMA = 0.85
 TITULO_MIN = 12
 TITULO_MAX = 90
-NOTA_MINIMA = 0.55
+# A nota mínima NÃO é decidida aqui: é a régua calibrada em juizo.py (uma régua só). Este valor
+# é só a rede de segurança para o caso de o juízo não carregar.
+NOTA_MINIMA = 0.65
 JANELA_DE_FORMA = 12          # quantas publicações recentes entram na comparação de forma
 
 # Canais que a casa conhece. Publicação só acontece nos que têm caminho de envio.
@@ -207,6 +209,48 @@ def problema_de_estilo(texto: str, canal: str = "") -> str | None:
     return None
 
 
+def _juizo_modulo():
+    import importlib.util
+    import os as _os
+    caminho = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "juizo.py")
+    spec = importlib.util.spec_from_file_location("juizo_do_portao", caminho)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+CANais_COM_REGUA_DE_DESCRICAO = ("youtube",)
+
+
+def _nota_minima_do_juizo(canal="social"):
+    mod = _juizo_modulo()
+    if canal in CANais_COM_REGUA_DE_DESCRICAO:
+        return float(mod.NOTA_MINIMA_DESCRICAO)
+    return float(mod.NOTA_MINIMA)
+
+
+def _rubrica_do_canal(canal):
+    return "descricao" if canal in CANais_COM_REGUA_DE_DESCRICAO else "post"
+
+
+def _nota_do_juizo(texto, canal="social"):
+    """Nota 0..1 pela régua declarada em juizo.py — duas réguas, uma por tipo de peça.
+
+    Post (bluesky, threads, instagram, mastodon, telegram, site, devlog) usa a régua de post.
+    Descrição de vídeo do YouTube usa a régua de descrição: link e fonte são requisito, hashtag
+    não é. Medir descrição pela régua de post seria número bonito medindo a coisa errada.
+    """
+    try:
+        mod = _juizo_modulo()
+        if _rubrica_do_canal(canal) == "descricao":
+            valor, _detalhe = mod.nota_descricao(texto)
+        else:
+            valor, _detalhe = mod.nota(texto)
+        return valor
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def _sem_acento(texto: str) -> str:
     return "".join(c for c in unicodedata.normalize("NFD", texto or "")
                    if unicodedata.category(c) != "Mn").lower()
@@ -339,6 +383,12 @@ def avalia(candidato: dict, *, canal: str, publicacoes: list | None = None,
     cand = candidato if isinstance(candidato, dict) else {}
     canal = (canal or "").strip().lower()
     numeros: dict = {}
+    # A nota é calculada ANTES de qualquer recusa, de propósito: assim toda recusa sai com a nota
+    # no motivo/números. Recusa sem número é o que o dono chamou de "explicação".
+    if nota_juizo is None:
+        nota_juizo = _nota_do_juizo(str(candidato.get("texto") or ""), canal)
+    if nota_juizo is not None:
+        numeros["nota_juizo"] = round(float(nota_juizo), 3)
 
     if canal not in CANAIS_CONHECIDOS:
         return {"publica": False, "motivo": "canal desconhecido: " + (canal or "(vazio)"), "numeros": numeros}
@@ -429,12 +479,19 @@ def avalia(candidato: dict, *, canal: str, publicacoes: list | None = None,
 
     # ESTILO por último de propósito: recusa de conteúdo (dois assuntos, repetição, fato
     # inventado) é mais informativa que recusa de forma. O estilo só decide o que sobrou.
+    # GRAÇA MEDIDA (06/11/2026): a nota do juízo deixou de ser opcional. Quem chama não precisa
+    # mais passar nota nenhuma — o portão calcula com a régua calibrada em juizo.py.
     problema = problema_de_estilo(texto, canal)
     if problema:
         return {"publica": False, "motivo": "estilo: " + problema, "numeros": numeros}
 
     if nota_juizo is not None:
         minimo = NOTA_MINIMA if nota_minima is None else float(nota_minima)
+        if nota_minima is None:
+            try:
+                minimo = _nota_minima_do_juizo(canal) or minimo
+            except Exception:  # noqa: BLE001
+                pass
         numeros["nota_juizo"] = round(float(nota_juizo), 3)
         numeros["nota_minima"] = minimo
         if float(nota_juizo) < minimo:

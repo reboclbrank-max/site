@@ -43,7 +43,7 @@ def carrega(nome, arquivo):
 cv = carrega("chamar_video", "chamar-video.py")
 pp = carrega("portao_publicacao", "portao-publicacao.py")
 
-VIDEO = {"id": "HmbEdojjhsU", "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
+VIDEO = {"jogo": "ceifalume", "id": "HmbEdojjhsU", "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
          "angulo": "como_funciona:ceifalume-8h", "fato": "ceifalume-8h",
          "numeros": {"plantadas": 15, "colhidas": 8, "toques": 806, "minutos": 2,
                      "toques_por_minuto": 403},

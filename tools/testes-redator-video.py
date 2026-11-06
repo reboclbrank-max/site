@@ -118,6 +118,11 @@ ok("a régua de números tem os fatos da partida (não é lista vazia)", len(per
 for angulo in ANGULOS_OK:
     titulo, descricao = TEXTOS[angulo["id"]]
     sem_link = re.sub(r"https?://\S+", " ", titulo + " " + descricao)
+    # Identificador não é afirmação: data de conferência, assinatura de partida e nome de arquivo
+    # têm dígitos que não são número medido. Saem antes da conta (o resto continua valendo).
+    sem_link = re.sub(r"conferid[oa] em \d{4}-\d{2}-\d{2}(T[0-9:]+Z?)?", " ", sem_link)
+    sem_link = re.sub(r"partida [0-9a-f]{6,}", " ", sem_link)
+    sem_link = re.sub(r"posts/\S+\.json", " ", sem_link)
     numeros = {int(n) for n in re.findall(r"\d+", sem_link)}
     ok("%s: nenhum número inventado no texto" % angulo["id"], numeros <= permitidos,
        sorted(numeros - permitidos))

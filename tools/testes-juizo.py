@@ -55,7 +55,10 @@ ok("traço: texto vazio não quebra", isinstance(j.tracos(""), dict))
 
 # ------------------------------------------------------------------ peso declarado
 _pontos, _contrib = j.pontuar("🌙 A fazenda não dorme. Grátis no navegador. #indiedev")
-ok("pontuação é a soma dos pesos dos traços presentes", _pontos == 4, (_pontos, _contrib))
+# 06/11/2026: três traços entraram (termina_com_pontuacao +2, sem_molde_de_dois_jogos +2,
+# abertura_propria +1). O texto do caso tem: cita_jogo 2, molde 2, pontuação 2, abertura 1,
+# chamada 1, hashtag 1 = 9.
+ok("pontuação é a soma dos pesos dos traços presentes", _pontos == 9, (_pontos, _contrib))
 ok("sem citar jogo, o texto perde o peso maior",
    j.pontuar("Texto genérico sobre jogos. #indiedev")[0] < j.pontuar(
        "CEIFALUME não dorme. #indiedev")[0])

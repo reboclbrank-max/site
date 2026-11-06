@@ -55,7 +55,7 @@ LIMITE_DO_PEDIDOO = 540  # `cerebro_com_motivo` corta o pedido em 560 caracteres
 NOTA_DE_REFERENCIA = 6.0  # nota de um post sólido no juízo da casa (5 traços positivos)
 # Piso do ciclo: um post precisa de pelo menos metade dos traços de um post sólido (3 de 6).
 # Abaixo disso não é post ruim de forma pontual — é post sem conteúdo, e a casa não publica.
-NOTA_MINIMA_DO_CICLO = 0.5
+NOTA_MINIMA_DO_CICLO = None   # None = a régua do juízo (juizo.NOTA_MINIMA)
 
 JOGOS = ("prancheta", "ceifalume")
 RODADAS = 2            # quantas levas de 5 textos antes de recusar
@@ -491,14 +491,17 @@ def titulo_do_texto(texto, assunto):
 
 # ------------------------------------------------------------------ juízo e hora
 def nota_do_texto(texto):
-    """(nota 0..1, detalhe). Normaliza a pontuação do juízo pela nota de um post sólido."""
+    """(nota 0..1, detalhe) — a MESMA régua do portão (`juizo.nota`), não uma paralela.
+
+    Havia duas réguas: o redator normalizava por NOTA_DE_REFERENCIA e o portão comparava com
+    0,55. Duas escalas para a mesma pergunta é como ninguém sabe por que um texto passou. Agora
+    é uma: a nota declarada em juizo.py, calibrada na história da casa.
+    """
     j = juizo()
     if j is None:
         return None, {"motivo": "juízo indisponível: nota neutra"}
-    pontos, contribuicoes = j.pontuar(texto)
-    nota = max(0.0, min(1.0, float(pontos) / NOTA_DE_REFERENCIA))
-    return round(nota, 3), {"pontos": pontos, "contribuicoes": contribuicoes[:4],
-                            "referencia": NOTA_DE_REFERENCIA}
+    valor, detalhe = j.nota(texto)
+    return valor, detalhe
 
 
 def hora_aprendida(caminho=None):

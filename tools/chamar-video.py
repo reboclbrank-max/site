@@ -125,6 +125,15 @@ def montar_chamada(video):
     partes = ["Vídeo novo no canal: \"%s\"." % titulo]
     if linha:
         partes.append("Na partida gravada: %s." % linha)
+    # O nome do jogo e a hashtag da casa: chamada que não diz de que jogo está falando não é
+    # chamada (medido pela régua do juízo em 06/11/2026: 0,308 sem isso).
+    jogo = str(video.get("jogo") or video.get("slug") or "").strip().lower()
+    if jogo == "ceifalume":
+        partes.append("É o CEIFALUME, grátis no navegador. #ceifalume")
+    elif jogo == "prancheta":
+        partes.append("É a PRANCHETA, grátis no navegador. #prancheta")
+    elif jogo:
+        partes.append("É o %s. #%s" % (jogo.upper(), jogo))
     corpo = " ".join(partes)
     espaço = LIMITE_BLUESKY - len(link) - 1
     if len(corpo) > espaço:

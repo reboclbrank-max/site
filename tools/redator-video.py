@@ -183,8 +183,11 @@ ANGULOS = [
         "titulo": lambda f, j: "O que o agente comprou jogando %s: %s" % (
             f["nome_curto"], f["compras"][0]),
         "corpo": lambda f, j: [
-            "As melhorias compradas nesta gravação: %s." % ", ".join(f["compras"]),
-            "Cada uma saiu de moeda economizada colheita a colheita, dentro da mesma partida.",
+            "As %d melhorias compradas nesta gravação: %s." % (
+                len(f["compras"]), ", ".join(f["compras"])),
+            "Cada uma saiu de moeda economizada colheita a colheita, dentro da mesma partida: "
+            "as moedas foram de %d para %d em %d minutos." % (
+                f["moedas_inicio"], f["moedas_fim"], f["minutos"]),
             "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
         ],
     },
@@ -563,6 +566,14 @@ def texto_do_angulo(angulo, fatos, raiz=RAIZ):
         # Todo fato citado carrega a fonte: sem isso o vídeo afirma e o leitor não confere.
         partes.append("Fonte: %s (conferido em %s)." % (fato_da_casa.get("origem"),
                                                         fato_da_casa.get("quando")))
+    if not fato_da_casa and fatos.get("slug"):
+        # Ângulo que fala da GRAVAÇÃO, não de um fato do jogo: a fonte é o próprio registro da
+        # partida. Sem isso a descrição afirmava número sem dizer de onde saiu — medido pela
+        # régua de descrição em 06/11/2026 (nota 0,636 < 0,73, ângulo "compra").
+        registro = _registro_da_cena(fatos["slug"])
+        if registro:
+            partes.append("Fonte: posts/cenas.json (partida %s, conferida em %s)."
+                          % (registro.get("assinatura", "?"), registro.get("quando", "?")))
     if origem:
         partes.append(origem)
     partes.append(FECHAMENTO)
@@ -574,6 +585,23 @@ def texto_do_angulo(angulo, fatos, raiz=RAIZ):
     descricao = "\n\n".join(partes)
     limite = getattr(kit, "LIMITE_DESCRICAO", 5000)
     return titulo[:getattr(kit, "LIMITE_TITULO", 100)], descricao[:limite]
+
+
+def _registro_da_cena(slug, raiz=RAIZ):
+    """Último registro de partida daquele jogo em posts/cenas.json (ou None)."""
+    try:
+        with open(os.path.join(raiz, "posts", "cenas.json"), encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return None
+    itens = dados.get("partidas") if isinstance(dados, dict) else dados
+    if not isinstance(itens, list):
+        return None
+    do_jogo = [x for x in itens if isinstance(x, dict) and x.get("jogo") == slug]
+    if not do_jogo:
+        # registros antigos não declaram "jogo": todos são da primeira cena da casa
+        do_jogo = [x for x in itens if isinstance(x, dict) and not x.get("jogo")]
+    return do_jogo[-1] if do_jogo else None
 
 
 def problemas_do_texto(titulo, descricao, fatos):
