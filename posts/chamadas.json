@@ -2,6 +2,25 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-06T22:07:54Z",
+   "video_id": "FRCzgqUlMFY",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"Como funciona: a chuva rega de graça: não custa água nem moeda\". Na partida gravada: 10 mudas, 4 colheitas, em 2 minutos. É o CEIFALUME-GAMEPLAY. #ceifalume-gameplay\nhttps://youtu.be/FRCzgqUlMFY",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "resultado": "recusado",
+   "motivo": "nota do juízo abaixo do mínimo (0.46 < 0.65)",
+   "numeros": {
+    "video": "FRCzgqUlMFY",
+    "historico_do_canal": 2,
+    "nota_juizo": 0.462,
+    "jogos_citados": [
+     "ceifalume"
+    ],
+    "semelhanca_maxima": 0.429,
+    "nota_minima": 0.65
+   }
+  },
+  {
    "quando": "2026-11-06T16:47:12Z",
    "video_id": "HmbEdojjhsU",
    "canal": "bluesky",
