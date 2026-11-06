@@ -535,7 +535,16 @@ def links_do_kit(slug, raiz=RAIZ):
 
 
 def texto_do_angulo(angulo, fatos, raiz=RAIZ):
-    """(titulo, descricao) daquele ângulo. Descrição sempre com origem, links e hashtags."""
+    """(titulo, descricao) daquele ângulo. Descrição sempre com origem, links e hashtags.
+
+    Ângulo cujo dado a partida não tem devolve (None, None) — NUNCA estoura. Defeito medido em
+    06/11/2026 (run 42269026877): a cena "nabo" gravou uma partida sem nome de planta no
+    relatório, e o ângulo "cultivo" fazia f["plantas"][0] direto: IndexError logo na barreira
+    offline, antes de qualquer gravação. Um dado que falta é uma recusa, não um acidente.
+    """
+    faltando = [c for c in (angulo.get("precisa") or ()) if fatos.get(c) in (None, "", [])]
+    if faltando:
+        return None, None
     j = fatos["_fatos_do_jogo"]
     if angulo.get("_fato"):
         fatos = dict(fatos, **{"_fato_da_casa": angulo["_fato"]})

@@ -58,6 +58,8 @@ ok("os números usados vêm todos do relatório",
    all(isinstance(FATOS.get(k), int) for k in ("plantadas", "colhidas", "toques", "minutos")), FATOS)
 
 TEXTOS = {a["id"]: rv.texto_do_angulo(a, FATOS) for a in rv.ANGULOS}
+TEXTOS = {k: v for k, v in TEXTOS.items() if (v or (None,))[0]}
+ANGULOS_OK = [a for a in rv.ANGULOS if a["id"] in TEXTOS]
 
 
 def bancada_de_partida(plantadas, colhidas, toques, segundos):
@@ -72,7 +74,10 @@ def bancada_de_partida(plantadas, colhidas, toques, segundos):
 
 # 1. cada ângulo é publicável
 PORTAO_VAZIO = []
-for angulo in rv.ANGULOS:
+# Ângulo que precisa de um dado que ESTA partida não tem devolve (None, None) em vez de
+# estourar (defeito medido no run 42269026877: IndexError em f["plantas"][0]). Ele não entra
+# nesta prova — e há contrato próprio para ele mais abaixo.
+for angulo in ANGULOS_OK:
     titulo, descricao = TEXTOS[angulo["id"]]
     nome = angulo["id"]
     ok("%s: título na faixa de 12 a 90 caracteres" % nome, 12 <= len(titulo) <= 90, len(titulo))
@@ -110,7 +115,7 @@ for digito in re.findall(r"\d+", (kit.JOGOS.get("ceifalume") or {}).get("versao"
     permitidos.add(int(digito))
 ok("a régua de números tem os fatos da partida (não é lista vazia)", len(permitidos) >= 6,
    sorted(permitidos))
-for angulo in rv.ANGULOS:
+for angulo in ANGULOS_OK:
     titulo, descricao = TEXTOS[angulo["id"]]
     sem_link = re.sub(r"https?://\S+", " ", titulo + " " + descricao)
     numeros = {int(n) for n in re.findall(r"\d+", sem_link)}
@@ -118,7 +123,7 @@ for angulo in rv.ANGULOS:
        sorted(numeros - permitidos))
 
 # 2. nenhum par de ângulos é "o mesmo post"
-ids = [a["id"] for a in rv.ANGULOS]
+ids = [a["id"] for a in ANGULOS_OK]
 pares = [(ids[i], ids[j]) for i in range(len(ids)) for j in range(i + 1, len(ids))]
 for a, b in pares:
     fa, fb = pp.forma(TEXTOS[a][1]), pp.forma(TEXTOS[b][1])
@@ -230,7 +235,7 @@ ok("e a maioria das recusas é a janela do dono",
 
 todos_ja_usados = [{"canal": "youtube", "titulo": TEXTOS[a["id"]][0], "texto": TEXTOS[a["id"]][1],
                     "angulo": a["id"], "id": "Z%d" % i, "quando": "2026-11-0%dT12:00:00Z" % (i + 1)}
-                   for i, a in enumerate(rv.ANGULOS)]
+                   for i, a in enumerate(ANGULOS_OK)]
 # e todos os fatos da casa já gastos: é o retrato do dia em que o estoque acaba de verdade
 for i, fato in enumerate(FATOS_DA_CASA):
     todos_ja_usados.append({"canal": "youtube", "titulo": "fato %s" % fato["id"],
@@ -280,7 +285,7 @@ ok("e o portão recusa esse caso com motivo", decisao_mesmo["publica"] is False,
 ok("o banco de ângulos declara quantos vídeos distintos a casa tem hoje (≥ 10)",
    len(rv.ANGULOS) >= 10, len(rv.ANGULOS))
 ok("cada ângulo tem id único (sem dois ângulos com o mesmo nome)",
-   len({a["id"] for a in rv.ANGULOS}) == len(rv.ANGULOS), [a["id"] for a in rv.ANGULOS])
+   len({a["id"] for a in rv.ANGULOS}) == len(rv.ANGULOS), [a["id"] for a in ANGULOS_OK])
 shutil.rmtree(outra, ignore_errors=True)
 
 # 7b. o kit usa o ângulo aprovado e o registro do envio guarda qual foi
