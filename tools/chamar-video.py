@@ -132,6 +132,22 @@ def montar_chamada(video):
     return "%s\n%s" % (corpo, link)
 
 
+def _marcar(entrada, raiz=RAIZ):
+    """Atualiza uma chamada já registrada (ex.: vira 'substituida' quando é refeita)."""
+    caminho = os.path.join(raiz, REGISTRO_CHAMADAS)
+    dados = ler_json(caminho, {"chamadas": []})
+    lista = [x for x in (dados.get("chamadas") or []) if isinstance(x, dict)]
+    for i, item in enumerate(lista):
+        if item.get("uri") and item.get("uri") == entrada.get("uri"):
+            lista[i] = dict(item, resultado=entrada.get("resultado"))
+            break
+    dados["chamadas"] = lista
+    with open(caminho, "w", encoding="utf-8") as f:
+        json.dump(dados, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    return caminho
+
+
 def ja_chamado(video_id, raiz=RAIZ):
     for item in chamadas(raiz):
         if str(item.get("video_id")) == str(video_id) and item.get("resultado") == "publicado":
@@ -140,20 +156,24 @@ def ja_chamado(video_id, raiz=RAIZ):
 
 
 def texto_repetido(texto, raiz=RAIZ):
+    """Chamada PUBLICADA com o mesmo texto. Substituída ou falha não conta: não está no ar."""
     alvo = _sem_acento(" ".join(str(texto or "").split()))
     for item in chamadas(raiz):
+        if item.get("resultado") != "publicado":
+            continue
         anterior = _sem_acento(" ".join(str(item.get("texto") or "").split()))
         if anterior and anterior == alvo:
             return item
     return None
 
 
-def decidir(video, texto, raiz=RAIZ, hora=None, publicacoes=None, avaliador=None):
+def decidir(video, texto, raiz=RAIZ, hora=None, publicacoes=None, avaliador=None,
+            ignorar_chamada=False):
     """(libera, motivo, números). Nenhuma chamada sai sem esta resposta."""
     if not video:
         return False, "nenhum vídeo publicado no registro — não há o que chamar", {}
     hora = hora_local() if hora is None else int(hora)
-    anterior = ja_chamado(video["id"], raiz)
+    anterior = None if ignorar_chamada else ja_chamado(video["id"], raiz)
     if anterior:
         return False, ("este vídeo já foi chamado em %s (%s) — chamar de novo seria repetir"
                        % (anterior.get("quando"), anterior.get("canal"))), {"video": video["id"]}
@@ -213,6 +233,29 @@ def publicar(texto, link, handle, senha, pedir=None):
         return None, type(erro).__name__ + ": " + str(erro)[:140]
 
 
+def apagar(uri, handle, senha, pedir=None):
+    """Apaga uma chamada publicada (deleteRecord). Devolve (ok, erro)."""
+    pedir = pedir or _pedir
+    if not (uri and handle and senha):
+        return False, "sem uri ou sem credencial para apagar"
+    partes = str(uri).replace("at://", "").split("/")
+    if len(partes) != 3:
+        return False, "uri fora do formato at://did/collection/rkey"
+    did, colecao, chave = partes
+    try:
+        sessao = pedir(API + "/com.atproto.server.createSession",
+                       {"identifier": handle, "password": senha})
+        jwt = (sessao or {}).get("accessJwt")
+        if not jwt:
+            return False, "o Bluesky não devolveu sessão"
+        pedir(API + "/com.atproto.repo.deleteRecord",
+              {"repo": did, "collection": colecao, "rkey": chave},
+              {"Authorization": "Bearer " + jwt})
+        return True, None
+    except Exception as erro:
+        return False, type(erro).__name__ + ": " + str(erro)[:140]
+
+
 def registrar(entrada, raiz=RAIZ):
     caminho = os.path.join(raiz, REGISTRO_CHAMADAS)
     dados = ler_json(caminho, {"_o_que_e": "chamadas de vídeo publicadas nos canais da casa — "
@@ -229,14 +272,42 @@ def registrar(entrada, raiz=RAIZ):
 
 
 def executar(raiz=RAIZ, ensaio=False, hora=None, publicacoes=None, avaliador=None,
-             post=None, escrever=print):
-    """(ok, mensagem). Ensaiar não publica e não registra publicação."""
+             post=None, escrever=print, refazer=False):
+    """(ok, mensagem). Ensaiar não publica e não registra publicação.
+
+    `refazer` corrige uma chamada já publicada: apaga o post antigo e publica o texto de hoje.
+    Nasceu de um defeito real (06/11/2026): a chamada do HmbEdojjhsU saiu com o título antigo,
+    porque o registro do vídeo ainda não tinha sido sincronizado com a correção feita no canal.
+    Post errado no ar não se conserta com post novo do lado: o antigo sai.
+    """
     video = video_mais_recente(raiz)
     if not video:
         return False, "nenhum vídeo publicado no registro — não há o que chamar"
     texto = montar_chamada(video)
+    anterior = ja_chamado(video["id"], raiz) if refazer else None
+    if refazer:
+        if not anterior:
+            escrever("refazer: não há chamada publicada deste vídeo — seguindo como chamada nova")
+        else:
+            handle = os.environ.get("BLUESKY_HANDLE", "").strip()
+            senha = os.environ.get("BLUESKY_APPPASS", "").strip()
+            if ensaio:
+                escrever("ensaio: apagaria %s e publicaria o texto de hoje" % anterior.get("uri"))
+            else:
+                foi, erro_apagar = apagar(anterior.get("uri"), handle, senha, pedir=post)
+                if not foi:
+                    return False, "não apaguei a chamada antiga (%s) — não publico em dobro" % erro_apagar
+                anterior["resultado"] = "substituida"
+                _marcar(anterior, raiz=raiz)
+                escrever("chamada antiga apagada: " + str(anterior.get("uri")))
+            # A chamada apagada sai da comparação: ela não está mais no canal.
+            base = historico_do_canal(raiz)
+            if anterior and anterior.get("texto"):
+                base = [x for x in base if (x.get("texto") or "") != anterior["texto"]]
+            publicacoes = base if publicacoes is None else publicacoes
     libera, motivo, numeros = decidir(video, texto, raiz=raiz, hora=hora,
-                                      publicacoes=publicacoes, avaliador=avaliador)
+                                      publicacoes=publicacoes, avaliador=avaliador,
+                                      ignorar_chamada=bool(anterior))
     escrever("chamada do vídeo %s (%s)" % (video["id"], video.get("angulo") or "sem ângulo"))
     escrever("portão: " + motivo)
     escrever("texto:\n" + texto)
@@ -256,6 +327,7 @@ def executar(raiz=RAIZ, ensaio=False, hora=None, publicacoes=None, avaliador=Non
     entrada = {"quando": agora_utc().isoformat().replace("+00:00", "Z"),
                "video_id": video["id"], "canal": "bluesky", "texto": texto,
                "titulo": video.get("titulo"), "uri": uri,
+               "refeita": bool(refazer and anterior),
                "resultado": "publicado" if uri else "falhou", "erro": erro,
                "numeros": numeros}
     registrar(entrada, raiz=raiz)
@@ -267,7 +339,7 @@ def executar(raiz=RAIZ, ensaio=False, hora=None, publicacoes=None, avaliador=Non
 
 def main(argv):
     ensaio = "--ensaio" in argv
-    ok, mensagem = executar(ensaio=ensaio)
+    ok, mensagem = executar(ensaio=ensaio, refazer="--refazer" in argv)
     print(("✓ " if ok else "✗ ") + mensagem)
     return 0 if ok else 1
 

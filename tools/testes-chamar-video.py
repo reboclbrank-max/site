@@ -182,6 +182,53 @@ ok("chamada recusada pela janela fica registrada com motivo",
    deu5 is False and cv.chamadas(tmp6) and cv.chamadas(tmp6)[0]["resultado"] == "recusado"
    and "janela" in cv.chamadas(tmp6)[0]["motivo"], cv.chamadas(tmp6))
 
+# ---- 8. refazer: a chamada errada sai do ar antes de a nova entrar
+tmp7 = bancada()
+cv.registrar({"quando": "2026-11-06T16:44:14Z", "video_id": "HmbEdojjhsU", "canal": "bluesky",
+              "texto": texto, "titulo": VIDEO["titulo"], "resultado": "publicado",
+              "uri": "at://did:plc:x/app.bsky.feed.post/velho"}, raiz=tmp7)
+os.environ["BLUESKY_HANDLE"] = "casa.bsky.social"
+os.environ["BLUESKY_APPPASS"] = "senha-de-teste"
+try:
+    pedir_refazer = post_falso(uri="at://did:plc:x/app.bsky.feed.post/novo")
+    deu6, msg6 = cv.executar(raiz=tmp7, hora=12, refazer=True, post=pedir_refazer,
+                             avaliador=lambda *a, **k: {"publica": True, "motivo": "ok"},
+                             escrever=lambda *a, **k: None)
+    ok("refazer publica a chamada nova", deu6 is True and "novo" in msg6, msg6)
+    ok("refazer apaga a chamada antiga antes de publicar",
+       any("deleteRecord" in url for url, corpo in pedir_refazer.chamadas),
+       [c[0] for c in pedir_refazer.chamadas])
+    registros = cv.chamadas(tmp7)
+    ok("a chamada antiga fica registrada como substituída",
+       any(x.get("resultado") == "substituida" for x in registros), [x.get("resultado") for x in registros])
+    ok("e a nova entra como publicada", registros[0].get("resultado") == "publicado", registros[0])
+
+    # se o Bluesky não deixa apagar, nada é publicado em dobro
+    tmp8 = bancada()
+    cv.registrar({"quando": "2026-11-06T16:44:14Z", "video_id": "HmbEdojjhsU", "canal": "bluesky",
+                  "texto": texto, "resultado": "publicado",
+                  "uri": "at://did:plc:x/app.bsky.feed.post/velho"}, raiz=tmp8)
+
+    def post_que_recusa_apagar(url, corpo, cabecalhos=None):
+        if "deleteRecord" in url:
+            raise RuntimeError("apagar recusado")
+        if "createSession" in url:
+            return {"accessJwt": "jwt", "did": "did:plc:x"}
+        return {"uri": "at://novo"}
+    deu7, msg7 = cv.executar(raiz=tmp8, hora=12, refazer=True, post=post_que_recusa_apagar,
+                             avaliador=lambda *a, **k: {"publica": True, "motivo": "ok"},
+                             escrever=lambda *a, **k: None)
+    ok("sem conseguir apagar a antiga, não publica a nova",
+       deu7 is False and "não publico em dobro" in msg7, msg7)
+    ok("e o registro não ganha chamada publicada",
+       all(x.get("resultado") != "publicado" or x.get("uri") != "at://novo" for x in cv.chamadas(tmp8)),
+       [x.get("resultado") for x in cv.chamadas(tmp8)])
+    shutil.rmtree(tmp8, ignore_errors=True)
+finally:
+    os.environ.pop("BLUESKY_HANDLE", None)
+    os.environ.pop("BLUESKY_APPPASS", None)
+shutil.rmtree(tmp7, ignore_errors=True)
+
 # o portão é consultado com o canal certo
 vistos = []
 
@@ -201,6 +248,7 @@ wf = open(os.path.join(RAIZ, ".github", "workflows", "chamar-video.yml"), encodi
 ok("o workflow roda este contrato", "testes-chamar-video.py" in wf)
 ok("o workflow usa as credenciais do Bluesky de secrets", "BLUESKY_APPPASS" in wf)
 ok("o workflow versiona o registro de chamadas", "posts/chamadas.json" in wf)
+ok("o workflow permite refazer uma chamada errada", "REFAZER" in wf and "--refazer" in wf)
 
 for caminho in (tmp, tmp2, tmp3, tmp4, tmp5, tmp6):
     shutil.rmtree(caminho, ignore_errors=True)

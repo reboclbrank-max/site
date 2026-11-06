@@ -18,6 +18,11 @@ on:
         required: false
         default: ""
         type: string
+      refazer:
+        description: "REFAZER = apaga a chamada antiga do vídeo e publica o texto de hoje"
+        required: false
+        default: ""
+        type: string
   schedule:
     - cron: "20 13,17 * * *"   # 2 chamadas por dia (10h20 e 14h20 de Brasília)
 
@@ -45,10 +50,12 @@ jobs:
           BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
           BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}
           ENSAIO_PEDIDO: ${{ github.event.inputs.ensaio }}
+          REFAZER_PEDIDO: ${{ github.event.inputs.refazer }}
         run: |
           set +e
           ARG=""
-          if [ "$ENSAIO_PEDIDO" = "ENSAIAR" ]; then ARG="--ensaio"; fi
+          if [ "$ENSAIO_PEDIDO" = "ENSAIAR" ]; then ARG="$ARG --ensaio"; fi
+          if [ "$REFAZER_PEDIDO" = "REFAZER" ]; then ARG="$ARG --refazer"; fi
           python3 tools/chamar-video.py $ARG | tee /tmp/chamada.txt
           codigo=${PIPESTATUS[0]}
           {
