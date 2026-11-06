@@ -317,9 +317,44 @@ def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print
     return destino
 
 
+def caminho_da_capa(pacote, raiz=RAIZ):
+    """A capa desenhada por tools/desenhar-capa.py, se existir.
+
+    POR QUE (06/11/2026): os três vídeos do dia subiram com o mesmo primeiro quadro, e o
+    espectador não distinguia um do outro no grid. A capa única é desenhada no workflow de
+    gravação; aqui ela é APLICADA no YouTube. Sem capa, o envio segue — capa é melhoria, não
+    pré-requisito, e falhar nela não pode esconder que o vídeo subiu.
+    """
+    for nome in ((pacote or {}).get("capa_do_video"), "media/gameplay/ceifalume-capa.png"):
+        if not nome:
+            continue
+        caminho = nome if os.path.isabs(nome) else os.path.join(raiz, nome)
+        if os.path.exists(caminho) and os.path.getsize(caminho) > 10_000:
+            return caminho
+    return None
+
+
+def definir_capa(access_token, vid, caminho, abrir=None):
+    """POST em thumbnails/set. Devolve (ok, mensagem). Nunca lança."""
+    abrir = abrir or urllib.request.urlopen
+    try:
+        with open(caminho, "rb") as f:
+            dados = f.read()
+        req = urllib.request.Request(
+            "https://www.googleapis.com/upload/youtube/v3/thumbnails/set?videoId="
+            + urllib.parse.quote(str(vid)),
+            data=dados,
+            headers={"Authorization": "Bearer " + str(access_token),
+                     "Content-Type": "image/png", "User-Agent": "rebocl/1"})
+        abrir(req, timeout=120)
+        return True, "capa aplicada no vídeo " + str(vid)
+    except Exception as erro:  # noqa: BLE001
+        return False, "não consegui aplicar a capa: " + str(erro)[:120]
+
+
 def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
              iniciar=None, enviar=None, escrever=print, impressora=None,
-             hora_local=None, publicacoes=None):
+             hora_local=None, publicacoes=None, aplicar_capa=None):
     """Executa o envio. Devolve (ok, mensagem).
 
     Dois caminhos declarados: MANUAL (palavra PUBLICAR) e AUTOMÁTICO (palavra AUTOMATICO +
@@ -382,6 +417,14 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
         except Exception as erro:
             # o vídeo JÁ subiu: falhar aqui não pode esconder isso
             escrever("aviso: não consegui registrar o envio (" + str(erro)[:120] + ")")
+    # CAPA ÚNICA no ar. Se falhar, o vídeo continua publicado: a falha é avisada, não escondida.
+    capa = caminho_da_capa(pacote, raiz)
+    if capa:
+        try:
+            deu, aviso = (aplicar_capa or definir_capa)(token, vid, capa)
+        except Exception as erro:  # noqa: BLE001
+            deu, aviso = False, "capa falhou: " + str(erro)[:120]
+        escrever(("✓ " if deu else "aviso: ") + aviso)
     return True, "publicado: https://youtu.be/" + vid
 
 

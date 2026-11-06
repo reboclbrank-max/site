@@ -173,6 +173,8 @@ jobs:
           python3 - <<'PY'
           import json, os, shutil, subprocess
           kit = json.load(open("posts/kit-gameplay.json", encoding="utf-8"))
+          pacotes = kit.get("pacotes") or []
+          kit = pacotes[0] if pacotes else {}
           rel = json.load(open("media/gameplay/ceifalume-gameplay-cru-decisoes.json", encoding="utf-8"))
           titulo = (kit.get("titulo") or "").strip()
           numeros = "%s mudas · %s colheitas · %s min" % (
@@ -181,7 +183,7 @@ jobs:
           quadro = "media/gameplay/quadro-para-capa.png"
           ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
           subprocess.run([ffmpeg, "-y", "-hide_banner", "-loglevel", "error",
-                          "-ss", "6", "-i", "media/gameplay/ceifalume-gameplay-cru.mp4",
+                          "-ss", "20", "-i", "media/gameplay/ceifalume-gameplay-cru.mp4",
                           "-frames:v", "1", quadro], check=True)
           subprocess.run(["python3", "tools/desenhar-capa.py", "--quadro", quadro,
                           "--saida", "media/gameplay/ceifalume-capa.png",

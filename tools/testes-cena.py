@@ -43,12 +43,14 @@ checar("toda estratégia diz, em português, o que muda na tela",
       all(len(e.get("porque") or "") > 20 for e in cena.ESTRATEGIAS.values()))
 
 # ---- 2. a rotação nunca repete a anterior e dá a volta em todas
-r = cena.carregar(bancada())
+caminho_rotacao = bancada()
+r = cena.carregar(caminho_rotacao)
 sequencia = []
 for _ in range(8):
     e = cena.proxima(r)
     sequencia.append(e)
-    cena.registrar(relatorio(plantadas=len(sequencia) * 3), e, r, quando="2026-11-06T1%d:00:00Z" % len(sequencia))
+    cena.registrar(relatorio(plantadas=len(sequencia) * 3), e, r,
+                   caminho=caminho_rotacao, quando="2026-11-06T1%d:00:00Z" % len(sequencia))
 checar("a estratégia da vez nunca é a mesma da gravação anterior",
       all(sequencia[i] != sequencia[i - 1] for i in range(1, len(sequencia))), sequencia)
 checar("todas as estratégias têm vez a cada volta",
@@ -96,7 +98,17 @@ saida = subprocess.run(["python3", os.path.join(RAIZ, "tools", "cena.py"), "prox
 checar("o comando 'proxima' imprime só o nome da estratégia",
       saida.stdout.strip() in cena.ESTRATEGIAS, saida.stdout.strip())
 
-# ---- 7. o gravador (JS) e a rotação (Python) falam a MESMA língua
+# ---- 7. registrar sem caminho NÃO escreve no registro real da casa
+antes = open(os.path.join(RAIZ, "posts", "cenas.json"), "rb").read() if os.path.exists(
+    os.path.join(RAIZ, "posts", "cenas.json")) else b""
+mem = {"partidas": []}
+cena.registrar(relatorio(plantadas=99), "trigo", mem)
+depois = open(os.path.join(RAIZ, "posts", "cenas.json"), "rb").read() if os.path.exists(
+    os.path.join(RAIZ, "posts", "cenas.json")) else b""
+checar("registrar só na memória não toca o registro versionado", antes == depois)
+checar("a partida existe na memória do teste", len(mem["partidas"]) == 1)
+
+# ---- 8. o gravador (JS) e a rotação (Python) falam a MESMA língua
 import re
 js = open(os.path.join(RAIZ, "tools", "gravar-gameplay.js"), encoding="utf-8").read()
 bloco = re.search(r"const CENAS = \{(.+?)\n\};", js, re.S)

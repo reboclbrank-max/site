@@ -118,7 +118,10 @@ def registrar(relatorio, estrategia, registro=None, caminho=None, quando=None, f
         "quando": quando or _quando(), "estrategia": estrategia, "assinatura": assin,
         "resumo": corpo,
     })
-    if caminho is not None or registro is not None:
+    # SÓ grava quando o chamador diz ONDE: escrever no registro da casa por omissão já custou
+    # caro — um teste que rodava "só na memória" escreveu 8 partidas de mentira em
+    # posts/cenas.json, e a rotação passou a escolher a cena errada em produção.
+    if caminho is not None:
         gravar(registro, caminho)
     return (True, "partida nova: %s (%s)" % (assin, estrategia), assin)
 

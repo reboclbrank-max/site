@@ -81,7 +81,8 @@ def validador_ok(pacote):
     return []
 
 
-def rodar(raiz, confirmacao, ok=True, impressora=None, hora_local=12, publicacoes=()):
+def rodar(raiz, confirmacao, ok=True, impressora=None, hora_local=12, publicacoes=(),
+          aplicar_capa=None):
     """Roda o envio na bancada. `publicacoes` é o histórico do canal; vazio = canal novo.
 
     `hora_local=12` é o padrão de propósito: a janela do dono (09-22h) faz parte do portão, e um
@@ -92,7 +93,8 @@ def rodar(raiz, confirmacao, ok=True, impressora=None, hora_local=12, publicacoe
                                   renovar=renovar, validador=validador_ok,
                                   iniciar=iniciar, enviar=enviar_bytes,
                                   escrever=lambda *a, **k: None, impressora=impressora,
-                                  hora_local=hora_local, publicacoes=list(publicacoes))
+                                  hora_local=hora_local, publicacoes=list(publicacoes),
+                                  aplicar_capa=aplicar_capa)
     return enviou, msg, chamadas
 
 
@@ -269,6 +271,52 @@ checar("sem relatório da partida, o título próprio não é inventado",
       kitg.titulo_da_partida("ceifalume", kityt, raiz=str(tempfile.mkdtemp())) is None)
 shutil.rmtree(a, ignore_errors=True)
 shutil.rmtree(b, ignore_errors=True)
+
+
+# ---- CAPA ÚNICA: os três vídeos de 06/11 subiram com o mesmo primeiro quadro ----------------
+# A capa é desenhada na gravação e APLICADA aqui. Estes contratos cobram isso — e cobram também
+# que uma falha de capa não esconda um vídeo que já subiu.
+raiz = bancada()
+capa = pathlib.Path(raiz) / "media" / "gameplay" / "ceifalume-capa.png"
+capa.parent.mkdir(parents=True, exist_ok=True)
+capa.write_bytes(b"PNG" + b"z" * 40_000)
+chamadas_capa = []
+
+
+def aplicar(token, vid, caminho):
+    chamadas_capa.append((token, vid, caminho))
+    return True, "capa aplicada no vídeo " + str(vid)
+
+
+ok, msg, _ = rodar(raiz, "AUTOMATICO", aplicar_capa=aplicar)
+checar("com capa desenhada, o envio aplica a capa", ok is True and len(chamadas_capa) == 1, msg)
+checar("a capa vai para o vídeo que acabou de subir",
+      bool(chamadas_capa) and chamadas_capa[0][1] == "VIDEO123", chamadas_capa)
+checar("a capa aplicada é a capa daquele vídeo",
+      bool(chamadas_capa) and chamadas_capa[0][2].endswith("ceifalume-capa.png"), chamadas_capa)
+
+raiz_sem_capa = bancada()
+chamadas_capa.clear()
+ok, msg, _ = rodar(raiz_sem_capa, "AUTOMATICO", aplicar_capa=aplicar)
+checar("sem capa desenhada, publica e não inventa capa",
+      ok is True and chamadas_capa == [], (msg, chamadas_capa))
+
+raiz_falha = bancada()
+capa2 = pathlib.Path(raiz_falha) / "media" / "gameplay" / "ceifalume-capa.png"
+capa2.parent.mkdir(parents=True, exist_ok=True)
+capa2.write_bytes(b"PNG" + b"y" * 40_000)
+
+
+def aplicar_quebrado(*a, **k):
+    raise RuntimeError("thumbnails/set recusou")
+
+
+ok, msg, _ = rodar(raiz_falha, "AUTOMATICO", aplicar_capa=aplicar_quebrado)
+checar("capa que falha não derruba uma publicação que deu certo",
+      ok is True and "publicado" in msg, msg)
+
+for r in (raiz, raiz_sem_capa, raiz_falha):
+    shutil.rmtree(r, ignore_errors=True)
 
 certos = sum(1 for _, ok in resultados if ok)
 print("%d/%d contratos do portão do vídeo passaram" % (certos, len(resultados)))
