@@ -137,12 +137,115 @@ ANGULOS = [
             "Nada de vídeo editado à mão: a legenda descreve a decisão tomada, e o áudio é sintetizado pela produção.",
         ],
     },
+    {
+        "id": "moedas",
+        "precisa": ("moedas_inicio", "moedas_fim"),
+        "hashtags": ["#idlefarm"],
+        "titulo": lambda f, j: "De %d a %d moedas em %d min de %s" % (
+            f["moedas_inicio"], f["moedas_fim"], f["minutos"], f["nome_curto"]),
+        "corpo": lambda f, j: [
+            "A fazenda começou com %d moedas e terminou a gravação com %d no bolso."
+            % (f["moedas_inicio"], f["moedas_fim"]),
+            "O bolso não enche sozinho: cada moeda veio de colheita vendida, e cada compra saiu dele.",
+            "É a diferença entre fazenda idle e passatempo de espera — o número mede decisão, não sorte.",
+        ],
+    },
+    {
+        "id": "cultivo",
+        "precisa": ("celulas_prontas", "plantas"),
+        "hashtags": [],
+        "titulo": lambda f, j: "%d células com %s pronto no fim da partida" % (
+            f["celulas_prontas"], f["plantas"][0]),
+        "corpo": lambda f, j: [
+            "No fim da gravação, %d das %d células do terreno estavam com planta pronta."
+            % (f["celulas_prontas"], f["celulas_total"]),
+            "O cultivo da partida foi %s." % " e ".join(f["plantas"]),
+            "Nenhuma célula anda junto com a outra: cada uma tem o seu relógio de crescimento.",
+        ],
+    },
+    {
+        "id": "tutorial",
+        "precisa": ("tutorial_segundos", "telas"),
+        "hashtags": ["#godot", "#indiegame"],
+        "titulo": lambda f, j: "Tutorial de %s resolvido em %s segundo" % (
+            f["nome_curto"], str(f["tutorial_segundos"]).replace(".", ",")),
+        "corpo": lambda f, j: [
+            "O tutorial do jogo abriu e fechou em %s segundo, com %d toque."
+            % (str(f["tutorial_segundos"]).replace(".", ","), f["tutorial_toques"]),
+            "Depois disso ninguém digita nada: um agente olha a tela e escolhe onde tocar.",
+            "A captura atravessou %d telas diferentes antes do campo ficar cheio." % f["telas"],
+        ],
+    },
+    {
+        "id": "compra",
+        "precisa": ("compras",),
+        "hashtags": ["#godot", "#jogobrasileiro"],
+        "titulo": lambda f, j: "O que o agente comprou jogando %s: %s" % (
+            f["nome_curto"], f["compras"][0]),
+        "corpo": lambda f, j: [
+            "As melhorias compradas nesta gravação: %s." % ", ".join(f["compras"]),
+            "Cada uma saiu de moeda economizada colheita a colheita, dentro da mesma partida.",
+            "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+    {
+        "id": "comparacao",
+        "precisa": ("_anterior",),
+        "hashtags": ["#indiedev", "#registro"],
+        "titulo": lambda f, j: "%d colheitas contra %d da partida anterior" % (
+            f["colhidas"], f["_anterior"]["colhidas"]),
+        "corpo": lambda f, j: [
+            "Esta gravação colheu %d; a anterior, que já está no canal, tinha colhido %d."
+            % (f["colhidas"], f["_anterior"]["colhidas"]),
+            "Os toques foram %d agora e %d antes — tudo lido do relatório, nada estimado."
+            % (f["toques"], f["_anterior"]["toques"]),
+            "A fazenda muda de uma partida para a outra, e o registro do canal mostra a diferença.",
+        ],
+    },
 ]
-
 FECHAMENTO = "Canal de dev solo: bastidores, versões e o que quebrou no caminho."
 PROIBIDOS = ("garantido", "viral", "imperdivel", "imperdível", "melhor do mundo",
              "nao perca", "não perca", "em breve", "clique aqui")
 MECANICA_INVENTADA = ("inimigo", "tiro", "chefe", "boss", "corrida", "pulo", "pular")
+
+
+def relatorio_cru(slug, raiz=RAIZ):
+    """O relatório da partida, cru. {} quando não existe (o redator então não escreve nada)."""
+    kitg = _kit_gameplay()
+    info = (getattr(kitg, "GAMEPLAY", {}) or {}).get(slug) or {}
+    caminho = os.path.join(raiz, info.get("decisoes") or "")
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return {}
+    return dados if isinstance(dados, dict) else {}
+
+
+def _compras(relatorio):
+    """As compras que o agente fez na partida, do relatório ("comprar Poço (40 moedas · …)")."""
+    nomes = []
+    for d in relatorio.get("decisoes") or []:
+        if not isinstance(d, dict):
+            continue
+        motivo = str(d.get("motivo") or "")
+        if not motivo.lower().startswith("comprar"):
+            continue
+        nome = motivo[len("comprar"):].strip().split("(")[0].strip()
+        if nome and nome not in nomes:
+            nomes.append(nome)
+    return nomes
+
+
+def _plantas(relatorio, limite=3):
+    """As plantas que estavam no campo no fim, sem repetir."""
+    fim = ((relatorio.get("economia") or {}).get("fim") or {})
+    plantas = []
+    for campo in fim.get("camposLista") or []:
+        nome = str((campo or {}).get("planta") or "").strip()
+        if nome and nome not in plantas:
+            plantas.append(nome)
+    return plantas[:limite]
 
 
 def fatos_do_pacote(slug, raiz=RAIZ):
@@ -163,6 +266,34 @@ def fatos_do_pacote(slug, raiz=RAIZ):
     if not j:
         return {}
     f["_fatos_do_jogo"] = j
+    # Fatos extras do relatório: cada ângulo novo declara de qual precisa ("precisa"), e ângulo
+    # sem o fato é pulado com motivo — nunca preenchido com estimativa.
+    rel = relatorio_cru(slug, raiz=raiz)
+    economia = rel.get("economia") or {}
+    inicio, fim = economia.get("inicio") or {}, economia.get("fim") or {}
+    for chave, valor in (
+        ("moedas_inicio", inicio.get("moedas")),
+        ("moedas_fim", fim.get("moedas")),
+        ("campos_inicio", inicio.get("campos")),
+        ("campos_fim", fim.get("campos")),
+        ("telas", rel.get("telas")),
+        ("tutorial_toques", rel.get("tutorial_toques")),
+    ):
+        try:
+            f[chave] = int(valor)
+        except (TypeError, ValueError):
+            pass
+    try:
+        f["tutorial_segundos"] = round(float(rel.get("tutorial_segundos") or 0), 1)
+    except (TypeError, ValueError):
+        pass
+    f["tutorial_fechou"] = bool(rel.get("tutorial_fechou"))
+    f["compras"] = _compras(rel)
+    f["plantas"] = _plantas(rel)
+    campos = fim.get("camposLista") or []
+    if campos:
+        f["celulas_total"] = len(campos)
+        f["celulas_prontas"] = sum(1 for c in campos if (c or {}).get("pronto"))
     return f
 
 
@@ -259,8 +390,20 @@ def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None)
     hist = historico(raiz) if publicacoes is None else publicacoes
     hora = hora_local_do_canal() if hora_local is None else int(hora_local)
     anterior = ultimo_angulo(hist)
+    # A comparação precisa da partida anterior publicada — e ela existe porque o registro guarda
+    # os números de cada vídeo. Sem anterior, o ângulo não é oferecido (não se inventa passado).
+    for item in hist:
+        if isinstance(item.get("numeros"), dict) and item["numeros"].get("colhidas") is not None:
+            fatos["_anterior"] = dict(item["numeros"], quando=item.get("quando"))
+            break
     recusas = []
+    aprovados = []
     for angulo in ANGULOS:
+        faltando = [c for c in (angulo.get("precisa") or ()) if fatos.get(c) in (None, "", [])]
+        if faltando:
+            recusas.append({"angulo": angulo["id"],
+                            "motivo": "fato ausente no relatório desta partida: " + ", ".join(faltando)})
+            continue
         titulo, descricao = texto_do_angulo(angulo, fatos, raiz=raiz)
         problemas = problemas_do_texto(titulo, descricao, fatos)
         if problemas:
@@ -275,9 +418,13 @@ def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None)
         if not decisao.get("publica"):
             recusas.append({"angulo": angulo["id"], "motivo": str(decisao.get("motivo") or "recusado")})
             continue
-        return ({"angulo": angulo["id"], "titulo": titulo, "descricao": descricao,
-                 "numeros": {k: fatos[k] for k in ("plantadas", "colhidas", "toques", "minutos",
-                                                   "toques_por_minuto")}}, recusas)
+        aprovados.append({"angulo": angulo["id"], "titulo": titulo, "descricao": descricao,
+                          "numeros": {k: fatos[k] for k in ("plantadas", "colhidas", "toques",
+                                                            "minutos", "toques_por_minuto")}})
+    if aprovados:
+        # Todos os ângulos foram julgados (a recusa de cada um fica registrada); o primeiro
+        # aprovado na ordem declarada é o que publica.
+        return aprovados[0], recusas
     return None, recusas
 
 

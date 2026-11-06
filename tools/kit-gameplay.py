@@ -57,19 +57,16 @@ def _redator():
 
 
 def texto_do_video(slug, raiz=RAIZ):
-    """(titulo, descricao, angulo, recusas) do redator — ou (None, None, None, recusas).
+    """(escolha, recusas) do redator. `escolha` é None quando nenhum ângulo foi aprovado.
 
     Sem ângulo aprovado o kit NÃO fica sem texto: ele mantém o molde e o portão do envio
     recusa a repetição depois. Kit que se recusa a montar derrubaria a gravação inteira.
     """
     try:
-        redator = _redator()
-        escolha, recusas = redator.escolher(slug, raiz=raiz)
+        escolha, recusas = _redator().escolher(slug, raiz=raiz)
     except Exception as erro:  # redator quebrado não pode impedir a gravação
-        return None, None, None, [{"angulo": None, "motivo": "redator falhou: " + str(erro)[:120]}]
-    if not escolha:
-        return None, None, None, recusas
-    return escolha["titulo"], escolha["descricao"], escolha["angulo"], recusas
+        return None, [{"angulo": None, "motivo": "redator falhou: " + str(erro)[:120]}]
+    return escolha, recusas
 
 
 def numeros_da_partida(slug, raiz=RAIZ):
@@ -174,13 +171,16 @@ def pacote(slug):
     # O redator tem a palavra final: ele escolhe o ângulo e escreve com os números da partida,
     # passando pelo mesmo portão dos outros canais. Sem ângulo aprovado, vale o molde acima —
     # e o portão do envio recusa a repetição com número e motivo.
-    titulo_redator, descricao_redator, angulo, recusas = texto_do_video(slug, RAIZ)
-    if titulo_redator:
-        titulo, descricao = titulo_redator, descricao_redator
+    escolha_redator, recusas = texto_do_video(slug, RAIZ)
+    angulo = (escolha_redator or {}).get("angulo")
+    if escolha_redator:
+        titulo, descricao = escolha_redator["titulo"], escolha_redator["descricao"]
 
     p = {
         "id": slug + "-gameplay",
         "angulo": angulo,
+        # os números vão junto: é com eles que o próximo vídeo pode comparar partidas
+        "numeros": (escolha_redator or {}).get("numeros"),
         "slug": slug,
         "arquivo": info["arquivo"],
         "arquivo_existe": os.path.exists(caminho),

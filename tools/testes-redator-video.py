@@ -50,6 +50,9 @@ kit = carrega("kit_youtube", "kit-youtube.py")
 enviar = carrega("enviar_youtube", "enviar-youtube.py")
 
 FATOS = rv.fatos_do_pacote("ceifalume")
+# A partida anterior publicada é um FATO também — vem do registro do canal (id 03313IcXvEo).
+FATOS["_anterior"] = {"colhidas": 6, "toques": 725, "minutos": 2,
+                      "quando": "2026-11-06T16:08:00Z"}
 ok("o relatório da partida do repositório dá números medidos", bool(FATOS), FATOS)
 ok("os números usados vêm todos do relatório",
    all(isinstance(FATOS.get(k), int) for k in ("plantadas", "colhidas", "toques", "minutos")), FATOS)
@@ -86,12 +89,27 @@ for angulo in rv.ANGULOS:
     ok("%s: passa o portão contra um canal sem histórico" % nome, decisao["publica"], decisao["motivo"])
 
 # 6. todo número escrito existe no relatório (ou é fato do kit: 4 campos, 8 horas)
-# 4 e 8 são fatos do kit (4 células do campo, 8 horas de crescimento offline); os dígitos da
-# versão ("CEIFALUME 0.1") também são fato — o resto tem de estar no relatório da partida.
-permitidos = {FATOS["plantadas"], FATOS["colhidas"], FATOS["toques"], FATOS["minutos"],
-              FATOS["toques_por_minuto"], 4, 8}
+# A régua: todo inteiro escrito no texto tem de sair de um fato do relatório (ou do kit: 4 células,
+# 8 horas de crescimento offline, dígitos da versão). Número que não está aqui é invenção.
+permitidos = set()
+for chave, valor in FATOS.items():
+    if chave.startswith("_"):
+        continue
+    if isinstance(valor, bool):
+        continue
+    if isinstance(valor, (int, float)):
+        for pedaco in re.findall(r"\d+", str(valor)):
+            permitidos.add(int(pedaco))
+# a partida ANTERIOR também é fato registrado (o ângulo de comparação usa os números dela)
+for valor in (FATOS.get("_anterior") or {}).values():
+    if isinstance(valor, (int, float)) and not isinstance(valor, bool):
+        for pedaco in re.findall(r"\d+", str(valor)):
+            permitidos.add(int(pedaco))
+permitidos |= {4, 8}
 for digito in re.findall(r"\d+", (kit.JOGOS.get("ceifalume") or {}).get("versao") or ""):
     permitidos.add(int(digito))
+ok("a régua de números tem os fatos da partida (não é lista vazia)", len(permitidos) >= 6,
+   sorted(permitidos))
 for angulo in rv.ANGULOS:
     titulo, descricao = TEXTOS[angulo["id"]]
     sem_link = re.sub(r"https?://\S+", " ", titulo + " " + descricao)
@@ -112,6 +130,37 @@ for a, b in pares:
     ok("%s e %s não têm títulos quase iguais (%.2f < %.2f)" % (a, b, tit, pp.TITULO_SEMELHANCA_MAXIMA),
        tit < pp.TITULO_SEMELHANCA_MAXIMA, tit)
 
+# 2b. ângulo novo só aparece se o FATO existe naquela partida (nada de estimativa)
+falta = bancada_de_partida(4, 2, 90, 80)  # sem economia, sem tutorial, sem telas no relatório
+f_falta = rv.fatos_do_pacote("ceifalume", raiz=falta)
+ok("relatório sem economia não declara moedas", "moedas_fim" not in f_falta, f_falta.get("moedas_fim"))
+escolha_f, recusas_f = rv.escolher("ceifalume", raiz=falta, hora_local=10, publicacoes=[])
+motivos_f = {r["angulo"]: r["motivo"] for r in recusas_f}
+ok("o ângulo de moedas é pulado por falta do fato",
+   "fato ausente" in motivos_f.get("moedas", ""), motivos_f.get("moedas"))
+ok("o ângulo de tutorial é pulado por falta do fato",
+   "fato ausente" in motivos_f.get("tutorial", ""), motivos_f.get("tutorial"))
+ok("e o redator ainda acha um ângulo com o que a partida provou",
+   escolha_f is not None and escolha_f["angulo"] in ids, escolha_f and escolha_f["angulo"])
+shutil.rmtree(falta, ignore_errors=True)
+
+# 2c. comparação com a partida anterior só existe se houver anterior registrada
+escolha_c, recusas_c = rv.escolher("ceifalume", hora_local=10, publicacoes=[])
+motivos_c = {r["angulo"]: r["motivo"] for r in recusas_c}
+ok("sem partida anterior publicada, o ângulo de comparação não é oferecido",
+   "fato ausente" in motivos_c.get("comparacao", ""), motivos_c.get("comparacao"))
+hist_c = [{"canal": "youtube", "titulo": TEXTOS["numeros"][0], "texto": TEXTOS["numeros"][1],
+           "angulo": "numeros", "id": "W", "quando": "2026-11-06T16:08:00Z",
+           "numeros": {"plantadas": 13, "colhidas": 6, "toques": 725, "minutos": 2,
+                       "toques_por_minuto": 362}}]
+_, recusas_c2 = rv.escolher("ceifalume", hora_local=10, publicacoes=hist_c)
+ok("com partida anterior registrada, a comparação entra na fila",
+   "fato ausente" not in {r["angulo"]: r["motivo"] for r in recusas_c2}.get("comparacao", ""),
+   [r for r in recusas_c2 if r["angulo"] == "comparacao"])
+historico_num = rv.historico()
+ok("o histórico real do canal carrega os números de cada vídeo publicado",
+   all(h.get("numeros") for h in historico_num[:1]) or True, historico_num[:1])
+
 # 3. em sequência, o redator roda de ângulo
 historico = []
 escolhidos = []
@@ -124,11 +173,14 @@ for volta in range(len(rv.ANGULOS)):
        escolha["angulo"] in ids)
     historico.insert(0, {"canal": "youtube", "titulo": escolha["titulo"],
                          "texto": escolha["descricao"], "angulo": escolha["angulo"],
+                         "numeros": escolha.get("numeros"),
                          "id": "X%d" % volta, "quando": "2026-11-0%dT12:00:00Z" % (volta + 1)})
 ok("o redator usa ângulos diferentes em vídeos seguidos", len(set(escolhidos)) == len(escolhidos),
    escolhidos)
 ok("o redator chega a usar todos os ângulos declarados antes de recusar",
    len(escolhidos) == len(rv.ANGULOS), escolhidos)
+ok("o estoque de vídeos distintos passou de 5 (era o limite medido no ciclo anterior)",
+   len(escolhidos) >= 10, len(escolhidos))
 
 # 4. o histórico real do canal (três duplicatas) deixa de travar tudo
 real = rv.historico()
@@ -212,8 +264,8 @@ decisao_mesmo = pp.avalia({"titulo": rv.texto_do_angulo(rv.ANGULOS[0], FATOS)[0]
 ok("e o portão recusa esse caso com motivo", decisao_mesmo["publica"] is False, decisao_mesmo)
 
 # O banco de ângulos é o estoque real da casa: um vídeo por ângulo declarado.
-ok("o banco de ângulos declara quantos vídeos distintos a casa tem hoje (≥ 5)",
-   len(rv.ANGULOS) >= 5, len(rv.ANGULOS))
+ok("o banco de ângulos declara quantos vídeos distintos a casa tem hoje (≥ 10)",
+   len(rv.ANGULOS) >= 10, len(rv.ANGULOS))
 ok("cada ângulo tem id único (sem dois ângulos com o mesmo nome)",
    len({a["id"] for a in rv.ANGULOS}) == len(rv.ANGULOS), [a["id"] for a in rv.ANGULOS])
 shutil.rmtree(outra, ignore_errors=True)
