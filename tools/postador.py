@@ -727,6 +727,115 @@ def pode_publicar_agora(agora=None, calendario=None, caminho_log="posts/log.md")
     return True, motivo
 
 
+def _modulo_portao():
+    import importlib.util
+    caminho = os.path.join(os.path.dirname(os.path.abspath(__file__)), "portao-publicacao.py")
+    if not os.path.exists(caminho):
+        return None
+    spec = importlib.util.spec_from_file_location("portao_publicacao", caminho)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def portao_libera(canal, texto):
+    """(libera, motivo) para UM canal. O portão é a última palavra antes de cada envio.
+
+    O texto já passou pelo portão no ciclo (canal `site`), mas canal tem regra própria:
+    itch não publica, instagram e threads exigem credencial viva. Chamar aqui deixa a decisão
+    registrada por canal, em vez de supor que o que vale para um vale para todos.
+    """
+    p = _modulo_portao()
+    if p is None:
+        return True, "portão indisponível: envio segue com a regra antiga"
+    publicacoes = []
+    try:
+        red = _modulo_redator()
+        if red is not None:
+            publicacoes = red.historico_para_portao("posts/posts-publicados.md")
+    except Exception:
+        publicacoes = []
+    decisao = p.avalia({"titulo": str(texto)[:80] or "post da casa", "texto": str(texto)},
+                       canal=canal, publicacoes=publicacoes, calendario=ler_calendario(),
+                       hora_local=hora_local().hour, credencial_disponivel=True)
+    return bool(decisao.get("publica")), str(decisao.get("motivo") or "")
+
+
+def _modulo_redator():
+    """Carrega o redator (nome com hífen obriga importlib). None se ele não existir."""
+    import importlib.util
+    caminho = os.path.join(os.path.dirname(os.path.abspath(__file__)), "redator.py")
+    if not os.path.exists(caminho):
+        return None
+    spec = importlib.util.spec_from_file_location("redator", caminho)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def ciclo_do_redator():
+    """Pauta, texto, juízo e portão no mesmo lugar. Devolve a decisão — nunca publica.
+
+    O motor de texto é o da casa (`cerebro_com_motivo`), que já tem três provedores e sabe
+    dizer por que não respondeu. A memória de pauta vai para `posts/repertorio.json`: é ela que
+    impede o ângulo de voltar cedo.
+    """
+    try:
+        red = _modulo_redator()
+    except Exception as erro:
+        return {"publica": False, "motivo": "redator indisponível: " + str(erro)[:80]}
+    if red is None:
+        return {"publica": False, "motivo": "redator indisponível: arquivo ausente"}
+
+    def motor(pedido):
+        texto, _motivo = cerebro_com_motivo(pedido, tentativas=1)
+        return texto
+
+    decisao = red.ciclo(
+        motor,
+        canal="site",
+        publicacoes=red.historico_para_portao("posts/posts-publicados.md"),
+        calendario=ler_calendario(),
+        hora_local=hora_local().hour,
+        caminho_repertorio="posts/repertorio.json",
+    )
+    if not decisao.get("publica"):
+        return {"publica": False, "motivo": decisao.get("motivo"),
+                "recusas": (decisao.get("recusas") or [])[:6]}
+    escolhido = decisao["escolhido"]
+    assunto = escolhido["pauta"]["assunto"]
+    return {
+        "publica": True,
+        "texto": escolhido["texto"],
+        "titulo": escolhido["titulo"],
+        "angulo": escolhido["pauta"]["angulo"],
+        "assunto": assunto,
+        "nota": escolhido.get("nota"),
+        "motivo": decisao.get("motivo"),
+        "url": DESTINOS_EDITORIAIS.get(assunto) or DESTINOS_EDITORIAIS["catalogo"],
+    }
+
+
+def registra_recusa_do_ciclo(escolha, caminho="posts/portao-decisoes.jsonl"):
+    """Recusa também vira prova: hora, motivo e o que foi tentado. Falhar aqui não derruba."""
+    try:
+        linha = json.dumps({
+            "quando": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "publicou": False,
+            "motivo": str((escolha or {}).get("motivo") or "")[:400],
+            "tentativas": [
+                {"angulo": (t.get("pauta") or {}).get("angulo"),
+                 "assunto": (t.get("pauta") or {}).get("assunto"),
+                 "motivo": str(t.get("motivo"))[:200]}
+                for t in ((escolha or {}).get("recusas") or [])[:6]
+            ],
+        }, ensure_ascii=False)
+        with open(caminho, "a", encoding="utf-8") as f:
+            f.write(linha + "\n")
+    except Exception as erro:
+        print("aviso: recusa não registrada (%s)" % str(erro)[:80])
+
+
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else ""
     if modo != "teste" and ciclo_ainda_recente():
@@ -746,122 +855,146 @@ def main():
         tema_atual = "teste controlado"
         url_da_fila = ""
     else:
-        temas = ["apresente o PRANCHETA pra quem curte manager de futebol", "apresente o CEIFALUME 0.1 para quem curte idle de fazenda noturna",
-                 "convide pra testar o PRANCHETA e contar qual modo prefere (lances ao vivo ou instantaneo)",
-                 "explique por que o PRANCHETA ser 100% ficticio e um ponto forte", "dica tatica curta que funciona no PRANCHETA",
-                 "converse sobre vida de dev solo no Brasil e cite os jogos", "pinte o clima do CEIFALUME: a fazenda nao dorme",
-                 "curiosidade de bastidor: como e criar um jogo sozinho", "pergunte qual time o torcedor torce e provoque amistoso no PRANCHETA",
-                 "explique o APK: por que tambem funciona no celular sem internet", "fale das plantacoes noturnas do CEIFALUME",
-                 "compare gerir um clube real vs ficticio (sem citar clubes reais)", "pergunte: resultado ao vivo ou instantaneo, por que?",
-                 "fale da arte pixelada e do clima de lanterna dos jogos", "convide pra seguir a conta pra acompanhar atualizacoes do CEIFALUME",
-                 "conte que o PRANCHETA roda no navegador, sem baixar nada", "pergunte qual modo de jogo o publico prefere e por que",
-                 "dica: como montar defesa no PRANCHETA", "fale do mercado noturno do CEIFALUME que muda de preco",
-                 "agradeca aos que testaram e convide novos testadores", "explique o que e um manager de futebol pra quem nunca jogou",
-                 "fale da liberdade de jogo 100% offline", "pergunte: qual ultimo jogo indie o publico jogou?",
-                 "conte o passo a passo de como jogar o PRANCHETA agora", "pinte um cenario: noite de sexta, fazenda do CEIFALUME acesa",
-                 "explique que a casa tambem ensina: devlogs abertos no itch", "pergunte o que falta num jogo de futebol pra ser perfeito",
-                 "fale da rotina de estudar programacao todo dia", "compare jogar no navegador vs APK, vantagens de cada",
-                 "peça sugestao de recurso pro CEIFALUME nos comentarios", "fale da alegria do primeiro jogador que nao e da familia",
-                 "explique por que jogos pequenos tem alma", "pergunte: futebol com amigos ou gerir o clube sozinho?",
-                 "fale dos sons e musicas que combinam com CEIFALUME", "convide pra apoiar seguindo e compartilhando", "retrospectiva rapida: o que a casa aprendeu essa semana",
-                 # Ponte entre redes: o dono pediu divulgar cada rede dentro das outras.
-                 # Medido em 24/10/2026, o Instagram tem 15 posts e 0 seguidores; o
-                 # Bluesky tem 34 seguidores. Levar quem já acompanha para o canal
-                 # vazio é o único caminho sem criar conta, custo ou anúncio.
-                 "convide a seguir a conta no Instagram para ver os bastidores dos jogos",
-                 "convide a seguir a conta no Instagram para acompanhar as artes novas",
-                 "lembre que o site lista os canais oficiais da casa",
-                 "convide quem joga no navegador a seguir a conta no Instagram"]
-        contexto = ""
-        try:
-            with open("posts/aulas.md") as fa:
-                ultimas = [l.strip() for l in fa.readlines() if l.strip()][-3:]
-            contexto = " APRENDIZADOS ANTERIORES DA CASA (use o que servir): " + " ".join(l[:120] for l in ultimas)
-        except Exception:
-            pass
-        indice_tema = 0
-        url_da_fila = ""
-        try:
-            with open("posts/tema-contador.txt") as ft:
-                indice_tema = int(ft.read().strip() or 0)
-        except Exception:
-            pass
-        with open("posts/tema-contador.txt", "w") as ft:
-            ft.write(str(indice_tema + 1))
-        tema_atual = tema_do_ciclo(temas, indice_tema)
-        pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
-                  "ate 220 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + tema_atual + "." + contexto)
-        gerado, motivo = cerebro_com_motivo(pedido[:550])
-        # ESCOLHA (30/10/2026): o robô não aceita mais o primeiro texto que aparece. Ele pede
-        # uma segunda versão com abertura diferente, pontua as duas e escolhe com justificativa.
-        candidatos = [gerado]
-        try:
-            quantos = int(os.environ.get("JUIZO_CANDIDATOS", "2"))
-        except Exception:
-            quantos = 2
-        if quantos > 1 and gerado:
+        # ---------------------------------------------------------------------------
+        # O REDATOR MANDA (06/11/2026). Até aqui o texto vinha de uma lista de 40 temas
+        # girada por contador e, quando o motor falhava, de uma fila fixa de 7 frases — foi
+        # assim que a casa publicou 106 posts com a mesma estrutura ("PRANCHETA ... CEIFALUME
+        # ... dois jogos, um dev solo"). Agora quem escreve é o redator (pauta + ângulo +
+        # fatos do assunto) e quem decide é o portão. Se o portão recusar, o ciclo NÃO
+        # publica e diz o motivo: recusar é o comportamento normal.
+        # ---------------------------------------------------------------------------
+        escolha = ciclo_do_redator()
+        if escolha.get("publica"):
+            texto = escolha["texto"]
+            tema_atual = "%s · %s" % (escolha.get("angulo") or "pauta", escolha.get("assunto") or "")
+            url_da_fila = escolha.get("url") or ""
+            motivo_geracao = escolha.get("motivo") or "passou no portão"
+            resultados.append(("cerebro", "OK", "redator: " + str(motivo_geracao)[:200]))
+            resultados.append(("pauta do ciclo", "OK", str(tema_atual)[:80]))
+        elif os.environ.get("RESERVA_DE_FILA") == "1":
+            # Reserva antiga, desligada por padrão: só liga quem quiser repetir de propósito.
+            temas = ["apresente o PRANCHETA pra quem curte manager de futebol", "apresente o CEIFALUME 0.1 para quem curte idle de fazenda noturna",
+                     "convide pra testar o PRANCHETA e contar qual modo prefere (lances ao vivo ou instantaneo)",
+                     "explique por que o PRANCHETA ser 100% ficticio e um ponto forte", "dica tatica curta que funciona no PRANCHETA",
+                     "converse sobre vida de dev solo no Brasil e cite os jogos", "pinte o clima do CEIFALUME: a fazenda nao dorme",
+                     "curiosidade de bastidor: como e criar um jogo sozinho", "pergunte qual time o torcedor torce e provoque amistoso no PRANCHETA",
+                     "explique o APK: por que tambem funciona no celular sem internet", "fale das plantacoes noturnas do CEIFALUME",
+                     "compare gerir um clube real vs ficticio (sem citar clubes reais)", "pergunte: resultado ao vivo ou instantaneo, por que?",
+                     "fale da arte pixelada e do clima de lanterna dos jogos", "convide pra seguir a conta pra acompanhar atualizacoes do CEIFALUME",
+                     "conte que o PRANCHETA roda no navegador, sem baixar nada", "pergunte qual modo de jogo o publico prefere e por que",
+                     "dica: como montar defesa no PRANCHETA", "fale do mercado noturno do CEIFALUME que muda de preco",
+                     "agradeca aos que testaram e convide novos testadores", "explique o que e um manager de futebol pra quem nunca jogou",
+                     "fale da liberdade de jogo 100% offline", "pergunte: qual ultimo jogo indie o publico jogou?",
+                     "conte o passo a passo de como jogar o PRANCHETA agora", "pinte um cenario: noite de sexta, fazenda do CEIFALUME acesa",
+                     "explique que a casa tambem ensina: devlogs abertos no itch", "pergunte o que falta num jogo de futebol pra ser perfeito",
+                     "fale da rotina de estudar programacao todo dia", "compare jogar no navegador vs APK, vantagens de cada",
+                     "peça sugestao de recurso pro CEIFALUME nos comentarios", "fale da alegria do primeiro jogador que nao e da familia",
+                     "explique por que jogos pequenos tem alma", "pergunte: futebol com amigos ou gerir o clube sozinho?",
+                     "fale dos sons e musicas que combinam com CEIFALUME", "convide pra apoiar seguindo e compartilhando", "retrospectiva rapida: o que a casa aprendeu essa semana",
+                     # Ponte entre redes: o dono pediu divulgar cada rede dentro das outras.
+                     # Medido em 24/10/2026, o Instagram tem 15 posts e 0 seguidores; o
+                     # Bluesky tem 34 seguidores. Levar quem já acompanha para o canal
+                     # vazio é o único caminho sem criar conta, custo ou anúncio.
+                     "convide a seguir a conta no Instagram para ver os bastidores dos jogos",
+                     "convide a seguir a conta no Instagram para acompanhar as artes novas",
+                     "lembre que o site lista os canais oficiais da casa",
+                     "convide quem joga no navegador a seguir a conta no Instagram"]
+            contexto = ""
             try:
-                outro, motivo2 = cerebro_com_motivo(
-                    (pedido + " NAO comece com o mesmo recurso da versao anterior; "
-                              "comece pelo fato concreto do jogo.")[:560], tentativas=1)
-                if outro and outro.strip() != (gerado or "").strip():
-                    candidatos.append(outro)
-                    motivo = motivo + " + " + (motivo2 or "motor respondeu")
+                with open("posts/aulas.md") as fa:
+                    ultimas = [l.strip() for l in fa.readlines() if l.strip()][-3:]
+                contexto = " APRENDIZADOS ANTERIORES DA CASA (use o que servir): " + " ".join(l[:120] for l in ultimas)
             except Exception:
                 pass
-        ciclo_do_dia = datetime.datetime.utcnow().hour // 3
-        try:
-            with open("posts/posts-publicados.md") as fpp:
-                ja_publicados = fpp.read().lower()
-        except Exception:
-            ja_publicados = ""
-        ultimo_publicado = ""
-        try:
-            ultimo_publicado = [l.strip() for l in ja_publicados.splitlines() if l.strip()][-1]
-        except Exception:
-            ultimo_publicado = ""
-        escolhido, justificativa, detalhe_escolha = escolher_melhor_texto(
-            candidatos, ja_publicados, ultimo_texto=ultimo_publicado)
-        candidato_gerado = " ".join((escolhido or "").strip().split())[:LIMITE_TEXTO_EDITORIAL]
-        motivo_geracao = (motivo or "motor respondeu") + " · juízo: " + justificativa
-        texto = candidato_gerado if candidato_gerado and texto_gerado_seguro(
-            candidato_gerado, ja_publicados) else ""
-        if candidato_gerado and texto:
-            texto, mudancas = revisar_texto(texto)
-            if mudancas:
-                motivo_geracao += " · revisão: " + "; ".join(mudancas)
+            indice_tema = 0
+            url_da_fila = ""
             try:
-                _j = _juizo()
-                if _j is not None:
-                    _j.registrar_escolha(texto, justificativa, detalhe_escolha, revisao=mudancas)
-            except Exception as erro:
-                # Registro da escolha é memória, não publicação: falha aqui não derruba o ciclo —
-                # mas não pode ser silenciosa (memória que some sem aviso é pior que memória nenhuma).
-                motivo_geracao += " · memória do juízo não gravada (%s)" % str(erro)[:60]
-        if candidato_gerado and not texto:
-            motivo_geracao = ("reprovado pelo crivo editorial "
-                              "(tamanho, link, hashtag, fato vencido ou repetição)")
-        if not texto:
-            indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
-            for passo in range(len(fila["posts"])):
-                item = fila["posts"][(indice_reserva + passo) % len(fila["posts"])]
-                if not ja_foi_publicado(item["texto"], ja_publicados):
-                    texto = item["texto"]
-                    url_da_fila = item.get("url", "")
-                    break
+                with open("posts/tema-contador.txt") as ft:
+                    indice_tema = int(ft.read().strip() or 0)
+            except Exception:
+                pass
+            with open("posts/tema-contador.txt", "w") as ft:
+                ft.write(str(indice_tema + 1))
+            tema_atual = tema_do_ciclo(temas, indice_tema)
+            pedido = ("Voce e a voz da casa REBOCL BRANK, dev solo brasileiro, tom humano e caloroso. Escreva UM post de rede social, "
+                      "ate 220 caracteres, portugues, no maximo 2 hashtags. " + FATOS + " TEMA DE HOJE: " + tema_atual + "." + contexto)
+            gerado, motivo = cerebro_com_motivo(pedido[:550])
+            # ESCOLHA (30/10/2026): o robô não aceita mais o primeiro texto que aparece. Ele pede
+            # uma segunda versão com abertura diferente, pontua as duas e escolhe com justificativa.
+            candidatos = [gerado]
+            try:
+                quantos = int(os.environ.get("JUIZO_CANDIDATOS", "2"))
+            except Exception:
+                quantos = 2
+            if quantos > 1 and gerado:
+                try:
+                    outro, motivo2 = cerebro_com_motivo(
+                        (pedido + " NAO comece com o mesmo recurso da versao anterior; "
+                                  "comece pelo fato concreto do jogo.")[:560], tentativas=1)
+                    if outro and outro.strip() != (gerado or "").strip():
+                        candidatos.append(outro)
+                        motivo = motivo + " + " + (motivo2 or "motor respondeu")
+                except Exception:
+                    pass
+            ciclo_do_dia = datetime.datetime.utcnow().hour // 3
+            try:
+                with open("posts/posts-publicados.md") as fpp:
+                    ja_publicados = fpp.read().lower()
+            except Exception:
+                ja_publicados = ""
+            ultimo_publicado = ""
+            try:
+                ultimo_publicado = [l.strip() for l in ja_publicados.splitlines() if l.strip()][-1]
+            except Exception:
+                ultimo_publicado = ""
+            escolhido, justificativa, detalhe_escolha = escolher_melhor_texto(
+                candidatos, ja_publicados, ultimo_texto=ultimo_publicado)
+            candidato_gerado = " ".join((escolhido or "").strip().split())[:LIMITE_TEXTO_EDITORIAL]
+            motivo_geracao = (motivo or "motor respondeu") + " · juízo: " + justificativa
+            texto = candidato_gerado if candidato_gerado and texto_gerado_seguro(
+                candidato_gerado, ja_publicados) else ""
+            if candidato_gerado and texto:
+                texto, mudancas = revisar_texto(texto)
+                if mudancas:
+                    motivo_geracao += " · revisão: " + "; ".join(mudancas)
+                try:
+                    _j = _juizo()
+                    if _j is not None:
+                        _j.registrar_escolha(texto, justificativa, detalhe_escolha, revisao=mudancas)
+                except Exception as erro:
+                    # Registro da escolha é memória, não publicação: falha aqui não derruba o ciclo —
+                    # mas não pode ser silenciosa (memória que some sem aviso é pior que memória nenhuma).
+                    motivo_geracao += " · memória do juízo não gravada (%s)" % str(erro)[:60]
+            if candidato_gerado and not texto:
+                motivo_geracao = ("reprovado pelo crivo editorial "
+                                  "(tamanho, link, hashtag, fato vencido ou repetição)")
             if not texto:
-                # Toda a fila já foi publicada: em vez de repetir a MESMA frase (foi o que
-                # aconteceu 53 vezes), assume a repetição no log e varia o fecho pelo tema.
-                item = fila["posts"][indice_reserva]
-                texto = item["texto"].rstrip(" .") + ". " + variacao_de_fecho(indice_tema)
-                url_da_fila = item.get("url", "")
-                motivo_geracao += " · fila esgotada, fecho variado pelo tema"
-        texto, anexou_ponte = garantir_ponte(texto, tema_atual)
-        if anexou_ponte:
-            motivo_geracao += " · convite da ponte anexado (motor não citou o Instagram)"
-        resultados.append(("cerebro", "OK" if texto == candidato_gerado else "INDISPONIVEL",
-                           ("post novo validado — " + motivo_geracao) if texto == candidato_gerado
-                           else ("fila de reserva — " + motivo_geracao)))
+                indice_reserva = (dia + ciclo_do_dia) % len(fila["posts"])
+                for passo in range(len(fila["posts"])):
+                    item = fila["posts"][(indice_reserva + passo) % len(fila["posts"])]
+                    if not ja_foi_publicado(item["texto"], ja_publicados):
+                        texto = item["texto"]
+                        url_da_fila = item.get("url", "")
+                        break
+                if not texto:
+                    # Toda a fila já foi publicada: em vez de repetir a MESMA frase (foi o que
+                    # aconteceu 53 vezes), assume a repetição no log e varia o fecho pelo tema.
+                    item = fila["posts"][indice_reserva]
+                    texto = item["texto"].rstrip(" .") + ". " + variacao_de_fecho(indice_tema)
+                    url_da_fila = item.get("url", "")
+                    motivo_geracao += " · fila esgotada, fecho variado pelo tema"
+            texto, anexou_ponte = garantir_ponte(texto, tema_atual)
+            if anexou_ponte:
+                motivo_geracao += " · convite da ponte anexado (motor não citou o Instagram)"
+            resultados.append(("cerebro", "OK" if texto == candidato_gerado else "INDISPONIVEL",
+                               ("post novo validado — " + motivo_geracao) if texto == candidato_gerado
+                               else ("fila de reserva — " + motivo_geracao)))
+        else:
+            motivo = escolha.get("motivo") or "sem decisão"
+            print("RESUMO: publicacao=RECUSADA (%s)" % str(motivo)[:300])
+            resultados.append(("portão de publicação", "RECUSOU", str(motivo)[:200]))
+            registra_recusa_do_ciclo(escolha)
+            return
     destino = destino_oficial(url_da_fila, texto, tema_atual)
     mensagem = mensagem_editorial(texto, destino)
     nome_destino = next(nome for nome, url in DESTINOS_EDITORIAIS.items() if url == destino)
@@ -913,6 +1046,9 @@ def main():
         igid, igtok = ini.get("user_id"), ini.get("token")
     if igid and igtok:
         def _reel():
+            libera, motivo_portao = portao_libera("instagram", mensagem)
+            if not libera:
+                raise RuntimeError("portão recusou o reel: " + motivo_portao[:160])
             agora = datetime.datetime.utcnow()
             dia_semana = agora.weekday()
             hora_utc = agora.hour
@@ -947,6 +1083,9 @@ def main():
 
     if igid and igtok:
         def _ig():
+            libera, motivo_portao = portao_libera("instagram", mensagem)
+            if not libera:
+                raise RuntimeError("portão recusou o instagram: " + motivo_portao[:160])
             hora_utc = datetime.datetime.utcnow().hour
             # 14/10: os crons do GitHub chegam atrasados (visto: 00:11, 04:05, 08:27, 11:19...), entao a hora
             # EXATA quase nunca batia e o instagram ficava sempre PULADO. Agora: janela com folga (dia 13h-16h,
@@ -1000,6 +1139,10 @@ def main():
         thid, thtok = cofare["threads"].get("user_id"), cofare["threads"]["token"]
     if thid and thtok:
         def _th():
+            libera, motivo_portao = portao_libera("threads", mensagem)
+            if not libera:
+                raise RuntimeError("portão recusou o threads: " + motivo_portao[:160])
+
             def _post(url, dados):
                 return json.loads(urllib.request.urlopen(urllib.request.Request(url, data=urllib.parse.urlencode(dados).encode(), headers=dict(UA)), timeout=30).read().decode())
             c = _post("https://graph.threads.net/v1.0/" + thid + "/threads", {"media_type": "TEXT", "text": mensagem[:480], "access_token": thtok})

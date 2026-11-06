@@ -1,0 +1,310 @@
+{
+ "_o_que_e": "Base de FATOS da casa. O redator só pode escrever o que está aqui — cada fato carrega origem (arquivo onde está escrito) e quando foi conferido. Se não está aqui, não vai para a rede.",
+ "_por_que_existe": "Medido em 06/11/2026: 106 posts sociais em 5 canais e quatro deles repetindo a mesma estrutura ('PRANCHETA ... CEIFALUME ... dois jogos, um dev solo'). O texto repetia porque o pedido ao motor era uma lista de fatos dos DOIS jogos ao mesmo tempo: o motor fundia tudo no mesmo parágrafo. Fato separado por assunto + um assunto por post é a correção.",
+ "_regra_do_redator": [
+  "Um post fala de UM assunto (um jogo, ou o ofício, ou a casa). Nunca dos dois jogos.",
+  "Fato com validade vencida não é usado.",
+  "'usa_uma_vez' = verdade que só pode ser anunciada uma vez (ex.: lançamento da 0.1).",
+  "Nenhum número aqui é estimativa: todos foram lidos de arquivo do repositório."
+ ],
+ "fatos": [
+  {
+   "id": "prancheta-trocas",
+   "assunto": "prancheta",
+   "classe": "mecanica",
+   "afirmacao": "durante a partida o técnico pode fazer até 5 trocas e dar uma instrução tática aos 45 minutos",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-narracao",
+   "assunto": "prancheta",
+   "classe": "mecanica",
+   "afirmacao": "a partida é narrada lance a lance com placar ao vivo, e não existe controle do jogador em campo",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-ficticio",
+   "assunto": "prancheta",
+   "classe": "cultura",
+   "afirmacao": "o mundo é fictício e gerado por semente a cada carreira: nenhum clube, jogador ou escudo real aparece",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-divisoes",
+   "assunto": "prancheta",
+   "classe": "mecanica",
+   "afirmacao": "a carreira tem duas divisões, copa nacional, Data FIFA, finanças, conquistas e recordes",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-mercado",
+   "assunto": "prancheta",
+   "classe": "mecanica",
+   "afirmacao": "o mercado funciona com contratos e empréstimos, e a escalação é manual",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-offline",
+   "assunto": "prancheta",
+   "classe": "disponibilidade",
+   "afirmacao": "roda no navegador e em APK Android, sem conta, sem compra e sem internet, com save local",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-acessibilidade",
+   "assunto": "prancheta",
+   "classe": "mecanica",
+   "afirmacao": "o texto pode ser ajustado em 16, 18 ou 20, existe modo daltônico e os alvos de toque são grandes",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-guia",
+   "assunto": "prancheta",
+   "classe": "mecanica",
+   "afirmacao": "a primeira semana funciona como um guia do primeiro jogo, em quatro passos com atalhos de treino e prancheta",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-som",
+   "assunto": "prancheta",
+   "classe": "bastidor",
+   "afirmacao": "o som só começa depois do primeiro toque, porque navegador nenhum deixa tocar áudio sozinho",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-versao",
+   "assunto": "prancheta",
+   "classe": "marco",
+   "afirmacao": "a versão 0.1 foi lançada em 06/10/2026, feita em Godot 4.5",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": false,
+   "usa_uma_vez": false
+  },
+  {
+   "id": "ceifalume-8h",
+   "assunto": "ceifalume",
+   "classe": "mecanica",
+   "afirmacao": "as plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "ceifalume-chuva",
+   "assunto": "ceifalume",
+   "classe": "mecanica",
+   "afirmacao": "a chuva rega de graça: não custa água nem moeda",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "ceifalume-tutorial",
+   "assunto": "ceifalume",
+   "classe": "mecanica",
+   "afirmacao": "os três primeiros dias de jogo funcionam como tutorial: plantar, esperar a noite passar, colher e vender",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "ceifalume-apk",
+   "assunto": "ceifalume",
+   "classe": "disponibilidade",
+   "afirmacao": "o APK Android tem 79 MB, instala fora da Play Store e não pede conta",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "ceifalume-anuncio",
+   "assunto": "ceifalume",
+   "classe": "cultura",
+   "afirmacao": "o único anúncio do jogo é um vídeo opcional que dá recompensa: nada aparece se o jogador não quiser",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "ceifalume-save",
+   "assunto": "ceifalume",
+   "classe": "mecanica",
+   "afirmacao": "o progresso salva sozinho, com música e efeitos sonoros originais",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "ceifalume-culturas",
+   "assunto": "ceifalume",
+   "classe": "mecanica",
+   "afirmacao": "são seis culturas no celeiro: abóbora, flor de lume, milho, nabo, tomate e trigo",
+   "origem": "media/gameplay/ceifalume-gameplay-cru-decisoes.json",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "ceifalume-melhorias",
+   "assunto": "ceifalume",
+   "classe": "mecanica",
+   "afirmacao": "são seis melhorias para comprar: celeiro, poço, lanterna, ajudante, composteira e carroça",
+   "origem": "media/gameplay/ceifalume-gameplay-cru-decisoes.json",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "ceifalume-versao",
+   "assunto": "ceifalume",
+   "classe": "marco",
+   "afirmacao": "a versão 0.1 foi lançada em 17/09/2026, feita em Godot 4",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": false
+  },
+  {
+   "id": "medido-bicos",
+   "assunto": "ceifalume",
+   "classe": "numero",
+   "afirmacao": "na gravação de 2 minutos, o robô da casa fez 728 bicos de colheita: 336 por minuto",
+   "origem": "media/gameplay/ceifalume-gameplay-cru-decisoes.json",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "medido-moedas",
+   "assunto": "ceifalume",
+   "classe": "numero",
+   "afirmacao": "em 2 minutos de jogo gravado, o saldo foi de 25 para 291 moedas",
+   "origem": "media/gameplay/ceifalume-gameplay-cru-decisoes.json",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "medido-plantadas",
+   "assunto": "ceifalume",
+   "classe": "numero",
+   "afirmacao": "na mesma gravação foram 14 plantadas e 9 colhidas em 2 minutos, e o campo comprado subiu de 4 para 5",
+   "origem": "media/gameplay/ceifalume-gameplay-cru-decisoes.json",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "medido-tutorial",
+   "assunto": "ceifalume",
+   "classe": "numero",
+   "afirmacao": "o tutorial do Ceifalume fechou em 1,9 segundo, com um único toque",
+   "origem": "media/gameplay/ceifalume-gameplay-cru-decisoes.json",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "medido-video",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "o gameplay do Ceifalume tem 2 minutos, sem corte de tela e sem fala, com a faixa de instruções fixa no rodapé do começo ao fim",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "oficio-godot",
+   "assunto": "oficio",
+   "classe": "bastidor",
+   "afirmacao": "os dois jogos são feitos em Godot por uma pessoa só, em português do Brasil",
+   "origem": "jogos/prancheta/index.html + jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "oficio-devlog",
+   "assunto": "oficio",
+   "classe": "canal",
+   "afirmacao": "os devlogs do desenvolvimento ficam abertos no itch.io, com comentários e feedback",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "oficio-discord",
+   "assunto": "oficio",
+   "classe": "canal",
+   "afirmacao": "existe um Discord da casa para comunidade, feedback e bugs: discord.gg/AnJr5nqx4K",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "oficio-apk-fora-de-loja",
+   "assunto": "oficio",
+   "classe": "bastidor",
+   "afirmacao": "o jogo não está em loja: o APK é instalado por fora e o Android pede para permitir apps de fonte desconhecida",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "casa-canais",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "existe uma página com todos os canais oficiais da casa, e ela é o único lugar onde os links são oficiais",
+   "origem": "canais.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "casa-newsletter",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "a newsletter avisa só quando sai versão nova, nada de e-mail de rotina",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "casa-telegram",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "os avisos de versão do Ceifalume saem no Telegram: t.me/ceifalume",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "casa-site-gratis",
+   "assunto": "casa",
+   "classe": "cultura",
+   "afirmacao": "os jogos são grátis de verdade: sem cadastro, sem compra, sem paywall",
+   "origem": "jogos/ceifalume/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  },
+  {
+   "id": "prancheta-trailer",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "existe trailer do Prancheta no YouTube, além do gameplay do Ceifalume",
+   "origem": "jogos/prancheta/index.html",
+   "quando": "2026-11-06",
+   "repetivel": true
+  }
+ ]
+}
