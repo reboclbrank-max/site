@@ -149,6 +149,25 @@ checar("ENSAIO recusa pacote inválido e diz que recusaria", recusou is False, m
 checar("a recusa do ensaio é sobre o portão, não sobre envio",
        "recusado" in msg_ruim.lower() or "RECUSARIA" in msg_ruim, msg_ruim)
 
+# 0b. a capa aplicada é a DO PACOTE (06/11/2026)
+# O ensaio do PRANCHETA mostrou que caminho_da_capa() caía num padrão do CEIFALUME: o vídeo de
+# futebol ia ao ar com a capa da fazenda. Contrato: a capa sai do pacote; o padrão do CEIFALUME
+# só vale para pacote do CEIFALUME.
+_kit_capa = {"pacotes": [dict(PACOTE, id="prancheta-gameplay", slug="prancheta",
+                              capa="media/capa-prancheta.png",
+                              arquivo="media/video.mp4")]}
+raiz_c = bancada(kit=_kit_capa)
+(raiz_c / "media" / "capa-prancheta.png").write_bytes(b"p" * 20_000)
+(raiz_c / "media" / "gameplay").mkdir(parents=True, exist_ok=True)
+(raiz_c / "media" / "gameplay" / "ceifalume-capa.png").write_bytes(b"c" * 20_000)
+_achada = enviar.caminho_da_capa({"slug": "prancheta", "capa": "media/capa-prancheta.png"},
+                                 raiz=str(raiz_c))
+checar("a capa do pacote do PRANCHETA é a dele, não a do CEIFALUME",
+       str(_achada).endswith("capa-prancheta.png"), _achada)
+_achada_ceif = enviar.caminho_da_capa({"slug": "ceifalume"}, raiz=str(raiz_c))
+checar("pacote do CEIFALUME ainda cai no padrão dele quando não traz capa",
+       str(_achada_ceif).endswith("ceifalume-capa.png"), _achada_ceif)
+
 # 1. palavra errada
 with tempfile.TemporaryDirectory() as tmp:
     raiz = bancada()

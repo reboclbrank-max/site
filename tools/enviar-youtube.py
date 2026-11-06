@@ -398,7 +398,14 @@ def caminho_da_capa(pacote, raiz=RAIZ):
     gravação; aqui ela é APLICADA no YouTube. Sem capa, o envio segue — capa é melhoria, não
     pré-requisito, e falhar nela não pode esconder que o vídeo subiu.
     """
-    for nome in ((pacote or {}).get("capa_do_video"), "media/gameplay/ceifalume-capa.png"):
+    # ORDEM: a capa QUE ESTÁ NO PACOTE vem primeiro. Até 06/11/2026 esta função só olhava
+    # `capa_do_video` e um padrão fixo do CEIFALUME — o pacote do PRANCHETA, que traz a própria
+    # capa em `pacote["capa"]`, seria enviado com a capa do outro jogo (visto no ensaio local:
+    # "capa: media/gameplay/ceifalume-capa.png" num pacote de futebol).
+    candidatos = [(pacote or {}).get("capa"), (pacote or {}).get("capa_do_video")]
+    if (pacote or {}).get("slug") == "ceifalume":
+        candidatos.append("media/gameplay/ceifalume-capa.png")
+    for nome in candidatos:
         if not nome:
             continue
         caminho = nome if os.path.isabs(nome) else os.path.join(raiz, nome)

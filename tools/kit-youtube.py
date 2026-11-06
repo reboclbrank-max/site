@@ -197,7 +197,14 @@ def validar(p):
     for link in (JOGOS[p["slug"]]["link"], HUB_CANAIS):
         if link not in p["descricao"]:
             erros.append("link oficial ausente: " + link)
-    if not p["arquivo_existe"]:
+    # Pacote montado por OUTRO gerador (o do gameplay, por exemplo) pode não trazer a conferência
+    # de arquivo. Isso é erro — mas erro de KIT, não IndexError: o envio tem de recusar com motivo,
+    # não estourar. Medido no ensaio do PRANCHETA em 06/11/2026 (run 42310268259): KeyError
+    # 'arquivo_existe' no lugar da recusa.
+    if "arquivo_existe" not in p:
+        erros.append("pacote sem conferência de arquivo (arquivo_existe): "
+                     + str(p.get("arquivo") or "(sem arquivo)"))
+    elif not p["arquivo_existe"]:
         erros.append("arquivo de vídeo ausente: " + p["arquivo"])
     soma = sum(len(t) + 1 for t in p["tags"])
     if soma > LIMITE_TAGS_CARACTERES:

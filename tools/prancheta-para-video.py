@@ -178,6 +178,17 @@ def montar_pacote(decisoes, estrategia, assinatura, raiz=RAIZ, capa=None, escolh
     return pacote
 
 
+def conferir_arquivos(pacote, raiz=RAIZ):
+    """Preenche arquivo_existe/bytes/capa_existe — as três conferências que o kit do YouTube
+    exige no `validar`. Sem elas o pacote é recusado (e era: KeyError no primeiro ensaio)."""
+    arquivo = os.path.join(raiz, pacote.get("arquivo") or "")
+    capa = os.path.join(raiz, pacote.get("capa") or "")
+    pacote["arquivo_existe"] = os.path.exists(arquivo) and os.path.getsize(arquivo) > 10_000
+    pacote["bytes"] = os.path.getsize(arquivo) if os.path.exists(arquivo) else 0
+    pacote["capa_existe"] = os.path.exists(capa) and os.path.getsize(capa) > 10_000
+    return pacote
+
+
 def gravar_pacote(pacote, caminho=KIT):
     """Mete o pacote no kit sem tocar nos outros (o kit é o arquivo que o envio lê)."""
     dados = {"pacotes": []}
@@ -216,6 +227,7 @@ def main(argv):
     for r in (recusas or [])[:6]:
         print("✘ ângulo %s: %s" % (r.get("angulo"), str(r.get("motivo"))[:90]), file=sys.stderr)
     pacote = montar_pacote(decisoes, estrategia, assinatura, capa=a.capa, escolha=escolha)
+    conferir_arquivos(pacote)
     if not a.sem_kit:
         gravar_pacote(pacote, a.kit)
     print("pacote: %s · estratégia %s · %d passos (%d confirmados)"
