@@ -115,8 +115,17 @@ jobs:
           TITULO=$(echo "$TEXTO" | sed -n 's/^titulo: //p')
           NUMEROS=$(echo "$TEXTO" | sed -n 's/^capa_numeros: //p')
           echo "título da capa: $TITULO"
+          # QUADRO DA CAPA: a prancheta tática, não o fim de jogo. Medido em 06/11/2026 na capa
+          # do run 42275794636: o último quadro é a tela de resultado (0×3, saldo, cartões) —
+          # informativa e ilegível no tamanho de miniatura. O quadro da prancheta mostra o campo
+          # e as fichas, que é o que o jogo É. Se ele não existir, cai no quadro final.
+          QUADRO=media/gameplay/prancheta-prancheta.png
+          if [ ! -s "$QUADRO" ]; then
+            QUADRO=media/gameplay/prancheta-cru-quadro.png
+          fi
+          echo "quadro da capa: $QUADRO"
           python3 tools/desenhar-capa.py \
-            --quadro media/gameplay/prancheta-cru-quadro.png \
+            --quadro "$QUADRO" \
             --saida media/gameplay/prancheta-capa.png \
             --titulo "$TITULO" \
             --numeros "$NUMEROS" \

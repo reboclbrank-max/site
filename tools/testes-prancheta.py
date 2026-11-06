@@ -121,6 +121,9 @@ ok("o workflow registra a partida e falha se ela repetir",
    "cena.py registrar --jogo prancheta" in wf and "partida repetida" in wf)
 ok("o workflow desenha capa do quadro do próprio vídeo",
    "desenhar-capa.py" in wf and "prancheta-cru-quadro.png" in wf)
+ok("a capa usa a prancheta tática quando ela existe (e não o placar final)",
+   "prancheta-prancheta.png" in wf and wf.index("prancheta-prancheta.png")
+   < wf.index("prancheta-cru-quadro.png"))
 ok("o workflow monta o pacote de envio do PRANCHETA",
    "prancheta-para-video.py" in wf and "prancheta-gameplay" in wf)
 
