@@ -106,8 +106,23 @@ with tempfile.TemporaryDirectory() as pasta:
 fonte_wf = open(os.path.join(RAIZ, ".github", "workflows", "metricas-youtube.yml"),
                 encoding="utf-8").read()
 ok("o workflow usa YT_API_KEY de secrets", "secrets.YT_API_KEY" in fonte_wf)
-ok("o workflow não escreve nada além das métricas",
-   fonte_wf.count("git add") == 1 and "youtube-metricas.json" in fonte_wf)
+# O contrato nasceu exigindo UM `git add` (só as métricas). Em 06/11/2026 entrou a medição de
+# adesão, que também é medição e também precisa ser versionada — exigir um único `git add`
+# passaria a proibir medir. O que importa continua igual: o workflow de medição não escreve
+# nada que não seja resultado de medição.
+import re as _re
+_caminhos_adicionados = set()
+for _linha in _re.findall(r"git add ([^\n]+)", fonte_wf):
+    for _pedaco in _linha.replace("\\", " ").split():
+        # `|| true` fecha o comando: não é caminho, é o "não falhe se o arquivo não existir"
+        if _pedaco.strip() and not _pedaco.startswith(("-", "|", "&&")) \
+                and _pedaco.strip() not in ("true", "false"):
+            _caminhos_adicionados.add(_pedaco.strip())
+ok("o workflow só versiona arquivos de medição",
+   _caminhos_adicionados and _caminhos_adicionados <= {"posts/youtube-metricas.json",
+                                                       "posts/adesao.json"},
+   sorted(_caminhos_adicionados))
+ok("o workflow versiona as métricas", "posts/youtube-metricas.json" in fonte_wf)
 
 print("\n%d/%d testes do medidor de métricas passaram" % (total - len(falhas), total))
 sys.exit(1 if falhas else 0)
