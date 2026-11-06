@@ -27,4 +27,6 @@ jobs:
             tools/testes-envio-automatico-youtube.py \
             tools/testes-redator-video.py \
             tools/testes-medir-adesao.py \
-            tools/testes-chamar-video.py
+            tools/testes-chamar-video.py \
+            tools/testes-cena.py \
+            tools/testes-capa.py

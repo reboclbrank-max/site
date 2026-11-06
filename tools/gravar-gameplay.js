@@ -50,9 +50,23 @@ function argumentos(argv) {
     // Linha de base para a comparação antes/depois: mesmo robô, mesmas leituras, mas sem as
     // decisões de dinheiro (melhoria/semente). Serve só para medir, não é o modo de produção.
     else if (a === '--sem-economia') o.semEconomia = true;
+    // ESTRATÉGIA DA CENA (06/11/2026): três vídeos seguidos saíram da MESMA partida — mesmas
+    // células, mesma semente, mesmo primeiro quadro. Trocar o título disso não é novidade. A
+    // estratégia muda o que se vê: até onde o robô sobe de semente e em quantas células planta.
+    else if (a === '--estrategia') o.estrategia = valor();
   }
   return o;
 }
+
+// VIÉS DE CENA — espelho de tools/cena.py. Nome desconhecido NÃO é aceito: estratégia inválida
+// viraria "mais do mesmo" sem ninguém perceber, que é exatamente o defeito a evitar.
+const CENAS = {
+  'nabo':      { tetoSemente: 0, tetoCelulas: 9 },
+  'milho':     { tetoSemente: 1, tetoCelulas: 9 },
+  'trigo':     { tetoSemente: 2, tetoCelulas: 4 },
+  'cara':      { tetoSemente: 9, tetoCelulas: 9 },
+  'meia-cela': { tetoSemente: 1, tetoCelulas: 4 }
+};
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -389,6 +403,9 @@ function decidir(estado, memoria = {}) {
   const agora = memoria.agora || 0;
   const ocupadas = memoria.ocupadas || {};
   const economia = memoria.economia || null;
+  // viés da cena da vez: o mesmo robô, com um teto declarado de semente e de células
+  const tetoSemente = memoria.cena ? memoria.cena.tetoSemente : 9;
+  const tetoCelulas = memoria.cena ? memoria.cena.tetoCelulas : 9;
 
   // ---- decisões de DINHEIRO (medidas no save do próprio jogo) ----
   // Ordem de prioridade: primeiro o que aumenta a produção por ciclo (celeiro, poço, campo),
@@ -421,7 +438,8 @@ function decidir(estado, memoria = {}) {
     // travado (plantio recusado = célula vazia = zero de renda). Aí desce para a mais barata que
     // paga um plantio, mesmo sem cobrir a rodada inteira.
     const pagaUma = (x) => economia.moedas >= x.custo;
-    const opcoes = SEMENTES.filter((x) => x.responde !== false && !falhas[x.indice] && cobre(x));
+    const opcoes = SEMENTES.filter((x) => x.responde !== false && !falhas[x.indice] && cobre(x)
+      && x.indice <= tetoSemente);
     const melhor = opcoes.length ? opcoes[opcoes.length - 1] : null;
     if (atual && !pagaUma(atual)) {
       const baratas = SEMENTES.filter((x) => pagaUma(x) && !falhas[x.indice]);
@@ -458,6 +476,7 @@ function decidir(estado, memoria = {}) {
     economia.camposLista.forEach((campo, i) => {
       const c = CELULAS[i];
       if (!c) return;
+      if (i >= tetoCelulas) return;   // cena de campo pequeno: só as primeiras células
       if (campo.pronto && (agora - (colhidasHaPouco[c.id] || -1e9)) > LIMIAR.carenciaColheita) {
         prontasSave.push({ id: c.id, alvo: colherDe(c) });
       } else if (!campo.pronto && !campo.planta
@@ -651,6 +670,14 @@ function carregarPlaywright(tentativas = [], incluirPadroes = true) {
 
 async function principal() {
   const op = argumentos(process.argv.slice(2));
+  if (op.estrategia && !CENAS[op.estrategia]) {
+    console.error('✘ estratégia de cena desconhecida: ' + op.estrategia
+      + ' (válidas: ' + Object.keys(CENAS).join(', ') + ')');
+    return 4;
+  }
+  op.cena = CENAS[op.estrategia] || null;
+  if (op.cena) console.log('cena: ' + op.estrategia + ' · teto de semente ' + op.cena.tetoSemente
+    + ' · células ' + op.cena.tetoCelulas);
   const playwright = carregarPlaywright();
   if (!playwright) {
     console.error('✘ falta playwright-core: npm i playwright-core && npx playwright install chromium-headless-shell');
@@ -797,7 +824,7 @@ async function principal() {
       }
       const d = decidir(estado, { agora: Date.now() - inicioAcoes, ocupadas, confirmacoes,
         economia: op.semEconomia ? null : economia, melhoriasFeitas, sementesFalhas,
-        sementePendente, colhidasHaPouco });
+        sementePendente, colhidasHaPouco, cena: op.cena });
       let acao;
       if (d.tipo === 'plantar') {
         // Com troca de semente pendente, NÃO toca na sacola: o toque na sacola devolve a semente
@@ -1014,6 +1041,8 @@ async function principal() {
           gasto_sementes: gastoSementes,
           sementes: sementesTrocadas
         },
+        estrategia: op.estrategia || null,
+        cena: op.cena || null,
         limite: LIMIAR, celulas: CELULAS.map((c) => c.id)
       }, null, 1));
     } catch (e) { /* relatório é extra, não pode derrubar a captura */ }

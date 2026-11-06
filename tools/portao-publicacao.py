@@ -33,7 +33,10 @@ Regras, todas declaradas e testáveis:
      com o que já saiu = repetição, e repetição é recusa.
   6. JUÍZO — usa a nota do juízo da casa (`juizo.py`) quando houver candidatos; abaixo do
      mínimo, recusa.
-  7. SEM HISTÓRICO NÃO HÁ PROVA DE NOVIDADE — mas também não se bloqueia a primeira
+  7. ESTILO — markdown cru em canal que não renderiza markdown, hashtag em inglês num canal em
+     português, palavra sem acento, frase de pressão, emoji demais e caixa-alta gritada são
+     recusa. Medido em 06/11/2026: `**Prancheta**`, "Voce" e "#IdleFarm" passaram pelo portão.
+  8. SEM HISTÓRICO NÃO HÁ PROVA DE NOVIDADE — mas também não se bloqueia a primeira
      publicação do canal: declara-se "primeira do canal" e segue para as outras regras.
 
 O que este arquivo NÃO faz: escrever texto, escolher tema, falar com a rede. Ele julga.
@@ -101,6 +104,107 @@ FORMULAS_GENERICAS = (
     "confira agora", "imperdivel", "imperdível", "nao perca", "não perca",
     "novidade quente", "clique aqui", "voce nao vai acreditar", "você não vai acreditar",
 )
+
+
+# ---- 8. ESTILO: o que é recusado por ser feio, não por ser repetido ou inventado -------------
+# Medido em 06/11/2026 no mostruário: um dos três textos gerados saiu com `**Prancheta**` (o
+# asterisco do markdown aparece cru no Bluesky, no Threads e no Instagram), e o texto publicado
+# naquele dia começava com "Voce" sem acento e terminava com #IdleFarm — hashtag em inglês num
+# canal que fala português. O portão media repetição e mentira; não media tato. Agora mede.
+#
+# A lista abaixo não é gosto: cada item é um defeito que a casa JÁ publicou ou JÁ viu o motor
+# escrever. Item novo só entra com o caso que o motivou.
+CANAIS_SEM_MARKDOWN = {"bluesky", "threads", "instagram", "mastodon", "nostr", "telegram"}
+MARKDOWN_CRU = ("**", "__", "##", "```", "](", "<b>", "</b>", "<i>")
+
+# Hashtag em inglês num canal em português. A casa escreve em pt-BR; #IdleFarm, #IndieDev e
+# #Gaming foram MEDIDOS em posts reais. A lista de permitidas é explícita: o que não está nela
+# e parece inglês, cai. Hashtag da casa e do jogo passam sempre.
+HASHTAGS_PERMITIDAS = {
+    "ceifalume", "prancheta", "reboclbrank", "rebocoblrank", "jogobrasileiro",
+    "jogobrasileiro🇧🇷", "gamedevbr", "godot", "godotengine", "indiebr", "devlog",
+}
+HASHTAGS_EM_INGLES = {
+    "idlefarm", "idle", "indiedev", "indiegame", "gamedev", "gaming", "gameplay",
+    "farming", "indiegamedev", "cozygame", "pixelart", "screenshotsaturday", "gamer",
+    "mobilegame", "html5game", "webgame", "indiedevbr", "idlegame", "farmgame",
+}
+
+# Palavras que a casa escreve SEM acento e por isso já saíram erradas no ar. Só entram formas
+# que não têm outro sentido em português (por isso "e"/"esta" ficam de fora).
+SEM_ACENTO = {
+    "voce": "você", "nao": "não", "tambem": "também", "versao": "versão",
+    "producao": "produção", "graca": "graça", "coracao": "coração",
+    "portugues": "português", "jogavel": "jogável", "gratis": "grátis",
+    "otimo": "ótimo", "possivel": "possível", "sozinho": "sozinho",
+    "proximo": "próximo", "historia": "história", "comecar": "começar",
+    "plantacao": "plantação", "so": "só", "la": "lá", "ja": "já", "apos": "após",
+}
+
+# Frase de pressão/medo: a casa não vende ameaça. Medido em 06/11/2026: o motor escreveu
+# "Fora dali, é risco." — o portão deixou passar e o texto era ruim.
+FRASES_DE_PRESSAO = (
+    "é risco", "e risco", "última chance", "ultima chance", "só hoje", "so hoje",
+    "corre que", "vai perder", "não vai durar", "nao vai durar",
+)
+
+TETO_EMOJI = 3
+TETO_HASHTAGS = 2
+TETO_MAIUSCULAS = 0.35
+
+
+def _hashtags(texto: str) -> list:
+    return [t.lower() for t in re.findall(r"#([\wÀ-ÿ]+)", texto or "")]
+
+
+def _palavras(texto: str) -> list:
+    return re.findall(r"[A-Za-zÀ-ÿ]+(?:'[A-Za-z]+)?", texto or "")
+
+
+def emojis(texto: str) -> int:
+    return sum(1 for c in (texto or "") if unicodedata.category(c) == "So")
+
+
+def problema_de_estilo(texto: str, canal: str = "") -> str | None:
+    """Devolve o motivo da recusa de ESTILO, ou None. Cada motivo cita o que foi achado.
+
+    Não julga beleza — julga os defeitos que já foram publicados: markdown cru, hashtag em
+    inglês, palavra sem acento, grito de caixa alta, emoji demais e frase de pressão.
+    """
+    corpo = texto or ""
+    canal = (canal or "").strip().lower()
+    plano = _sem_acento(corpo)
+
+    if canal in CANAIS_SEM_MARKDOWN:
+        for marca in MARKDOWN_CRU:
+            if marca in corpo:
+                return "formatação crua de markdown (%s não renderiza no %s)" % (marca, canal)
+
+    tags = _hashtags(corpo)
+    if len(tags) > TETO_HASHTAGS:
+        return "hashtag demais: %d (teto %d)" % (len(tags), TETO_HASHTAGS)
+    for tag in tags:
+        if tag in HASHTAGS_EM_INGLES and tag not in HASHTAGS_PERMITIDAS:
+            return "hashtag em inglês num canal em português: #%s" % tag
+
+    for palavra in _palavras(corpo):
+        certo = SEM_ACENTO.get(_sem_acento(palavra))
+        if certo and certo != palavra.lower():
+            return "palavra sem acento: \"%s\" (o certo é \"%s\")" % (palavra, certo)
+
+    for frase in FRASES_DE_PRESSAO:
+        if _sem_acento(frase) in plano:
+            return "frase de pressão: \"%s\" — a casa não vende medo" % frase
+
+    quantos = emojis(corpo)
+    if quantos > TETO_EMOJI:
+        return "emoji demais: %d (teto %d)" % (quantos, TETO_EMOJI)
+
+    letras = [c for c in corpo if c.isalpha()]
+    if letras and sum(1 for c in letras if c.isupper()) / len(letras) > TETO_MAIUSCULAS:
+        return "grito de caixa alta: %.0f%% das letras em maiúscula" % (
+            100 * sum(1 for c in letras if c.isupper()) / len(letras))
+    return None
 
 
 def _sem_acento(texto: str) -> str:
@@ -322,6 +426,12 @@ def avalia(candidato: dict, *, canal: str, publicacoes: list | None = None,
     if pior >= SEMELHANCA_MAXIMA:
         return {"publica": False, "numeros": numeros,
                 "motivo": "texto repetido: %.2f de semelhança com \"%s\"" % (pior, pior_titulo[:60])}
+
+    # ESTILO por último de propósito: recusa de conteúdo (dois assuntos, repetição, fato
+    # inventado) é mais informativa que recusa de forma. O estilo só decide o que sobrou.
+    problema = problema_de_estilo(texto, canal)
+    if problema:
+        return {"publica": False, "motivo": "estilo: " + problema, "numeros": numeros}
 
     if nota_juizo is not None:
         minimo = NOTA_MINIMA if nota_minima is None else float(nota_minima)

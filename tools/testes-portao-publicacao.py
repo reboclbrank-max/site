@@ -15,9 +15,10 @@ espec.loader.exec_module(portao)
 resultados = []
 
 
-def checar(nome, condicao):
+def checar(nome, condicao, detalhe=""):
     resultados.append((nome, bool(condicao)))
-    print(("PASS" if condicao else "FAIL") + " — " + nome)
+    print(("PASS" if condicao else "FAIL") + " — " + nome
+          + ("" if condicao or not detalhe else "  [motivo: " + str(detalhe) + "]"))
 
 
 CAL = {"janela": {"inicio": 9, "fim": 22}, "teto_diario": 1}
@@ -92,6 +93,64 @@ checar("primeira do canal é declarada, não bloqueada", r["publica"] is True an
 r = portao.avalia(cand("O jogo que nasceu de uma ideia simples", "texto"),
                   canal="youtube", publicacoes=HISTORICO, calendario=CAL, hora_local=14)
 checar("histórico de site não barra youtube", r["publica"] is True)
+
+# ---- 11. ESTILO: os defeitos que já foram publicados agora são recusa ----------------------
+# Caso real de 06/11/2026: "Quer achar a gente de verdade? Só na **Prancheta**..." foi aprovado
+# com o markdown cru, e o post que foi ao ar começava com "Voce" e terminava com #IdleFarm.
+bom = "Ceifalume: plantar flor de lume junto à abóbora abre a colheita de 30 para 20 segundos"
+r = portao.avalia(cand(bom, bom),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("texto limpo passa no estilo e publica", r["publica"] is True, r["motivo"])
+
+r = portao.avalia(cand(bom, "Quer achar a gente? Só na **Prancheta**, lá tem tudo"),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("markdown cru no bluesky recusa", r["publica"] is False and "markdown" in r["motivo"], r["motivo"])
+
+r = portao.avalia(cand(bom, "quer achar a gente de verdade? so na prancheta, la tem tudo"),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("palavra sem acento recusa e diz a forma certa",
+       r["publica"] is False and "acento" in r["motivo"] and "só" in r["motivo"], r["motivo"])
+
+# o caso exato do post que foi ao ar em 06/11 ("Voce programa colheitas longas...")
+r = portao.avalia(cand(bom, "Voce programa colheitas antes de dormir e acorda com o celeiro cheio"),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("'Voce' sem acento recusa citando 'você'",
+       r["publica"] is False and "você" in r["motivo"], r["motivo"])
+
+r = portao.avalia(cand(bom, bom + " #IdleFarm"),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("hashtag em inglês recusa", r["publica"] is False and "inglês" in r["motivo"], r["motivo"])
+
+r = portao.avalia(cand(bom, bom + " #Ceifalume #JogoBrasileiro"),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("hashtag da casa em português passa", r["publica"] is True, r["motivo"])
+
+r = portao.avalia(cand(bom, bom + " Fora dali, é risco."),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("frase de pressão recusa", r["publica"] is False and "pressão" in r["motivo"], r["motivo"])
+
+r = portao.avalia(cand(bom, bom + " 🌙🌙🌙🌙🌙"),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("emoji demais recusa", r["publica"] is False and "emoji" in r["motivo"], r["motivo"])
+
+r = portao.avalia(cand(bom, bom.upper()),
+                  canal="bluesky", publicacoes=HISTORICO, calendario=CAL, hora_local=14,
+                  credencial_disponivel=True)
+checar("caixa alta gritada recusa", r["publica"] is False and "caixa alta" in r["motivo"], r["motivo"])
+
+# o site RENDERIZA markdown: a mesma marca não é defeito lá
+r = portao.avalia(cand("Um devlog sobre o plantio da flor de lume",
+                       "o **plantio** da flor de lume mudou o tempo de colheita do campo inteiro"),
+                  canal="site", publicacoes=HISTORICO, calendario=CAL, hora_local=14)
+checar("no site o markdown não é defeito", r["publica"] is True, r["motivo"])
 
 certos = sum(1 for _, ok in resultados if ok)
 print("%d/%d contratos do portão de publicação passaram" % (certos, len(resultados)))

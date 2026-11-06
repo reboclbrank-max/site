@@ -66,15 +66,29 @@ jobs:
           python3 tools/rodar-contratos-isolados.py tools/testes-envio-automatico-youtube.py
           python3 tools/rodar-contratos-isolados.py tools/testes-redator-video.py
           python3 tools/rodar-contratos-isolados.py tools/testes-instrucoes-video.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-cena.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-capa.py
 
       # REQUISITO DO DONO: se o robô não jogar, a gravação NÃO é entregue. Antes bastava uma
       # rodada sem HUD para o run inteiro morrer com tela de abertura; agora ele REPETE a captura
       # uma vez, em outra resolução (mudar o tamanho da tela muda o caminho dos cliques e do
       # canvas do Godot). Só o que passa no portão do plantio é aceito: em 30/10, sem a escala,
       # 3 de 3 rodadas em 960x540 ficavam sem plantio; com a escala, 960/800/1280 plantaram.
+      # A CENA DA VEZ (06/11/2026): três vídeos do mesmo dia saíram da MESMA partida — mesmo
+      # Dia 1, mesmas células, mesmo primeiro quadro. A estratégia mudada a cada gravação é o
+      # que faz o vídeo novo ser outro vídeo, e não o velho com outro título.
+      - name: Escolhe a cena da vez (nunca a mesma da gravação anterior)
+        id: cena
+        run: |
+          ESTRATEGIA=$(python3 tools/cena.py proxima)
+          echo "estrategia=$ESTRATEGIA" >> "$GITHUB_OUTPUT"
+          echo "cena da vez: $ESTRATEGIA"
+          python3 tools/cena.py lista | tail -5
+
       - name: Grava o gameplay do CEIFALUME (agente olha o estado e decide)
         env:
           SEGUNDOS_PEDIDO: ${{ github.event.inputs.segundos || '130' }}
+          ESTRATEGIA: ${{ steps.cena.outputs.estrategia }}
         run: |
           set -o pipefail
           SEGUNDOS="$SEGUNDOS_PEDIDO"
@@ -84,7 +98,8 @@ jobs:
             echo "::group::captura $tentativa de 2 (${L}x${A}, ${SEGUNDOS}s)"
             if node tools/gravar-gameplay.js \
                  --saida media/gameplay/ceifalume-gameplay-cru.mp4 \
-                 --segundos "$SEGUNDOS" --largura "$L" --altura "$A" --quadros 24; then
+                 --segundos "$SEGUNDOS" --largura "$L" --altura "$A" --quadros 24 \
+                 --estrategia "$ESTRATEGIA"; then
               ok=1
             fi
             echo "::endgroup::"
@@ -102,9 +117,9 @@ jobs:
       # termina em erro — vídeo parado não é entregue.
       - name: Pós-produção (corte automático, legenda, trilha, cartão final)
         env:
-          # A faixa de instruções ocupa 150 px do rodapé: a legenda sobe para não ficar
-          # embaixo dela (medido: com 28 px ela ficava escondida).
-          LEGENDA_MARGEM_V: "176"
+          # A faixa de instruções ocupa 112 px do rodapé (era 150 até 06/11/2026 — o dono viu
+          # que ela engolia o campo): a legenda sobe para 138 px e não fica embaixo dela.
+          LEGENDA_MARGEM_V: "138"
         run: |
           python3 tools/produzir-video.py \
             media/gameplay/ceifalume-gameplay-cru.mp4 \
@@ -128,11 +143,55 @@ jobs:
           python3 tools/validar-video.py media/gameplay/ceifalume-gameplay-instrucoes.mp4
           python3 tools/validar-instrucoes.py media/gameplay/ceifalume-gameplay-instrucoes.mp4
 
-      - name: Confere que o vídeo tem legenda, som e cartão
-        run: python3 tools/rodar-contratos-isolados.py tools/testes-video-final.py media/gameplay/ceifalume-gameplay.mp4
-
       - name: Monta o kit de envio do gameplay
         run: python3 tools/kit-gameplay.py
+
+      # A CENA ENTRA NO REGISTRO ANTES DE VIRAR VÍDEO: duas partidas com a mesma assinatura não
+      # entram, e o run para aqui em vez de publicar "o mesmo vídeo com outro título".
+      - name: Registra a cena (duas partidas iguais não entram)
+        id: cena_gravada
+        run: |
+          set +e
+          python3 tools/cena.py registrar \
+            --relatorio media/gameplay/ceifalume-gameplay-cru-decisoes.json \
+            --estrategia "${{ steps.cena.outputs.estrategia }}" | tee /tmp/cena.txt
+          codigo=${PIPESTATUS[0]}
+          ASSINATURA=$(grep -oE '[0-9a-f]{12}' /tmp/cena.txt | head -1)
+          echo "assinatura=$ASSINATURA" >> "$GITHUB_OUTPUT"
+          if [ "$codigo" != "0" ]; then
+            echo "::error::esta partida já foi gravada antes (assinatura repetida) — vídeo novo, não: $(cat /tmp/cena.txt)"
+            exit 1
+          fi
+          echo "cena registrada: $ASSINATURA"
+
+      # CAPA ÚNICA: os três vídeos de 06/11 subiram com o mesmo primeiro quadro. A capa leva o
+      # título do próprio vídeo, os números daquela partida e a assinatura da cena.
+      - name: Desenha a capa do vídeo (uma por vídeo)
+        env:
+          ASSINATURA_CENA: ${{ steps.cena_gravada.outputs.assinatura }}
+        run: |
+          python3 - <<'PY'
+          import json, os, shutil, subprocess
+          kit = json.load(open("posts/kit-gameplay.json", encoding="utf-8"))
+          rel = json.load(open("media/gameplay/ceifalume-gameplay-cru-decisoes.json", encoding="utf-8"))
+          titulo = (kit.get("titulo") or "").strip()
+          numeros = "%s mudas · %s colheitas · %s min" % (
+              rel.get("plantadas", "?"), rel.get("colhidas", "?"),
+              rel.get("minutos", 2))
+          quadro = "media/gameplay/quadro-para-capa.png"
+          ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
+          subprocess.run([ffmpeg, "-y", "-hide_banner", "-loglevel", "error",
+                          "-ss", "6", "-i", "media/gameplay/ceifalume-gameplay-cru.mp4",
+                          "-frames:v", "1", quadro], check=True)
+          subprocess.run(["python3", "tools/desenhar-capa.py", "--quadro", quadro,
+                          "--saida", "media/gameplay/ceifalume-capa.png",
+                          "--titulo", titulo, "--numeros", numeros,
+                          "--assinatura", os.environ.get("ASSINATURA_CENA", "")], check=True)
+          print("capa do vídeo: " + titulo)
+          PY
+
+      - name: Confere que o vídeo tem legenda, som e cartão
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-video-final.py media/gameplay/ceifalume-gameplay.mp4
 
       - name: Guarda o vídeo no repositório (é o arquivo que o envio e o chat usam)
         run: |
@@ -140,7 +199,9 @@ jobs:
           git config user.email "reboclbrank@gmail.com"
           git add media/gameplay/ceifalume-gameplay.mp4 \
                   media/gameplay/ceifalume-gameplay-instrucoes.mp4 \
-                  media/gameplay/ceifalume-gameplay-cru-decisoes.json
+                  media/gameplay/ceifalume-gameplay-cru-decisoes.json \
+                  media/gameplay/ceifalume-capa.png \
+                  posts/cenas.json
           if git diff --cached --quiet; then
             echo "vídeo sem mudança"
             exit 0
@@ -182,7 +243,9 @@ jobs:
             media/gameplay/ceifalume-gameplay-cru-decisoes.json
             media/gameplay/legendas.ass
             media/gameplay/legendas.srt
+            media/gameplay/ceifalume-capa.png
             posts/kit-gameplay.json
+            posts/cenas.json
           retention-days: 14
 
       - name: Resumo

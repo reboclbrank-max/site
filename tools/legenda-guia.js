@@ -32,8 +32,8 @@ function argumentos(argv) {
     saida: path.join(RAIZ, 'media', 'gameplay', 'ceifalume-gameplay.mp4'),
     relatorio: null,
     linhas: [],
-    alturaFaixa: 150,
-    fonte: 28,
+    alturaFaixa: 112,
+    fonte: 24,
     semTrilha: false
   };
   for (let i = 0; i < argv.length; i += 1) {

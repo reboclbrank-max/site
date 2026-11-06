@@ -159,7 +159,7 @@ ANGULOS = {
         "nome": "pergunta que ensina",
         "classes": ("mecanica", "numero"),
         "pedido": "faca uma pergunta cuja resposta ensina uma tatica do jogo",
-        "forma": "comece com 'Voce' e termine com '?'",
+        "forma": "comece com uma pergunta em segunda pessoa usando 'você' com acento, e termine com '?'",
     },
 }
 
@@ -388,16 +388,25 @@ def montar_pedido(pauta, fatos, aberturas_proibidas=()):
     apoio = (" Nao cite outro jogo da casa." if pauta["assunto"] in JOGOS else
              " Cite %s pelo nome, e so ele." % ASSUNTOS.get(pauta.get("jogo_de_apoio"), "").split(" (")[0])
 
+    # Hashtag em português, e do assunto da vez: sugerir #prancheta num post de ceifalume é
+    # convidar o motor a falar do outro jogo — que o portão recusa por "dois assuntos".
+    TAGS_DO_ASSUNTO = {
+        "ceifalume": "use #ceifalume ou #jogobrasileiro",
+        "prancheta": "use #prancheta ou #jogobrasileiro",
+        "casa": "use #gamedevbr ou #godot",
+        "oficio": "use #godot ou #gamedevbr",
+    }
+
     def monta(fatos_usados, angulo_usado, tam_afirmacao):
         corpo = " ".join(_encurtar(f["afirmacao"], tam_afirmacao) for f in fatos_usados)
         pedido = (
             "Posts da casa REBOCL BRANK (dev solo, Brasil). UM post de rede social, ate %d "
             "caracteres, portugues do Brasil. ASSUNTO UNICO: %s. ANGULO: %s. "
             "FATOS (verdade; nao invente numero, data nem mecanica fora deles): %s. FORMA: %s. "
-            "%s No maximo %d hashtag(s).%s"
+            "%s No maximo %d hashtag(s), em portugues: %s.%s"
             % (pauta.get("limite", 180), ASSUNTOS.get(pauta["assunto"], pauta["assunto"]),
                angulo_usado["pedido"], corpo, angulo_usado["forma"],
-               apoio, int(pauta.get("hashtags", 1)),
+               apoio, int(pauta.get("hashtags", 1)), TAGS_DO_ASSUNTO.get(pauta["assunto"], "#godot"),
                (" Nao comece com: " + "; ".join(proibidas) + ".") if proibidas else "")
         )
         return pedido

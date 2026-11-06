@@ -135,8 +135,8 @@ checar("contradição com fato conferido é recusada (o jogo salva sozinho)",
       r["publica"] is False and "contradiz" in r["motivo"], r["motivo"])
 
 # forma: mesmas palavras trocadas, mesma estrutura
-um = "CEIFALUME: plante antes de dormir e a lavoura cresce. Volte de manhã e venda tudo. #idle"
-dois = "CEIFALUME: regue antes da meia-noite e o milho cresce. Volte cedo e negocie bem. #idle"
+um = "CEIFALUME: plante antes de dormir e a lavoura cresce. Volte de manhã e venda tudo. #godot"
+dois = "CEIFALUME: regue antes da meia-noite e o milho cresce. Volte cedo e negocie bem. #godot"
 r = portao.avalia({"titulo": "Ceifalume: plante antes de dormir e a lavoura cresce de noite",
                    "texto": dois}, canal="site",
                   publicacoes=[{"canal": "site", "titulo": "Ceifalume: plante antes de dormir",
@@ -230,7 +230,7 @@ def motor_de_mentira(pedido):
         texto += " " + FECHOS[n % len(FECHOS)]
     if (n % 4) == 3:
         texto += " São %s minutos e dá para ver tudo." % numero
-    for i, tag in enumerate((" #indiedev", " #gamedev", " #godot")[:teto_hashtag]):
+    for i, tag in enumerate((" #jogobrasileiro", " #gamedevbr", " #godot")[:teto_hashtag]):
         if (n + i) % 2 == 0:
             texto += tag
     return texto[:limite]
