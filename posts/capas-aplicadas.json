@@ -1,0 +1,47 @@
+{
+ "_o_que_e": "uma linha por vídeo que recebeu capa da casa",
+ "aplicadas": [
+  {
+   "id": "PRyg0Ncz5U8",
+   "quando": "2026-11-06T19:02:26Z",
+   "titulo": "Onde jogar CEIFALUME sem instalar loja",
+   "capa": "media/capas/PRyg0Ncz5U8-capa.png",
+   "sha256": "830c2c973b8ab134"
+  },
+  {
+   "id": "HmbEdojjhsU",
+   "quando": "2026-11-06T19:02:32Z",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
+   "capa": "media/capas/HmbEdojjhsU-capa.png",
+   "sha256": "8de4047540d57947"
+  },
+  {
+   "id": "L2UIYmofEiE",
+   "quando": "2026-11-06T19:02:36Z",
+   "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
+   "capa": "media/capas/L2UIYmofEiE-capa.png",
+   "sha256": "216f5c8245d8be6c"
+  },
+  {
+   "id": "03313IcXvEo",
+   "quando": "2026-11-06T19:02:42Z",
+   "titulo": "6 colheitas em 2 min de CEIFALUME 0.1",
+   "capa": "media/capas/03313IcXvEo-capa.png",
+   "sha256": "1b33e9d63d3578bc"
+  },
+  {
+   "id": "f5kQFOQs0To",
+   "quando": "2026-11-06T19:02:48Z",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "capa": "media/capas/f5kQFOQs0To-capa.png",
+   "sha256": "b93e203f7bb6b111"
+  },
+  {
+   "id": "YK2flr2JGz4",
+   "quando": "2026-11-06T19:02:50Z",
+   "titulo": "PRANCHETA — simulador de gestão de futebol 100% fictício (jogo indie brasileiro)",
+   "capa": "media/capas/YK2flr2JGz4-capa.png",
+   "sha256": "11c254d7afd20c36"
+  }
+ ]
+}
