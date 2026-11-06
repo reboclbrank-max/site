@@ -8,7 +8,7 @@ name: enviar-youtube
 #
 # PORTA FECHADA (06/11/2026): este workflow envia o arquivo que está COMMITADO no repositório.
 # O vídeo do PRANCHETA é gravado a cada run, então o que está no git é sempre uma partida velha
-# — pedir "prancheta" aqui é recusado, com o motivo, pelo próprio tools/enviar-youtube.py.
+# — pedir "prancheta" aqui é recusado, com o motivo, pela própria ferramenta de envio.
 # Quem grava e envia o PRANCHETA é o gravar-prancheta.yml, no mesmo run.
 on:
   workflow_dispatch:

@@ -213,8 +213,14 @@ for wf in ("enviar-youtube.yml", "autorizar-youtube.yml"):
     ok(f"{wf} só roda por workflow_dispatch", "workflow_dispatch:" in texto)
 _envio_wf = open(os.path.join(RAIZ, ".github", "workflows", "enviar-youtube.yml"), encoding="utf-8").read()
 ok("o workflow de envio exige a confirmação do dono", "confirmacao" in _envio_wf)
+# A ORDEM É MEDIDA PELA LINHA QUE EXECUTA O ENVIO, não pela primeira menção ao nome do arquivo:
+# um comentário no cabeçalho citando o script fazia este contrato reprovar (06/11/2026, runs
+# 42312565606 e 42312568284) sem que nenhuma barreira tivesse mudado de lugar.
+import re as _re
+_chamada = _re.search(r"python3\s+tools/enviar-youtube\.py", _envio_wf)
 ok("o workflow de envio roda as barreiras antes de tocar a rede",
-   _envio_wf.index("testes-youtube-oauth.py") < _envio_wf.index("enviar-youtube.py"))
+   _chamada is not None
+   and _envio_wf.index("testes-youtube-oauth.py") < _chamada.start())
 ok("o workflow de envio não recebe segredo de escrita em rede",
    "contents: write" not in _envio_wf)
 
