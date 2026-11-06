@@ -1,19 +1,12 @@
 {
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
- "ultima_publicacao": "2026-11-06T14:37:10Z",
+ "ultima_publicacao": "2026-11-06T20:35:27Z",
  "ultima_medicao": "2026-11-03T01:42:54Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 130,
+ "pulsos": 131,
  "historico": [
-  {
-   "quando": "2026-11-02T09:26:23Z",
-   "acao": "dormir",
-   "motivo": "fora da janela (06h local)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-02T09:31:04Z",
    "acao": "publicar",
@@ -284,6 +277,13 @@
    "quando": "2026-11-06T14:37:10Z",
    "acao": "publicar",
    "motivo": "fila: [publicar-20261103T020215Z] empurrar a meta: itch: downloads: faltam 53 e o ritmo necessário é 5.3 por dia",
+   "codigo": 0,
+   "saida": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strfti"
+  },
+  {
+   "quando": "2026-11-06T20:35:27Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261103T065158Z] empurrar a meta: Instagram: seguidores: faltam 50 e o ritmo necessário é 5.0 por dia",
    "codigo": 0,
    "saida": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strfti"
   }

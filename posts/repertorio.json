@@ -30,6 +30,31 @@
    "hashtags": 2,
    "nota": 1.0,
    "texto": "Voce programa colheitas longas antes de dormir sabendo que o jogo roda offline por até 8h e acorda com o celeiro cheio? #Ceifalume #IdleFarm"
+  },
+  {
+   "quando": "2026-11-06T20:35:43Z",
+   "canal": "site",
+   "angulo": "pergunta_ao_publico",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-ficticio",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "qual ferramenta",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Qual ferramenta da Prancheta do Android você acha mais útil para acompanhar as trocas de jogadores? Durante a partida, o técnico pode fazer até 5 trocas e dar. "
   }
  ],
  "fatos_de_uma_vez": [
@@ -42,33 +67,38 @@
   "medido-bicos",
   "medido-moedas",
   "medido-plantadas",
-  "medido-tutorial"
+  "medido-tutorial",
+  "prancheta-trocas",
+  "prancheta-narracao",
+  "prancheta-ficticio",
+  "prancheta-divisoes",
+  "prancheta-mercado",
+  "prancheta-acessibilidade",
+  "prancheta-guia"
  ],
  "ultimo": {
-  "quando": "2026-11-06T14:38:51Z",
+  "quando": "2026-11-06T20:35:43Z",
   "canal": "site",
-  "angulo": "pergunta_que_ensina",
-  "assunto": "ceifalume",
+  "angulo": "pergunta_ao_publico",
+  "assunto": "prancheta",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias",
-   "medido-bicos",
-   "medido-moedas",
-   "medido-plantadas",
-   "medido-tutorial"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-ficticio",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "voce programa",
-  "tipo_abertura": "voce",
+  "abertura": "qual ferramenta",
+  "tipo_abertura": "frase",
   "esqueleto": [
    "pergunta",
+   "frase",
    "frase"
   ],
-  "hashtags": 2,
-  "nota": 1.0,
-  "texto": "Voce programa colheitas longas antes de dormir sabendo que o jogo roda offline por até 8h e acorda com o celeiro cheio? #Ceifalume #IdleFarm"
+  "hashtags": 1,
+  "nota": 0.846,
+  "texto": "Qual ferramenta da Prancheta do Android você acha mais útil para acompanhar as trocas de jogadores? Durante a partida, o técnico pode fazer até 5 trocas e dar. "
  }
 }

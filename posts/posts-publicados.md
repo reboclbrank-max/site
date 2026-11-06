@@ -319,3 +319,6 @@ PRANCHETA: futebol tático 100% fictício, desenhe a bola parada e simule (Godot
 
 ## 06/11/2026 14:39 UTC
 Voce programa colheitas longas antes de dormir sabendo que o jogo roda offline por até 8h e acorda com o celeiro cheio? #Ceifalume #IdleFarm
+
+## 06/11/2026 20:35 UTC
+Qual ferramenta da Prancheta do Android você acha mais útil para acompanhar as trocas de jogadores? Durante a partida, o técnico pode fazer até 5 trocas e dar. #prancheta
