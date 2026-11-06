@@ -1,0 +1,55 @@
+name: Sonda do Threads
+
+# Prova até onde a casa chega no Threads SEM publicar nada.
+#
+# O que faz: identidade → permissão de publicar (quota) → cria CONTAINER de texto e espera o
+# status ficar FINISHED. Para aí. Container não publicado não aparece para ninguém e expira
+# sozinho.
+#
+# O que NÃO faz: threads_publish. Publicar é decisão do ciclo, com texto aprovado pelo portão.
+#
+# Por que só sob demanda: é chamada à API da Meta com o token da casa; rodar sem motivo gasta
+# quota e não prova nada de novo.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmacao:
+        description: "Digite SONDAR para rodar a sonda (não publica nada)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sonda-threads
+  cancel-in-progress: false
+
+jobs:
+  sondar:
+    if: github.actor == 'reboclbrank-max' && inputs.confirmacao == 'SONDAR'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Contrato da sonda (offline, sem rede e sem segredo)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-sonda-threads.py
+
+      - name: Sonda de verdade (para antes do publish)
+        env:
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+        run: |
+          set +e
+          python3 tools/sonda-threads.py | tee /tmp/sonda.json
+          codigo=${PIPESTATUS[0]}
+          echo "código de saída: $codigo"
+          {
+            echo "### Sonda do Threads"
+            echo '```json'
+            cat /tmp/sonda.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $codigo
