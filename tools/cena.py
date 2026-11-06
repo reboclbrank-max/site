@@ -41,6 +41,33 @@ ESTRATEGIAS = {
 
 ORDEM = ("nabo", "milho", "trigo", "cara", "meia-cela")
 
+# ---- PRANCHETA: o segundo jogo da casa, com as suas próprias estratégias ------------------
+# Até 06/11/2026 o PRANCHETA era gravado sempre pelo mesmo caminho (menu → carreira → clube →
+# staff → prancheta → partida, sempre com a instrução padrão e ritmo normal). O gravador roda
+# 3x/dia desde 27/10 e o vídeo saía igual todo dia: gravar outro jogo não é, por si só, gravar
+# outra cena. Estas estratégias usam botões que o jogo JÁ tem (lidos em 27/10/2026, 1280x720):
+#   instrucao: "+ Pressionar" (110,608) ou "Seguir sem mexer" (636,573)
+#   ritmo:     "Rápida" (700,685)
+#   pular_fim: "Pular para o fim" (900,705) — muda o que a gravação mostra da partida
+ESTRATEGIAS_PRANCHETA = {
+    "pressao_rapida": {
+        "instrucao": "pressionar", "ritmo": "rapida", "pular_fim": True,
+        "porque": "instrução de pressão e velocidade rápida, cortando para o fim do jogo"},
+    "posse_normal": {
+        "instrucao": "seguir", "ritmo": "normal", "pular_fim": False,
+        "porque": "sem instrução, ritmo normal: a partida inteira no tempo do jogo"},
+    "contra_ataque": {
+        "instrucao": "seguir", "ritmo": "rapida", "pular_fim": True,
+        "porque": "sem instrução e velocidade rápida, mostrando a virada em vez do plano"},
+}
+ORDEM_PRANCHETA = ("pressao_rapida", "posse_normal", "contra_ataque")
+
+# jogo -> (estratégias, ordem)
+JOGOS = {
+    "ceifalume": (ESTRATEGIAS, ORDEM),
+    "prancheta": (ESTRATEGIAS_PRANCHETA, ORDEM_PRANCHETA),
+}
+
 
 def _quando():
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -65,14 +92,16 @@ def gravar(registro, caminho=None):
         f.write("\n")
 
 
-def proxima(registro):
+def proxima(registro, jogo="ceifalume"):
     """A estratégia da vez: a que faz mais tempo que não sai — e nunca a mesma de antes."""
-    partidas = (registro or {}).get("partidas") or []
+    estrategias, ordem = JOGOS.get(jogo, (ESTRATEGIAS, ORDEM))
+    partidas = [p for p in ((registro or {}).get("partidas") or [])
+                if (p.get("jogo") or "ceifalume") == jogo]
     ultima = partidas[-1].get("estrategia") if partidas else None
     ultimo_uso = {}
     for i, p in enumerate(partidas):
         ultimo_uso[p.get("estrategia")] = i
-    candidatas = [e for e in ORDEM if e != ultima] or list(ORDEM)
+    candidatas = [e for e in ordem if e != ultima] or list(ordem)
     candidatas.sort(key=lambda e: ultimo_uso.get(e, -1))
     return candidatas[0]
 
@@ -106,18 +135,53 @@ def repetida(registro, assin):
     return None
 
 
-def registrar(relatorio, estrategia, registro=None, caminho=None, quando=None, forcar=False):
+def assinatura_prancheta(relatorio, estrategia):
+    """Impressão digital de uma gravação do PRANCHETA: a sequência de decisões do gravador.
+
+    O relatório (`prancheta-cru-decisoes.json`) traz cada passo com tempo, motivo e ação. Duas
+    gravações que atravessam o jogo igual, com a mesma estratégia, têm a mesma assinatura — e a
+    segunda não entra no registro. Se o tempo de cada passo mudasse a assinatura, toda gravação
+    seria "nova" e a régua não valeria nada: por isso o tempo entra arredondado a 1 s.
+    """
+    r = relatorio or {}
+    passos = r.get("decisoes") or r.get("passos") or []
+    marcas = []
+    for p in passos:
+        if isinstance(p, dict):
+            marcas.append([str(p.get("acao") or p.get("motivo") or ""),
+                           round(float(p.get("t") or 0), 0)])
+        else:
+            marcas.append([str(p), 0])
+    corpo = {
+        "jogo": r.get("jogo") or "prancheta",
+        "estrategia": estrategia,
+        "passos": marcas,
+        "toques_partida": r.get("toques_partida"),
+        "passos_confirmados": r.get("passos_confirmados"),
+    }
+    bruto = json.dumps(corpo, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha1(bruto.encode("utf-8")).hexdigest()[:12], corpo
+
+
+def registrar(relatorio, estrategia, registro=None, caminho=None, quando=None, forcar=False,
+              jogo="ceifalume"):
     """Grava a partida. Devolve (ok, motivo, assinatura). Duas iguais NÃO entram."""
     registro = registro if registro is not None else carregar(caminho)
-    assin, corpo = assinatura(relatorio, estrategia)
+    if jogo == "prancheta":
+        assin, corpo = assinatura_prancheta(relatorio, estrategia)
+    else:
+        assin, corpo = assinatura(relatorio, estrategia)
     antes = repetida(registro, assin)
     if antes and not forcar:
         return (False, "partida repetida: mesma assinatura de %s (%s) — gravar de novo não é novidade"
                 % (antes.get("quando"), antes.get("estrategia")), assin)
-    registro.setdefault("partidas", []).append({
+    linha = {
         "quando": quando or _quando(), "estrategia": estrategia, "assinatura": assin,
         "resumo": corpo,
-    })
+    }
+    if jogo != "ceifalume":
+        linha["jogo"] = jogo
+    registro.setdefault("partidas", []).append(linha)
     # SÓ grava quando o chamador diz ONDE: escrever no registro da casa por omissão já custou
     # caro — um teste que rodava "só na memória" escreveu 8 partidas de mentira em
     # posts/cenas.json, e a rotação passou a escolher a cena errada em produção.
@@ -131,25 +195,26 @@ def main(argv):
     ap.add_argument("acao", choices=["proxima", "registrar", "lista"])
     ap.add_argument("--relatorio", help="arquivo *-decisoes.json do gravador")
     ap.add_argument("--estrategia")
+    ap.add_argument("--jogo", default="ceifalume", choices=sorted(JOGOS))
     ap.add_argument("--registro", default=REGISTRO)
     a = ap.parse_args(argv[1:])
     registro = carregar(a.registro)
     if a.acao == "proxima":
-        e = proxima(registro)
+        e = proxima(registro, a.jogo)
         print(e)
-        print("# " + ESTRATEGIAS[e]["porque"], file=sys.stderr)
+        print("# " + JOGOS.get(a.jogo, (ESTRATEGIAS, ORDEM))[0][e]["porque"], file=sys.stderr)
         return 0
     if a.acao == "lista":
         for p in registro.get("partidas") or []:
             print("%s  %-10s %s" % (p.get("quando"), p.get("estrategia"), p.get("assinatura")))
         return 0
-    estrategia = a.estrategia or proxima(registro)
+    estrategia = a.estrategia or proxima(registro, a.jogo)
     if not a.relatorio or not os.path.exists(a.relatorio):
         print("✘ falta o relatório do gravador (--relatorio)", file=sys.stderr)
         return 2
     with open(a.relatorio, encoding="utf-8") as f:
         relatorio = json.load(f)
-    ok, motivo, assin = registrar(relatorio, estrategia, registro, a.registro)
+    ok, motivo, assin = registrar(relatorio, estrategia, registro, a.registro, jogo=a.jogo)
     print(("✓ " if ok else "✘ ") + motivo)
     return 0 if ok else 1
 

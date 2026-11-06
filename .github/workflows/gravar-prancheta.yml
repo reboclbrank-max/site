@@ -48,21 +48,33 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
           npm install --no-save --no-audit --no-fund playwright-core@1
           npx --yes playwright install chromium-headless-shell
+          python3 -m pip install --quiet --disable-pip-version-check Pillow
           # --with-deps é lento (apt completo) e já falhou por tempo; o headless-shell
           # roda no runner com as libs padrão do ubuntu-24.04 (medido no job do CEIFALUME).
 
       - name: Barreiras offline
         run: |
           node --check tools/gravar-prancheta.js
+          python3 -m py_compile tools/prancheta-para-video.py tools/cena.py tools/desenhar-capa.py
           python3 tools/rodar-contratos-isolados.py tools/testes-prancheta.py
           python3 tools/rodar-contratos-isolados.py tools/testes-gameplay.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-cena.py
+
+      - name: Escolhe a cena da vez (rotação do tools/cena.py)
+        id: cena
+        run: |
+          ESTRATEGIA=$(python3 tools/cena.py proxima --jogo prancheta 2>/dev/null)
+          echo "cena da vez: $ESTRATEGIA"
+          echo "estrategia=$ESTRATEGIA" >> "$GITHUB_OUTPUT"
 
       - name: Grava o PRANCHETA (build web do itch, roteiro medido)
         env:
           SEGUNDOS_PEDIDO: ${{ github.event.inputs.segundos || '80' }}
+          ESTRATEGIA: ${{ steps.cena.outputs.estrategia }}
         run: |
           node tools/gravar-prancheta.js \
             --saida media/gameplay/prancheta-cru.mp4 \
+            --estrategia "$ESTRATEGIA" \
             --segundos "$SEGUNDOS_PEDIDO"
 
       - name: Pós-produção (legenda, trilha, cartão final)
@@ -76,11 +88,57 @@ jobs:
       - name: Mede o vídeo final
         run: python3 tools/validar-video.py media/gameplay/prancheta-gameplay.mp4
 
+      - name: Registra a partida (assinatura — cena repetida não entra)
+        id: registro
+        env:
+          ESTRATEGIA: ${{ steps.cena.outputs.estrategia }}
+        run: |
+          # Recusa é comportamento certo: se a assinatura já está em posts/cenas.json, a
+          # gravação é a mesma cena com outro carimbo. O run FALHA de propósito.
+          if ! python3 tools/cena.py registrar --jogo prancheta \
+                --relatorio media/gameplay/prancheta-cru-decisoes.json \
+                --estrategia "$ESTRATEGIA" \
+                --registro posts/cenas.json; then
+            echo "::error::partida repetida: a assinatura desta gravação já está no registro"
+            exit 1
+          fi
+          ASSINATURA=$(python3 -c "import json;d=json.load(open('posts/cenas.json',encoding='utf-8'));ps=[p for p in d['partidas'] if (p.get('jogo') or '')=='prancheta'];print(ps[-1]['assinatura'])")
+          echo "assinatura=$ASSINATURA" >> "$GITHUB_OUTPUT"
+
+      - name: Desenha a capa do vídeo (quadro do próprio vídeo)
+        env:
+          ESTRATEGIA: ${{ steps.cena.outputs.estrategia }}
+          ASSINATURA: ${{ steps.registro.outputs.assinatura }}
+        run: |
+          TEXTO=$(python3 tools/prancheta-para-video.py --sem-kit --estrategia "$ESTRATEGIA" \
+            --assinatura "$ASSINATURA")
+          TITULO=$(echo "$TEXTO" | sed -n 's/^titulo: //p')
+          NUMEROS=$(echo "$TEXTO" | sed -n 's/^capa_numeros: //p')
+          echo "título da capa: $TITULO"
+          python3 tools/desenhar-capa.py \
+            --quadro media/gameplay/prancheta-cru-quadro.png \
+            --saida media/gameplay/prancheta-capa.png \
+            --titulo "$TITULO" \
+            --numeros "$NUMEROS" \
+            --assinatura "$ASSINATURA"
+
+      - name: Monta o pacote do vídeo (título, descrição, tags)
+        env:
+          ESTRATEGIA: ${{ steps.cena.outputs.estrategia }}
+          ASSINATURA: ${{ steps.registro.outputs.assinatura }}
+        run: |
+          python3 tools/prancheta-para-video.py \
+            --estrategia "$ESTRATEGIA" \
+            --assinatura "$ASSINATURA" \
+            --capa media/gameplay/prancheta-capa.png \
+            --kit posts/kit-gameplay.json
+
       - name: Guarda o vídeo no repositório (é o arquivo que o envio usa)
         run: |
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
           git add media/gameplay/prancheta-gameplay.mp4 media/gameplay/prancheta-cru-decisoes.json
+          git add media/gameplay/prancheta-capa.png posts/cenas.json posts/kit-gameplay.json
           if git diff --cached --quiet; then
             echo "vídeo sem mudança"
             exit 0
@@ -119,6 +177,7 @@ jobs:
             media/gameplay/prancheta-gameplay.mp4
             media/gameplay/prancheta-cru.mp4
             media/gameplay/prancheta-cru-decisoes.json
+            media/gameplay/prancheta-capa.png
           retention-days: 14
 
       - name: Resumo
@@ -133,5 +192,53 @@ jobs:
               -of default=noprint_wrappers=1 media/gameplay/prancheta-gameplay.mp4
             echo '```'
             echo
+            echo "Cena da vez: ${{ steps.cena.outputs.estrategia }} · assinatura ${{ steps.registro.outputs.assinatura }}"
+            echo
             echo "Envio ao YouTube: $STATUS_PUBLICACAO"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Envia ao YouTube (só com a palavra PUBLICAR)
+        # Até 06/11/2026 este workflow tinha o campo PUBLICAR e NENHUM passo de envio: o resumo
+        # dizia "pedido neste run" e nada saía. Promessa falsa. Agora o envio é este passo, com
+        # o mesmo cadeado e o mesmo portão do CEIFALUME (o vídeo só sobe se for novo).
+        if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          CONFIRMACAO: ${{ github.event.inputs.publicar }}
+          KIT_YOUTUBE: posts/kit-gameplay.json
+        run: |
+          python3 tools/enviar-youtube.py prancheta-gameplay | tee /tmp/envio.txt
+
+      - name: Registra o que foi publicado (JSON público)
+        if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}
+        run: |
+          if [ ! -f posts/youtube-publicados.json ]; then
+            echo "sem registro para guardar (o envio pode ter falhado antes)"
+            exit 0
+          fi
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/youtube-publicados.json
+          [ -e posts/videos-enviados.json ] && git add posts/videos-enviados.json || true
+          if git diff --cached --quiet; then
+            echo "registro sem mudança"
+            exit 0
+          fi
+          git commit -m "registro: vídeo do PRANCHETA publicado no YouTube ($(date -u +'%d/%m %H:%M UTC'))"
+          git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+          enviado=0
+          for tentativa in 1 2 3; do
+            if git fetch -q origin main && git rebase -q origin/main && git push; then
+              echo "registro no main (tentativa $tentativa)"
+              enviado=1
+              break
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          if [ "$enviado" != "1" ]; then
+            echo "::error::3 tentativas e o registro não entrou no main"
+            exit 1
+          fi

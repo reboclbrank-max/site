@@ -45,6 +45,26 @@ const ALVO = {
   pularParaFim: { x: 900, y: 705 }        // "Pular para o fim"
 };
 
+// ESTRATÉGIAS — o que muda de uma gravação para a outra (declarado, conferível no log).
+// Até 06/11/2026 este gravador fazia SEMPRE a mesma coisa: instrução de pressão, seguir sem
+// mexer, acelerar, pular para o fim. Rodava 3x/dia e entregava a mesma cena com outro carimbo.
+// Quem escolhe a estratégia é o tools/cena.py (rotação entre as três), para o CEIFALUME e o
+// PRANCHETA não repetirem a própria cena.
+const ESTRATEGIAS = {
+  pressao_rapida: {
+    instrucao: 'pressionar', acelerar: true, pularFim: true,
+    porque: 'instrução de pressão, velocidade rápida e corte para o fim do jogo'
+  },
+  posse_normal: {
+    instrucao: 'seguir', acelerar: false, pularFim: false,
+    porque: 'sem instrução e ritmo normal: a partida inteira no tempo do jogo'
+  },
+  contra_ataque: {
+    instrucao: 'seguir', acelerar: true, pularFim: true,
+    porque: 'sem instrução e velocidade rápida: mostra a virada, não o plano'
+  }
+};
+
 function argumentos(argv) {
   const o = {
     saida: path.join(RAIZ, 'media', 'gameplay', 'prancheta-cru.mp4'),
@@ -57,7 +77,8 @@ function argumentos(argv) {
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
     const valor = () => argv[++i];
-    if (a === '--saida') o.saida = path.resolve(valor());
+    if (a === '--estrategia') o.estrategia = valor();
+    else if (a === '--saida') o.saida = path.resolve(valor());
     else if (a === '--segundos') o.segundos = Number(valor());
     else if (a === '--url') o.url = valor();
     else if (a === '--largura') o.largura = Number(valor());
@@ -211,15 +232,31 @@ async function principal() {
 
     // Partida: o jogo para no intervalo e pede uma instrução. A sequência abaixo é a que o
     // próprio jogo sugere ("escolha uma instrução... toque em Seguir sem mexer").
-    await passo('dar instrução no intervalo', ALVO.instrucao, 1600, 0.3);
-    await passo('seguir sem mexer', ALVO.seguir, 1800, 0.3);
-    await passo('acelerar a partida', ALVO.velocidadeRapida, 1800, 0.3);
+    if (op.estrategia && !ESTRATEGIAS[op.estrategia]) {
+      // estratégia desconhecida NÃO cai num padrão silencioso: seria gravar outra cena e dizer
+      // no log que foi a pedida (o defeito clássico do `replace` silencioso, já pago nesta casa).
+      console.error('✘ estratégia desconhecida: ' + op.estrategia
+        + ' (conhecidas: ' + Object.keys(ESTRATEGIAS).join(', ') + ')');
+      return 7;
+    }
+    const plano = ESTRATEGIAS[op.estrategia] || ESTRATEGIAS.posse_normal;
+    console.log('estratégia: ' + (op.estrategia || 'posse_normal') + ' — ' + plano.porque);
+    if (plano.instrucao === 'pressionar') {
+      await passo('dar instrução no intervalo (pressionar)', ALVO.instrucao, 1600, 0.3);
+    } else {
+      await passo('seguir sem mexer (sem instrução)', ALVO.seguir, 1800, 0.3);
+    }
+    if (plano.acelerar) {
+      await passo('acelerar a partida', ALVO.velocidadeRapida, 1800, 0.3);
+    }
 
     // Resto do tempo: alterna as velocidade (deixa a partida correr) e, no fim, pula para o
     // resultado — cada toque registrado com a mudança que causou na tela.
     const fim = inicio + op.segundos * 1000;
     let toquesPartida = 0;
-    const alvosPartida = [ALVO.velocidadeRapida, { x: 640, y: 360 }, ALVO.instrucao, ALVO.seguir];
+    const alvosPartida = plano.acelerar
+      ? [ALVO.velocidadeRapida, { x: 640, y: 360 }, ALVO.instrucao, ALVO.seguir]
+      : [{ x: 640, y: 360 }, ALVO.instrucao, ALVO.seguir, { x: 640, y: 360 }];
     while (Date.now() - inicio < op.segundos * 1000 - 9000) {
       const alvo = alvosPartida[toquesPartida % alvosPartida.length];
       const antes = (await lerTela()).pixels;
@@ -235,7 +272,11 @@ async function principal() {
       });
       toquesPartida += 1;
     }
-    await passo('pular para o fim da partida', ALVO.pularParaFim, 3000, 0.3);
+    if (plano.pularFim) {
+      await passo('pular para o fim da partida', ALVO.pularParaFim, 3000, 0.3);
+    } else {
+      await pagina.waitForTimeout(3000);
+    }
     void fim;
     await pagina.screenshot({ path: op.saida.replace(/\.mp4$/i, '-quadro.png') });
 
@@ -250,6 +291,7 @@ async function principal() {
     }
     fs.writeFileSync(op.saida.replace(/\.mp4$/i, '-decisoes.json'), JSON.stringify({
       jogo: 'prancheta',
+      estrategia: op.estrategia || 'posse_normal',
       endereco,
       decisoes: passos.map((p) => ({ t: p.t, motivo: p.motivo, acao: p.acao })),
       passos_confirmados: confirmados,
@@ -279,4 +321,4 @@ if (require.main === module) {
   principal().then((codigo) => process.exit(codigo || 0));
 }
 
-module.exports = { descobrirBuild, ALVO, BUILD_RESERVA, PAGINA_ITCH };
+module.exports = { descobrirBuild, ALVO, BUILD_RESERVA, PAGINA_ITCH, ESTRATEGIAS };
