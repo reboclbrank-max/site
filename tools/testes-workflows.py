@@ -237,6 +237,18 @@ def main():
             ok("%s: `| tee` não engole o código de saída (%s)" % (nome, linha[:44]), protegido,
                "sem pipefail no passo")
 
+    # ENTREGA × STASH: gravar é inútil se o commit levar o vídeo junto
+    for nome, fonte in fontes().items():
+        # só vale para quem GRAVA e ENTrega um vídeo (os outros podem dar stash à vontade)
+        if "git stash push -u" not in fonte or "upload-artifact" not in fonte \
+                or re.search(r"media/gameplay/[\w.-]+\.mp4", fonte) is None:
+            continue
+        ok("%s: guarda o vídeo da entrega antes do stash" % nome, "/tmp/entrega" in fonte)
+        ok("%s: devolve o vídeo depois do push" % nome,
+           "cp \"$f\" \"media/gameplay/" in fonte)
+        ok("%s: falha se o vídeo final sumir depois do commit" % nome,
+           re.search(r"test\s+-s\s+media/gameplay/[\w.-]+\.mp4", fonte) is not None)
+
     print("\n%d/%d verificações de higiene de workflow passaram"
           % (len(certos), len(certos) + len(falhas)))
     return 0 if not falhas else 1

@@ -223,6 +223,15 @@ jobs:
           #      árvore (trechos, cru, quadro de prova) — então as sobras saem do caminho antes;
           #   2) falhar nas 3 tentativas NÃO pode passar batido: sem o `exit 1` o run terminava
           #      verde com o vídeo fora do repositório.
+          # O VÍDEO DA ENTREGA NÃO PODE IR PARA O STASH (06/11/2026, run 42314703025): o .mp4
+          # deixou de ser versionado, então `git stash -u` passou a guardar o próprio vídeo
+          # junto com as sobras. Efeito medido: artefato subiu 3 arquivos (sem o vídeo), o
+          # resumo morreu no ffprobe ("No such file or directory") e o run ficou vermelho
+          # depois de gravar. Agora a entrega sai para /tmp antes do stash e volta depois.
+          mkdir -p /tmp/entrega
+          for f in media/gameplay/ceifalume-gameplay.mp4 media/gameplay/ceifalume-gameplay-instrucoes.mp4; do
+            if [ -s "$f" ]; then cp "$f" /tmp/entrega/; fi
+          done
           git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
           enviado=0
           for tentativa in 1 2 3; do
@@ -239,6 +248,10 @@ jobs:
             echo "::error::3 tentativas e o vídeo não entrou no main (o arquivo existe só neste run)"
             exit 1
           fi
+          for f in /tmp/entrega/*; do
+            if [ -s "$f" ]; then cp "$f" "media/gameplay/$(basename "$f")"; fi
+          done
+          test -s media/gameplay/ceifalume-gameplay.mp4 || { echo "::error::o vídeo final não sobreviveu ao commit (o stash engoliu a entrega)"; exit 1; }
           git log --oneline -1
 
       - name: Guarda o vídeo e o quadro de prova
