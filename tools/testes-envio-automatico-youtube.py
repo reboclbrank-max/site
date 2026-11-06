@@ -176,6 +176,15 @@ checar("o workflow passa AUTOMATICO (não PUBLICAR) no caminho agendado",
       "AUTOMATICO" in wf and "CONFIRMACAO: AUTOMATICO" in wf)
 checar("o caminho manual do workflow continua existindo", "github.event.inputs.publicar == 'PUBLICAR'" in wf)
 checar("o workflow versiona o registro de impressões", "posts/videos-enviados.json" in wf)
+checar("o registro guarda o ângulo do vídeo (é o que faz o redator rodar)",
+      "angulo=pacote.get(\"angulo\")" in open(RAIZ / "tools" / "enviar-youtube.py", encoding="utf-8").read())
+# Medido no run 42248857217 (06/11/2026 16:08 UTC): o vídeo subiu, o registro entrou no main e o
+# run terminou VERMELHO porque o resumo fazia `cat /tmp/envio.txt`, arquivo que só o caminho
+# manual cria. Trabalho feito com run vermelho é o mesmo defeito de antes, só que ao contrário.
+checar("o resumo do workflow não depende de arquivo que só o caminho manual cria",
+      "cat /tmp/envio.txt 2>/dev/null" in wf and "envio-auto.txt 2>/dev/null" in wf)
+checar("o passo do registro roda também no caminho automático",
+      "github.event.inputs.publicar == 'AUTOMATICO'" in wf)
 
 # 10. o arquivo novo NÃO basta: o mesmo título não sobe de novo
 #     (medido em 06/11/2026: três uploads com o mesmo título, arquivos diferentes)

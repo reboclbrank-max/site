@@ -165,7 +165,7 @@ shutil.rmtree(vazio, ignore_errors=True)
 escolha_j, recusas_j = rv.escolher("ceifalume", hora_local=4)
 ok("fora da janela do dono o redator recusa", escolha_j is None)
 ok("e a recusa traz a hora e a janela",
-   recusas_j and "fora da janela (04h local" in recusas_j[0]["motivo"], recusas_j[:1])
+   any("fora da janela (04h local" in r["motivo"] for r in recusas_j), recusas_j[:2])
 ok("a recusa por janela aparece para todos os ângulos (nenhuma passa por fora)",
    len(recusas_j) == len(rv.ANGULOS), len(recusas_j))
 

@@ -282,6 +282,11 @@ jobs:
             echo "### Envio ao YouTube"
             echo
             echo '```'
-            cat /tmp/envio.txt
+            # O caminho agendado grava a saída em /tmp/envio-auto.txt; o manual, em /tmp/envio.txt.
+            # Em 06/11/2026 este `cat` sem guarda derrubou o run 42248857217 DEPOIS de o vídeo
+            # já ter subido e o registro já ter entrado no main: o run ficou vermelho com o
+            # trabalho feito. Resumo não pode ser o que reprova a publicação.
+            cat /tmp/envio.txt 2>/dev/null || cat /tmp/envio-auto.txt 2>/dev/null \
+              || echo "sem saída de envio neste caminho"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
