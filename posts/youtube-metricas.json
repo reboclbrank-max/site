@@ -1,10 +1,26 @@
 {
- "medido_em": "2026-11-06T16:30:41Z",
+ "medido_em": "2026-11-06T21:02:24Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
+   "id": "FRCzgqUlMFY",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "publicado_em": "2026-11-06T20:04:46Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "PRyg0Ncz5U8",
+   "titulo": "Onde jogar CEIFALUME sem instalar loja",
+   "publicado_em": "2026-11-06T18:24:35Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
    "id": "HmbEdojjhsU",
-   "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
    "publicado_em": "2026-11-06T16:30:04Z",
    "views": 0,
    "likes": 0,
@@ -36,7 +52,7 @@
   }
  ],
  "totais": {
-  "videos": 4,
+  "videos": 6,
   "views": 0,
   "likes": 0,
   "comentarios": 0

@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-06T16:30:41Z",
+ "quando": "2026-11-06T21:02:24Z",
  "regra": {
   "janela_horas": 72,
   "criterio": "views do vídeo novo > mediana de views dos vídeos que o canal já tinha antes dele e inscritos ganhos >= 1 na mesma janela",
@@ -14,21 +14,20 @@
   "inscritos_ganhos": null
  },
  "video_novo": {
-  "id": "HmbEdojjhsU",
-  "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
-  "angulo": "como_funciona:ceifalume-8h",
-  "quando": "2026-11-06T16:29:50Z",
-  "publicado_em": "2026-11-06T16:30:04Z",
+  "id": "FRCzgqUlMFY",
+  "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+  "angulo": "como_funciona:ceifalume-chuva",
+  "quando": "2026-11-06T20:04:19Z",
+  "publicado_em": "2026-11-06T20:04:46Z",
   "views": 0,
   "likes": 0,
   "comentarios": 0
  },
  "base_da_regua": {
   "videos_comparados": 49,
-  "mediana_views": 9.0,
+  "mediana_views": 8.0,
   "views": [
    230,
-   182,
    134,
    102,
    96,
@@ -46,33 +45,78 @@
    17,
    14,
    14,
-   14
+   14,
+   13
   ]
  },
  "veredito": "AINDA_MEDINDO",
- "motivo": "4 vídeo(s) na janela; o primeiro veredito fecha em 2026-11-07T05:17:32Z",
+ "motivo": "6 vídeo(s) na janela; o primeiro veredito fecha em 2026-11-07T05:17:32Z",
  "numeros": {
   "views_novo": 0,
-  "mediana_base": 9.0,
+  "mediana_base": 8.0,
   "inscritos_ganhos": null,
-  "horas_no_ar": 0.0,
+  "horas_no_ar": 1.0,
   "janela_horas": 72
  },
  "video_novo_veredito": {
   "veredito": "AINDA_MEDINDO",
-  "motivo": "0.0 horas no ar de 72 — a régua só fecha no fim da janela",
+  "motivo": "1.0 horas no ar de 72 — a régua só fecha no fim da janela",
   "numeros": {
    "views_novo": 0,
-   "mediana_base": 9.0,
+   "mediana_base": 8.0,
    "inscritos_ganhos": null,
-   "horas_no_ar": 0.0,
+   "horas_no_ar": 1.0,
    "janela_horas": 72
   }
  },
  "videos": [
   {
+   "id": "FRCzgqUlMFY",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "angulo": "como_funciona:ceifalume-chuva",
+   "fato": "ceifalume-chuva",
+   "quando": "2026-11-06T20:04:19Z",
+   "fecha_em": "2026-11-09T20:04:19Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 8.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "1.0 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 8.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 1.0,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "PRyg0Ncz5U8",
+   "titulo": "Onde jogar CEIFALUME sem instalar loja",
+   "angulo": "onde_jogar:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "quando": "2026-11-06T18:24:11Z",
+   "fecha_em": "2026-11-09T18:24:11Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 8.5,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "2.6 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 8.5,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 2.6,
+    "janela_horas": 72
+   }
+  },
+  {
    "id": "HmbEdojjhsU",
-   "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
    "angulo": "como_funciona:ceifalume-8h",
    "fato": "ceifalume-8h",
    "quando": "2026-11-06T16:29:50Z",
@@ -83,12 +127,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 9.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "0.0 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "4.5 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 9.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 0.0,
+    "horas_no_ar": 4.5,
     "janela_horas": 72
    }
   },
@@ -105,12 +149,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 10.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "0.2 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "4.8 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 10.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 0.2,
+    "horas_no_ar": 4.8,
     "janela_horas": 72
    }
   },
@@ -127,12 +171,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 11.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "0.4 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "4.9 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 11.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 0.4,
+    "horas_no_ar": 4.9,
     "janela_horas": 72
    }
   },
@@ -149,12 +193,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 11.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "59.2 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "63.7 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 11.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 59.2,
+    "horas_no_ar": 63.7,
     "janela_horas": 72
    }
   }
@@ -163,9 +207,25 @@
   "HmbEdojjhsU": 24,
   "L2UIYmofEiE": 24,
   "03313IcXvEo": 24,
-  "f5kQFOQs0To": 24
+  "f5kQFOQs0To": 24,
+  "FRCzgqUlMFY": 24,
+  "PRyg0Ncz5U8": 24
  },
  "publicados_medidos": [
+  {
+   "id": "FRCzgqUlMFY",
+   "publicado_em": "2026-11-06T20:04:46Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "PRyg0Ncz5U8",
+   "publicado_em": "2026-11-06T18:24:35Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "HmbEdojjhsU",
    "publicado_em": "2026-11-06T16:30:04Z",
