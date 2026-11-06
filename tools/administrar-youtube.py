@@ -14,6 +14,7 @@ Por isso este script: administra de verdade; e quando a publicação por API vol
 diz isso com todas as letras em vez de fingir que publicou. A saída sem auditoria é o envio
 pelo navegador (o mesmo vídeo, mesma conta) e o resto continua sendo por aqui.
 """
+import datetime
 import json
 import os
 import sys
@@ -196,8 +197,51 @@ def auto(ambiente=None, get=None, put=None, kit=None, renovar=None):
     return linhas, True
 
 
+def sincronizar_registro(video_id, titulo=None, descricao=None, raiz=None, quando=None):
+    """Faz o registro da casa contar a verdade do canal.
+
+    Se o título no YouTube muda e `posts/youtube-publicados.json` continua com o antigo, todo
+    mundo que lê o registro (chat, chamada do vídeo, relatório) passa a repetir o defeito. O
+    registro guarda o que está no ar — e guarda também a troca, para a história não sumir.
+    """
+    raiz = raiz or RAIZ
+    caminho = os.path.join(raiz, "posts", "youtube-publicados.json")
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return None
+    lista = dados.get("publicados") if isinstance(dados, dict) else dados
+    if not isinstance(lista, list):
+        return None
+    mudou = False
+    for item in lista:
+        if not isinstance(item, dict) or str(item.get("id")) != str(video_id):
+            continue
+        trocas = []
+        for campo, valor in (("titulo", titulo), ("descricao", descricao)):
+            if valor is None:
+                continue
+            atual = item.get(campo)
+            if atual != valor:
+                trocas.append({"campo": campo, "de": (atual or "")[:120], "para": valor[:120],
+                               "quando": quando or datetime.datetime.utcnow().replace(
+                                   microsecond=0).isoformat() + "Z"})
+                item[campo] = valor
+                mudou = True
+        if trocas:
+            item.setdefault("correcoes", []).extend(trocas)
+            break
+    if not mudou:
+        return caminho
+    with open(caminho, "w", encoding="utf-8") as f:
+        json.dump(dados, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    return caminho
+
+
 def corrigir(ambiente=None, video_id=None, titulo=None, descricao=None, get=None, put=None,
-             renovar=None):
+             renovar=None, raiz=None):
     """Corrige título/descrição de UM vídeo já publicado. Nunca publica, nunca apaga.
 
     POR QUE EXISTE (06/11/2026): o primeiro vídeo de um assunto novo subiu com o título cortado
@@ -227,10 +271,14 @@ def corrigir(ambiente=None, video_id=None, titulo=None, descricao=None, get=None
     if descricao is not None and snippet.get("description") != descricao:
         dif["description"] = descricao
     if not dif:
-        return ["corrigir: nada a mudar em %s (já está assim)" % video_id], True
+        # Mesmo sem chamada à API, o registro é sincronizado: o vídeo já está com o texto
+        # pedido e o registro tem de dizer o mesmo.
+        sincronizar_registro(video_id, titulo=titulo, descricao=descricao, raiz=raiz)
+        return ["corrigir: nada a mudar em %s no canal (registro sincronizado)" % video_id], True
     ok, erro3 = aplicar_metadados(token, video, dif, put=put)
     if not ok:
         return ["corrigir: a API recusou — " + str(erro3 or "sem detalhe")[:140]], False
+    sincronizar_registro(video_id, titulo=titulo, descricao=descricao, raiz=raiz)
     return ["corrigir: %s %s atualizado (%s)" % (video_id, "=".join(sorted(dif)),
                                                  "título" if "title" in dif else "descrição")], True
 

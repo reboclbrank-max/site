@@ -3,6 +3,7 @@
 """Barreira do administrador do YouTube. Nenhum teste toca a rede."""
 import importlib.util
 import os
+import shutil
 import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -249,6 +250,27 @@ linhas_c, feito_c = adm.corrigir(ambiente=AMB, video_id="v1", titulo="x" * 200,
                                  get=GetComVideo([VIDEO_NO_AR]), put=PutFalso(), renovar=renovar_falso)
 ok("título fora da faixa é recusado antes de qualquer chamada",
    feito_c is False and "fora da faixa" in linhas_c[0], linhas_c)
+
+# ------------------------------------------------------------------ o registro diz o que está no ar
+import json as _json
+import tempfile as _tempfile
+_banca = _tempfile.mkdtemp(prefix="bancada-registro-")
+os.makedirs(os.path.join(_banca, "posts"), exist_ok=True)
+_caminho = os.path.join(_banca, "posts", "youtube-publicados.json")
+_json.dump({"publicados": [{"id": "v1", "titulo": "cortado por até 8",
+                            "quando": "2026-11-06T16:29:50Z"}]},
+           open(_caminho, "w", encoding="utf-8"))
+adm.sincronizar_registro("v1", titulo="título inteiro", raiz=_banca)
+_registro = _json.load(open(_caminho, encoding="utf-8"))["publicados"][0]
+ok("o registro passa a dizer o título que está no canal", _registro["titulo"] == "título inteiro",
+   _registro)
+ok("e guarda a troca (a história não some)",
+   _registro.get("correcoes") and _registro["correcoes"][0]["de"] == "cortado por até 8",
+   _registro.get("correcoes"))
+ok("id que não está no registro não inventa entrada",
+   adm.sincronizar_registro("naoexiste", titulo="x", raiz=_banca) is not None
+   and len(_json.load(open(_caminho, encoding="utf-8"))["publicados"]) == 1)
+shutil.rmtree(_banca, ignore_errors=True)
 
 fonte_adm = open(os.path.join(RAIZ, "tools", "administrar-youtube.py"), encoding="utf-8").read()
 ok("corrigir nunca publica (não existe videos.insert no caminho)",

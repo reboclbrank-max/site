@@ -26,4 +26,5 @@ jobs:
           python3 tools/rodar-contratos-isolados.py tools/testes-dependencias-barreira.py tools/testes-gif-com-selo.py tools/testes-bancada-isolada.py tools/testes-workflows.py tools/testes-contencao-marketing.py tools/testes-duplicados-youtube.py tools/testes-registro-youtube.py tools/testes-portao-publicacao.py tools/testes-redator.py tools/testes-sonda-instagram.py tools/testes-sonda-threads.py \
             tools/testes-envio-automatico-youtube.py \
             tools/testes-redator-video.py \
-            tools/testes-medir-adesao.py
+            tools/testes-medir-adesao.py \
+            tools/testes-chamar-video.py

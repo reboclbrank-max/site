@@ -30,7 +30,9 @@ on:
         default: ""
 
 permissions:
-  contents: read
+  # write porque corrigir sincroniza posts/youtube-publicados.json: registro que diz título
+  # antigo depois de o vídeo ter sido corrigido é o mesmo defeito, só que espalhado.
+  contents: write
 
 concurrency:
   group: administrar-youtube
@@ -48,6 +50,22 @@ jobs:
           python3 tools/rodar-contratos-isolados.py tools/testes-administrar-youtube.py
           python3 tools/rodar-contratos-isolados.py tools/testes-youtube-oauth.py
           python3 tools/rodar-contratos-isolados.py tools/testes-kit-youtube.py
+
+      - name: Guarda o registro sincronizado (só quando houve correção)
+        run: |
+          if [ ! -e posts/youtube-publicados.json ]; then exit 0; fi
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/youtube-publicados.json
+          if git diff --cached --quiet; then
+            echo "registro sem mudança"
+            exit 0
+          fi
+          git commit -m "registro: título do vídeo corrigido no canal ($(date -u +'%d/%m %H:%M UTC'))"
+          bash tools/entrar-no-main.sh "registro do YouTube" || {
+            echo "::error::o registro corrigido não entrou no main"
+            exit 1
+          }
 
       - name: Administra
         env:
