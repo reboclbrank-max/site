@@ -60,12 +60,12 @@
   {
    "id": "prancheta-gameplay",
    "slug": "prancheta",
-   "estrategia": "posse_normal",
-   "vinheta": "437edede36a1",
+   "estrategia": "contra_ataque",
+   "vinheta": "00705ec6dba5",
    "numeros": {
-    "passos": 12,
+    "passos": 13,
     "passos_confirmados": 10,
-    "toques_partida": 5
+    "toques_partida": 4
    },
    "arquivo": "media/gameplay/prancheta-gameplay.mp4",
    "capa": "media/gameplay/prancheta-capa.png",
@@ -74,8 +74,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "PRANCHETA: a partida inteira sem mexer no plano do staff · 5 toques",
-   "descricao": "Gravação automática do PRANCHETA: o agente atravessou menu, carreira, escolha de clube e staff até a prancheta tática, e jogou a partida com o plano recomendado.\n\nA cena desta vez foi \"posse_normal\": 12 passos, 10 confirmados por mudança de tela.\n\nNa partida foram 5 toques registrados pelo gravador.\n\nFonte: posts/cenas.json (partida 437edede36a1, conferida em 2026-11-06).\n\nJogo: PRANCHETA — simulador de gestão de futebol 100% fictício, Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#prancheta #godot",
+   "titulo": "PRANCHETA: ritmo rápido e a virada sem instrução · 4 toques",
+   "descricao": "Gravação automática do PRANCHETA: o agente atravessou menu, carreira, escolha de clube e staff até a prancheta tática, e jogou a partida com o plano recomendado.\n\nA cena desta vez foi \"contra_ataque\": 13 passos, 10 confirmados por mudança de tela.\n\nNa partida foram 4 toques registrados pelo gravador.\n\nFonte: posts/cenas.json (partida 00705ec6dba5, conferida em 2026-11-06).\n\nJogo: PRANCHETA — simulador de gestão de futebol 100% fictício, Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#prancheta #godot",
    "tags": [
     "prancheta",
     "manager de futebol",

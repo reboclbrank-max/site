@@ -1,10 +1,10 @@
 {
  "jogo": "prancheta",
- "estrategia": "posse_normal",
+ "estrategia": "contra_ataque",
  "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920",
  "decisoes": [
   {
-   "t": 16.4,
+   "t": 16,
    "motivo": "abrir o menu do jogo",
    "acao": "toque em 500,87"
   },
@@ -14,17 +14,17 @@
    "acao": "toque em 500,179"
   },
   {
-   "t": 27.3,
+   "t": 27.2,
    "motivo": "aplicar a sugestão do staff",
    "acao": "toque em 500,232"
   },
   {
-   "t": 32,
+   "t": 31.9,
    "motivo": "aplicar o microciclo da semana",
    "acao": "toque em 500,612"
   },
   {
-   "t": 37.3,
+   "t": 37.2,
    "motivo": "abrir a prancheta",
    "acao": "toque em 500,259"
   },
@@ -34,36 +34,41 @@
    "acao": "toque em 500,289"
   },
   {
-   "t": 49.5,
+   "t": 49.4,
    "motivo": "seguir sem mexer (sem instrução)",
    "acao": "toque em 636,573"
   },
   {
-   "t": 54.6,
+   "t": 54.3,
+   "motivo": "acelerar a partida",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 59.3,
+   "motivo": "partida em andamento",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 64.3,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 59.8,
+   "t": 69.5,
    "motivo": "partida em andamento",
    "acao": "toque em 110,608"
   },
   {
-   "t": 65,
+   "t": 74.6,
    "motivo": "partida em andamento",
    "acao": "toque em 636,573"
   },
   {
-   "t": 70.2,
-   "motivo": "partida em andamento",
-   "acao": "toque em 640,360"
-  },
-  {
-   "t": 75.4,
-   "motivo": "partida em andamento",
-   "acao": "toque em 640,360"
+   "t": 80.2,
+   "motivo": "pular para o fim da partida",
+   "acao": "toque em 900,705"
   }
  ],
  "passos_confirmados": 10,
- "toques_partida": 5
+ "toques_partida": 4
 }
