@@ -119,7 +119,7 @@ jobs:
           # do run 42275794636: o último quadro é a tela de resultado (0×3, saldo, cartões) —
           # informativa e ilegível no tamanho de miniatura. O quadro da prancheta mostra o campo
           # e as fichas, que é o que o jogo É. Se ele não existir, cai no quadro final.
-          QUADRO=media/gameplay/prancheta-prancheta.png
+          QUADRO=media/gameplay/prancheta-cru-prancheta.png
           if [ ! -s "$QUADRO" ]; then
             QUADRO=media/gameplay/prancheta-cru-quadro.png
           fi
