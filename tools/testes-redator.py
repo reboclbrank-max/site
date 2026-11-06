@@ -409,9 +409,18 @@ checar("o instagram passa pelo portão antes de publicar",
 checar("o threads passa pelo portão antes de publicar",
       'portao_libera("threads", mensagem)' in fonte_postador)
 repertorio_real = redator.carregar_repertorio()
-checar("a memória de pauta existe no repositório e é vazia no começo",
-      isinstance(repertorio_real.get("usos"), list) and len(repertorio_real["usos"]) == 0,
-      len(repertorio_real.get("usos") or []))
+# Este contrato nasceu exigindo lista VAZIA (a memória estava começando). Em 06/11/2026 o
+# pulso publicou de verdade e gravou o primeiro uso — exigir vazio passaria a reprovar a casa
+# por estar funcionando. O que se cobra agora é o que sempre importou: a memória existe e cada
+# uso tem ângulo, assunto, canal e data (sem isso ela não impede repetição nenhuma).
+_usos_reais = repertorio_real.get("usos")
+checar("a memória de pauta existe no repositório e é uma lista",
+      isinstance(_usos_reais, list), type(_usos_reais).__name__)
+checar("todo uso da memória tem ângulo, assunto, canal e data",
+      all(isinstance(u, dict) and str(u.get("angulo") or "").strip()
+          and str(u.get("assunto") or "").strip() and str(u.get("canal") or "").strip()
+          and str(u.get("quando") or "").strip() for u in (_usos_reais or [])),
+      (_usos_reais or [])[:2])
 
 
 certos = sum(1 for _, ok in resultados if ok)

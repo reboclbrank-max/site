@@ -47,6 +47,31 @@ def _modulo(nome, arquivo):
     return modulo
 
 
+def _redator():
+    """O redator do vídeo (tools/redator-video.py) — quem escolhe o ângulo da gravação."""
+    spec = importlib.util.spec_from_file_location(
+        "redator_video", os.path.join(RAIZ, "tools", "redator-video.py"))
+    modulo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(modulo)
+    return modulo
+
+
+def texto_do_video(slug, raiz=RAIZ):
+    """(titulo, descricao, angulo, recusas) do redator — ou (None, None, None, recusas).
+
+    Sem ângulo aprovado o kit NÃO fica sem texto: ele mantém o molde e o portão do envio
+    recusa a repetição depois. Kit que se recusa a montar derrubaria a gravação inteira.
+    """
+    try:
+        redator = _redator()
+        escolha, recusas = redator.escolher(slug, raiz=raiz)
+    except Exception as erro:  # redator quebrado não pode impedir a gravação
+        return None, None, None, [{"angulo": None, "motivo": "redator falhou: " + str(erro)[:120]}]
+    if not escolha:
+        return None, None, None, recusas
+    return escolha["titulo"], escolha["descricao"], escolha["angulo"], recusas
+
+
 def numeros_da_partida(slug, raiz=RAIZ):
     """Os fatos daquela partida, do relatório que o agente escreveu jogando. {} se não houver.
 
@@ -146,8 +171,16 @@ def pacote(slug):
         descricao = descricao.replace(info["origem"] + "\n\n",
                                       info["origem"] + "\n\n" + linha + "\n\n", 1)
 
+    # O redator tem a palavra final: ele escolhe o ângulo e escreve com os números da partida,
+    # passando pelo mesmo portão dos outros canais. Sem ângulo aprovado, vale o molde acima —
+    # e o portão do envio recusa a repetição com número e motivo.
+    titulo_redator, descricao_redator, angulo, recusas = texto_do_video(slug, RAIZ)
+    if titulo_redator:
+        titulo, descricao = titulo_redator, descricao_redator
+
     p = {
         "id": slug + "-gameplay",
+        "angulo": angulo,
         "slug": slug,
         "arquivo": info["arquivo"],
         "arquivo_existe": os.path.exists(caminho),
@@ -165,6 +198,7 @@ def pacote(slug):
         "visibilidade": "público",
         "feito_para_criancas": "não",
         "origem": info["origem"],
+        "recusas_do_redator": recusas,
     }
     erros += kit.validar(p)
     return p, erros
@@ -190,6 +224,9 @@ def main():
     for p in dados["pacotes"]:
         print("pacote %s · %s · %d B · %s" % (p["id"], p["arquivo"], p["bytes"],
                                               p["titulo"][:60]))
+        print("  ângulo: %s" % (p.get("angulo") or "nenhum — o portão do envio vai recusar a repetição"))
+        for recusa in p.get("recusas_do_redator") or []:
+            print("  ✘ ângulo %s: %s" % (recusa.get("angulo"), recusa.get("motivo")))
     if dados["problemas"]:
         for slug, erros in dados["problemas"].items():
             print("✘ %s: %s" % (slug, "; ".join(erros)))

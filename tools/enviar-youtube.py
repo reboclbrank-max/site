@@ -160,6 +160,7 @@ def historico_publicado(raiz=RAIZ):
         saida.append({"canal": "youtube",
                       "titulo": str(item.get("titulo") or ""),
                       "texto": str(item.get("descricao") or item.get("texto") or ""),
+                      "angulo": item.get("angulo"),
                       "id": item.get("id"), "quando": item.get("quando")})
     saida.sort(key=lambda x: str(x.get("quando") or ""), reverse=True)
     return saida
@@ -274,7 +275,8 @@ def enviar_bytes(url_sessao, caminho, abrir=None):
         return None, "envio recusado (%s): %s" % (e.code, e.read().decode("utf-8", "replace")[:200])
 
 
-def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print, descricao=None):
+def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print, descricao=None,
+              angulo=None):
     """Grava o que foi publicado em posts/youtube-publicados.json.
 
     Por que existe (27/10/2026): o envio imprimia o link no log do run e nada ficava registrado.
@@ -297,6 +299,8 @@ def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print
         # a descrição fica guardada porque é ela que o portão de forma compara depois: sem o
         # texto, a próxima gravação passaria só por não ter com o que se comparar.
         "descricao": (descricao or "")[:400],
+        # o ângulo é o que faz o redator rodar: com ele gravado, o próximo vídeo escolhe outro
+        "angulo": angulo or None,
         "arquivo": arquivo or "",
         "quando": quando or datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
     })
@@ -365,7 +369,8 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
     if str(os.environ.get("YT_REGISTRO", "1")).strip() != "0":
         try:
             registrar(raiz, slug, pacote.get("titulo"), vid, arquivo=pacote.get("arquivo"),
-                      escrever=escrever, descricao=pacote.get("descricao"))
+                      escrever=escrever, descricao=pacote.get("descricao"),
+                      angulo=pacote.get("angulo"))
             registrar_impressao(sha, slug, vid, pacote.get("arquivo"), raiz=raiz,
                                 escrever=escrever)
         except Exception as erro:

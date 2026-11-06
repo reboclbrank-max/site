@@ -64,6 +64,7 @@ jobs:
             tools/desenhar-faixa.py tools/validar-instrucoes.py
           python3 tools/rodar-contratos-isolados.py tools/testes-gameplay.py
           python3 tools/rodar-contratos-isolados.py tools/testes-envio-automatico-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-redator-video.py
           python3 tools/rodar-contratos-isolados.py tools/testes-instrucoes-video.py
 
       # REQUISITO DO DONO: se o robô não jogar, a gravação NÃO é entregue. Antes bastava uma
