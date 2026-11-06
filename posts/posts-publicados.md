@@ -316,3 +316,6 @@ Dois jogos, um coração brasileiro ❤️🇧🇷 PRANCHETA: futebol tático na
 
 ## 03/11/2026 00:53 UTC
 PRANCHETA: futebol tático 100% fictício, desenhe a bola parada e simule (Godot, grátis nav/APK) 🇧🇷 CEIFALUME 0.1: fazenda noturna idle, a lavoura cresce 8h offline 🌙 Dois projetos, um dev solo brasileiro. #GodotEngine #I
+
+## 06/11/2026 14:39 UTC
+Voce programa colheitas longas antes de dormir sabendo que o jogo roda offline por até 8h e acorda com o celeiro cheio? #Ceifalume #IdleFarm

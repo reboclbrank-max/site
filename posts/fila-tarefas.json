@@ -979,11 +979,11 @@
    "id": "publicar-20261103T020215Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-03T02:02:15Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-06T14:37:10Z",
+   "resultado": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strftime(\"%d/%m\"), perguntas[dia % len(perguntas)], aula[:400].replace(\"\\n\", \" \")))\n/home/runner/work/site/site/tools/postador.py:1581: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
    "motivo": "empurrar a meta: itch: downloads: faltam 53 e o ritmo necessário é 5.3 por dia",
    "chave": "meta-itch: downloads",
    "origem": "perceber"
@@ -1037,6 +1037,31 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "medir-2026110606"
+  },
+  {
+   "id": "publicar-20261106T143710Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-06T14:37:10Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.78 por dia",
+   "chave": "meta-YouTube: inscritos",
+   "origem": "perceber"
+  },
+  {
+   "id": "medir-20261106T143710Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-06T14:37:10Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026110614"
   }
  ]
 }

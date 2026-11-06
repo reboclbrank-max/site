@@ -3,7 +3,72 @@
  "_por_que_existe": "Medido em 06/11/2026: 106 posts sociais e quatro seguidos com a mesma estrutura. Sem memória de pauta não existe novidade — existe sorte.",
  "_lei": "Ângulo em descanso por 6 publicações; par (ângulo, assunto) em descanso por 20. Só o ato humano revoga estas janelas (tools/redator.py).",
  "versao": 1,
- "usos": [],
- "fatos_de_uma_vez": [],
- "ultimo": null
+ "usos": [
+  {
+   "quando": "2026-11-06T14:38:51Z",
+   "canal": "site",
+   "angulo": "pergunta_que_ensina",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias",
+    "medido-bicos",
+    "medido-moedas",
+    "medido-plantadas",
+    "medido-tutorial"
+   ],
+   "abertura": "voce programa",
+   "tipo_abertura": "voce",
+   "esqueleto": [
+    "pergunta",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 1.0,
+   "texto": "Voce programa colheitas longas antes de dormir sabendo que o jogo roda offline por até 8h e acorda com o celeiro cheio? #Ceifalume #IdleFarm"
+  }
+ ],
+ "fatos_de_uma_vez": [
+  "ceifalume-8h",
+  "ceifalume-chuva",
+  "ceifalume-tutorial",
+  "ceifalume-save",
+  "ceifalume-culturas",
+  "ceifalume-melhorias",
+  "medido-bicos",
+  "medido-moedas",
+  "medido-plantadas",
+  "medido-tutorial"
+ ],
+ "ultimo": {
+  "quando": "2026-11-06T14:38:51Z",
+  "canal": "site",
+  "angulo": "pergunta_que_ensina",
+  "assunto": "ceifalume",
+  "fatos": [
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias",
+   "medido-bicos",
+   "medido-moedas",
+   "medido-plantadas",
+   "medido-tutorial"
+  ],
+  "abertura": "voce programa",
+  "tipo_abertura": "voce",
+  "esqueleto": [
+   "pergunta",
+   "frase"
+  ],
+  "hashtags": 2,
+  "nota": 1.0,
+  "texto": "Voce programa colheitas longas antes de dormir sabendo que o jogo roda offline por até 8h e acorda com o celeiro cheio? #Ceifalume #IdleFarm"
+ }
 }
