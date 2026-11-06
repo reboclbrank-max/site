@@ -33,6 +33,39 @@
     ],
     "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
    }
+  },
+  {
+   "quando": "2026-11-06T18:24:00Z",
+   "estrategia": "milho",
+   "assinatura": "62da85d4dd28",
+   "resumo": {
+    "estrategia": "milho",
+    "plantadas": 13,
+    "colhidas": 9,
+    "bicos": 640,
+    "sementes": [],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 29
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 18,
+      "t": 53
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 68,
+      "t": 55.3
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
   }
  ]
 }
