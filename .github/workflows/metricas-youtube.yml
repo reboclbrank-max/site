@@ -34,17 +34,27 @@ jobs:
         run: |
           python3 -m py_compile tools/metricas-youtube.py
           python3 tools/rodar-contratos-isolados.py tools/testes-metricas-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-medir-adesao.py
 
       - name: Mede os vídeos publicados
         env:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
         run: python3 tools/metricas-youtube.py
 
+      # ADESÃO: a régua escrita antes do número. Views do vídeo novo contra a mediana dos vídeos
+      # que o canal já tinha, mais inscritos ganhos na janela de 72h. Se a API não responder, o
+      # medidor falha e NÃO reescreve o JSON — número velho com data nova é mentira.
+      - name: Mede a adesão (a régua é declarada, o veredito vem com número)
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+        run: python3 tools/medir-adesao.py
+
       - name: Guarda o número medido
         run: |
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
           git add posts/youtube-metricas.json
+          [ -e posts/adesao.json ] && git add posts/adesao.json || true
           if git diff --cached --quiet; then
             echo "sem mudança nas métricas"
             exit 0
