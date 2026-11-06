@@ -104,6 +104,51 @@ def rodar(raiz, confirmacao, ok=True, impressora=None, hora_local=12, publicacoe
     return enviou, msg, chamadas
 
 
+# 0. ENSAIO (06/11/2026): roda todos os portões e para antes do token
+# O PRANCHETA nunca foi enviado ao canal; provar o pacote dele exigia um caminho que valida tudo
+# e não publica nada. É este. O dublê abaixo estoura se alguém pedir token: ensaio que pede token
+# não é ensaio, é envio disfarçado.
+def _token_proibido(*a, **k):
+    raise AssertionError("ENSAIO pediu token — ensaio não fala com o YouTube")
+
+
+raiz = bancada()
+ensaio_ok, ensaio_msg = enviar.executar(
+    "ceifalume-gameplay", "ENSAIO", raiz=str(raiz), renovar=_token_proibido,
+    validador=validador_ok, iniciar=_token_proibido, enviar=_token_proibido,
+    escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("ENSAIO roda os portões e não pede token", ensaio_ok is True and "ensaio" in ensaio_msg,
+       ensaio_msg)
+checar("ENSAIO não grava registro de envio",
+       not (raiz / "posts" / "youtube-publicados.json").exists()
+       or len(json.loads((raiz / "posts" / "youtube-publicados.json").read_text(
+           encoding="utf-8")).get("publicados") or []) == 0,
+       "registro foi escrito")
+checar("ENSAIO não registra impressão de arquivo",
+       not (raiz / "posts" / "videos-enviados.json").exists(),
+       "impressão foi escrita")
+def _capa_proibida(*a, **k):
+    raise AssertionError("ENSAIO aplicou capa — ensaio não toca no vídeo")
+
+
+raiz_capa = bancada()
+enviar.executar("ceifalume-gameplay", "ENSAIO", raiz=str(raiz_capa), renovar=_token_proibido,
+                validador=validador_ok, iniciar=_token_proibido, enviar=_token_proibido,
+                escrever=lambda *a, **k: None, hora_local=12, publicacoes=[],
+                aplicar_capa=_capa_proibida)
+checar("ENSAIO não aplica capa", not (raiz_capa / "posts" / "capas-aplicadas.json").exists())
+checar("ENSAIO diz o que faria quando o pacote passa", "passaria no portão" in ensaio_msg,
+       ensaio_msg)
+
+raiz_ruim = bancada()
+recusou, msg_ruim = enviar.executar(
+    "ceifalume-gameplay", "ENSAIO", raiz=str(raiz_ruim), renovar=_token_proibido,
+    validador=lambda pacote: ["vídeo pequeno demais"], iniciar=_token_proibido,
+    enviar=_token_proibido, escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("ENSAIO recusa pacote inválido e diz que recusaria", recusou is False, msg_ruim)
+checar("a recusa do ensaio é sobre o portão, não sobre envio",
+       "recusado" in msg_ruim.lower() or "RECUSARIA" in msg_ruim, msg_ruim)
+
 # 1. palavra errada
 with tempfile.TemporaryDirectory() as tmp:
     raiz = bancada()

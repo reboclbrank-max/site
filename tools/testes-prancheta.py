@@ -78,6 +78,11 @@ ok("o envio ao YouTube continua atrás da palavra PUBLICAR",
 ok("o envio ao YouTube existe e depende da palavra PUBLICAR",
    "enviar-youtube.py prancheta-gameplay" in wf and "publicar == 'PUBLICAR'" in wf)
 envio = wf[wf.index("enviar-youtube.py prancheta-gameplay"):]
+ok("existe ensaio do envio que não publica e não usa segredo",
+   "CONFIRMACAO: ENSAIO" in wf and "Ensaio do envio" in wf)
+_ensaio = wf[wf.index("Ensaio do envio"):wf.index("Envia ao YouTube (só com a palavra PUBLICAR)")]
+ok("o passo de ensaio não pede credencial do YouTube",
+   "YT_REFRESH_TOKEN" not in _ensaio and "secrets." not in _ensaio)
 ok("o envio está atrás de uma condição de PUBLICAR (nunca no agendamento)",
    "if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}" in
    wf[max(0, wf.index("enviar-youtube.py prancheta-gameplay") - 900):])
@@ -160,11 +165,41 @@ _tmp = tempfile.mkdtemp(prefix="kit-prancheta-")
 _kit = os.path.join(_tmp, "kit-gameplay.json")
 with open(_kit, "w", encoding="utf-8") as _f:
     json.dump({"pacotes": [{"id": "ceifalume-gameplay", "titulo": "CEIFALUME"}]}, _f)
+# quem escreve o texto é o redator do vídeo; o molde é só rede de segurança
+_esc, _rec = ppv.texto_do_redator()
+ok("o texto do PRANCHETA vem do redator (rotação de ângulo), não do molde",
+   _esc is not None, [_r.get("motivo") for _r in (_rec or [])][:2])
+pac_red = ppv.montar_pacote(REL, "pressao_rapida", "abc123def456", escolha=_esc)
+ok("com o redator, o pacote diz de que ângulo saiu",
+   _esc is None or str(pac_red.get("origem_do_texto", "")).startswith("redator:"),
+   pac_red.get("origem_do_texto"))
+pac_molde = ppv.montar_pacote(REL, "pressao_rapida", "abc123def456", escolha=None)
+ok("sem ângulo aprovado, o molde assume e o log diz que assumiu",
+   "molde" in str(pac_molde.get("origem_do_texto")), pac_molde.get("origem_do_texto"))
+ok("o pacote com texto do redator ainda passa a régua de descrição",
+   juizo.nota_descricao(pac_red["descricao"])[0] >= juizo.NOTA_MINIMA_DESCRICAO,
+   juizo.nota_descricao(pac_red["descricao"])[0])
+
 ppv.gravar_pacote(pac, _kit)
 _dados = json.load(open(_kit, encoding="utf-8"))
 ok("o pacote do PRANCHETA entra no kit sem apagar o do CEIFALUME",
    {p["id"] for p in _dados["pacotes"]} == {"ceifalume-gameplay", "prancheta-gameplay"},
    [p["id"] for p in _dados["pacotes"]])
+# quem escreve o texto é o redator do vídeo; o molde é só rede de segurança
+_esc, _rec = ppv.texto_do_redator()
+ok("o texto do PRANCHETA vem do redator (rotação de ângulo), não do molde",
+   _esc is not None, [_r.get("motivo") for _r in (_rec or [])][:2])
+pac_red = ppv.montar_pacote(REL, "pressao_rapida", "abc123def456", escolha=_esc)
+ok("com o redator, o pacote diz de que ângulo saiu",
+   _esc is None or str(pac_red.get("origem_do_texto", "")).startswith("redator:"),
+   pac_red.get("origem_do_texto"))
+pac_molde = ppv.montar_pacote(REL, "pressao_rapida", "abc123def456", escolha=None)
+ok("sem ângulo aprovado, o molde assume e o log diz que assumiu",
+   "molde" in str(pac_molde.get("origem_do_texto")), pac_molde.get("origem_do_texto"))
+ok("o pacote com texto do redator ainda passa a régua de descrição",
+   juizo.nota_descricao(pac_red["descricao"])[0] >= juizo.NOTA_MINIMA_DESCRICAO,
+   juizo.nota_descricao(pac_red["descricao"])[0])
+
 ppv.gravar_pacote(pac, _kit)
 ok("gravar o mesmo pacote duas vezes não duplica",
    len(json.load(open(_kit, encoding="utf-8"))["pacotes"]) == 2)

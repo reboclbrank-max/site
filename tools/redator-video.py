@@ -33,6 +33,12 @@ FUSO_DO_CANAL = -3
 
 # Fatos do jogo que o texto pode afirmar — todos vêm do kit oficial, não daqui.
 FATOS_DO_KIT = {
+    "prancheta": {
+        "mecanica": "você desenha a bola parada na prancheta e vê a partida simular",
+        "o_que_e": "simulador de gestão de futebol 100% fictício",
+        "onde": "grátis no navegador ou no APK",
+        "motor": "feito com Godot, feito no Brasil",
+    },
     "ceifalume": {
         "mecanica": "plante, colha e negocie à luz da lanterna",
         "atencao": "as plantações crescem por até 8 horas mesmo com o jogo fechado",
@@ -40,6 +46,81 @@ FATOS_DO_KIT = {
         "motor": "feito com Godot, feito no Brasil",
     },
 }
+
+
+# ESTRATÉGIAS DA GRAVAÇÃO, em português — a mesma lista de tools/cena.py, dita para o espectador.
+ESTRATEGIAS_EM_TEXTO = {
+    "pressao_rapida": "instrução de pressão no intervalo e velocidade rápida",
+    "posse_normal": "a partida inteira em ritmo normal, sem mexer no plano",
+    "contra_ataque": "sem instrução e velocidade rápida, mostrando a virada",
+}
+
+# ÂNGULOS DO PRANCHETA. Cada um declara de que fato precisa ("precisa") e é pulado com motivo se
+# o relatório daquela gravação não tiver o número. Nada aqui é estimado: é o que o gravador viu.
+ANGULOS_PRANCHETA = [
+    {
+        "id": "roteiro_do_agente",
+        "precisa": ("passos", "passos_confirmados"),
+        "hashtags": ["#prancheta", "#godot"],
+        "titulo": lambda f, j: "%d passos do menu à prancheta, %d confirmados por imagem" % (
+            f["passos"], f["passos_confirmados"]),
+        "corpo": lambda f, j: [
+            "A gravação atravessa o jogo do começo ao fim: menu, nova carreira, convite de clube, "
+            "sugestão do staff, microciclo da semana e, por fim, a prancheta tática.",
+            "São %d passos, e %d deles foram confirmados por MUDANÇA DE TELA — o gravador compara "
+            "o quadro antes e depois de cada toque, então passo que não muda nada não conta."
+            % (f["passos"], f["passos_confirmados"]),
+            "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+    {
+        "id": "estrategia_da_vez",
+        "precisa": ("estrategia",),
+        "hashtags": ["#prancheta", "#jogobrasileiro"],
+        "titulo": lambda f, j: "PRANCHETA: %s" % ESTRATEGIAS_EM_TEXTO.get(
+            f["estrategia"], f["estrategia"]),
+        "corpo": lambda f, j: [
+            "Esta gravação foi feita com uma escolha declarada: %s."
+            % ESTRATEGIAS_EM_TEXTO.get(f["estrategia"], f["estrategia"]),
+            "A escolha não é enfeite de título: ela muda os botões que o agente aperta dentro da "
+            "partida, e a cena de um vídeo para o outro deixa de ser a mesma.",
+            "O relatório da gravação guarda a assinatura da partida, então duas gravações iguais "
+            "não passam por novas. O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+    {
+        "id": "toques_da_partida",
+        "precisa": ("toques_partida",),
+        "hashtags": ["#prancheta", "#devlog"],
+        "titulo": lambda f, j: "O que %d toques fizeram na partida do PRANCHETA" % f["toques_partida"],
+        "corpo": lambda f, j: [
+            "Na partida, o agente deu %d toques e o gravador registrou o que cada um mudou na tela."
+            % f["toques_partida"],
+            "O plano veio do staff, o microciclo foi aplicado antes de jogar e a instrução do "
+            "intervalo mudou o comportamento do time — tudo isso está no vídeo, na ordem.",
+            "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+    {
+        "id": "como_funciona_prancheta",
+        "precisa": ("_fatos_do_jogo",),
+        "hashtags": ["#prancheta", "#futebol"],
+        "titulo": lambda f, j: "Como o PRANCHETA simula uma partida a partir da prancheta",
+        "corpo": lambda f, j: [
+            "O PRANCHETA é %s: %s." % (j["o_que_e"], j["mecanica"]),
+            "Na gravação, o agente escolhe o plano recomendado pelo staff e vê a partida simular "
+            "a partir dele — sem tempo real de comando, sem refleflexo: decisão antes do apito.",
+            "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+]
+
+ANGULOS_POR_JOGO = {"ceifalume": None, "prancheta": ANGULOS_PRANCHETA}
+
+
+def angulos_do_jogo(slug):
+    """Os ângulos daquele jogo. Sem lista própria, vale a lista do CEIFALUME."""
+    return ANGULOS_POR_JOGO.get(slug) or ANGULOS
 
 
 def _modulo(nome, arquivo):
@@ -489,7 +570,13 @@ def fatos_do_pacote(slug, raiz=RAIZ):
     f["nome"] = (jogo.get("nome") or slug) + ((" " + jogo.get("versao")) if jogo.get("versao") else "")
     f["nome_curto"] = jogo.get("nome") or slug
     f["nome_curto_upper"] = f["nome_curto"].upper()
-    f["toques_por_minuto"] = int(round(n["toques"] / max(1, n["minutos"])))
+    if n.get("toques") is not None:
+        f["toques_por_minuto"] = int(round(n["toques"] / max(1, n["minutos"])))
+    if slug == "prancheta":
+        # O ângulo precisa saber que estratégia foi essa gravação — é o que muda de um vídeo para
+        # o outro, e sem isso dois vídeos seguidos dizem a mesma coisa com palavras diferentes.
+        f["estrategia"] = n.get("estrategia") or "posse_normal"
+        f["toques"] = n.get("toques_partida") or 0
     f["slug"] = slug
     j = dict(FATOS_DO_KIT.get(slug) or {})
     if not j:
@@ -670,12 +757,16 @@ def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None)
             fatos["_anterior"] = dict(item["numeros"], quando=item.get("quando"))
             break
     usados = {x.get("fato") for x in hist if isinstance(x, dict) and x.get("fato")}
-    do_fato = angulos_de_fato(usados, raiz=raiz)
+    # Os ângulos "de fato" vêm de posts/fatos.json, que é a base de fatos do CEIFALUME. Aplicá-los
+    # ao PRANCHETA quebrava com KeyError('plantadas') — e pior: se um dia passasse, seria um vídeo
+    # do futebol citando número de plantio. Fato de jogo não atravessa jogo.
+    do_fato = angulos_de_fato(usados, raiz=raiz) if slug == "ceifalume" else []
     # O canal não deve emendar dez vídeos sobre a própria partida: alterna assunto (fato da casa)
     # com número (partida). Se o último vídeo foi de fato, tenta a partida primeiro — e vice-versa.
     ultimo_teve_fato = bool(hist and isinstance(hist[0], dict) and hist[0].get("fato"))
-    candidatos = ([a for a in do_fato] + list(ANGULOS)) if not ultimo_teve_fato \
-        else (list(ANGULOS) + list(do_fato))
+    do_jogo = angulos_do_jogo(slug)
+    candidatos = ([a for a in do_fato] + list(do_jogo)) if not ultimo_teve_fato \
+        else (list(do_jogo) + list(do_fato))
     recusas = []
     aprovados = []
     for angulo in candidatos:
@@ -698,10 +789,15 @@ def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None)
         if not decisao.get("publica"):
             recusas.append({"angulo": angulo["id"], "motivo": str(decisao.get("motivo") or "recusado")})
             continue
+        # Os números que o registro guarda são os MEDIDOS daquela gravação, e cada jogo mede o que
+        # tem: o CEIFALUME conta mudas/colheitas, o PRANCHETA conta passos e toques. Guardar
+        # "plantadas: KeyError" ou inventar zero seria pior que não guardar.
         aprovados.append({"angulo": angulo["id"], "fato": angulo.get("fato"),
                           "titulo": titulo, "descricao": descricao,
-                          "numeros": {k: fatos[k] for k in ("plantadas", "colhidas", "toques",
-                                                            "minutos", "toques_por_minuto")}})
+                          "numeros": {k: fatos[k] for k in (
+                              "plantadas", "colhidas", "toques", "minutos", "toques_por_minuto",
+                              "passos", "passos_confirmados", "toques_partida", "estrategia")
+                              if k in fatos}})
     if aprovados:
         # Todos os ângulos foram julgados (a recusa de cada um fica registrada); o primeiro
         # aprovado na ordem declarada é o que publica.

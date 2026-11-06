@@ -65,14 +65,30 @@ def gravar_registro(registro, caminho=None):
     os.replace(caminho + ".tmp", caminho)
 
 
-def candidatos(videos, registro):
+# Nomes que identificam jogo da casa. Vídeo cujo título não cita nenhum deles NÃO recebe capa
+# por omissão: em 06/11/2026 a lista de uploads sem capa tinha 34 vídeos, e 29 deles eram de
+# 2025 com títulos que não são da casa (Racing Master, Cooking Bride, Summoners War, FIFA
+# Rivals...). Pintar a marca da casa em cima do conteúdo dos outros seria errado — e o erro
+# seria invisível, porque a ferramenta diria "capa aplicada" com sucesso.
+NOMES_DA_CASA = ("ceifalume", "prancheta", "pelle", "brasa", "reboclbrank")
+
+
+def da_casa(titulo):
+    baixo = str(titulo or "").lower()
+    return any(n in baixo for n in NOMES_DA_CASA)
+
+
+def candidatos(videos, registro, so_da_casa=True):
     """Vídeos sem capa da casa, do mais novo para o mais antigo."""
     ja = {str(x.get("id")) for x in (registro or {}).get("aplicadas") or [] if isinstance(x, dict)}
     saida = []
     for v in videos or []:
         vid = str((v or {}).get("id") or "").strip()
-        if vid and vid not in ja:
-            saida.append(dict(v, id=vid))
+        if not vid or vid in ja:
+            continue
+        if so_da_casa and not da_casa((v or {}).get("titulo")):
+            continue
+        saida.append(dict(v, id=vid))
     return saida
 
 
@@ -149,7 +165,7 @@ def aplicar(access_token, vid, caminho, aplicar_fn=None):
 
 def executar(access_token, confirmacao, raiz=RAIZ, limite=6, registro_caminho=None,
              listar=None, baixar=None, aplicar_fn=None, escrever=print, somente=None,
-             forcar=False):
+             forcar=False, todos=False):
     """Aplica capa nos vídeos antigos. Devolve (ok, relatório)."""
     if str(confirmacao or "").strip().upper() != PALAVRA:
         return False, {"motivo": "faltou a palavra %s: capa também é publicação, não sai sozinha"
@@ -159,13 +175,15 @@ def executar(access_token, confirmacao, raiz=RAIZ, limite=6, registro_caminho=No
     if not videos:
         return False, {"motivo": "a API não devolveu vídeos (token sem permissão?)",
                        "aplicadas": [], "recusadas": []}
-    alvos = candidatos(videos, registro)
+    alvos = candidatos(videos, registro, so_da_casa=not todos)
     if forcar:
         # repintar de propósito: quando o desenho da capa melhora, a capa velha envelhece junto.
         # O registro continua valendo como histórico (o id é reescrito, não duplicado).
         ja = {x["id"] for x in (registro.get("aplicadas") or [])}
-        alvos = [v for v in videos if v.get("id")] if not somente else [
-            v for v in videos if v.get("id") in set(somente)]
+        base = [v for v in videos if v.get("id")]
+        if not (todos or somente):
+            base = [v for v in base if da_casa(v.get("titulo"))]
+        alvos = base if not somente else [v for v in base if v["id"] in set(somente)]
         registro["aplicadas"] = [x for x in (registro.get("aplicadas") or [])
                                  if x.get("id") not in {v["id"] for v in alvos}]
         void = ja
@@ -200,9 +218,12 @@ def executar(access_token, confirmacao, raiz=RAIZ, limite=6, registro_caminho=No
         escrever("✓ %s · %s · sha %s" % (v["id"], v.get("titulo", "")[:52], resumo["sha256"]))
     if aplicadas and registro_caminho is not None:
         gravar_registro(registro, registro_caminho)
-    return bool(aplicadas or not alvos), {"aplicadas": aplicadas, "recusadas": recusadas,
-                                          "candidatos": len(candidatos(videos, carregar_registro(
-                                              registro_caminho)))}
+    pendentes = candidatos(videos, carregar_registro(registro_caminho), so_da_casa=not todos)
+    return bool(aplicadas or not alvos), {
+        "aplicadas": aplicadas, "recusadas": recusadas,
+        "candidatos": len(pendentes),
+        "fora_da_casa": len([v for v in videos if v.get("id") and not da_casa(v.get("titulo"))]),
+    }
 
 
 def main(argv):
@@ -212,16 +233,19 @@ def main(argv):
     ap.add_argument("--registro", default=REGISTRO)
     ap.add_argument("--so", nargs="*", default=None, help="ids específicos")
     ap.add_argument("--ensaio", action="store_true", help="lista os candidatos e não aplica")
+    ap.add_argument("--todos", action="store_true",
+                    help="inclui vídeos que não citam jogo da casa (cuidado: conteúdo alheio)")
     ap.add_argument("--forcar", action="store_true",
                     help="repinta mesmo quem já tem capa (quando o desenho melhorou)")
     a = ap.parse_args(argv[1:])
     if a.ensaio:
         registro = carregar_registro(a.registro)
-        for v in candidatos(listar_videos(_token()), registro)[:a.limite]:
+        videos = listar_videos(_token())
+        for v in candidatos(videos, registro, so_da_casa=not a.todos)[:a.limite]:
             print("%s  %s  %s" % (v["id"], v.get("publicado_em", "")[:10], v.get("titulo", "")[:60]))
         return 0
     ok, rel = executar(_token(), a.confirmacao, limite=a.limite, registro_caminho=a.registro,
-                       somente=a.so, forcar=a.forcar)
+                       somente=a.so, forcar=a.forcar, todos=a.todos)
     print(json.dumps({k: rel[k] for k in ("aplicadas", "recusadas")}, ensure_ascii=False, indent=1))
     if not ok:
         print("✘ " + rel.get("motivo", "nada aplicado"), file=sys.stderr)

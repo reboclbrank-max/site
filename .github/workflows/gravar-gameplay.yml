@@ -195,13 +195,19 @@ jobs:
       - name: Confere que o vídeo tem legenda, som e cartão
         run: python3 tools/rodar-contratos-isolados.py tools/testes-video-final.py media/gameplay/ceifalume-gameplay.mp4
 
-      - name: Guarda o vídeo no repositório (é o arquivo que o envio e o chat usam)
+      - name: Guarda o registro no repositório (o vídeo vai como artefato, não como binário)
+        # POLÍTICA NOVA (06/11/2026). Até aqui este passo commitava o .mp4 a cada gravação —
+        # 4 por dia no CEIFALUME (≈9 MB por rodada, contando o arquivo com instruções) e 3 no
+        # PRANCHETA. O repositório chegou a 325 MB de histórico por causa disso, e crescia
+        # ~40 MB/dia: em um mês seria mais de 1 GB de vídeo antigo guardado para sempre.
+        # O vídeo NÃO precisa ficar no git para ser enviado: quem envia é este mesmo job, logo
+        # depois, com o arquivo ainda em disco. O que precisa de histórico é o registro
+        # (decisões, capa, cena, kit) — e esse continua sendo commitado.
+        # O arquivo publicado fica no artefato do run (14 dias) para quem quiser baixar.
         run: |
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
-          git add media/gameplay/ceifalume-gameplay.mp4 \
-                  media/gameplay/ceifalume-gameplay-instrucoes.mp4 \
-                  media/gameplay/ceifalume-gameplay-cru-decisoes.json \
+          git add media/gameplay/ceifalume-gameplay-cru-decisoes.json \
                   media/gameplay/ceifalume-capa.png \
                   posts/kit-gameplay.json \
                   posts/cenas.json

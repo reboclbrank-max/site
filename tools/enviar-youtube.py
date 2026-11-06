@@ -50,6 +50,11 @@ URL_UPLOAD = ("https://www.googleapis.com/upload/youtube/v3/videos"
               "?uploadType=resumable&part=snippet,status")
 PALAVRA_CONFIRMACAO = "PUBLICAR"
 PALAVRA_AUTOMATICA = "AUTOMATICO"
+# ENSAIO (06/11/2026): roda TODOS os portões — kit, arquivo, impressão, título novo, régua do
+# texto — e para antes de pedir token. Serve para provar um pacote que nunca foi enviado (o do
+# PRANCHETA, por exemplo) sem tocar no canal. Ensaio não grava registro, não aplica capa, não
+# abre conexão: é o único caminho que promete e cumpre "não publica nada".
+PALAVRA_ENSAIO = "ENSAIO"
 REGISTRO_IMPRESSOES = os.path.join("posts", "videos-enviados.json")
 REGISTRO_PUBLICADOS = os.path.join("posts", "youtube-publicados.json")
 
@@ -322,6 +327,11 @@ def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print
         # e quem lê o registro (chamada, mostruario, conferência) lia um texto quebrado. Agora o
         # corte é em fim de parágrafo (ou de frase), com reticência só quando precisa.
         "descricao": _resumo_da_descricao(descricao),
+        # DIZ SE ESTÁ INTEIRA. O resumo pode cortar em 600 caracteres; quem lê o registro (chamada,
+        # mostruário, conferência) precisa saber se está vendo a descrição do vídeo ou um resumo
+        # dela. Antes o campo era escrito à mão em alguns registros e faltava em outros — o vídeo
+        # FRCzgqUlMFY (06/11, 20h) entrou sem o campo e o contrato do registro só descobriu depois.
+        "descricao_completa": len((descricao or "").strip()) <= 600,
         # o ângulo é o que faz o redator rodar: com ele gravado, o próximo vídeo escolhe outro
         "angulo": angulo or None,
         "fato": fato or None,
@@ -336,6 +346,48 @@ def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print
         json.dump(atual, f, ensure_ascii=False, indent=1)
     escrever("registro: posts/youtube-publicados.json (" + str(len(atual["publicados"])) + " vídeo(s))")
     return destino
+
+
+def registrar_capa_aplicada(vid, titulo, caminho, raiz=RAIZ, quando=None):
+    """Anota em posts/capas-aplicadas.json que ESTE vídeo recebeu capa da casa.
+
+    POR QUE (06/11/2026): o caminho do envio aplicava capa e não contava para ninguém. O vídeo
+    FRCzgqUlMFY subiu com capa às 20h e, duas horas depois, a ferramenta das capas dos antigos
+    listou ele como "sem capa" — dois registros que não conversavam iam repintar o que já estava
+    pintado. Uma capa aplicada vale para os dois caminhos, então ela se anota num arquivo só.
+    """
+    import hashlib
+    from datetime import datetime, timezone
+    destino = os.path.join(raiz, "posts", "capas-aplicadas.json")
+    registro = {"_o_que_e": "uma linha por vídeo que recebeu capa da casa", "aplicadas": []}
+    if os.path.exists(destino):
+        try:
+            with open(destino, encoding="utf-8") as f:
+                dado = json.load(f)
+            if isinstance(dado, dict) and isinstance(dado.get("aplicadas"), list):
+                registro = dado
+        except (OSError, ValueError):
+            pass
+    sha = ""
+    try:
+        with open(caminho, "rb") as f:
+            sha = hashlib.sha256(f.read()).hexdigest()[:16]
+    except OSError:
+        pass
+    linha = {"id": str(vid), "quando": quando or datetime.now(timezone.utc).strftime(
+        "%Y-%m-%dT%H:%M:%SZ"), "titulo": titulo, "capa": caminho, "sha256": sha}
+    registro["aplicadas"] = [x for x in registro["aplicadas"]
+                             if not (isinstance(x, dict) and str(x.get("id")) == str(vid))]
+    registro["aplicadas"].append(linha)
+    try:
+        os.makedirs(os.path.dirname(os.path.abspath(destino)), exist_ok=True)
+        with open(destino + ".tmp", "w", encoding="utf-8") as f:
+            json.dump(registro, f, ensure_ascii=False, indent=1)
+            f.write("\n")
+        os.replace(destino + ".tmp", destino)
+    except OSError:
+        return None
+    return linha
 
 
 def caminho_da_capa(pacote, raiz=RAIZ):
@@ -382,7 +434,7 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
     vídeo comprovadamente novo). Qualquer outra coisa é recusa.
     """
     pedido = str(confirmacao or "").strip().upper()
-    if pedido not in (PALAVRA_CONFIRMACAO, PALAVRA_AUTOMATICA):
+    if pedido not in (PALAVRA_CONFIRMACAO, PALAVRA_AUTOMATICA, PALAVRA_ENSAIO):
         return False, ("faltou a confirmação explícita (palavra %s ou %s): a casa não publica "
                        "sozinha sem prova" % (PALAVRA_CONFIRMACAO, PALAVRA_AUTOMATICA))
     # KIT_YOUTUBE permite apontar para outro kit (o do gameplay gravado, por exemplo) sem
@@ -397,6 +449,29 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
     if erros:
         return False, "kit recusado: " + "; ".join(erros)
     sha = (impressora or impressao)(arquivo_do_video(pacote, raiz))
+
+    if pedido == PALAVRA_ENSAIO:
+        # A ORDEM É A MESMA DO ENVIO DE VERDADE, e o ensaio para antes do token. Se um portão
+        # muda aqui e não ali, o ensaio vira mentira — por isso o ensaio chama as mesmas funções.
+        libera, motivo = pode_enviar_sozinho(pacote, raiz=raiz, impressora=impressora)
+        escrever("portão do arquivo: " + motivo)
+        libera_texto, motivo_texto, numeros_texto = portao_do_texto(
+            pacote, raiz=raiz, hora_local=hora_local, publicacoes=publicacoes)
+        escrever("portão do texto: " + motivo_texto)
+        if numeros_texto:
+            escrever("portão do texto (números): "
+                     + json.dumps(numeros_texto, ensure_ascii=False, sort_keys=True))
+        capa = caminho_da_capa(pacote, raiz)
+        if capa:
+            escrever("capa: %s (%d bytes)" % (capa, os.path.getsize(capa)))
+        else:
+            escrever("capa: nenhuma encontrada")
+        escrever("ensaio: nada foi enviado, nada foi registrado, nenhuma capa foi aplicada")
+        if not (libera and libera_texto):
+            return False, ("ensaio RECUSARIA o envio: " + (motivo if not libera else motivo_texto))
+        return True, ("ensaio: o pacote %s passaria no portão (%s) — título \"%s\""
+                      % (slug, motivo, str(pacote.get("titulo"))[:60]))
+
     if pedido == PALAVRA_AUTOMATICA:
         libera, motivo = pode_enviar_sozinho(pacote, raiz=raiz, impressora=impressora)
         if not libera:
@@ -446,6 +521,10 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
         except Exception as erro:  # noqa: BLE001
             deu, aviso = False, "capa falhou: " + str(erro)[:120]
         escrever(("✓ " if deu else "aviso: ") + aviso)
+        if deu:
+            linha = registrar_capa_aplicada(vid, pacote.get("titulo"), capa, raiz=raiz)
+            if linha:
+                escrever("capa registrada em posts/capas-aplicadas.json (%s)" % linha["sha256"])
     return True, "publicado: https://youtu.be/" + vid
 
 

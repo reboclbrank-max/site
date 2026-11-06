@@ -93,6 +93,38 @@ for angulo in ANGULOS_OK:
                         publicacoes=PORTAO_VAZIO, calendario=rv.JANELA_DO_CANAL, hora_local=10)
     ok("%s: passa o portão contra um canal sem histórico" % nome, decisao["publica"], decisao["motivo"])
 
+# 5b. PRANCHETA: ângulos próprios, número medido, nada de vocabulário de plantio (06/11/2026)
+PRAN = getattr(rv, "ANGULOS_PRANCHETA", [])
+ok("o PRANCHETA tem ângulos próprios no redator do vídeo", len(PRAN) >= 4, len(PRAN))
+ok("todo ângulo do PRANCHETA declara id, precisa, hashtags, título e corpo",
+   all(a.get("id") and a.get("precisa") is not None and a.get("hashtags")
+       and callable(a.get("titulo")) and callable(a.get("corpo")) for a in PRAN))
+_FATOS_P = rv.fatos_do_pacote("prancheta")
+ok("os fatos do PRANCHETA vêm do relatório da gravação (passos e toques)",
+   _FATOS_P.get("passos") and _FATOS_P.get("passos_confirmados") is not None, _FATOS_P)
+ok("o PRANCHETA não inventa fato de plantio", "plantadas" not in _FATOS_P, list(_FATOS_P))
+_esc_p, _rec_p = rv.escolher("prancheta")
+ok("o redator aprova um ângulo do PRANCHETA com dado real", _esc_p is not None,
+   [_r["motivo"][:60] for _r in _rec_p][:3])
+if _esc_p:
+    _texto_p = _esc_p["titulo"] + " " + _esc_p["descricao"]
+    # cuidado com falso positivo: "MUDANÇA de tela" contém "muda". A régua é por palavra.
+    import re as _re_p
+    # "muda" brasileiro é ambíguo: o substantivo (muda de planta) e o verbo (muda de tela).
+    # A régua pega só as formas que NÃO têm verbo: "mudas" no plural e os outros substantivos.
+    _plantio = _re_p.findall(r"\b(mudas|colheitas|celeiro|sementes|plantações)\b",
+                             _texto_p.lower())
+    ok("o texto do PRANCHETA não fala de muda, colheita nem celeiro", not _plantio, _plantio)
+    ok("o texto do PRANCHETA carrega a fonte da partida",
+       "posts/cenas.json" in _esc_p["descricao"])
+    ok("o título do PRANCHETA cabe na faixa do canal",
+       12 <= len(_esc_p["titulo"]) <= 90, len(_esc_p["titulo"]))
+    ok("o registro dos números do PRANCHETA guarda o que ele mede",
+       _esc_p["numeros"].get("passos") and "plantadas" not in _esc_p["numeros"],
+       _esc_p["numeros"])
+ok("fato do CEIFALUME não atravessa para o PRANCHETA",
+   all(a.get("id") not in ("numeros", "cultivo", "moedas") for a in PRAN), [a["id"] for a in PRAN])
+
 # 6. todo número escrito existe no relatório (ou é fato do kit: 4 campos, 8 horas)
 # A régua: todo inteiro escrito no texto tem de sair de um fato do relatório (ou do kit: 4 células,
 # 8 horas de crescimento offline, dígitos da versão). Número que não está aqui é invenção.

@@ -108,6 +108,21 @@ def main():
     escrevem = [n for n, s in wfs.items() if "git push" in s or "entrar-no-main.sh" in s]
     sem_ajudante = [n for n in escrevem if "entrar-no-main.sh" not in wfs[n]
                     and not n.startswith(("gravar-", "editar-itch"))]
+    # 7b. BINÁRIO NÃO ENTRA NO GIT (06/11/2026). Os workflows de gravação commitavam o .mp4 de
+    #     cada tomada: 4 por dia no CEIFALUME (≈9 MB) e 3 no PRANCHETA. O repositório chegou a
+    #     325 MB de histórico e crescia ~40 MB/dia. O vídeo só é necessário DURANTE o run que o
+    #     produziu (é ele que envia); o artefato guarda o arquivo. Este contrato impede a volta.
+    import re as _re
+    commitam_video = []
+    for nome, texto in wfs.items():
+        for linha in texto.splitlines():
+            if "git add" in linha and _re.search(r"\.(mp4|webm|mov|mkv)\b", linha):
+                commitam_video.append(nome)
+                break
+    ok("NENHUM workflow commita vídeo no main (binário vai como artefato)", not commitam_video,
+       commitam_video)
+    guardam = [n for n, t in wfs.items() if "upload-artifact" in t and "media/gameplay" in t]
+    ok("os workflows de gravação guardam o vídeo como artefato", len(guardam) >= 2, guardam)
     ok("todo workflow que escreve no main usa o entrar-no-main (gravar-* manda binário e não "
        "conflita em arquivo gerado)", not sem_ajudante, sem_ajudante)
     ajudante = os.path.join(RAIZ, "tools", "entrar-no-main.sh")

@@ -18,7 +18,7 @@ on:
         required: false
         default: "80"
       publicar:
-        description: "digite PUBLICAR para enviar ao YouTube (vazio = só gravar)"
+        description: "PUBLICAR envia ao YouTube · ENSAIO roda todos os portões sem publicar · vazio = só gravar"
         required: false
         default: ""
   schedule:
@@ -142,11 +142,14 @@ jobs:
             --capa media/gameplay/prancheta-capa.png \
             --kit posts/kit-gameplay.json
 
-      - name: Guarda o vídeo no repositório (é o arquivo que o envio usa)
+      - name: Guarda o registro no repositório (o vídeo vai como artefato, não como binário)
+        # POLÍTICA NOVA (06/11/2026): o .mp4 deixa de entrar no git. Ele só é necessário DURANTE
+        # o run que o produziu (é esse run que envia), e commitar 3 gravações por dia colocava
+        # ~3,3 MB/dia de binário para sempre no histórico. O artefato do run guarda o arquivo.
         run: |
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
-          git add media/gameplay/prancheta-gameplay.mp4 media/gameplay/prancheta-cru-decisoes.json
+          git add media/gameplay/prancheta-cru-decisoes.json
           git add media/gameplay/prancheta-capa.png posts/cenas.json posts/kit-gameplay.json
           if git diff --cached --quiet; then
             echo "vídeo sem mudança"
@@ -205,6 +208,26 @@ jobs:
             echo
             echo "Envio ao YouTube: $STATUS_PUBLICACAO"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Ensaio do envio (roda todos os portões e não publica)
+        # O caminho de envio do PRANCHETA nunca tinha rodado. Ensaio valida kit, arquivo, capa,
+        # impressão, título novo e a régua do texto — e para antes de pedir token. Não usa
+        # segredo nenhum: se o ensaio depender de credencial, ele não prova nada.
+        if: ${{ github.event.inputs.publicar == 'ENSAIO' }}
+        env:
+          CONFIRMACAO: ENSAIO
+          KIT_YOUTUBE: posts/kit-gameplay.json
+        run: |
+          set +e
+          python3 tools/enviar-youtube.py prancheta-gameplay | tee /tmp/ensaio.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Ensaio do envio do PRANCHETA (nada foi publicado)"
+            echo '```'
+            cat /tmp/ensaio.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código do ensaio: $codigo"
 
       - name: Envia ao YouTube (só com a palavra PUBLICAR)
         # Até 06/11/2026 este workflow tinha o campo PUBLICAR e NENHUM passo de envio: o resumo

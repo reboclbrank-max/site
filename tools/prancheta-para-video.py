@@ -43,6 +43,22 @@ def _modulo(nome, arquivo):
     return mod
 
 
+def texto_do_redator(raiz=RAIZ):
+    """(escolha, recusas) do redator do vídeo. `escolha` = None quando nenhum ângulo passou.
+
+    POR QUE (06/11/2026): o texto do PRANCHETA saía daqui, de um molde de três títulos — fora da
+    rotação de ângulos e da régua de "título quase igual" que o CEIFALUME já tinha. Duas semanas
+    disso e o canal teria o mesmo vídeo de futebol com outra etiqueta. Agora quem escreve é o
+    redator; este arquivo só monta o pacote e, se o redator recusar tudo, cai no molde antigo
+    (e diz no log que caiu).
+    """
+    try:
+        redator = _modulo("redator_video", "redator-video.py")
+        return redator.escolher("prancheta", raiz=raiz)
+    except Exception as erro:  # noqa: BLE001
+        return None, [{"angulo": None, "motivo": "redator falhou: " + str(erro)[:120]}]
+
+
 def ler_decisoes(caminho):
     with open(caminho, encoding="utf-8") as f:
         dados = json.load(f)
@@ -125,15 +141,22 @@ def _hoje():
     return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
-def montar_pacote(decisoes, estrategia, assinatura, raiz=RAIZ, capa=None):
+def montar_pacote(decisoes, estrategia, assinatura, raiz=RAIZ, capa=None, escolha=None):
     numeros = numeros_do_relatorio(decisoes)
     kit = _modulo("kit_youtube", "kit-youtube.py")
     info = (getattr(kit, "JOGOS", {}) or {}).get("prancheta") or {}
-    titulo = titulo_da_gravacao(estrategia, numeros)
-    descricao = descricao_da_gravacao(estrategia, numeros, assinatura)
+    if escolha and escolha.get("titulo") and escolha.get("descricao"):
+        titulo, descricao = escolha["titulo"], escolha["descricao"]
+        origem_do_texto = "redator:%s" % escolha.get("angulo")
+    else:
+        titulo = titulo_da_gravacao(estrategia, numeros)
+        descricao = descricao_da_gravacao(estrategia, numeros, assinatura)
+        origem_do_texto = "molde (o redator recusou todos os ângulos)"
     pacote = {
         "id": "prancheta-gameplay",
         "slug": "prancheta",
+        "angulo": (escolha or {}).get("angulo"),
+        "origem_do_texto": origem_do_texto,
         "estrategia": estrategia,
         "vinheta": assinatura,
         "numeros": numeros,
@@ -189,12 +212,16 @@ def main(argv):
     decisoes = ler_decisoes(a.relatorio)
     estrategia = a.estrategia or decisoes.get("estrategia") or "posse_normal"
     assinatura = a.assinatura or assinatura_do_registro("prancheta")
-    pacote = montar_pacote(decisoes, estrategia, assinatura, capa=a.capa)
+    escolha, recusas = texto_do_redator()
+    for r in (recusas or [])[:6]:
+        print("✘ ângulo %s: %s" % (r.get("angulo"), str(r.get("motivo"))[:90]), file=sys.stderr)
+    pacote = montar_pacote(decisoes, estrategia, assinatura, capa=a.capa, escolha=escolha)
     if not a.sem_kit:
         gravar_pacote(pacote, a.kit)
     print("pacote: %s · estratégia %s · %d passos (%d confirmados)"
           % (pacote["id"], pacote["estrategia"], pacote["numeros"]["passos"],
              pacote["numeros"]["passos_confirmados"]))
+    print("texto de: %s" % pacote["origem_do_texto"])
     print("titulo: %s" % pacote["titulo"])
     print("capa_numeros: %s" % numeros_da_capa(pacote["numeros"]))
     juizo = _modulo("juizo", "juizo.py")

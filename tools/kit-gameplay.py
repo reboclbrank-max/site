@@ -26,6 +26,17 @@ SAIDA = os.path.join(RAIZ, "posts", "kit-gameplay.json")
 
 # slug do jogo -> (arquivo do gameplay, título próprio, linha de origem)
 GAMEPLAY = {
+    "prancheta": {
+        # PRANCHETA: o relatório dele é outro (passos do roteiro, não plantio). O redator do vídeo
+        # aprendeu a ler os dois — antes o texto do PRANCHETA saía de uma ferramenta paralela, sem
+        # rotação de ângulo e sem a régua de "título quase igual" (dívida apontada em 06/11/2026).
+        "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+        "sufixo_titulo": " — gameplay gravado no navegador",
+        "decisoes": "media/gameplay/prancheta-cru-decisoes.json",
+        "origem": ("Gameplay: gravado automaticamente do PRANCHETA rodando no build web do "
+                   "itch.io. A trilha é sintetizada pelo script de produção e as legendas "
+                   "descrevem o que o agente fez na partida."),
+    },
     "ceifalume": {
         # o arquivo do kit é o que tem as INSTRUÇÕES na tela (rodada 111): é esse que vai ao YouTube
         "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
@@ -85,6 +96,28 @@ def numeros_da_partida(slug, raiz=RAIZ):
     if not isinstance(dados, dict):
         return {}
     decisoes = dados.get("decisoes") or []
+    if slug == "prancheta":
+        # Relatório do PRANCHETA: 13 passos do roteiro, quantos foram CONFIRMADOS por mudança de
+        # tela e quantos toques o agente deu na partida. Não há "plantadas": cada jogo mede o que
+        # ele tem, e o texto só usa o que existir.
+        if not isinstance(decisoes, list) or not decisoes:
+            return {}
+        confirmados = dados.get("passos_confirmados")
+        if confirmados is None:
+            confirmados = sum(1 for d in decisoes if isinstance(d, dict) and d.get("ok"))
+        try:
+            toques = int(dados.get("toques_partida") or 0)
+        except (TypeError, ValueError):
+            toques = 0
+        segundos = 0.0
+        try:
+            segundos = float(decisoes[-1].get("t") or 0)
+        except (TypeError, ValueError):
+            segundos = 0.0
+        return {"passos": len(decisoes), "passos_confirmados": int(confirmados or 0),
+                "toques_partida": toques, "segundos": round(segundos),
+                "minutos": max(1, int(round(segundos / 60.0))),
+                "estrategia": str(dados.get("estrategia") or "posse_normal")}
     segundos = 0.0
     if isinstance(decisoes, list) and decisoes and isinstance(decisoes[-1], dict):
         try:

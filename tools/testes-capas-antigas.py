@@ -161,6 +161,45 @@ ok("repintar não duplica a linha no registro",
    len([x for x in json.load(open(reg_for, encoding="utf-8"))["aplicadas"]
         if x["id"] == "AAA111"]) == 1)
 
+# ---- só conteúdo da casa por omissão (06/11/2026) -----------------------------------------
+# A lista real do canal tem 34 uploads sem capa da casa, e 29 deles são de 2025 com títulos que
+# não são da casa (Racing Master, Cooking Bride, Summoners War...). O padrão tem de ser o seguro.
+VIDEOS_MISTOS = VIDEOS + [
+    {"id": "ZZZ999", "titulo": "Racing Master: O MELHOR jogo de carros realista de 2025!"},
+    {"id": "YYY888", "titulo": "Cooking Bride to Primrose Lake"},
+]
+ok("vídeo que não cita jogo da casa fica de fora por omissão",
+   "ZZZ999" not in [v["id"] for v in capa.candidatos(VIDEOS_MISTOS, {"aplicadas": []})],
+   [v["id"] for v in capa.candidatos(VIDEOS_MISTOS, {"aplicadas": []})])
+ok("com --todos ele entra (quem manda é o dono, não a ferramenta)",
+   "ZZZ999" in [v["id"] for v in capa.candidatos(VIDEOS_MISTOS, {"aplicadas": []},
+                                                  so_da_casa=False)])
+ok("o relatório conta quantos ficaram fora por não serem da casa",
+   "fora_da_casa" in capa.executar("tok", "APLICAR", raiz=tmp, limite=1,
+                                   registro_caminho=os.path.join(tmp, "r5.json"),
+                                   listar=lambda t, m=50: VIDEOS_MISTOS, baixar=baixar_falso,
+                                   aplicar_fn=aplicar_ok, escrever=lambda *a, **k: None)[1])
+
+# ---- os dois caminhos de capa falam o MESMO registro (06/11/2026) -------------------------
+import importlib.util as _iu
+_s = _iu.spec_from_file_location("enviar_yt", os.path.join(RAIZ, "tools", "enviar-youtube.py"))
+enviar_yt = _iu.module_from_spec(_s)
+_s.loader.exec_module(enviar_yt)
+reg_unico = os.path.join(tmp, "capas-unificado.json")
+from PIL import Image as _Im
+if tem_pil:
+    _capa = os.path.join(tmp, "capa-envio.png")
+    _Im.new("RGB", (1280, 720), (9, 9, 9)).save(_capa)
+    linha = enviar_yt.registrar_capa_aplicada("CCC333", "título do envio", _capa, raiz=tmp)
+    ok("o envio registra a capa que aplicou", bool(linha and linha.get("sha256")), linha)
+    lido = capa.carregar_registro(os.path.join(tmp, "posts", "capas-aplicadas.json"))
+    ok("a ferramenta das capas lê o que o envio registrou",
+       any(x["id"] == "CCC333" for x in lido["aplicadas"]), lido)
+    enviar_yt.registrar_capa_aplicada("CCC333", "título do envio", _capa, raiz=tmp)
+    lido2 = capa.carregar_registro(os.path.join(tmp, "posts", "capas-aplicadas.json"))
+    ok("registrar duas vezes não duplica (upsert por id)",
+       len([x for x in lido2["aplicadas"] if x["id"] == "CCC333"]) == 1)
+
 # ---- o workflow ---------------------------------------------------------------------------
 wf = open(os.path.join(RAIZ, ".github", "workflows", "capas-dos-antigos.yml"),
           encoding="utf-8").read()
