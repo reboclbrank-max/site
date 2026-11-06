@@ -75,5 +75,27 @@ ok("o commit do registro cita a data com o formato entre aspas",
    "date -u +'%d/%m %H:%M UTC'" in texto_workflow,
    "o formato sem aspas gera mensagem vazia (...)")
 
+# ---- a descrição guardada não pode mentir sobre o que está no ar ----------------------------
+# Medido em 06/11/2026: quatro entradas terminavam em "…A trilha" (corte seco em 400 chars).
+# Registro quebrado faz a chamada, o mostruário e a conferência lerem um texto que não existe.
+# fim aceitável: pontuação, reticência da marcação de parcial, ou hashtag (as descrições do
+# redator terminam com a hashtag da casa — "#jogobrasileiro" é fim de frase, não corte).
+def _fim_ok(desc):
+    fim = desc.strip()
+    if not fim:
+        return True
+    ultimo = fim.split()[-1]
+    return fim[-1] in ".!?…)" or ultimo.startswith("#")
+
+
+_parciais = [p for p in (publicados or []) if not _fim_ok(p.get("descricao") or "")]
+ok("nenhuma descrição do registro termina no meio da frase", not _parciais,
+   str([p.get("url") for p in _parciais]))
+ok("descrição guardada diz se está inteira ou é parcial",
+   all(("descricao_completa" in p) for p in (publicados or []) if (p.get("descricao") or "").strip()),
+   str([p.get("url") for p in (publicados or []) if (p.get("descricao") or "").strip()
+        and "descricao_completa" not in p]))
+
+
 print("%d/%d contratos do registro do YouTube passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)

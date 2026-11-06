@@ -277,6 +277,24 @@ def enviar_bytes(url_sessao, caminho, abrir=None):
         return None, "envio recusado (%s): %s" % (e.code, e.read().decode("utf-8", "replace")[:200])
 
 
+def _resumo_da_descricao(texto, limite=600):
+    """Resumo da descrição que NÃO corta no meio de uma frase.
+
+    Medido em 06/11/2026: o registro de posts/youtube-publicados.json guardava
+    "…A trilha" — quatro descrições terminavam assim. Guardar texto quebrado não é economia de
+    espaço: é um registro que mente sobre o que está no ar (a descrição inteira está no YouTube).
+    """
+    corpo = (texto or "").strip()
+    if len(corpo) <= limite:
+        return corpo
+    corte = corpo[:limite]
+    for marca in ("\n\n", ". ", "! ", "? "):
+        pos = corte.rfind(marca)
+        if pos > limite * 0.5:
+            return corte[:pos + len(marca)].strip() + ("…" if marca != "\n\n" else "")
+    return corte.rsplit(" ", 1)[0].rstrip(" ,;:") + "…"
+
+
 def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print, descricao=None,
               angulo=None, numeros=None, fato=None):
     """Grava o que foi publicado em posts/youtube-publicados.json.
@@ -300,7 +318,10 @@ def registrar(raiz, slug, titulo, vid, quando=None, arquivo=None, escrever=print
         "titulo": (titulo or "")[:120],
         # a descrição fica guardada porque é ela que o portão de forma compara depois: sem o
         # texto, a próxima gravação passaria só por não ter com o que se comparar.
-        "descricao": (descricao or "")[:400],
+        # O registro guardava os primeiros 400 caracteres e cortava NO MEIO DA FRASE ("…A trilha"),
+        # e quem lê o registro (chamada, mostruario, conferência) lia um texto quebrado. Agora o
+        # corte é em fim de parágrafo (ou de frase), com reticência só quando precisa.
+        "descricao": _resumo_da_descricao(descricao),
         # o ângulo é o que faz o redator rodar: com ele gravado, o próximo vídeo escolhe outro
         "angulo": angulo or None,
         "fato": fato or None,

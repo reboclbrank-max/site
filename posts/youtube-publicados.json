@@ -5,7 +5,7 @@
    "url": "https://youtu.be/PRyg0Ncz5U8",
    "slug": "ceifalume-gameplay",
    "titulo": "Onde jogar CEIFALUME sem instalar loja",
-   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nA partida do vídeo saiu do build web: 9 colheitas em 2 minutos de tela.\n\nNada de cadastro, compra ou espera para abrir o jogo.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo pr",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nA partida do vídeo saiu do build web: 9 colheitas em 2 minutos de tela.\n\nNada de cadastro, compra ou espera para abrir o jogo.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
    "angulo": "onde_jogar:ceifalume-8h",
    "fato": "ceifalume-8h",
    "numeros": {
@@ -16,14 +16,15 @@
     "toques_por_minuto": 320
    },
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
-   "quando": "2026-11-06T18:24:11Z"
+   "quando": "2026-11-06T18:24:11Z",
+   "descricao_completa": true
   },
   {
    "id": "HmbEdojjhsU",
    "url": "https://youtu.be/HmbEdojjhsU",
    "slug": "ceifalume-gameplay",
    "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
-   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNa gravação desta partida: 15 mudas plantadas e 8 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNa gravação desta partida: 15 mudas plantadas e 8 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha…",
    "angulo": "como_funciona:ceifalume-8h",
    "fato": "ceifalume-8h",
    "numeros": {
@@ -42,14 +43,15 @@
      "para": "Como funciona: as plantações crescem e as vendas acontecem",
      "quando": "2026-11-06T16:46:08Z"
     }
-   ]
+   ],
+   "descricao_completa": false
   },
   {
    "id": "L2UIYmofEiE",
    "url": "https://youtu.be/L2UIYmofEiE",
    "slug": "ceifalume-gameplay",
    "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
-   "descricao": "Quanto cabe em 2 minutos de uma fazenda que cresce enquanto você olha para outro lado?\n\nNesta partida deu 9 colheitas, 9 mudas semeadas e 806 toques espalhados pelo terreno.\n\nA resposta curta é que o limite não é a pressa: é o tempo de cada planta.\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produ",
+   "descricao": "Quanto cabe em 2 minutos de uma fazenda que cresce enquanto você olha para outro lado?\n\nNesta partida deu 9 colheitas, 9 mudas semeadas e 806 toques espalhados pelo terreno.\n\nA resposta curta é que o limite não é a pressa: é o tempo de cada planta.\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produ…",
    "angulo": "pergunta",
    "numeros": {
     "plantadas": 9,
@@ -59,17 +61,19 @@
     "toques_por_minuto": 403
    },
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
-   "quando": "2026-11-06T16:16:47Z"
+   "quando": "2026-11-06T16:16:47Z",
+   "descricao_completa": false
   },
   {
    "id": "03313IcXvEo",
    "url": "https://youtu.be/03313IcXvEo",
    "slug": "ceifalume-gameplay",
    "titulo": "6 colheitas em 2 min de CEIFALUME 0.1",
-   "descricao": "Em 2 minutos de gravação o agente plantou 13 mudas e colheu 6, sem esperar parado em nenhum momento.\n\nCada célula do campo tem o seu próprio tempo de crescimento, e o celeiro guarda o que sobra.\n\nForam 725 toques na tela, cerca de 362 por minuto, distribuídos entre semear e colher.\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintet",
+   "descricao": "Em 2 minutos de gravação o agente plantou 13 mudas e colheu 6, sem esperar parado em nenhum momento.\n\nCada célula do campo tem o seu próprio tempo de crescimento, e o celeiro guarda o que sobra.\n\nForam 725 toques na tela, cerca de 362 por minuto, distribuídos entre semear e colher.\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintet…",
    "angulo": "numeros",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
-   "quando": "2026-11-06T16:08:00Z"
+   "quando": "2026-11-06T16:08:00Z",
+   "descricao_completa": false
   },
   {
    "id": "f5kQFOQs0To",

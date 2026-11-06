@@ -318,6 +318,17 @@ checar("capa que falha não derruba uma publicação que deu certo",
 for r in (raiz, raiz_sem_capa, raiz_falha):
     shutil.rmtree(r, ignore_errors=True)
 
+
+# ---- o registro não pode guardar descrição cortada no meio da frase -------------------------
+# Medido em 06/11/2026: quatro descrições em posts/youtube-publicados.json terminavam em
+# "…A trilha". Registro quebrado mente sobre o que está no ar.
+_longa = ("Linha curta.\n\n" + "Frase completa sobre a partida medida. " * 40)
+_resumo = enviar._resumo_da_descricao(_longa)
+checar("resumo da descrição não termina no meio de uma palavra",
+      _resumo.endswith("…") or _resumo.endswith("."), _resumo[-25:])
+checar("resumo da descrição cabe no registro", len(_resumo) <= 640, len(_resumo))
+checar("descrição curta passa inteira", enviar._resumo_da_descricao("Texto curto.") == "Texto curto.")
+
 certos = sum(1 for _, ok in resultados if ok)
 print("%d/%d contratos do portão do vídeo passaram" % (certos, len(resultados)))
 raise SystemExit(0 if certos == len(resultados) else 1)
