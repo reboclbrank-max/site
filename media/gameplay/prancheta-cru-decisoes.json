@@ -1,84 +1,74 @@
 {
  "jogo": "prancheta",
- "estrategia": "posse_normal",
+ "estrategia": "contra_ataque",
  "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920",
  "decisoes": [
   {
-   "t": 14.8,
+   "t": 16.5,
    "motivo": "abrir o menu do jogo",
    "acao": "toque em 500,87"
   },
   {
-   "t": 19.8,
+   "t": 22.4,
    "motivo": "aceitar o convite do clube",
    "acao": "toque em 500,179"
   },
   {
-   "t": 23.7,
+   "t": 27.6,
    "motivo": "aplicar a sugestão do staff",
    "acao": "toque em 500,232"
   },
   {
-   "t": 27.4,
+   "t": 32.4,
    "motivo": "aplicar o microciclo da semana",
    "acao": "toque em 500,612"
   },
   {
-   "t": 31.6,
+   "t": 37.7,
    "motivo": "abrir a prancheta",
    "acao": "toque em 500,259"
   },
   {
-   "t": 37.6,
+   "t": 45.3,
    "motivo": "jogar com o plano recomendado",
    "acao": "toque em 500,289"
   },
   {
-   "t": 41.1,
+   "t": 50,
    "motivo": "seguir sem mexer (sem instrução)",
    "acao": "toque em 636,573"
   },
   {
-   "t": 45.3,
+   "t": 54.7,
+   "motivo": "acelerar a partida",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 59.9,
+   "motivo": "partida em andamento",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 65.1,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 49.5,
+   "t": 70.2,
    "motivo": "partida em andamento",
    "acao": "toque em 110,608"
   },
   {
-   "t": 53.8,
+   "t": 75.3,
    "motivo": "partida em andamento",
    "acao": "toque em 636,573"
   },
   {
-   "t": 58,
-   "motivo": "partida em andamento",
-   "acao": "toque em 640,360"
-  },
-  {
-   "t": 62.1,
-   "motivo": "partida em andamento",
-   "acao": "toque em 640,360"
-  },
-  {
-   "t": 66.3,
-   "motivo": "partida em andamento",
-   "acao": "toque em 110,608"
-  },
-  {
-   "t": 70.4,
-   "motivo": "partida em andamento",
-   "acao": "toque em 636,573"
-  },
-  {
-   "t": 74.5,
-   "motivo": "partida em andamento",
-   "acao": "toque em 640,360"
+   "t": 81,
+   "motivo": "pular para o fim da partida",
+   "acao": "toque em 900,705"
   }
  ],
- "passos_confirmados": 13,
- "toques_partida": 8
+ "passos_confirmados": 10,
+ "toques_partida": 4
 }
