@@ -1,0 +1,55 @@
+name: Sonda do Instagram
+
+# Prova até onde a casa chega no Instagram SEM publicar nada.
+#
+# O que faz: identidade → permissão de publicar (quota) → cria CONTAINER de mídia e espera
+# o processamento ficar FINISHED. Para aí. O container não publicado expira sozinho em 24 h
+# e nada aparece no perfil.
+#
+# O que NÃO faz: media_publish. Publicar é decisão do ciclo, com texto aprovado pelo portão.
+#
+# Por que só sob demanda: é uma chamada à API da Meta com o token da casa. Rodar de hora em
+# hora gastaria quota de publicação à toa (a quota é de 50 por 24 h e o container conta).
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmacao:
+        description: "Digite SONDAR para rodar a sonda (não publica nada)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sonda-instagram
+  cancel-in-progress: false
+
+jobs:
+  sondar:
+    if: github.actor == 'reboclbrank-max' && inputs.confirmacao == 'SONDAR'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Contrato da sonda (offline, sem rede e sem segredo)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-sonda-instagram.py
+
+      - name: Sonda de verdade (para antes do publish)
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: |
+          set +e
+          python3 tools/sonda-instagram.py | tee /tmp/sonda.json
+          codigo=${PIPESTATUS[0]}
+          echo "código de saída: $codigo"
+          {
+            echo "### Sonda do Instagram"
+            echo '```json'
+            cat /tmp/sonda.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $codigo
