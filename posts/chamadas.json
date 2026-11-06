@@ -2,13 +2,31 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-06T16:47:12Z",
+   "video_id": "HmbEdojjhsU",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"Como funciona: as plantações crescem e as vendas acontecem\". Na partida gravada: 15 mudas, 8 colheitas, em 2 minutos.\nhttps://youtu.be/HmbEdojjhsU",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
+   "uri": "at://did:plc:ypmicjqbhpoxf6xd3ee4zke3/app.bsky.feed.post/3mzntimke6p2h",
+   "refeita": true,
+   "resultado": "publicado",
+   "erro": null,
+   "numeros": {
+    "video": "HmbEdojjhsU",
+    "historico_do_canal": 0,
+    "jogos_citados": [],
+    "semelhanca_maxima": 0.0,
+    "primeira_do_canal": true
+   }
+  },
+  {
    "quando": "2026-11-06T16:44:14Z",
    "video_id": "HmbEdojjhsU",
    "canal": "bluesky",
    "texto": "Vídeo novo no canal: \"Como funciona: as plantações crescem e as vendas acontecem por até 8\". Na partida gravada: 15 mudas, 8 colheitas, em 2 minutos.\nhttps://youtu.be/HmbEdojjhsU",
    "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
    "uri": "at://did:plc:ypmicjqbhpoxf6xd3ee4zke3/app.bsky.feed.post/3mzntdcydgh2r",
-   "resultado": "publicado",
+   "resultado": "substituida",
    "erro": null,
    "numeros": {
     "video": "HmbEdojjhsU",
