@@ -24,6 +24,10 @@ on:
         description: "ids separados por espaço (vazio = todos os que não têm capa)"
         required: false
         default: ""
+      forcar:
+        description: "digite FORCAR para repintar quem já tem capa (quando o desenho melhorou)"
+        required: false
+        default: ""
 
 permissions:
   contents: write      # só para versionar posts/capas-aplicadas.json
@@ -63,13 +67,16 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           LIMITE: ${{ github.event.inputs.limite }}
           IDS: ${{ github.event.inputs.ids }}
+          FORCAR: ${{ github.event.inputs.forcar }}
         run: |
           set +e
+          EXTRA=""
+          if [ "$FORCAR" = "FORCAR" ]; then EXTRA="--forcar"; fi
           if [ -n "$IDS" ]; then
-            python3 tools/capa-dos-antigos.py --confirmacao APLICAR --limite "$LIMITE" --so $IDS \
+            python3 tools/capa-dos-antigos.py --confirmacao APLICAR --limite "$LIMITE" --so $IDS $EXTRA \
               | tee /tmp/capas.txt
           else
-            python3 tools/capa-dos-antigos.py --confirmacao APLICAR --limite "$LIMITE" \
+            python3 tools/capa-dos-antigos.py --confirmacao APLICAR --limite "$LIMITE" $EXTRA \
               | tee /tmp/capas.txt
           fi
           codigo=${PIPESTATUS[0]}

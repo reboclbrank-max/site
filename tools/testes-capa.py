@@ -98,6 +98,20 @@ s9 = os.path.join(pasta, "c9.png")
 capa.desenhar(q1, s9, "Sem marca nenhuma", "", "abc123", marca="")
 checar("capa sem marca é diferente da capa com marca", sha(s9) != sha(s7))
 
+# ---- o véu do texto (06/11/2026) -------------------------------------------------------------
+# Os vídeos antigos do CEIFALUME têm legenda burnada no rodapé; sem véu forte, o título novo e a
+# legenda velha disputam o mesmo espaço (visto nas capas aplicadas no canal em 06/11).
+_base = Image.open(q1).convert("RGB") if os.path.exists(q1) else None
+if _base is not None and hasattr(capa, "veu_do_texto"):
+    _sem = capa.escurecer(_base, 0.52)
+    _com = capa.veu_do_texto(_sem)
+    _px_sem = _sem.getpixel((640, 700))
+    _px_com = _com.getpixel((640, 700))
+    checar("o véu do texto escurece o rodapé de verdade", sum(_px_com) < sum(_px_sem) * 0.75,
+       (_px_sem, _px_com))
+    checar("e não apaga o quadro no meio da imagem",
+       sum(_com.getpixel((640, 200))) > 30, _com.getpixel((640, 200)))
+
 certos = sum(1 for _, ok in resultados if ok)
 print("%d/%d contratos da capa passaram" % (certos, len(resultados)))
 raise SystemExit(0 if certos == len(resultados) else 1)

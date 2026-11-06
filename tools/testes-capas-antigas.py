@@ -147,6 +147,20 @@ so_escolhido = capa.executar("tok", "APLICAR", raiz=tmp, limite=6,
 ok("--so aplica só nos ids pedidos", [x["id"] for x in so_escolhido["aplicadas"]] == ["BBB222"],
    so_escolhido["aplicadas"])
 
+# ---- --forcar: repintar quando o desenho melhora ------------------------------------------
+reg_for = os.path.join(tmp, "reg-forcar.json")
+_1 = capa.executar("tok", "APLICAR", raiz=tmp, limite=6, registro_caminho=reg_for,
+                   listar=listar_falso, baixar=baixar_falso, aplicar_fn=aplicar_ok,
+                   escrever=lambda *a, **k: None)[1]
+_2 = capa.executar("tok", "APLICAR", raiz=tmp, limite=6, registro_caminho=reg_for,
+                   listar=listar_falso, baixar=baixar_falso, aplicar_fn=aplicar_ok,
+                   escrever=lambda *a, **k: None, forcar=True, somente=["AAA111", "BBB222"])[1]
+ok("--forcar repinta quem já tem capa (desenho melhor não fica preso ao antigo)",
+   [x["id"] for x in _2["aplicadas"]] == ["AAA111", "BBB222"], _2["aplicadas"])
+ok("repintar não duplica a linha no registro",
+   len([x for x in json.load(open(reg_for, encoding="utf-8"))["aplicadas"]
+        if x["id"] == "AAA111"]) == 1)
+
 # ---- o workflow ---------------------------------------------------------------------------
 wf = open(os.path.join(RAIZ, ".github", "workflows", "capas-dos-antigos.yml"),
           encoding="utf-8").read()

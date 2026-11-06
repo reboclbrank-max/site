@@ -66,6 +66,26 @@ def escurecer(im, fracao=0.52):
     return Image.alpha_composite(base, véu).convert("RGB")
 
 
+def veu_do_texto(im, altura=252, forca=0.90):
+    """Bloco escuro atrás do título — mais forte que o escurecer().
+
+    POR QUE (06/11/2026, medido nas capas dos vídeos antigos): os vídeos antigos do CEIFALUME têm
+    legenda BURNADA no rodapé ("COMO JOGAR: 1) toque no botão..."), e o título novo caía em cima
+    dela: duas letras brancas brigando no mesmo lugar. Este véu cobre a faixa e o título volta a
+    ser a única coisa legível ali. Não apaga o quadro: a cena continua atrás, 10% visível.
+    """
+    base = im.convert("RGBA")
+    véu = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(véu)
+    alt = min(int(altura), ALTURA)
+    for i in range(alt):
+        y = ALTURA - alt + i
+        # primeiro 25% do bloco entra rápido (tapa a legenda antiga), o resto fica cheio
+        alfa = int(255 * forca * min(1.0, (i / float(alt)) / 0.25))
+        d.line([(0, y), (LARGURA, y)], fill=(4, 6, 12, alfa))
+    return Image.alpha_composite(base, véu).convert("RGB")
+
+
 def veu_do_topo(im, altura=132):
     """Véu leve no topo: a assinatura e a marca leem sobre qualquer cena (o jogo é claro à
     esquerda — o painel do Dia 1 — e escuro à direita)."""
@@ -112,7 +132,7 @@ def desenhar(entrada, saida, titulo, numeros="", assinatura="", marca="reboclbra
     titulo = " ".join((titulo or "").split())
     if not titulo:
         raise ValueError("capa sem título: capa sem título é template, e template é o defeito")
-    im = veu_do_topo(escurecer(quadro_de_entrada(entrada)))
+    im = veu_do_texto(veu_do_topo(escurecer(quadro_de_entrada(entrada))))
     d = ImageDraw.Draw(im)
 
     f_kicker = fonte(FONTE_BOLD, 30)
@@ -142,6 +162,7 @@ def desenhar(entrada, saida, titulo, numeros="", assinatura="", marca="reboclbra
     im.save(saida, "PNG")
     bruto = open(saida, "rb").read()
     return {"saida": saida, "titulo": titulo, "linhas": len(linhas), "numeros": numeros,
+            "veu_do_texto": True,
             "assinatura": assinatura, "sha256": hashlib.sha256(bruto).hexdigest()[:16],
             "bytes": len(bruto)}
 

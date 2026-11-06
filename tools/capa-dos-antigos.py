@@ -148,7 +148,8 @@ def aplicar(access_token, vid, caminho, aplicar_fn=None):
 
 
 def executar(access_token, confirmacao, raiz=RAIZ, limite=6, registro_caminho=None,
-             listar=None, baixar=None, aplicar_fn=None, escrever=print, somente=None):
+             listar=None, baixar=None, aplicar_fn=None, escrever=print, somente=None,
+             forcar=False):
     """Aplica capa nos vídeos antigos. Devolve (ok, relatório)."""
     if str(confirmacao or "").strip().upper() != PALAVRA:
         return False, {"motivo": "faltou a palavra %s: capa também é publicação, não sai sozinha"
@@ -159,6 +160,15 @@ def executar(access_token, confirmacao, raiz=RAIZ, limite=6, registro_caminho=No
         return False, {"motivo": "a API não devolveu vídeos (token sem permissão?)",
                        "aplicadas": [], "recusadas": []}
     alvos = candidatos(videos, registro)
+    if forcar:
+        # repintar de propósito: quando o desenho da capa melhora, a capa velha envelhece junto.
+        # O registro continua valendo como histórico (o id é reescrito, não duplicado).
+        ja = {x["id"] for x in (registro.get("aplicadas") or [])}
+        alvos = [v for v in videos if v.get("id")] if not somente else [
+            v for v in videos if v.get("id") in set(somente)]
+        registro["aplicadas"] = [x for x in (registro.get("aplicadas") or [])
+                                 if x.get("id") not in {v["id"] for v in alvos}]
+        void = ja
     if somente:
         queridos = {str(x).strip() for x in somente}
         alvos = [v for v in alvos if v["id"] in queridos]
@@ -202,6 +212,8 @@ def main(argv):
     ap.add_argument("--registro", default=REGISTRO)
     ap.add_argument("--so", nargs="*", default=None, help="ids específicos")
     ap.add_argument("--ensaio", action="store_true", help="lista os candidatos e não aplica")
+    ap.add_argument("--forcar", action="store_true",
+                    help="repinta mesmo quem já tem capa (quando o desenho melhorou)")
     a = ap.parse_args(argv[1:])
     if a.ensaio:
         registro = carregar_registro(a.registro)
@@ -209,7 +221,7 @@ def main(argv):
             print("%s  %s  %s" % (v["id"], v.get("publicado_em", "")[:10], v.get("titulo", "")[:60]))
         return 0
     ok, rel = executar(_token(), a.confirmacao, limite=a.limite, registro_caminho=a.registro,
-                       somente=a.so)
+                       somente=a.so, forcar=a.forcar)
     print(json.dumps({k: rel[k] for k in ("aplicadas", "recusadas")}, ensure_ascii=False, indent=1))
     if not ok:
         print("✘ " + rel.get("motivo", "nada aplicado"), file=sys.stderr)
