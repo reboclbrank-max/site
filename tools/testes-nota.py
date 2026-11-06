@@ -56,7 +56,12 @@ def dia(txt):
     return (int(a), int(m), int(d))
 
 
-molde = [juizo.nota(t)[0] for q, t in postos if dia(q) < (2026, 11, 6)]
+# DATA DE REFERÊNCIA DO CORPUS (06/11/2026): a calibração vale para o que a casa publicou ATÉ
+# esta data. Se o arquivo for reescrito ou podado, o contrato acusa em vez de recalibrar sozinho.
+DATA_DO_CORPUS = (2026, 11, 6)
+molde = [juizo.nota(t)[0] for q, t in postos if dia(q) < DATA_DO_CORPUS]
+ok("o corpus de referência tem pelo menos 100 posts antes de 06/11/2026",
+   len(molde) >= 100, len(molde))
 ok("o corpus do molde antigo existe (100+ posts)", len(molde) >= 100, len(molde))
 
 abaixo = sum(1 for n in molde if n < juizo.NOTA_MINIMA)

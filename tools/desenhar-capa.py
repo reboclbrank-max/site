@@ -137,7 +137,14 @@ def desenhar(entrada, saida, titulo, numeros="", assinatura="", marca="reboclbra
 
     f_kicker = fonte(FONTE_BOLD, 30)
     if assinatura:
-        com_contorno(d, (MARGEM, 34), "PARTIDA " + assinatura.upper(), f_kicker, COR_DESTAQUE, 2)
+        # FAIXA ATRÁS DO KICKER (06/11/2026): nas capas do PRANCHETA a linha "PARTIDA …" caía em
+        # cima da barra do jogo ("45' · Guarani de Catotoim 1 x 1 …") e as duas letras brigavam.
+        # A faixa dá fundo previsível em qualquer quadro; o texto continua sendo o mesmo.
+        _texto_kicker = "PARTIDA " + assinatura.upper()
+        _larg = d.textlength(_texto_kicker, font=f_kicker)
+        d.rounded_rectangle([MARGEM - 12, 26, MARGEM + _larg + 12, 76], radius=10,
+                            fill=(4, 6, 12, 205))
+        com_contorno(d, (MARGEM, 34), _texto_kicker, f_kicker, COR_DESTAQUE, 2)
     if marca:
         larg = d.textlength(marca, font=fonte(FONTE_NORMAL, 24))
         com_contorno(d, (LARGURA - MARGEM - larg, 38), marca, fonte(FONTE_NORMAL, 24),
