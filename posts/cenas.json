@@ -585,6 +585,64 @@
     "passos_confirmados": 12
    },
    "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-06T23:59:16Z",
+   "estrategia": "posse_normal",
+   "assinatura": "f773ca35437f",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "posse_normal",
+    "passos": [
+     [
+      "toque em 500,87",
+      17.0
+     ],
+     [
+      "toque em 500,179",
+      23.0
+     ],
+     [
+      "toque em 500,232",
+      28.0
+     ],
+     [
+      "toque em 500,612",
+      33.0
+     ],
+     [
+      "toque em 500,259",
+      38.0
+     ],
+     [
+      "toque em 500,289",
+      46.0
+     ],
+     [
+      "toque em 636,573",
+      51.0
+     ],
+     [
+      "toque em 640,360",
+      56.0
+     ],
+     [
+      "toque em 110,608",
+      61.0
+     ],
+     [
+      "toque em 636,573",
+      66.0
+     ],
+     [
+      "toque em 640,360",
+      72.0
+     ]
+    ],
+    "toques_partida": 4,
+    "passos_confirmados": 9
+   },
+   "jogo": "prancheta"
   }
  ]
 }
