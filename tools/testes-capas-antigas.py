@@ -100,6 +100,30 @@ _uma_pagina, _ = _abrir_falso([{"items": [{"snippet": {"resourceId": {"videoId":
                                                        "title": "curto"}}]}])
 ok("canal curto (uma página) não entra em laço", len(capa.listar_videos("t", abrir=_uma_pagina)) == 1)
 
+# ---- vídeo de OUTRO jogo não é dívida de capa (07/11/2026) --------------------------------
+# O dono perguntou pelos "118 sem capa": medido, eles são vídeos de outros jogos. O retrato
+# passa a dizer isso com nome, para o número parar de parecer trabalho pendente.
+import importlib as _il
+_capa_estado = _il.util.spec_from_file_location("capa_estado2", os.path.join(RAIZ, "tools",
+                                                                             "capa-dos-antigos.py"))
+_m = _il.util.module_from_spec(_capa_estado)
+_capa_estado.loader.exec_module(_m)
+_bancada = tempfile.mkdtemp(prefix="retrato-")
+_m.CAMINHO_ESTADO = os.path.join(_bancada, "capas-estado.json")
+_m._token = lambda: "x"
+_m.listar_videos = lambda t: [
+    {"id": "CASA1", "publicado_em": "2026-11-01", "titulo": "CEIFALUME 0.1 — colheitas"},
+    {"id": "OUTRO1", "publicado_em": "2026-10-01", "titulo": "gameplay de outro jogo qualquer"},
+    {"id": "OUTRO2", "publicado_em": "2026-09-01", "titulo": "mais um jogo de terceiros"},
+]
+_m.main(["capa", "--ensaio", "--registro", os.path.join(_bancada, "vazio.json")])
+_retrato = json.load(open(_m.CAMINHO_ESTADO, encoding="utf-8"))
+ok("o retrato conta os vídeos de outros jogos", _retrato.get("outros_jogos") == 2,
+   _retrato.get("outros_jogos"))
+ok("o retrato conta os da casa", _retrato.get("da_casa") == 1, _retrato.get("da_casa"))
+ok("o retrato diz a decisão (outros jogos ficam sem capa por regra)",
+   "por regra" in (_retrato.get("_decisao") or ""), _retrato.get("_decisao"))
+
 tmp = tempfile.mkdtemp(prefix="capas-antigas-")
 # o ensaio grava o retrato da cobertura; a suíte aponta para o tmp para não escrever na casa
 capa.CAMINHO_ESTADO = os.path.join(tmp, "capas-estado.json")

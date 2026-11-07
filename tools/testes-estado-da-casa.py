@@ -83,6 +83,15 @@ try:
     ok("o bloco mostra os pulsos", "Pulsos: 132" in bloco, bloco)
     ok("o bloco data a medida das capas", "medido em 2026-11-07" in bloco, bloco)
 
+    # 2b. vídeos de outros jogos aparecem com nome (não como dívida)
+    with open(os.path.join(tmp, "capas-estado.json"), "w", encoding="utf-8") as f:
+        json.dump({"no_canal": 169, "sem_capa": 0, "da_casa": 51, "outros_jogos": 118,
+                   "medido_em": "2026-11-07T01:00:00Z"}, f)
+    _bloco_outros = est.texto(est.estado())
+    ok("o bloco diz quantos são de outros jogos", "118 de outros jogos" in _bloco_outros,
+       _bloco_outros)
+    ok("e diz que é por regra, não por pendência", "por regra" in _bloco_outros, _bloco_outros)
+
     # 3. a régua de metas: idade visível, e vencida quando passa de 24 h
     with open(os.path.join(tmp, "placar-estado.json"), "w", encoding="utf-8") as f:
         json.dump({"medido_em": "2026-11-03T06:52:00Z", "dias_restantes": 9, "prazo": "2026-11-12"}, f)

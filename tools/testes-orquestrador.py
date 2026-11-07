@@ -179,12 +179,38 @@ def main():
     # 06/11/2026: o dono autorizou a cadência. O contrato antigo exigia "sem cron"; o novo
     # exige o que importa: o cron acorda, mas quem decide continua sendo o orquestrador
     # (janela + teto) e o portão, e o pulso manual segue exigindo o dono e a palavra.
+    # ---- O CRON COBRE A JANELA E AS JANELAS DE PESQUISA/APRENDIZADO ---------------
+    # MEDIDO (07/11/2026): `*/20 * * * *` dava 72 pulsos/dia; 27 caíam em horas em que nada pode
+    # acontecer (nem publicar, nem pesquisar às 03h, nem aprender às 04h). Eles só dormiam.
+    _wf24 = open(os.path.join(RAIZ, ".github", "workflows", "marketing-24h.yml"),
+                 encoding="utf-8").read()
+    _cron24 = [l.split('"')[1] for l in _wf24.split("permissions:")[0].splitlines()
+               if l.strip().startswith("- cron:")]
     ok("workflow 24h tem cadência agendada", "schedule:" in texto and "cron:" in texto)
     ok("workflow 24h só agenda no main", "github.ref == 'refs/heads/main'" in texto)
     ok("workflow 24h mantém o pulso manual com confirmação", "inputs.confirmacao == 'PUBLICAR'" in texto)
     ok("workflow 24h não publica por conta própria: chama o orquestrador", "python3 tools/orquestrador.py" in texto)
     ok("workflow 24h roda o orquestrador", "tools/orquestrador.py" in texto)
     ok("workflow 24h tem concorrência (não duplica pulso)", "concurrency:" in texto)
+    if _cron24:
+        _campo = _cron24[0].split()[1]
+        _horas, _passo = set(), 0
+        for _parte in _campo.split(","):
+            if "-" in _parte:
+                _a, _b = _parte.split("-")
+                _horas |= set(range(int(_a), int(_b) + 1))
+            else:
+                _horas.add(int(_parte))
+        _passo = int(_cron24[0].split()[0].split("/")[1])
+        ok("o cron cobre a janela de publicação (09h-21h de Brasília)", {0, 12, 15, 18, 21, 23} <= _horas,
+           sorted(_horas))
+        ok("o cron cobre a pesquisa das 03h e o aprendizado das 04h de Brasília",
+           {6, 7} <= _horas, sorted(_horas))
+        ok("o cron não acorda em horas mortas (23h-02h, 05h-08h de Brasília)",
+           not ({2, 3, 4, 5, 8, 9, 10, 11} & _horas), sorted(_horas))
+        ok("a cadência de 20 minutos foi mantida", _passo == 20, _cron24[0])
+        ok("o cron roda no máximo 45 vezes por dia (era 72)", len(_horas) * (60 // _passo) <= 45,
+           len(_horas) * (60 // _passo))
     ok("workflow 24h commita o estado", "git commit" in texto)
 
     # ---- ANTI-FOME DA FILA (07/11/2026) ------------------------------------------------
@@ -379,7 +405,7 @@ def main():
        'tipos = ("medir",)' in _src_orq and "pode_publicar(agora, ler_calendario())" in _src_orq,
        [l for l in _src_orq.splitlines() if "tipos =" in l])
 
-    total = 24 + 15 + 8 + 7 + 5
+    total = 24 + 15 + 8 + 7 + 5 + 5
     print("\n%d/%d testes do orquestrador 24h passaram" % (total - falhas, total))
     return 1 if falhas else 0
 

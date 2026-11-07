@@ -36,7 +36,10 @@ def metas_em_risco(texto_placar):
     """Lista (meta, falta, por_dia) das linhas EM_CURSO do placar, maior risco primeiro."""
     itens = []
     for linha in texto_placar.splitlines():
-        if not linha.startswith("|") or "EM_CURSO" not in linha:
+        # RENOVADA e PARADA também são risco (07/11/2026): a régua passou a nomear assim as metas
+        # que não fecham no prazo. Ler só "EM_CURSO" faria a pesquisa ignorar justamente as piores.
+        if not linha.startswith("|") or not any(
+                est in linha for est in ("EM_CURSO", "RENOVADA", "PARADA")):
             continue
         partes = [p.strip() for p in linha.strip("|").split("|")]
         if len(partes) < 6:

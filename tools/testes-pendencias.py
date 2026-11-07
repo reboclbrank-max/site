@@ -179,6 +179,15 @@ ok("o estado da casa diz quantos vídeos foram publicados", "Vídeos publicados:
 ok("o estado da casa diz a cobertura de capas", "Capas da casa:" in _md)
 ok("o estado da casa diz o tamanho da fila", "Fila:" in _md,
    [l for l in _md.splitlines() if l.startswith("- Fila:")])
+# ---- canais desligados aparecem uma vez, com motivo (07/11/2026) ---------------------------
+ok("o relatório tem a seção dos canais desligados", "## Canais desligados por decisão" in _md,
+   _md[_md.find("## Canais"):][:80])
+ok("os três canais desligados estão nomeados",
+   all(nome in _md for nome in ("telegram", "mastodon", "discord")),
+   [n for n in ("telegram", "mastodon", "discord") if n not in _md])
+ok("cada canal desligado leva o motivo junto", _md.count("decisão de 07/11/2026") >= 3,
+   _md.count("decisão de 07/11/2026"))
+
 ok("o estado da casa vem antes das pendências",
    _md.find("## Estado da casa") < _md.find("| item | estado | como |"),
    (_md.find("## Estado da casa"), _md.find("| item | estado | como |")))

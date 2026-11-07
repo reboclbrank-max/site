@@ -88,11 +88,30 @@ def precisar(o_que, porque, quem, como, verifica, tipo_fila=None, chave=None):
 
 
 # ---------------------------------------------------------------- os sentidos
-def canais_cegos(ler_log, segredos, ciclos=20):
+# CANAIS QUE O DONO DECIDIU NÃO LIGAR (07/11/2026). Telegram, Mastodon e Discord nunca
+# publicaram em 20 ciclos por falta de segredo, e a mesma linha voltava todo dia no relatório:
+# três itens fixos de ruído no lugar onde o dono deveria ver só o que exige ação. A decisão foi
+# registrar a decisão (posts/canais-desligados.json) e calar a cobrança — cobrar todo dia o que
+# já foi decidido é o mesmo defeito de repetir texto.
+CANAIS_DESLIGADOS = os.path.join(RAIZ, "posts", "canais-desligados.json")
+
+
+def ler_canais_desligados(caminho=None):
+    """{canal: motivo} dos canais desligados por decisão. Arquivo ausente = nenhum."""
+    dados = ler_json(caminho or CANAIS_DESLIGADOS) or {}
+    canais = dados.get("canais") or {}
+    return {str(k): (v or {}).get("motivo", "") if isinstance(v, dict) else str(v)
+            for k, v in canais.items()}
+
+
+def canais_cegos(ler_log, segredos, ciclos=20, desligados=None):
     """Canais que, nos últimos ciclos, SEMPRE disseram que falta segredo."""
     historico = ler_log(ciclos)
     necessidades = []
+    desligados = desligados or {}
     for chave, segredo in segredos.items():
+        if chave in desligados:
+            continue          # decisão tomada: o canal não entra no relatório
         linhas = [c["linhas"].get(chave) for c in historico if c["linhas"].get(chave)]
         if len(linhas) < 5:
             continue
@@ -144,7 +163,7 @@ def metas_em_risco(placar_linhas, dias_restantes=None, minimo_por_dia=1.0, dias_
     """
     necessidades = []
     for linha in placar_linhas:
-        if linha.get("status") not in ("EM_CURSO",):
+        if linha.get("status") not in ("EM_CURSO", "RENOVADA"):
             continue
         try:
             por_dia = float(str(linha.get("por_dia", "")).replace(",", "."))
@@ -167,6 +186,27 @@ def metas_em_risco(placar_linhas, dias_restantes=None, minimo_por_dia=1.0, dias_
             "robô", "priorizar essa meta no próximo ciclo editorial",
             "o número observado sobe no placar (posts/placar-metas.md)",
             tipo_fila="publicar", chave="meta-" + linha["meta"]))
+    return necessidades
+
+
+def metas_paradas(placar_linhas, minimo_dias=21):
+    """Metas medidas que não movem um número há >= minimo_dias.
+
+    POR QUE EXISTE (07/11/2026): empurrar uma meta parada é repetição com outro nome — a casa já
+    paga caro por repetição. Quando o ritmo medido é 0,0/dia há 21 dias, a necessidade não é
+    "publicar mais uma vez": é plano novo (pesquisar) ou a decisão de aposentar, que é do dono.
+    """
+    necessidades = []
+    for linha in placar_linhas or []:
+        if linha.get("status") != "PARADA":
+            continue
+        necessidades.append(precisar(
+            "meta parada: " + linha["meta"],
+            "%s em %s dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não "
+            "funcionou" % (linha.get("observado"), minimo_dias),
+            "robô", "procurar outra abordagem antes de publicar de novo sobre esta meta",
+            "o número observado se move, ou o dono aposenta a meta (posts/metas.json)",
+            tipo_fila="pesquisar", chave="parada-" + linha["meta"]))
     return necessidades
 
 
@@ -282,7 +322,7 @@ def perceber(agora=None, enfileirar=True):
 
     necessidades = []
     try:
-        necessidades += canais_cegos(ler_log, segredos)
+        necessidades += canais_cegos(ler_log, segredos, desligados=ler_canais_desligados())
     except Exception:
         pass
     necessidades += artefatos_velhos(agora)
@@ -301,7 +341,9 @@ def perceber(agora=None, enfileirar=True):
     except Exception:
         decorridos = None
     try:
-        necessidades += metas_em_risco(placar_linhas(), dias, dias_decorridos=decorridos)
+        _linhas = placar_linhas()
+        necessidades += metas_em_risco(_linhas, dias, dias_decorridos=decorridos)
+        necessidades += metas_paradas(_linhas)
     except Exception:
         pass
     necessidades += repeticao_alta(

@@ -441,6 +441,61 @@ def observado_youtube(chave=None, canal=None):
 DIAS_PARA_VEREDITO = 14
 
 
+# A META QUE NÃO ANDA NÃO TEM PRAZO (07/11/2026). Decisão tomada com número na mão, porque o
+# contrário era encenação: o prazo de 12/11 chegava com quatro metas em curso e nenhuma delas ao
+# alcance no ritmo medido (Instagram 0,0/dia, YouTube 0,0/dia, itch 0,16/dia, Bluesky 0,76/dia).
+# Regra, aplicada a TODA meta com leitura:
+#   ritmo medido = delta desde a linha de partida ÷ dias decorridos;
+#   ritmo 0 por 21 dias ou mais -> PARADA: deixa de ter prazo (o alvo continua escrito, porque alvo
+#     é decisão do dono), mas continua sendo medida todo dia;
+#   ritmo > 0 que não fecha no prazo -> RENOVADA, com a data que o ritmo realmente entrega;
+#   ritmo > 0 que fecha no prazo -> EM_CURSO, como antes.
+DIAS_SEM_RITMO = 21
+
+
+def previsao_da_meta(falta, ritmo, hoje=None):
+    """Quantos dias o ritmo medido leva para fechar a meta — e a data. Puro, testável."""
+    import math
+    if falta is None or not ritmo or float(ritmo) <= 0:
+        return None, None
+    dias = max(1, int(math.ceil(float(falta) / float(ritmo))))
+    data = (hoje + datetime.timedelta(days=dias)).isoformat() if hoje is not None else None
+    return dias, data
+
+
+def aplicar_politica_de_ritmo(linhas, dias_decorridos, dias_restantes=None, hoje=None):
+    """Marca cada meta com o ritmo medido, a previsão e o status honesto."""
+    for linha in linhas or []:
+        if linha.get("status") not in ("EM_CURSO", "RENOVADA", "PARADA"):
+            continue
+        delta = linha.get("delta")
+        if not isinstance(delta, (int, float)) or not dias_decorridos:
+            continue
+        ritmo = round(float(delta) / float(dias_decorridos), 3)
+        linha["ritmo_medido"] = ritmo
+        if ritmo <= 0:
+            linha["no_prazo"] = False
+            if dias_decorridos >= DIAS_SEM_RITMO:
+                linha["status"] = "PARADA"
+                linha["motivo"] = ("%d dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo "
+                                   "é encenação — a meta continua medida, sem data para cumprir"
+                                   % dias_decorridos)
+            else:
+                linha["motivo"] = ("ainda sem ritmo em %d dias (o julgamento é em %d dias)"
+                                   % (dias_decorridos, DIAS_SEM_RITMO))
+            continue
+        previsao, data = previsao_da_meta(linha.get("falta"), ritmo, hoje)
+        linha["previsao_dias"] = previsao
+        linha["prazo_estimado"] = data
+        linha["no_prazo"] = bool(dias_restantes is not None and previsao is not None
+                                 and previsao <= dias_restantes)
+        if not linha["no_prazo"]:
+            linha["status"] = "RENOVADA"
+            linha["motivo"] = ("não fecha no prazo no ritmo medido (%s/dia): prazo renovado para "
+                               "a data que o ritmo entrega (%s)" % (ritmo, data))
+    return linhas
+
+
 def placar_metas(observado, caminho=METAS, hoje=None):
     """Compara as metas aprovadas em 15/10 com o que foi medido. Não inventa nada.
 
@@ -535,6 +590,7 @@ def placar_metas(observado, caminho=METAS, hoje=None):
             dias_decorridos = (hoje - datetime.date.fromisoformat(inicio)).days
         except ValueError:
             dias_decorridos = None
+    aplicar_politica_de_ritmo(linhas, dias_decorridos, dias, hoje)
     return linhas, {"dias_restantes": dias, "prazo": prazo.isoformat() if prazo else None,
                     "dias_decorridos": dias_decorridos,
                     "metas_com_leitura": observavel,
@@ -582,6 +638,25 @@ def gravar_placar(linhas, contexto, hoje=None):
     dias_dec = contexto.get("dias_decorridos")
     parados = [l for l in linhas if l.get("delta") == 0 and isinstance(dias_dec, int)
                and dias_dec >= DIAS_PARA_VEREDITO]
+    # A PROJEÇÃO PELO RITMO MEDIDO (07/11/2026): a régua dizia "por dia necessário" e nunca dizia
+    # se aquele ritmo existe do lado de cá. Agora cada meta em curso carrega o ritmo medido e a
+    # data que ele entrega — e as paradas dizem que pararam.
+    em_curso = [l for l in linhas if l.get("ritmo_medido") is not None]
+    if em_curso:
+        rodape += "\n**Pelo ritmo medido** (delta desde 13/10 ÷ dias decorridos):\n"
+        for l in em_curso:
+            if l["status"] == "PARADA":
+                rodape += ("\n- **%s** — PARADA: %s (alvo %s segue escrito; alvo é decisão do dono)"
+                           % (l["meta"], l["motivo"], l["alvo"]))
+            else:
+                rodape += ("\n- **%s** — %s: %s/dia → falta %s → %s dia(s), em %s%s"
+                           % (l["meta"], l["status"], l["ritmo_medido"], l["falta"],
+                              l.get("previsao_dias"), l.get("prazo_estimado") or "—",
+                              " (fecha no prazo)" if l.get("no_prazo") else ""))
+        if not any(l.get("no_prazo") for l in em_curso):
+            rodape += ("\n\n> Nenhuma das metas em curso fecha o prazo com o ritmo medido. O prazo "
+                       "oficial continua escrito acima; as datas desta lista são o que o ritmo "
+                       "entrega de fato.\n")
     if parados:
         rodape += ("\n> **Sem retorno em %d dias:** " % dias_dec
                    + ", ".join("%s (%s medido(s), nada a mais desde 13/10)" % (

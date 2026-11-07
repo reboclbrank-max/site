@@ -321,12 +321,22 @@ def main(argv):
         # como log vazio, e log vazio não se distingue de passo que não rodou. O run 42321618066
         # terminou verde sem uma linha — e o ensaio anterior (42318213722) acusava o vídeo
         # O04ajm1t54Q como sem capa. Só a contagem prova qual dos dois aconteceu.
-        print("ensaio: %d vídeo(s) sem capa nesta rodada · %d no canal · %d no registro"
-              % (len(fila), len(videos), len((registro or {}).get("aplicadas") or [])))
+        # QUANTOS SÃO DA CASA, QUANTOS NÃO SÃO (07/11/2026). O dono perguntou pelos "118 sem
+        # capa": eles não são dívida, são vídeos de OUTROS jogos, que a regra do canal deixa de
+        # fora — pintar a marca da casa em vídeo alheio é o oposto de conteúdo próprio. O número
+        # fica dito com nome, para não parecer trabalho pendente pela terceira rodada seguida.
+        da_casa_videos = [v for v in videos if da_casa((v or {}).get("titulo"))]
+        outros = len(videos) - len(da_casa_videos)
+        print("ensaio: %d vídeo(s) sem capa nesta rodada · %d no canal (%d da casa, %d de outros "
+              "jogos) · %d no registro"
+              % (len(fila), len(videos), len(da_casa_videos), outros,
+                 len((registro or {}).get("aplicadas") or [])))
         # O RETRATO FICA GRAVADO (07/11/2026): o ensaio contava em números e o número morria no
         # log do run. Agora o estado da casa lê este arquivo e responde "50 de 50, nenhum sem
         # capa" sem depender de abrir o Actions.
-        _gravar_estado_capas(len(videos), len(fila), registro_de_todos=len((registro or {}).get("aplicadas") or []))
+        _gravar_estado_capas(len(videos), len(fila),
+                             registro_de_todos=len((registro or {}).get("aplicadas") or []),
+                             da_casa=len(da_casa_videos), outros_jogos=outros)
         return 0
     ok, rel = executar(_token(), a.confirmacao, limite=a.limite, registro_caminho=a.registro,
                        somente=a.so, forcar=a.forcar, todos=a.todos)
@@ -336,13 +346,19 @@ def main(argv):
     return 0 if ok else 1
 
 
-def _gravar_estado_capas(no_canal, sem_capa, registro_de_todos=0):
+def _gravar_estado_capas(no_canal, sem_capa, registro_de_todos=0, da_casa=None, outros_jogos=None):
     """Grava o retrato da cobertura de capas em posts/capas-estado.json (fonte do estado da casa)."""
     import datetime
     caminho = CAMINHO_ESTADO
     dados = {"_o_que_e": "retrato da cobertura de capas: quantos vídeos o canal tem e quantos estão sem capa",
              "no_canal": int(no_canal), "sem_capa": int(sem_capa),
              "no_registro": int(registro_de_todos),
+             # DECISÃO DE 07/11/2026: vídeo de OUTRO jogo não recebe capa da casa. O número fica
+             # no retrato para ninguém confundir ausência de capa com falta de trabalho.
+             "_decisao": ("capa da casa só em vídeo que cita jogo da casa; os de outros jogos "
+                          "ficam sem capa por regra, não por pendência"),
+             "da_casa": None if da_casa is None else int(da_casa),
+             "outros_jogos": None if outros_jogos is None else int(outros_jogos),
              "medido_em": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
     try:
         os.makedirs(os.path.dirname(caminho), exist_ok=True)

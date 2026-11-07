@@ -148,6 +148,44 @@ ok("sem delta, não inventa ritmo medido",
    _r_sem and "ritmo medido" not in _r_sem[0]["porque"],
    _r_sem[0]["porque"] if _r_sem else None)
 
+# ---- meta parada: plano novo, não repetição (07/11/2026) ----------------------------------
+# Empurrar uma meta com ritmo 0,0/dia há 25 dias é repetição com outro nome. A necessidade vira
+# pesquisa de abordagem — e não uma publicação a mais no mesmo canal.
+_paradas = p.metas_paradas([
+    {"meta": "YouTube: inscritos", "status": "PARADA", "observado": "24", "alvo": "40"},
+    {"meta": "Bluesky: seguidores", "status": "RENOVADA", "observado": "32", "alvo": "50"},
+])
+ok("meta PARADA vira necessidade", len(_paradas) == 1, _paradas)
+ok("meta parada pede pesquisa, não publicação", _paradas and _paradas[0]["tipo_fila"] == "pesquisar",
+   _paradas[0]["tipo_fila"] if _paradas else None)
+ok("meta parada não é chamada de 'empurrar'", _paradas and "empurrar" not in _paradas[0]["o_que"],
+   _paradas[0]["o_que"] if _paradas else None)
+ok("meta parada diz que o ritmo é 0,0/dia", _paradas and "0,0/dia" in _paradas[0]["porque"],
+   _paradas[0]["porque"] if _paradas else None)
+ok("meta RENOVADA não entra como parada", all("Bluesky" not in i["o_que"] for i in _paradas), _paradas)
+_renovada = p.metas_em_risco(
+    [{"meta": "itch: downloads", "alvo": "100", "observado": "48", "falta": "52",
+      "por_dia": "10.4", "status": "RENOVADA", "delta": 4}], dias_restantes=5, dias_decorridos=25)
+ok("meta RENOVADA continua sendo empurrada", len(_renovada) == 1, _renovada)
+
+# ---- canais desligados por decisão não voltam como cobrança (07/11/2026) -------------------
+# Telegram, Mastodon e Discord nunca publicaram por falta de segredo e voltavam TODO dia no
+# relatório. A decisão de 07/11 foi não ligar: o registro fica, a cobrança para.
+_ciclos_falsos = [{"linhas": {"telegram": "INDISPONIVEL: falta o segredo TELEGRAM_TOKEN",
+                             "discord": "INDISPONIVEL: falta o segredo DISCORD_WEBHOOK"}}
+                  for _ in range(6)]
+_segredos = {"telegram": ["TELEGRAM_TOKEN", "TELEGRAM_CHAT"], "discord": ("DISCORD_WEBHOOK",)}
+_antes = p.canais_cegos(lambda n: _ciclos_falsos, _segredos)
+ok("canal cego sem decisão continua cobrado", len(_antes) == 2, [n["o_que"] for n in _antes])
+_depois = p.canais_cegos(lambda n: _ciclos_falsos, _segredos, desligados={"telegram": "não ligar"})
+ok("canal desligado sai da cobrança", [n["o_que"] for n in _depois] == ["ligar o canal discord"],
+   [n["o_que"] for n in _depois])
+ok("o arquivo da decisão é lido de verdade",
+   set(p.ler_canais_desligados()) >= {"telegram", "mastodon", "discord"},
+   p.ler_canais_desligados())
+ok("cada canal desligado tem motivo escrito",
+   all(len(v) > 20 for v in p.ler_canais_desligados().values()), p.ler_canais_desligados())
+
 # ---------------------------------------------------------------- repetição
 ok("repetição acima do limite vira necessidade",
    len(p.repeticao_alta({"repeticao_desde_o_conserto": {"pct": 22.0, "ciclos": 9}})) == 1)
@@ -189,8 +227,16 @@ ok("toda necessidade tem número no porquê",
 ok("toda necessidade diz quem faz e como verificar",
    all(i["quem"] in ("robô", "dono") and i["como"] and i["verifica"]
        for i in _real["robo"] + _real["dono"]))
-ok("os canais cegos aparecem como do dono (com o segredo nomeado)",
-   any("segredo" in i["porque"] for i in _real["dono"]), [i["o_que"] for i in _real["dono"]])
+# A COBRANÇA DE CANAL MUDOU DE REGRA EM 07/11/2026: telegram, mastodon e discord foram
+# desligados por decisão (posts/canais-desligados.json) e não voltam como item do dia. O que se
+# cobra agora é o invariante: canal desligado NÃO aparece, e a mecânica continua provada acima
+# (canal cego sem decisão vira necessidade do dono).
+_desligados_reais = p.ler_canais_desligados()
+ok("os canais desligados por decisão não voltam como cobrança do dono",
+   not [i for i in _real["dono"] if any(canal in i["o_que"] for canal in _desligados_reais)],
+   [i["o_que"] for i in _real["dono"]])
+ok("o arquivo dos canais desligados é lido pelo perceber do repositório",
+   set(_desligados_reais) == {"telegram", "mastodon", "discord"}, _desligados_reais)
 ok("nenhuma necessidade se repete (chave única)",
    len({i.get("chave") or i["o_que"] for i in _real["robo"] + _real["dono"]})
    == len(_real["robo"] + _real["dono"]))

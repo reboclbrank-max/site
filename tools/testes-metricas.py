@@ -546,5 +546,62 @@ if os.path.exists(_caminho_json):
     ok("o JSON traz as linhas do placar", isinstance(_dados.get("linhas"), list) and _dados["linhas"],
        _dados.get("linhas"))
 
+# ---- a meta que não anda não tem prazo (07/11/2026) ----------------------------------------
+# Decisão com número: o prazo de 12/11 chegava com 4 metas em curso e nenhuma ao alcance.
+_d, _data = metricas.previsao_da_meta(18, 0.76, hoje=datetime.date(2026, 11, 7))
+ok("previsão: falta 18 a 0,76/dia leva 24 dias", _d == 24, _d)
+ok("previsão devolve a data que o ritmo entrega", _data == "2026-12-01", _data)
+ok("previsão com ritmo zero não inventa data", metricas.previsao_da_meta(18, 0) == (None, None))
+ok("previsão sem falta não inventa data", metricas.previsao_da_meta(None, 1.0) == (None, None))
+
+def _meta(**kw):
+    base = {"meta": "x", "alvo": 50, "observado": 32, "falta": 18, "status": "EM_CURSO",
+            "delta": 0, "partida": 0}
+    base.update(kw)
+    return base
+
+_parada = metricas.aplicar_politica_de_ritmo([_meta(delta=0)], 25, 5, datetime.date(2026, 11, 7))
+ok("ritmo 0 por 25 dias vira PARADA", _parada[0]["status"] == "PARADA", _parada[0]["status"])
+ok("PARADA diz o motivo com o número de dias", "25 dias" in _parada[0]["motivo"], _parada[0]["motivo"])
+ok("PARADA não tem prazo cumprível", _parada[0]["no_prazo"] is False)
+
+_jovem = metricas.aplicar_politica_de_ritmo([_meta(delta=0)], 10, 5, datetime.date(2026, 11, 7))
+ok("ritmo 0 em 10 dias ainda não é veredito", _jovem[0]["status"] == "EM_CURSO", _jovem[0]["status"])
+ok("e o motivo diz quando o julgamento acontece", "21 dias" in _jovem[0]["motivo"], _jovem[0]["motivo"])
+
+_lento = metricas.aplicar_politica_de_ritmo([_meta(delta=19, falta=18)], 25, 5,
+                                            datetime.date(2026, 11, 7))
+ok("ritmo que não fecha o prazo vira RENOVADA", _lento[0]["status"] == "RENOVADA",
+   _lento[0]["status"])
+ok("RENOVADA carrega a data que o ritmo entrega", _lento[0]["prazo_estimado"] == "2026-12-01",
+   _lento[0].get("prazo_estimado"))
+ok("RENOVADA diz que não fecha no prazo", _lento[0]["no_prazo"] is False)
+
+_rapido = metricas.aplicar_politica_de_ritmo([_meta(delta=200, falta=18)], 25, 5,
+                                             datetime.date(2026, 11, 7))
+ok("ritmo que fecha o prazo continua EM_CURSO", _rapido[0]["status"] == "EM_CURSO",
+   _rapido[0]["status"])
+ok("e é dito que fecha no prazo", _rapido[0]["no_prazo"] is True)
+
+_sem_delta = metricas.aplicar_politica_de_ritmo([_meta(delta=None)], 25, 5, None)
+ok("sem delta a política não chuta status", _sem_delta[0]["status"] == "EM_CURSO",
+   _sem_delta[0]["status"])
+ok("sem delta não inventa ritmo medido", "ritmo_medido" not in _sem_delta[0])
+
+# e o placar REAL, gerado agora, já sai com a política aplicada
+_linhas_reais, _ctx_real = metricas.placar_metas({
+    "bsky_seguidores": 32, "ig_posts": 39, "ig_seguidores": 0, "itch_downloads": 48,
+    "itch_visitas": 206, "yt_inscritos": 24, "yt_shorts": 7, "itch_seguidores": None})
+_em_curso = [l for l in _linhas_reais if l["status"] in ("EM_CURSO", "RENOVADA", "PARADA")]
+ok("todas as metas em curso carregam ritmo medido", _em_curso and
+   all(l.get("ritmo_medido") is not None for l in _em_curso),
+   [(l["meta"], l.get("ritmo_medido")) for l in _em_curso])
+ok("nenhuma delas fecha o prazo no ritmo medido",
+   all(l.get("no_prazo") is False for l in _em_curso),
+   [(l["meta"], l.get("no_prazo")) for l in _em_curso])
+ok("o placar escrito tem a seção da projeção",
+   "Pelo ritmo medido" in open(metricas.SAIDA_PLACAR, encoding="utf-8").read(),
+   metricas.SAIDA_PLACAR)
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 raise SystemExit(1 if falhas else 0)

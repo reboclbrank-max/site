@@ -290,6 +290,22 @@ def escrever(relatorio):
             linhas.append("  - sondagem: `%s`" % i["sondagem"])
         for onde in i.get("coberto_em") or []:
             linhas.append("  - chega ao jogador por: %s" % onde)
+    # CANAIS DESLIGADOS POR DECISÃO (07/11/2026): aparecem UMA vez, com motivo, e não voltam
+    # como cobrança todo dia. Silêncio sem registro seria pior: pareceria esquecimento.
+    try:
+        _desligados = json.load(open(os.path.join(RAIZ, "posts", "canais-desligados.json"),
+                                     encoding="utf-8"))
+        _canais = _desligados.get("canais") or {}
+    except (OSError, ValueError):
+        _canais = {}
+    if _canais:
+        linhas += ["", "## Canais desligados por decisão", "",
+                   "Decidido em %s. Ficam fora da cobrança diária; o motivo está escrito para "
+                   "não parecer esquecimento." % (_desligados.get("_decidido_em") or "—")]
+        for _nome in sorted(_canais):
+            _info = _canais[_nome] or {}
+            linhas.append("- **%s**: %s" % (_nome, _info.get("motivo") or "sem motivo registrado"))
+
     linhas += ["", "## Medições", ""]
     for i in relatorio["itens"]:
         linhas.append("- **%s**: %s" % (i["titulo"], i["medido"]))

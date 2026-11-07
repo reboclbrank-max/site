@@ -22,8 +22,15 @@ on:
   # Escolha de intervalo: 20 minutos. É o suficiente para um pulso cair dentro da janela,
   # não gasta runner à toa e continua abaixo do teto de 5 publicações por dia, que é do
   # orquestrador, não do cron.
+  # HORÁRIO ÚTIL, NÃO 24 HORAS (07/11/2026). Antes: `*/20 * * * *` — 72 pulsos por dia, dos
+  # quais 27 caíam em horas em que nada pode acontecer: nem publicar (janela fechada), nem
+  # pesquisar (03h local), nem aprender (04h local). Eles só dormiam e poluíam o histórico.
+  # Agora o cron cobre exatamente o que a casa usa, em UTC (BRT = UTC-3):
+  #   12-23 e 0  → 09h a 21h de Brasília (a janela 9-22h, com o pulso das 21h incluído)
+  #   6          → 03h de Brasília (janela diária de pesquisa)
+  #   7          → 04h de Brasília (janela diária de aprendizado)
   schedule:
-    - cron: "*/20 * * * *"
+    - cron: "*/20 0,6,7,12-23 * * *"
   # O caminho manual continua existindo — para quando o dono quiser forçar um ciclo.
   workflow_dispatch:
     inputs:
