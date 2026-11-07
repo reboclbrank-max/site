@@ -123,6 +123,8 @@ ok("o retrato conta os vídeos de outros jogos", _retrato.get("outros_jogos") ==
 ok("o retrato conta os da casa", _retrato.get("da_casa") == 1, _retrato.get("da_casa"))
 ok("o retrato diz a decisão (outros jogos ficam sem capa por regra)",
    "por regra" in (_retrato.get("_decisao") or ""), _retrato.get("_decisao"))
+ok("o retrato cruza registro e canal (quantos dos que têm capa seguem no canal)",
+   _retrato.get("com_capa_no_canal") == 0, _retrato.get("com_capa_no_canal"))
 
 tmp = tempfile.mkdtemp(prefix="capas-antigas-")
 # o ensaio grava o retrato da cobertura; a suíte aponta para o tmp para não escrever na casa

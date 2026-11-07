@@ -327,6 +327,14 @@ def main(argv):
         # fica dito com nome, para não parecer trabalho pendente pela terceira rodada seguida.
         da_casa_videos = [v for v in videos if da_casa((v or {}).get("titulo"))]
         outros = len(videos) - len(da_casa_videos)
+        # O REGISTRO E O CANAL, CRUZADOS (07/11/2026): o retrato dizia "51 no registro" e "169 no
+        # canal" e deixava o leitor somar sozinho — e a conta que ele fazia ("118 sem capa") não
+        # era a que a ferramenta mede. Agora os três números vêm medidos: quantos dos que têm
+        # capa ainda estão no canal, e quantos desses citam jogo da casa pelo título.
+        _ids = {str(x.get("id")) for x in (registro or {}).get("aplicadas") or []
+                if isinstance(x, dict)}
+        com_capa = [v for v in videos if str(v.get("id")) in _ids]
+        com_capa_da_casa = [v for v in com_capa if da_casa((v or {}).get("titulo"))]
         print("ensaio: %d vídeo(s) sem capa nesta rodada · %d no canal (%d da casa, %d de outros "
               "jogos) · %d no registro"
               % (len(fila), len(videos), len(da_casa_videos), outros,
@@ -336,7 +344,8 @@ def main(argv):
         # capa" sem depender de abrir o Actions.
         _gravar_estado_capas(len(videos), len(fila),
                              registro_de_todos=len((registro or {}).get("aplicadas") or []),
-                             da_casa=len(da_casa_videos), outros_jogos=outros)
+                             da_casa=len(da_casa_videos), outros_jogos=outros,
+                             com_capa=len(com_capa), com_capa_da_casa=len(com_capa_da_casa))
         return 0
     ok, rel = executar(_token(), a.confirmacao, limite=a.limite, registro_caminho=a.registro,
                        somente=a.so, forcar=a.forcar, todos=a.todos)
@@ -346,7 +355,8 @@ def main(argv):
     return 0 if ok else 1
 
 
-def _gravar_estado_capas(no_canal, sem_capa, registro_de_todos=0, da_casa=None, outros_jogos=None):
+def _gravar_estado_capas(no_canal, sem_capa, registro_de_todos=0, da_casa=None, outros_jogos=None,
+                         com_capa=None, com_capa_da_casa=None):
     """Grava o retrato da cobertura de capas em posts/capas-estado.json (fonte do estado da casa)."""
     import datetime
     caminho = CAMINHO_ESTADO
@@ -359,6 +369,8 @@ def _gravar_estado_capas(no_canal, sem_capa, registro_de_todos=0, da_casa=None, 
                           "ficam sem capa por regra, não por pendência"),
              "da_casa": None if da_casa is None else int(da_casa),
              "outros_jogos": None if outros_jogos is None else int(outros_jogos),
+             "com_capa_no_canal": None if com_capa is None else int(com_capa),
+             "com_capa_e_da_casa": None if com_capa_da_casa is None else int(com_capa_da_casa),
              "medido_em": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
     try:
         os.makedirs(os.path.dirname(caminho), exist_ok=True)

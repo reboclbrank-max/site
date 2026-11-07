@@ -97,6 +97,8 @@ def estado(agora=None):
         "capas_sem_capa": sem_capa,
         "capas_medido_em": capas_estado.get("medido_em"),
         "capas_outros_jogos": capas_estado.get("outros_jogos"),
+        "capas_da_casa": capas_estado.get("da_casa"),
+        "capas_com_capa_no_canal": capas_estado.get("com_capa_no_canal"),
         "fila_pendentes": len(pendentes),
         "fila_por_tipo": por_tipo,
         "fila_mais_velha": mais_velha[0] if mais_velha else None,
@@ -125,12 +127,13 @@ def texto(dados=None):
     linha = "Capas da casa: %d aplicada(s)" % d["capas_aplicadas"]
     if d["capas_no_canal"]:
         linha += " · canal com %d vídeos" % d["capas_no_canal"]
+        if d.get("capas_da_casa") is not None and d.get("capas_outros_jogos") is not None:
+            linha += " (%d citam jogo da casa, %d de outros jogos)" % (
+                d["capas_da_casa"], d["capas_outros_jogos"])
     if d["capas_sem_capa"] == 0:
         linha += " · nenhum da casa sem capa"
     elif d["capas_sem_capa"]:
         linha += " · %d da casa sem capa" % d["capas_sem_capa"]
-    if d.get("capas_outros_jogos"):
-        linha += " · %d de outros jogos, sem capa por regra" % d["capas_outros_jogos"]
     if d.get("capas_medido_em"):
         linha += " (medido em %s)" % str(d["capas_medido_em"])[:16]
     linhas.append(linha)

@@ -83,14 +83,17 @@ try:
     ok("o bloco mostra os pulsos", "Pulsos: 132" in bloco, bloco)
     ok("o bloco data a medida das capas", "medido em 2026-11-07" in bloco, bloco)
 
-    # 2b. vídeos de outros jogos aparecem com nome (não como dívida)
+    # 2b. os três números do canal aparecem cada um com nome (e nada de conta que o leitor faça só)
     with open(os.path.join(tmp, "capas-estado.json"), "w", encoding="utf-8") as f:
-        json.dump({"no_canal": 169, "sem_capa": 0, "da_casa": 51, "outros_jogos": 118,
-                   "medido_em": "2026-11-07T01:00:00Z"}, f)
+        json.dump({"no_canal": 169, "sem_capa": 0, "da_casa": 11, "outros_jogos": 158,
+                   "com_capa_no_canal": 51, "medido_em": "2026-11-07T01:00:00Z"}, f)
     _bloco_outros = est.texto(est.estado())
-    ok("o bloco diz quantos são de outros jogos", "118 de outros jogos" in _bloco_outros,
-       _bloco_outros)
-    ok("e diz que é por regra, não por pendência", "por regra" in _bloco_outros, _bloco_outros)
+    ok("o bloco diz quantos citam jogo da casa e quantos são de outros jogos",
+       "11 citam jogo da casa, 158 de outros jogos" in _bloco_outros, _bloco_outros)
+    ok("o bloco diz que nenhum da casa está sem capa",
+       "nenhum da casa sem capa" in _bloco_outros, _bloco_outros)
+    ok("o bloco não inventa razão para os de outros jogos (nada de 'por regra' sem medir)",
+       "por regra" not in _bloco_outros, _bloco_outros)
 
     # 3. a régua de metas: idade visível, e vencida quando passa de 24 h
     with open(os.path.join(tmp, "placar-estado.json"), "w", encoding="utf-8") as f:
