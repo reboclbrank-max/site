@@ -318,17 +318,24 @@ def main():
     # O único workflow que COMMITAVA a medição era o postagem-diaria, cuja agenda saiu na
     # contenção. O diagnostico-da-casa mede, mas não tinha agenda nem commit — e o pulso seguia
     # decidindo com números de 03/11.
-    _diag = fontes().get("diagnostico-da-casa.yml", "")
+    _diag = fontes().get("medir-o-dia.yml", "")
+    ok("existe um workflow com o papel de escrever a régua", bool(_diag), list(fontes())[:3])
     _gatilhos_diag = _diag.split("permissions:")[0]
     _crons_diag = [l.split('"')[1] for l in _gatilhos_diag.splitlines() if l.strip().startswith("- cron:")]
-    ok("diagnostico-da-casa tem agenda (a régua não fica sem quem a escreva)", bool(_crons_diag),
+    ok("medir-o-dia tem agenda (a régua não fica sem quem a escreva)", bool(_crons_diag),
        _crons_diag)
     _horas_diag = []
     for _c in _crons_diag:
         _horas_diag += [int(x) for x in _c.split()[1].split(",") if x.isdigit()]
     ok("a medição do dia roda dentro da janela (9-22h de Brasília)",
        _horas_diag and all(12 <= h <= 22 for h in _horas_diag), _horas_diag)
-    ok("diagnostico-da-casa versiona a régua de metas", "git add posts/placar-metas.md" in _diag)
+    ok("medir-o-dia pode escrever no repositório (é o papel dele)",
+       "contents: write" in _diag, [l for l in _diag.splitlines() if "contents:" in l])
+    ok("diagnostico-da-casa continua só-leitura (não virou escritor de passagem)",
+       "contents: read" in fontes().get("diagnostico-da-casa.yml", ""))
+    ok("diagnostico-da-casa ganhou as ferramentas que as suítes pedem (Pillow)",
+       "Pillow" in fontes().get("diagnostico-da-casa.yml", ""))
+    ok("medir-o-dia versiona a régua de metas", "git add posts/placar-metas.md" in _diag)
     ok("o commit da medição entra pelo entrar-no-main (sem push seco)",
        "entrar-no-main.sh" in _diag.split("Versiona a medição")[-1])
     ok("o commit da medição só acontece quando algo mudou",
