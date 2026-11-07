@@ -1,0 +1,102 @@
+{
+ "linhas": [
+  {
+   "meta": "Instagram: publicações",
+   "alvo": 30,
+   "observado": 39,
+   "falta": 0,
+   "status": "ATINGIDO",
+   "fonte": "graph.instagram.com",
+   "partida": 2,
+   "delta": 37,
+   "por_dia": null
+  },
+  {
+   "meta": "Instagram: seguidores",
+   "alvo": 50,
+   "observado": 0,
+   "falta": 50,
+   "status": "EM_CURSO",
+   "fonte": "graph.instagram.com",
+   "partida": 0,
+   "delta": 0,
+   "por_dia": 10.0
+  },
+  {
+   "meta": "Bluesky: seguidores",
+   "alvo": 50,
+   "observado": 32,
+   "falta": 18,
+   "status": "EM_CURSO",
+   "fonte": "API pública do Bluesky",
+   "partida": 13,
+   "delta": 19,
+   "por_dia": 3.6
+  },
+  {
+   "meta": "YouTube: inscritos",
+   "alvo": 40,
+   "observado": 24,
+   "falta": 16,
+   "status": "EM_CURSO",
+   "fonte": "YouTube Data API v3 (chave no runner)",
+   "partida": 24,
+   "delta": 0,
+   "por_dia": 3.2
+  },
+  {
+   "meta": "YouTube: shorts",
+   "alvo": 4,
+   "observado": 7,
+   "falta": 0,
+   "status": "ATINGIDO",
+   "fonte": "YouTube Data API v3 (chave no runner)",
+   "partida": null,
+   "delta": null,
+   "por_dia": null
+  },
+  {
+   "meta": "itch: downloads",
+   "alvo": 100,
+   "observado": 48,
+   "falta": 52,
+   "status": "EM_CURSO",
+   "fonte": "api.itch.io/profile/games (chave no runner)",
+   "partida": 44,
+   "delta": 4,
+   "por_dia": 10.4
+  },
+  {
+   "meta": "itch: seguidores (aposentada)",
+   "alvo": 10,
+   "observado": null,
+   "falta": null,
+   "status": "SEM_LEITURA",
+   "fonte": "SEM_API: o itch não publica seguidores (conferido em 25/10/2026)",
+   "partida": null,
+   "delta": null,
+   "por_dia": null,
+   "motivo": "aposentada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública"
+  },
+  {
+   "meta": "itch: visitas",
+   "alvo": "—",
+   "observado": 206,
+   "falta": null,
+   "status": "ACOMPANHADA",
+   "fonte": "api.itch.io/profile/games (chave no runner)",
+   "partida": null,
+   "delta": null,
+   "por_dia": null,
+   "motivo": "medida no lugar de itch: seguidores, sem alvo (alvo é decisão do dono)"
+  }
+ ],
+ "placar_contexto": {
+  "dias_restantes": 5,
+  "prazo": "2026-11-12",
+  "dias_decorridos": 25,
+  "metas_com_leitura": 7,
+  "metas_sem_leitura": 0,
+  "metas_aposentadas": 1
+ }
+}
