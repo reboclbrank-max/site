@@ -33,7 +33,12 @@ def ler(caminho):
 
 
 def metas_em_risco(texto_placar):
-    """Lista (meta, falta, por_dia) das linhas EM_CURSO do placar, maior risco primeiro."""
+    """Lista (meta, falta, por_dia, status), maior ritmo necessário primeiro.
+
+    O STATUS VAI JUNTO (07/11/2026): `PARADA` é meta com ritmo medido 0,0/dia — nenhum tema novo
+    faz ela andar, e escolhê-la como "a meta do dia" mandava o redator empurrar o que já não
+    funcionava. Ela continua medida e continua na lista; só não é a meta a atacar com post.
+    """
     itens = []
     for linha in texto_placar.splitlines():
         # RENOVADA e PARADA também são risco (07/11/2026): a régua passou a nomear assim as metas
@@ -44,9 +49,10 @@ def metas_em_risco(texto_placar):
         partes = [p.strip() for p in linha.strip("|").split("|")]
         if len(partes) < 6:
             continue
-        meta, falta, por_dia = partes[0], partes[3], partes[4]
+        meta, falta, por_dia, status = partes[0], partes[3], partes[4], partes[5]
         try:
-            itens.append((meta, float(falta.replace(",", ".")), float(por_dia.replace(",", "."))))
+            itens.append((meta, float(falta.replace(",", ".")), float(por_dia.replace(",", ".")),
+                          status))
         except ValueError:
             continue
     itens.sort(key=lambda x: x[2], reverse=True)
@@ -109,6 +115,11 @@ def montar(agora=None):
         aprendizado = {}
 
     riscos = metas_em_risco(placar)
+    # O POST NÃO MOVE META PARADA (07/11/2026): separa o que dá para atacar do que precisa de
+    # outra abordagem. Sem isso, o placar real escolhia "Instagram: seguidores" (PARADA, ritmo
+    # 0,0/dia há 25 dias) como a meta do dia, porque 10,0/dia é o maior ritmo necessário.
+    atacaveis = [r for r in riscos if r[3] not in ("PARADA", "SEM_LEITURA")]
+    paradas = [r for r in riscos if r[3] == "PARADA"]
     ruins = formatos_ruins(desempenho)
     # o relatório repete a tabela em vários dias (um bloco por data): conta uma vez só
     vistos, unicos = set(), []
@@ -121,13 +132,16 @@ def montar(agora=None):
     temas_gastos = [r["formato"] for r in ruins]
     tema = escolher_tema(temas_gastos=temas_gastos)
 
-    alvo = riscos[0][0] if riscos else None
+    alvo = atacaveis[0] if atacaveis else None
     plano = {
         "quando": agora.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "meta_em_risco": {"meta": alvo,
-                          "falta": riscos[0][1] if riscos else None,
-                          "por_dia": riscos[0][2] if riscos else None} if riscos else None,
-        "ranking_de_risco": [{"meta": m, "falta": f, "por_dia": d} for m, f, d in riscos],
+        "meta_em_risco": {"meta": alvo[0], "falta": alvo[1], "por_dia": alvo[2],
+                          "status": alvo[3]} if alvo else None,
+        "metas_paradas": [{"meta": m, "falta": f, "ritmo_medido": "0,0/dia",
+                           "porque": "post não move: a pesquisa é sobre outra abordagem"}
+                          for m, f, _d, _s in paradas],
+        "ranking_de_risco": [{"meta": m, "falta": f, "por_dia": d, "status": st}
+                             for m, f, d, st in riscos],
         "formatos_a_evitar": ruins,
         "tema_do_dia": tema,
         "horario": horario_do_plano(calendario, aprendizado),
@@ -144,6 +158,9 @@ def main(argv):
     plano = montar()
     risco = plano["meta_em_risco"] or {}
     print("meta em risco: %s (falta %s · %s/dia)" % (risco.get("meta"), risco.get("falta"), risco.get("por_dia")))
+    if plano.get("metas_paradas"):
+        print("metas paradas (post não move): %s"
+              % ", ".join("%s — falta %s" % (p["meta"], p["falta"]) for p in plano["metas_paradas"]))
     print("formatos a evitar: %s" % ", ".join(f["formato"] for f in plano["formatos_a_evitar"]) or "nenhum")
     print("tema do dia: %s" % ((plano["tema_do_dia"] or {}).get("texto", "(fila vazia)")[:80]))
     print("horário: %s" % plano["horario"]["motivo"])

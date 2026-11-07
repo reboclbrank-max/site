@@ -164,6 +164,20 @@ def main():
     riscos = pesq.metas_em_risco(placar)
     ok("pesquisa ordena por ritmo necessário (maior risco primeiro)",
        riscos[0][0].startswith("itch"), riscos[:2])
+    ok("a pesquisa sabe o status de cada meta", riscos[0][3] == "EM_CURSO", riscos[0])
+
+    # 9b. META PARADA NÃO É A META DO DIA (07/11/2026)
+    _placar_parado = ("| meta | alvo | observado | falta | por dia | status | desde a partida |\n"
+                      "|---|---|---|---|---|---|---|\n"
+                      "| Instagram: seguidores | 50 | 0 | 50 | 10.0 | PARADA | 0 |\n"
+                      "| Bluesky: seguidores | 50 | 32 | 18 | 3.6 | RENOVADA | +19 |\n")
+    _r_parado = pesq.metas_em_risco(_placar_parado)
+    ok("a linha PARADA entra na lista com o status", _r_parado[0][3] == "PARADA", _r_parado[0])
+    ok("PARADA tem o maior ritmo necessário (é a que parece pior)",
+       _r_parado[0][0].startswith("Instagram"), _r_parado)
+    _atacaveis = [r for r in _r_parado if r[3] != "PARADA"]
+    ok("a meta a atacar com post é a que ainda anda", _atacaveis[0][0].startswith("Bluesky"),
+       _atacaveis)
 
     desempenho = ("| tipo | posts | engajamento médio | melhor | sem engajamento |\n"
                   "|---|---|---|---|---|\n"
