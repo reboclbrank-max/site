@@ -76,8 +76,8 @@ try:
     ok("lê a cobertura de capas do retrato medido", dados["capas_no_canal"] == 50, dados["capas_no_canal"])
 
     bloco = est.texto(dados)
-    ok("o bloco diz 'de 50 vídeos do canal'", "50 de 50 vídeos do canal" in bloco, bloco)
-    ok("o bloco diz que nenhum está sem capa", "nenhum sem capa" in bloco, bloco)
+    ok("o bloco diz o tamanho do canal medido", "canal com 50 vídeos" in bloco, bloco)
+    ok("o bloco diz que nenhum da casa está sem capa", "nenhum da casa sem capa" in bloco, bloco)
     ok("o bloco mostra a fila com tipo e tempo de espera",
        "medir 2" in bloco and "publicar 1" in bloco and "há" in bloco, bloco)
     ok("o bloco mostra os pulsos", "Pulsos: 132" in bloco, bloco)
@@ -88,10 +88,16 @@ try:
         json.dump({"no_canal": 50, "sem_capa": 3, "medido_em": "2026-11-07T01:00:00Z"}, f)
     dados2 = est.estado()
     ok("capa faltando é dita em número", dados2["capas_sem_capa"] == 3, dados2["capas_sem_capa"])
-    # a cobertura é a conta, não o total: 50 no canal menos 3 sem capa = 47 cobertos
-    ok("a cobertura desconta quem está sem capa", "47 de 50 vídeos do canal" in est.texto(dados2),
+    # NADA DE RAZÃO INVENTADA: o canal tem 169 vídeos e só 51 são da casa. "51 de 169" faria
+    # parecer descuido, "169 de 169" seria mentira — o bloco diz os três números com nome.
+    ok("capa faltando da casa aparece como falta da casa", "3 da casa sem capa" in est.texto(dados2),
        est.texto(dados2))
-    ok("o bloco diz quantos faltam", "3 sem capa" in est.texto(dados2), est.texto(dados2))
+    _falso = dict(dados2, capas_no_canal=169, capas_sem_capa=0, capas_aplicadas=51)
+    _t = est.texto(_falso)
+    ok("o bloco não inventa '169 de 169' quando só 51 têm capa",
+       "169 de 169" not in _t and "canal com 169 vídeos" in _t and "51 aplicada" in _t, _t)
+    ok("o bloco diz quantos da casa faltam", "3 da casa sem capa" in est.texto(dados2),
+       est.texto(dados2))
 
     # 4. --json é dado cru e legível
     import io

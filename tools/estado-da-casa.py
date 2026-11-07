@@ -102,20 +102,20 @@ def texto(dados=None):
         (" · último: %s (%s)" % (d["ultimo_publicado"], (d["ultimo_publicado_titulo"] or "")[:48]))
         if d["ultimo_publicado"] else ""))
 
-    # A COBERTURA É O NÚMERO QUE IMPORTA: "51 capas" não diz se falta alguma. Quando o ensaio
-    # das capas já mediu o canal, o bloco diz "50 de 50" e data a medida.
-    cobertura = "%d capa(s) aplicada(s)" % d["capas_aplicadas"]
+    # SEM RAZÃO INVENTADA (07/11/2026): o canal tem 169 vídeos e só 51 têm capa da casa — os
+    # outros 118 não são da casa e ficam fora por regra. "51 de 169" faria parecer descuido e
+    # "169 de 169" seria mentira. O bloco diz os três números com nome: aplicadas, tamanho do
+    # canal e quantos DA CASA estão sem capa.
+    linha = "Capas da casa: %d aplicada(s)" % d["capas_aplicadas"]
     if d["capas_no_canal"]:
-        cobertura = "%d de %d vídeos do canal" % (
-            d["capas_no_canal"] - (d["capas_sem_capa"] or 0), d["capas_no_canal"])
-    detalhe = ""
-    if d["capas_sem_capa"]:
-        detalhe = " · %d sem capa" % d["capas_sem_capa"]
-    elif d["capas_sem_capa"] == 0:
-        detalhe = " · nenhum sem capa"
+        linha += " · canal com %d vídeos" % d["capas_no_canal"]
+    if d["capas_sem_capa"] == 0:
+        linha += " · nenhum da casa sem capa"
+    elif d["capas_sem_capa"]:
+        linha += " · %d da casa sem capa" % d["capas_sem_capa"]
     if d.get("capas_medido_em"):
-        detalhe += " (medido em %s)" % str(d["capas_medido_em"])[:16]
-    linhas.append("Capas da casa: %s%s" % (cobertura, detalhe))
+        linha += " (medido em %s)" % str(d["capas_medido_em"])[:16]
+    linhas.append(linha)
 
     if d["fila_pendentes"]:
         tipos = ", ".join("%s %d" % (tipo, qtd) for tipo, qtd in sorted(d["fila_por_tipo"].items()))
