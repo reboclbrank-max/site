@@ -78,6 +78,34 @@
    "hashtags": 1,
    "nota": 0.769,
    "texto": "Tudo sobre os canais oficiais está na nossa página. Já conhece o Prancheta? Descubra mais nos outros canais da casa! #gamedevbr"
+  },
+  {
+   "quando": "2026-11-07T12:02:29Z",
+   "canal": "site",
+   "angulo": "dica_de_jogador",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias",
+    "medido-bicos",
+    "medido-moedas",
+    "medido-plantadas",
+    "medido-tutorial"
+   ],
+   "abertura": "faltando espaco",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "pergunta",
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Faltando espaço no celeiro? Não gaste sementes à toa: só plante abóbora quando tiver slot livre pro processador, senão a colheita apodrece na fila. #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -104,26 +132,31 @@
   "prancheta-trailer"
  ],
  "ultimo": {
-  "quando": "2026-11-07T00:21:22Z",
+  "quando": "2026-11-07T12:02:29Z",
   "canal": "site",
-  "angulo": "ponte_de_canal",
-  "assunto": "casa",
+  "angulo": "dica_de_jogador",
+  "assunto": "ceifalume",
   "fatos": [
-   "casa-canais",
-   "casa-newsletter",
-   "casa-telegram",
-   "prancheta-trailer"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias",
+   "medido-bicos",
+   "medido-moedas",
+   "medido-plantadas",
+   "medido-tutorial"
   ],
-  "abertura": "tudo sobre",
+  "abertura": "faltando espaco",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "frase",
    "pergunta",
-   "frase",
+   "rotulo",
    "frase"
   ],
   "hashtags": 1,
   "nota": 0.769,
-  "texto": "Tudo sobre os canais oficiais está na nossa página. Já conhece o Prancheta? Descubra mais nos outros canais da casa! #gamedevbr"
+  "texto": "Faltando espaço no celeiro? Não gaste sementes à toa: só plante abóbora quando tiver slot livre pro processador, senão a colheita apodrece na fila. #ceifalume"
  }
 }
