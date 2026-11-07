@@ -1133,11 +1133,11 @@
    "id": "pesquisar-20261107T044325Z",
    "tipo": "pesquisar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-07T04:43:25Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-07T06:46:37Z",
+   "resultado": "meta em risco: itch: downloads (falta 52.0 · 10.4/dia)\nmetas paradas (post não move): Instagram: seguidores — falta 50.0, YouTube: inscritos — falta 16.0\nformatos a evitar: comentário em post alheio\ntema do dia: ⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des\nhorário: sem prova estatística: mantém a janela do calendário\nplano gravado em posts/plano-do-dia.json",
    "motivo": "meta parada: Instagram: seguidores: 0 em 21 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
    "chave": "parada-Instagram: seguidores",
    "origem": "perceber"
@@ -1154,6 +1154,18 @@
    "motivo": "meta parada: YouTube: inscritos: 24 em 21 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
    "chave": "parada-YouTube: inscritos",
    "origem": "perceber"
+  },
+  {
+   "id": "pesquisar-20261107T064637Z",
+   "tipo": "pesquisar",
+   "prioridade": 40,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-07T06:46:37Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "pesquisar-2026110706"
   }
  ],
  "recusadas": [
