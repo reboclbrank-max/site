@@ -1,6 +1,13 @@
 # Pendências do dono
 
-Medido em 2026-11-06T19:29:15Z (o devlog do itch é público: dá para conferir de fora).
+Medido em 2026-11-07T02:48:52Z (o devlog do itch é público: dá para conferir de fora).
+
+## Estado da casa
+
+- Vídeos publicados: 10 · último: _ffmjSMsW0Y (CEIFALUME 0.1: 8 colheitas, 11 mudas plantadas, )
+- Capas da casa: 51 capa(s) aplicada(s)
+- Fila: 8 pendente(s) (medir 5, publicar 3) · a mais velha: medir-20261103T093331Z há 89.3 h · 80 feita(s)
+- Pulsos: 132 · última publicação 2026-11-07T00:19:53Z · última medição 2026-11-03T01:42:54Z
 
 | item | estado | como |
 | --- | --- | --- |
