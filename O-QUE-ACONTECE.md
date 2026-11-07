@@ -1,6 +1,6 @@
 # O que acontece quando você mexe em algo
 
-Gerado por `tools/o-que-acontece.py` a partir dos **41** arquivos de `.github/workflows/` — cada linha vem do próprio workflow, não da minha memória. O `conferir-tudo` falha se este documento deixar de bater com eles.
+Gerado por `tools/o-que-acontece.py` a partir dos **42** arquivos de `.github/workflows/` — cada linha vem do próprio workflow, não da minha memória. O `conferir-tudo` falha se este documento deixar de bater com eles.
 
 ## 1. Você deu push no `main`
 
@@ -23,12 +23,13 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 
 ## 2. O dia sem você tocar em nada (hora de Brasília)
 
-**63 disparos automáticos por dia**, em 12 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
+**71 disparos automáticos por dia**, em 13 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
 
 **Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-07): **14.02/dia** de 63 pedidos. O pior caso é `medir-o-dia`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
 
 | hora (Brasília) | workflow | o que faz |
 | --- | --- | --- |
+| 00h, 03h, 06h, 09h, 12h, 15h, 18h, 21h | `corrente` | A CORRENTE DE PULSOS (07/11/2026). ⚠️ fora da janela: 00h, 03h, 06h |
 | 00h, 06h, 12h, 18h | `metricas-youtube` | Mede o que os vídeos publicados fizeram (views, likes, comentários). ⚠️ fora da janela: 00h, 06h |
 | 03h | `administrar-itch` | Administração automática do itch.io: o robô olha o estado, decide e (se for o caso) sobe o build — sem clique do dono. ⚠️ fora da janela: 03h |
 | 03h | `administrar-youtube` | Administração automática do YouTube: organiza e corrige o que já está publicado (título, descrição, tags) sem clique do dono. ⚠️ fora da janela: 03h |

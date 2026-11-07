@@ -1,0 +1,53 @@
+name: corrente
+
+# A CORRENTE DE PULSOS (07/11/2026). O cron não é agenda: medido na semana, o pulso
+# `marketing-24h` tem cron de 45 disparos por dia e recebeu 1,86 (4,1%); `medir-o-dia` recebeu
+# zero. Enquanto isso a casa documentava "um pulso a cada 20 minutos" e vivia outra coisa.
+#
+# Esta corrente substitui a promessa do GitHub por conta da casa: um run espera até o próximo
+# horário de pulso, dispara o pulso, dispara a si mesmo e dorme de novo. O cron de 3 em 3 horas
+# fica aqui só como partida de segurança — se a corrente quebrar, ela volta.
+#
+# Limites (todos medidos no próprio código, não em promessa):
+#   - `posts/PARAR` existe -> não dispara nada, nem antes nem durante a espera;
+#   - espera máxima de 5h20 dentro de um job que morre em 6h;
+#   - só acorda em hora que tem o que fazer: janela 9-22 (publicar) e 3-4 (pesquisa/aprendizado);
+#   - disparo que falha encerra a corrente com código 3 — falha nunca vira sucesso.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */3 * * *"   # partida de segurança: se a corrente morrer, ela volta em até 3 h
+
+permissions:
+  contents: read
+
+concurrency:
+  group: corrente
+  cancel-in-progress: false
+
+jobs:
+  corrente:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350     # 5h49: cobre a espera máxima (5h20) com folga, abaixo do teto de 6h
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Contratos da corrente (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-corrente.py
+
+      - name: Espera o próximo pulso, dispara o pulso e a si mesma
+        env:
+          GHPAT: ${{ secrets.GHPAT }}
+        run: |
+          set -o pipefail -e
+          python3 tools/corrente.py --ensaiar | tee /tmp/corrente-ensaio.txt
+          python3 tools/corrente.py | tee /tmp/corrente.txt
+          {
+            echo "### Corrente de pulsos"
+            echo
+            echo '```'
+            cat /tmp/corrente-ensaio.txt
+            echo
+            cat /tmp/corrente.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
