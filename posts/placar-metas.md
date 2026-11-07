@@ -5,15 +5,24 @@
 | meta | alvo | observado | falta | por dia | status | desde a partida |
 |---|---|---|---|---|---|---|
 | Instagram: publicações | 30 | 39 | 0 | — | ATINGIDO | +37 |
-| Instagram: seguidores | 50 | 0 | 50 | 10.0 | EM_CURSO | 0 |
-| Bluesky: seguidores | 50 | 32 | 18 | 3.6 | EM_CURSO | +19 |
-| YouTube: inscritos | 40 | 24 | 16 | 3.2 | EM_CURSO | 0 |
+| Instagram: seguidores | 50 | 0 | 50 | 10.0 | PARADA | 0 |
+| Bluesky: seguidores | 50 | 32 | 18 | 3.6 | RENOVADA | +19 |
+| YouTube: inscritos | 40 | 24 | 16 | 3.2 | PARADA | 0 |
 | YouTube: shorts | 4 | 7 | 0 | — | ATINGIDO | — |
-| itch: downloads | 100 | 48 | 52 | 10.4 | EM_CURSO | +4 |
+| itch: downloads | 100 | 48 | 52 | 10.4 | RENOVADA | +4 |
 | itch: seguidores (aposentada) | 10 | NAO_OBSERVAVEL | — | — | SEM_LEITURA | — |
 | itch: visitas | — | 206 | — | — | ACOMPANHADA | — |
 
 Prazo: **2026-11-12** · 5 dia(s) restante(s) · 7 meta(s) com leitura, 0 sem leitura automática · 1 aposentada(s) com o motivo no arquivo.
+
+**Pelo ritmo medido** (delta desde 13/10 ÷ dias decorridos):
+
+- **Instagram: seguidores** — PARADA: 25 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir (alvo 50 segue escrito; alvo é decisão do dono)
+- **Bluesky: seguidores** — RENOVADA: 0.76/dia → falta 18 → 24 dia(s), em 2026-12-01
+- **YouTube: inscritos** — PARADA: 25 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir (alvo 40 segue escrito; alvo é decisão do dono)
+- **itch: downloads** — RENOVADA: 0.16/dia → falta 52 → 325 dia(s), em 2027-09-28
+
+> Nenhuma das metas em curso fecha o prazo com o ritmo medido. O prazo oficial continua escrito acima; as datas desta lista são o que o ritmo entrega de fato.
 
 > **Sem retorno em 25 dias:** Instagram: seguidores (0 medido(s), nada a mais desde 13/10), YouTube: inscritos (24 medido(s), nada a mais desde 13/10). O esforço não voltou número nenhum. Manter o canal ou aposentá-lo é decisão do dono, com este número na mão — o robô não decide isso e não vai fingir que decide.
 

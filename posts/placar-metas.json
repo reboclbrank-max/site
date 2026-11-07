@@ -16,33 +16,44 @@
    "alvo": 50,
    "observado": 0,
    "falta": 50,
-   "status": "EM_CURSO",
+   "status": "PARADA",
    "fonte": "graph.instagram.com",
    "partida": 0,
    "delta": 0,
-   "por_dia": 10.0
+   "por_dia": 10.0,
+   "ritmo_medido": 0.0,
+   "no_prazo": false,
+   "motivo": "25 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
   },
   {
    "meta": "Bluesky: seguidores",
    "alvo": 50,
    "observado": 32,
    "falta": 18,
-   "status": "EM_CURSO",
+   "status": "RENOVADA",
    "fonte": "API pública do Bluesky",
    "partida": 13,
    "delta": 19,
-   "por_dia": 3.6
+   "por_dia": 3.6,
+   "ritmo_medido": 0.76,
+   "previsao_dias": 24,
+   "prazo_estimado": "2026-12-01",
+   "no_prazo": false,
+   "motivo": "não fecha no prazo no ritmo medido (0.76/dia): prazo renovado para a data que o ritmo entrega (2026-12-01)"
   },
   {
    "meta": "YouTube: inscritos",
    "alvo": 40,
    "observado": 24,
    "falta": 16,
-   "status": "EM_CURSO",
+   "status": "PARADA",
    "fonte": "YouTube Data API v3 (chave no runner)",
    "partida": 24,
    "delta": 0,
-   "por_dia": 3.2
+   "por_dia": 3.2,
+   "ritmo_medido": 0.0,
+   "no_prazo": false,
+   "motivo": "25 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
   },
   {
    "meta": "YouTube: shorts",
@@ -60,11 +71,16 @@
    "alvo": 100,
    "observado": 48,
    "falta": 52,
-   "status": "EM_CURSO",
+   "status": "RENOVADA",
    "fonte": "api.itch.io/profile/games (chave no runner)",
    "partida": 44,
    "delta": 4,
-   "por_dia": 10.4
+   "por_dia": 10.4,
+   "ritmo_medido": 0.16,
+   "previsao_dias": 325,
+   "prazo_estimado": "2027-09-28",
+   "no_prazo": false,
+   "motivo": "não fecha no prazo no ritmo medido (0.16/dia): prazo renovado para a data que o ritmo entrega (2027-09-28)"
   },
   {
    "meta": "itch: seguidores (aposentada)",
