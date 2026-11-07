@@ -75,10 +75,11 @@ ok("fora da janela não acontece (a conta mira só a janela)",
 # ------------------------------------------------------------------ o passo da corrente
 _chamadas = []
 _feito = c.ciclo(agora_fn=lambda: local(15, 5),
-                 disparar_fn=lambda wf: _chamadas.append(wf),
+                 pulso_fn=lambda: _chamadas.append("pulso"),
+                 si_fn=lambda: _chamadas.append("corrente"),
                  dormir=lambda s: _chamadas.append(("dormiu", s)),
                  token="x", parado_fn=lambda: False)
-ok("a corrente dispara o pulso e a si mesma", _chamadas and _chamadas[-2:] == ["marketing-24h", "corrente"],
+ok("a corrente acorda o pulso e se reagenda", _chamadas and _chamadas[-2:] == ["pulso", "corrente"],
    _chamadas)
 ok("ela dorme antes de disparar", isinstance(_chamadas[0], tuple) and _chamadas[0][0] == "dormiu",
    _chamadas[:2])
@@ -88,7 +89,8 @@ ok("o registro diz o motivo", "janela aberta" in _feito["motivo"], _feito)
 
 _chamadas_vazias = []
 _parado = c.ciclo(agora_fn=lambda: local(15, 5),
-                  disparar_fn=lambda wf: _chamadas_vazias.append(wf),
+                  pulso_fn=lambda: _chamadas_vazias.append("pulso"),
+                  si_fn=lambda: _chamadas_vazias.append("corrente"),
                   dormir=lambda s: None, token="x", parado_fn=lambda: True)
 ok("com posts/PARAR, nada é disparado", _chamadas_vazias == [], _chamadas_vazias)
 ok("com posts/PARAR, a corrente diz que parou", _parado["acao"] == "parar" and "PARAR" in _parado["motivo"],
@@ -104,7 +106,8 @@ def _parado_depois(s):
 
 _chamadas_durante = []
 _meio = c.ciclo(agora_fn=lambda: local(15, 5),
-                disparar_fn=lambda wf: _chamadas_durante.append(wf),
+                pulso_fn=lambda: _chamadas_durante.append("pulso"),
+                si_fn=lambda: _chamadas_durante.append("corrente"),
                 dormir=_parado_depois, token="x", parado_fn=lambda: _estado["parado"])
 ok("se PARAR aparece durante a espera, não dispara", _chamadas_durante == [], _chamadas_durante)
 ok("e diz por que parou", "durante a espera" in _meio["motivo"], _meio)
@@ -141,6 +144,63 @@ try:
         ok("HTTP diferente de 204/201 não é sucesso", "500" in str(erro), erro)
 finally:
     c.urllib.request.urlopen = _salvo
+
+# O PULSO VAI POR `repository_dispatch` (07/11/2026). O primeiro run de verdade morreu com
+# HTTP 422: `marketing-24h` exige a entrada `confirmacao` e a corrente não a mandava. Mandar
+# PUBLICAR daqui seria a automação digitando autorização de gente — então o pulso tem gatilho
+# próprio, e o corpo enviado é provado abaixo.
+_enviados = []
+
+
+class _Captura(_Resposta):
+    def __init__(self, status=204):
+        self.status = status
+
+
+def _capturar(req, timeout=None):
+    _enviados.append({"url": req.full_url, "corpo": (req.data or b"").decode()})
+    return _Captura()
+
+
+_guarda = c.urllib.request.urlopen
+c.urllib.request.urlopen = _capturar
+try:
+    c.disparar_pulso("x")
+    c.disparar("corrente", "x")
+finally:
+    c.urllib.request.urlopen = _guarda
+ok("o pulso é acordado pelo `repository_dispatch`",
+   _enviados and _enviados[0]["url"].endswith("/repos/reboclbrank-max/site/dispatches"),
+   _enviados[:1])
+ok("o corpo do pulso diz o evento, não uma palavra de confirmação",
+   '"event_type": "pulso"' in _enviados[0]["corpo"] and "PUBLICAR" not in _enviados[0]["corpo"],
+   _enviados[0]["corpo"])
+ok("a corrente se reagenda pelo `workflow_dispatch` (só ele dispara a si mesmo)",
+   _enviados[1]["url"].endswith("/actions/workflows/corrente.yml/dispatches"), _enviados[1]["url"])
+ok("a corrente nunca digita PUBLICAR por ninguém",
+   all("PUBLICAR" not in e["corpo"] for e in _enviados), _enviados)
+
+c.urllib.request.urlopen = lambda req, timeout=None: _Captura(422)
+try:
+    c.disparar_pulso("x")
+    ok("HTTP 422 do pulso não é sucesso", False)
+except RuntimeError as erro:
+    ok("HTTP 422 do pulso não é sucesso", "422" in str(erro), erro)
+finally:
+    c.urllib.request.urlopen = _guarda
+
+# o ciclo de verdade usa esses dois caminhos (não o `disparar('marketing-24h')` antigo)
+_origem = c.disparar_pulso, c.disparar
+_chamou = []
+c.disparar_pulso = lambda token=None, **k: _chamou.append("pulso")
+c.disparar = lambda wf, token=None, **k: _chamou.append(wf)
+try:
+    c.ciclo(agora_fn=lambda: local(15, 5), dormir=lambda s: None, token="x",
+            parado_fn=lambda: False)
+finally:
+    c.disparar_pulso, c.disparar = _origem
+ok("o ciclo padrao acorda o pulso pelo caminho novo e reagenda a corrente",
+   _chamou == ["pulso", "corrente"], _chamou)
 
 # sem token, a linha de comando não dispara às cegas
 _salvo_token = {k: os.environ.pop(k, None) for k in ("GHPAT", "GITHUB_TOKEN")}

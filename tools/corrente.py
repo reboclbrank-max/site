@@ -36,6 +36,7 @@ REPO = "reboclbrank-max/site"
 
 FUSO = datetime.timezone(datetime.timedelta(hours=-3))
 PASSO_MINUTOS = 20             # o pulso é de 20 em 20 minutos
+PULSO_EVENTO = "pulso"         # `repository_dispatch` que acorda o `marketing-24h`
 ESPERA_MAXIMA = datetime.timedelta(hours=5, minutes=20)
 MARGEM_DE_ABERTURA = datetime.timedelta(minutes=20)
 
@@ -92,18 +93,41 @@ def parado(caminho=PARAR):
     return os.path.exists(caminho)
 
 
-def disparar(workflow, token, repo=REPO, ref="main"):
-    """POST de workflow_dispatch. Erro levantado com o motivo — falha não vira 'disparei'."""
-    url = ("https://api.github.com/repos/%s/actions/workflows/%s.yml/dispatches"
-           % (repo, workflow))
-    corpo = json.dumps({"ref": ref}).encode()
-    req = urllib.request.Request(url, data=corpo, method="POST",
+def _post(url, corpo, token):
+    """POST na API do GitHub. Devolve o status; erro de HTTP é levantado com o motivo."""
+    dados = json.dumps(corpo).encode()
+    req = urllib.request.Request(url, data=dados, method="POST",
                                  headers={"Authorization": "Bearer " + token,
                                           "Accept": "application/vnd.github+json",
                                           "Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=30) as r:
-        if r.status not in (201, 204):
-            raise RuntimeError("dispatch de %s devolveu HTTP %s" % (workflow, r.status))
+        return r.status
+
+
+def disparar(workflow, token, repo=REPO, ref="main"):
+    """Dispara um workflow pelo `workflow_dispatch` (usado para a própria corrente).
+
+    Só serve para workflow cujo `workflow_dispatch` não exija entrada obrigatória: o pulso
+    `marketing-24h` exige a palavra PUBLICAR, e mandar essa palavra daqui seria a automação
+    digitando autorização de gente. Para o pulso existe `disparar_pulso`.
+    """
+    url = "https://api.github.com/repos/%s/actions/workflows/%s.yml/dispatches" % (repo, workflow)
+    status = _post(url, {"ref": ref}, token)
+    if status not in (201, 204):
+        raise RuntimeError("dispatch de %s devolveu HTTP %s" % (workflow, status))
+    return True
+
+
+def disparar_pulso(token, repo=REPO, evento=PULSO_EVENTO):
+    """Acorda o pulso por `repository_dispatch` — o caminho que não pede palavra de ninguém.
+
+    O pulso roda as mesmas barreiras e o mesmo portão do pulso agendado: a corrente não decide
+    nada, só toca o relógio no horário que o cron prometia e não cumpria.
+    """
+    url = "https://api.github.com/repos/%s/dispatches" % repo
+    status = _post(url, {"event_type": evento}, token)
+    if status not in (201, 204):
+        raise RuntimeError("pulso devolveu HTTP %s" % status)
     return True
 
 
@@ -113,10 +137,15 @@ def esperar(segundos, dormir=time.sleep):
     return segundos
 
 
-def ciclo(agora_fn=None, disparar_fn=None, dormir=time.sleep, token=None, parado_fn=None):
-    """Um passo da corrente: espera, dispara o pulso, dispara a si mesmo. Devolve o que fez."""
+def ciclo(agora_fn=None, pulso_fn=None, si_fn=None, dormir=time.sleep, token=None,
+          parado_fn=None):
+    """Um passo da corrente: espera, acorda o pulso, marca a si mesma. Devolve o que fez."""
     agora_fn = agora_fn or (lambda: datetime.datetime.now(datetime.timezone.utc))
-    disparar_fn = disparar_fn or (lambda wf: disparar(wf, token))
+    # DOIS CAMINHOS DIFERENTES, DE PROPÓSITO: o pulso vai por `repository_dispatch` (não pede
+    # palavra de ninguém); a corrente se reagenda por `workflow_dispatch`, que é o único jeito
+    # de um workflow disparar a si mesmo.
+    pulso_fn = pulso_fn or (lambda: disparar_pulso(token))
+    si_fn = si_fn or (lambda: disparar("corrente", token))
     parado_fn = parado_fn or parado
     if parado_fn():
         return {"acao": "parar", "motivo": "posts/PARAR existe — a casa não faz nada até alguém apagar"}
@@ -128,8 +157,8 @@ def ciclo(agora_fn=None, disparar_fn=None, dormir=time.sleep, token=None, parado
     if parado_fn():
         return {"acao": "parar", "motivo": "posts/PARAR apareceu durante a espera",
                 "esperou_s": esperados}
-    disparar_fn("marketing-24h")
-    disparar_fn("corrente")
+    pulso_fn()
+    si_fn()
     return {"acao": "disparou", "em": alvo.strftime("%Y-%m-%dT%H:%M:%SZ"),
             "esperou_s": esperados, "motivo": motivo(alvo, abre, fecha)}
 

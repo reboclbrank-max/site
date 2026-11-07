@@ -31,6 +31,13 @@ on:
   #   7          → 04h de Brasília (janela diária de aprendizado)
   schedule:
     - cron: "*/20 0,6,7,12-23 * * *"
+  # A CORRENTE CHAMA POR AQUI (07/11/2026). O cron entrega 4% do que promete; quem toca o
+  # relógio agora é `corrente.yml`. Ela não usa `workflow_dispatch` porque esse caminho exige
+  # a palavra PUBLICAR digitada por uma pessoa — e a corrente NÃO digita PUBLICAR por ninguém.
+  # `repository_dispatch` é o gatilho próprio para "isto vem da corrente", e o pulso roda as
+  # mesmas barreiras e o mesmo portão do pulso agendado.
+  repository_dispatch:
+    types: [pulso]
   # O caminho manual continua existindo — para quando o dono quiser forçar um ciclo.
   workflow_dispatch:
     inputs:
@@ -51,6 +58,7 @@ jobs:
     # Pulso agendado roda sozinho; pulso manual continua exigindo o dono e a palavra.
     if: >-
       (github.event_name == 'schedule' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'repository_dispatch' && github.event.action == 'pulso') ||
       (github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR')
     runs-on: ubuntu-24.04
     timeout-minutes: 20
