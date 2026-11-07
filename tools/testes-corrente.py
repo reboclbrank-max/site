@@ -279,5 +279,41 @@ for k, v in _salvo_token.items():
         os.environ[k] = v
 ok("sem token a corrente para com código 3 (não finge que disparou)", _codigo == 3, _codigo)
 
+# ------------------------------------------------- o workflow não pode mentir
+_caminho_yaml = os.path.join(RAIZ, ".github", "workflows", "corrente.yml")
+_yaml = open(_caminho_yaml, encoding="utf-8").read() if os.path.exists(_caminho_yaml) else ""
+
+
+def _linha(chave):
+    """Valor de uma chave do YAML, sem comentário à direita (o arquivo comenta muito)."""
+    for linha in _yaml.splitlines():
+        if linha.strip().startswith(chave):
+            return linha.split(":", 1)[1].split("#", 1)[0].strip()
+    return None
+
+
+ok("o workflow da corrente existe no repositório", bool(_yaml))
+ok("a corrente tem grupo de concorrência próprio (é o que impede dobrar)",
+   _linha("group") == "corrente", _linha("group"))
+ok("o grupo da corrente não cancela o run em andamento (só o pendente é substituído)",
+   _linha("cancel-in-progress") == "false", _linha("cancel-in-progress"))
+ok("a retaguarda do cron existe: se a corrente morrer, ela volta",
+   '"0 */3 * * *"' in _yaml or "0 */3 * * *" in _yaml)
+_teto = _linha("timeout-minutes")
+ok("o job declara teto de tempo", _teto is not None and _teto.isdigit(), _teto)
+ok("o teto cobre a espera máxima do código (senão o run morre dormindo)",
+   _teto is not None and _teto.isdigit()
+   and int(_teto) > c.ESPERA_MAXIMA.total_seconds() / 60.0,
+   (_teto, c.ESPERA_MAXIMA))
+ok("o teto fica abaixo do limite de 6h do GitHub",
+   _teto is not None and _teto.isdigit() and int(_teto) < 360, _teto)
+ok("o passo roda os contratos offline ANTES de iniciar a corrente",
+   "testes-corrente.py" in _yaml
+   and _yaml.index("testes-corrente.py") < _yaml.index("tools/corrente.py"),
+   _yaml.find("testes-corrente.py"))
+ok("o token que a corrente usa vem do segredo GHPAT", "GHPAT" in _yaml)
+ok("o workflow conta a medição do concurrency (não é promessa, é run citado)",
+   "42355781857" in _yaml and "pending" in _yaml)
+
 print("\n%d/%d contratos da corrente passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)

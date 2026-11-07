@@ -297,6 +297,22 @@ def escrever(relatorio):
         # corrente seria repetir o erro com outro nome. O veredito vem do mesmo medidor.
         _corr = _cad.get("corrente") or {}
         if _corr.get("veredito"):
+            # O PRÓXIMO PULSO (07/11/2026): "em dia" ontem não diz nada sobre hoje. A mesma conta
+            # que a corrente usa dentro do run responde aqui — e há silêncio legítimo: das 04h40
+            # às 09h não existe hora de pulso, então a resposta certa pode ser "só às 09h".
+            try:
+                import importlib.util as _iu2
+                _spec2 = _iu2.spec_from_file_location("corrente_pend", os.path.join(RAIZ, "tools", "corrente.py"))
+                _corr_mod = _iu2.module_from_spec(_spec2)
+                _spec2.loader.exec_module(_corr_mod)
+                _prox = _corr_mod.proximo_disparo(datetime.now(timezone.utc))
+                _quando = _prox.astimezone(_corr_mod.FUSO)
+                _extra_prox = " · próximo pulso %s" % _quando.strftime("%d/%m %H:%M")
+                if _quando.date() != datetime.now(timezone.utc).astimezone(_corr_mod.FUSO).date():
+                    _extra_prox += " (fora da janela agora: não há pulso antes disso)"
+            except Exception:  # noqa: BLE001 — relatório sem esta linha ainda é útil
+                _extra_prox = ""
+            _corr = dict(_corr, veredito=_corr["veredito"] + _extra_prox)
             _extra = ""
             if _corr.get("pulsos_perdidos"):
                 _extra = " · %d pulso(s) devido(s) sem sair" % _corr["pulsos_perdidos"]

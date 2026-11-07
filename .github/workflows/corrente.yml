@@ -13,6 +13,14 @@ name: corrente
 # diárias simples recebem 86% e `medir-o-dia`, a régua da casa, recebeu ZERO. Só entra o que mede —
 # `administrar-itch` e `administrar-youtube` exigem a palavra de confirmação e ficam de fora.
 #
+# UMA CORRENTE SÓ, MEDIDO (07/11/2026). O risco de uma corrente que se reagenda é dobrar: dois runs
+# acordando no mesmo minuto, cada um disparando o pulso e mais dois runs. Medi com três disparos
+# seguidos no repositório de verdade: o run 42352222476 ficou `in_progress`, o 42355781857 ficou
+# `pending` e o 42355819311 — o terceiro — **cancelou o pendente**. É o `concurrency` abaixo
+# trabalhando: no máximo um run rodando e um pendente por grupo, e o pendente mais novo substitui o
+# mais velho. Por construção a corrente não pode dobrar, e a dupla que eu criei de propósito foi
+# cancelada na hora.
+#
 # Limites (todos medidos no próprio código, não em promessa):
 #   - `posts/PARAR` existe -> não dispara nada, nem antes nem durante a espera;
 #   - espera máxima de 5h20 dentro de um job que morre em 6h;

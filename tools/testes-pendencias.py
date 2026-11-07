@@ -267,6 +267,12 @@ try:
        _linha_corrente and "2 pulso(s)" in _linha_corrente[0], _linha_corrente)
     ok("o relatório diz quantos buracos houve em 24h",
        _linha_corrente and "1 buraco(s)" in _linha_corrente[0], _linha_corrente)
+    ok("o relatório diz quando é o PRÓXIMO pulso (em dia hoje não garante amanhã)",
+       _linha_corrente and "próximo pulso" in _linha_corrente[0], _linha_corrente)
+    ok("o próximo pulso vem com dia e hora, não com 'em breve'",
+       _linha_corrente and __import__("re").search(r"próximo pulso \d\d/\d\d \d\d:\d\d",
+                                                  _linha_corrente[0]) is not None,
+       _linha_corrente)
     # A ORIGINALIDADE NO RELATÓRIO (07/11/2026): o dono pediu coisas únicas; o relatório passa a
     # dizer quantas, com data. Repetição é o que a casa mais errou (40x o mesmo texto em 9 dias).
     _uni_path = os.path.join(RAIZ, "posts", "unicidade.json")
