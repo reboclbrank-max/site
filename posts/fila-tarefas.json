@@ -1166,6 +1166,31 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "pesquisar-2026110706"
+  },
+  {
+   "id": "pesquisar-20261107T070013Z",
+   "tipo": "pesquisar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-07T07:00:13Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "meta parada: Instagram: seguidores: 0 em 25 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "chave": "parada-Instagram: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "aprender-20261107T070013Z",
+   "tipo": "aprender",
+   "prioridade": 30,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-07T07:00:13Z",
+   "executada": "2026-11-07T07:00:13Z",
+   "resultado": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.22, desvio 0.49\ngravado em posts/aprendizado.json",
+   "motivo": "decisão do relógio",
+   "chave": "aprender-2026110707"
   }
  ],
  "recusadas": [
