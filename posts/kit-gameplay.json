@@ -5,16 +5,16 @@
    "angulo": "o_que_tem_dentro:ceifalume-chuva",
    "fato": "ceifalume-chuva",
    "numeros": {
-    "plantadas": 10,
-    "colhidas": 4,
-    "toques": 1074,
+    "plantadas": 14,
+    "colhidas": 5,
+    "toques": 1059,
     "minutos": 2,
-    "toques_por_minuto": 537
+    "toques_por_minuto": 530
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4034162,
+   "bytes": 3891065,
    "capa": "media/ceifalume/perfil-rb-itch-630x500.png",
    "capa_existe": true,
    "dimensoes": [
@@ -23,7 +23,7 @@
    ],
    "formato": "vídeo normal (16:9)",
    "titulo": "O que tem dentro de CEIFALUME",
-   "descricao": "A chuva rega de graça: não custa água nem moeda.\n\nO que aparece na tela desta gravação é a partida de verdade: 1074 toques no campo.\n\nSem corte de tela e sem fala: a legenda descreve a decisão tomada no momento.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot",
+   "descricao": "A chuva rega de graça: não custa água nem moeda.\n\nO que aparece na tela desta gravação é a partida de verdade: 1059 toques no campo.\n\nSem corte de tela e sem fala: a legenda descreve a decisão tomada no momento.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
