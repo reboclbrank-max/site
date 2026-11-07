@@ -76,15 +76,24 @@ _caminhos = oq._caminhos_do_push(
     'permissions:\n')
 ok("caminho do push sai sem aspas", _caminhos == ["tools/**", "posts/**"], _caminhos)
 
-ok("cadeado por 'confirmacao' é reconhecido",
-   oq._cadeado('on:\n  workflow_dispatch:\n    inputs:\n      confirmacao:\n'
-               '        description: "digite PUBLICAR"\n') == ["confirmacao"])
-ok("cadeado por 'publicar' é reconhecido",
-   oq._cadeado('on:\n  workflow_dispatch:\n    inputs:\n      publicar:\n'
-               '        description: "PUBLICAR"\n') == ["publicar"])
+_c1 = oq._cadeados('on:\n  workflow_dispatch:\n    inputs:\n      confirmacao:\n'
+                   '        description: "digite PUBLICAR"\n')
+ok("cadeado por 'confirmacao' é reconhecido", [c["campo"] for c in _c1] == ["confirmacao"], _c1)
+ok("a palavra do cadeado é a que se digita", _c1 and _c1[0]["palavra"] == "PUBLICAR", _c1)
+_c2 = oq._cadeados('on:\n  workflow_dispatch:\n    inputs:\n      publicar:\n'
+                   '        description: "PUBLICAR envia · ENSAIO simula · vazio só grava"\n')
+ok("cadeado por 'publicar' é reconhecido", [c["campo"] for c in _c2] == ["publicar"], _c2)
+ok("as palavras do cadeado saem todas", _c2 and _c2[0]["palavra"] == "PUBLICAR / ENSAIO", _c2)
+_c3 = oq._cadeados('on:\n  workflow_dispatch:\n    inputs:\n      confirmacao:\n'
+                   '        description: "digite PRIVAR ou APAGAR"\n')
+ok("cada workflow tem a sua palavra (PRIVAR ou APAGAR)", _c3 and _c3[0]["palavra"] == "PRIVAR / APAGAR",
+   _c3)
+ok("cadeado repetido aparece uma vez só",
+   len(oq._cadeados('on:\n  workflow_dispatch:\n    inputs:\n      publicar:\n'
+                    '        description: "PUBLICAR"\n') ) == 1)
 ok("input comum não vira cadeado",
-   oq._cadeado('on:\n  workflow_dispatch:\n    inputs:\n      modo:\n'
-               '        description: "estado|auto"\n') == [])
+   oq._cadeados('on:\n  workflow_dispatch:\n    inputs:\n      modo:\n'
+                '        description: "estado|auto"\n') == [])
 
 with tempfile.TemporaryDirectory() as tmp:
     caminho = os.path.join(tmp, "x.yml")

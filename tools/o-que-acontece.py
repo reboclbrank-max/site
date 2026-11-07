@@ -140,11 +140,50 @@ def _caminhos_do_push(texto):
     return caminhos
 
 
-def _cadeado(texto):
-    """Workflow que publica de verdade só com uma palavra digitada (o cadeado da casa)."""
+def _cadeados(texto):
+    """Os campos de confirmação e a palavra que pedem — lidos dos inputs, não adivinhados.
+
+    A palavra importa: o campo chama `confirmacao` em quase todos, mas o que se digita é
+    PUBLICAR, APLICAR ou ENSAIO, e é isso que o dono precisa saber.
+    """
     on = _bloco_on(texto)
-    nomes = re.findall(r"^\s{6}(\w+):\s*$", on, re.M)
-    return [n for n in nomes if n.lower() in ("confirmacao", "publicar", "confirmar")]
+    linhas = on.splitlines()
+    achados = []
+    dentro = False
+    atual, descricao = None, []
+
+    def _fechar():
+        if atual in ("confirmacao", "publicar", "confirmar"):
+            junto = " ".join(descricao)
+            # a palavra é a que o dono digita, e cada workflow tem a sua: PUBLICAR, APLICAR,
+            # EDITAR, SONDAR, PRIVAR/APAGAR. Sai do texto da descrição, sem vocabulário fixo.
+            palavras = [p for p in re.findall(r"\b([A-ZÁÉÍÓÚÂÊÔÃÕÇ]{4,12})\b", junto)]
+            achado = {"campo": atual, "palavra": " / ".join(palavras)}
+            if achado not in achados:
+                achados.append(achado)
+
+    for linha in linhas:
+        enxuto = linha.strip()
+        if not enxuto:
+            continue
+        recuo = len(linha) - len(linha.lstrip())
+        if enxuto.startswith("inputs:"):
+            dentro = True
+            continue
+        if not dentro:
+            continue
+        if recuo <= 2:
+            _fechar()
+            dentro = False
+            continue
+        if recuo == 6 and enxuto.endswith(":"):
+            _fechar()
+            atual, descricao = enxuto[:-1].strip(), []
+        elif recuo > 6:
+            if enxuto.startswith("description:"):
+                descricao.append(enxuto.split(":", 1)[1].strip().strip("\"'"))
+    _fechar()
+    return achados
 
 
 def projetos_do_itch(raiz=RAIZ):
@@ -197,7 +236,7 @@ def levantar(raiz=RAIZ):
         g = _gatilhos(texto)
         item = {"nome": nome, "descricao": descricao(texto), "gatilhos": g,
                 "caminhos": _caminhos_do_push(texto) if g["push"] else [],
-                "cadeado": _cadeado(texto)}
+                "cadeado": _cadeados(texto)}
         dados["todos"].append(item)
         if g["push"]:
             dados["push"].append(item)
@@ -319,7 +358,13 @@ def gerar(raiz=RAIZ):
                  "(**%d** workflows):" % len(cadeados))
         l.append("")
         for i in cadeados:
-            l.append("- `%s` — palavra `%s`" % (i["nome"], "/".join(c.upper() for c in i["cadeado"])))
+            campos = []
+            for c in i["cadeado"]:
+                if c["palavra"]:
+                    campos.append("`%s` = **%s**" % (c["campo"], c["palavra"]))
+                else:
+                    campos.append("`%s`" % c["campo"])
+            l.append("- `%s` — %s" % (i["nome"], ", ".join(campos)))
         l.append("")
     l.append("O resto mede, grava ou registra — e o registro é o produto. Quando um run não "
              "consegue provar o que fez, ele termina em recusa com o motivo, nunca em sucesso.")

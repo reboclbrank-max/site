@@ -46,19 +46,19 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 
 Estes só escrevem no mundo com a palavra digitada no campo de confirmação (**13** workflows):
 
-- `capas-dos-antigos` — palavra `CONFIRMACAO`
-- `duplicados-youtube` — palavra `CONFIRMACAO`
-- `editar-itch` — palavra `CONFIRMACAO`
-- `enviar-itch` — palavra `CONFIRMACAO`
-- `enviar-youtube` — palavra `CONFIRMACAO`
-- `gravar-gameplay` — palavra `PUBLICAR`
-- `gravar-prancheta` — palavra `PUBLICAR`
-- `marketing-24h` — palavra `CONFIRMACAO`
-- `marketing-continuo` — palavra `CONFIRMACAO`
-- `postagem-diaria` — palavra `CONFIRMACAO`
-- `publicar-devlog-itch` — palavra `CONFIRMACAO`
-- `sonda-instagram` — palavra `CONFIRMACAO`
-- `sonda-threads` — palavra `CONFIRMACAO`
+- `capas-dos-antigos` — `confirmacao` = **APLICAR**
+- `duplicados-youtube` — `confirmacao` = **PRIVAR / APAGAR**
+- `editar-itch` — `confirmacao` = **EDITAR**
+- `enviar-itch` — `confirmacao` = **PUBLICAR**
+- `enviar-youtube` — `confirmacao` = **PUBLICAR**
+- `gravar-gameplay` — `publicar` = **PUBLICAR**
+- `gravar-prancheta` — `publicar` = **PUBLICAR / ENSAIO**
+- `marketing-24h` — `confirmacao` = **PUBLICAR**
+- `marketing-continuo` — `confirmacao` = **PUBLICAR**
+- `postagem-diaria` — `confirmacao` = **PUBLICAR**
+- `publicar-devlog-itch` — `confirmacao` = **PUBLICAR**
+- `sonda-instagram` — `confirmacao` = **SONDAR**
+- `sonda-threads` — `confirmacao` = **SONDAR**
 
 O resto mede, grava ou registra — e o registro é o produto. Quando um run não consegue provar o que fez, ele termina em recusa com o motivo, nunca em sucesso.
 
