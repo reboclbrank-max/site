@@ -2,18 +2,11 @@
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
  "ultima_publicacao": "2026-11-07T02:48:53Z",
- "ultima_medicao": "2026-11-07T02:48:53Z",
+ "ultima_medicao": "2026-11-07T02:55:14Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 133,
+ "pulsos": 134,
  "historico": [
-  {
-   "quando": "2026-11-02T15:43:30Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261102T093104Z] empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.6 por dia",
-   "codigo": 0,
-   "saida": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)"
-  },
   {
    "quando": "2026-11-02T15:53:30Z",
    "acao": "publicar",
@@ -286,6 +279,13 @@
    "motivo": "fila: [publicar-20261106T143710Z] empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.78 por dia; fila: [medir-20261103T093331Z] decisão do relógio",
    "codigo": 0,
    "saida": "fila: 2 tarefa(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-07T02:55:14Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261107T001953Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 1 tarefa(s) neste pulso"
   }
  ]
 }

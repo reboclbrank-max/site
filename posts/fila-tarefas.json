@@ -1030,13 +1030,14 @@
    "id": "medir-20261106T062257Z",
    "tipo": "medir",
    "prioridade": 90,
-   "estado": "pendente",
+   "estado": "vencida",
    "tentativas": 0,
    "criada": "2026-11-06T06:22:57Z",
    "executada": null,
-   "resultado": null,
+   "resultado": "vencida: medir-20261107T001953Z mais nova assume (criada em 2026-11-07T00:19)",
    "motivo": "decisão do relógio",
-   "chave": "medir-2026110606"
+   "chave": "medir-2026110606",
+   "adiamentos": 0
   },
   {
    "id": "publicar-20261106T143710Z",
@@ -1055,13 +1056,14 @@
    "id": "medir-20261106T143710Z",
    "tipo": "medir",
    "prioridade": 90,
-   "estado": "pendente",
+   "estado": "vencida",
    "tentativas": 0,
    "criada": "2026-11-06T14:37:10Z",
    "executada": null,
-   "resultado": null,
+   "resultado": "vencida: medir-20261107T001953Z mais nova assume (criada em 2026-11-07T00:19)",
    "motivo": "decisão do relógio",
-   "chave": "medir-2026110614"
+   "chave": "medir-2026110614",
+   "adiamentos": 0
   },
   {
    "id": "publicar-20261106T203527Z",
@@ -1080,13 +1082,14 @@
    "id": "medir-20261106T203527Z",
    "tipo": "medir",
    "prioridade": 90,
-   "estado": "pendente",
+   "estado": "vencida",
    "tentativas": 0,
    "criada": "2026-11-06T20:35:27Z",
    "executada": null,
-   "resultado": null,
+   "resultado": "vencida: medir-20261107T001953Z mais nova assume (criada em 2026-11-07T00:19)",
    "motivo": "decisão do relógio",
-   "chave": "medir-2026110620"
+   "chave": "medir-2026110620",
+   "adiamentos": 0
   },
   {
    "id": "publicar-20261107T001953Z",
@@ -1105,13 +1108,26 @@
    "id": "medir-20261107T001953Z",
    "tipo": "medir",
    "prioridade": 90,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-07T00:19:53Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-07T02:55:14Z",
+   "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 206,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
    "motivo": "decisão do relógio",
    "chave": "medir-2026110700"
+  },
+  {
+   "id": "publicar-20261107T025514Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-07T02:55:14Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 2.0 por dia",
+   "chave": "meta-Bluesky: seguidores",
+   "origem": "perceber"
   }
  ],
  "recusadas": [
@@ -1139,6 +1155,18 @@
     "medir-20261106T143710Z",
     "medir-20261106T203527Z",
     "medir-20261107T001953Z"
+   ]
+  },
+  {
+   "tipo": "publicar",
+   "motivo": "empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.78 por dia",
+   "quando": "2026-11-07T02:55:14Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261106T203527Z",
+    "publicar-20261107T001953Z",
+    "publicar-20261107T025514Z"
    ]
   }
  ]
