@@ -219,6 +219,65 @@ for _nome, _fonte in _fluxos.items():
     ok("%s versiona o registro das capas no commit do envio" % _nome,
        "git add posts/capas-aplicadas.json" in _fonte)
 
+# ---- o QUADRO da capa é o melhor quadro, não o primeiro que baixar (07/11/2026) ------------
+# A capa do _ffmjSMsW0Y saiu com um quadro preto: o "quadro" era o maxresdefault, que é a própria
+# capa antiga quando o vídeo já tem miniatura enviada.
+if tem_pil:
+    from PIL import ImageDraw as _ID
+    _preto = os.path.join(tmp, "quadro-preto.jpg")
+    _Im.new("RGB", (480, 360), (2, 2, 2)).save(_preto, "JPEG")
+    _vivo = os.path.join(tmp, "quadro-vivo.jpg")
+    _im = _Im.new("RGB", (480, 360), (30, 60, 90))
+    _d = _ID.Draw(_im)
+    for _i in range(0, 480, 40):
+        _d.rectangle([_i, 0, _i + 20, 360], fill=(200, 180, 40))
+    _im.save(_vivo, "JPEG")
+    ok("quadro preto pontua menos que quadro com imagem",
+       capa._movimento(_preto) < capa._movimento(_vivo), (capa._movimento(_preto), capa._movimento(_vivo)))
+
+    class _Resposta:
+        def __init__(self, dados):
+            self._dados = dados
+
+        def read(self):
+            return self._dados
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    _pedidos = []
+
+    def _abrir(request, timeout=None):
+        url = getattr(request, "full_url", str(request))
+        _pedidos.append(url)
+        nome = url.rsplit("/", 1)[-1].replace(".jpg", "")
+        if nome in ("hq1", "maxresdefault"):
+            return _Resposta(open(_preto, "rb").read())
+        if nome in ("hq2", "sddefault"):
+            return _Resposta(open(_vivo, "rb").read())
+        raise OSError("404")
+
+    _escolhido = capa.baixar_quadro("ZZZTESTE123", os.path.join(tmp, "q.jpg"), abrir=_abrir)
+    ok("o quadro escolhido é o que tem imagem, não o primeiro que responde",
+       _escolhido and capa._movimento(_escolhido) == capa._movimento(_vivo),
+       capa._movimento(_escolhido or _preto))
+    _pedidos.clear()
+    capa.baixar_quadro("ZZZTESTE123", os.path.join(tmp, "q2.jpg"), abrir=_abrir, incluir_maxres=False)
+    ok("com incluir_maxres=False, o maxresdefault nem é pedido",
+       not any("maxresdefault" in u for u in _pedidos), _pedidos)
+    _pedidos.clear()
+    _fresco = capa.baixar_quadro("ZZZTESTE123", os.path.join(tmp, "q3.jpg"), abrir=_abrir, incluir_maxres=True)
+    ok("com incluir_maxres=True (vídeo nunca pintado), o maxresdefault é tentado",
+       any("maxresdefault" in u for u in _pedidos) and _fresco, _pedidos)
+    ok("nenhum candidato responde → None",
+       capa.baixar_quadro("ZZZTESTE123", os.path.join(tmp, "q4.jpg"),
+                          abrir=lambda *a, **k: (_ for _ in ()).throw(OSError("sem rede"))) is None)
+else:
+    print("○ desenho → SKIP: sem Pillow nesta máquina")
+
 # ---- o ensaio responde em NÚMEROS, mesmo quando não falta nada (06/11/2026) ----------------
 import io as _io
 import contextlib as _ctx

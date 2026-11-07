@@ -127,23 +127,73 @@ def listar_videos(access_token, maximo=50, abrir=None):
     return videos
 
 
-def baixar_quadro(vid, destino, abrir=None):
-    """Quadro do próprio vídeo (1280x720 quando existe). Devolve o caminho ou None."""
+def _movimento(caminho):
+    """Quanto o quadro tem de imagem de verdade (0 a 1). Quadro preto ou chapado pontua baixo.
+
+    POR QUE (07/11/2026): a capa nova do vídeo _ffmjSMsW0Y saiu com um quadro quase preto — o
+    cartão do logo no fim do vídeo. A capa é a primeira coisa que se vê; quadro sem imagem é
+    capa sem imagem. Aqui cada candidato é medido antes de virar capa.
+    """
+    try:
+        from PIL import Image, ImageStat
+    except ImportError:
+        return 0.0
+    try:
+        im = Image.open(caminho).convert("L").resize((160, 90))
+    except Exception:  # noqa: BLE001
+        return 0.0
+    stat = ImageStat.Stat(im)
+    media = stat.mean[0] / 255.0
+    desvio = stat.stddev[0] / 255.0
+    # brilho no meio da faixa (nem preto, nem estourado) e variação de tons (tem desenho na tela)
+    brilho = 1.0 - abs(media - 0.5) * 2
+    return round(0.6 * brilho + 0.4 * min(1.0, desvio * 3), 4)
+
+
+def baixar_quadro(vid, destino, abrir=None, incluir_maxres=True):
+    """O MELHOR quadro do próprio vídeo. Devolve o caminho ou None.
+
+    O YouTube publica três quadros alternativos (hq1, hq2, hq3) além do principal. Antes ficava
+    com o primeiro que baixasse — e o primeiro podia ser um cartão preto. Agora baixa os
+    candidatos, mede cada um e fica com o que tem mais imagem.
+    """
     abrir = abrir or urllib.request.urlopen
-    for nome in ("maxresdefault", "sddefault", "hqdefault"):
+    os.makedirs(os.path.dirname(os.path.abspath(destino)), exist_ok=True)
+    # `maxresdefault` DEIXA DE SER QUADRO QUANDO O VÍDEO JÁ TEM CAPA PRÓPRIA (07/11/2026): o
+    # YouTube serve a miniatura enviada nesse endereço. Repintar usando ela é devolver a mesma
+    # imagem — foi o que aconteceu com _ffmjSMsW0Y, cuja "capa nova" era a capa antiga. Nos
+    # vídeos que já estão no registro, o quadro vem dos automáticos (sddefault/hq1..3).
+    nomes = ["sddefault", "hq1", "hq2", "hq3"]
+    if incluir_maxres:
+        nomes.insert(0, "maxresdefault")
+    temporarios, melhores = [], []
+    for nome in nomes:
         url = "https://i.ytimg.com/vi/%s/%s.jpg" % (vid, nome)
+        caminho = "%s.%s.jpg" % (destino, nome)
         try:
             with abrir(urllib.request.Request(url, headers={"User-Agent": "rebocl/1"}),
                        timeout=60) as r:
                 dados = r.read()
-            if len(dados) > 5_000:
-                os.makedirs(os.path.dirname(os.path.abspath(destino)), exist_ok=True)
-                with open(destino, "wb") as f:
-                    f.write(dados)
-                return destino
         except Exception:  # noqa: BLE001
             continue
-    return None
+        if len(dados) <= 5_000:
+            continue
+        with open(caminho, "wb") as f:
+            f.write(dados)
+        temporarios.append(caminho)
+        melhores.append((_movimento(caminho), nome, caminho))
+    if not melhores:
+        return None
+    melhores.sort(reverse=True)
+    _, nome, escolhido = melhores[0]
+    import shutil
+    shutil.copyfile(escolhido, destino)
+    for caminho in temporarios:
+        try:
+            os.remove(caminho)
+        except OSError:
+            pass
+    return destino
 
 
 # ------------------------------------------------------------------ desenho e aplicação
@@ -193,8 +243,16 @@ def executar(access_token, confirmacao, raiz=RAIZ, limite=6, registro_caminho=No
     alvos = alvos[:max(0, int(limite))]
     aplicadas, recusadas = [], []
     for v in alvos:
-        quadro = (baixar or baixar_quadro)(v["id"], os.path.join(raiz, "media", "capas",
-                                                                 "%s-quadro.jpg" % v["id"]))
+        ja_pintado = any(isinstance(x, dict) and str(x.get("id")) == str(v["id"])
+                         for x in (registro.get("aplicadas") or []))
+        # `baixar` pode ser injetado por teste e não aceitar o parâmetro: tenta com, cai sem.
+        if baixar is not None:
+            quadro = baixar(v["id"], os.path.join(raiz, "media", "capas",
+                                                  "%s-quadro.jpg" % v["id"]))
+        else:
+            quadro = baixar_quadro(v["id"], os.path.join(raiz, "media", "capas",
+                                                         "%s-quadro.jpg" % v["id"]),
+                                   incluir_maxres=not ja_pintado)
         if not quadro:
             recusadas.append({"id": v["id"], "motivo": "não consegui baixar quadro do vídeo"})
             escrever("✘ %s: sem quadro" % v["id"])
