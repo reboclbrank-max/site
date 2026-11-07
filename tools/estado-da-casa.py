@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Estado da casa em um bloco — o que o dono pergunta e o chat deveria responder.
+
+POR QUE EXISTE (07/11/2026): as informações existiam espalhadas em seis JSON. Para responder
+"como está?" era preciso abrir `youtube-publicados.json` (o que saiu), `capas-aplicadas.json`
+(quantas capas), `fila-tarefas.json` (o que está na frente e há quanto tempo), `orquestrador.json`
+(quantos pulsos) e o último ensaio das capas (quantos vídeos do canal estão sem capa). Número que
+exige seis arquivos é número que ninguém lê — e foi assim que "3 descrições truncadas" e "fila
+faminta" passaram dias sem ser vistos.
+
+Este script não mede nada novo e não escreve nada: ele junta o que já está medido, com a data de
+cada medida. Fonte que não existe é dita, não inventada.
+"""
+import json
+import os
+import sys
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+POSTS = os.path.join(RAIZ, "posts")
+
+
+def _ler(nome):
+    try:
+        with open(os.path.join(POSTS, nome), encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return None
+
+
+def _lista(dados, *chaves):
+    if isinstance(dados, list):
+        return dados
+    if not isinstance(dados, dict):
+        return []
+    for chave in chaves:
+        if isinstance(dados.get(chave), list):
+            return dados[chave]
+    return []
+
+
+def _horas(quando, agora=None):
+    import datetime
+    if not quando:
+        return None
+    try:
+        valor = datetime.datetime.fromisoformat(str(quando).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if valor.tzinfo is None:
+        valor = valor.replace(tzinfo=datetime.timezone.utc)
+    agora = agora or datetime.datetime.now(datetime.timezone.utc)
+    return round(max(0.0, (agora - valor).total_seconds() / 3600.0), 1)
+
+
+def estado(agora=None):
+    """Devolve um dicionário só com o que foi lido de arquivo — nada estimado."""
+    publicados = _lista(_ler("youtube-publicados.json"), "publicados")
+    capas = _lista(_ler("capas-aplicadas.json"), "aplicadas")
+    fila = _lista(_ler("fila-tarefas.json"), "tarefas")
+    capas_estado = _ler("capas-estado.json") or {}
+    orq = _ler("orquestrador.json") or {}
+
+    pendentes = [t for t in fila if isinstance(t, dict) and t.get("estado") == "pendente"]
+    por_tipo = {}
+    for tarefa in pendentes:
+        por_tipo[tarefa.get("tipo")] = por_tipo.get(tarefa.get("tipo"), 0) + 1
+    mais_velha = None
+    for tarefa in pendentes:
+        horas = _horas(tarefa.get("criada"), agora)
+        if horas is not None and (mais_velha is None or horas > mais_velha[1]):
+            mais_velha = (tarefa.get("id"), horas)
+
+    sem_capa = capas_estado.get("sem_capa")
+    no_canal = capas_estado.get("no_canal")
+    return {
+        "publicados": len(publicados),
+        "ultimo_publicado": (publicados[0].get("id") if publicados else None),
+        "ultimo_publicado_titulo": (publicados[0].get("titulo") if publicados else None),
+        "capas_aplicadas": len(capas),
+        "capas_no_canal": no_canal,
+        "capas_sem_capa": sem_capa,
+        "capas_medido_em": capas_estado.get("medido_em"),
+        "fila_pendentes": len(pendentes),
+        "fila_por_tipo": por_tipo,
+        "fila_mais_velha": mais_velha[0] if mais_velha else None,
+        "fila_mais_velha_horas": mais_velha[1] if mais_velha else None,
+        "fila_feitas": len([t for t in fila if isinstance(t, dict) and t.get("estado") == "feito"]),
+        "pulsos": orq.get("pulsos"),
+        "ultima_publicacao_do_pulso": orq.get("ultima_publicacao"),
+        "ultima_medicao_do_pulso": orq.get("ultima_medicao"),
+    }
+
+
+def texto(dados=None):
+    """O bloco que o dono lê — em linha, com o número na frente."""
+    d = dados if isinstance(dados, dict) else estado()
+    linhas = []
+
+    linhas.append("Vídeos publicados: %d%s" % (
+        d["publicados"],
+        (" · último: %s (%s)" % (d["ultimo_publicado"], (d["ultimo_publicado_titulo"] or "")[:48]))
+        if d["ultimo_publicado"] else ""))
+
+    # A COBERTURA É O NÚMERO QUE IMPORTA: "51 capas" não diz se falta alguma. Quando o ensaio
+    # das capas já mediu o canal, o bloco diz "50 de 50" e data a medida.
+    cobertura = "%d capa(s) aplicada(s)" % d["capas_aplicadas"]
+    if d["capas_no_canal"]:
+        cobertura = "%d de %d vídeos do canal" % (
+            d["capas_no_canal"] - (d["capas_sem_capa"] or 0), d["capas_no_canal"])
+    detalhe = ""
+    if d["capas_sem_capa"]:
+        detalhe = " · %d sem capa" % d["capas_sem_capa"]
+    elif d["capas_sem_capa"] == 0:
+        detalhe = " · nenhum sem capa"
+    if d.get("capas_medido_em"):
+        detalhe += " (medido em %s)" % str(d["capas_medido_em"])[:16]
+    linhas.append("Capas da casa: %s%s" % (cobertura, detalhe))
+
+    if d["fila_pendentes"]:
+        tipos = ", ".join("%s %d" % (tipo, qtd) for tipo, qtd in sorted(d["fila_por_tipo"].items()))
+        velha = ""
+        if d["fila_mais_velha"]:
+            velha = " · a mais velha: %s há %s h" % (d["fila_mais_velha"], d["fila_mais_velha_horas"])
+        linhas.append("Fila: %d pendente(s) (%s)%s · %d feita(s)" % (
+            d["fila_pendentes"], tipos, velha, d["fila_feitas"]))
+    else:
+        linhas.append("Fila: vazia · %d tarefa(s) já feita(s)" % d["fila_feitas"])
+
+    pulsos = d.get("pulsos")
+    if pulsos is not None:
+        partes = ["Pulsos: %s" % pulsos]
+        if d.get("ultima_publicacao_do_pulso"):
+            partes.append("última publicação %s" % d["ultima_publicacao_do_pulso"])
+        if d.get("ultima_medicao_do_pulso"):
+            partes.append("última medição %s" % d["ultima_medicao_do_pulso"])
+        linhas.append(" · ".join(partes))
+
+    faltando = [nome for nome, chave in (("vídeos publicados", "publicados"),
+                                         ("capas", "capas_aplicadas"),
+                                         ("fila", "fila_pendentes"))
+                if d.get(chave) is None]
+    if faltando:
+        linhas.append("Sem registro para: " + ", ".join(faltando) + " (nada foi inventado)")
+    return "\n".join(linhas)
+
+
+def main(argv):
+    import argparse
+    ap = argparse.ArgumentParser(description="estado da casa em um bloco")
+    ap.add_argument("--json", action="store_true", help="imprime os dados crus")
+    a = ap.parse_args(argv[1:])
+    dados = estado()
+    if a.json:
+        print(json.dumps(dados, ensure_ascii=False, indent=1, sort_keys=True))
+    else:
+        print(texto(dados))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

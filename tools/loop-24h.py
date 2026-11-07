@@ -72,7 +72,12 @@ def main(argv):
         memoria_codigo, _ = rodar([sys.executable, "tools/memoria.py"])
         ok, msg = commitar("#%d" % i)
         print("estado: %s" % msg)
-        if not ok or codigo != 0 or memoria_codigo != 0:
+        # DORMIR NÃO É FALHA (07/11/2026): fora da janela o orquestrador dorme de propósito e
+        # devolve 0. Quando ele devolvia 1, todo bloco que atravessava a noite saía vermelho e o
+        # marketing-continuo ficou 4 dias em failure sem nada quebrado. Só é incompleto o pulso
+        # que falhou DE VERDADE: erro sem intenção declarada de dormir, ou memória que não gravou.
+        dormiu = "dormir" in saida or "nada a fazer" in saida
+        if not ok or memoria_codigo != 0 or (codigo != 0 and not dormiu):
             print("pulso incompleto; falha visível, sem repetir efeitos neste bloco")
             return 1
         if i == pulsos:

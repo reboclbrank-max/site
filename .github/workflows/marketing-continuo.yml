@@ -1,4 +1,16 @@
-name: marketing-continuo
+name: marketing-continuo (bloco manual — não roda sozinho)
+
+# DECISÃO TOMADA, COM MEDIÇÃO (07/11/2026): NÃO revive a agenda — e o motivo não é gosto.
+#   - A agenda deste arquivo foi removida em `d2ded0a` (03/11/2026, PR #7 "fase 0: contenção
+#     segura"). Os 4 runs vermelhos foram os últimos AGENDADOS (01/11 13:09Z até 03/11 00:52Z);
+#     desde então não houve mais nenhum, porque não há mais cron. Nada ficou quebrado: ficou contido.
+#   - O papel do bloco contínuo (pulsar sem parar) já é do `marketing-24h`, que roda o orquestrador
+#     a cada janela e está verde. Dois relógios publicando é o defeito que a contenção pagou caro
+#     para tirar; reviver a agenda seria reintroduzi-lo.
+#   - O que ERA defeito de verdade — e foi consertado no `tools/loop-24h.py` — é o bloco chamar de
+#     "pulso incompleto" o pulso que dormiu de propósito, fora da janela. Era isso que pintava de
+#     vermelho o run que tinha feito a coisa certa.
+#   Uso legítimo daqui em diante: execução manual (PUBLICAR) para um bloco longo de trabalho.
 
 # Bloco contínuo: um job que fica trabalhando por horas, em vez de acordar a cada 15 min.
 # Isto é o mais perto de "processo sempre vivo" que o GitHub Actions permite (teto de 6 h

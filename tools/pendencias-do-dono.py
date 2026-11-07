@@ -256,7 +256,20 @@ def escrever(relatorio):
         f.write("\n")
     linhas = ["# Pendências do dono", "",
               "Medido em %s (o devlog do itch é público: dá para conferir de fora)." % relatorio["quando"],
-              "", "| item | estado | como |", "| --- | --- | --- |"]
+              ""]
+    # O ESTADO DA CASA VEM ANTES DAS PENDÊNCIAS (07/11/2026): quem abre este relatório quer saber
+    # como a casa está — quantos vídeos, quantas capas de quantas, o tamanho e a idade da fila.
+    # Antes, isso exigia abrir seis JSON, e foi assim que "3 descrições truncadas" e "fila com
+    # tarefa de 89 horas" passaram dias sem aparecer.
+    try:
+        import importlib.util as _iu
+        _spec = _iu.spec_from_file_location("estado_casa", os.path.join(RAIZ, "tools", "estado-da-casa.py"))
+        _estado = _iu.module_from_spec(_spec)
+        _spec.loader.exec_module(_estado)
+        linhas += ["## Estado da casa", ""] + ["- " + l for l in _estado.texto().splitlines()] + [""]
+    except Exception as _erro:  # noqa: BLE001 — relatório sem este bloco ainda é útil
+        linhas += ["## Estado da casa", "", "- não foi possível ler o estado: %s" % str(_erro)[:80], ""]
+    linhas += ["| item | estado | como |", "| --- | --- | --- |"]
     for i in relatorio["itens"]:
         linhas.append("| %s | %s | %s |" % (i["titulo"], i["estado"], i["como_fazer"]))
     linhas += ["", "## Por que só o dono pode", ""]

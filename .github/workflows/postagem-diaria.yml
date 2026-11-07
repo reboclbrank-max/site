@@ -1,4 +1,14 @@
-name: postagem-diaria
+name: postagem-diaria (legado — não roda sozinho)
+
+# MORTO COMO AGENDA POR DECISÃO (07/11/2026), e a decisão é medida:
+#   - o `cron` deste arquivo saiu em `d2ded0a` (03/11/2026, PR #7 "fase 0: contenção segura"); o
+#     último run AGENDADO foi 03/11 08:41Z. Depois disso só houve disparo manual. Não "parou de
+#     funcionar": foi contido de propósito.
+#   - quem publica hoje é o pulso de 24h (`marketing-24h` + `orquestrador`, ~4 pulsos/dia, verde) e
+#     os `gravar-*` com a palavra PUBLICAR. A agenda diária deste arquivo seria um terceiro relógio
+#     publicando — exatamente o que a contenção proíbe (e a suíte `testes-contencao-marketing` cobra).
+#   - o arquivo FICA porque seis suítes medem o que ele contém (cadeado, entrada-no-main, sem push
+#     seco). O que ele não pode é voltar a rodar por conta própria.
 on:
   # Fase 0: publicação e retaguarda agendadas permanecem contidas no código.
   workflow_dispatch:

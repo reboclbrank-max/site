@@ -24,9 +24,11 @@ on:
         required: false
         default: ""
   schedule:
-    # 4 gravações por dia (a cada 6 h), só gravação — nenhum envio automático.
-    # Repositório público: minutos de Actions não são cobrados, e a captura leva ~4 min.
-    - cron: "25 1,7,13,19 * * *"
+    # DUAS GRAVAÇÕES POR DIA, DENTRO DA JANELA (07/11/2026): era "25 1,7,13,19" — 22:25, 04:25,
+    # 10:25 e 16:25 de Brasília. As duas da madrugada nasciam fora da janela 9h-22h e NUNCA
+    # podiam publicar: metade das gravações diárias era feita para o artefato. Agora 12:25Z e
+    # 19:25Z (09:25 e 16:25 de Brasília), as duas dentro da janela.
+    - cron: "25 12,19 * * *"
 
 permissions:
   # write só por causa do registro do que foi publicado (posts/youtube-publicados.json), e esse

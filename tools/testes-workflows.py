@@ -279,6 +279,40 @@ def main():
         ok("%s: o commit do envio versiona o registro de capas" % nome,
            "git add posts/capas-aplicadas.json" in fonte)
 
+    # ---- CICLOS CONTIDOS TÊM A DECISÃO ESCRITA (07/11/2026) ---------------------------
+    # O dono pediu decisão sobre dois ciclos parados desde 03/11. Medido: a agenda dos dois saiu
+    # em `d2ded0a` (PR #7, "fase 0: contenção segura") — não "parou de funcionar", foi contida.
+    # Decidido: NÃO voltam a ter agenda (o pulso 24h cobre o papel). O que este contrato impede é
+    # o pior dos dois mundos: ficar sem agenda e sem explicação, e alguém "consertar" isso
+    # recolocando um cron que a contenção tirou.
+    for nome, marca in (("postagem-diaria.yml", "MORTO COMO AGENDA"),
+                        ("marketing-continuo.yml", "NÃO revive a agenda")):
+        fonte = fontes().get(nome, "")
+        ok("%s: existe" % nome, bool(fonte))
+        _gatilhos = fonte.split("permissions:")[0]
+        ok("%s: não tem agenda (decisão medida, não esquecimento)" % nome,
+           "schedule:" not in _gatilhos and "cron:" not in _gatilhos, _gatilhos[-160:])
+        ok("%s: a decisão está escrita no arquivo, com o commit que a tomou" % nome,
+           marca in fonte and "d2ded0a" in fonte,
+           marca if marca not in fonte else "sem d2ded0a")
+        ok("%s: exige a palavra do dono" % nome, "PUBLICAR" in fonte)
+
+    # O bloco contínuo não pode chamar de falha o pulso que dormiu: foi isso que pintou de
+    # vermelho 4 runs seguidos que tinham feito a coisa certa.
+    _loop = open(os.path.join(RAIZ, "tools", "loop-24h.py"), encoding="utf-8").read()
+    ok("o bloco contínuo perdoa o pulso que dormiu de propósito", "not dormiu" in _loop)
+
+    # E a gravação de gameplay precisa nascer DENTRO da janela, senão o vídeo nunca pode sair.
+    _gameplay = fontes().get("gravar-gameplay.yml", "")
+    _horas = []
+    for linha in _gameplay.splitlines():
+        if linha.strip().startswith("- cron:"):
+            _horas += [int(h) for h in linha.split('"')[1].split()[1].split(",")]
+    ok("as gravações de gameplay nascem dentro da janela (9-22h de Brasília)",
+       _horas and all(12 <= h <= 22 for h in _horas), _horas)
+    ok("sobrou gravação de madrugada? (04h e 22h de Brasília eram inúteis)",
+       all(h not in (7,) for h in _horas), _horas)
+
     print("\n%d/%d verificações de higiene de workflow passaram"
           % (len(certos), len(certos) + len(falhas)))
     return 0 if not falhas else 1

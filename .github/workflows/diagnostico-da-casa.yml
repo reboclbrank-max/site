@@ -43,6 +43,7 @@ jobs:
           python3 tools/rodar-contratos-isolados.py tools/testes-workflows.py
           python3 tools/rodar-contratos-isolados.py tools/testes-painel-marketing.py
           python3 tools/rodar-contratos-isolados.py tools/testes-pendencias.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-estado-da-casa.py
           python3 tools/rodar-contratos-isolados.py tools/testes-publicar-devlog.py
           python3 tools/rodar-contratos-isolados.py tools/testes-decisoes.py
           python3 tools/rodar-contratos-isolados.py tools/testes-aprender-horario.py

@@ -225,11 +225,16 @@ def usar_fila(agora, estado):
     relogio, _ = decidir(agora, estado, ler_calendario())
     if relogio != "dormir":
         fila.adicionar(dados, relogio, motivo="decisão do relógio", chave="%s-%s" % (relogio, agora.strftime("%Y%m%d%H")))
-    tarefa = fila.pegar(dados)
+    # UMA DE CADA TIPO POR PULSO (07/11/2026): o pulso fechava uma tarefa só e enfileirava duas;
+    # a fila crescia e a `medir` velha nunca chegava na vez. Agora sai uma `publicar` e uma
+    # `medir` por pulso — nunca duas do mesmo tipo.
+    tarefas = fila.selecionar_pulso(dados, agora=agora)
     fila.gravar(dados, FILA)
-    if not tarefa:
-        return None, None, None
-    return tarefa["tipo"], "fila: [%s] %s" % (tarefa["id"], tarefa.get("motivo", "")), (fila, dados, tarefa)
+    if not tarefas:
+        return None, None, []
+    trios = [(fila, dados, tarefa) for tarefa in tarefas]
+    motivo = "; ".join("fila: [%s] %s" % (t["id"], t.get("motivo", "")) for t in tarefas)
+    return tarefas[0]["tipo"], motivo, trios
 
 
 def fechar_fila(trio, ok, resultado=""):
@@ -250,19 +255,42 @@ def main(argv):
     estado = carregar_estado()
     calendario = ler_calendario()
     acao, motivo = decidir(agora, estado, calendario)
-    trio = None
+    trios = []
     if not seco:
-        da_fila, motivo_fila, trio = usar_fila(agora, estado)
+        da_fila, motivo_fila, trios = usar_fila(agora, estado)
         if da_fila:
             acao, motivo = da_fila, motivo_fila
 
     print("pulso %s · ação: %s · %s" % (iso(agora), acao, motivo))
-    codigo, saida = (0, "modo seco") if seco else executar(acao, agora)
-    print(saida)
-    if trio:
-        fechar_fila(trio, codigo == 0, saida)
+    acoes_feitas = []
+    if trios:
+        codigos = []
+        for trio_t in trios:
+            tipo_da_tarefa = trio_t[2]["tipo"]
+            codigo_t, saida_t = executar(tipo_da_tarefa, agora)
+            print("fila: %s · %s" % (trio_t[2]["id"], saida_t))
+            fechar_fila(trio_t, codigo_t == 0, saida_t)
+            acoes_feitas.append((tipo_da_tarefa, codigo_t))
+            codigos.append(codigo_t)
+        codigo, saida = max(codigos), "fila: %d tarefa(s) neste pulso" % len(trios)
+    else:
+        codigo, saida = (0, "modo seco") if seco else executar(acao, agora)
+        print(saida)
+    if not acoes_feitas:
+        acoes_feitas = [(acao, codigo)]
 
     estado["pulsos"] = int(estado.get("pulsos", 0)) + 1
+    for acao, codigo in acoes_feitas:
+        _anotar_no_estado(acao, codigo, agora, estado, calendario)
+    estado["historico"].append({"quando": iso(agora), "acao": acao, "motivo": motivo,
+                                "codigo": codigo, "saida": saida[:200]})
+    gravar_estado(estado)
+    print("registrado: pulsos=%d" % estado["pulsos"])
+    return 0 if codigo == 0 else 1
+
+
+def _anotar_no_estado(acao, codigo, agora, estado, calendario):
+    """O que aquele pulso deixou registrado (uma vez por ação executada)."""
     if acao == "publicar" and codigo == 0:
         estado["ultima_publicacao"] = iso(agora)
         fuso = (calendario or {}).get("janela", {}).get("fuso", "America/Fortaleza")
@@ -277,12 +305,6 @@ def main(argv):
         estado["ultima_pesquisa"] = iso(agora)
     elif acao == "aprender" and codigo == 0:
         estado["ultima_aprendizagem"] = iso(agora)
-
-    estado["historico"].append({"quando": iso(agora), "acao": acao, "motivo": motivo,
-                                "codigo": codigo, "saida": saida[:200]})
-    gravar_estado(estado)
-    print("registrado: pulsos=%d" % estado["pulsos"])
-    return 0 if codigo == 0 else 1
 
 
 def gravar_calendario(dados, caminho=CALENDARIO):

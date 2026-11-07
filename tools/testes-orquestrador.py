@@ -187,7 +187,93 @@ def main():
     ok("workflow 24h tem concorrência (não duplica pulso)", "concurrency:" in texto)
     ok("workflow 24h commita o estado", "git commit" in texto)
 
-    total = 24
+    # ---- ANTI-FOME DA FILA (07/11/2026) ------------------------------------------------
+    # MEDIDO antes do conserto: o pulso fechava 1 tarefa e o ciclo enfileirava ~2, e a mais velha
+    # tinha 03/11 09:33 com 0 tentativas — 89 h esperando sem ninguém notar. Três cobranças:
+    # teto por tipo, prioridade efetiva depois de FOME_HORAS e pulso que fecha um de cada tipo.
+    _f = importlib.util.spec_from_file_location(
+        "fila_tarefas", os.path.join(RAIZ, "tools", "fila-tarefas.py"))
+    fila = importlib.util.module_from_spec(_f)
+    _f.loader.exec_module(fila)
+
+    ok("a fila tem teto por tipo (não cresce sem fim)", getattr(fila, "TETO_POR_TIPO", None) == 3,
+       getattr(fila, "TETO_POR_TIPO", None))
+    ok("a fila tem limiar de fome declarado", getattr(fila, "FOME_HORAS", None) == 24,
+       getattr(fila, "FOME_HORAS", None))
+
+    _agora = datetime.datetime(2026, 11, 7, 2, 0, tzinfo=datetime.timezone.utc)
+
+    def _t(tid, tipo, horas, prio=60, estado_t="pendente"):
+        quando = (_agora - datetime.timedelta(hours=horas)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return {"id": tid, "tipo": tipo, "estado": estado_t, "criada": quando,
+                "prioridade": prio, "tentativas": 0}
+
+    _tarefas = {"tarefas": [_t("publicar-nova", "publicar", 0),
+                            _t("medir-faminta", "medir", 30)]}
+    _antiga = fila.prioridade_efetiva(_tarefas["tarefas"][1], _agora)
+    _nova = fila.prioridade_efetiva(_tarefas["tarefas"][0], _agora)
+    ok("tarefa de 30 h passa na frente de tarefa nova", _antiga > _nova, (_antiga, _nova))
+    ok("a fome vira número grande, não empate", _antiga - _nova >= 500, (_antiga, _nova))
+    ok("tarefa nova não ganha bônus de fome",
+       _nova == _tarefas["tarefas"][0]["prioridade"], (_nova, _tarefas["tarefas"][0]["prioridade"]))
+
+    _escolhidas = fila.selecionar_pulso(_tarefas, tipos=("publicar", "medir"), agora=_agora)
+    _tipos = sorted(t["tipo"] for t in _escolhidas)
+    ok("o pulso fecha um de cada tipo", _tipos == ["medir", "publicar"], _escolhidas)
+    ok("o pulso escolhe a tarefa faminta do tipo",
+       any(t["tipo"] == "medir" and t["id"] == "medir-faminta" for t in _escolhidas), _escolhidas)
+    ok("o pulso nunca repete o mesmo id", len({t["id"] for t in _escolhidas}) == len(_escolhidas),
+       _escolhidas)
+    ok("o pulso marca o que levou como executando (não some da conta)",
+       all(t["estado"] == "executando" for t in _escolhidas), [t["estado"] for t in _escolhidas])
+    ok("o que ficou na fila continua pendente",
+       _tarefas["tarefas"][0]["estado"] == "executando" and
+       all(t["estado"] != "pendente" for t in _escolhidas), _tarefas)
+    ok("tarefa já executada não volta no pulso",
+       fila.selecionar_pulso({"tarefas": [_t("x", "publicar", 5, estado_t="executando")]},
+                             tipos=("publicar",), agora=_agora) == [],
+       fila.selecionar_pulso({"tarefas": [_t("x", "publicar", 5, estado_t="executando")]},
+                             tipos=("publicar",), agora=_agora))
+
+    _cheia = {"tarefas": [_t("m%d" % i, "medir", i) for i in range(3)]}
+    ok("com o tipo no teto, a fila recusa mais uma",
+       fila.adicionar(_cheia, "medir", motivo="mais uma") is None, len(_cheia["tarefas"]))
+    ok("a recusa do teto sai com motivo e números",
+       _cheia.get("recusadas") and _cheia["recusadas"][-1]["ja_pendentes"] == 3
+       and _cheia["recusadas"][-1]["teto"] == 3, _cheia.get("recusadas"))
+    ok("a fila no teto não cresce", len(_cheia["tarefas"]) == 3, len(_cheia["tarefas"]))
+    _abaixo = {"tarefas": [_t("m%d" % i, "medir", i) for i in range(2)]}
+    ok("abaixo do teto ainda entra", fila.adicionar(_abaixo, "medir", motivo="cabe") is not None,
+       len(_abaixo["tarefas"]))
+
+    ok("o orquestrador usa a seleção por tipo (não pega uma e sai)",
+       "selecionar_pulso" in open(os.path.join(RAIZ, "tools", "orquestrador.py"),
+                                  encoding="utf-8").read())
+
+    # ---- DORMIR NÃO É FALHA ------------------------------------------------------------
+    # MEDIDO: o marketing-continuo morreu 4 dias em "pulso 8/30 · ação: dormir · fora da janela
+    # (23h local)" seguido de "pulso incompleto". O pulso tinha feito o certo: dormir.
+    _loop = open(os.path.join(RAIZ, "tools", "loop-24h.py"), encoding="utf-8").read()
+    ok("o bloco contínuo não trata dormir como pulso incompleto", "dormiu" in _loop,
+       [l for l in _loop.splitlines() if "incompleto" in l])
+    ok("dormir está nomeado na condição de falha",
+       "codigo != 0 and not dormiu" in _loop,
+       [l for l in _loop.splitlines() if "not dormiu" in l])
+
+    # ---- CRON DENTRO DA JANELA ---------------------------------------------------------
+    _gameplay = open(os.path.join(RAIZ, ".github", "workflows", "gravar-gameplay.yml"),
+                     encoding="utf-8").read()
+    _crons = [l.split('"')[1] for l in _gameplay.splitlines() if l.strip().startswith("- cron:")]
+    ok("o gravar-gameplay tem cadência agendada", len(_crons) == 1, _crons)
+    _horas_utc = []
+    for _c in _crons:
+        _h = _c.split()[1]
+        _horas_utc += [int(x) for x in _h.split(",")]
+    ok("nenhuma gravação nasce fora da janela 9-22h de Brasília",
+       all(12 <= h <= 22 for h in _horas_utc), _horas_utc)
+    ok("as gravações ficam às 09h e 16h de Brasília", sorted(_horas_utc) == [12, 19], _horas_utc)
+
+    total = 24 + 15
     print("\n%d/%d testes do orquestrador 24h passaram" % (total - falhas, total))
     return 1 if falhas else 0
 

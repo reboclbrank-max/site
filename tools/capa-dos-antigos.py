@@ -308,6 +308,10 @@ def main(argv):
         # O04ajm1t54Q como sem capa. Só a contagem prova qual dos dois aconteceu.
         print("ensaio: %d vídeo(s) sem capa nesta rodada · %d no canal · %d no registro"
               % (len(fila), len(videos), len((registro or {}).get("aplicadas") or [])))
+        # O RETRATO FICA GRAVADO (07/11/2026): o ensaio contava em números e o número morria no
+        # log do run. Agora o estado da casa lê este arquivo e responde "50 de 50, nenhum sem
+        # capa" sem depender de abrir o Actions.
+        _gravar_estado_capas(len(videos), len(fila), registro_de_todos=len((registro or {}).get("aplicadas") or []))
         return 0
     ok, rel = executar(_token(), a.confirmacao, limite=a.limite, registro_caminho=a.registro,
                        somente=a.so, forcar=a.forcar, todos=a.todos)
@@ -315,6 +319,30 @@ def main(argv):
     if not ok:
         print("✘ " + rel.get("motivo", "nada aplicado"), file=sys.stderr)
     return 0 if ok else 1
+
+
+def _gravar_estado_capas(no_canal, sem_capa, registro_de_todos=0):
+    """Grava o retrato da cobertura de capas em posts/capas-estado.json (fonte do estado da casa)."""
+    import datetime
+    caminho = CAMINHO_ESTADO
+    dados = {"_o_que_e": "retrato da cobertura de capas: quantos vídeos o canal tem e quantos estão sem capa",
+             "no_canal": int(no_canal), "sem_capa": int(sem_capa),
+             "no_registro": int(registro_de_todos),
+             "medido_em": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
+    try:
+        os.makedirs(os.path.dirname(caminho), exist_ok=True)
+        with open(caminho, "w", encoding="utf-8") as f:
+            json.dump(dados, f, ensure_ascii=False, indent=1)
+            f.write("\n")
+    except OSError:
+        pass
+    return caminho
+
+
+# O CAMINHO É CONSTANTE DE MÓDULO (07/11/2026): a suíte `testes-capas-antigas` roda o ensaio
+# de verdade, e caminho enterrado dentro da função fazia o teste escrever no repositório (a
+# bateria inteira acusou "escreveu no repositório"). Agora o teste aponta a constante para o tmp.
+CAMINHO_ESTADO = os.path.join(RAIZ, "posts", "capas-estado.json")
 
 
 def _token():

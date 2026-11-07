@@ -109,17 +109,19 @@ jobs:
           retention-days: 14
 
       - name: Versiona o registro do que recebeu capa
-        if: ${{ github.event.inputs.confirmacao == 'APLICAR' }}
+        # Roda também no ensaio: o retrato da cobertura (posts/capas-estado.json) é medido ali, e
+        # é ele que o estado da casa lê para responder "50 de 50, nenhum sem capa".
         run: |
-          if [ ! -f posts/capas-aplicadas.json ]; then
-            echo "nada aplicado — sem registro para guardar"
+          if [ ! -f posts/capas-aplicadas.json ] && [ ! -f posts/capas-estado.json ]; then
+            echo "nada medido nem aplicado — sem registro para guardar"
             exit 0
           fi
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
           # só a capa desenhada entra: o quadro bruto é intermediário e está no .gitignore
-          git add posts/capas-aplicadas.json 'media/capas/*-capa.png'
-          [ -d media/capas ] && git ls-files --others --exclude-standard media/capas | head -5 || true
+          [ -e posts/capas-aplicadas.json ] && git add posts/capas-aplicadas.json || true
+          [ -e posts/capas-estado.json ] && git add posts/capas-estado.json || true
+          git add 'media/capas/*-capa.png' 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "registro sem mudança"
             exit 0

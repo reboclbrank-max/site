@@ -48,6 +48,8 @@ ok("registro ausente não quebra a fila",
 
 # ---- desenho: precisa de título real e de quadro do próprio vídeo -------------------------
 tmp = tempfile.mkdtemp(prefix="capas-antigas-")
+# o ensaio grava o retrato da cobertura; a suíte aponta para o tmp para não escrever na casa
+capa.CAMINHO_ESTADO = os.path.join(tmp, "capas-estado.json")
 try:
     capa.desenhar_capa("AAA111", "", os.path.join(tmp, "q.jpg"), os.path.join(tmp, "s.png"))
     ok("vídeo sem título não recebe capa", False, "desenhou sem título")

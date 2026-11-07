@@ -169,6 +169,20 @@ ok("o relatório não contém cookie nem chave",
    not any(p in json.dumps(_salvo).lower() for p in ("itch_cookie", "itcg", "api_key", "bearer")))
 ok("o .md foi escrito", os.path.getsize(pend.SAIDA_MD) > 200)
 
+# ---- O RELATÓRIO ABRE COM O ESTADO DA CASA (07/11/2026)
+# O dono pediu que o chat mostre o que a casa já sabe: quantos vídeos, quantas capas de quantas,
+# o tamanho e a idade da fila. Isso não pode depender de abrir seis JSON à mão.
+_md = open(pend.SAIDA_MD, encoding="utf-8").read()
+ok("o relatório tem a seção Estado da casa", "## Estado da casa" in _md,
+   _md[_md.find("## Estado da casa"):][:80])
+ok("o estado da casa diz quantos vídeos foram publicados", "Vídeos publicados:" in _md)
+ok("o estado da casa diz a cobertura de capas", "Capas da casa:" in _md)
+ok("o estado da casa diz o tamanho da fila", "Fila:" in _md,
+   [l for l in _md.splitlines() if l.startswith("- Fila:")])
+ok("o estado da casa vem antes das pendências",
+   _md.find("## Estado da casa") < _md.find("| item | estado | como |"),
+   (_md.find("## Estado da casa"), _md.find("| item | estado | como |")))
+
 # ---- o build no itch deixa de ser pendência FANTASMA quando há build com prova
 # MEDIDO (31/10/2026): o item ficava "esperando o dono" para sempre porque a única medida era
 # "a página respondeu 200" — verdade mesmo sem build nenhum. Com o build 2257110 no ar, o
