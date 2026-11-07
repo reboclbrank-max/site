@@ -195,6 +195,11 @@ if tem_pil:
     lido = capa.carregar_registro(os.path.join(tmp, "posts", "capas-aplicadas.json"))
     ok("a ferramenta das capas lê o que o envio registrou",
        any(x["id"] == "CCC333" for x in lido["aplicadas"]), lido)
+    # caminho ABSOLUTO não entra no registro versionado: registro é fato público
+    linha_abs = enviar_yt.registrar_capa_aplicada("DDD444", "título do envio",
+                                                  os.path.abspath(_capa), raiz=tmp)
+    ok("caminho absoluto é gravado relativo ao repositório",
+       linha_abs and not os.path.isabs(linha_abs.get("capa", "/")), linha_abs and linha_abs.get("capa"))
     enviar_yt.registrar_capa_aplicada("CCC333", "título do envio", _capa, raiz=tmp)
     lido2 = capa.carregar_registro(os.path.join(tmp, "posts", "capas-aplicadas.json"))
     ok("registrar duas vezes não duplica (upsert por id)",

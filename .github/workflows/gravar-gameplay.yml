@@ -194,6 +194,13 @@ jobs:
           print("capa do vídeo: " + titulo)
           PY
 
+      # REMONTA O KIT DEPOIS DA CAPA (07/11/2026): a capa é desenhada depois do primeiro kit, e o
+      # pacote levava a imagem de perfil do itch (630x500) como capa do YouTube — o vídeo
+      # _ffmjSMsW0Y subiu assim. Remontar é barato e faz o pacote apontar para o desenho desta
+      # partida, que é 1280x720.
+      - name: Remonta o kit com a capa desenhada
+        run: python3 tools/kit-gameplay.py --jogo ceifalume
+
       - name: Confere que o vídeo tem legenda, som e cartão
         run: python3 tools/rodar-contratos-isolados.py tools/testes-video-final.py media/gameplay/ceifalume-gameplay.mp4
 

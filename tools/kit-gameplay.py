@@ -27,6 +27,11 @@ SAIDA = os.path.join(RAIZ, "posts", "kit-gameplay.json")
 # slug do jogo -> (arquivo do gameplay, título próprio, linha de origem)
 GAMEPLAY = {
     "prancheta": {
+        # A CAPA É DO VÍDEO, NÃO DO PERFIL (07/11/2026): o pacote mandava a imagem de perfil do
+        # itch (630x500) como capa do YouTube, e o vídeo subia com miniatura que não é 16:9 nem
+        # daquela partida. A capa daqui é a desenhada pelo próprio run (quadro do vídeo + título
+        # medido + assinatura da cena), em 1280x720.
+        "capa": "media/gameplay/prancheta-capa.png",
         # PRANCHETA: o relatório dele é outro (passos do roteiro, não plantio). O redator do vídeo
         # aprendeu a ler os dois — antes o texto do PRANCHETA saía de uma ferramenta paralela, sem
         # rotação de ângulo e sem a régua de "título quase igual" (dívida apontada em 06/11/2026).
@@ -38,6 +43,7 @@ GAMEPLAY = {
                    "descrevem o que o agente fez na partida."),
     },
     "ceifalume": {
+        "capa": "media/gameplay/ceifalume-capa.png",
         # o arquivo do kit é o que tem as INSTRUÇÕES na tela (rodada 111): é esse que vai ao YouTube
         "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
         "sufixo_titulo": " — gameplay gravado no navegador",
@@ -239,6 +245,14 @@ def pacote(slug):
     # e o portão do envio recusa a repetição com número e motivo.
     escolha_redator, recusas = texto_do_video(slug, RAIZ)
     angulo = (escolha_redator or {}).get("angulo")
+    _numeros = (escolha_redator or {}).get("numeros")
+    if not _numeros:
+        # O REGISTRO GUARDA O QUE FOI MEDIDO, MESMO SEM REDATOR (07/11/2026): quando nenhum ângulo
+        # é aprovado (fora da janela, por exemplo), o kit caía no molde e mandava numeros=None.
+        # O vídeo _ffmjSMsW0Y subiu com "11 mudas, 8 colheitas, 794 toques" no título e o registro
+        # sem número nenhum — e o ângulo "comparacao" do vídeo seguinte precisa do anterior.
+        _medidos = numeros_da_partida(slug, RAIZ)
+        _numeros = {k: v for k, v in _medidos.items() if k != "minutos"} or None
     _aprovados = (escolha_redator or {}).get("angulos_aprovados")
     _candidatos = (escolha_redator or {}).get("angulos_candidatos")
     fato = (escolha_redator or {}).get("fato")
@@ -251,14 +265,15 @@ def pacote(slug):
         # qual fato da casa sustentou o texto (o redator não repete fato já usado)
         "fato": fato,
         # os números vão junto: é com eles que o próximo vídeo pode comparar partidas
-        "numeros": (escolha_redator or {}).get("numeros"),
+        "numeros": _numeros,
         "slug": slug,
         "arquivo": info["arquivo"],
         "arquivo_existe": os.path.exists(caminho),
         "bytes": os.path.getsize(caminho) if os.path.exists(caminho) else 0,
-        "capa": kit.JOGOS[slug].get("capa"),
-        "capa_existe": bool(kit.JOGOS[slug].get("capa")
-                            and kit._verificar_arquivo(kit.JOGOS[slug]["capa"])),
+        "capa": info.get("capa") or kit.JOGOS[slug].get("capa"),
+        "capa_existe": bool((info.get("capa") or kit.JOGOS[slug].get("capa"))
+                            and kit._verificar_arquivo(info.get("capa")
+                                                       or kit.JOGOS[slug]["capa"])),
         "dimensoes": kit.dimensoes_mp4(info["arquivo"]) if os.path.exists(caminho) else None,
         "formato": "vídeo normal (16:9)",
         "titulo": titulo[:kit.LIMITE_TITULO],

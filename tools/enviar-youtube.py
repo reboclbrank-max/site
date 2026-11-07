@@ -399,9 +399,17 @@ def registrar_capa_aplicada(vid, titulo, caminho, raiz=RAIZ, quando=None):
                 registro = dado
         except (OSError, ValueError):
             pass
+    # CAMINHO RELATIVO, SEMPRE (07/11/2026): o registro versionado guardou
+    # "/home/runner/work/site/site/media/ceifalume/perfil-rb-itch-630x500.png" — caminho que só
+    # existe dentro do run. Registro é fato público: caminho de máquina não entra.
+    try:
+        if os.path.isabs(caminho) and os.path.abspath(caminho).startswith(os.path.abspath(raiz) + os.sep):
+            caminho = os.path.relpath(caminho, os.path.abspath(raiz))
+    except (OSError, ValueError):
+        pass
     sha = ""
     try:
-        with open(caminho, "rb") as f:
+        with open(os.path.join(raiz, caminho) if not os.path.isabs(caminho) else caminho, "rb") as f:
             sha = hashlib.sha256(f.read()).hexdigest()[:16]
     except OSError:
         pass

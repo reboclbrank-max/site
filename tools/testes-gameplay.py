@@ -474,6 +474,20 @@ def main():
        len(_kit.montar(None)["pacotes"]) >= 0 and len(list(_kit.GAMEPLAY)) == 2,
        list(_kit.GAMEPLAY))
 
+    # 4d. A CAPA DO PACOTE É A DO VÍDEO, NÃO A DO PERFIL (07/11/2026): o vídeo _ffmjSMsW0Y subiu
+    # com a imagem de perfil do itch (630x500) no lugar da capa 16:9 desenhada pelo run.
+    _capas = {_slug: (_kit.GAMEPLAY[_slug].get("capa") or "") for _slug in _kit.GAMEPLAY}
+    ok("cada jogo do kit declara a capa desenhada do próprio vídeo",
+       all(c.startswith("media/gameplay/") and "-capa.png" in c for c in _capas.values()), _capas)
+    ok("a capa do CEIFALUME no kit é a do run, não a imagem de perfil",
+       "perfil" not in _capas.get("ceifalume", ""), _capas.get("ceifalume"))
+
+    # 4e. O REGISTRO GUARDA O NÚMERO MEDIDO MESMO SEM REDATOR (07/11/2026)
+    _fontes = [a for a in _kit.GAMEPLAY]
+    ok("o kit tem reserva de números medidos (para o registro não ficar sem número)",
+       "numeros_da_partida(slug, RAIZ)" in open(os.path.join(RAIZ, "tools", "kit-gameplay.py"),
+                                                encoding="utf-8").read(), _fontes)
+
     # 5. envio continua trancado
     env = dict(os.environ, KIT_YOUTUBE=os.path.join("posts", "kit-gameplay.json"), CONFIRMACAO="")
     r = subprocess.run([sys.executable, "tools/enviar-youtube.py", "ceifalume-gameplay"],
