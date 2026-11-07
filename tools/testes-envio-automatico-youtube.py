@@ -21,6 +21,7 @@ import shutil
 import tempfile
 
 RAIZ = pathlib.Path(__file__).resolve().parents[1]
+ROOT_DIR = str(RAIZ)
 spec = importlib.util.spec_from_file_location("enviar_youtube", RAIZ / "tools" / "enviar-youtube.py")
 enviar = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(enviar)
@@ -153,6 +154,24 @@ recusou, msg_ruim = enviar.executar(
 checar("ENSAIO recusa pacote inválido e diz que recusaria", recusou is False, msg_ruim)
 checar("a recusa do ensaio é sobre o portão, não sobre envio",
        "recusado" in msg_ruim.lower() or "RECUSARIA" in msg_ruim, msg_ruim)
+
+# 0. CÓDIGO DE SAÍDA: recusa ≠ falha operacional (06/11/2026)
+checar("publicado devolve 0", enviar.codigo_de_saida(True, "publicado: https://youtu.be/x") == 0)
+for _recusa in ("portão do vídeo recusou: vídeo idêntico já publicado",
+                "portão do texto recusou: hashtag demais",
+                "porta fechada: prancheta não sai por este caminho",
+                "ensaio RECUSARIA o envio: janela",
+                "faltou a confirmação explícita"):
+    checar("recusa devolve 2 (%s)" % _recusa[:28],
+           enviar.codigo_de_saida(False, _recusa) == 2, enviar.codigo_de_saida(False, _recusa))
+for _falha in ("não consegui falar com o YouTube", "o YouTube não devolveu o id do vídeo",
+               "renovação recusada pelo Google"):
+    checar("falha operacional devolve 3 (%s)" % _falha[:28],
+           enviar.codigo_de_saida(False, _falha) == 3, enviar.codigo_de_saida(False, _falha))
+_wf_gp = open(os.path.join(ROOT_DIR, ".github", "workflows", "gravar-gameplay.yml"),
+              encoding="utf-8").read()
+checar("o passo agendado só derruba o run em falha operacional (código 3)",
+       'if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi' in _wf_gp)
 
 # 0a. PORTA FECHADA do PRANCHETA (06/11/2026)
 # O kit manual envia o arquivo COMMITADO; o vídeo do PRANCHETA é gravado a cada run. Enquanto a

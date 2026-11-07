@@ -564,12 +564,38 @@ def executar(slug, confirmacao, raiz=RAIZ, renovar=None, validador=None,
     return True, "publicado: https://youtu.be/" + vid
 
 
+# RECUSA ≠ FALHA OPERACIONAL (06/11/2026). Os dois casos devolviam 1, e o passo agendado do
+# CEIFALUME fazia `exit 0` para não pintar de vermelho a recusa normal do portão (o mesmo vídeo
+# não sobe duas vezes — nos 4 runs por dia isso acontece). Efeito colateral: token vencido, upload
+# interrompido e erro de rede também saíam verdes, e ninguém ficava sabendo.
+#   código 0 = publicado
+#   código 2 = RECUSA com motivo (portão do vídeo, portão do texto, ensaio, porta fechada, kit)
+#   código 3 = FALHA OPERACIONAL (credencial, upload, YouTube sem id, arquivo)
+RECUSAS = (
+    "faltou a confirmação",
+    "porta fechada",
+    "kit recusado",
+    "não tem o pacote",
+    "portão do vídeo recusou",
+    "portão do texto recusou",
+    "ensaio RECUSARIA",
+)
+
+
+def codigo_de_saida(ok, mensagem):
+    """Traduz o resultado do envio no código que o workflow enxerga."""
+    if ok:
+        return 0
+    texto = str(mensagem or "").strip()
+    return 2 if any(texto.startswith(r) for r in RECUSAS) else 3
+
+
 def main(argv):
     slug = argv[0] if argv else "prancheta"
     confirmacao = os.environ.get("CONFIRMACAO", "")
     ok, msg = executar(slug, confirmacao)
     print(("✓ " if ok else "✗ ") + msg)
-    return 0 if ok else 1
+    return codigo_de_saida(ok, msg)
 
 
 if __name__ == "__main__":

@@ -414,8 +414,12 @@ def main():
     env = dict(os.environ, KIT_YOUTUBE=os.path.join("posts", "kit-gameplay.json"), CONFIRMACAO="")
     r = subprocess.run([sys.executable, "tools/enviar-youtube.py", "ceifalume-gameplay"],
                        capture_output=True, text=True, cwd=RAIZ, env=env)
-    ok("sem PUBLICAR o envio do gameplay é recusado", r.returncode == 1 and "PUBLICAR" in (r.stdout + r.stderr),
-       (r.stdout + r.stderr)[-120:])
+    # 2 = RECUSA com motivo, 3 = falha operacional (06/11/2026). Antes tudo era 1, e o passo
+    # agendado do CEIFALUME fazia `exit 0` para não pintar de vermelho a recusa normal — o que
+    # também escondia token vencido e upload interrompido.
+    ok("sem PUBLICAR o envio do gameplay é recusado (código 2, não 3)",
+       r.returncode == 2 and "PUBLICAR" in (r.stdout + r.stderr),
+       (r.returncode, (r.stdout + r.stderr)[-120:]))
 
     # 6. o workflow
     caminho = os.path.join(RAIZ, ".github", "workflows", "gravar-gameplay.yml")

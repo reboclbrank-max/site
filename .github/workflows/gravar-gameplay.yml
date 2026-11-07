@@ -311,6 +311,10 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           echo "código do envio: $codigo"
+          # 0 = publicado · 2 = recusa do portão com motivo (normal no agendado) · 3 = falha
+          # operacional (token, upload, rede). Só a terceira derruba o run: recusa silenciosa
+          # era o defeito, mas token vencido também ficava verde.
+          if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi
           exit 0
 
       - name: Envia ao YouTube (só com a palavra PUBLICAR)
