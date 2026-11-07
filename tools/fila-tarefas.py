@@ -203,6 +203,23 @@ def concluir(dados, tarefa, ok, resultado=""):
     return "nova tentativa (%d/%d)" % (tarefa["tentativas"], MAX_TENTATIVAS)
 
 
+def adiar(dados, tarefa, motivo=""):
+    """Devolve a tarefa à fila SEM contar tentativa: ela não falhou, foi adiada.
+
+    MEDIDO (07/11/2026, pulso 02:48Z): às 23h locais o pulso pegou a `publicar`, o portão
+    respondeu "janela: fora da janela (23h local)" — e a tarefa foi fechada como `feito`. Uma
+    publicação que não houve virou tarefa concluída, e a fila perdeu a tarefa sem que nada
+    acontecesse. Adiar é diferente de falhar e diferente de concluir.
+    """
+    if not tarefa:
+        return None
+    tarefa["estado"] = "pendente"
+    tarefa["adiamentos"] = int(tarefa.get("adiamentos", 0)) + 1
+    tarefa["adiada_em"] = agora_iso()
+    tarefa["resultado"] = ("adiada: " + (motivo or ""))[:200]
+    return "adiada (%s)" % ((motivo or "")[:60])
+
+
 def semear(dados, plano=None, agora=None):
     """Enche a fila a partir do plano do dia. Idempotente: não duplica o que já existe."""
     criadas = []

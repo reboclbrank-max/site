@@ -228,7 +228,16 @@ def usar_fila(agora, estado):
     # UMA DE CADA TIPO POR PULSO (07/11/2026): o pulso fechava uma tarefa só e enfileirava duas;
     # a fila crescia e a `medir` velha nunca chegava na vez. Agora sai uma `publicar` e uma
     # `medir` por pulso — nunca duas do mesmo tipo.
-    tarefas = fila.selecionar_pulso(dados, agora=agora)
+    # MAS FORA DA JANELA NÃO SE PEGA `publicar` (07/11/2026, medido no pulso 02:48Z): às 23h
+    # locais o pulso levou a `publicar`, o portão respondeu "PULADO (fora da janela)" e a tarefa
+    # foi fechada como `feito` — publicação que não houve virando tarefa concluída. Pega-se a
+    # `publicar` só quando o portão abre; fora dele o pulso mede e a tarefa espera a manhã.
+    tipos = ("publicar", "medir")
+    _pode, _por_que = pode_publicar(agora, ler_calendario())
+    if not _pode:
+        tipos = ("medir",)
+        print("fila: publicar fora de cogitação agora — %s" % _por_que)
+    tarefas = fila.selecionar_pulso(dados, tipos=tipos, agora=agora)
     fila.gravar(dados, FILA)
     if not tarefas:
         return None, None, []
@@ -269,6 +278,12 @@ def main(argv):
             tipo_da_tarefa = trio_t[2]["tipo"]
             codigo_t, saida_t = executar(tipo_da_tarefa, agora)
             print("fila: %s · %s" % (trio_t[2]["id"], saida_t))
+            if "PULADO" in saida_t:
+                # adiada, não feita: a tarefa volta para a fila e a tentativa não é gasta
+                estado_tarefa = trio_t[0].adiar(trio_t[1], trio_t[2], saida_t)
+                trio_t[0].gravar(trio_t[1], FILA)
+                print("fila: tarefa %s -> %s" % (trio_t[2]["id"], estado_tarefa))
+                continue
             fechar_fila(trio_t, codigo_t == 0, saida_t)
             acoes_feitas.append((tipo_da_tarefa, codigo_t))
             codigos.append(codigo_t)

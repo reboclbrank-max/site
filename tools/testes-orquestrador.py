@@ -273,7 +273,31 @@ def main():
        all(12 <= h <= 22 for h in _horas_utc), _horas_utc)
     ok("as gravações ficam às 09h e 16h de Brasília", sorted(_horas_utc) == [12, 19], _horas_utc)
 
-    total = 24 + 15
+    # ---- PULAR NÃO É CONCLUIR (07/11/2026) ---------------------------------------------
+    # Medido no run 42331047208: às 23h locais o pulso levou a `publicar`, o portão respondeu
+    # "janela: fora da janela" / "RESUMO: janela=PULADO" e a tarefa foi fechada como `feito`.
+    # Publicação que não houve virou tarefa concluída — e a fila perdeu a tarefa.
+    _tardia = _t("publicar-de-noite", "publicar", 1)
+    _dados_adiar = {"tarefas": [_tardia]}
+    _antes_tentativas = int(_tardia.get("tentativas", 0))
+    _dito = fila.adiar(_dados_adiar, _tardia, "janela: fora da janela (23h local)")
+    ok("adiar devolve a tarefa para a fila", _tardia["estado"] == "pendente", _tardia["estado"])
+    ok("adiar não gasta tentativa (não foi falha)", _tardia["tentativas"] == _antes_tentativas,
+       _tardia["tentativas"])
+    ok("adiar deixa o motivo escrito", "fora da janela" in (_tardia.get("resultado") or ""),
+       _tardia.get("resultado"))
+    ok("adiar conta o adiamento", _tardia.get("adiamentos") == 1, _tardia.get("adiamentos"))
+    ok("adiar diz o que fez", _dito and "adiada" in _dito, _dito)
+
+    _src_orq = open(os.path.join(RAIZ, "tools", "orquestrador.py"), encoding="utf-8").read()
+    ok("o pulso não fecha como feito o que o portão pulou",
+       '"PULADO" in saida_t' in _src_orq, [l for l in _src_orq.splitlines() if "PULADO" in l])
+    ok("o pulso usa adiar (e não concluir) no pulo", ".adiar(" in _src_orq)
+    ok("fora da janela o pulso nem pega publicar",
+       'tipos = ("medir",)' in _src_orq and "pode_publicar(agora, ler_calendario())" in _src_orq,
+       [l for l in _src_orq.splitlines() if "tipos =" in l])
+
+    total = 24 + 15 + 8
     print("\n%d/%d testes do orquestrador 24h passaram" % (total - falhas, total))
     return 1 if falhas else 0
 
