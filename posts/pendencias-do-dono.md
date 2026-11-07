@@ -1,18 +1,18 @@
 # Pendências do dono
 
-Medido em 2026-11-07T07:25:45Z (o devlog do itch é público: dá para conferir de fora).
+Medido em 2026-11-07T07:48:11Z (o devlog do itch é público: dá para conferir de fora).
 
 ## Estado da casa
 
 - Vídeos publicados: 10 · último: _ffmjSMsW0Y (CEIFALUME 0.1: 8 colheitas, 11 mudas plantadas…)
 - Capas da casa: 51 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
 - PRANCHETA no itch: build 19604665 (a casa viu em 2026-11-07T05:38) · esse build não sobe por aqui: o dono publica no itch
-- Fila: 6 pendente(s) (pesquisar 3, publicar 3) · a mais velha: publicar-20261106T203527Z há 10.8 h · 85 feita(s)
-- Régua de metas: medida há 2.8 h · prazo 2026-11-12 · 5 dia(s) restante(s)
-- Pulsos: 142 · última publicação 2026-11-07T02:48:53Z · última medição 2026-11-07T02:55:14Z
+- Fila: 6 pendente(s) (pesquisar 3, publicar 3) · a mais velha: publicar-20261106T203527Z há 11.2 h · 85 feita(s)
+- Régua de metas: medida há 3.1 h · prazo 2026-11-12 · 5 dia(s) restante(s)
+- Pulsos: 144 · última publicação 2026-11-07T02:48:53Z · última medição 2026-11-07T02:55:14Z
 
-- Agenda: o cron pede **71** disparos/dia e o GitHub entregou **14.02/dia** (janela de 7 dia(s), medido em 2026-11-07). Pior entrega: marketing-24h 4.1% (1.86/dia).
-- Corrente: em dia (último pulso 07/11 04:00, há 11 min) · 4 buraco(s) nas últimas 24h
+- Agenda: o cron pede **71** disparos/dia e o GitHub entregou **14.59/dia** (janela de 7 dia(s), medido em 2026-11-07). Pior entrega: marketing-24h 5.4% (2.43/dia).
+- Corrente: em dia (último pulso 07/11 04:40, há 4 min) · 4 buraco(s) nas últimas 24h
 
 - Originalidade: últimos 7 dias: 10 post(s), todos textos diferentes · média 4.54/dia · o último dia com repetição foi 2026-10-25
 
