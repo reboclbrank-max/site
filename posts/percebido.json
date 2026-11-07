@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-07T04:43:25Z",
+ "quando": "2026-11-07T04:47:42Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -22,7 +22,7 @@
   },
   {
    "o_que": "meta parada: Instagram: seguidores",
-   "porque": "0 em 21 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "porque": "0 em 25 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
    "quem": "robô",
    "como": "procurar outra abordagem antes de publicar de novo sobre esta meta",
    "verifica": "o número observado se move, ou o dono aposenta a meta (posts/metas.json)",
@@ -31,7 +31,7 @@
   },
   {
    "o_que": "meta parada: YouTube: inscritos",
-   "porque": "24 em 21 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "porque": "24 em 25 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
    "quem": "robô",
    "como": "procurar outra abordagem antes de publicar de novo sobre esta meta",
    "verifica": "o número observado se move, ou o dono aposenta a meta (posts/metas.json)",
@@ -40,13 +40,10 @@
   }
  ],
  "dono": [],
- "enfileiradas": [
-  "pesquisar-20261107T044325Z",
-  "pesquisar-20261107T044325Z"
- ],
+ "enfileiradas": [],
  "contagem": {
   "robo": 4,
   "dono": 0,
-  "enfileiradas": 2
+  "enfileiradas": 0
  }
 }
