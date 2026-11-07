@@ -43,7 +43,7 @@ def _modulo(nome, arquivo):
     return mod
 
 
-def texto_do_redator(raiz=RAIZ):
+def texto_do_redator(raiz=RAIZ, hora_local=None, publicacoes=None):
     """(escolha, recusas) do redator do vídeo. `escolha` = None quando nenhum ângulo passou.
 
     POR QUE (06/11/2026): o texto do PRANCHETA saía daqui, de um molde de três títulos — fora da
@@ -54,7 +54,10 @@ def texto_do_redator(raiz=RAIZ):
     """
     try:
         redator = _modulo("redator_video", "redator-video.py")
-        return redator.escolher("prancheta", raiz=raiz)
+        # hora_local/publicacoes existem para o TESTE poder fixar o cenário: a janela do dono é
+        # 09-22h e, rodando às 22h07, o teste dava vermelho sem nada estar quebrado (06/11/2026).
+        return redator.escolher("prancheta", raiz=raiz, hora_local=hora_local,
+                                publicacoes=publicacoes)
     except Exception as erro:  # noqa: BLE001
         return None, [{"angulo": None, "motivo": "redator falhou: " + str(erro)[:120]}]
 

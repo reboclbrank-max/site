@@ -103,9 +103,15 @@ _FATOS_P = rv.fatos_do_pacote("prancheta")
 ok("os fatos do PRANCHETA vêm do relatório da gravação (passos e toques)",
    _FATOS_P.get("passos") and _FATOS_P.get("passos_confirmados") is not None, _FATOS_P)
 ok("o PRANCHETA não inventa fato de plantio", "plantadas" not in _FATOS_P, list(_FATOS_P))
-_esc_p, _rec_p = rv.escolher("prancheta")
+# CENÁRIO FIXO: 12h (dentro da janela 09-22h) e sem histórico — senão o resultado depende da
+# hora em que a suíte roda e do último vídeo publicado (06/11/2026: às 22h07 ela reprovava).
+_esc_p, _rec_p = rv.escolher("prancheta", hora_local=12, publicacoes=[])
 ok("o redator aprova um ângulo do PRANCHETA com dado real", _esc_p is not None,
    [_r["motivo"][:60] for _r in _rec_p][:3])
+_esc_noite, _rec_noite = rv.escolher("prancheta", hora_local=3, publicacoes=[])
+ok("o redator respeita a hora que recebe (3h da manhã não publica, 12h publica)",
+   _esc_noite is None and _esc_p is not None,
+   [_r["motivo"][:50] for _r in (_rec_noite or [])][:2])
 if _esc_p:
     _texto_p = _esc_p["titulo"] + " " + _esc_p["descricao"]
     # cuidado com falso positivo: "MUDANÇA de tela" contém "muda". A régua é por palavra.

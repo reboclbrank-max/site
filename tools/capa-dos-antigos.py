@@ -241,8 +241,15 @@ def main(argv):
     if a.ensaio:
         registro = carregar_registro(a.registro)
         videos = listar_videos(_token())
-        for v in candidatos(videos, registro, so_da_casa=not a.todos)[:a.limite]:
+        fila = candidatos(videos, registro, so_da_casa=not a.todos)
+        for v in fila[:a.limite]:
             print("%s  %s  %s" % (v["id"], v.get("publicado_em", "")[:10], v.get("titulo", "")[:60]))
+        # O ENSAIO FALA EM NÚMEROS MESMO QUANDO NÃO FALTA NADA (06/11/2026): a lista vazia saía
+        # como log vazio, e log vazio não se distingue de passo que não rodou. O run 42321618066
+        # terminou verde sem uma linha — e o ensaio anterior (42318213722) acusava o vídeo
+        # O04ajm1t54Q como sem capa. Só a contagem prova qual dos dois aconteceu.
+        print("ensaio: %d vídeo(s) sem capa nesta rodada · %d no canal · %d no registro"
+              % (len(fila), len(videos), len((registro or {}).get("aplicadas") or [])))
         return 0
     ok, rel = executar(_token(), a.confirmacao, limite=a.limite, registro_caminho=a.registro,
                        somente=a.so, forcar=a.forcar, todos=a.todos)

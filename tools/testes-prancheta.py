@@ -166,7 +166,10 @@ _kit = os.path.join(_tmp, "kit-gameplay.json")
 with open(_kit, "w", encoding="utf-8") as _f:
     json.dump({"pacotes": [{"id": "ceifalume-gameplay", "titulo": "CEIFALUME"}]}, _f)
 # quem escreve o texto é o redator do vídeo; o molde é só rede de segurança
-_esc, _rec = ppv.texto_do_redator()
+# CENÁRIO FIXO (06/11/2026): rodar isto às 22h07 dava vermelho porque a janela do dono fecha às
+# 22h, e o histórico real já tinha o ângulo do último vídeo publicado. O que se mede aqui é o
+# redator aprovando com dado real — não o relógio da máquina nem o estado de produção.
+_esc, _rec = ppv.texto_do_redator(hora_local=12, publicacoes=[])
 ok("o texto do PRANCHETA vem do redator (rotação de ângulo), não do molde",
    _esc is not None, [_r.get("motivo") for _r in (_rec or [])][:2])
 pac_red = ppv.montar_pacote(REL, "pressao_rapida", "abc123def456", escolha=_esc)
@@ -186,7 +189,10 @@ ok("o pacote do PRANCHETA entra no kit sem apagar o do CEIFALUME",
    {p["id"] for p in _dados["pacotes"]} == {"ceifalume-gameplay", "prancheta-gameplay"},
    [p["id"] for p in _dados["pacotes"]])
 # quem escreve o texto é o redator do vídeo; o molde é só rede de segurança
-_esc, _rec = ppv.texto_do_redator()
+# CENÁRIO FIXO (06/11/2026): rodar isto às 22h07 dava vermelho porque a janela do dono fecha às
+# 22h, e o histórico real já tinha o ângulo do último vídeo publicado. O que se mede aqui é o
+# redator aprovando com dado real — não o relógio da máquina nem o estado de produção.
+_esc, _rec = ppv.texto_do_redator(hora_local=12, publicacoes=[])
 ok("o texto do PRANCHETA vem do redator (rotação de ângulo), não do molde",
    _esc is not None, [_r.get("motivo") for _r in (_rec or [])][:2])
 pac_red = ppv.montar_pacote(REL, "pressao_rapida", "abc123def456", escolha=_esc)

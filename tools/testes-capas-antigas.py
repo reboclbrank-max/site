@@ -207,6 +207,40 @@ ok("existe workflow para rodar isso sem depender da máquina de ninguém", "capa
 ok("o workflow usa os segredos do YouTube", "secrets.YT_REFRESH_TOKEN" in wf)
 ok("o workflow exige a palavra antes de aplicar", "APLICAR" in wf)
 ok("o workflow versiona o registro das capas", "posts/capas-aplicadas.json" in wf)
+# o passo de commit do envio precisa versionar o registro (a capa morria no stash do run)
+_fluxos = {n: open(os.path.join(RAIZ, ".github", "workflows", n), encoding="utf-8").read()
+           for n in ("gravar-prancheta.yml", "gravar-gameplay.yml")}
+for _nome, _fonte in _fluxos.items():
+    ok("%s versiona o registro das capas no commit do envio" % _nome,
+       "git add posts/capas-aplicadas.json" in _fonte)
+
+# ---- o ensaio responde em NÚMEROS, mesmo quando não falta nada (06/11/2026) ----------------
+import io as _io
+import contextlib as _ctx
+_canal = [{"id": "ZZZ1", "publicado_em": "2025-03-04", "titulo": "CEIFALUME — gravação antiga"},
+          {"id": "ZZZ2", "publicado_em": "2025-03-05", "titulo": "CEIFALUME — outra gravação"}]
+_orig_videos, _orig_token = capa.listar_videos, capa._token
+capa.listar_videos, capa._token = (lambda _t: list(_canal)), (lambda: "token-de-teste")
+try:
+    _saida = _io.StringIO()
+    with _ctx.redirect_stdout(_saida):
+        _rc = capa.main(["capa-dos-antigos.py", "--ensaio", "--registro",
+                         os.path.join(tmp, "registro-vazio.json")])
+    _texto = _saida.getvalue()
+    ok("o ensaio lista os dois vídeos sem capa", _texto.count("ZZZ") == 2, _texto.strip().splitlines())
+    ok("o ensaio fecha com a contagem (não é log vazio)", "2 vídeo(s) sem capa" in _texto, _texto)
+    _registro_cheio = os.path.join(tmp, "registro-cheio.json")
+    with open(_registro_cheio, "w", encoding="utf-8") as _f:
+        json.dump({"_o_que_e": "teste", "aplicadas": [
+            {"id": "ZZZ1", "quando": "2026-01-01T00:00:00Z", "titulo": "a", "capa": "x.png"},
+            {"id": "ZZZ2", "quando": "2026-01-01T00:00:00Z", "titulo": "b", "capa": "y.png"}]}, _f)
+    _saida2 = _io.StringIO()
+    with _ctx.redirect_stdout(_saida2):
+        capa.main(["capa-dos-antigos.py", "--ensaio", "--registro", _registro_cheio])
+    ok("com todos no registro, o ensaio diz zero em vez de não dizer nada",
+       "0 vídeo(s) sem capa" in _saida2.getvalue(), _saida2.getvalue())
+finally:
+    capa.listar_videos, capa._token = _orig_videos, _orig_token
 
 certos = sum(1 for _, c in res if c)
 print("\n%d/%d contratos da capa dos antigos passaram" % (certos, len(res)))
