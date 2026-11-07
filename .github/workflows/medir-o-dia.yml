@@ -64,8 +64,12 @@ jobs:
         run: |
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
-          git add posts/placar-metas.md posts/desempenho.md posts/placar-estado.json \
-                  posts/progresso-metas.md 2>/dev/null || true
+          # `posts/placar-metas.json` ENTRA NA LISTA (07/11/2026): é dele que o `perceber.py` lê
+          # prazo e dias decorridos para dizer o ritmo medido. Ficou de fora na primeira versão e
+          # o arquivo era criado e jogado fora a cada run (medido no run 42338086387: 2 arquivos
+          # versionados, o JSON não era um deles).
+          git add posts/placar-metas.md posts/placar-metas.json posts/desempenho.md \
+                  posts/placar-estado.json posts/progresso-metas.md 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "medição sem mudança — nada a versionar"
             exit 0

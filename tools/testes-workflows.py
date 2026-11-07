@@ -336,6 +336,9 @@ def main():
     ok("diagnostico-da-casa ganhou as ferramentas que as suítes pedem (Pillow)",
        "Pillow" in fontes().get("diagnostico-da-casa.yml", ""))
     ok("medir-o-dia versiona a régua de metas", "git add posts/placar-metas.md" in _diag)
+    ok("medir-o-dia versiona o placar em JSON (é dele que o pulso lê o prazo)",
+       "posts/placar-metas.json" in _diag.split("Versiona a medição")[-1],
+       [l.strip() for l in _diag.splitlines() if "git add" in l])
     ok("o commit da medição entra pelo entrar-no-main (sem push seco)",
        "entrar-no-main.sh" in _diag.split("Versiona a medição")[-1])
     ok("o commit da medição só acontece quando algo mudou",
