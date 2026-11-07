@@ -1,64 +1,89 @@
 {
  "jogo": "prancheta",
- "estrategia": "posse_normal",
- "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920",
+ "estrategia": "contra_ataque",
+ "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920&quot;&gt;&lt;/iframe&gt;",
  "decisoes": [
   {
-   "t": 17.3,
+   "t": 15.4,
    "motivo": "abrir o menu do jogo",
    "acao": "toque em 500,87"
   },
   {
-   "t": 23.1,
+   "t": 20.4,
    "motivo": "aceitar o convite do clube",
    "acao": "toque em 500,179"
   },
   {
-   "t": 28.2,
+   "t": 24.5,
    "motivo": "aplicar a sugestão do staff",
    "acao": "toque em 500,232"
   },
   {
-   "t": 32.8,
+   "t": 28.5,
    "motivo": "aplicar o microciclo da semana",
    "acao": "toque em 500,612"
   },
   {
-   "t": 38.2,
+   "t": 33,
    "motivo": "abrir a prancheta",
    "acao": "toque em 500,259"
   },
   {
-   "t": 46,
+   "t": 39,
    "motivo": "jogar com o plano recomendado",
    "acao": "toque em 500,289"
   },
   {
-   "t": 50.8,
+   "t": 42.7,
    "motivo": "seguir sem mexer (sem instrução)",
    "acao": "toque em 636,573"
   },
   {
-   "t": 55.9,
+   "t": 46.4,
+   "motivo": "acelerar a partida",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 50.4,
+   "motivo": "partida em andamento",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 54.5,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 61.2,
+   "t": 58.6,
    "motivo": "partida em andamento",
    "acao": "toque em 110,608"
   },
   {
-   "t": 66.4,
+   "t": 62.5,
    "motivo": "partida em andamento",
    "acao": "toque em 636,573"
   },
   {
-   "t": 71.7,
+   "t": 66.6,
+   "motivo": "partida em andamento",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 70.6,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
+  },
+  {
+   "t": 74.8,
+   "motivo": "partida em andamento",
+   "acao": "toque em 110,608"
+  },
+  {
+   "t": 79.4,
+   "motivo": "pular para o fim da partida",
+   "acao": "toque em 900,705"
   }
  ],
- "passos_confirmados": 9,
- "toques_partida": 4
+ "passos_confirmados": 13,
+ "toques_partida": 7
 }
