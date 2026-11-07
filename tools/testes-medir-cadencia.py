@@ -102,6 +102,41 @@ for k, v in _salvo_env.items():
 ok("sem token não há linha e há erro dito (ausência de medida ≠ zero medido)",
    _vazio["linhas"] == [] and _vazio["erros"], _vazio["erros"][:2])
 
+# ------------------------------------------------- janela maior que a vida do workflow
+ok("sem data da API, a idade vem do run mais antigo",
+   c.dias_no_ar([run("2026-11-05"), run("2026-11-07")], hoje=HOJE) == 3,
+   c.dias_no_ar([run("2026-11-05"), run("2026-11-07")], hoje=HOJE))
+ok("a data de criação da API manda mais que o run mais antigo",
+   c.dias_no_ar([run("2026-11-07")], hoje=HOJE, criado_em="2026-10-09T00:00:00Z") == 30,
+   c.dias_no_ar([run("2026-11-07")], hoje=HOJE, criado_em="2026-10-09T00:00:00Z"))
+ok("sem run nenhum não há idade (e não vira zero)",
+   c.dias_no_ar([], hoje=HOJE) is None)
+
+_salvo_lidos, _salvo_criacao = c.ler_runs, c.ler_criacao
+c.ler_criacao = lambda token, **k: {"corrente": "2026-11-07T06:00:00Z",
+                                    "medir-o-dia": "2026-10-01T00:00:00Z"}
+c.ler_runs = lambda wf, token, **k: (
+    [{"created_at": "2026-11-07T06:46:00Z"}, {"created_at": "2026-11-07T07:00:00Z"}]
+    if wf == "corrente" else
+    [run("2026-10-08")] if wf == "medir-o-dia" else
+    [run("2026-11-01"), run("2026-11-02"), run("2026-11-03"), run("2026-11-04"),
+     run("2026-11-05"), run("2026-11-06"), run("2026-11-07")])
+_novo = c.medir(token="x", dias=7, hoje=HOJE, raiz=RAIZ)
+c.ler_runs, c.ler_criacao = _salvo_lidos, _salvo_criacao
+_linha_nova = next(l for l in _novo["linhas"] if l["workflow"] == "corrente")
+ok("workflow que nasceu dentro da janela não vira 'pior entrega'",
+   _linha_nova["entrega_pct"] is None and "no ar há 1 dia" in _linha_nova["frase"],
+   _linha_nova["frase"])
+ok("a idade aparece na linha (dias_no_ar)", _linha_nova["dias_no_ar"] == 1, _linha_nova["dias_no_ar"])
+_nunca_rodou = next((l for l in _novo["linhas"] if l["workflow"] == "medir-o-dia"), None)
+ok("workflow antigo que nunca rodou NÃO ganha álibi: continua medido como 0%",
+   _nunca_rodou is None or (_nunca_rodou["entrega_pct"] == 0.0
+                            and (_nunca_rodou["dias_no_ar"] or 0) >= 7),
+   _nunca_rodou and (_nunca_rodou["entrega_pct"], _nunca_rodou["dias_no_ar"]))
+ok("workflow com vida inteira continua sendo comparado",
+   all(l["entrega_pct"] is not None for l in _novo["linhas"] if l["workflow"] != "corrente"),
+   [(l["workflow"], l["entrega_pct"]) for l in _novo["linhas"] if l["entrega_pct"] is None])
+
 # ------------------------------------------------------- a corrente presta contas
 def utc(dia, hora, minuto=0):
     return datetime.datetime(2026, 11, dia, hora, minuto, tzinfo=datetime.timezone.utc)

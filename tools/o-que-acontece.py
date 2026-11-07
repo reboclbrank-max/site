@@ -356,7 +356,10 @@ def gerar(raiz=RAIZ):
     # que foi ENTREGUE, medido — senão a tabela repete a promessa como se fosse fato.
     cadencia_por_workflow = {}
     for item in cadencia.get("linhas") or []:
-        if item.get("workflow") and item.get("medido_por_dia") is not None:
+        # Só entra quem tem medida COMPARÁVEL: workflow que nasceu dentro da janela mediria a
+        # própria idade, não a entrega (a `corrente` aparecia como 0,0/dia no dia em que nasceu).
+        if (item.get("workflow") and item.get("medido_por_dia") is not None
+                and item.get("entrega_pct") is not None):
             cadencia_por_workflow[item["workflow"]] = item
     l.append("")
     l.append("| hora (Brasília) | workflow | o que faz |")

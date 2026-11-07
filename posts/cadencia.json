@@ -18,7 +18,8 @@
     "2026-11-01": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 18
+   "runs_lidos": 18,
+   "dias_no_ar": 13
   },
   {
    "workflow": "administrar-youtube",
@@ -36,31 +37,34 @@
     "2026-11-01": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 18
+   "runs_lidos": 18,
+   "dias_no_ar": 13
   },
   {
    "workflow": "chamar-video",
    "cron": "20 13,17 * * *",
    "esperado_por_dia": 2,
    "medido_por_dia": 0.14,
-   "entrega_pct": 7.0,
-   "frase": "o agendador entrega 7.0% do cron: o número do papel não é o número da vida",
+   "entrega_pct": null,
+   "frase": "no ar há 2 dia(s): comparar com 7 dia(s) de janela ainda não vale",
    "por_dia": {
     "2026-11-06": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 3
+   "runs_lidos": 3,
+   "dias_no_ar": 2
   },
   {
    "workflow": "corrente",
    "cron": "0 */3 * * *",
    "esperado_por_dia": 8,
    "medido_por_dia": 0.0,
-   "entrega_pct": 0.0,
-   "frase": "o agendador entrega 0.0% do cron: o número do papel não é o número da vida",
+   "entrega_pct": null,
+   "frase": "no ar há 1 dia(s): comparar com 7 dia(s) de janela ainda não vale",
    "por_dia": {},
    "amostra_cobre": true,
-   "runs_lidos": 3
+   "runs_lidos": 3,
+   "dias_no_ar": 1
   },
   {
    "workflow": "gravar-gameplay",
@@ -78,7 +82,8 @@
     "2026-11-01": 3
    },
    "amostra_cobre": true,
-   "runs_lidos": 58
+   "runs_lidos": 58,
+   "dias_no_ar": 12
   },
   {
    "workflow": "gravar-prancheta",
@@ -96,7 +101,8 @@
     "2026-11-01": 3
    },
    "amostra_cobre": true,
-   "runs_lidos": 43
+   "runs_lidos": 43,
+   "dias_no_ar": 12
   },
   {
    "workflow": "ler-comentarios",
@@ -114,7 +120,8 @@
     "2026-11-01": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 12
+   "runs_lidos": 12,
+   "dias_no_ar": 13
   },
   {
    "workflow": "marketing-24h",
@@ -131,7 +138,8 @@
     "2026-11-01": 5
    },
    "amostra_cobre": true,
-   "runs_lidos": 52
+   "runs_lidos": 52,
+   "dias_no_ar": 13
   },
   {
    "workflow": "medir-itch",
@@ -149,18 +157,20 @@
     "2026-11-01": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 12
+   "runs_lidos": 12,
+   "dias_no_ar": 13
   },
   {
    "workflow": "medir-o-dia",
    "cron": "45 12 * * *",
    "esperado_por_dia": 1,
    "medido_por_dia": 0.0,
-   "entrega_pct": 0.0,
-   "frase": "o agendador entrega 0.0% do cron: o número do papel não é o número da vida",
+   "entrega_pct": null,
+   "frase": "no ar há 1 dia(s): comparar com 7 dia(s) de janela ainda não vale",
    "por_dia": {},
    "amostra_cobre": true,
-   "runs_lidos": 5
+   "runs_lidos": 5,
+   "dias_no_ar": 1
   },
   {
    "workflow": "metricas-youtube",
@@ -179,7 +189,8 @@
     "2026-11-01": 3
    },
    "amostra_cobre": true,
-   "runs_lidos": 35
+   "runs_lidos": 35,
+   "dias_no_ar": 12
   },
   {
    "workflow": "pendencias-do-dono",
@@ -197,7 +208,8 @@
     "2026-11-01": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 16
+   "runs_lidos": 16,
+   "dias_no_ar": 9
   },
   {
    "workflow": "vigia-sessao-itch",
@@ -215,20 +227,21 @@
     "2026-11-01": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 12
+   "runs_lidos": 12,
+   "dias_no_ar": 13
   }
  ],
  "erros": [],
  "total_esperado_por_dia": 71,
  "total_medido_por_dia": 14.02,
  "corrente": {
-  "agora": "2026-11-07T07:03:58.627176+00:00",
+  "agora": "2026-11-07T07:11:06.949611+00:00",
   "ultimo_pulso": "2026-11-07T07:00:02+00:00",
-  "idade_min": 3.9,
+  "idade_min": 11.1,
   "slot_devido": "2026-11-07T07:00:00+00:00",
-  "atraso_min": 4.0,
+  "atraso_min": 11.1,
   "pulsos_perdidos": 0,
-  "veredito": "em dia (último pulso 07/11 04:00, há 4 min)",
+  "veredito": "em dia (último pulso 07/11 04:00, há 11 min)",
   "buracos": [
    {
     "desde": "2026-11-06T14:36:55+00:00",

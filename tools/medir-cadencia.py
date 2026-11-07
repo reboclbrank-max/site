@@ -256,10 +256,78 @@ def tolerancia_da_corrente(passo):
     return max(1, passo // 2)
 
 
+def primeiro_dia(runs):
+    """O dia do run mais antigo lido — para saber há quanto tempo aquele workflow existe."""
+    datas = []
+    for run in runs:
+        try:
+            datas.append(datetime.date.fromisoformat(str(run.get("created_at") or "")[:10]))
+        except ValueError:
+            continue
+    return min(datas) if datas else None
+
+
+def dias_desde(criado_em, hoje=None):
+    """Idade em dias a partir da data de criação do workflow (ISO ou date)."""
+    if criado_em is None:
+        return None
+    if isinstance(criado_em, datetime.datetime):
+        dia = criado_em.date()
+    elif isinstance(criado_em, datetime.date):
+        dia = criado_em
+    else:
+        try:
+            dia = datetime.date.fromisoformat(str(criado_em)[:10])
+        except ValueError:
+            return None
+    return ((hoje or datetime.date.today()) - dia).days + 1
+
+
+def dias_no_ar(runs=None, hoje=None, criado_em=None):
+    """Quantos dias o workflow existe de verdade.
+
+    Duas fontes, e a ordem importa: `criado_em` (a API diz quando o workflow foi criado) e, na
+    falta dele, o run mais antigo lido.
+
+    A VIDA NÃO SE MEDE PELOS RUNS (07/11/2026): a primeira versão desta função usava o run mais
+    antigo, e aí `medir-o-dia` — um workflow que existe há semanas e NUNCA rodou — aparecia com
+    "1 dia de vida", ficando imune à comparação. Era o defeito na direção contrária: o workflow
+    que não entrega nada ganhava álibi. A `corrente`, nascida hoje, é que precisa do álibi.
+    """
+    idade = dias_desde(criado_em, hoje=hoje)
+    if idade is not None:
+        return idade
+    primeiro = primeiro_dia(runs or [])
+    if primeiro is None:
+        return None
+    return ((hoje or datetime.date.today()) - primeiro).days + 1
+
+
+def ler_criacao(token, repo=REPO, por_pagina=100):
+    """{nome do workflow: data de criação} direto da API — a idade vem do GitHub, não do palpite."""
+    url = ("https://api.github.com/repos/%s/actions/workflows?per_page=%d" % (repo, por_pagina))
+    req = urllib.request.Request(url, headers={"Authorization": "Bearer " + token,
+                                              "Accept": "application/vnd.github+json"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        dados = json.loads(r.read().decode())
+    criados = {}
+    for item in dados.get("workflows") or []:
+        nome = str(item.get("path") or "").rsplit("/", 1)[-1]
+        if nome.endswith(".yml"):
+            criados[nome[:-4]] = item.get("created_at")
+    return criados
+
+
 def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
     token = token or os.environ.get("GHPAT") or os.environ.get("GITHUB_TOKEN")
     esperado = esperado_do_repositorio(raiz)
     linhas, erros, lidos = [], [], {}
+    criados = {}
+    if token:
+        try:
+            criados = ler_criacao(token)
+        except Exception as erro:  # noqa: BLE001 — sem a idade da API, cai para o run mais antigo
+            erros.append("idade dos workflows: %s" % str(erro)[:80])
     for nome, (cron, pede) in sorted(esperado.items()):
         if not token:
             erros.append("%s: sem token" % nome)
@@ -274,6 +342,12 @@ def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
         medido = medido_por_dia(dias_map, dias)
         entrega, frase = comparar(pede, medido)
         cobre = amostra_cobre(runs, hoje=hoje, dias=dias)
+        ar = dias_no_ar(runs, hoje=hoje, criado_em=criados.get(nome))
+        if cobre and ar is not None and ar < dias:
+            # JANELA MAIOR QUE A VIDA (07/11/2026): comparar 7 dias de cron com um workflow que
+            # nasceu ontem mede a data de nascimento, não a entrega. O honesto é dizer a idade.
+            entrega, frase = None, ("no ar há %d dia(s): comparar com %d dia(s) de janela ainda "
+                                    "não vale" % (ar, dias))
         if not cobre:
             # LISTA CURTA NÃO É ZERO: se o histórico lido nem alcança a janela, o honesto é dizer
             # "não sei" — foi assim que a casa confundiu "sem leitura" com "0 seguidores" antes.
@@ -282,7 +356,7 @@ def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
         linhas.append({"workflow": nome, "cron": cron, "esperado_por_dia": pede,
                        "medido_por_dia": None if not cobre else medido, "entrega_pct": entrega,
                        "frase": frase, "por_dia": dias_map, "amostra_cobre": cobre,
-                       "runs_lidos": len(runs)})
+                       "runs_lidos": len(runs), "dias_no_ar": ar})
     total_esperado = sum(l["esperado_por_dia"] for l in linhas)
     total_medido = round(sum(l["medido_por_dia"] or 0 for l in linhas), 2)
     dados = {"medido_em": (hoje or datetime.date.today()).isoformat(),

@@ -159,7 +159,9 @@ _cad_caminho = os.path.join(RAIZ, "posts", "cadencia.json")
 _medidos = {}
 if os.path.exists(_cad_caminho):
     for _i in _json_cad.load(open(_cad_caminho, encoding="utf-8")).get("linhas") or []:
-        if _i.get("medido_por_dia") is not None:
+        # mesma régua do gerador: só entra quem tem medida comparável (workflow que nasceu
+        # dentro da janela mediria a própria idade)
+        if _i.get("medido_por_dia") is not None and _i.get("entrega_pct") is not None:
             _medidos[_i["workflow"]] = _i
 _linhas_tabela = [x for x in _doc.splitlines() if x.startswith("| ") and "`" in x]
 _faltando = [n for n in _medidos if not any(("`%s`" % n) in x and "entregou" in x for x in _linhas_tabela)]
