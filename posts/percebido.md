@@ -1,6 +1,6 @@
 # O que precisa ser feito
 
-Gerado em 2026-11-07T04:31:36Z pelo próprio ciclo, olhando o estado medido (não o relógio).
+Gerado em 2026-11-07T04:39:17Z pelo próprio ciclo, olhando o estado medido (não o relógio).
 
 > necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.
 
@@ -13,10 +13,6 @@ Gerado em 2026-11-07T04:31:36Z pelo próprio ciclo, olhando o estado medido (nã
 | empurrar a meta: YouTube: inscritos | faltam 16 e o ritmo necessário é 3.2 por dia (prazo em 5 dias) · ritmo medido: 0.0 por dia em 25 dias — não fecha no prazo | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
 | empurrar a meta: itch: downloads | faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
 
-## Espera o dono (3)
+## Espera o dono (0)
 
-| o que | por quê (medido) | como | verifica |
-| --- | --- | --- | --- |
-| ligar o canal telegram | nunca publicou em 20 ciclos: falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT | criar o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT em Settings → Secrets → Actions | o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html) |
-| ligar o canal mastodon | nunca publicou em 20 ciclos: falta o segredo MASTODON_URL + MASTODON_TOKEN | criar o segredo MASTODON_URL + MASTODON_TOKEN em Settings → Secrets → Actions | o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html) |
-| ligar o canal discord | nunca publicou em 20 ciclos: falta o segredo DISCORD_WEBHOOK | criar o segredo DISCORD_WEBHOOK em Settings → Secrets → Actions | o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html) |
+Nada esperando o dono nesta rodada.

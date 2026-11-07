@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-07T04:31:36Z",
+ "quando": "2026-11-07T04:39:17Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -39,39 +39,11 @@
    "chave": "meta-itch: downloads"
   }
  ],
- "dono": [
-  {
-   "o_que": "ligar o canal telegram",
-   "porque": "nunca publicou em 20 ciclos: falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT",
-   "quem": "dono",
-   "como": "criar o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT em Settings → Secrets → Actions",
-   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
-   "tipo_fila": null,
-   "chave": "dono-segredo-telegram"
-  },
-  {
-   "o_que": "ligar o canal mastodon",
-   "porque": "nunca publicou em 20 ciclos: falta o segredo MASTODON_URL + MASTODON_TOKEN",
-   "quem": "dono",
-   "como": "criar o segredo MASTODON_URL + MASTODON_TOKEN em Settings → Secrets → Actions",
-   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
-   "tipo_fila": null,
-   "chave": "dono-segredo-mastodon"
-  },
-  {
-   "o_que": "ligar o canal discord",
-   "porque": "nunca publicou em 20 ciclos: falta o segredo DISCORD_WEBHOOK",
-   "quem": "dono",
-   "como": "criar o segredo DISCORD_WEBHOOK em Settings → Secrets → Actions",
-   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
-   "tipo_fila": null,
-   "chave": "dono-segredo-discord"
-  }
- ],
+ "dono": [],
  "enfileiradas": [],
  "contagem": {
   "robo": 4,
-  "dono": 3,
+  "dono": 0,
   "enfileiradas": 0
  }
 }
