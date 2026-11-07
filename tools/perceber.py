@@ -134,8 +134,14 @@ def artefatos_velhos(agora=None, horas=HORAS_VELHO):
     return necessidades
 
 
-def metas_em_risco(placar_linhas, dias_restantes=None, minimo_por_dia=1.0):
-    """Metas cujo ritmo necessário por dia já passou do razoável (>= 1 por dia)."""
+def metas_em_risco(placar_linhas, dias_restantes=None, minimo_por_dia=1.0, dias_decorridos=None):
+    """Metas cujo ritmo necessário por dia já passou do razoável (>= 1 por dia).
+
+    O RITMO MEDIDO ENTRA NA FRASE (07/11/2026): "faltam 52 e o ritmo necessário é 10.4 por dia"
+    diz o que falta, não se dá. Com o `delta` desde a linha de partida e os dias decorridos, a
+    mesma frase pode dizer o ritmo que a casa REALMENTE tem — e, quando ele não fecha o prazo,
+    dizer isso em letras claras em vez de repetir a meta como se ela estivesse ao alcance.
+    """
     necessidades = []
     for linha in placar_linhas:
         if linha.get("status") not in ("EM_CURSO",):
@@ -146,11 +152,18 @@ def metas_em_risco(placar_linhas, dias_restantes=None, minimo_por_dia=1.0):
             continue
         if por_dia < minimo_por_dia:
             continue
+        frase = ("faltam %s e o ritmo necessário é %s por dia%s"
+                 % (linha.get("falta"), linha.get("por_dia"),
+                    (" (prazo em %s dias)" % dias_restantes) if dias_restantes else ""))
+        delta = linha.get("delta")
+        medido = None
+        if isinstance(delta, (int, float)) and dias_decorridos:
+            medido = round(float(delta) / float(dias_decorridos), 2)
+        if medido is not None and float(por_dia) > 0 and medido < float(por_dia):
+            frase += (" · ritmo medido: %s por dia em %s dias — não fecha no prazo"
+                      % (medido, dias_decorridos))
         necessidades.append(precisar(
-            "empurrar a meta: " + linha["meta"],
-            "faltam %s e o ritmo necessário é %s por dia%s"
-            % (linha.get("falta"), linha.get("por_dia"),
-               (" (prazo em %s dias)" % dias_restantes) if dias_restantes else ""),
+            "empurrar a meta: " + linha["meta"], frase,
             "robô", "priorizar essa meta no próximo ciclo editorial",
             "o número observado sobe no placar (posts/placar-metas.md)",
             tipo_fila="publicar", chave="meta-" + linha["meta"]))
@@ -277,10 +290,18 @@ def perceber(agora=None, enfileirar=True):
     try:
         contexto = (ler_json(os.path.join(RAIZ, "posts", "placar-metas.json")) or {})
         dias = (contexto.get("placar_contexto") or {}).get("dias_restantes")
+        if dias is None:      # o carimbo da régua também sabe o prazo (medir-o-dia)
+            carimbo = ler_json(os.path.join(RAIZ, "posts", "placar-estado.json")) or {}
+            dias = carimbo.get("dias_restantes")
     except Exception:
         dias = None
     try:
-        necessidades += metas_em_risco(placar_linhas(), dias)
+        contexto = (ler_json(os.path.join(RAIZ, "posts", "placar-metas.json")) or {})
+        decorridos = (contexto.get("placar_contexto") or {}).get("dias_decorridos")
+    except Exception:
+        decorridos = None
+    try:
+        necessidades += metas_em_risco(placar_linhas(), dias, dias_decorridos=decorridos)
     except Exception:
         pass
     necessidades += repeticao_alta(

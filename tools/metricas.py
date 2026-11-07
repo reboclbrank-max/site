@@ -609,6 +609,18 @@ def gravar_placar(linhas, contexto, hoje=None):
     caminho = os.path.join(os.path.dirname(SAIDA_PLACAR) or ".", os.path.basename(SAIDA_PLACAR))
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(texto)
+    # O PLACAR EM JSON, QUE ALGUÉM JÁ LIA (07/11/2026): `perceber.py` procura
+    # `posts/placar-metas.json` para saber o prazo e o número de dias — e esse arquivo NUNCA foi
+    # escrito por ninguém. Resultado medido: todas as frases de meta em risco saíam sem o prazo
+    # ("(prazo em N dias)" nunca aparecia), porque o leitor achava dias_restantes = None.
+    try:
+        json_placar = dict(linhas=[dict(l) for l in linhas], placar_contexto=dict(contexto or {}))
+        with open(os.path.join(os.path.dirname(caminho) or ".", "placar-metas.json"),
+                  "w", encoding="utf-8") as f:
+            json.dump(json_placar, f, ensure_ascii=False, indent=1)
+            f.write("\n")
+    except OSError:
+        pass
     return caminho
 
 

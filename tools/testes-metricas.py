@@ -521,5 +521,30 @@ ok("a régua atual diz quantas metas leu", metricas._leituras_da_regua(_caminho_
    metricas._leituras_da_regua(_caminho_regua))
 ok("régua que não existe não inventa número", metricas._leituras_da_regua("/nao/existe.md") is None)
 
+# ---- o placar em JSON existe de verdade (07/11/2026) --------------------------------------
+# `perceber.py` procurava posts/placar-metas.json para saber o prazo — e o arquivo NUNCA era
+# escrito por ninguém: toda frase de meta em risco saía sem "(prazo em N dias)".
+_bancada_json = tempfile.mkdtemp(prefix="placar-json-")
+_placar_md = os.path.join(_bancada_json, "placar-metas.md")
+_placar_original = metricas.SAIDA_PLACAR
+metricas.SAIDA_PLACAR = _placar_md
+metricas.gravar_placar(
+    [{"meta": "YouTube: inscritos", "alvo": 40, "observado": 24, "falta": 16, "status": "EM_CURSO",
+      "fonte": "x", "partida": 24, "delta": 0, "por_dia": 3.2}],
+    {"dias_restantes": 5, "prazo": "2026-11-12", "dias_decorridos": 25,
+     "metas_com_leitura": 1, "metas_sem_leitura": 0, "metas_aposentadas": 0})
+metricas.SAIDA_PLACAR = _placar_original
+_caminho_json = os.path.join(_bancada_json, "placar-metas.json")
+ok("o placar em JSON é escrito junto com o markdown", os.path.exists(_caminho_json), _caminho_json)
+if os.path.exists(_caminho_json):
+    _dados = json.load(open(_caminho_json, encoding="utf-8"))
+    ok("o JSON traz o prazo que o pulso lê",
+       (_dados.get("placar_contexto") or {}).get("prazo") == "2026-11-12", _dados.get("placar_contexto"))
+    ok("o JSON traz os dias decorridos (para o ritmo medido)",
+       (_dados.get("placar_contexto") or {}).get("dias_decorridos") == 25,
+       _dados.get("placar_contexto"))
+    ok("o JSON traz as linhas do placar", isinstance(_dados.get("linhas"), list) and _dados["linhas"],
+       _dados.get("linhas"))
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 raise SystemExit(1 if falhas else 0)

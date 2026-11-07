@@ -110,6 +110,36 @@ ok("o porquê mostra falta, ritmo e prazo",
 ok("meta em risco enfileira publicação (é o que empurra número)",
    _r and _r[0]["tipo_fila"] == "publicar", _r)
 
+# ---- o ritmo MEDIDO na frase (07/11/2026) ------------------------------------------------
+# Medido hoje: yt_inscritos saiu de 24 para 24 em 25 dias; a frase só dizia "faltam 16 e o
+# ritmo necessário é 3.2 por dia". Necessário e medido lado a lado, ou o dono lê esperança.
+_placar_ritmo = [
+    {"meta": "YouTube: inscritos", "alvo": "40", "observado": "24", "falta": "16",
+     "por_dia": "3.2", "status": "EM_CURSO", "delta": 0, "partida": 24},
+]
+_r_ritmo = p.metas_em_risco(_placar_ritmo, dias_restantes=5, dias_decorridos=25)
+ok("o porquê mostra o ritmo medido quando ele existe",
+   _r_ritmo and "ritmo medido: 0.0 por dia em 25 dias" in _r_ritmo[0]["porque"],
+   _r_ritmo[0]["porque"] if _r_ritmo else None)
+ok("e diz, em letras claras, que não fecha no prazo",
+   _r_ritmo and "não fecha no prazo" in _r_ritmo[0]["porque"],
+   _r_ritmo[0]["porque"] if _r_ritmo else None)
+ok("o necessário continua na frase (os dois números lado a lado)",
+   _r_ritmo and "3.2" in _r_ritmo[0]["porque"], _r_ritmo[0]["porque"] if _r_ritmo else None)
+_r_rapido = p.metas_em_risco(
+    [{"meta": "itch: downloads", "alvo": "100", "observado": "48", "falta": "52",
+      "por_dia": "2.0", "status": "EM_CURSO", "delta": 60, "partida": 0}],
+    dias_restantes=5, dias_decorridos=25)
+ok("ritmo medido suficiente NÃO é chamado de fora de alcance",
+   _r_rapido and "não fecha no prazo" not in _r_rapido[0]["porque"],
+   _r_rapido[0]["porque"] if _r_rapido else None)
+_r_sem = p.metas_em_risco(
+    [{"meta": "Bluesky: seguidores", "alvo": "50", "observado": "32", "falta": "18",
+      "por_dia": "3.6", "status": "EM_CURSO"}], dias_restantes=5)
+ok("sem delta, não inventa ritmo medido",
+   _r_sem and "ritmo medido" not in _r_sem[0]["porque"],
+   _r_sem[0]["porque"] if _r_sem else None)
+
 # ---------------------------------------------------------------- repetição
 ok("repetição acima do limite vira necessidade",
    len(p.repeticao_alta({"repeticao_desde_o_conserto": {"pct": 22.0, "ciclos": 9}})) == 1)
