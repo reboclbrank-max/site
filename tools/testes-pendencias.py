@@ -267,6 +267,41 @@ try:
        _linha_corrente and "2 pulso(s)" in _linha_corrente[0], _linha_corrente)
     ok("o relatório diz quantos buracos houve em 24h",
        _linha_corrente and "1 buraco(s)" in _linha_corrente[0], _linha_corrente)
+    # A ORIGINALIDADE NO RELATÓRIO (07/11/2026): o dono pediu coisas únicas; o relatório passa a
+    # dizer quantas, com data. Repetição é o que a casa mais errou (40x o mesmo texto em 9 dias).
+    _uni_path = os.path.join(RAIZ, "posts", "unicidade.json")
+    _uni_antes = open(_uni_path, encoding="utf-8").read() if os.path.exists(_uni_path) else None
+    try:
+        with open(_uni_path, "w", encoding="utf-8") as f:
+            json.dump({"medido_em": "2026-11-07", "posts": 109, "dias_com_post": 24,
+                       "media_por_dia": 4.54,
+                       "veredito": "últimos 7 dias: 10 post(s), todos textos diferentes · "
+                                   "média 4.54/dia · o último dia com repetição foi 2026-10-25"}, f)
+        pend.escrever(pend.montar())
+        _texto_uni = open(pend.SAIDA_MD, encoding="utf-8").read()
+        _linha_uni = [l for l in _texto_uni.splitlines() if l.startswith("- Originalidade:")]
+        ok("o relatório diz quantos posts diferentes a casa publicou", _linha_uni
+           and "todos textos diferentes" in _linha_uni[0], _linha_uni)
+        ok("o relatório diz a data do último dia com repetição",
+           _linha_uni and "2026-10-25" in _linha_uni[0], _linha_uni)
+        with open(_uni_path, "w", encoding="utf-8") as f:
+            json.dump({"medido_em": "2026-11-07", "posts": 12, "media_por_dia": 1.2,
+                       "veredito": "REPETIÇÃO nos últimos 7 dias: 12 post(s), 8 texto(s) "
+                                   "único(s), 4 repetido(s)"}, f)
+        pend.escrever(pend.montar())
+        _texto_rep = open(pend.SAIDA_MD, encoding="utf-8").read()
+        ok("repetição medida aparece no relatório como REPETIÇÃO, não como estilo",
+           any("REPETIÇÃO" in l and l.startswith("- Originalidade:")
+               for l in _texto_rep.splitlines()),
+           [l for l in _texto_rep.splitlines() if "Originalidade" in l])
+    finally:
+        if _uni_antes is None:
+            if os.path.exists(_uni_path):
+                os.unlink(_uni_path)
+        else:
+            with open(_uni_path, "w", encoding="utf-8") as f:
+                f.write(_uni_antes)
+
     # corrente em dia: a linha muda de tom, e o relatório não fica mudo quando está tudo bem
     with open(_cad_path, "w", encoding="utf-8") as f:
         json.dump({"medido_em": "2026-11-07", "janela_dias": 7,

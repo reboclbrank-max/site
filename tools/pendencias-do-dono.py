@@ -304,6 +304,16 @@ def escrever(relatorio):
                 _extra += " · %d buraco(s) nas últimas 24h" % len(_corr["buracos"])
             linhas.append("- Corrente: %s%s" % (_corr["veredito"], _extra))
         linhas.append("")
+    # A ORIGINALIDADE MEDIDA (07/11/2026): o dono pediu "coisas únicas" e a casa respondia com
+    # opinião. Aqui vai o número: quantos posts, quantos textos diferentes, e a data do último dia
+    # em que a casa repetiu. Repetição é falha, não estilo.
+    try:
+        _uni = json.load(open(os.path.join(RAIZ, "posts", "unicidade.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        _uni = {}
+    if _uni.get("posts"):
+        linhas.append("- Originalidade: %s" % _uni.get("veredito", "medido, sem frase"))
+        linhas.append("")
 
     linhas += ["| item | estado | como |", "| --- | --- | --- |"]
     for i in relatorio["itens"]:
