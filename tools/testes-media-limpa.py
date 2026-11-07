@@ -49,6 +49,12 @@ def versionados():
 
 def citado(nome_arquivo, fontes):
     base = os.path.basename(nome_arquivo)
+    # MATÉRIA-PRIMA DECLARADA: `x-fonte.gif` é a origem de `x.gif`, que está versionado e é o que
+    # as páginas usam. A relação existe no nome e no arquivo derivado — não é arquivo solto.
+    if "-fonte." in base:
+        derivado = base.replace("-fonte.", ".")
+        if os.path.exists(os.path.join(RAIZ, os.path.dirname(nome_arquivo), derivado)):
+            return True
     for caminho in fontes:
         try:
             with open(caminho, encoding="utf-8", errors="ignore") as f:
@@ -88,19 +94,37 @@ def main():
     base_wf = os.path.join(RAIZ, ".github", "workflows")
     if os.path.isdir(base_wf):
         fontes += [os.path.join(base_wf, a) for a in os.listdir(base_wf) if a.endswith(".yml")]
+    # REGISTRO TAMBÉM CITA (06/11/2026): as capas aplicadas nos vídeos são guardadas em
+    # posts/capas-aplicadas.json, com o caminho de cada uma. Sem ler os JSON de posts, o teste
+    # acusava de órfão o arquivo que o próprio registro aponta — e cobrava apagar a prova.
+    base_posts = os.path.join(RAIZ, "posts")
+    if os.path.isdir(base_posts):
+        fontes += [os.path.join(base_posts, a) for a in os.listdir(base_posts) if a.endswith(".json")]
 
     orfaos = [f for f in pesados if not citado(f, fontes)]
     ok("nenhum arquivo de mídia pesado está órfão (nada cita)", not orfaos,
        "sem citação: %s" % orfaos)
 
-    # O que NÃO pode ser ignorado: o vídeo que o site e o kit entregam.
-    for obrigatorio in ("media/gameplay/ceifalume-gameplay-instrucoes.mp4",
-                        "media/gameplay/ceifalume-gameplay.mp4"):
+    # O que NÃO pode ser ignorado: o vídeo que o SITE toca (mídia de página, precisa estar no
+    # repositório para funcionar em qualquer clone). O vídeo GRAVADO pelo run é o contrário:
+    # se estiver versionado, envelhece e o envio manual manda a partida de outro dia.
+    for obrigatorio in ("media/gameplay/ceifalume-gameplay-instrucoes.mp4",):
         ok("o vídeo entregue continua versionado: " + os.path.basename(obrigatorio),
            obrigatorio in lista, "sumiu do git")
 
+    import subprocess as _sp
+    _versionados = set(_sp.run(["git", "ls-files", "media/gameplay"], cwd=RAIZ,
+                               capture_output=True, text=True).stdout.split())
+    for _gravado in ("media/gameplay/ceifalume-gameplay.mp4",
+                     "media/gameplay/prancheta-gameplay.mp4"):
+        ok("o vídeo gravado não mora no git: " + os.path.basename(_gravado),
+           _gravado not in _versionados, "está versionado")
+
     with open(os.path.join(RAIZ, ".gitignore"), encoding="utf-8") as f:
         ignorados = f.read()
+    ok("o .gitignore impede o vídeo gravado de voltar",
+       "media/gameplay/ceifalume-gameplay.mp4" in ignorados
+       and "media/gameplay/prancheta-gameplay.mp4" in ignorados, "regra ausente")
     ok("o .gitignore impede o artefato de voltar", "media/gameplay/trecho-*.mp4" in ignorados
        and "media/gameplay/trilha.m4a" in ignorados, "regra ausente")
 

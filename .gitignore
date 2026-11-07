@@ -14,3 +14,10 @@ media/gameplay/prancheta-cru.mp4
 # workflows de gravação já instalam sozinhos (npm install --no-save playwright-core@1). Versionar
 # isso só faz todo clone e todo checkout de CI baixarem 14 MB à toa.
 node_modules/
+
+# VÍDEO GRAVADO NÃO SE VERSIONA (06/11/2026): cada run grava o seu; o que fica no git envelhece
+# e o envio manual acaba mandando uma partida de outro dia. O artefato do run guarda o arquivo.
+# O que continua versionado é o vídeo que o SITE toca (ceifalume-gameplay-instrucoes.mp4), que é
+# mídia de página, não entrega de run.
+media/gameplay/prancheta-gameplay.mp4
+media/gameplay/ceifalume-gameplay.mp4

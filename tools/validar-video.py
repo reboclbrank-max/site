@@ -212,8 +212,16 @@ def validar(caminho, binario=None, escrever=print):
 
 
 def main(argv):
-    alvo = argv[0] if argv else os.path.join(RAIZ, "media", "gameplay",
-                                            "ceifalume-gameplay.mp4")
+    # O vídeo gravado não mora mais no repositório (06/11/2026): sem caminho explícito, usa o
+    # primeiro que existir; se não houver nenhum, AVISA em vez de medir o arquivo errado.
+    candidatos = [os.path.join(RAIZ, "media", "gameplay", a) for a in
+                  ("ceifalume-gameplay.mp4", "prancheta-gameplay.mp4",
+                   "ceifalume-gameplay-instrucoes.mp4")]
+    alvo = argv[0] if argv else next((c for c in candidatos if os.path.exists(c)), "")
+    if not alvo or not os.path.exists(alvo):
+        escrever("nenhum vídeo gravado no repositório — passe o caminho: "
+                 + os.path.relpath(candidatos[0], RAIZ))
+        return 2
     ok, _rel, problemas = validar(alvo)
     return 0 if ok else 1
 
