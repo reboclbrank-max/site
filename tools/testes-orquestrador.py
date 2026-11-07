@@ -24,11 +24,16 @@ import orquestrador  # noqa: E402
 
 UTC = datetime.timezone.utc
 falhas = 0
+# O DENOMINADOR VIRAVA MENTIRA (07/11/2026): a soma `24 + 15 + 8 + 7 + 5 + 5 = 64` era escrita à
+# mão e o arquivo já rodava 75 verificações. Suíte que diz "64/64" enquanto roda 75 esconde o que
+# ninguém contou — e um teste que deixa de ser chamado não aparece em lugar nenhum.
+certos = 0
 
 
 def ok(nome, cond, detalhe=""):
-    global falhas
+    global falhas, certos
     if cond:
+        certos += 1
         print("OK  " + nome)
     else:
         falhas += 1
@@ -88,6 +93,32 @@ def main():
         ultima_medicao=orquestrador.iso(agora - datetime.timedelta(hours=1)),
         ultima_pesquisa=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
     ok("04h local sem aprendizado hoje → aprender", acao == "aprender", acao)
+
+    # 5b. A MEDIÇÃO VENCIDA NÃO PODE ENGOLIR A JANELA (07/11/2026)
+    # A ordem antiga devolvia "medir" às 03h porque a medição vence a cada 6 h; a pesquisa ficou
+    # 5 dias sem rodar e as tarefas `pesquisar` da fila morriam lá.
+    _velha = datetime.timedelta(hours=8)
+    agora = em_utc_para_local(3)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - _velha)), CAL)
+    ok("03h local com medição vencida → pesquisar (não medir)", acao == "pesquisar", acao)
+
+    agora = em_utc_para_local(4)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - _velha),
+        ultima_pesquisa=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
+    ok("04h local com medição vencida → aprender (não medir)", acao == "aprender", acao)
+
+    agora = em_utc_para_local(3)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - _velha),
+        ultima_pesquisa=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
+    ok("03h local com pesquisa feita e medição vencida → medir", acao == "medir", acao)
+
+    agora = em_utc_para_local(10)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - _velha)), CAL)
+    ok("fora das janelas, medição vencida continua sendo medir", acao == "medir", acao)
 
     # 6. pesquisa não repete no mesmo dia
     agora = em_utc_para_local(6)
@@ -405,8 +436,7 @@ def main():
        'tipos = ("medir",)' in _src_orq and "pode_publicar(agora, ler_calendario())" in _src_orq,
        [l for l in _src_orq.splitlines() if "tipos =" in l])
 
-    total = 24 + 15 + 8 + 7 + 5 + 5
-    print("\n%d/%d testes do orquestrador 24h passaram" % (total - falhas, total))
+    print("\n%d/%d testes do orquestrador 24h passaram" % (certos, certos + falhas))
     return 1 if falhas else 0
 
 

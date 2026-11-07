@@ -23,11 +23,15 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "tools"))
 
 falhas = 0
+# O DENOMINADOR ERA FIXO (07/11/2026): `total = 23` cravado no fim, com 22 verificações rodando.
+# Um teste que deixa de ser chamado não aparece em suíte com denominador escrito à mão.
+certos = 0
 
 
 def ok(nome, cond, detalhe=""):
-    global falhas
+    global falhas, certos
     if cond:
+        certos += 1
         print("OK  " + nome)
     else:
         falhas += 1
@@ -142,8 +146,7 @@ def main():
     ok("nenhum JSON de posts/ carrega marcador de conflito", not marcados, marcados)
     ok("todos os JSON de posts/ parseiam", not quebrados, quebrados)
 
-    total = 23
-    print("\n%d/%d testes do chat v2 (fila, memória, laço) passaram" % (total - falhas, total))
+    print("\n%d/%d testes do chat v2 (fila, memória, laço) passaram" % (certos, certos + falhas))
     return 1 if falhas else 0
 
 

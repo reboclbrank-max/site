@@ -114,6 +114,23 @@ def main():
                  if "concurrency:" in s and not re.search(r"concurrency:\s*\n\s*group:\s*\S+", s)]
     ok("o concurrency tem grupo nomeado", not sem_grupo, sem_grupo)
 
+    # 3b. DENOMINADOR FIXO EM SUÍTE (07/11/2026). Medido: `testes-orquestrador.py` imprimia
+    #     "64/64" rodando 75 verificações, e `testes-v2.py` dizia 23 com 22 rodando. Número de
+    #     verificações escrito à mão não acompanha o arquivo — e um teste que deixa de ser
+    #     chamado nunca aparece. O denominador tem de ser contado.
+    fixos = []
+    for f in glob.glob(os.path.join(RAIZ, "tools", "testes-*.py")):
+        try:
+            texto = open(f, encoding="utf-8").read()
+        except OSError:
+            continue
+        if "passaram" not in texto:
+            continue
+        for linha in texto.splitlines():
+            if re.match(r"^\s*total\s*=\s*(\d+\s*\+\s*)+\d+\s*$", linha):
+                fixos.append("%s: %s" % (os.path.basename(f), linha.strip()))
+    ok("nenhuma suíte conta as verificações à mão", not fixos, fixos)
+
     # 4. Suíte órfã: teste que nada executa não protege nada.
     suites = [os.path.basename(f) for f in glob.glob(os.path.join(RAIZ, "tools", "testes-*"))
               if f.endswith((".py", ".js"))]

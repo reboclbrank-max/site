@@ -160,15 +160,21 @@ def decidir(agora=None, estado=None, calendario=None):
     fuso = (calendario or {}).get("janela", {}).get("fuso", "America/Fortaleza")
     hora_local = local(agora, fuso).hour
 
-    ultima_medicao = ler_iso(estado.get("ultima_medicao"))
-    if not ultima_medicao or (agora - ultima_medicao) >= INTERVALO_MEDICAO:
-        return "medir", "medição vencida (intervalo de %dh)" % (INTERVALO_MEDICAO.total_seconds() / 3600)
-
+    # AS JANELAS DIÁRIAS VÊM ANTES DA MEDIÇÃO (07/11/2026). A ordem antiga perguntava "medição
+    # vencida?" primeiro, e a medição vence a cada 6 h: às 03h local ela quase sempre estava
+    # vencida, o pulso respondia "medir" e a janela de pesquisa passava em branco. Medido no
+    # estado real: `ultima_pesquisa` parada em 02/11 (5 dias) e duas tarefas `pesquisar` na fila
+    # que ninguém escolhia — a política de "meta parada pede pesquisa" existia e não rodava.
+    # Pesquisa e aprendizado têm UMA hora por dia; medir tem o dia inteiro.
     if 3 <= hora_local < 4 and not ja_feito_hoje(estado.get("ultima_pesquisa"), agora, fuso):
         return "pesquisar", "janela diária de pesquisa (03h local)"
 
     if 4 <= hora_local < 5 and not ja_feito_hoje(estado.get("ultima_aprendizagem"), agora, fuso):
         return "aprender", "janela diária de aprendizado (04h local)"
+
+    ultima_medicao = ler_iso(estado.get("ultima_medicao"))
+    if not ultima_medicao or (agora - ultima_medicao) >= INTERVALO_MEDICAO:
+        return "medir", "medição vencida (intervalo de %dh)" % (INTERVALO_MEDICAO.total_seconds() / 3600)
 
     pode, motivo = pode_publicar(agora, calendario)
     if not pode:
