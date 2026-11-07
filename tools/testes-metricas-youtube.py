@@ -118,9 +118,13 @@ for _linha in _re.findall(r"git add ([^\n]+)", fonte_wf):
         if _pedaco.strip() and not _pedaco.startswith(("-", "|", "&&")) \
                 and _pedaco.strip() not in ("true", "false"):
             _caminhos_adicionados.add(_pedaco.strip())
+# O REGISTRO ENTROU NA LISTA EM 07/11/2026, e com motivo: o mesmo workflow agora confere o
+# registro contra o que está no ar (registro-do-vivo.py) e precisa versionar o que conferiu.
+# Continua valendo o que o contrato protege — nada de arquivo alheio à medição.
 ok("o workflow só versiona arquivos de medição",
    _caminhos_adicionados and _caminhos_adicionados <= {"posts/youtube-metricas.json",
-                                                       "posts/adesao.json"},
+                                                       "posts/adesao.json",
+                                                       "posts/youtube-publicados.json"},
    sorted(_caminhos_adicionados))
 ok("o workflow versiona as métricas", "posts/youtube-metricas.json" in fonte_wf)
 

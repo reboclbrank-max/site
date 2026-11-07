@@ -261,6 +261,15 @@ def main():
             ok("%s: instala %s antes de rodar a bateria" % (nome, ferramenta),
                marca in fonte)
 
+    # O MEDIDOR CONFERE O REGISTRO CONTRA O CANAL (07/11/2026)
+    for nome, fonte in fontes().items():
+        if "metricas-youtube.py" not in fonte:
+            continue
+        ok("%s: confere o registro do canal contra o que está no ar" % nome,
+           "registro-do-vivo.py" in fonte)
+        ok("%s: versiona o registro depois de conferir" % nome,
+           "git add posts/youtube-publicados.json" in fonte)
+
     # O REGISTRO DA CAPA É COMMITADO (06/11/2026): quem envia capa anota em
     # posts/capas-aplicadas.json; se o passo de commit esquece esse arquivo, a anotação morre no
     # stash do fim do run e a ferramenta das capas repinta o que já estava pintado.

@@ -73,10 +73,14 @@ def texto_do_video(slug, raiz=RAIZ):
     Sem ângulo aprovado o kit NÃO fica sem texto: ele mantém o molde e o portão do envio
     recusa a repetição depois. Kit que se recusa a montar derrubaria a gravação inteira.
     """
+    rel = {}
     try:
-        escolha, recusas = _redator().escolher(slug, raiz=raiz)
+        escolha, recusas = _redator().escolher(slug, raiz=raiz, relatorio=rel)
     except Exception as erro:  # redator quebrado não pode impedir a gravação
         return None, [{"angulo": None, "motivo": "redator falhou: " + str(erro)[:120]}]
+    if escolha is not None and rel:
+        escolha = dict(escolha, angulos_aprovados=rel.get("aprovados"),
+                       angulos_candidatos=rel.get("candidatos"))
     return escolha, recusas
 
 
@@ -235,6 +239,8 @@ def pacote(slug):
     # e o portão do envio recusa a repetição com número e motivo.
     escolha_redator, recusas = texto_do_video(slug, RAIZ)
     angulo = (escolha_redator or {}).get("angulo")
+    _aprovados = (escolha_redator or {}).get("angulos_aprovados")
+    _candidatos = (escolha_redator or {}).get("angulos_candidatos")
     fato = (escolha_redator or {}).get("fato")
     if escolha_redator:
         titulo, descricao = escolha_redator["titulo"], escolha_redator["descricao"]
@@ -264,6 +270,9 @@ def pacote(slug):
         "feito_para_criancas": "não",
         "origem": info["origem"],
         "recusas_do_redator": recusas,
+        # quantos ângulos passaram de quantos foram julgados: o log mostrava só as recusas
+        "angulos_aprovados": _aprovados,
+        "angulos_candidatos": _candidatos,
     }
     erros += kit.validar(p)
     return p, erros
@@ -340,6 +349,9 @@ def main(argv=None):
         print("  ângulo: %s" % (p.get("angulo") or "nenhum — o portão do envio vai recusar a repetição"))
         for recusa in p.get("recusas_do_redator") or []:
             print("  ✘ ângulo %s: %s" % (recusa.get("angulo"), recusa.get("motivo")))
+        if p.get("angulos_aprovados") is not None:
+            print("  ângulos: %s aprovados de %s candidatos" % (
+                p.get("angulos_aprovados"), p.get("angulos_candidatos")))
     if dados["problemas"]:
         for slug, erros in dados["problemas"].items():
             print("✘ %s: %s" % (slug, "; ".join(erros)))

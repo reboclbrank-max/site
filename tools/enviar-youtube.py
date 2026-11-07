@@ -300,7 +300,18 @@ def _resumo_da_descricao(texto, limite=600):
     for marca in ("\n\n", ". ", "! ", "? "):
         pos = corte.rfind(marca)
         if pos > limite * 0.5:
-            return corte[:pos + len(marca)].strip() + ("…" if marca != "\n\n" else "")
+            saida = corte[:pos + len(marca)].strip()
+            # PARÁGRAFO NEM SEMPRE FECHA FRASE (07/11/2026): no vídeo f5kQFOQs0To o parágrafo
+            # cortado terminava em "…/canais.html" — um link. O resumo ficava sem fim de frase,
+            # e o contrato do registro ("nenhuma descrição termina no meio da frase") pegou.
+            # Aqui o corte volta até a última frase fechada; sem nenhuma, reticência resolve.
+            if saida and saida[-1] not in ".!?…":
+                fechadas = [m for m in re.finditer(r"[.!?][\"')\]]*(?:\s|$)", saida)]
+                if fechadas:
+                    saida = saida[:fechadas[-1].end()].strip()
+                else:
+                    saida = saida.rstrip(" ,;:") + "…"
+            return saida
     return corte.rsplit(" ", 1)[0].rstrip(" ,;:") + "…"
 
 

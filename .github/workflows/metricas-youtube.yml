@@ -35,6 +35,7 @@ jobs:
           python3 -m py_compile tools/metricas-youtube.py
           python3 tools/rodar-contratos-isolados.py tools/testes-metricas-youtube.py
           python3 tools/rodar-contratos-isolados.py tools/testes-medir-adesao.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-registro-do-vivo.py
 
       - name: Mede os vídeos publicados
         env:
@@ -49,12 +50,20 @@ jobs:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
         run: python3 tools/medir-adesao.py
 
+      # O REGISTRO CONFERE O QUE ESTÁ NO AR (07/11/2026): o registro guardava resumos cortados no
+      # meio da palavra e três entradas com descrição vazia, e isso foi lido como "descrição
+      # truncada no YouTube". As descrições estão inteiras (666-742 caracteres). Este passo lê a
+      # página de cada vídeo e regrava o resumo certo + o tamanho real no canal.
+      - name: Confere o registro contra o que está no ar
+        run: python3 tools/registro-do-vivo.py
+
       - name: Guarda o número medido
         run: |
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
           git add posts/youtube-metricas.json
           [ -e posts/adesao.json ] && git add posts/adesao.json || true
+          git add posts/youtube-publicados.json
           if git diff --cached --quiet; then
             echo "sem mudança nas métricas"
             exit 0

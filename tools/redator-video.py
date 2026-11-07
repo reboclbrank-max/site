@@ -115,12 +115,85 @@ ANGULOS_PRANCHETA = [
     },
 ]
 
+# ---------------------------------------------------------------- FORMAS NOVAS (06-07/11/2026)
+# POR QUE (medido): rodando o CEIFALUME em 07/11/2026, o portão recusou 54 ângulos — 21 deles por
+# "mesma forma de um post recente do canal". A leitura certa não era afrouxar o portão: era o
+# redator ter FORMAS que o canal ainda não usou. Cada ângulo abaixo tem esqueleto próprio —
+# rótulo com passos numerados, abertura com pergunta no fim, abertura com desenho, ficha com
+# fecho de convite — e usa só número que está no relatório da partida.
+ANGULOS_CEIFALUME_FORMAS_NOVAS = [
+    {
+        "id": "passo_a_passo",
+        "precisa": ("plantadas", "colhidas", "toques", "minutos"),
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda f, j: "Passo a passo: %d mudas e %d colheitas em %d min de %s" % (
+            f["plantadas"], f["colhidas"], f["minutos"], f["nome_curto"]),
+        "corpo": lambda f, j: [
+            "Nesta partida: %d mudas plantadas, %d colheitas e %d toques em %d minutos."
+            % (f["plantadas"], f["colhidas"], f["toques"], f["minutos"]),
+            "Primeiro o agente abre o campo e escolhe a célula livre mais próxima.",
+            "Depois volta só quando a planta fica pronta, porque cada célula tem relógio próprio.",
+            "No fim, o que sobra da venda vai para o celeiro e é o celeiro que autoriza a próxima compra.",
+            "Se quiser ver isso do começo: o jogo abre no navegador, sem conta e sem instalar.",
+        ],
+    },
+    {
+        "id": "medida_por_minuto",
+        "precisa": ("colhidas", "toques", "minutos", "toques_por_minuto"),
+        "hashtags": [],
+        "titulo": lambda f, j: "A conta por minuto em %s: %d colheitas em %d min" % (
+            f["nome_curto"], f["colhidas"], f["minutos"]),
+        "corpo": lambda f, j: [
+            "A régua do vídeo é simples: quantas colheitas saem por minuto de tela.",
+            "Nesta gravação foram %d colheitas em %d minutos, com %d toques — cerca de %d toques por minuto."
+            % (f["colhidas"], f["minutos"], f["toques"], f["toques_por_minuto"]),
+            "O tempo que não aparece no vídeo é o do crescimento: %s." % j["atencao"],
+            "Cada colheita contada aqui veio do relatório do gravador, e o número que falta é o que não aconteceu.",
+            "Vale a pena esperar a planta em vez de tocar mais rápido?",
+        ],
+    },
+    {
+        "id": "semente_do_dia",
+        "precisa": ("plantadas", "colhidas", "minutos"),
+        "hashtags": ["#godot", "#jogobrasileiro"],
+        "titulo": lambda f, j: "Semente do dia: %d mudas para %d colheitas em %d min" % (
+            f["plantadas"], f["colhidas"], f["minutos"]),
+        "corpo": lambda f, j: [
+            "🌱 Semente do dia: %d mudas no chão e %d colheitas na cesta em %d minutos de gravação."
+            % (f["plantadas"], f["colhidas"], f["minutos"]),
+            "O campo é noturno de propósito: enxergar pouco faz parte da escolha de onde apertar.",
+            "O relógio de cada canteiro corre mesmo com o aplicativo fechado, e é ele que dá o ritmo.",
+            "Quem abrir o jogo no navegador vê a mesma fazenda, com o mesmo relógio.",
+        ],
+    },
+    {
+        "id": "ficha_da_partida",
+        "precisa": ("plantadas", "colhidas", "toques", "minutos"),
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda f, j: "Ficha da partida: %d colheitas, %d toques, %d min" % (
+            f["colhidas"], f["toques"], f["minutos"]),
+        "corpo": lambda f, j: [
+            "Ficha da partida: %d mudas plantadas, %d colheitas, %d toques e %d minutos de tela."
+            % (f["plantadas"], f["colhidas"], f["toques"], f["minutos"]),
+            "A ficha não tem estimativa: é o que o gravador anotou enquanto o jogo rodava no navegador.",
+            "O que muda de uma partida para a outra é a decisão de onde plantar, não a sorte.",
+            "Jogue você também e compare a sua ficha com esta.",
+        ],
+    },
+]
+
 ANGULOS_POR_JOGO = {"ceifalume": None, "prancheta": ANGULOS_PRANCHETA}
 
 
 def angulos_do_jogo(slug):
-    """Os ângulos daquele jogo. Sem lista própria, vale a lista do CEIFALUME."""
-    return ANGULOS_POR_JOGO.get(slug) or ANGULOS
+    """Os ângulos daquele jogo. Sem lista própria, vale a lista do CEIFALUME.
+
+    As FORMAS NOVAS vêm primeiro: o portão recusa por forma repetida, e forma que o canal já
+    usou não deve competir de igual para igual com forma que ele nunca viu.
+    """
+    if ANGULOS_POR_JOGO.get(slug):
+        return ANGULOS_POR_JOGO[slug]
+    return list(ANGULOS_CEIFALUME_FORMAS_NOVAS) + list(ANGULOS)
 
 
 def _modulo(nome, arquivo):
@@ -735,7 +808,7 @@ def ultimo_angulo(publicacoes):
     return None
 
 
-def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None):
+def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None, relatorio=None):
     """Escolhe o ângulo do vídeo. Devolve (escolha, recusas).
 
     escolha = {"angulo", "titulo", "descricao", "numeros"} ou None.
@@ -798,6 +871,12 @@ def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None)
                               "plantadas", "colhidas", "toques", "minutos", "toques_por_minuto",
                               "passos", "passos_confirmados", "toques_partida", "estrategia")
                               if k in fatos}})
+    # O NÚMERO QUE FALTAVA (07/11/2026): a saída imprimia só as recusas, e eu li "54 ✘" como se
+    # o estoque estivesse acabando. Estava errado: 128 dos 182 candidatos eram APROVADOS, e só o
+    # primeiro publica. Quem lê o log precisa ver os dois lados da conta.
+    if relatorio is not None:
+        relatorio.update({"candidatos": len(candidatos), "aprovados": len(aprovados),
+                          "recusas": len(recusas)})
     if aprovados:
         # Todos os ângulos foram julgados (a recusa de cada um fica registrada); o primeiro
         # aprovado na ordem declarada é o que publica.
@@ -807,9 +886,12 @@ def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None)
 
 def main(argv):
     slug = argv[1] if len(argv) > 1 else "ceifalume"
-    escolha, recusas = escolher(slug)
+    rel = {}
+    escolha, recusas = escolher(slug, relatorio=rel)
     for r in recusas:
         print("✘ ângulo %s: %s" % (r["angulo"], r["motivo"]))
+    print("ângulos: %d candidatos · %d aprovados · %d recusados"
+          % (rel.get("candidatos", 0), rel.get("aprovados", 0), rel.get("recusas", 0)))
     if not escolha:
         print("nenhum ângulo aprovado — o vídeo não publica (e a recusa fica registrada)")
         return 1

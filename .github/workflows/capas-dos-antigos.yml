@@ -28,6 +28,10 @@ on:
         description: "digite FORCAR para repintar quem já tem capa (quando o desenho melhorou)"
         required: false
         default: ""
+      todos:
+        description: "digite TODOS para incluir vídeos que não citam jogo da casa (07/11/2026)"
+        required: false
+        default: ""
 
 permissions:
   contents: write      # só para versionar posts/capas-aplicadas.json
@@ -57,7 +61,11 @@ jobs:
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           LIMITE: ${{ github.event.inputs.limite }}
-        run: python3 tools/capa-dos-antigos.py --ensaio --limite "$LIMITE"
+          TODOS: ${{ github.event.inputs.todos }}
+        run: |
+          EXTRA=""
+          if [ "$TODOS" = "TODOS" ]; then EXTRA="--todos"; fi
+          python3 tools/capa-dos-antigos.py --ensaio --limite "$LIMITE" $EXTRA
 
       - name: Aplica as capas (só com a palavra APLICAR)
         if: ${{ github.event.inputs.confirmacao == 'APLICAR' }}
@@ -68,10 +76,12 @@ jobs:
           LIMITE: ${{ github.event.inputs.limite }}
           IDS: ${{ github.event.inputs.ids }}
           FORCAR: ${{ github.event.inputs.forcar }}
+          TODOS: ${{ github.event.inputs.todos }}
         run: |
           set +e
           EXTRA=""
           if [ "$FORCAR" = "FORCAR" ]; then EXTRA="--forcar"; fi
+          if [ "$TODOS" = "TODOS" ]; then EXTRA="$EXTRA --todos"; fi
           if [ -n "$IDS" ]; then
             python3 tools/capa-dos-antigos.py --confirmacao APLICAR --limite "$LIMITE" --so $IDS $EXTRA \
               | tee /tmp/capas.txt

@@ -57,9 +57,13 @@ ok("o relatório da partida do repositório dá números medidos", bool(FATOS), 
 ok("os números usados vêm todos do relatório",
    all(isinstance(FATOS.get(k), int) for k in ("plantadas", "colhidas", "toques", "minutos")), FATOS)
 
-TEXTOS = {a["id"]: rv.texto_do_angulo(a, FATOS) for a in rv.ANGULOS}
+# O POOL É O QUE O REDATOR USA (07/11/2026): antes a bancada olhava só rv.ANGULOS, e as formas
+# novas — que entram na frente na escolha — ficavam fora das provas de "mesma forma" e de
+# "número inventado". Bancada que mede metade do pool aprova metade do problema.
+POOL_CEIFALUME = list(getattr(rv, "ANGULOS_CEIFALUME_FORMAS_NOVAS", [])) + list(rv.ANGULOS)
+TEXTOS = {a["id"]: rv.texto_do_angulo(a, FATOS) for a in POOL_CEIFALUME}
 TEXTOS = {k: v for k, v in TEXTOS.items() if (v or (None,))[0]}
-ANGULOS_OK = [a for a in rv.ANGULOS if a["id"] in TEXTOS]
+ANGULOS_OK = [a for a in POOL_CEIFALUME if a["id"] in TEXTOS]
 
 
 def bancada_de_partida(plantadas, colhidas, toques, segundos):
@@ -92,6 +96,51 @@ for angulo in ANGULOS_OK:
     decisao = pp.avalia({"titulo": titulo, "texto": descricao}, canal="youtube",
                         publicacoes=PORTAO_VAZIO, calendario=rv.JANELA_DO_CANAL, hora_local=10)
     ok("%s: passa o portão contra um canal sem histórico" % nome, decisao["publica"], decisao["motivo"])
+
+# A CONTA FECHA (07/11/2026): todo candidato é aprovado ou recusado, nunca some. A saída antiga
+# imprimia só as recusas — e "54 ✘" foi lido como estoque acabando quando havia 128 aprovados.
+_rel = {}
+rv.escolher("ceifalume", hora_local=12, publicacoes=[], relatorio=_rel)
+ok("o relatório do redator conta candidatos, aprovados e recusas",
+   _rel.get("candidatos", 0) > 0 and _rel.get("aprovados", 0) > 0
+   and _rel.get("aprovados", 0) + _rel.get("recusas", 0) == _rel.get("candidatos"), _rel)
+_rel_noite = {}
+rv.escolher("ceifalume", hora_local=3, publicacoes=[], relatorio=_rel_noite)
+ok("fora da janela, todos os candidatos são recusados e a conta continua fechando",
+   _rel_noite.get("aprovados") == 0
+   and _rel_noite.get("recusas") == _rel_noite.get("candidatos"), _rel_noite)
+
+# 5a-bis. FORMAS NOVAS DO CEIFALUME (07/11/2026): o portão recusou 21 ângulos por "mesma forma
+# de um post recente do canal". A resposta foi escrever forma nova, não afrouxar o portão.
+_NOVAS = getattr(rv, "ANGULOS_CEIFALUME_FORMAS_NOVAS", [])
+ok("o redator tem pelo menos 4 formas novas para o CEIFALUME", len(_NOVAS) >= 4, len(_NOVAS))
+ok("cada forma nova declara id, precisa, hashtags, título e corpo",
+   all(a.get("id") and a.get("precisa") and a.get("hashtags") is not None
+       and callable(a.get("titulo")) and callable(a.get("corpo")) for a in _NOVAS),
+   [a.get("id") for a in _NOVAS])
+_PORTAO = rv._portao()
+_FATOS_C = rv.fatos_do_pacote("ceifalume")
+_aprovadas = []
+for _a in _NOVAS:
+    _t, _d = rv.texto_do_angulo(_a, _FATOS_C)
+    _dec = _PORTAO.avalia({"titulo": _t, "texto": _d}, canal="youtube", publicacoes=[],
+                          calendario=rv.JANELA_DO_CANAL, hora_local=12) or {}
+    ok("a forma nova %s passa o portão com o histórico vazio" % _a["id"],
+       bool(_dec.get("publica")), str(_dec.get("motivo"))[:80])
+    if _dec.get("publica"):
+        _aprovadas.append(_PORTAO.forma(_t + " " + _d))
+ok("as formas novas não são a mesma forma entre si",
+   len({(_f.get("tipo_abertura"), _f.get("esqueleto"), _f.get("hashtags")) for _f in _aprovadas})
+   == len(_aprovadas), [(_f.get("tipo_abertura"), _f.get("hashtags")) for _f in _aprovadas])
+# as antigas que precisam de fato que esta partida não tem devolvem título None: não entram
+_antigas = []
+for _a in rv.ANGULOS:
+    _ta, _da = rv.texto_do_angulo(_a, _FATOS_C)
+    if _ta and _da:
+        _antigas.append(_PORTAO.forma(_ta + " " + _da))
+ok("as formas novas não são o mesmo esqueleto das antigas",
+   not any(_PORTAO.mesma_forma(_f, _g) for _f in _aprovadas for _g in _antigas),
+   len(_antigas))
 
 # 5b. PRANCHETA: ângulos próprios, número medido, nada de vocabulário de plantio (06/11/2026)
 PRAN = getattr(rv, "ANGULOS_PRANCHETA", [])
@@ -268,13 +317,14 @@ escolha_j, recusas_j = rv.escolher("ceifalume", hora_local=4)
 ok("fora da janela do dono o redator recusa", escolha_j is None)
 ok("e a recusa traz a hora e a janela",
    any("fora da janela (04h local" in r["motivo"] for r in recusas_j), recusas_j[:2])
-_todos_os_candidatos = len(rv.ANGULOS) + len(rv.angulos_de_fato(rv.historico() and
+_todos_os_candidatos = len(rv.angulos_do_jogo("ceifalume")) + len(rv.angulos_de_fato(rv.historico() and
                                                                {x.get("fato") for x in rv.historico()} or set()))
 ok("todos os candidatos (base e de fato) são julgados, nenhum passa por fora",
    len(recusas_j) >= _todos_os_candidatos or len(recusas_j) >= len(rv.ANGULOS),
    (len(recusas_j), _todos_os_candidatos))
 ok("e a maioria das recusas é a janela do dono",
-   sum(1 for r in recusas_j if "janela" in r["motivo"]) >= len(rv.ANGULOS), len(recusas_j))
+   sum(1 for r in recusas_j if "janela" in r["motivo"]) >= len(rv.angulos_do_jogo("ceifalume")),
+   len(recusas_j))
 
 todos_ja_usados = [{"canal": "youtube", "titulo": TEXTOS[a["id"]][0], "texto": TEXTOS[a["id"]][1],
                     "angulo": a["id"], "id": "Z%d" % i, "quando": "2026-11-0%dT12:00:00Z" % (i + 1)}
