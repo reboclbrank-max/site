@@ -57,13 +57,20 @@ def esperado_do_repositorio(raiz=RAIZ):
     return saida
 
 
-def contar_por_dia(runs, hoje=None, dias=7):
-    """Quantos runs AGENDADOS por dia, na janela dos últimos `dias` (o dia de hoje conta)."""
+# O QUE CONTA COMO RELÓGIO DA CASA (07/11/2026): o `schedule` é o cron e o `repository_dispatch` é
+# a corrente — os dois são a casa tocando o próprio relógio. `workflow_dispatch` é mão humana
+# (minha), e contar isso como entrega seria medir o meu dedo, não a máquina. Medido: `medir-o-dia`
+# tem 5 runs hoje e todos são `workflow_dispatch` de quando ele foi criado — 0 agendados.
+EVENTOS_DO_RELOGIO = ("schedule", "repository_dispatch")
+
+
+def contar_por_dia(runs, hoje=None, dias=7, eventos=EVENTOS_DO_RELOGIO):
+    """Quantos runs do RELÓGIO por dia, na janela dos últimos `dias` (o dia de hoje conta)."""
     hoje = hoje or datetime.date.today()
     limite = hoje - datetime.timedelta(days=dias - 1)
     por_dia = {}
     for run in runs:
-        if (run.get("event") or "") != "schedule":
+        if (run.get("event") or "") not in eventos:
             continue
         quando = str(run.get("created_at") or "")[:10]
         try:
@@ -74,6 +81,24 @@ def contar_por_dia(runs, hoje=None, dias=7):
             continue
         por_dia[dia.isoformat()] = por_dia.get(dia.isoformat(), 0) + 1
     return por_dia
+
+
+def contar_por_evento(runs, hoje=None, dias=7):
+    """{evento: quantos runs} na janela — para dizer o que ficou de fora da conta."""
+    hoje = hoje or datetime.date.today()
+    limite = hoje - datetime.timedelta(days=dias - 1)
+    mapa = {}
+    for run in runs:
+        quando = str(run.get("created_at") or "")[:10]
+        try:
+            dia = datetime.date.fromisoformat(quando)
+        except ValueError:
+            continue
+        if dia < limite or dia > hoje:
+            continue
+        evento = run.get("event") or "?"
+        mapa[evento] = mapa.get(evento, 0) + 1
+    return mapa
 
 
 def medido_por_dia(por_dia, dias=7):
@@ -339,6 +364,8 @@ def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
             continue
         lidos[nome] = runs
         dias_map = contar_por_dia(runs, hoje=hoje, dias=dias)
+        eventos = contar_por_evento(runs, hoje=hoje, dias=dias)
+        manuais = eventos.get("workflow_dispatch", 0)
         medido = medido_por_dia(dias_map, dias)
         entrega, frase = comparar(pede, medido)
         cobre = amostra_cobre(runs, hoje=hoje, dias=dias)
@@ -353,10 +380,15 @@ def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
             # "não sei" — foi assim que a casa confundiu "sem leitura" com "0 seguidores" antes.
             entrega, frase = None, ("amostra não cobre a janela (%d run(s) lido(s)): não afirmo "
                                     "quantos por dia" % len(runs))
+        if manuais and not medido:
+            # não é entrega, mas não é silêncio: 0 agendado com 5 disparos à mão é uma história.
+            # Vem depois da idade e da amostra de propósito — o motivo do zero não se perde.
+            frase += (" — %d run(s) disparado(s) à mão não contam como agenda" % manuais)
         linhas.append({"workflow": nome, "cron": cron, "esperado_por_dia": pede,
                        "medido_por_dia": None if not cobre else medido, "entrega_pct": entrega,
                        "frase": frase, "por_dia": dias_map, "amostra_cobre": cobre,
-                       "runs_lidos": len(runs), "dias_no_ar": ar})
+                       "runs_lidos": len(runs), "dias_no_ar": ar, "por_evento": eventos,
+                       "manuais": manuais})
     total_esperado = sum(l["esperado_por_dia"] for l in linhas)
     total_medido = round(sum(l["medido_por_dia"] or 0 for l in linhas), 2)
     dados = {"medido_em": (hoje or datetime.date.today()).isoformat(),

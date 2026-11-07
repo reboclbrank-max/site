@@ -102,6 +102,41 @@ for k, v in _salvo_env.items():
 ok("sem token não há linha e há erro dito (ausência de medida ≠ zero medido)",
    _vazio["linhas"] == [] and _vazio["erros"], _vazio["erros"][:2])
 
+# --------------------------------------------- o que conta como relógio da casa
+def com_evento(dia, evento, hora=12):
+    return {"created_at": "%sT%02d:00:00Z" % (dia, hora), "event": evento}
+
+
+ok("run agendado conta", c.contar_por_dia([com_evento("2026-11-06", "schedule")],
+                                          hoje=HOJE, dias=7) == {"2026-11-06": 1})
+ok("run da corrente (repository_dispatch) TAMBÉM conta: é a casa tocando o relógio",
+   c.contar_por_dia([com_evento("2026-11-06", "repository_dispatch")],
+                    hoje=HOJE, dias=7) == {"2026-11-06": 1})
+ok("run disparado à mão NÃO conta como agenda",
+   c.contar_por_dia([com_evento("2026-11-06", "workflow_dispatch")],
+                    hoje=HOJE, dias=7) == {})
+ok("push não conta", c.contar_por_dia([com_evento("2026-11-06", "push")],
+                                      hoje=HOJE, dias=7) == {})
+_eventos = c.contar_por_evento([com_evento("2026-11-06", "schedule"),
+                                com_evento("2026-11-06", "workflow_dispatch"),
+                                com_evento("2026-11-06", "workflow_dispatch")], hoje=HOJE, dias=7)
+ok("o contador por evento mostra o que ficou fora",
+   _eventos == {"schedule": 1, "workflow_dispatch": 2}, _eventos)
+
+_salvo_lidos, _salvo_criacao = c.ler_runs, c.ler_criacao
+c.ler_criacao = lambda token, **k: {}
+c.ler_runs = lambda wf, token, **k: (
+    [com_evento("2026-11-07", "workflow_dispatch", 4),
+     com_evento("2026-11-07", "workflow_dispatch", 5)] if wf == "medir-o-dia" else
+    [com_evento("2026-11-0%d" % i, "schedule") for i in range(1, 8)])
+_so_manual = c.medir(token="x", dias=7, hoje=HOJE, raiz=RAIZ)
+c.ler_runs, c.ler_criacao = _salvo_lidos, _salvo_criacao
+_linha_manual = next(l for l in _so_manual["linhas"] if l["workflow"] == "medir-o-dia")
+ok("workflow só com disparo manual tem entrega 0 (não é agenda)",
+   _linha_manual["medido_por_dia"] == 0.0 and _linha_manual["manuais"] == 2, _linha_manual)
+ok("e a frase diz por que o zero não é silêncio",
+   "disparado(s) à mão não contam" in _linha_manual["frase"], _linha_manual["frase"])
+
 # ------------------------------------------------- janela maior que a vida do workflow
 ok("sem data da API, a idade vem do run mais antigo",
    c.dias_no_ar([run("2026-11-05"), run("2026-11-07")], hoje=HOJE) == 3,

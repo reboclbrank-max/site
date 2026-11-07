@@ -19,7 +19,11 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 18,
-   "dias_no_ar": 13
+   "dias_no_ar": 13,
+   "por_evento": {
+    "schedule": 6
+   },
+   "manuais": 0
   },
   {
    "workflow": "administrar-youtube",
@@ -38,7 +42,12 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 18,
-   "dias_no_ar": 13
+   "dias_no_ar": 13,
+   "por_evento": {
+    "workflow_dispatch": 3,
+    "schedule": 6
+   },
+   "manuais": 3
   },
   {
    "workflow": "chamar-video",
@@ -52,7 +61,12 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 3,
-   "dias_no_ar": 2
+   "dias_no_ar": 2,
+   "por_evento": {
+    "schedule": 1,
+    "workflow_dispatch": 2
+   },
+   "manuais": 2
   },
   {
    "workflow": "corrente",
@@ -60,11 +74,15 @@
    "esperado_por_dia": 8,
    "medido_por_dia": 0.0,
    "entrega_pct": null,
-   "frase": "no ar há 1 dia(s): comparar com 7 dia(s) de janela ainda não vale",
+   "frase": "no ar há 1 dia(s): comparar com 7 dia(s) de janela ainda não vale — 5 run(s) disparado(s) à mão não contam como agenda",
    "por_dia": {},
    "amostra_cobre": true,
-   "runs_lidos": 3,
-   "dias_no_ar": 1
+   "runs_lidos": 5,
+   "dias_no_ar": 1,
+   "por_evento": {
+    "workflow_dispatch": 5
+   },
+   "manuais": 5
   },
   {
    "workflow": "gravar-gameplay",
@@ -83,7 +101,12 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 58,
-   "dias_no_ar": 12
+   "dias_no_ar": 12,
+   "por_evento": {
+    "workflow_dispatch": 16,
+    "schedule": 13
+   },
+   "manuais": 16
   },
   {
    "workflow": "gravar-prancheta",
@@ -102,7 +125,12 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 43,
-   "dias_no_ar": 12
+   "dias_no_ar": 12,
+   "por_evento": {
+    "workflow_dispatch": 8,
+    "schedule": 17
+   },
+   "manuais": 8
   },
   {
    "workflow": "ler-comentarios",
@@ -121,25 +149,35 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 12,
-   "dias_no_ar": 13
+   "dias_no_ar": 13,
+   "por_evento": {
+    "schedule": 6
+   },
+   "manuais": 0
   },
   {
    "workflow": "marketing-24h",
    "cron": "*/20 0,6,7,12-23 * * *",
    "esperado_por_dia": 45,
-   "medido_por_dia": 1.86,
-   "entrega_pct": 4.1,
-   "frase": "o agendador entrega 4.1% do cron: o número do papel não é o número da vida",
+   "medido_por_dia": 2.43,
+   "entrega_pct": 5.4,
+   "frase": "o agendador entrega 5.4% do cron: o número do papel não é o número da vida",
    "por_dia": {
-    "2026-11-07": 1,
+    "2026-11-07": 5,
     "2026-11-06": 2,
     "2026-11-03": 2,
     "2026-11-02": 3,
     "2026-11-01": 5
    },
    "amostra_cobre": true,
-   "runs_lidos": 52,
-   "dias_no_ar": 13
+   "runs_lidos": 54,
+   "dias_no_ar": 13,
+   "por_evento": {
+    "repository_dispatch": 4,
+    "workflow_dispatch": 10,
+    "schedule": 13
+   },
+   "manuais": 10
   },
   {
    "workflow": "medir-itch",
@@ -158,7 +196,11 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 12,
-   "dias_no_ar": 13
+   "dias_no_ar": 13,
+   "por_evento": {
+    "schedule": 6
+   },
+   "manuais": 0
   },
   {
    "workflow": "medir-o-dia",
@@ -166,11 +208,15 @@
    "esperado_por_dia": 1,
    "medido_por_dia": 0.0,
    "entrega_pct": null,
-   "frase": "no ar há 1 dia(s): comparar com 7 dia(s) de janela ainda não vale",
+   "frase": "no ar há 1 dia(s): comparar com 7 dia(s) de janela ainda não vale — 5 run(s) disparado(s) à mão não contam como agenda",
    "por_dia": {},
    "amostra_cobre": true,
    "runs_lidos": 5,
-   "dias_no_ar": 1
+   "dias_no_ar": 1,
+   "por_evento": {
+    "workflow_dispatch": 5
+   },
+   "manuais": 5
   },
   {
    "workflow": "metricas-youtube",
@@ -190,7 +236,12 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 35,
-   "dias_no_ar": 12
+   "dias_no_ar": 12,
+   "por_evento": {
+    "schedule": 18,
+    "workflow_dispatch": 3
+   },
+   "manuais": 3
   },
   {
    "workflow": "pendencias-do-dono",
@@ -209,7 +260,12 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 16,
-   "dias_no_ar": 9
+   "dias_no_ar": 9,
+   "por_evento": {
+    "workflow_dispatch": 8,
+    "schedule": 6
+   },
+   "manuais": 8
   },
   {
    "workflow": "vigia-sessao-itch",
@@ -228,20 +284,24 @@
    },
    "amostra_cobre": true,
    "runs_lidos": 12,
-   "dias_no_ar": 13
+   "dias_no_ar": 13,
+   "por_evento": {
+    "schedule": 6
+   },
+   "manuais": 0
   }
  ],
  "erros": [],
  "total_esperado_por_dia": 71,
- "total_medido_por_dia": 14.02,
+ "total_medido_por_dia": 14.59,
  "corrente": {
-  "agora": "2026-11-07T07:11:06.949611+00:00",
-  "ultimo_pulso": "2026-11-07T07:00:02+00:00",
-  "idade_min": 11.1,
-  "slot_devido": "2026-11-07T07:00:00+00:00",
-  "atraso_min": 11.1,
+  "agora": "2026-11-07T07:43:52.321753+00:00",
+  "ultimo_pulso": "2026-11-07T07:40:01+00:00",
+  "idade_min": 3.9,
+  "slot_devido": "2026-11-07T07:40:00+00:00",
+  "atraso_min": 3.9,
   "pulsos_perdidos": 0,
-  "veredito": "em dia (último pulso 07/11 04:00, há 11 min)",
+  "veredito": "em dia (último pulso 07/11 04:40, há 4 min)",
   "buracos": [
    {
     "desde": "2026-11-06T14:36:55+00:00",

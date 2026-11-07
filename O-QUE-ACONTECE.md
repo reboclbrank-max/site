@@ -25,7 +25,7 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 
 **71 disparos automáticos por dia**, em 13 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
 
-**Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-07): **14.02/dia** de 71 pedidos. O pior caso é `marketing-24h`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
+**Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-07): **14.59/dia** de 71 pedidos. O pior caso é `marketing-24h`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
 
 | hora (Brasília) | workflow | o que faz |
 | --- | --- | --- |
@@ -33,7 +33,7 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 | 00h, 06h, 12h, 18h | `metricas-youtube` | Mede o que os vídeos publicados fizeram (views, likes, comentários). — **entregou 2.57/dia** de 4 pedidos (64.2%) ⚠️ fora da janela: 00h, 06h |
 | 03h | `administrar-itch` | Administração automática do itch.io: o robô olha o estado, decide e (se for o caso) sobe o build — sem clique do dono. — **entregou 0.86/dia** de 1 pedidos (86.0%) ⚠️ fora da janela: 03h |
 | 03h | `administrar-youtube` | Administração automática do YouTube: organiza e corrige o que já está publicado (título, descrição, tags) sem clique do dono. — **entregou 0.86/dia** de 1 pedidos (86.0%) ⚠️ fora da janela: 03h |
-| 03h, 04h, 09h–21h | `marketing-24h` | Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa (45 pulsos/dia). — **entregou 1.86/dia** de 45 pedidos (4.1%) ⚠️ fora da janela: 03h, 04h |
+| 03h, 04h, 09h–21h | `marketing-24h` | Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa (45 pulsos/dia). — **entregou 2.43/dia** de 45 pedidos (5.4%) ⚠️ fora da janela: 03h, 04h |
 | 09h, 16h | `gravar-gameplay` | Grava o jogo rodando de verdade e transforma em arquivo de vídeo. — **entregou 1.86/dia** de 2 pedidos (93.0%) |
 | 09h, 13h, 16h | `gravar-prancheta` | Grava o PRANCHETA rodando (o segundo jogo da casa). — **entregou 2.43/dia** de 3 pedidos (81.0%) |
 | 09h | `ler-comentarios` | Lê comentários públicos só com a API key (sem OAuth, sem consentimento novo). — **entregou 0.86/dia** de 1 pedidos (86.0%) |
