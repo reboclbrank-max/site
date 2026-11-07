@@ -543,6 +543,24 @@ def placar_metas(observado, caminho=METAS, hoje=None):
                     "metas_aposentadas": sum(1 for l in linhas if "aposentada" in l["meta"])}
 
 
+def manter_regua(antigas, novas, forcar=False):
+    """True = mantém a régua que já está no arquivo (leitura pior não apaga leitura boa)."""
+    if forcar or antigas is None:
+        return False
+    return int(novas or 0) < int(antigas)
+
+
+def _leituras_da_regua(caminho):
+    """Quantas metas a régua atual conseguiu ler ('N meta(s) com leitura' no rodapé)."""
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            texto = f.read()
+    except OSError:
+        return None
+    achado = re.search(r"(\d+)\s+meta\(s\) com leitura", texto)
+    return int(achado.group(1)) if achado else None
+
+
 def gravar_placar(linhas, contexto, hoje=None):
     hoje = hoje or datetime.date.today()
     if not linhas:
@@ -822,6 +840,17 @@ def main(argv):
         pass
     if "--json" in argv:
         print(json.dumps(dados, ensure_ascii=False, indent=1))
+        return 0
+    # A RÉGUA NÃO PODE PIORAR POR FALTA DE CREDENCIAL (07/11/2026). Medido no run 42337480653:
+    # a medição com segredos escreveu 7 metas com leitura (Instagram 39 posts, Bluesky 32, YouTube
+    # 24, itch 48/206); o merge do entrar-no-main re-rodou o gerador SEM os segredos e a régua
+    # foi reescrita com 1 leitura e seis NAO_OBSERVAVEL. Medição pior não substitui medição boa:
+    # sem credencial, a régua fica como está e o motivo é dito.
+    if manter_regua(_leituras_da_regua(SAIDA_PLACAR), contexto_metas.get("metas_com_leitura") or 0,
+                    forcar="--forcar" in argv):
+        print("📊 medição NÃO sobrescreveu a régua: esta rodada leu %d meta(s) e a régua atual tem "
+              "%d — leitura pior não apaga leitura boa (use --forcar se for decisão sua)"
+              % (contexto_metas.get("metas_com_leitura") or 0, _leituras_da_regua(SAIDA_PLACAR)))
         return 0
     caminho = gravar(dados)
     r = dados["resumo"]

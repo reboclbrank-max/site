@@ -504,5 +504,22 @@ ok("sem leitura, nada é contado como lido", _lidas_sem == 0)
 ok("medidor quebrado não derruba o ciclo", postador.medicoes_de_plataforma(
     medidor=types.SimpleNamespace(observado_itch=lambda: 1 / 0, observado_youtube=lambda: 1 / 0))[1] == 0)
 
+# ---- a régua não piora por falta de credencial (07/11/2026) -------------------------------
+# Medido no run 42337480653: a medição COM segredos leu 7 metas; o merge do entrar-no-main
+# re-rodou o gerador SEM segredos e a régua virou 1 leitura com seis NAO_OBSERVAVEL.
+ok("régua pior que a atual é recusada", metricas.manter_regua(7, 1) is True)
+ok("régua igual é aceita (número pode atualizar)", metricas.manter_regua(7, 7) is False)
+ok("régua melhor é aceita", metricas.manter_regua(1, 7) is False)
+ok("sem régua anterior, escreve (primeira vez)", metricas.manter_regua(None, 0) is False)
+ok("o dono pode forçar (--forcar)", metricas.manter_regua(7, 1, forcar=True) is False)
+_bancada_regua = tempfile.mkdtemp(prefix="regua-")
+_caminho_regua = os.path.join(_bancada_regua, "placar-metas.md")
+open(_caminho_regua, "w", encoding="utf-8").write(
+    "# Placar\n\nPrazo: **2026-11-12** · 5 dia(s) restante(s) · 7 meta(s) com leitura, "
+    "0 sem leitura automática.\n")
+ok("a régua atual diz quantas metas leu", metricas._leituras_da_regua(_caminho_regua) == 7,
+   metricas._leituras_da_regua(_caminho_regua))
+ok("régua que não existe não inventa número", metricas._leituras_da_regua("/nao/existe.md") is None)
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 raise SystemExit(1 if falhas else 0)

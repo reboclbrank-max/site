@@ -340,6 +340,15 @@ def main():
        "entrar-no-main.sh" in _diag.split("Versiona a medição")[-1])
     ok("o commit da medição só acontece quando algo mudou",
        "git diff --cached --quiet" in _diag.split("Versiona a medição")[-1])
+    # O COMMIT DA MEDIÇÃO TAMBÉM PRECISA DOS SEGREDOS: o entrar-no-main re-roda o gerador no
+    # merge, e sem segredos essa segunda rodada escrevia NAO_OBSERVAVEL sobre os números lidos.
+    _passo_commit = _diag.split("Versiona a medição")[-1]
+    ok("o passo que commita a medição leva os segredos (o merge re-roda o gerador)",
+       all(chave in _passo_commit for chave in ("IG_TOKEN", "YT_API_KEY", "ITCH_API_KEYS")),
+       [c for c in ("IG_TOKEN", "YT_API_KEY", "ITCH_API_KEYS") if c not in _passo_commit])
+    ok("a régua pior que a atual é recusada (não vira NAO_OBSERVAVEL em cima de número)",
+       "manter_regua(" in open(os.path.join(RAIZ, "tools", "metricas.py"), encoding="utf-8").read())
+
     ok("a medição deixa carimbo de quando foi medida (posts/placar-estado.json)",
        "placar-estado.json" in open(os.path.join(RAIZ, "tools", "metricas.py"),
                                     encoding="utf-8").read())
