@@ -189,7 +189,7 @@ def metas_em_risco(placar_linhas, dias_restantes=None, minimo_por_dia=1.0, dias_
     return necessidades
 
 
-def metas_paradas(placar_linhas, minimo_dias=21):
+def metas_paradas(placar_linhas, minimo_dias=21, dias_decorridos=None):
     """Metas medidas que não movem um número há >= minimo_dias.
 
     POR QUE EXISTE (07/11/2026): empurrar uma meta parada é repetição com outro nome — a casa já
@@ -203,7 +203,8 @@ def metas_paradas(placar_linhas, minimo_dias=21):
         necessidades.append(precisar(
             "meta parada: " + linha["meta"],
             "%s em %s dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não "
-            "funcionou" % (linha.get("observado"), minimo_dias),
+            "funcionou" % (linha.get("observado"),
+                           linha.get("dias_sem_ritmo") or dias_decorridos or minimo_dias),
             "robô", "procurar outra abordagem antes de publicar de novo sobre esta meta",
             "o número observado se move, ou o dono aposenta a meta (posts/metas.json)",
             tipo_fila="pesquisar", chave="parada-" + linha["meta"]))
@@ -343,7 +344,7 @@ def perceber(agora=None, enfileirar=True):
     try:
         _linhas = placar_linhas()
         necessidades += metas_em_risco(_linhas, dias, dias_decorridos=decorridos)
-        necessidades += metas_paradas(_linhas)
+        necessidades += metas_paradas(_linhas, dias_decorridos=decorridos)
     except Exception:
         pass
     necessidades += repeticao_alta(

@@ -160,6 +160,11 @@ ok("meta parada pede pesquisa, não publicação", _paradas and _paradas[0]["tip
    _paradas[0]["tipo_fila"] if _paradas else None)
 ok("meta parada não é chamada de 'empurrar'", _paradas and "empurrar" not in _paradas[0]["o_que"],
    _paradas[0]["o_que"] if _paradas else None)
+ok("meta parada diz os dias REAIS, não o mínimo da regra",
+   p.metas_paradas([{"meta": "x", "status": "PARADA", "observado": "24", "dias_sem_ritmo": 25}])
+   and "24 em 25 dias" in p.metas_paradas([{"meta": "x", "status": "PARADA", "observado": "24",
+                                            "dias_sem_ritmo": 25}])[0]["porque"],
+   p.metas_paradas([{"meta": "x", "status": "PARADA", "observado": "24", "dias_sem_ritmo": 25}]))
 ok("meta parada diz que o ritmo é 0,0/dia", _paradas and "0,0/dia" in _paradas[0]["porque"],
    _paradas[0]["porque"] if _paradas else None)
 ok("meta RENOVADA não entra como parada", all("Bluesky" not in i["o_que"] for i in _paradas), _paradas)

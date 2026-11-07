@@ -477,6 +477,7 @@ def aplicar_politica_de_ritmo(linhas, dias_decorridos, dias_restantes=None, hoje
             linha["no_prazo"] = False
             if dias_decorridos >= DIAS_SEM_RITMO:
                 linha["status"] = "PARADA"
+                linha["dias_sem_ritmo"] = dias_decorridos
                 linha["motivo"] = ("%d dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo "
                                    "é encenação — a meta continua medida, sem data para cumprir"
                                    % dias_decorridos)
