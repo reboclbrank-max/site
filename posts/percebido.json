@@ -1,10 +1,10 @@
 {
- "quando": "2026-11-07T04:27:39Z",
+ "quando": "2026-11-07T04:31:36Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
    "o_que": "empurrar a meta: Instagram: seguidores",
-   "porque": "faltam 50 e o ritmo necessário é 10.0 por dia (prazo em 5 dias)",
+   "porque": "faltam 50 e o ritmo necessário é 10.0 por dia (prazo em 5 dias) · ritmo medido: 0.0 por dia em 25 dias — não fecha no prazo",
    "quem": "robô",
    "como": "priorizar essa meta no próximo ciclo editorial",
    "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
@@ -13,7 +13,7 @@
   },
   {
    "o_que": "empurrar a meta: Bluesky: seguidores",
-   "porque": "faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias)",
+   "porque": "faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias) · ritmo medido: 0.76 por dia em 25 dias — não fecha no prazo",
    "quem": "robô",
    "como": "priorizar essa meta no próximo ciclo editorial",
    "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
@@ -22,7 +22,7 @@
   },
   {
    "o_que": "empurrar a meta: YouTube: inscritos",
-   "porque": "faltam 16 e o ritmo necessário é 3.2 por dia (prazo em 5 dias)",
+   "porque": "faltam 16 e o ritmo necessário é 3.2 por dia (prazo em 5 dias) · ritmo medido: 0.0 por dia em 25 dias — não fecha no prazo",
    "quem": "robô",
    "como": "priorizar essa meta no próximo ciclo editorial",
    "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
@@ -31,7 +31,7 @@
   },
   {
    "o_que": "empurrar a meta: itch: downloads",
-   "porque": "faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias)",
+   "porque": "faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
    "quem": "robô",
    "como": "priorizar essa meta no próximo ciclo editorial",
    "verifica": "o número observado sobe no placar (posts/placar-metas.md)",
