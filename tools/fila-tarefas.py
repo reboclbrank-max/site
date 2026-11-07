@@ -90,8 +90,18 @@ def adicionar(dados, tipo, motivo="", quando=None, chave=None):
         print("fila: recusada %s — %d já pendentes (teto %d): %s"
               % (tipo, len(pendentes), TETO_POR_TIPO, (motivo or "")[:60]))
         return None
+    # ID ÚNICO (07/11/2026): o id saía do segundo da criação, e várias tarefas do mesmo pulso
+    # nasciam no mesmo segundo — a fila real tem 13 ids repetidos em 46 tarefas. O id é o que
+    # aparece no log ("fila: tarefa publicar-... -> feito"), então id repetido é log ambíguo:
+    # não se sabe qual das quatro enfileiradas naquele minuto foi a que rodou.
+    base = "%s-%s" % (tipo, (quando or agora_iso()).replace(":", "").replace("-", ""))
+    ident, n = base, 2
+    existentes = {t.get("id") for t in dados["tarefas"]}
+    while ident in existentes:
+        ident = "%s-%d" % (base, n)
+        n += 1
     tarefa = {
-        "id": "%s-%s" % (tipo, (quando or agora_iso()).replace(":", "").replace("-", "")),
+        "id": ident,
         "tipo": tipo,
         "prioridade": PRIORIDADES.get(tipo, 10),
         "estado": "pendente",

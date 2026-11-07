@@ -314,6 +314,21 @@ def main():
        and _cheia["recusadas"][-1]["teto"] == 3, _cheia.get("recusadas"))
     ok("a fila no teto não cresce", len(_cheia["tarefas"]) == 3, len(_cheia["tarefas"]))
     _abaixo = {"tarefas": [_t("m%d" % i, "medir", i) for i in range(2)]}
+    # id único mesmo no mesmo segundo (a fila real chegou a ter 4 tarefas com o mesmo id)
+    _mesmo_segundo = fila.vazia()
+    _ids = set()
+    _teto_original = fila.TETO_POR_TIPO
+    fila.TETO_POR_TIPO = 10          # o teto de 3 é outra regra (e tem o seu próprio contrato)
+    try:
+        for i in range(4):
+            _unica = fila.adicionar(_mesmo_segundo, "publicar", motivo="meta %d" % i,
+                                    quando="2026-11-01T07:10:25Z")
+            _ids.add(_unica["id"])
+    finally:
+        fila.TETO_POR_TIPO = _teto_original
+    ok("quatro tarefas no mesmo segundo ganham quatro ids", len(_ids) == 4, sorted(_ids))
+    ok("o primeiro id não ganha sufixo", "publicar-20261101T071025Z" in _ids, sorted(_ids))
+
     ok("abaixo do teto ainda entra", fila.adicionar(_abaixo, "medir", motivo="cabe") is not None,
        len(_abaixo["tarefas"]))
 
