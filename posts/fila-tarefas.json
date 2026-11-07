@@ -1128,6 +1128,32 @@
    "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 2.0 por dia",
    "chave": "meta-Bluesky: seguidores",
    "origem": "perceber"
+  },
+  {
+   "id": "pesquisar-20261107T044325Z",
+   "tipo": "pesquisar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-07T04:43:25Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "meta parada: Instagram: seguidores: 0 em 21 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "chave": "parada-Instagram: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "pesquisar-20261107T044325Z",
+   "tipo": "pesquisar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-07T04:43:25Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "meta parada: YouTube: inscritos: 24 em 21 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "chave": "parada-YouTube: inscritos",
+   "origem": "perceber"
   }
  ],
  "recusadas": [
