@@ -1005,11 +1005,11 @@
    "id": "medir-20261103T093331Z",
    "tipo": "medir",
    "prioridade": 90,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-03T09:33:31Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-07T02:48:53Z",
+   "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 206,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
    "motivo": "decisão do relógio",
    "chave": "medir-2026110309"
   },
@@ -1042,11 +1042,11 @@
    "id": "publicar-20261106T143710Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-06T14:37:10Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-07T02:48:53Z",
+   "resultado": "janela: fora da janela (23h local; janela 09-22h)\nRESUMO: janela=PULADO (fora da janela (23h local; janela 09-22h))",
    "motivo": "empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.78 por dia",
    "chave": "meta-YouTube: inscritos",
    "origem": "perceber"
@@ -1112,6 +1112,34 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "medir-2026110700"
+  }
+ ],
+ "recusadas": [
+  {
+   "tipo": "publicar",
+   "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 2.0 por dia",
+   "quando": "2026-11-07T02:48:53Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261106T143710Z",
+    "publicar-20261106T203527Z",
+    "publicar-20261107T001953Z"
+   ]
+  },
+  {
+   "tipo": "medir",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-07T02:48:53Z",
+   "teto": 3,
+   "ja_pendentes": 5,
+   "esperando": [
+    "medir-20261103T093331Z",
+    "medir-20261106T062257Z",
+    "medir-20261106T143710Z",
+    "medir-20261106T203527Z",
+    "medir-20261107T001953Z"
+   ]
   }
  ]
 }

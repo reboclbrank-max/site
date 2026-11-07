@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-07T00:19:53Z",
+ "quando": "2026-11-07T02:48:53Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -68,12 +68,10 @@
    "chave": "dono-segredo-discord"
   }
  ],
- "enfileiradas": [
-  "publicar-20261107T001953Z"
- ],
+ "enfileiradas": [],
  "contagem": {
   "robo": 4,
   "dono": 3,
-  "enfileiradas": 1
+  "enfileiradas": 0
  }
 }

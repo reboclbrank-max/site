@@ -1,19 +1,12 @@
 {
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
- "ultima_publicacao": "2026-11-07T00:19:53Z",
- "ultima_medicao": "2026-11-03T01:42:54Z",
+ "ultima_publicacao": "2026-11-07T02:48:53Z",
+ "ultima_medicao": "2026-11-07T02:48:53Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 132,
+ "pulsos": 133,
  "historico": [
-  {
-   "quando": "2026-11-02T15:33:30Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261102T093104Z] empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 1.8 por dia",
-   "codigo": 0,
-   "saida": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strfti"
-  },
   {
    "quando": "2026-11-02T15:43:30Z",
    "acao": "publicar",
@@ -286,6 +279,13 @@
    "motivo": "fila: [publicar-20261106T062257Z] empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 2.0 por dia",
    "codigo": 0,
    "saida": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strfti"
+  },
+  {
+   "quando": "2026-11-07T02:48:53Z",
+   "acao": "medir",
+   "motivo": "fila: [publicar-20261106T143710Z] empurrar a meta: YouTube: inscritos: faltam 16 e o ritmo necessário é 1.78 por dia; fila: [medir-20261103T093331Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 2 tarefa(s) neste pulso"
   }
  ]
 }
