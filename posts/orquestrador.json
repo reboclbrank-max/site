@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-07T02:55:14Z",
  "ultima_pesquisa": "2026-11-02T06:36:23Z",
  "ultima_aprendizagem": "2026-11-02T07:06:23Z",
- "pulsos": 134,
+ "pulsos": 135,
  "historico": [
-  {
-   "quando": "2026-11-02T15:53:30Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261102T093104Z] empurrar a meta: itch: downloads: faltam 53 e o ritmo necessário é 5.3 por dia",
-   "codigo": 0,
-   "saida": "RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)"
-  },
   {
    "quando": "2026-11-02T16:03:30Z",
    "acao": "publicar",
@@ -286,6 +279,13 @@
    "motivo": "fila: [medir-20261107T001953Z] decisão do relógio",
    "codigo": 0,
    "saida": "fila: 1 tarefa(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-07T04:21:37Z",
+   "acao": "dormir",
+   "motivo": "fora da janela (01h local)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
   }
  ]
 }
