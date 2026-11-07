@@ -1,6 +1,19 @@
 {
  "publicados": [
   {
+   "id": "_ffmjSMsW0Y",
+   "url": "https://youtu.be/_ffmjSMsW0Y",
+   "slug": "ceifalume-gameplay",
+   "titulo": "CEIFALUME 0.1: 8 colheitas, 11 mudas plantadas, 794 toques em 2 min de jogo",
+   "descricao": "CEIFALUME 0.1 — jogo idle de fazenda noturna.\n\nComo funciona: plante, colha e negocie à luz da lanterna.\nO que chama atenção: as plantações crescem por até 8 horas mesmo com o jogo fechado.\nOnde jogar: grátis no navegador ou no Android, sem conta.\nFeito com Godot, feito no Brasil.",
+   "descricao_completa": false,
+   "angulo": null,
+   "fato": null,
+   "numeros": null,
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-07T01:55:42Z"
+  },
+  {
    "id": "O04ajm1t54Q",
    "url": "https://youtu.be/O04ajm1t54Q",
    "slug": "prancheta-gameplay",
