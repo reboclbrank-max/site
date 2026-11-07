@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-06T21:02:24Z",
+ "quando": "2026-11-07T01:10:15Z",
  "regra": {
   "janela_horas": 72,
   "criterio": "views do vídeo novo > mediana de views dos vídeos que o canal já tinha antes dele e inscritos ganhos >= 1 na mesma janela",
@@ -14,11 +14,11 @@
   "inscritos_ganhos": null
  },
  "video_novo": {
-  "id": "FRCzgqUlMFY",
-  "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
-  "angulo": "como_funciona:ceifalume-chuva",
-  "quando": "2026-11-06T20:04:19Z",
-  "publicado_em": "2026-11-06T20:04:46Z",
+  "id": "O04ajm1t54Q",
+  "titulo": "16 passos do menu à prancheta, 13 confirmados por imagem",
+  "angulo": "roteiro_do_agente",
+  "quando": "2026-11-07T00:04:42Z",
+  "publicado_em": "2026-11-07T00:04:58Z",
   "views": 0,
   "likes": 0,
   "comentarios": 0
@@ -50,26 +50,48 @@
   ]
  },
  "veredito": "AINDA_MEDINDO",
- "motivo": "6 vídeo(s) na janela; o primeiro veredito fecha em 2026-11-07T05:17:32Z",
+ "motivo": "7 vídeo(s) na janela; o primeiro veredito fecha em 2026-11-07T05:17:32Z",
  "numeros": {
   "views_novo": 0,
   "mediana_base": 8.0,
   "inscritos_ganhos": null,
-  "horas_no_ar": 1.0,
+  "horas_no_ar": 1.1,
   "janela_horas": 72
  },
  "video_novo_veredito": {
   "veredito": "AINDA_MEDINDO",
-  "motivo": "1.0 horas no ar de 72 — a régua só fecha no fim da janela",
+  "motivo": "1.1 horas no ar de 72 — a régua só fecha no fim da janela",
   "numeros": {
    "views_novo": 0,
    "mediana_base": 8.0,
    "inscritos_ganhos": null,
-   "horas_no_ar": 1.0,
+   "horas_no_ar": 1.1,
    "janela_horas": 72
   }
  },
  "videos": [
+  {
+   "id": "O04ajm1t54Q",
+   "titulo": "16 passos do menu à prancheta, 13 confirmados por imagem",
+   "angulo": "roteiro_do_agente",
+   "fato": null,
+   "quando": "2026-11-07T00:04:42Z",
+   "fecha_em": "2026-11-10T00:04:42Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 8.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "1.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 8.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 1.1,
+    "janela_horas": 72
+   }
+  },
   {
    "id": "FRCzgqUlMFY",
    "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
@@ -81,14 +103,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 8.0,
+   "mediana_base": 8.5,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "1.0 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "5.1 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 8.0,
+    "mediana_base": 8.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 1.0,
+    "horas_no_ar": 5.1,
     "janela_horas": 72
    }
   },
@@ -103,14 +125,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 8.5,
+   "mediana_base": 9.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "2.6 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "6.8 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 8.5,
+    "mediana_base": 9.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 2.6,
+    "horas_no_ar": 6.8,
     "janela_horas": 72
    }
   },
@@ -125,14 +147,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 9.0,
+   "mediana_base": 10.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "4.5 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "8.7 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 9.0,
+    "mediana_base": 10.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 4.5,
+    "horas_no_ar": 8.7,
     "janela_horas": 72
    }
   },
@@ -147,14 +169,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 10.0,
+   "mediana_base": 11.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "4.8 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "8.9 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 10.0,
+    "mediana_base": 11.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 4.8,
+    "horas_no_ar": 8.9,
     "janela_horas": 72
    }
   },
@@ -171,12 +193,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 11.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "4.9 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "9.0 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 11.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 4.9,
+    "horas_no_ar": 9.0,
     "janela_horas": 72
    }
   },
@@ -193,12 +215,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 11.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "63.7 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "67.9 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 11.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 63.7,
+    "horas_no_ar": 67.9,
     "janela_horas": 72
    }
   }
@@ -209,9 +231,17 @@
   "03313IcXvEo": 24,
   "f5kQFOQs0To": 24,
   "FRCzgqUlMFY": 24,
-  "PRyg0Ncz5U8": 24
+  "PRyg0Ncz5U8": 24,
+  "O04ajm1t54Q": 24
  },
  "publicados_medidos": [
+  {
+   "id": "O04ajm1t54Q",
+   "publicado_em": "2026-11-07T00:04:58Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "FRCzgqUlMFY",
    "publicado_em": "2026-11-06T20:04:46Z",

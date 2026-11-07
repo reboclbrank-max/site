@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-06T21:02:24Z",
+ "medido_em": "2026-11-07T01:10:15Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "O04ajm1t54Q",
+   "titulo": "16 passos do menu à prancheta, 13 confirmados por imagem",
+   "publicado_em": "2026-11-07T00:04:58Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "FRCzgqUlMFY",
    "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
@@ -52,7 +60,7 @@
   }
  ],
  "totais": {
-  "videos": 6,
+  "videos": 7,
   "views": 0,
   "likes": 0,
   "comentarios": 0
