@@ -144,7 +144,9 @@ jobs:
           python3 tools/validar-instrucoes.py media/gameplay/ceifalume-gameplay-instrucoes.mp4
 
       - name: Monta o kit de envio do gameplay
-        run: python3 tools/kit-gameplay.py
+        # SÓ O JOGO DESTE RUN: este workflow grava o CEIFALUME. Montar o kit inteiro fazia o passo
+        # reprovar por falta do vídeo do PRANCHETA, que outro workflow grava (run 42319687317).
+        run: python3 tools/kit-gameplay.py --jogo ceifalume
 
       # A CENA ENTRA NO REGISTRO ANTES DE VIRAR VÍDEO: duas partidas com a mesma assinatura não
       # entram, e o run para aqui em vez de publicar "o mesmo vídeo com outro título".

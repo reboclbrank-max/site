@@ -269,9 +269,21 @@ def pacote(slug):
     return p, erros
 
 
-def montar():
+def montar(slugs=None):
+    """Monta os pacotes dos jogos pedidos (padrão: todos).
+
+    POR QUE O RECORTE (06/11/2026): cada workflow grava UM jogo. O run 42319687317 gravou o
+    CEIFALUME, montou o kit para todos e foi reprovado porque o vídeo do PRANCHETA — que aquele
+    run não gravou — não existia no disco. A gravação tinha dado certo e o run saía vermelho:
+    o kit cobrava do run um vídeo que não era dele.
+    """
+    alvo = list(slugs) if slugs else list(GAMEPLAY)
+    desconhecidos = [x for x in alvo if x not in GAMEPLAY]
+    if desconhecidos:
+        raise SystemExit("jogo fora do kit: %s (os do kit: %s)"
+                         % (", ".join(desconhecidos), ", ".join(GAMEPLAY)))
     pacotes, problemas = [], {}
-    for slug in GAMEPLAY:
+    for slug in alvo:
         p, erros = pacote(slug)
         if erros:
             problemas[slug] = erros
@@ -280,8 +292,44 @@ def montar():
     return {"pacotes": pacotes, "problemas": problemas}
 
 
-def main():
-    dados = montar()
+def jogos_pedidos(argv):
+    """Lê `--jogo slug` (repetível) ou `--jogo=slug`. Sem nenhum, monta o kit inteiro."""
+    pedidos = []
+    i = 0
+    while i < len(argv):
+        arg = argv[i]
+        if arg == "--jogo" and i + 1 < len(argv):
+            pedidos.append(argv[i + 1])
+            i += 2
+            continue
+        if arg.startswith("--jogo="):
+            pedidos.append(arg.split("=", 1)[1])
+            i += 1
+            continue
+        raise SystemExit("argumento desconhecido: %s (uso: kit-gameplay.py [--jogo slug]...)" % arg)
+    return pedidos
+
+
+def main(argv=None):
+    argv = list(sys.argv[1:] if argv is None else argv)
+    pedidos = jogos_pedidos(argv)
+    dados = montar(pedidos or None)
+    if pedidos:
+        # O kit versionado é de TODOS os jogos: o que este run não mediu continua como estava, em
+        # vez de desaparecer do arquivo que o outro workflow lê.
+        try:
+            with open(SAIDA, encoding="utf-8") as f:
+                antigo = json.load(f)
+        except (OSError, ValueError):
+            antigo = {}
+        mantidos = [p for p in (antigo.get("pacotes") or [])
+                    if isinstance(p, dict) and p.get("slug") not in pedidos]
+        if mantidos:
+            dados["pacotes"] = dados["pacotes"] + mantidos
+            print("mantidos do kit anterior: %s" % ", ".join(str(p.get("slug")) for p in mantidos))
+        fora = [x for x in GAMEPLAY if x not in pedidos]
+        if fora:
+            print("não montado neste run (--jogo): %s" % ", ".join(fora))
     os.makedirs(os.path.dirname(SAIDA), exist_ok=True)
     with open(SAIDA, "w", encoding="utf-8") as f:
         json.dump(dados, f, ensure_ascii=False, indent=1)

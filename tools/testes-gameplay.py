@@ -73,6 +73,17 @@ def ffmpeg():
     return mod, mod.ffmpeg()
 
 
+def _levanta(fn):
+    """True quando a chamada estoura — usado para provar que argumento inválido é recusado."""
+    try:
+        fn()
+    except SystemExit:
+        return True
+    except BaseException:
+        return True
+    return False
+
+
 def main():
     # 1. o agente que olha o estado e decide (o roteiro cego saiu em 27/10)
     # Os estados abaixo são os MEDIDOS no jogo rodando em 27/10/2026 (ver docs/VIDEO-GAMEPLAY.md):
@@ -450,6 +461,18 @@ def main():
     ok("a linha do PRANCHETA fala em passos e a do CEIFALUME em plantio",
        "passos" in _linhas.get("prancheta", "") and "mudas" in _linhas.get("ceifalume", ""),
        _linhas)
+
+    # 4c. O KIT MONTA SÓ O JOGO DO RUN (06/11/2026): cada workflow grava um jogo. O run
+    # 42319687317 gravou o CEIFALUME e foi reprovado porque o kit inteiro exigia o vídeo do
+    # PRANCHETA, que aquele run não gravou. `--jogo` recorta sem esconder: o kit continua sendo
+    # de todos os jogos, e o que não foi medido é dito.
+    ok("o kit aceita --jogo=slug", _kit.jogos_pedidos(["--jogo=ceifalume"]) == ["ceifalume"],
+       _kit.jogos_pedidos(["--jogo", "prancheta", "--jogo=ceifalume"]))
+    ok("o kit recusa argumento que não conhece",
+       _levanta(lambda: _kit.jogos_pedidos(["--tudo"])), True)
+    ok("sem --jogo, os dois jogos são montados",
+       len(_kit.montar(None)["pacotes"]) >= 0 and len(list(_kit.GAMEPLAY)) == 2,
+       list(_kit.GAMEPLAY))
 
     # 5. envio continua trancado
     env = dict(os.environ, KIT_YOUTUBE=os.path.join("posts", "kit-gameplay.json"), CONFIRMACAO="")

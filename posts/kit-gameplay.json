@@ -2,7 +2,7 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "como_funciona:ceifalume-chuva",
+   "angulo": "o_que_tem_dentro:ceifalume-chuva",
    "fato": "ceifalume-chuva",
    "numeros": {
     "plantadas": 10,
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
-   "descricao": "A chuva rega de graça: não custa água nem moeda.\n\nNa gravação desta partida: 10 mudas plantadas e 4 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
+   "titulo": "O que tem dentro de CEIFALUME",
+   "descricao": "A chuva rega de graça: não custa água nem moeda.\n\nO que aparece na tela desta gravação é a partida de verdade: 1074 toques no campo.\n\nSem corte de tela e sem fala: a legenda descreve a decisão tomada no momento.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -45,7 +45,7 @@
     },
     {
      "angulo": "onde_jogar:ceifalume-8h",
-     "motivo": "mesmo ângulo do último vídeo publicado (onde_jogar:ceifalume-8h) — o ângulo roda"
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
     {
      "angulo": "quanto_rende:ceifalume-8h",
@@ -88,8 +88,28 @@
      "motivo": "texto repetido: 0.75 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
     },
     {
+     "angulo": "como_funciona:ceifalume-chuva",
+     "motivo": "título já publicado neste canal: Como funciona: a chuva rega de graça: não custa água nem moeda"
+    },
+    {
      "angulo": "onde_jogar:ceifalume-chuva",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-chuva",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "quem_fe_z:ceifalume-chuva",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "o_que_muda_depois:ceifalume-chuva",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "como_funciona:ceifalume-tutorial",
+     "motivo": "texto repetido: 0.62 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
     {
      "angulo": "onde_jogar:ceifalume-tutorial",
@@ -100,6 +120,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "como_funciona:ceifalume-apk",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
      "angulo": "onde_jogar:ceifalume-apk",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
@@ -108,12 +132,20 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "como_funciona:ceifalume-anuncio",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
      "angulo": "onde_jogar:ceifalume-anuncio",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
     {
      "angulo": "requisito:ceifalume-anuncio",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "como_funciona:ceifalume-save",
+     "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
     {
      "angulo": "onde_jogar:ceifalume-save",
@@ -132,6 +164,10 @@
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "como_funciona:ceifalume-versao",
+     "motivo": "texto repetido: 0.69 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
      "angulo": "onde_jogar:ceifalume-versao",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
@@ -142,6 +178,10 @@
     {
      "angulo": "bastidor_do_dia:ceifalume-versao",
      "motivo": "texto repetido: 0.62 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "como_funciona:oficio-devlog",
+     "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
     {
      "angulo": "onde_jogar:oficio-devlog",
@@ -160,6 +200,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "como_funciona:casa-newsletter",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
      "angulo": "onde_jogar:casa-newsletter",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
@@ -168,12 +212,20 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "como_funciona:casa-telegram",
+     "motivo": "texto repetido: 0.70 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
      "angulo": "onde_jogar:casa-telegram",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
     },
     {
      "angulo": "requisito:casa-telegram",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 1 hashtags): Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "como_funciona:casa-site-gratis",
+     "motivo": "texto repetido: 0.67 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
     {
      "angulo": "onde_jogar:casa-site-gratis",

@@ -42,6 +42,11 @@ jobs:
           python3 -m pip install --quiet --disable-pip-version-check Pillow
           npm install --no-save --no-audit --no-fund playwright-core@1
           npx --yes playwright install --with-deps chromium-headless-shell
+          # O navegador que a SUÍTE usa é o do playwright de PYTHON (testes-devlog-navegador
+          # importa playwright.sync_api). O playwright-core do Node é o do gravador. São dois
+          # drivers diferentes: instalar só o do Node deixou a suíte do devlog vermelha no CI.
+          python3 -m pip install --quiet --disable-pip-version-check playwright
+          python3 -m playwright install --with-deps chromium
 
       - name: Node (as suítes do decisor rodam no Node)
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4

@@ -255,7 +255,9 @@ def main():
     for nome, fonte in fontes().items():
         if "rodar-todas-as-suites.py" not in fonte:
             continue
-        for ferramenta, marca in (("Pillow", "Pillow"), ("navegador", "playwright")):
+        for ferramenta, marca in (("Pillow", "Pillow"),
+                                  ("navegador do Node (gravador)", "playwright-core"),
+                                  ("navegador do Python (suítes)", "python3 -m playwright install")):
             ok("%s: instala %s antes de rodar a bateria" % (nome, ferramenta),
                marca in fonte)
 
