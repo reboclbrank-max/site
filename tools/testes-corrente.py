@@ -112,6 +112,75 @@ _meio = c.ciclo(agora_fn=lambda: local(15, 5),
 ok("se PARAR aparece durante a espera, não dispara", _chamadas_durante == [], _chamadas_durante)
 ok("e diz por que parou", "durante a espera" in _meio["motivo"], _meio)
 
+# ------------------------------------------------------- as diárias que o cron deixa passar
+def run_em(instante):
+    return {"created_at": instante.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")}
+
+
+_rodaram, _sem = c.rodaram_hoje(local(10, 5), ler_runs_fn=lambda wf: [run_em(local(9, 30))])
+ok("rodou hoje é reconhecido por run do mesmo dia local",
+   all(_rodaram[n] for n in _rodaram) and not _sem, (_rodaram, _sem))
+_rodaram, _ = c.rodaram_hoje(local(10, 5), ler_runs_fn=lambda wf: [run_em(local(9, 30, dia=7))])
+ok("run de ontem não conta como hoje",
+   not any(_rodaram.values()), _rodaram)
+
+_nada_rodou = {n: False for n, _h in c.DIARIAS_GARANTIDAS}
+ok("às 08h50, antes da hora de preferência, nenhuma diária é cobrada",
+   c.diarias_faltando(local(8, 50), _nada_rodou) == [])
+ok("às 09h05 a corrente NÃO atropela o cron: a graça de uma passada ainda vale",
+   c.diarias_faltando(local(9, 5), _nada_rodou) == [], c.diarias_faltando(local(9, 5), _nada_rodou))
+ok("às 09h20, as diárias das 9h que não rodaram entram na conta",
+   set(c.diarias_faltando(local(9, 20), _nada_rodou)) ==
+   {n for n, h in c.DIARIAS_GARANTIDAS if h == 9},
+   c.diarias_faltando(local(9, 20), _nada_rodou))
+ok("às 09h20 a diária das 10h ainda não é cobrada",
+   "medir-itch" not in c.diarias_faltando(local(9, 20), _nada_rodou))
+ok("às 10h20 a das 10h entra", "medir-itch" in c.diarias_faltando(local(10, 20), _nada_rodou))
+ok("a graça é de uma passada, não de uma hora",
+   c.GRACA_MINUTOS == c.PASSO_MINUTOS, (c.GRACA_MINUTOS, c.PASSO_MINUTOS))
+ok("diária que já rodou hoje não é disparada de novo",
+   c.diarias_faltando(local(10, 5), {n: True for n, _h in c.DIARIAS_GARANTIDAS}) == [])
+ok("fora da hora de pulso (05h) a corrente não dispara diária",
+   c.diarias_faltando(local(5, 0), _nada_rodou) == [])
+ok("a palavra de confirmação nunca é digitada: nenhuma diária garantida é de escrita",
+   set(n for n, _h in c.DIARIAS_GARANTIDAS) ==
+   {"medir-o-dia", "ler-comentarios", "pendencias-do-dono", "vigia-sessao-itch", "medir-itch"},
+   c.DIARIAS_GARANTIDAS)
+ok("administrar-itch e administrar-youtube ficam de fora (exigem palavra)",
+   not ({"administrar-itch", "administrar-youtube"} &
+        {n for n, _h in c.DIARIAS_GARANTIDAS}))
+
+_disparadas = []
+_feito_diarias = c.garantir(local(10, 25), token="x",
+                            disparar_fn=lambda wf: _disparadas.append(wf),
+                            ler_runs_fn=lambda wf: [])
+ok("garantir dispara só o que falta", set(_disparadas) ==
+   {n for n, h in c.DIARIAS_GARANTIDAS if h <= 10}, _disparadas)
+
+
+def _falha(wf):
+    raise RuntimeError("rede caiu")
+
+
+_nao_lidas = c.garantir(local(10, 25), token="x", disparar_fn=lambda wf: None,
+                        ler_runs_fn=_falha)
+ok("leitura que falha não vira 'não rodou': não dispara às cegas",
+   _nao_lidas["dispares"] == [] and _nao_lidas["sem_leitura"], _nao_lidas)
+
+_ciclo_diarias = []
+_feito_ciclo = c.ciclo(agora_fn=lambda: local(9, 5), pulso_fn=lambda: None,
+                       si_fn=lambda: _ciclo_diarias.append("corrente"),
+                       dormir=lambda s: None, token="x", parado_fn=lambda: False,
+                       garantir_fn=lambda alvo: {"dispares": ["medir-o-dia"], "sem_leitura": {}})
+ok("as diárias aparecem no registro do ciclo", _feito_ciclo["diarias"] == ["medir-o-dia"],
+   _feito_ciclo)
+ok("a corrente se reagenda mesmo depois de disparar diárias", _ciclo_diarias == ["corrente"])
+_feito_erro = c.ciclo(agora_fn=lambda: local(9, 5), pulso_fn=lambda: None, si_fn=lambda: None,
+                      dormir=lambda s: None, token="x", parado_fn=lambda: False,
+                      garantir_fn=lambda alvo: (_ for _ in ()).throw(RuntimeError("boom")))
+ok("diária que explode não derruba a corrente (e fica registrado)",
+   _feito_erro["acao"] == "disparou" and _feito_erro["sem_leitura"], _feito_erro)
+
 # ------------------------------------------------------------------ limites
 _esperado = c.esperar(10 ** 6, dormir=lambda s: None)
 ok("a espera nunca passa de 5h20 (job do GitHub morre em 6h)",

@@ -8,6 +8,11 @@ name: corrente
 # horário de pulso, dispara o pulso, dispara a si mesmo e dorme de novo. O cron de 3 em 3 horas
 # fica aqui só como partida de segurança — se a corrente quebrar, ela volta.
 #
+# Ela também garante as DIÁRIAS que medem: na hora de preferência de cada uma (com uma passada de
+# graça para o cron não ser atropelado), se ela não rodou hoje, a corrente dispara. Medido: as
+# diárias simples recebem 86% e `medir-o-dia`, a régua da casa, recebeu ZERO. Só entra o que mede —
+# `administrar-itch` e `administrar-youtube` exigem a palavra de confirmação e ficam de fora.
+#
 # Limites (todos medidos no próprio código, não em promessa):
 #   - `posts/PARAR` existe -> não dispara nada, nem antes nem durante a espera;
 #   - espera máxima de 5h20 dentro de um job que morre em 6h;
