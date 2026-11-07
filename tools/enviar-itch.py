@@ -411,6 +411,10 @@ def _baixar(url, timeout=180):
         return r.read()
 
 
+# O diagnóstico diário baixa só estes: o wasm tem 38 MB e fica para o `conferir` completo.
+ARQUIVOS_ENXUTOS = ["index.html", "index.js", "index.pck"]
+
+
 def conferir_conteudo(slug, raiz=RAIZ, baixar=None, arquivos=None):
     """O JOGO que o visitante do itch recebe é o mesmo que está no repositório?
 
@@ -473,6 +477,32 @@ def _get_json(url, chave):
         return None, str(e)[:80]
 
 
+# O DIAGNÓSTICO IMPRIMIA UMA CÓPIA TORTA DESTA CONTA (07/11/2026): o workflow
+# `diagnostico-da-casa` refazia o laço de impressão por conta própria e mostrava
+# "index.html DIFERENTE" logo acima de "jogo igual: SIM" — sem dizer que a casca HTML é
+# justamente a peça que o itch reescreve. Quem lê vê contradição; não há. O texto agora sai
+# daqui, um lugar só.
+def texto_conferencia(resultado):
+    """As linhas do `conferir`, com a ressalva da casca escrita onde ela aparece."""
+    linhas = ["página %s — upload %s" % (resultado["pagina"], resultado["upload"])]
+    for l in resultado["arquivos"]:
+        nota = ""
+        if l["arquivo"] == "index.html" and l["estado"] == "DIFERENTE":
+            nota = "   (esperado: o itch reescreve a casca e injeta o htmlgame.js dele)"
+        elif l["estado"].startswith("não consegui"):
+            nota = "   (sem leitura: não afirmo igual nem diferente)"
+        elif l["estado"] == "ausente no repositório":
+            nota = "   (não existe aqui: nada a comparar)"
+        linhas.append("  %-12s %s repo=%s itch=%s%s"
+                      % (l["arquivo"], l["estado"], l["repo"] or "-", l["itch"] or "-", nota))
+    linhas.append("  jogo (conteúdo) igual ao repositório: %s"
+                  % ("SIM" if resultado["jogo_igual_ao_repo"] else "NÃO"))
+    linhas.append("  casca html igual: %s" % (
+        "SIM" if resultado["casca_html_igual"] else
+        "NÃO (o itch reescreve e injeta o htmlgame.js dele — não é atraso de build)"))
+    return "\n".join(linhas)
+
+
 def main(argv):
     modo = argv[0] if argv else "status"
     slug = argv[1] if len(argv) > 1 else "ceifalume"
@@ -497,18 +527,13 @@ def main(argv):
             return 0
         if modo == "conferir":
             # SOMENTE LEITURA: baixa o que a página serve e compara sha256 com o repositório.
-            resultado, erro = conferir_conteudo(slug)
+            enxuto = "--enxuto" in argv
+            resultado, erro = conferir_conteudo(
+                slug, arquivos=ARQUIVOS_ENXUTOS if enxuto else None)
             if erro:
                 print("✗ não consegui conferir:", erro)
                 return 1
-            print("página %s — upload %s" % (resultado["pagina"], resultado["upload"]))
-            for l in resultado["arquivos"]:
-                print("  %-12s %-14s repo=%s itch=%s %8d B" % (
-                    l["arquivo"], l["estado"], l["repo"] or "-", l["itch"] or "-", l["bytes"]))
-            print("  jogo (conteúdo) igual ao repositório: %s" % (
-                "SIM" if resultado["jogo_igual_ao_repo"] else "NÃO"))
-            print("  casca html igual: %s" % ("SIM" if resultado["casca_html_igual"] else
-                                              "NÃO (o itch reescreve e injeta o htmlgame.js dele)"))
+            print(texto_conferencia(resultado))
             return 0
         if modo == "jogador":
             # SOMENTE LEITURA: o que abre quando alguém clica em jogar, e o que a API tem.

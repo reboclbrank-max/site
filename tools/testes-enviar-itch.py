@@ -404,5 +404,30 @@ ok("o vídeo citado pelo selo é o que está no kit oficial",
    or "GuE7af6dYo8" in open(os.path.join(RAIZ, "posts", "youtube-publicados.json"),
                             encoding="utf-8").read(), "vídeo fora do registro")
 
+# ------------------------------------------------------------------ texto da conferência
+# O diagnóstico mostrava "index.html DIFERENTE" logo acima de "jogo igual: SIM", sem explicar
+# que a casca HTML é a peça que o itch reescreve. Agora o texto sai de um lugar só.
+_res = {"pagina": "https://x.itch.io/c", "upload": 123, "jogo_igual_ao_repo": True,
+        "casca_html_igual": False,
+        "arquivos": [{"arquivo": "index.html", "estado": "DIFERENTE", "repo": "aaa", "itch": "bbb"},
+                     {"arquivo": "index.js", "estado": "IGUAL", "repo": "ccc", "itch": "ccc"},
+                     {"arquivo": "index.pck", "estado": "não consegui baixar do itch (timeout)",
+                      "repo": "ddd", "itch": ""}]}
+_txt = itch.texto_conferencia(_res)
+ok("o texto da conferência diz que a casca diferente é esperada",
+   "esperado: o itch reescreve a casca" in _txt, _txt)
+ok("o texto diz que o jogo (conteúdo) é igual", "jogo (conteúdo) igual ao repositório: SIM" in _txt)
+ok("o texto explica a casca html com o motivo", "não é atraso de build" in _txt)
+ok("arquivo sem leitura não vira 'igual' nem 'diferente'",
+   "não afirmo igual nem diferente" in _txt, _txt)
+ok("o texto mostra o upload medido", "upload 123" in _txt)
+ok("a lista enxuta do diagnóstico deixa o wasm de fora", "index.wasm" not in itch.ARQUIVOS_ENXUTOS,
+   itch.ARQUIVOS_ENXUTOS)
+
+_wf = open(os.path.join(RAIZ, ".github/workflows/diagnostico-da-casa.yml"), encoding="utf-8").read()
+ok("o diagnóstico usa o texto de um lugar só (não refaz a conta por conta própria)",
+   "enviar-itch.py conferir" in _wf and "conferir_conteudo" not in _wf)
+ok("o diagnóstico continua sem baixar o wasm de 38 MB", "--enxuto" in _wf)
+
 print("\n%d/%d testes do envio ao itch passaram" % (certos, certos + falhas))
 sys.exit(1 if falhas else 0)
