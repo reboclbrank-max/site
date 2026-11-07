@@ -109,21 +109,36 @@ def playlist_de_uploads(access_token, abrir=None):
             .get("uploads"))
 
 
-def listar_videos(access_token, maximo=50, abrir=None):
-    """[{id, titulo, publicado_em}] direto da playlist de uploads do canal."""
+def listar_videos(access_token, maximo=500, abrir=None):
+    """[{id, titulo, publicado_em}] direto da playlist de uploads do canal.
+
+    PAGINA DE VERDADE (07/11/2026): a versão anterior pedia `maxResults=50` e ignorava o
+    `nextPageToken` — ou seja, com mais de 50 vídeos no canal ela lê 50 e PARA. Foi assim que o
+    retrato da cobertura saiu "no_canal: 50, sem_capa: 0" enquanto o registro tinha 51 capas: 50
+    não era o tamanho do canal, era o tamanho da página. Contagem truncada que parece exata é
+    pior que contagem ausente.
+    """
     playlist = playlist_de_uploads(access_token, abrir=abrir)
     if not playlist:
         return []
-    dados = _get_json("https://www.googleapis.com/youtube/v3/playlistItems"
-                      "?part=snippet&maxResults=%d&playlistId=%s&access_token=%s"
-                      % (min(int(maximo), 50), playlist, str(access_token)), abrir=abrir)
-    videos = []
-    for item in dados.get("items") or []:
-        sn = item.get("snippet") or {}
-        vid = ((sn.get("resourceId") or {}).get("videoId") or "").strip()
-        if vid:
-            videos.append({"id": vid, "titulo": (sn.get("title") or "").strip(),
-                           "publicado_em": sn.get("publishedAt") or ""})
+    videos, pagina, lidas = [], None, 0
+    while lidas < int(maximo):
+        url = ("https://www.googleapis.com/youtube/v3/playlistItems"
+               "?part=snippet&maxResults=%d&playlistId=%s&access_token=%s"
+               % (min(int(maximo) - lidas, 50), playlist, str(access_token)))
+        if pagina:
+            url += "&pageToken=" + str(pagina)
+        dados = _get_json(url, abrir=abrir)
+        for item in dados.get("items") or []:
+            sn = item.get("snippet") or {}
+            vid = ((sn.get("resourceId") or {}).get("videoId") or "").strip()
+            if vid:
+                videos.append({"id": vid, "titulo": (sn.get("title") or "").strip(),
+                               "publicado_em": sn.get("publishedAt") or ""})
+        lidas = len(videos)
+        pagina = dados.get("nextPageToken")
+        if not pagina or not (dados.get("items") or []):
+            break
     return videos
 
 

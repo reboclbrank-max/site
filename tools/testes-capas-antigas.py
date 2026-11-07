@@ -47,6 +47,59 @@ ok("registro ausente não quebra a fila",
    len(capa.candidatos(VIDEOS, {"aplicadas": []})) == 3)
 
 # ---- desenho: precisa de título real e de quadro do próprio vídeo -------------------------
+# ---- LISTAR O CANAL INTEIRO (07/11/2026) -------------------------------------------------
+# MEDIDO: o canal respondeu "50" e o registro tinha 51 capas. Não eram 50 vídeos: era o tamanho
+# da página (maxResults=50, nextPageToken ignorado). Contagem truncada que parece exata é pior
+# que contagem ausente — e é ela que alimenta o "estado da casa".
+class _Resp(object):
+    def __init__(self, dados):
+        self._dados = dados
+
+    def read(self):
+        return json.dumps(self._dados).encode("utf-8")
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+
+def _abrir_falso(paginas):
+    pedidos = []
+
+    def abrir(req, timeout=60):
+        url = req.full_url if hasattr(req, "full_url") else str(req)
+        pedidos.append(url)
+        if "playlistItems" not in url:
+            return _Resp({"items": [{"contentDetails": {"relatedPlaylists": {"uploads": "UU123"}}}]})
+        if "pageToken=PAGINA2" in url:
+            return _Resp(paginas[1])
+        return _Resp(paginas[0])
+
+    return abrir, pedidos
+
+
+_paginas = [
+    {"items": [{"snippet": {"resourceId": {"videoId": "V%02d" % i}, "title": "vídeo %d" % i,
+                            "publishedAt": "2026-11-01"}} for i in range(50)],
+     "nextPageToken": "PAGINA2"},
+    {"items": [{"snippet": {"resourceId": {"videoId": "V50"}, "title": "vídeo 50",
+                            "publishedAt": "2026-10-01"}}]},
+]
+_abrir, _pedidos = _abrir_falso(_paginas)
+_listados = capa.listar_videos("token-de-mentira", abrir=_abrir)
+ok("lê o canal inteiro, não só a primeira página", len(_listados) == 51, len(_listados))
+ok("o último da segunda página entra", _listados and _listados[-1]["id"] == "V50",
+   _listados[-1] if _listados else None)
+ok("pede a segunda página com pageToken", any("pageToken=PAGINA2" in u for u in _pedidos), _pedidos[-1:])
+ok("não pede página depois da última", len([u for u in _pedidos if "playlistItems" in u]) == 2,
+   len(_pedidos))
+
+_uma_pagina, _ = _abrir_falso([{"items": [{"snippet": {"resourceId": {"videoId": "S1"},
+                                                       "title": "curto"}}]}])
+ok("canal curto (uma página) não entra em laço", len(capa.listar_videos("t", abrir=_uma_pagina)) == 1)
+
 tmp = tempfile.mkdtemp(prefix="capas-antigas-")
 # o ensaio grava o retrato da cobertura; a suíte aponta para o tmp para não escrever na casa
 capa.CAMINHO_ESTADO = os.path.join(tmp, "capas-estado.json")
