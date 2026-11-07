@@ -55,6 +55,29 @@
    "hashtags": 1,
    "nota": 0.846,
    "texto": "Qual ferramenta da Prancheta do Android você acha mais útil para acompanhar as trocas de jogadores? Durante a partida, o técnico pode fazer até 5 trocas e dar. "
+  },
+  {
+   "quando": "2026-11-07T00:21:22Z",
+   "canal": "site",
+   "angulo": "ponte_de_canal",
+   "assunto": "casa",
+   "fatos": [
+    "casa-canais",
+    "casa-newsletter",
+    "casa-telegram",
+    "prancheta-trailer"
+   ],
+   "abertura": "tudo sobre",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Tudo sobre os canais oficiais está na nossa página. Já conhece o Prancheta? Descubra mais nos outros canais da casa! #gamedevbr"
   }
  ],
  "fatos_de_uma_vez": [
@@ -74,31 +97,33 @@
   "prancheta-divisoes",
   "prancheta-mercado",
   "prancheta-acessibilidade",
-  "prancheta-guia"
+  "prancheta-guia",
+  "casa-canais",
+  "casa-newsletter",
+  "casa-telegram",
+  "prancheta-trailer"
  ],
  "ultimo": {
-  "quando": "2026-11-06T20:35:43Z",
+  "quando": "2026-11-07T00:21:22Z",
   "canal": "site",
-  "angulo": "pergunta_ao_publico",
-  "assunto": "prancheta",
+  "angulo": "ponte_de_canal",
+  "assunto": "casa",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-ficticio",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "casa-canais",
+   "casa-newsletter",
+   "casa-telegram",
+   "prancheta-trailer"
   ],
-  "abertura": "qual ferramenta",
+  "abertura": "tudo sobre",
   "tipo_abertura": "frase",
   "esqueleto": [
+   "frase",
    "pergunta",
    "frase",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.846,
-  "texto": "Qual ferramenta da Prancheta do Android você acha mais útil para acompanhar as trocas de jogadores? Durante a partida, o técnico pode fazer até 5 trocas e dar. "
+  "nota": 0.769,
+  "texto": "Tudo sobre os canais oficiais está na nossa página. Já conhece o Prancheta? Descubra mais nos outros canais da casa! #gamedevbr"
  }
 }

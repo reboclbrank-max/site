@@ -322,3 +322,6 @@ Voce programa colheitas longas antes de dormir sabendo que o jogo roda offline p
 
 ## 06/11/2026 20:35 UTC
 Qual ferramenta da Prancheta do Android você acha mais útil para acompanhar as trocas de jogadores? Durante a partida, o técnico pode fazer até 5 trocas e dar. #prancheta
+
+## 07/11/2026 00:21 UTC
+Tudo sobre os canais oficiais está na nossa página. Já conhece o Prancheta? Descubra mais nos outros canais da casa! #gamedevbr
