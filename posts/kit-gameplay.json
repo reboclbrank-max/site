@@ -4,12 +4,17 @@
    "id": "ceifalume-gameplay",
    "angulo": null,
    "fato": null,
-   "numeros": null,
+   "numeros": {
+    "plantadas": 11,
+    "colhidas": 8,
+    "toques": 794,
+    "segundos": 135
+   },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 3793968,
-   "capa": "media/ceifalume/perfil-rb-itch-630x500.png",
+   "bytes": 4034162,
+   "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
     1280,
@@ -35,727 +40,727 @@
    "recusas_do_redator": [
     {
      "angulo": "como_funciona:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-8h",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-chuva",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-apk",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-anuncio",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-save",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-culturas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-melhorias",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-versao",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:oficio-devlog",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:casa-canais",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:casa-newsletter",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:casa-telegram",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_funciona:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_jogar:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quanto_rende:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "quem_fe_z:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_tem_dentro:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "por_que_gratis:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "como_foi_gravado:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "o_que_muda_depois:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "onde_esta_a_comunidade:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "requisito:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "genero:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor_do_dia:casa-site-gratis",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "passo_a_passo",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "medida_por_minuto",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "semente_do_dia",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "ficha_da_partida",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "numeros",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "pergunta",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "rotulo",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "convite",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "bastidor",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "moedas",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "cultivo",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "tutorial",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "compra",
-     "motivo": "fora da janela (22h local, janela 09-22h)"
+     "motivo": "fora da janela (23h local, janela 09-22h)"
     },
     {
      "angulo": "comparacao",
