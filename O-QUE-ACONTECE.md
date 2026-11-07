@@ -25,23 +25,23 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 
 **71 disparos automáticos por dia**, em 13 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
 
-**Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-07): **14.02/dia** de 63 pedidos. O pior caso é `medir-o-dia`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
+**Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-07): **14.02/dia** de 71 pedidos. O pior caso é `corrente`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
 
 | hora (Brasília) | workflow | o que faz |
 | --- | --- | --- |
-| 00h, 03h, 06h, 09h, 12h, 15h, 18h, 21h | `corrente` | A CORRENTE DE PULSOS (07/11/2026). ⚠️ fora da janela: 00h, 03h, 06h |
-| 00h, 06h, 12h, 18h | `metricas-youtube` | Mede o que os vídeos publicados fizeram (views, likes, comentários). ⚠️ fora da janela: 00h, 06h |
-| 03h | `administrar-itch` | Administração automática do itch.io: o robô olha o estado, decide e (se for o caso) sobe o build — sem clique do dono. ⚠️ fora da janela: 03h |
-| 03h | `administrar-youtube` | Administração automática do YouTube: organiza e corrige o que já está publicado (título, descrição, tags) sem clique do dono. ⚠️ fora da janela: 03h |
-| 03h, 04h, 09h–21h | `marketing-24h` | Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa (45 pulsos/dia). ⚠️ fora da janela: 03h, 04h |
-| 09h, 16h | `gravar-gameplay` | Grava o jogo rodando de verdade e transforma em arquivo de vídeo. |
-| 09h, 13h, 16h | `gravar-prancheta` | Grava o PRANCHETA rodando (o segundo jogo da casa). |
-| 09h | `ler-comentarios` | Lê comentários públicos só com a API key (sem OAuth, sem consentimento novo). |
-| 09h | `medir-o-dia` | Medido: `posts/placar-metas.md` estava parado em 03/11 06:52Z — dizia "9 dia(s) restante(s)" quando faltavam 5 — e o pulso decidia com aqueles… |
-| 09h | `pendencias-do-dono` | Fecha o ciclo do único passo que sobra para o dono (publicar no painel do itch). |
-| 09h | `vigia-sessao-itch` | A sessão do itch (segredo ITCH_COOKIE) é o único caminho para escrever na página. |
-| 10h, 14h | `chamar-video` | Leva quem já segue a casa até o vídeo que acabou de sair. |
-| 10h | `medir-itch` | Placar do itch pela API (que nao passa pela Cloudflare): downloads, visitas, publicacao. |
+| 00h, 03h, 06h, 09h, 12h, 15h, 18h, 21h | `corrente` | A CORRENTE DE PULSOS (07/11/2026). — **entregou 0.0/dia** de 8 pedidos (0.0%) ⚠️ fora da janela: 00h, 03h, 06h |
+| 00h, 06h, 12h, 18h | `metricas-youtube` | Mede o que os vídeos publicados fizeram (views, likes, comentários). — **entregou 2.57/dia** de 4 pedidos (64.2%) ⚠️ fora da janela: 00h, 06h |
+| 03h | `administrar-itch` | Administração automática do itch.io: o robô olha o estado, decide e (se for o caso) sobe o build — sem clique do dono. — **entregou 0.86/dia** de 1 pedidos (86.0%) ⚠️ fora da janela: 03h |
+| 03h | `administrar-youtube` | Administração automática do YouTube: organiza e corrige o que já está publicado (título, descrição, tags) sem clique do dono. — **entregou 0.86/dia** de 1 pedidos (86.0%) ⚠️ fora da janela: 03h |
+| 03h, 04h, 09h–21h | `marketing-24h` | Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa (45 pulsos/dia). — **entregou 1.86/dia** de 45 pedidos (4.1%) ⚠️ fora da janela: 03h, 04h |
+| 09h, 16h | `gravar-gameplay` | Grava o jogo rodando de verdade e transforma em arquivo de vídeo. — **entregou 1.86/dia** de 2 pedidos (93.0%) |
+| 09h, 13h, 16h | `gravar-prancheta` | Grava o PRANCHETA rodando (o segundo jogo da casa). — **entregou 2.43/dia** de 3 pedidos (81.0%) |
+| 09h | `ler-comentarios` | Lê comentários públicos só com a API key (sem OAuth, sem consentimento novo). — **entregou 0.86/dia** de 1 pedidos (86.0%) |
+| 09h | `medir-o-dia` | Medido: `posts/placar-metas.md` estava parado em 03/11 06:52Z — dizia "9 dia(s) restante(s)" quando faltavam 5 — e o pulso decidia com aqueles… — **entregou 0.0/dia** de 1 pedidos (0.0%) |
+| 09h | `pendencias-do-dono` | Fecha o ciclo do único passo que sobra para o dono (publicar no painel do itch). — **entregou 0.86/dia** de 1 pedidos (86.0%) |
+| 09h | `vigia-sessao-itch` | A sessão do itch (segredo ITCH_COOKIE) é o único caminho para escrever na página. — **entregou 0.86/dia** de 1 pedidos (86.0%) |
+| 10h, 14h | `chamar-video` | Leva quem já segue a casa até o vídeo que acabou de sair. — **entregou 0.14/dia** de 2 pedidos (7.0%) |
+| 10h | `medir-itch` | Placar do itch pela API (que nao passa pela Cloudflare): downloads, visitas, publicacao. — **entregou 0.86/dia** de 1 pedidos (86.0%) |
 
 ⚠️ = o workflow roda fora da janela 9h–22h. Não é erro por si: medir de madrugada é legítimo; **publicar** de madrugada não é, e o portão recusa.
 

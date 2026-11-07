@@ -292,7 +292,18 @@ def escrever(relatorio):
             _frase += " Pior entrega: " + "; ".join(
                 "%s %s%% (%s/dia)" % (l["workflow"], l["entrega_pct"], l["medido_por_dia"])
                 for l in _piores) + "."
-        linhas += ["- " + _frase, ""]
+        linhas += ["- " + _frase]
+        # A CORRENTE TAMBÉM É MEDIDA (07/11/2026): trocar o cron pela corrente sem medir a
+        # corrente seria repetir o erro com outro nome. O veredito vem do mesmo medidor.
+        _corr = _cad.get("corrente") or {}
+        if _corr.get("veredito"):
+            _extra = ""
+            if _corr.get("pulsos_perdidos"):
+                _extra = " · %d pulso(s) devido(s) sem sair" % _corr["pulsos_perdidos"]
+            if _corr.get("buracos"):
+                _extra += " · %d buraco(s) nas últimas 24h" % len(_corr["buracos"])
+            linhas.append("- Corrente: %s%s" % (_corr["veredito"], _extra))
+        linhas.append("")
 
     linhas += ["| item | estado | como |", "| --- | --- | --- |"]
     for i in relatorio["itens"]:

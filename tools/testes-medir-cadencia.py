@@ -102,6 +102,67 @@ for k, v in _salvo_env.items():
 ok("sem token não há linha e há erro dito (ausência de medida ≠ zero medido)",
    _vazio["linhas"] == [] and _vazio["erros"], _vazio["erros"][:2])
 
+# ------------------------------------------------------- a corrente presta contas
+def utc(dia, hora, minuto=0):
+    return datetime.datetime(2026, 11, dia, hora, minuto, tzinfo=datetime.timezone.utc)
+
+
+def pulso(dia, hora, minuto=0):
+    return {"created_at": utc(dia, hora, minuto).strftime("%Y-%m-%dT%H:%M:%SZ")}
+
+
+ok("o slot devido às 09h30 BRT é o pulso das 09h20",
+   c.ultimo_slot(utc(7, 12, 30)).strftime("%H:%M") == "12:20",
+   c.ultimo_slot(utc(7, 12, 30)))
+ok("o slot devido às 09h05 BRT é o pulso das 09h",
+   c.ultimo_slot(utc(7, 12, 5)).strftime("%H:%M") == "12:00")
+ok("de madrugada (05h BRT) o último slot é o aprendizado das 04h40",
+   c.ultimo_slot(utc(7, 8, 0)).strftime("%H:%M") == "07:40",
+   c.ultimo_slot(utc(7, 8, 0)))
+_slot_noite = c.ultimo_slot(utc(7, 1, 0))   # 22h BRT: janela fechada, mas 21h40 ainda é hora de pulso
+ok("o slot cai sempre em hora permitida (janela 9-22 ou estudo 3-4)",
+   _slot_noite is not None and _slot_noite.astimezone(c._corrente().FUSO).hour in
+   c._corrente().horas_de_pulso(), _slot_noite)
+
+ok("a corrente está em dia quando o pulso do slot saiu",
+   c.corrente_viva([pulso(7, 12, 20), pulso(7, 12, 0)], agora=utc(7, 12, 30))["veredito"]
+   .startswith("em dia"))
+_prazo = c.corrente_viva([pulso(7, 12, 0)], agora=utc(7, 12, 22))   # 22 min desde o último pulso
+ok("um pulso de 22 min atrás ainda é 'em dia', e o veredito diz a idade",
+   _prazo["veredito"].startswith("em dia") and "min" in _prazo["veredito"], _prazo["veredito"])
+_atraso = c.corrente_viva([pulso(7, 12, 0)], agora=utc(7, 12, 40))   # 09h40 BRT, último 09h00
+ok("pulso que não saiu vira ATRASADA, com o número na frase",
+   _atraso["veredito"].startswith("ATRASADA") and _atraso["pulsos_perdidos"] >= 1,
+   _atraso["veredito"])
+ok("o atraso é contado em pulsos devidos que faltaram, não em minutos vagos",
+   _atraso["pulsos_perdidos"] == 1 and "1 pulso(s)" in _atraso["veredito"], _atraso)
+ok("um pulso só 15 min velho ainda é 'em dia' (tolerância de meio passo)",
+   c.corrente_viva([pulso(7, 12, 20)], agora=utc(7, 12, 35))["pulsos_perdidos"] == 0)
+ok("sem run lido a corrente não é 'zero': é 'não afirmo'",
+   "não afirmo" in c.corrente_viva([], agora=utc(7, 12, 30))["veredito"])
+
+_regulares = [pulso(7, 12, 0), pulso(7, 12, 20), pulso(7, 12, 40)]
+ok("corrente sem furo não inventa buraco",
+   c.buracos(c._instantes(_regulares), agora=utc(7, 13, 0)) == [])
+_furo = c._instantes([pulso(7, 12, 0), pulso(7, 13, 20)])
+_buracos = c.buracos(_furo, agora=utc(7, 13, 40))
+ok("80 minutos calados viram buraco em pulsos perdidos",
+   len(_buracos) == 1 and _buracos[0]["pulsos_perdidos"] >= 2, _buracos)
+ok("o buraco é contado em pulsos perdidos (número acionável), não em minutos",
+   isinstance(_buracos[0]["pulsos_perdidos"], int) and "desde" in _buracos[0], _buracos)
+
+_salvo_agora, _salvo_lidos = c.CORRENTE_AGORA, c.ler_runs
+c.CORRENTE_AGORA = utc(7, 12, 30)
+c.ler_runs = lambda wf, token, **k: ([pulso(7, 12, 20), pulso(7, 12, 0)]
+                                     if wf == "marketing-24h" else [pulso(7, 12, 20)])
+_com_corrente = c.medir(token="x", dias=1, hoje=HOJE, raiz=RAIZ)
+c.CORRENTE_AGORA, c.ler_runs = _salvo_agora, _salvo_lidos
+ok("medir() mede a própria corrente e não só os crons",
+   (_com_corrente.get("corrente") or {}).get("veredito", "").startswith("em dia"),
+   _com_corrente.get("corrente"))
+ok("a medida da corrente vai para o arquivo que o relatório lê",
+   "corrente" in _com_corrente and "buracos" in _com_corrente["corrente"])
+
 with tempfile.TemporaryDirectory() as tmp:
     caminho = os.path.join(tmp, "cadencia.json")
     c.gravar(_dados, caminho)

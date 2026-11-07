@@ -246,7 +246,10 @@ try:
                    "linhas": [{"workflow": "marketing-24h", "esperado_por_dia": 45,
                                "medido_por_dia": 1.86, "entrega_pct": 4.1},
                               {"workflow": "medir-itch", "esperado_por_dia": 1,
-                               "medido_por_dia": 0.86, "entrega_pct": 86.0}]}, f)
+                               "medido_por_dia": 0.86, "entrega_pct": 86.0}],
+                   "corrente": {"veredito": "ATRASADA: 2 pulso(s) não saíram desde 07/11 09:00",
+                                "pulsos_perdidos": 2,
+                                "buracos": [{"desde": "a", "ate": "b", "pulsos_perdidos": 2}]}}, f)
     pend.escrever(pend.montar())
     _texto_cad = open(pend.SAIDA_MD, encoding="utf-8").read()
     ok("o relatório diz o que o cron pede", "o cron pede **63**" in _texto_cad,
@@ -257,6 +260,26 @@ try:
        [l for l in _texto_cad.splitlines() if "Agenda" in l])
     ok("a entrega melhor não é chamada de pior", "medir-itch 86.0%" not in _texto_cad,
        [l for l in _texto_cad.splitlines() if "Agenda" in l])
+    _linha_corrente = [l for l in _texto_cad.splitlines() if l.startswith("- Corrente:")]
+    ok("o relatório diz se a corrente está entregando", _linha_corrente
+       and "ATRASADA" in _linha_corrente[0], _linha_corrente)
+    ok("o relatório diz quantos pulsos devidos não saíram",
+       _linha_corrente and "2 pulso(s)" in _linha_corrente[0], _linha_corrente)
+    ok("o relatório diz quantos buracos houve em 24h",
+       _linha_corrente and "1 buraco(s)" in _linha_corrente[0], _linha_corrente)
+    # corrente em dia: a linha muda de tom, e o relatório não fica mudo quando está tudo bem
+    with open(_cad_path, "w", encoding="utf-8") as f:
+        json.dump({"medido_em": "2026-11-07", "janela_dias": 7,
+                   "total_esperado_por_dia": 63, "total_medido_por_dia": 40.0,
+                   "linhas": [{"workflow": "marketing-24h", "esperado_por_dia": 45,
+                               "medido_por_dia": 39.0, "entrega_pct": 86.7}],
+                   "corrente": {"veredito": "em dia (último pulso há 6 min)",
+                                              "pulsos_perdidos": 0, "buracos": []}}, f)
+    pend.escrever(pend.montar())
+    _texto_ok = open(pend.SAIDA_MD, encoding="utf-8").read()
+    ok("corrente em dia é dita como em dia, sem inventar problema",
+       "Corrente: em dia" in _texto_ok and "ATRASADA" not in _texto_ok,
+       [l for l in _texto_ok.splitlines() if "Corrente" in l])
 finally:
     if _cad_antes is None:
         if os.path.exists(_cad_path):

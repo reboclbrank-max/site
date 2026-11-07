@@ -26,6 +26,7 @@ import importlib.util
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAIDA = os.path.join(RAIZ, "posts", "cadencia.json")
 REPO = "reboclbrank-max/site"
+CORRENTE_AGORA = None       # injetável nos testes: sem isso cada contrato dependeria do relógio
 
 
 def _agendas():
@@ -133,10 +134,132 @@ def amostra_cobre(runs, hoje=None, dias=7, por_pagina=100):
     return len(runs) < por_pagina        # curta e completa: o histórico começa na janela
 
 
+def _corrente():
+    """As réguas da corrente (passo, horas de pulso, fuso) vêm do próprio `corrente.py`.
+
+    Duas cópias do passo de 20 minutos seriam duas verdades: no dia em que uma mudasse, o
+    medidor estaria medindo outra coisa que não a corrente.
+    """
+    caminho = os.path.join(RAIZ, "tools", "corrente.py")
+    spec = importlib.util.spec_from_file_location("corrente_medida", caminho)
+    modulo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(modulo)
+    return modulo
+
+
+def _instantes(runs):
+    """created_at dos runs como datetime UTC, do mais velho para o mais novo."""
+    achados = []
+    for run in runs:
+        texto = str(run.get("created_at") or "")
+        if texto.endswith("Z"):
+            texto = texto[:-1] + "+00:00"
+        try:
+            achados.append(datetime.datetime.fromisoformat(texto).astimezone(datetime.timezone.utc))
+        except ValueError:
+            continue
+    return sorted(achados)
+
+
+def ultimo_slot(agora, horas=None, passo=None):
+    """O último horário em que a corrente DEVERIA ter disparado, até `agora` (inclusive).
+
+    Se agora são 10h30 e o passo é de 20 minutos, o pulso devido é o de 10h20. Fora das horas
+    permitidas o último slot pode estar ontem — e é isso mesmo: de madrugada não se exige pulso.
+    """
+    corrente = _corrente()
+    horas = set(corrente.horas_de_pulso() if horas is None else horas)
+    passo = passo or corrente.PASSO_MINUTOS
+    local = agora.astimezone(corrente.FUSO).replace(second=0, microsecond=0)
+    cand = local.replace(minute=local.minute - local.minute % passo)
+    for _ in range(24 * 60 // passo + 1):
+        if cand.hour in horas and cand <= local:
+            return cand.astimezone(datetime.timezone.utc)
+        cand -= datetime.timedelta(minutes=passo)
+    return None
+
+
+def _slots_perdidos(desde, ate, horas=None, passo=None, tolerancia=None):
+    """Quantos pulsos DEVIDOS caíram entre dois instantes e não saíram.
+
+    Conta em pulsos, não em minutos: "2 pulsos não saíram" é uma frase acionável; "47 minutos de
+    silêncio" não diz quanta coisa deixou de rodar. A tolerância existe porque um run recém-
+    disparado pode ainda não ter aparecido na lista.
+    """
+    corrente = _corrente()
+    horas = set(corrente.horas_de_pulso() if horas is None else horas)
+    passo = passo or corrente.PASSO_MINUTOS
+    if tolerancia is None:
+        tolerancia = datetime.timedelta(minutes=tolerancia_da_corrente(passo))
+    cand, perdidos = desde + datetime.timedelta(minutes=passo), 0
+    while cand < ate - tolerancia:
+        if cand.astimezone(corrente.FUSO).hour in horas:
+            perdidos += 1
+        cand += datetime.timedelta(minutes=passo)
+    return perdidos
+
+
+def corrente_viva(runs_pulso, agora=None, tolerancia_min=10, horas=None, passo=None):
+    """A corrente está entregando? Sem esta pergunta, a corrente vira a mentira seguinte.
+
+    O cron falhava calado: 45 pedidos, 1,86 entregues, e a casa só descobriu medindo. Aqui a
+    conta é a mesma dos buracos: entre o último pulso e agora, quantos pulsos DEVIDOS ficaram
+    para trás. Zero é em dia; um já é atraso com número.
+    """
+    corrente = _corrente()
+    passo = passo or corrente.PASSO_MINUTOS
+    agora = agora or datetime.datetime.now(datetime.timezone.utc)
+    instantes = _instantes(runs_pulso)
+    slot = ultimo_slot(agora, horas=horas, passo=passo)
+    dados = {"agora": agora.isoformat(), "ultimo_pulso": None, "idade_min": None,
+             "slot_devido": slot.isoformat() if slot else None, "atraso_min": None,
+             "pulsos_perdidos": None, "veredito": "não sei", "buracos": []}
+    if not instantes:
+        dados["veredito"] = "nenhum pulso lido: não afirmo"
+        return dados
+    ultimo = instantes[-1]
+    dados["ultimo_pulso"] = ultimo.isoformat()
+    dados["idade_min"] = round((agora - ultimo).total_seconds() / 60.0, 1)
+    if slot is not None:
+        dados["atraso_min"] = round((agora - slot).total_seconds() / 60.0, 1)
+    dados["pulsos_perdidos"] = _slots_perdidos(ultimo, agora, horas=horas, passo=passo,
+                                               tolerancia=datetime.timedelta(minutes=tolerancia_min))
+    quando = lambda t: t.astimezone(corrente.FUSO).strftime("%d/%m %H:%M")
+    if dados["pulsos_perdidos"] == 0:
+        dados["veredito"] = "em dia (último pulso %s, há %.0f min)" % (quando(ultimo),
+                                                                      dados["idade_min"])
+    else:
+        dados["veredito"] = "ATRASADA: %d pulso(s) não saíram desde %s (último há %.0f min)" % (
+            dados["pulsos_perdidos"], quando(ultimo), dados["idade_min"])
+    dados["buracos"] = buracos(instantes, agora=agora, horas=horas, passo=passo)
+    return dados
+
+
+def buracos(instantes, agora=None, horas=None, passo=None, horas_24=24):
+    """Intervalos em que a corrente deveria ter pulsado e não pulsou, nas últimas 24 horas."""
+    corrente = _corrente()
+    passo = passo or corrente.PASSO_MINUTOS
+    agora = agora or datetime.datetime.now(datetime.timezone.utc)
+    desde = agora - datetime.timedelta(hours=horas_24)
+    achados = [i for i in instantes if desde <= i <= agora]
+    resultado = []
+    for antes, depois in zip(achados, achados[1:] + [agora]):
+        perdidos = _slots_perdidos(antes, depois, horas=horas, passo=passo)
+        if perdidos >= 2:      # um pulso perdido isolado acontece; dois é buraco
+            resultado.append({"desde": antes.isoformat(), "ate": depois.isoformat(),
+                              "pulsos_perdidos": perdidos})
+    return resultado
+
+
+def tolerancia_da_corrente(passo):
+    """Um run pode demorar para nascer; meio passo de folga antes de chamar de perdido."""
+    return max(1, passo // 2)
+
+
 def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
     token = token or os.environ.get("GHPAT") or os.environ.get("GITHUB_TOKEN")
     esperado = esperado_do_repositorio(raiz)
-    linhas, erros = [], []
+    linhas, erros, lidos = [], [], {}
     for nome, (cron, pede) in sorted(esperado.items()):
         if not token:
             erros.append("%s: sem token" % nome)
@@ -146,6 +269,7 @@ def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
         except Exception as erro:  # noqa: BLE001
             erros.append("%s: %s" % (nome, str(erro)[:80]))
             continue
+        lidos[nome] = runs
         dias_map = contar_por_dia(runs, hoje=hoje, dias=dias)
         medido = medido_por_dia(dias_map, dias)
         entrega, frase = comparar(pede, medido)
@@ -161,9 +285,15 @@ def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
                        "runs_lidos": len(runs)})
     total_esperado = sum(l["esperado_por_dia"] for l in linhas)
     total_medido = round(sum(l["medido_por_dia"] or 0 for l in linhas), 2)
-    return {"medido_em": (hoje or datetime.date.today()).isoformat(),
-            "janela_dias": dias, "linhas": linhas, "erros": erros,
-            "total_esperado_por_dia": total_esperado, "total_medido_por_dia": total_medido}
+    dados = {"medido_em": (hoje or datetime.date.today()).isoformat(),
+             "janela_dias": dias, "linhas": linhas, "erros": erros,
+             "total_esperado_por_dia": total_esperado, "total_medido_por_dia": total_medido}
+    # A CORRENTE TAMBÉM PRESTA CONTAS (07/11/2026): trocar o cron pela corrente sem medir a
+    # corrente seria repetir o erro com outro nome. Só mede se o pulso foi lido.
+    if lidos.get("marketing-24h"):
+        dados["corrente"] = corrente_viva(lidos["marketing-24h"], agora=CORRENTE_AGORA
+                                          if CORRENTE_AGORA else None)
+    return dados
 
 
 def gravar(dados, caminho=SAIDA):
@@ -194,6 +324,10 @@ def main(argv):
             "?" if l["entrega_pct"] is None else "%s%%" % l["entrega_pct"], l["frase"]))
     print("\ntotal: o cron pede %s disparos/dia · o GitHub entregou %s/dia (janela de %d dia(s))"
           % (dados["total_esperado_por_dia"], dados["total_medido_por_dia"], dias))
+    if dados.get("corrente"):
+        print("corrente: " + dados["corrente"]["veredito"]
+              + (" · %d buraco(s) nas últimas 24h" % len(dados["corrente"]["buracos"])
+                 if dados["corrente"]["buracos"] else ""))
     if dados["erros"]:
         print("sem medida em: " + "; ".join(dados["erros"]))
     print("gravado em " + os.path.relpath(gravar(dados), RAIZ))

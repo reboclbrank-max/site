@@ -351,6 +351,13 @@ def gerar(raiz=RAIZ):
                     cadencia.get("total_medido_por_dia"), cadencia.get("total_esperado_por_dia"),
                     (sorted([x for x in cadencia["linhas"] if x.get("entrega_pct") is not None],
                             key=lambda x: x["entrega_pct"]) or [{"workflow": "—"}])[0]["workflow"]))
+    # A DESCRIÇÃO DO WORKFLOW NÃO PODE MENTIR SOZINHA (07/11/2026): o comentário do topo do
+    # `marketing-24h` diz "45 pulsos/dia". É o que o cron PEDE. Ao lado de cada linha entra o
+    # que foi ENTREGUE, medido — senão a tabela repete a promessa como se fosse fato.
+    cadencia_por_workflow = {}
+    for item in cadencia.get("linhas") or []:
+        if item.get("workflow") and item.get("medido_por_dia") is not None:
+            cadencia_por_workflow[item["workflow"]] = item
     l.append("")
     l.append("| hora (Brasília) | workflow | o que faz |")
     l.append("| --- | --- | --- |")
@@ -360,8 +367,15 @@ def gerar(raiz=RAIZ):
         fora = ""
         if linha["fora_da_janela"]:
             fora = " ⚠️ fora da janela: %s" % ", ".join(_hora(h) for h in linha["fora_da_janela"])
-        l.append("| %s | `%s` | %s%s |" % (quando, linha["workflow"],
-                                           linha["descricao"] or "—", fora))
+        entrega = ""
+        medida = cadencia_por_workflow.get(linha["workflow"])
+        if medida:
+            pct = medida.get("entrega_pct")
+            entrega = " — **entregou %s/dia** de %s pedidos%s" % (
+                medida["medido_por_dia"], medida.get("esperado_por_dia"),
+                "" if pct is None else " (%.1f%%)" % pct)
+        l.append("| %s | `%s` | %s%s%s |" % (quando, linha["workflow"],
+                                             linha["descricao"] or "—", entrega, fora))
     l.append("")
     l.append("⚠️ = o workflow roda fora da janela 9h–22h. Não é erro por si: medir de madrugada "
              "é legítimo; **publicar** de madrugada não é, e o portão recusa.")

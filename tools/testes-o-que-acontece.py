@@ -153,6 +153,26 @@ if os.path.exists(_cad_path):
 else:
     ok("sem cadência medida, o retrato não afirma entrega", "Entrega medida do agendador" not in _doc)
 
+# a tabela não pode repetir a promessa do cron sem a entrega medida ao lado
+import json as _json_cad
+_cad_caminho = os.path.join(RAIZ, "posts", "cadencia.json")
+_medidos = {}
+if os.path.exists(_cad_caminho):
+    for _i in _json_cad.load(open(_cad_caminho, encoding="utf-8")).get("linhas") or []:
+        if _i.get("medido_por_dia") is not None:
+            _medidos[_i["workflow"]] = _i
+_linhas_tabela = [x for x in _doc.splitlines() if x.startswith("| ") and "`" in x]
+_faltando = [n for n in _medidos if not any(("`%s`" % n) in x and "entregou" in x for x in _linhas_tabela)]
+ok("na tabela da agenda, quem foi medido mostra o que ENTREGOU", not _faltando, _faltando)
+ok("nenhuma linha promete 'pulsos/dia' sem dizer quanto entregou de verdade",
+   not [x for x in _linhas_tabela if "pulsos/dia" in x and "entregou" not in x],
+   [x[:90] for x in _linhas_tabela if "pulsos/dia" in x and "entregou" not in x])
+ok("a linha do pulso mostra a conta inteira (pedido, entregue e porcentagem)",
+   _medidos.get("marketing-24h") is None or any(
+       "entregou %s/dia" % _medidos["marketing-24h"]["medido_por_dia"] in x
+       and ("%.1f%%" % _medidos["marketing-24h"]["entrega_pct"]) in x for x in _linhas_tabela),
+   [x[:90] for x in _linhas_tabela if "marketing-24h" in x])
+
 ok("o retrato mostra a faixa de horas do pulso, não 'todas as horas'",
    "03h, 04h, 09h–21h" in _doc or "03h, 04h, 09h" in _doc, _doc[_doc.find("marketing-24h") - 80:
                                                                  _doc.find("marketing-24h") + 40])
