@@ -180,8 +180,25 @@ def linha_da_partida(slug, raiz=RAIZ):
     n = numeros_da_partida(slug, raiz)
     if not n:
         return ""
-    return ("Esta partida: %d mudas plantadas, %d colheitas e %d toques em %d minutos de "
-            "gravação." % (n["plantadas"], n["colhidas"], n["toques"], n["minutos"]))
+    # MESMA LIÇÃO DO TÍTULO (06/11/2026, run 42318967911): esta linha também lia as chaves do
+    # CEIFALUME direto e estourava no PRANCHETA. A frase é montada com o que existe.
+    partes = []
+    if n.get("plantadas"):
+        partes.append("%d mudas plantadas" % n["plantadas"])
+    if n.get("colhidas"):
+        partes.append("%d colheitas" % n["colhidas"])
+    if n.get("passos"):
+        partes.append("%d passos do roteiro" % n["passos"])
+    if n.get("passos_confirmados"):
+        partes.append("%d confirmados por imagem" % n["passos_confirmados"])
+    _toques = n.get("toques") or n.get("toques_partida") or 0
+    if _toques:
+        partes.append("%d toques" % _toques)
+    if not partes:
+        return ""
+    return ("Esta partida: %s em %d minuto%s de gravação."
+            % (", ".join(partes), n.get("minutos") or 1,
+               "" if (n.get("minutos") or 1) == 1 else "s"))
 
 
 def pacote(slug):

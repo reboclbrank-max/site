@@ -30,10 +30,18 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
-      - name: ffmpeg (para as suítes de vídeo não pularem)
+      - name: Ferramentas que as suítes medem (ffmpeg, Pillow, navegador)
+        # SEM ISTO, "tudo testado" NO CI ERA MENTIRA (06/11/2026): o run 42318964201 passou 46 de
+        # 52 e as 6 falhas eram TODAS dependência faltando — Pillow (capa, gif, capas antigas,
+        # barreira de dependências, instruções no vídeo) e navegador (devlog). O runner rodava
+        # aqui exatamente o que rodava na máquina de quem escreveu; no CI, metade pulava ou
+        # estourava. Suíte que pula por falta de ferramenta precisa da ferramenta instalada.
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
+          python3 -m pip install --quiet --disable-pip-version-check Pillow
+          npm install --no-save --no-audit --no-fund playwright-core@1
+          npx --yes playwright install --with-deps chromium-headless-shell
 
       - name: Node (as suítes do decisor rodam no Node)
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4

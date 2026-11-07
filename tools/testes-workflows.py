@@ -249,6 +249,16 @@ def main():
         ok("%s: falha se o vídeo final sumir depois do commit" % nome,
            re.search(r"test\s+-s\s+media/gameplay/[\w.-]+\.mp4", fonte) is not None)
 
+    # O CI QUE DIZ "TODAS AS SUÍTES" PRECISA DAS FERRAMENTAS (06/11/2026): o run 42318964201
+    # reprovou 6 de 52 — todas por falta de Pillow ou de navegador. Workflow que roda a bateria
+    # inteira instala o que a bateria mede, senão o verde é do que pulou.
+    for nome, fonte in fontes().items():
+        if "rodar-todas-as-suites.py" not in fonte:
+            continue
+        for ferramenta, marca in (("Pillow", "Pillow"), ("navegador", "playwright")):
+            ok("%s: instala %s antes de rodar a bateria" % (nome, ferramenta),
+               marca in fonte)
+
     # O REGISTRO DA CAPA É COMMITADO (06/11/2026): quem envia capa anota em
     # posts/capas-aplicadas.json; se o passo de commit esquece esse arquivo, a anotação morre no
     # stash do fim do run e a ferramenta das capas repinta o que já estava pintado.

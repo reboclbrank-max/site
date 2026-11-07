@@ -442,6 +442,14 @@ def main():
        and "colheita" not in str(_titulos.get("prancheta", "")).lower(), _titulos)
     ok("cada jogo tem título diferente do outro (não é molde)",
        len(set(_titulos.values())) == len(_titulos), _titulos)
+    # ...e o mesmo vale para a LINHA da descrição: o run 42318967911 morreu aqui, depois do
+    # título já estar consertado, porque só o título tinha sido coberto.
+    _linhas = {_slug: _kit.linha_da_partida(_slug, raiz=_pasta) for _slug in _kit.GAMEPLAY}
+    ok("a linha da partida também é montada para todo jogo (sem KeyError)",
+       all(_linhas.values()), _linhas)
+    ok("a linha do PRANCHETA fala em passos e a do CEIFALUME em plantio",
+       "passos" in _linhas.get("prancheta", "") and "mudas" in _linhas.get("ceifalume", ""),
+       _linhas)
 
     # 5. envio continua trancado
     env = dict(os.environ, KIT_YOUTUBE=os.path.join("posts", "kit-gameplay.json"), CONFIRMACAO="")
