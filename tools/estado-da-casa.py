@@ -126,10 +126,15 @@ def texto(dados=None):
     # canal e quantos DA CASA estão sem capa.
     linha = "Capas da casa: %d aplicada(s)" % d["capas_aplicadas"]
     if d["capas_no_canal"]:
+        # "DE OUTROS JOGOS" SAIU DA FRASE (07/11/2026): o classificador olha o TÍTULO, e 40 dos 51
+        # vídeos pintados têm título genérico ("Como funciona: as plantações crescem..."). Chamar
+        # 158 de "de outros jogos" seria palpite com cara de medida. O que é medido fica: tamanho
+        # do canal, quantos têm capa da casa e quantos citam jogo da casa no título.
         linha += " · canal com %d vídeos" % d["capas_no_canal"]
-        if d.get("capas_da_casa") is not None and d.get("capas_outros_jogos") is not None:
-            linha += " (%d citam jogo da casa, %d de outros jogos)" % (
-                d["capas_da_casa"], d["capas_outros_jogos"])
+        if d.get("capas_com_capa_no_canal"):
+            linha += ", %d com capa da casa" % d["capas_com_capa_no_canal"]
+        if d.get("capas_da_casa") is not None:
+            linha += ", %d citam jogo da casa no título" % d["capas_da_casa"]
     if d["capas_sem_capa"] == 0:
         linha += " · nenhum da casa sem capa"
     elif d["capas_sem_capa"]:

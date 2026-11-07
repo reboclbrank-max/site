@@ -88,8 +88,11 @@ try:
         json.dump({"no_canal": 169, "sem_capa": 0, "da_casa": 11, "outros_jogos": 158,
                    "com_capa_no_canal": 51, "medido_em": "2026-11-07T01:00:00Z"}, f)
     _bloco_outros = est.texto(est.estado())
-    ok("o bloco diz quantos citam jogo da casa e quantos são de outros jogos",
-       "11 citam jogo da casa, 158 de outros jogos" in _bloco_outros, _bloco_outros)
+    ok("o bloco diz quantos têm capa e quantos citam jogo da casa no título",
+       "51 com capa da casa" in _bloco_outros and "11 citam jogo da casa no título" in _bloco_outros,
+       _bloco_outros)
+    ok("o bloco NÃO chuta 'de outros jogos' (o classificador só olha o título)",
+       "outros jogos" not in _bloco_outros, _bloco_outros)
     ok("o bloco diz que nenhum da casa está sem capa",
        "nenhum da casa sem capa" in _bloco_outros, _bloco_outros)
     ok("o bloco não inventa razão para os de outros jogos (nada de 'por regra' sem medir)",
