@@ -17,6 +17,8 @@ Todo push publica o site (GitHub Pages), sem exceção e sem depender de teste v
 | `posts/devlog-itch.json` | `testes-devlog` | Mede o favorito "Postar devlog" num Chromium de verdade, no runner. |
 | `.github/workflows/testes-devlog.yml` | `testes-devlog` | Mede o favorito "Postar devlog" num Chromium de verdade, no runner. |
 
+Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar em `syncing_files` e morrer por timeout — foi o que aconteceu naquele run, e o push seguinte publicou tudo. Deploy do site falhando não estraga o repositório; o próximo push reenvia. Se o site parecer velho, confira o último `pages build and deploy`.
+
 **O que NÃO roda no push:** mexer em `ceifalume/`, `jogos/` ou nas páginas da raiz não dispara teste nenhum. O site publica igual; a bateria inteira (`conferir-tudo`) só é chamada quando o push toca `tools/`, `posts/` ou os próprios workflows. Se a dúvida é "será que eu quebrei alguma coisa?", rode `python3 tools/rodar-todas-as-suites.py` antes de empurrar.
 
 ## 2. O dia sem você tocar em nada (hora de Brasília)

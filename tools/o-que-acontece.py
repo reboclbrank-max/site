@@ -276,6 +276,11 @@ def gerar(raiz=RAIZ):
     if not any(i["cadeado"] for i in d["push"]) and not d["push"]:
         l.append("| — | — | nenhum workflow roda no push |")
     l.append("")
+    l.append("Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar em "
+             "`syncing_files` e morrer por timeout — foi o que aconteceu naquele run, e o push "
+             "seguinte publicou tudo. Deploy do site falhando não estraga o repositório; o próximo "
+             "push reenvia. Se o site parecer velho, confira o último `pages build and deploy`.")
+    l.append("")
     l.append("**O que NÃO roda no push:** mexer em `ceifalume/`, `jogos/` ou nas páginas da raiz "
              "não dispara teste nenhum. O site publica igual; a bateria inteira (`conferir-tudo`) "
              "só é chamada quando o push toca `tools/`, `posts/` ou os próprios workflows. "
