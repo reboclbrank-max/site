@@ -42,6 +42,14 @@ itch = _modulo_do_envio()
 
 NUNCA = os.path.join(RAIZ, "posts", "nunca-publicar.json")
 
+# Jogos que existem na casa mas NÃO têm build versionado aqui: não é desconhecido, é sem build.
+# O dono perguntou o que acontece se ele atualizar o PRANCHETA (07/11/2026); a resposta tem de
+# ser o motivo medido, não "jogo desconhecido".
+SEM_BUILD = {
+    "prancheta": "o build do PRANCHETA vive publicado no itch; no repositório só existe a página "
+                 "de venda (jogos/prancheta/index.html), então não há o que empurrar",
+}
+
 # projeto no itch -> (pasta do build, canal). O canal é o do export web.
 PROJETOS = {
     "ceifalume": {"pasta": "ceifalume", "alvo": "rebocl-brank/ceifalume",
@@ -268,7 +276,15 @@ def main(argv):
     modo = argv[1]
     nome = argv[2] if len(argv) > 2 else "ceifalume"
     if nome not in PROJETOS:
+        if nome in SEM_BUILD:
+            print("sem build para administrar: " + nome)
+            print("  motivo: " + SEM_BUILD[nome])
+            print("  o que fazer: subir o build no itch (painel/butler); a gravação automática "
+                  "passa a filmar a versão nova na próxima rodada")
+            return 2
         print("jogo desconhecido: " + nome)
+        print("  conhecidos com build: " + ", ".join(sorted(PROJETOS)))
+        print("  conhecidos sem build: " + (", ".join(sorted(SEM_BUILD)) or "(nenhum)"))
         return 2
     chave = itch.chave_do_ambiente("ITCH_API_KEYS") or itch.chave_do_ambiente("ITCH_API_KEY")
     if not chave:

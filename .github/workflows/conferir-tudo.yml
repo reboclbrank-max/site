@@ -65,3 +65,19 @@ jobs:
             echo
             tail -12 /tmp/suites.txt | sed 's/^/    /'
           } >> "$GITHUB_STEP_SUMMARY"
+
+      # O retrato do dia (O-QUE-ACONTECE.md) é gerado dos próprios workflows. Se alguém mexer num
+      # workflow e não regerar, o documento passa a mentir com cara de medido — este passo é o que
+      # impede isso. Não commita nada: só reprova.
+      - name: O retrato do dia está em dia com os workflows
+        run: |
+          set -o pipefail -e
+          python3 tools/rodar-contratos-isolados.py tools/testes-o-que-acontece.py | tee /tmp/retrato.txt
+          python3 tools/o-que-acontece.py --conferir | tee -a /tmp/retrato.txt
+          {
+            echo "### Retrato do dia"
+            echo
+            echo '```'
+            cat /tmp/retrato.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -207,6 +207,33 @@ ok("status sem canal é lido como inexistente", adm.interpretar_status(SEM_CANAL
 ok("status com canal é lido como existente", adm.interpretar_status(COM_CANAL, "html5")[0] is True)
 ok("a versão é extraída do status", adm.interpretar_status(COM_CANAL, "html5", local["hash"])[1] == local["hash"][:12])
 
+# ------------------------------------------------------------------ jogo sem build (07/11/2026)
+# O dono quer saber o que acontece ao atualizar o PRANCHETA. A resposta não pode ser
+# "jogo desconhecido": o PRANCHETA é da casa, só não tem build aqui.
+_capturado = {}
+
+
+def _dublê_de_print(*a, **k):
+    _capturado.setdefault("texto", []).append(" ".join(str(x) for x in a))
+
+
+_salvo_print = adm.print if hasattr(adm, "print") else print
+import builtins as _b
+_b.print = _dublê_de_print
+try:
+    _codigo = adm.main(["administrar-itch.py", "auto", "prancheta"])
+finally:
+    _b.print = _salvo_print
+_saida = " ".join(_capturado.get("texto", []))
+ok("o PRANCHETA não é tratado como jogo desconhecido", "jogo desconhecido" not in _saida, _saida)
+ok("o PRANCHETA é recusado com motivo medido", "sem build para administrar" in _saida, _saida)
+ok("a recusa diz onde o build dele vive", "publicado no itch" in _saida, _saida)
+ok("a recusa devolve código 2 (não é sucesso)", _codigo == 2, _codigo)
+ok("o PRANCHETA não entra na lista de quem sobe sozinho", "prancheta" not in adm.PROJETOS,
+   sorted(adm.PROJETOS))
+ok("todo jogo em SEM_BUILD é da casa (existe em jogos/)",
+   all(os.path.isdir(os.path.join(RAIZ, "jogos", n)) for n in adm.SEM_BUILD), sorted(adm.SEM_BUILD))
+
 # ------------------------------------------------------------------ segredo não vaza
 texto = open(os.path.join(RAIZ, "tools", "administrar-itch.py"), encoding="utf-8").read()
 ok("a chave não é escrita no código", "BUTLER_API_KEY" not in texto.split("import")[0] or True)

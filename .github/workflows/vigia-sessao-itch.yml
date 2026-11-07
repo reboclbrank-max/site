@@ -1,6 +1,6 @@
 name: vigia-sessao-itch
 
-# A sessao do itch (segredo ITCH_COOKIE) e o unico caminho para escrever na pagina.
+# A sessão do itch (segredo ITCH_COOKIE) é o único caminho para escrever na página.
 # Ela nao tem prazo publicado: cai quando o dono sai da conta, troca a senha, ou quando
 # o itch expira a sessao. Este vigia roda todo dia e avisa no dia em que cair — assim
 # "expira um dia" nunca vira "descobri semanas depois".

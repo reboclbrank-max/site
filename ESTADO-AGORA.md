@@ -1,3 +1,8 @@
+<!-- HISTÓRICO: este arquivo é a medição de 26/10/2026, guardada como prova do que se
+     mediu naquele dia. Os números envelheceram de propósito (diz 160 vídeos; o canal
+     tem 169). O retrato vivo do que roda sozinho é O-QUE-ACONTECE.md, gerado dos
+     workflows e conferido pelo `conferir-tudo`. -->
+
 # Estado medido — 26/10, depois da autorização
 
 Nada aqui é estimativa: cada linha veio de uma chamada real, feita no runner.

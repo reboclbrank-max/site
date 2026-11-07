@@ -1,6 +1,6 @@
 name: marketing-24h
 
-# Motor 24 horas: um pulso a cada ~15 minutos decide UMA ação e executa.
+# Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa (45 pulsos/dia).
 #
 # O que este workflow NÃO faz (para não vender ilusão):
 #   - não é "a cada segundo": o cron do GitHub é melhor esforço e pode atrasar;
