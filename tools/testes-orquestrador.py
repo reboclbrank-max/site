@@ -273,6 +273,32 @@ def main():
        all(12 <= h <= 22 for h in _horas_utc), _horas_utc)
     ok("as gravações ficam às 09h e 16h de Brasília", sorted(_horas_utc) == [12, 19], _horas_utc)
 
+    # ---- CÓPIAS VELHAS DE AÇÃO REPETÍVEL (07/11/2026) ---------------------------------
+    # Medido na fila real: 8 pendentes, 5 delas `medir`, quatro de 03/11. Medir o placar de
+    # 03/11 hoje não é trabalho útil — é cópia. Publicar é o contrário: cada uma vale por si.
+    _repetidas = {"tarefas": [_t("medir-velha", "medir", 90), _t("medir-meio", "medir", 40),
+                              _t("medir-nova", "medir", 2),
+                              _t("publicar-a", "publicar", 30), _t("publicar-b", "publicar", 1),
+                              _t("aprender-velha", "aprender", 50),
+                              _t("aprender-nova", "aprender", 3)]}
+    _saíram = fila.podar_repetidas(_repetidas)
+    ok("a poda deixa uma medir só", len(fila.pendentes_por_tipo(_repetidas, "medir")) == 1,
+       [t["id"] for t in fila.pendentes_por_tipo(_repetidas, "medir")])
+    ok("a medir que fica é a mais nova",
+       fila.pendentes_por_tipo(_repetidas, "medir")[0]["id"] == "medir-nova",
+       [t["id"] for t in fila.pendentes_por_tipo(_repetidas, "medir")])
+    ok("a poda deixa uma aprender só", len(fila.pendentes_por_tipo(_repetidas, "aprender")) == 1,
+       [t["id"] for t in fila.pendentes_por_tipo(_repetidas, "aprender")])
+    ok("a poda NÃO toca em publicar", len(fila.pendentes_por_tipo(_repetidas, "publicar")) == 2,
+       [t["id"] for t in fila.pendentes_por_tipo(_repetidas, "publicar")])
+    ok("a poda diz quantas saíram", len(_saíram) == 3, len(_saíram))
+    ok("podada não vira 'feita': vira vencida, com motivo",
+       all(t["estado"] == "vencida" and "vencida" in (t.get("resultado") or "") for t in _saíram),
+       [(t["id"], t["estado"]) for t in _saíram])
+    ok("o pulso poda antes de pegar",
+       ".podar_repetidas(" in open(os.path.join(RAIZ, "tools", "orquestrador.py"),
+                                   encoding="utf-8").read())
+
     # ---- PULAR NÃO É CONCLUIR (07/11/2026) ---------------------------------------------
     # Medido no run 42331047208: às 23h locais o pulso levou a `publicar`, o portão respondeu
     # "janela: fora da janela" / "RESUMO: janela=PULADO" e a tarefa foi fechada como `feito`.
@@ -297,7 +323,7 @@ def main():
        'tipos = ("medir",)' in _src_orq and "pode_publicar(agora, ler_calendario())" in _src_orq,
        [l for l in _src_orq.splitlines() if "tipos =" in l])
 
-    total = 24 + 15 + 8
+    total = 24 + 15 + 8 + 7
     print("\n%d/%d testes do orquestrador 24h passaram" % (total - falhas, total))
     return 1 if falhas else 0
 

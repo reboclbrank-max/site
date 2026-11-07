@@ -203,6 +203,36 @@ def concluir(dados, tarefa, ok, resultado=""):
     return "nova tentativa (%d/%d)" % (tarefa["tentativas"], MAX_TENTATIVAS)
 
 
+# AÇÕES IDEMPOTENTES: medir de novo dá o mesmo número; aprender de novo, a mesma lição. Ter
+# cinco `medir` pendentes não é cinco vezes mais medição — é uma medição e quatro cópias velhas,
+# e foi assim que a fila chegou a 8 pendentes com a mais antiga de 03/11. Publicar e pesquisar
+# NÃO estão nesta lista: cada publicação vale por si e não pode ser podada.
+IDEMPOTENTES = ("medir", "aprender")
+
+
+def podar_repetidas(dados, agora=None):
+    """Deixa no máximo UMA pendente por ação idempotente (a mais nova) e diz quantas podou.
+
+    A poda não apaga a tarefa nem mente sobre ela: marca `vencida`, com o motivo e o id da que
+    ficou. "Vencida" é diferente de "feita" — nada foi medido, nada foi aprendido.
+    """
+    podadas = []
+    for tipo in IDEMPOTENTES:
+        pendentes = [t for t in dados["tarefas"]
+                     if t.get("tipo") == tipo and t.get("estado") == "pendente"]
+        if len(pendentes) <= 1:
+            continue
+        pendentes.sort(key=lambda t: t.get("criada") or "", reverse=True)
+        fica = pendentes[0]
+        for velha in pendentes[1:]:
+            velha["estado"] = "vencida"
+            velha["resultado"] = ("vencida: %s mais nova assume (criada em %s)"
+                                  % (fica["id"], (fica.get("criada") or "")[:16]))
+            velha["adiamentos"] = int(velha.get("adiamentos", 0))
+            podadas.append(velha)
+    return podadas
+
+
 def adiar(dados, tarefa, motivo=""):
     """Devolve a tarefa à fila SEM contar tentativa: ela não falhou, foi adiada.
 

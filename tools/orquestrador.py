@@ -232,6 +232,13 @@ def usar_fila(agora, estado):
     # locais o pulso levou a `publicar`, o portão respondeu "PULADO (fora da janela)" e a tarefa
     # foi fechada como `feito` — publicação que não houve virando tarefa concluída. Pega-se a
     # `publicar` só quando o portão abre; fora dele o pulso mede e a tarefa espera a manhã.
+    # ANTES DE PEGAR, PODAR AS CÓPIAS VELHAS (07/11/2026): a fila real estava com 8 pendentes,
+    # sendo 5 `medir` — cinco medições do mesmo placar, quatro delas de 03/11. Medir de novo não
+    # fica melhor com o tempo; fica pior. A poda mantém a mais nova e diz quantas saíram.
+    _podadas = fila.podar_repetidas(dados, agora=agora)
+    if _podadas:
+        print("fila: %d cópia(s) vencida(s) podada(s) — fica a mais nova de cada ação repetível"
+              % len(_podadas))
     tipos = ("publicar", "medir")
     _pode, _por_que = pode_publicar(agora, ler_calendario())
     if not _pode:
