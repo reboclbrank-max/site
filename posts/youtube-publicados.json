@@ -1,6 +1,23 @@
 {
  "publicados": [
   {
+   "id": "O04ajm1t54Q",
+   "url": "https://youtu.be/O04ajm1t54Q",
+   "slug": "prancheta-gameplay",
+   "titulo": "16 passos do menu à prancheta, 13 confirmados por imagem",
+   "descricao": "A gravação atravessa o jogo do começo ao fim: menu, nova carreira, convite de clube, sugestão do staff, microciclo da semana e, por fim, a prancheta tática.\n\nSão 16 passos, e 13 deles foram confirmados por MUDANÇA DE TELA — o gravador compara o quadro antes e depois de cada toque, então passo que não muda nada não conta.\n\nO jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no APK.\n\nFonte: posts/cenas.json (partida 028ba44e6805, conferida em 2026-11-07T00:04:37Z).",
+   "descricao_completa": false,
+   "angulo": "roteiro_do_agente",
+   "fato": null,
+   "numeros": {
+    "passos": 16,
+    "passos_confirmados": 13,
+    "toques_partida": 7
+   },
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "quando": "2026-11-07T00:04:42Z"
+  },
+  {
    "id": "FRCzgqUlMFY",
    "url": "https://youtu.be/FRCzgqUlMFY",
    "slug": "ceifalume-gameplay",
