@@ -60,7 +60,7 @@
    "frase": "o agendador entrega 0.0% do cron: o número do papel não é o número da vida",
    "por_dia": {},
    "amostra_cobre": true,
-   "runs_lidos": 1
+   "runs_lidos": 3
   },
   {
    "workflow": "gravar-gameplay",
@@ -131,7 +131,7 @@
     "2026-11-01": 5
    },
    "amostra_cobre": true,
-   "runs_lidos": 50
+   "runs_lidos": 52
   },
   {
    "workflow": "medir-itch",
@@ -222,13 +222,13 @@
  "total_esperado_por_dia": 71,
  "total_medido_por_dia": 14.02,
  "corrente": {
-  "agora": "2026-11-07T06:41:22.449105+00:00",
-  "ultimo_pulso": "2026-11-07T04:47:28+00:00",
-  "idade_min": 113.9,
-  "slot_devido": "2026-11-07T06:40:00+00:00",
-  "atraso_min": 1.4,
-  "pulsos_perdidos": 2,
-  "veredito": "ATRASADA: 2 pulso(s) não saíram desde 07/11 01:47 (último há 114 min)",
+  "agora": "2026-11-07T07:03:58.627176+00:00",
+  "ultimo_pulso": "2026-11-07T07:00:02+00:00",
+  "idade_min": 3.9,
+  "slot_devido": "2026-11-07T07:00:00+00:00",
+  "atraso_min": 4.0,
+  "pulsos_perdidos": 0,
+  "veredito": "em dia (último pulso 07/11 04:00, há 4 min)",
   "buracos": [
    {
     "desde": "2026-11-06T14:36:55+00:00",
@@ -247,7 +247,7 @@
    },
    {
     "desde": "2026-11-07T04:47:28+00:00",
-    "ate": "2026-11-07T06:41:22.449105+00:00",
+    "ate": "2026-11-07T06:46:24+00:00",
     "pulsos_perdidos": 2
    }
   ]
