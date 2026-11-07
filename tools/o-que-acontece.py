@@ -331,9 +331,26 @@ def gerar(raiz=RAIZ):
     # 2. o dia
     l.append("## 2. O dia sem você tocar em nada (hora de Brasília)")
     l.append("")
-    l.append("**%d disparos automáticos por dia**, em %d workflows com agenda. "
-             "Os que publicam de verdade têm cadeado e param sem a palavra."
+    l.append("**%d disparos automáticos por dia**, em %d workflows com agenda — esse é o que o "
+             "cron PEDE. O que o GitHub entrega é outra conta (abaixo)."
              % (r["disparos_por_dia"], r["workflows_com_agenda"]))
+    # O QUE O CRON PEDE NÃO É O QUE ACONTECE (07/11/2026): medido na semana, 14 disparos/dia
+    # contra 63 pedidos. Sem esta linha o documento acima seria agenda no papel.
+    try:
+        with open(os.path.join(raiz, "posts", "cadencia.json"), encoding="utf-8") as f:
+            cadencia = json.load(f)
+    except (OSError, ValueError):
+        cadencia = {}
+    if cadencia.get("linhas"):
+        l.append("")
+        l.append("**Entrega medida do agendador** (janela de %s dia(s), medido em %s): **%s/dia** "
+                 "de %s pedidos. O pior caso é `%s`. O cron do GitHub é melhor esforço: para um "
+                 "pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa "
+                 "precisa de corrente, não de agenda."
+                 % (cadencia.get("janela_dias"), cadencia.get("medido_em"),
+                    cadencia.get("total_medido_por_dia"), cadencia.get("total_esperado_por_dia"),
+                    (sorted([x for x in cadencia["linhas"] if x.get("entrega_pct") is not None],
+                            key=lambda x: x["entrega_pct"]) or [{"workflow": "—"}])[0]["workflow"]))
     l.append("")
     l.append("| hora (Brasília) | workflow | o que faz |")
     l.append("| --- | --- | --- |")

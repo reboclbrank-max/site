@@ -34,6 +34,26 @@ jobs:
       - name: Barreiras offline
         run: python3 tools/rodar-contratos-isolados.py tools/testes-pendencias.py
 
+      # A AGENDA MEDIDA (07/11/2026): cron de repositório é melhor esforço e o GitHub entrega uma
+      # fração. Medido na semana: 14 disparos/dia contra 63 que o cron pede; o pulso de 20 em 20
+      # minutos roda 1,86 vez por dia. Este passo lê a API e grava posts/cadencia.json — o
+      # relatório abre com o número, porque é ele que explica um dia parado.
+      - name: Quanto o GitHub entrega da agenda
+        continue-on-error: true
+        env:
+          GHPAT: ${{ secrets.GHPAT }}
+        run: |
+          set -o pipefail -e
+          python3 tools/rodar-contratos-isolados.py tools/testes-medir-cadencia.py
+          python3 tools/medir-cadencia.py --dias 7 | tee /tmp/cadencia.txt
+          {
+            echo "### Agenda medida"
+            echo
+            echo '```'
+            cat /tmp/cadencia.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       # O PRANCHETA é o único jogo cujo build não passa por este repositório: o dono publica no
       # itch. Este passo lê qual build o itch está servindo e registra — é o que faz "atualizei o
       # PRANCHETA" virar fato observável em vez de memória. Não sobe nada, não publica nada.
@@ -60,7 +80,8 @@ jobs:
         run: |
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
-          git add posts/pendencias-do-dono.json posts/pendencias-do-dono.md posts/prancheta-build.json
+          git add posts/pendencias-do-dono.json posts/pendencias-do-dono.md \
+                  posts/prancheta-build.json posts/cadencia.json
           if git diff --cached --quiet; then
             echo "relatório sem mudança"
             exit 0

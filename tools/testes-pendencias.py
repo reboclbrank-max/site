@@ -229,5 +229,42 @@ finally:
         open(_orig_json, "w", encoding="utf-8").write(_guardado)
     _sh.rmtree(_tmp, ignore_errors=True)
 
+# ------------------------------------------------------------------ a agenda medida aparece
+# (07/11/2026) O relatório diário passa a abrir com a cadência medida: o cron pede 63 disparos
+# por dia e o GitHub entregou 14 na semana. É a primeira coisa que explica um dia parado.
+import tempfile as _tempfile
+
+_salvo_md = pend.SAIDA_MD
+_pasta_cad = _tempfile.mkdtemp(prefix="pend-cadencia-")
+pend.SAIDA_MD = os.path.join(_pasta_cad, "pendencias.md")
+_cad_path = os.path.join(RAIZ, "posts", "cadencia.json")
+_cad_antes = open(_cad_path, encoding="utf-8").read() if os.path.exists(_cad_path) else None
+try:
+    with open(_cad_path, "w", encoding="utf-8") as f:
+        json.dump({"medido_em": "2026-11-07", "janela_dias": 7,
+                   "total_esperado_por_dia": 63, "total_medido_por_dia": 14.02,
+                   "linhas": [{"workflow": "marketing-24h", "esperado_por_dia": 45,
+                               "medido_por_dia": 1.86, "entrega_pct": 4.1},
+                              {"workflow": "medir-itch", "esperado_por_dia": 1,
+                               "medido_por_dia": 0.86, "entrega_pct": 86.0}]}, f)
+    pend.escrever(pend.montar())
+    _texto_cad = open(pend.SAIDA_MD, encoding="utf-8").read()
+    ok("o relatório diz o que o cron pede", "o cron pede **63**" in _texto_cad,
+       _texto_cad[:200])
+    ok("o relatório diz o que o GitHub entregou", "entregou **14.02/dia**" in _texto_cad)
+    ok("o relatório nomeia a pior entrega com número",
+       "marketing-24h 4.1%" in _texto_cad,
+       [l for l in _texto_cad.splitlines() if "Agenda" in l])
+    ok("a entrega melhor não é chamada de pior", "medir-itch 86.0%" not in _texto_cad,
+       [l for l in _texto_cad.splitlines() if "Agenda" in l])
+finally:
+    if _cad_antes is None:
+        if os.path.exists(_cad_path):
+            os.unlink(_cad_path)
+    else:
+        with open(_cad_path, "w", encoding="utf-8") as f:
+            f.write(_cad_antes)
+    pend.SAIDA_MD = _salvo_md
+
 print("\n%d/%d verificações do medidor de pendências passaram" % (len(certos), len(certos) + len(falhas)))
 sys.exit(0 if not falhas else 1)

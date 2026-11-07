@@ -23,7 +23,9 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 
 ## 2. O dia sem você tocar em nada (hora de Brasília)
 
-**63 disparos automáticos por dia**, em 12 workflows com agenda. Os que publicam de verdade têm cadeado e param sem a palavra.
+**63 disparos automáticos por dia**, em 12 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
+
+**Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-07): **14.02/dia** de 63 pedidos. O pior caso é `medir-o-dia`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
 
 | hora (Brasília) | workflow | o que faz |
 | --- | --- | --- |

@@ -269,6 +269,31 @@ def escrever(relatorio):
         linhas += ["## Estado da casa", ""] + ["- " + l for l in _estado.texto().splitlines()] + [""]
     except Exception as _erro:  # noqa: BLE001 — relatório sem este bloco ainda é útil
         linhas += ["## Estado da casa", "", "- não foi possível ler o estado: %s" % str(_erro)[:80], ""]
+    # A AGENDA MEDIDA (07/11/2026): o cron pede 63 disparos por dia e o GitHub entregou 14 na
+    # semana medida — o pulso de 20 em 20 minutos roda 1,86 vez por dia. Isso muda a leitura de
+    # tudo ("publica de 2 em 2 horas" só vale quando o pulso existe). O número fica aqui porque
+    # é a primeira coisa que explica um dia parado.
+    try:
+        _cad = json.load(open(os.path.join(RAIZ, "posts", "cadencia.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        _cad = {}
+    if _cad.get("linhas"):
+        # "PIOR" SÓ QUANDO É PIOR (achado pelo contrato): listar as duas menores entregas
+        # colocava 86% na mesma frase que 4%, como se as duas fossem problema. Entra aqui só o
+        # que entrega menos da metade do que o cron pede.
+        _piores = sorted([l for l in _cad["linhas"]
+                          if l.get("entrega_pct") is not None and l["entrega_pct"] < 50],
+                         key=lambda l: l["entrega_pct"])[:2]
+        _frase = ("Agenda: o cron pede **%s** disparos/dia e o GitHub entregou **%s/dia** "
+                  "(janela de %s dia(s), medido em %s)."
+                  % (_cad.get("total_esperado_por_dia"), _cad.get("total_medido_por_dia"),
+                     _cad.get("janela_dias"), _cad.get("medido_em")))
+        if _piores:
+            _frase += " Pior entrega: " + "; ".join(
+                "%s %s%% (%s/dia)" % (l["workflow"], l["entrega_pct"], l["medido_por_dia"])
+                for l in _piores) + "."
+        linhas += ["- " + _frase, ""]
+
     linhas += ["| item | estado | como |", "| --- | --- | --- |"]
     for i in relatorio["itens"]:
         linhas.append("| %s | %s | %s |" % (i["titulo"], i["estado"], i["como_fazer"]))

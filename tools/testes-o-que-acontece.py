@@ -139,6 +139,20 @@ ok("o retrato conta quantos workflows só rodam por pedido",
 ok("o retrato diz os disparos automáticos por dia",
    ("**%d disparos automáticos por dia**" % _dados["resumo"]["disparos_por_dia"]) in _doc,
    _dados["resumo"]["disparos_por_dia"])
+_cad_path = os.path.join(RAIZ, "posts", "cadencia.json")
+if os.path.exists(_cad_path):
+    import json as _j
+    _cad = _j.load(open(_cad_path, encoding="utf-8"))
+    ok("o retrato diz o que o cron pede", ("**%d disparos automáticos por dia**"
+                                           % _dados["resumo"]["disparos_por_dia"]) in _doc,
+       _dados["resumo"]["disparos_por_dia"])
+    ok("o retrato diz o que o GitHub ENTREGOU (não só o que o cron pede)",
+       ("**%s/dia**" % _cad.get("total_medido_por_dia")) in _doc, _cad.get("total_medido_por_dia"))
+    ok("o retrato nomeia o pior caso da agenda", "O pior caso é" in _doc)
+    ok("o retrato explica que cron é melhor esforço", "melhor esforço" in _doc)
+else:
+    ok("sem cadência medida, o retrato não afirma entrega", "Entrega medida do agendador" not in _doc)
+
 ok("o retrato mostra a faixa de horas do pulso, não 'todas as horas'",
    "03h, 04h, 09h–21h" in _doc or "03h, 04h, 09h" in _doc, _doc[_doc.find("marketing-24h") - 80:
                                                                  _doc.find("marketing-24h") + 40])
