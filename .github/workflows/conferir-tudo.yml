@@ -1,0 +1,54 @@
+name: conferir-tudo
+
+# Roda TODAS as suítes de contrato da casa, em série, e falha se alguma mexer em arquivo
+# versionado. Existe porque o ciclo vinha rodando 21 suítes "de estimação" e chamando isso de
+# "tudo testado": o repositório tem 52, e as outras 31 nunca rodavam em lugar nenhum.
+#
+# POR QUE ffmpeg AQUI: duas suítes (instruções no vídeo e vídeo final) pulam sem ffmpeg. Pular é
+# honesto, mas um CI que nunca mede o vídeo não prova nada sobre ele.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tools/**"
+      - "posts/**"
+      - ".github/workflows/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: conferir-tudo
+  cancel-in-progress: true
+
+jobs:
+  suites:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: ffmpeg (para as suítes de vídeo não pularem)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Node (as suítes do decisor rodam no Node)
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+
+      - name: Todas as suítes
+        env:
+          FFMPEG_PATH: /usr/bin/ffmpeg
+        run: |
+          set -o pipefail -e
+          python3 tools/rodar-todas-as-suites.py | tee /tmp/suites.txt
+          {
+            echo "### Todas as suítes"
+            echo
+            echo
+            tail -12 /tmp/suites.txt | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"

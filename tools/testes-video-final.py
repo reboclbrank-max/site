@@ -26,8 +26,11 @@ def ffmpeg():
     for c in [os.environ.get("FFMPEG_PATH")]:
         if c and os.path.exists(c):
             return c
-    if subprocess.run(["ffmpeg", "-version"], capture_output=True).returncode == 0:
-        return "ffmpeg"
+    try:
+        if subprocess.run(["ffmpeg", "-version"], capture_output=True).returncode == 0:
+            return "ffmpeg"
+    except FileNotFoundError:
+        pass
     try:
         saida = subprocess.run(
             [sys.executable, "-c", "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())"],
@@ -142,6 +145,9 @@ def main(argv):
     if not alvo or not os.path.exists(alvo):
         escrever("nenhum vídeo gravado no repositório — passe o caminho: "
                  + os.path.relpath(candidatos[0], RAIZ))
+        return 2
+    if ffmpeg() is None:
+        print("SKIP: sem ffmpeg neste ambiente — o vídeo final não pode ser medido aqui")
         return 2
     ok, _i, _p = validar(alvo)
     return 0 if ok else 1

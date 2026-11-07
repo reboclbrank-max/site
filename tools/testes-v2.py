@@ -82,6 +82,8 @@ def main():
 
     # 4. memória
     memoria = carregar("mem", "memoria.py")
+    # construir() GRAVA posts/memoria.json; a suíte aponta para uma cópia descartável
+    memoria.SAIDA = tempfile.mkdtemp(prefix="memoria-") + "/memoria.json"
     m = memoria.construir()
     ok("memória lê as metas do placar", len(m["metas"]) >= 5, len(m["metas"]))
     ok("memória lê os formatos do desempenho", len(m["formatos"]) >= 2, len(m["formatos"]))

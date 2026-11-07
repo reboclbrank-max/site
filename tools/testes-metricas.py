@@ -19,6 +19,10 @@ spec = importlib.util.spec_from_file_location("metricas", os.path.join(RAIZ, "to
 metricas = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(metricas)
 
+# placar_metas() GRAVA posts/placar-metas.md. A suíte calcula o placar para conferir números —
+# não para publicar o placar da casa. (06/11/2026: cada execução reescrevia o arquivo.)
+metricas.SAIDA_PLACAR = os.path.join(tempfile.mkdtemp(prefix="placar-"), "placar-metas.md")
+
 certos = 0
 falhas = 0
 

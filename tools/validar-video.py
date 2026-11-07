@@ -218,6 +218,9 @@ def main(argv):
                   ("ceifalume-gameplay.mp4", "prancheta-gameplay.mp4",
                    "ceifalume-gameplay-instrucoes.mp4")]
     alvo = argv[0] if argv else next((c for c in candidatos if os.path.exists(c)), "")
+    if ffmpeg() is None:
+        print("SKIP: sem ffmpeg neste ambiente — não dá para medir o vídeo aqui")
+        return 2
     if not alvo or not os.path.exists(alvo):
         escrever("nenhum vídeo gravado no repositório — passe o caminho: "
                  + os.path.relpath(candidatos[0], RAIZ))

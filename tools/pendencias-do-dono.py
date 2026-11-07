@@ -23,6 +23,9 @@ import urllib.request
 from datetime import datetime, timezone
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Caminho do registro do itch como CONSTANTE: o teste precisa apontar para uma cópia temporária
+# em vez de reescrever o arquivo da casa (era o que ele fazia até 06/11/2026).
+CAMINHO_BUILDS = os.path.join(RAIZ, "posts", "itch-builds.json")
 SAIDA_JSON = os.path.join(RAIZ, "posts", "pendencias-do-dono.json")
 SAIDA_MD = os.path.join(RAIZ, "posts", "pendencias-do-dono.md")
 DEVLOG_PUBLICO = "https://rebocl-brank.itch.io/ceifalume/devlog"
@@ -130,7 +133,7 @@ def montar(estado_anterior=None):
     # conferência), o mesmo critério do cofre em tools/publicacoes.py.
     build_no_ar = None
     try:
-        with open(os.path.join(RAIZ, "posts", "itch-builds.json"), encoding="utf-8") as f:
+        with open(CAMINHO_BUILDS, encoding="utf-8") as f:
             for b in json.load(f).get("builds") or []:
                 if str(b.get("build") or "").strip() and str(b.get("prova") or "").strip():
                     build_no_ar = b
@@ -167,7 +170,7 @@ def montar(estado_anterior=None):
     #        agora leva o selo carimbado. Logo: nada aqui depende de clique do dono.
     conferencia, ressalva = {}, ""
     try:
-        with open(os.path.join(RAIZ, "posts", "itch-builds.json"), encoding="utf-8") as f:
+        with open(CAMINHO_BUILDS, encoding="utf-8") as f:
             for b in json.load(f).get("builds") or []:
                 if b.get("conferencia_do_servido"):
                     conferencia = b["conferencia_do_servido"]

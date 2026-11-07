@@ -19,6 +19,20 @@ spec = importlib.util.spec_from_file_location("pend", os.path.join(RAIZ, "tools"
 pend = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(pend)
 
+# A SUÍTE NÃO ESCREVE NA CASA (06/11/2026): o módulo grava pendencias-do-dono.json/.md e lê o
+# registro do itch. Rodando contra os caminhos de produção, cada execução reescrevia dois
+# arquivos do repositório e reescrevia o itch-builds.json (com "restaura no fim", que falha se o
+# teste estourar no meio). Agora tudo aponta para cópias descartáveis.
+import tempfile as _temp
+_BANCADA = _temp.mkdtemp(prefix="pendencias-")
+pend.SAIDA_JSON = os.path.join(_BANCADA, "pendencias-do-dono.json")
+pend.SAIDA_MD = os.path.join(_BANCADA, "pendencias-do-dono.md")
+pend.CAMINHO_BUILDS = os.path.join(_BANCADA, "itch-builds.json")
+import shutil as _shutil
+_origem_builds = os.path.join(RAIZ, "posts", "itch-builds.json")
+if os.path.exists(_origem_builds):
+    _shutil.copy(_origem_builds, pend.CAMINHO_BUILDS)
+
 certos, falhas = [], []
 
 
@@ -106,7 +120,8 @@ ok("a medida dele cita o GIF da descrição como caminho do vídeo",
 
 # e se a conferência disser o contrário, o item volta a ser limitação medida (não tarefa)
 import json as _json
-_caminho_builds = os.path.join(pend.RAIZ, "posts", "itch-builds.json")
+# a cópia da bancada, não o registro da casa (o módulo lê pend.CAMINHO_BUILDS)
+_caminho_builds = pend.CAMINHO_BUILDS
 _guardado_builds = open(_caminho_builds, encoding="utf-8").read()
 try:
     _d = _json.loads(_guardado_builds)
@@ -160,7 +175,7 @@ ok("o .md foi escrito", os.path.getsize(pend.SAIDA_MD) > 200)
 # relatório continuava pedindo ao dono o que já estava feito.
 import tempfile as _tf, shutil as _sh
 _tmp = _tf.mkdtemp()
-_orig_json = pend.os.path.join(pend.RAIZ, "posts", "itch-builds.json")
+_orig_json = pend.CAMINHO_BUILDS        # já é a cópia descartável montada no topo
 _guardado = open(_orig_json, encoding="utf-8").read() if os.path.exists(_orig_json) else None
 try:
     with open(_orig_json, "w", encoding="utf-8") as f:

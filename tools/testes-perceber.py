@@ -198,13 +198,18 @@ _a1, _a2 = p.SAIDA_JSON, p.SAIDA_MD
 p.SAIDA_JSON, p.SAIDA_MD = _js, _mds
 _out, sys.stdout = sys.stdout, io.StringIO()
 try:
-    p.main([])
+    p.main(["--sem-fila"])
 finally:
     sys.stdout = _out
     p.SAIDA_JSON, p.SAIDA_MD = _a1, _a2
 ok("grava percebido.json e .md", os.path.exists(_js) and os.path.exists(_mds))
 ok("escrita atômica (sem .tmp)", not os.path.exists(_js + ".tmp") and not os.path.exists(_mds + ".tmp"))
 ok("o json gravado tem contagem", "contagem" in json.load(open(_js, encoding="utf-8")))
+# A SUÍTE NÃO PODE ESCREVER NA FILA DA CASA (06/11/2026): até hoje o CLI era chamado com
+# enfileirar no padrão e a suíte enfiava uma tarefa em posts/fila-tarefas.json a cada execução —
+# rodei a bateria em paralelo e quatro suítes brigaram pelo mesmo arquivo.
+ok("o CLI tem porta que não escreve na fila (--sem-fila)",
+   "--sem-fila" in open(os.path.join(RAIZ, "tools", "perceber.py"), encoding="utf-8").read())
 
 # ---------------------------------------------------------------- integração com o pulso
 _fonte_orq = open(os.path.join(RAIZ, "tools", "orquestrador.py"), encoding="utf-8").read()

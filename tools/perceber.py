@@ -379,7 +379,10 @@ def escrever(caminho, texto):
 
 
 def main(argv):
-    dados = perceber()
+    # --sem-fila (06/11/2026): o CLI enfileirava SEMPRE, e o teste que roda o CLI de verdade
+    # escrevia em posts/fila-tarefas.json da casa. Fila é estado de produção: quem quer só ver o
+    # que o robô percebeu precisa de uma porta que não escreve.
+    dados = perceber(enfileirar=("--sem-fila" not in (argv or [])))
     escrever(SAIDA_JSON, json.dumps(dados, ensure_ascii=False, indent=1) + "\n")
     escrever(SAIDA_MD, markdown(dados))
     c = dados["contagem"]
