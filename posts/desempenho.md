@@ -13,13 +13,11 @@
 | conteúdo dos jogos | 90 | 1.89 | 4 | 17 (18.9%) |
 | comentário em post alheio | 210 | 0.9 | 4 | 85 (40.5%) |
 
-**Instagram (0 seguidores · 39 posts):** IMAGE n=30 média=0.0 zero=30
+**Instagram:** NAO_OBSERVAVEL (sem credencial no runtime (IG_TOKEN/IG_USER_ID ausentes))
 
-**itch.io:** 48 download(s) e 206 visita(s) em 1/1 conta(s). Ceifalume: 41 · Prancheta: 7
+**itch.io:** NAO_OBSERVAVEL (sem chave no runtime (ITCH_API_KEYS ausente))
 
-**YouTube:** 24 inscrito(s) · 169 vídeo(s) · 5468 visualizaç(ões) · shorts=7 de 100 conferido(s)
-**YouTube — o que o canal publica:** dos 100 vídeos lidos, **11 são dos jogos da casa** (282 views, média 25.6) e **89 são de outros jogos** (3206 views, média 36.0) — os da casa são 8.1% das visualizações.
-Melhores da casa: "Ceifalume: a horta acordou à noite 🌙 jog" (230) · "Desenhe a prancheta e decida a partida —" (22) · "PRANCHETA — simulador de gestão de futeb" (14)
+**YouTube:** NAO_OBSERVAVEL (sem chave no runtime (YT_API_KEY ausente))
 
 **Conversa:** 40 conversa(s) lida(s). Respostas ao conteúdo da casa: 1 em 1 thread(s), 0 atendida(s), 1 pendente(s). Retorno do autor de post comentado: 39 em 38 thread(s) — é retribuição ao comentário, não fila de resposta.
 
