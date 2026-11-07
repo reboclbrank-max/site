@@ -51,6 +51,13 @@ import unicodedata
 
 # Limiares declarados (não aprendidos): conservadores de propósito.
 SEMELHANCA_MAXIMA = 0.62      # acima disso, é repetição
+# A JANELA DA REPETIÇÃO É A HISTÓRIA, NÃO A SEMANA (07/11/2026). A comparação por semelhança
+# olhava só os 40 posts mais novos (~8 dias de casa a 5 posts/dia). Medido: o texto que saiu 40
+# vezes entre 13/10 e 25/10 **PASSOU** no portão em 07/11 — as cópias dele estavam na posição 61+
+# da lista, fora da janela de 40. Repetir o mesmo texto três semanas depois é exatamente o que o
+# dono chamou de "coisas únicas" ao contrário. O teto de 400 existe só para o custo não crescer
+# sem limite; com 109 posts hoje, é a história inteira.
+JANELA_DE_REPETICAO = 400
 TITULO_SEMELHANCA_MAXIMA = 0.85
 TITULO_MIN = 12
 TITULO_MAX = 90
@@ -468,11 +475,12 @@ def avalia(candidato: dict, *, canal: str, publicacoes: list | None = None,
 
     pior = 0.0
     pior_titulo = ""
-    for antigo in recentes[:40]:
+    for antigo in recentes[:JANELA_DE_REPETICAO]:
         s = semelhanca(texto, str(antigo.get("texto") or ""))
         if s > pior:
             pior, pior_titulo = s, str(antigo.get("titulo") or "")
     numeros["semelhanca_maxima"] = round(pior, 3)
+    numeros["repeticao_janela"] = min(len(recentes), JANELA_DE_REPETICAO)
     if pior >= SEMELHANCA_MAXIMA:
         return {"publica": False, "numeros": numeros,
                 "motivo": "texto repetido: %.2f de semelhança com \"%s\"" % (pior, pior_titulo[:60])}

@@ -35,6 +35,56 @@ def cand(titulo, texto):
     return {"titulo": titulo, "texto": texto}
 
 
+# 0. A REPETIÇÃO ANTIGA TAMBÉM É REPETIÇÃO (07/11/2026)
+# Medido no registro real: o texto que saiu 40 vezes entre 13/10 e 25/10 PASSAVA no portão em
+# 07/11, porque a comparação por semelhança olhava só os 40 posts mais novos e as cópias dele
+# estavam na posição 61+. Aqui a história tem 50 posts e o gêmeo fica na posição 45.
+_ALVO = ("o celeiro do ceifalume guarda ate 8 horas de colheita com o jogo fechado e o relogio "
+         "da fazenda continua correndo enquanto voce dorme e a producao rende")
+# a forma dos posts antigos precisa ser DIFERENTE da do candidato, senão o portão recusa por
+# forma antes de chegar na repetição — e o contrato não estaria medindo o que diz medir.
+def _forma_de_enchimento(i):
+    return {"abertura": "post %d" % i, "tipo_abertura": "rotulo", "frases": 3,
+            "esqueleto": ("rotulo", "frase", "frase"), "hashtags": 2, "emoji_no_inicio": True}
+
+
+_HISTORICO_LONGO = [{"canal": "site", "titulo": "post recente numero %d" % i,
+                     "texto": "assunto completamente diferente numero %d sobre a casa e seus canais "
+                              "oficiais com palavras proprias %d" % (i, i),
+                     "forma": _forma_de_enchimento(i)}
+                    for i in range(44)]
+_HISTORICO_LONGO.append({"canal": "site", "titulo": "o celeiro que trabalha sozinho",
+                         "texto": _ALVO, "forma": _forma_de_enchimento(44)})
+_HISTORICO_LONGO.append({"canal": "site", "titulo": "post mais novo da historia",
+                         "texto": "outro assunto qualquer do canal com outras palavras",
+                         "forma": _forma_de_enchimento(45)})
+_posicao_gemeo = next(i for i, h in enumerate(_HISTORICO_LONGO) if h["texto"] == _ALVO)
+checar("o gêmeo antigo está fora da janela de 40 (é o caso medido)",
+       len(_HISTORICO_LONGO) == 46 and _posicao_gemeo > 40, (_posicao_gemeo, len(_HISTORICO_LONGO)))
+# O candidato NÃO é o texto exato do gêmeo: com o texto idêntico, a recusa vem do contrato de
+# repetição exata (que sempre existiu) e não da semelhança — e o contrato estaria medindo outra
+# coisa. Aqui é uma palavra trocada: exatamente o caso "mesmo post com outra palavra", que passava.
+_ALVO_VARIANTE = _ALVO.replace("guarda ate 8 horas", "abriga ate 8 horas")
+checar("o candidato não é cópia exata de nenhum post da história",
+       all(h["texto"] != _ALVO_VARIANTE for h in _HISTORICO_LONGO))
+_r = portao.avalia(cand("Colheita que rende mesmo com o jogo fechado", _ALVO_VARIANTE), canal="site",
+                   hora_local=14, calendario=CAL, publicacoes=_HISTORICO_LONGO,
+                   credencial_disponivel=True, nota_juizo=1.0)
+checar("repetição de um texto antigo é recusada (a janela é a história, não a semana)",
+       _r["publica"] is False and "repetido" in _r["motivo"], _r["motivo"])
+checar("a recusa diz o número da semelhança",
+       _r["numeros"].get("semelhanca_maxima", 0) >= portao.SEMELHANCA_MAXIMA, _r["numeros"])
+checar("a janela de repetição cobre a história inteira do canal",
+       _r["numeros"].get("repeticao_janela") == len(_HISTORICO_LONGO), _r["numeros"])
+
+_r = portao.avalia(cand("A narração do prancheta lance a lance",
+                        "no prancheta a partida é narrada lance a lance com placar ao vivo e você "
+                        "decide do banco com cinco trocas e uma instrução aos quarenta e cinco"),
+                   canal="site", hora_local=14, calendario=CAL, publicacoes=_HISTORICO_LONGO,
+                   credencial_disponivel=True, nota_juizo=1.0)
+checar("mas um texto de verdade novo continua passando com a janela maior",
+       _r["publica"] is True, _r["motivo"])
+
 # 1. canal impossível não publica, com motivo próprio
 r = portao.avalia(cand("Um título qualquer e próprio", "texto novo sobre outra coisa"), canal="itch", hora_local=14, calendario=CAL)
 checar("itch não publica: a casa só mede", r["publica"] is False and "chave de API" in r["motivo"])
