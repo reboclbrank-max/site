@@ -105,6 +105,82 @@ with tempfile.TemporaryDirectory() as tmp:
     v.buscar_texto = _salvo_buscar
     ok("a linha de comando devolve 3 quando não mede", _codigo == 3, _codigo)
 
+    # ------------------------------------------------------------------ build novo vira FATO
+    # (não vira tarefa de publicar: o pulso roda o postador sem argumento, e o motivo da tarefa
+    # não chega ao texto — o que o redator lê de verdade são os fatos)
+    fatos = os.path.join(tmp, "fatos.json")
+    with open(fatos, "w", encoding="utf-8") as f:
+        json.dump({"fatos": [{"id": "prancheta-trocas", "assunto": "prancheta",
+                              "afirmacao": "até 5 trocas por partida"}]}, f)
+    _fato = v.registrar_fato("30000000", "20000000", caminho=fatos, quando="2026-11-07")
+    ok("build novo entra como fato do repertório", _fato and _fato["id"] == "prancheta-build-30000000",
+       _fato)
+    ok("o fato é do assunto prancheta", _fato and _fato["assunto"] == "prancheta", _fato)
+    ok("a afirmação diz o build novo e o antigo",
+       _fato and "30000000" in _fato["afirmacao"] and "20000000" in _fato["afirmacao"],
+       _fato and _fato["afirmacao"])
+    ok("a afirmação carrega a data", _fato and "2026-11-07" in _fato["afirmacao"], _fato)
+    ok("o fato diz de onde foi medido", _fato and _fato["origem"] == "posts/prancheta-build.json",
+       _fato)
+    ok("o fato não é repetível (versão é evento, não característica)",
+       _fato and _fato["repetivel"] is False and _fato.get("usa_uma_vez") is True, _fato)
+    ok("o fato vence (atualização não é verdade eterna)",
+       _fato and _fato.get("validade_dias") == 45, _fato)
+    ok("a classe do fato é uma das que o redator usa",
+       _fato and _fato["classe"] in ("mecanica", "numero", "bastidor", "cultura",
+                                     "disponibilidade", "canal", "marco"), _fato and _fato["classe"])
+    ok("fato tem afirmacao e assunto, como o redator exige",
+       _fato and bool(_fato.get("afirmacao")) and bool(_fato.get("assunto")))
+    ok("o mesmo build não vira fato duas vezes",
+       v.registrar_fato("30000000", "20000000", caminho=fatos) is None)
+    _fatos_gravados = json.load(open(fatos, encoding="utf-8"))["fatos"]
+    ok("os fatos antigos não são tocados", _fatos_gravados[0]["id"] == "prancheta-trocas",
+       _fatos_gravados[0])
+    ok("a lista cresceu em um", len(_fatos_gravados) == 2, len(_fatos_gravados))
+
+    # ------------------------------------------------------------------ main de ponta a ponta
+    _salvo = (v.REGISTRO, v.medir, v.registrar_fato, v.FATOS)
+    _chamadas = []
+    v.REGISTRO = registro
+    v.FATOS = fatos
+    v.registrar_fato = lambda *a, **k: _chamadas.append(a) or None
+    v.medir = lambda *a, **k: ("igual", "build igual", "20000000")
+    v.main(["--gravar"])
+    ok("build igual não vira fato", _chamadas == [], _chamadas)
+    v.medir = lambda *a, **k: ("não medido", "sem rede", None)
+    v.main(["--gravar"])
+    ok("sem medida não vira fato", _chamadas == [], _chamadas)
+    v.medir = lambda *a, **k: ("mudou", "build novo", "60000000")
+    v.main(["--gravar"])
+    ok("build diferente vira UM fato", len(_chamadas) == 1, _chamadas)
+    ok("o fato recebe o build antigo como referência",
+       _chamadas and _chamadas[0][1] == "20000000", _chamadas)
+    v.REGISTRO, v.medir, v.registrar_fato, v.FATOS = _salvo
+
+# ------------------------------------------------------------------ o fato é utilizável
+# O que vale não é o fato existir no arquivo: é o redator conseguir montar pauta com ele. Se a
+# classe não estiver entre as dos ângulos, o fato vira arquivo morto com cara de conteúdo.
+with tempfile.TemporaryDirectory() as tmp:
+    fatos = os.path.join(tmp, "fatos.json")
+    import shutil
+    shutil.copy(os.path.join(RAIZ, "posts", "fatos.json"), fatos)
+    _fato = v.registrar_fato("19604665", "111111", caminho=fatos, quando="2026-11-07")
+    spec_red = importlib.util.spec_from_file_location("redator", os.path.join(RAIZ, "tools", "redator.py"))
+    red = importlib.util.module_from_spec(spec_red)
+    spec_red.loader.exec_module(red)
+    _fatos_lidos = red.carregar_fatos(fatos)
+    ok("o redator lê o fato novo", any(f["id"] == _fato["id"] for f in _fatos_lidos))
+    _vivos = red.fatos_vivos(_fatos_lidos, {"fatos_de_uma_vez": []})
+    ok("o fato novo conta como vivo (não vencido, não gasto)",
+       any(f["id"] == _fato["id"] for f in _vivos))
+    import datetime as _dt
+    _pautas = red.pautas_possiveis(_vivos, {"usos": []}, hoje=_dt.date(2026, 11, 7))
+    _com_fato = [p for p in _pautas if _fato["id"] in p["fatos"]]
+    ok("o redator monta pauta com o fato novo", bool(_com_fato),
+       [p["angulo"] for p in _pautas][:5])
+    ok("a pauta do fato novo é do assunto prancheta",
+       _com_fato and all(p["assunto"] == "prancheta" for p in _com_fato), _com_fato)
+
 # ------------------------------------------------------------------ quem usa este vigia
 _pendencias = open(os.path.join(RAIZ, ".github/workflows/pendencias-do-dono.yml"),
                    encoding="utf-8").read()
