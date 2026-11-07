@@ -1,6 +1,6 @@
 # O que precisa ser feito
 
-Gerado em 2026-11-07T12:43:53Z pelo próprio ciclo, olhando o estado medido (não o relógio).
+Gerado em 2026-11-07T13:00:10Z pelo próprio ciclo, olhando o estado medido (não o relógio).
 
 > necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.
 
