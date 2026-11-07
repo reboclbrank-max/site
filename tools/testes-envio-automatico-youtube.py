@@ -391,9 +391,13 @@ checar("o título da partida é diferente do título fixo que repetiu três veze
       ta != "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)"
             " — gameplay gravado no navegador", ta)
 checar("o título da partida cabe no limite do YouTube", 0 < len(ta) <= kityt.LIMITE_TITULO, len(ta))
+# A FRASE MUDOU DE FORMA, NÃO DE CONTEÚDO (06/11/2026): a linha passou a ser montada com o que
+# cada jogo mede (o PRANCHETA não tem colheita), então os números continuam os mesmos e o que se
+# cobra é isso — os três números medidos e a duração, na ordem em que aconteceram.
+_linha = kitg.linha_da_partida("ceifalume", raiz=str(a))
 checar("a descrição diz o que aconteceu naquela partida",
-      "Esta partida: 14 mudas plantadas, 9 colheitas e 728 toques" in
-      kitg.linha_da_partida("ceifalume", raiz=str(a)), kitg.linha_da_partida("ceifalume", raiz=str(a)))
+      _linha.startswith("Esta partida:") and "14 mudas plantadas" in _linha
+      and "9 colheitas" in _linha and "728 toques" in _linha and "2 minutos" in _linha, _linha)
 checar("sem relatório da partida, o título próprio não é inventado",
       kitg.titulo_da_partida("ceifalume", kityt, raiz=str(tempfile.mkdtemp())) is None)
 shutil.rmtree(a, ignore_errors=True)
