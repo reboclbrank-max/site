@@ -151,6 +151,17 @@ for i in _dados["push"]:
             _sem_teste.append((i["nome"], c))
 ok("se algum push passar a testar ceifalume/jogos, a frase acima vira mentira e este contrato avisa",
    not _sem_teste, _sem_teste)
+_registro_prancheta = os.path.join(RAIZ, "posts", "prancheta-build.json")
+if os.path.exists(_registro_prancheta):
+    import json as _json
+    _build = _json.load(open(_registro_prancheta, encoding="utf-8")).get("build_id")
+    ok("o retrato diz qual build do PRANCHETA o itch serve", ("**%s**" % _build) in _doc, _build)
+    ok("o retrato diz quando a casa viu esse build", "a casa viu em" in _doc)
+    ok("o retrato diz que build novo vira fato, não post na marra",
+       "vira fato no repertório" in _doc)
+else:
+    ok("sem registro do PRANCHETA, o retrato não afirma build nenhum", "a casa viu em" not in _doc)
+
 ok("o retrato lista o prancheta como 'não sobe sozinho'",
    "`prancheta`" in _doc and "atualizar é upload no itch" in _doc)
 

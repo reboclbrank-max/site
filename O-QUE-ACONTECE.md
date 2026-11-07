@@ -84,3 +84,5 @@ O `administrar-itch` conhece **1** projeto(s): `ceifalume`. Só esses recebem bu
 
 Para o jogo que sobe sozinho, a gravação automática filma **o build deste repositório**. Para o que não sobe (o PRANCHETA vive publicado no itch), a gravação filma **a página do itch** — logo, build novo só aparece lá depois de o dono subir.
 
+O build do PRANCHETA que o itch está servindo hoje: **19604665** (a casa viu em 2026-11-07T05:38, pelo `vigia-build-prancheta.py` que roda no relatório diário). Quando muda, vira fato no repertório do redator — não vira post na marra.
+

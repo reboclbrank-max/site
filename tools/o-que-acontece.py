@@ -17,6 +17,7 @@ Uso:
 """
 import ast
 import glob
+import json
 import os
 import re
 import sys
@@ -421,6 +422,21 @@ def gerar(raiz=RAIZ):
              "gravação filma **a página do itch** — logo, build novo só aparece lá depois de "
              "o dono subir.")
     l.append("")
+    # O QUE A CASA JÁ SABE DO PRANCHETA (07/11/2026): o vigia lê o build servido pelo itch todo
+    # dia e grava em posts/prancheta-build.json. Se o arquivo sumir, a linha some — nada de
+    # afirmar build que ninguém mediu.
+    prancheta = {}
+    try:
+        with open(os.path.join(raiz, "posts", "prancheta-build.json"), encoding="utf-8") as f:
+            prancheta = json.load(f)
+    except (OSError, ValueError):
+        prancheta = {}
+    if prancheta.get("build_id"):
+        l.append("O build do PRANCHETA que o itch está servindo hoje: **%s** (a casa viu em %s, "
+                 "pelo `vigia-build-prancheta.py` que roda no relatório diário). Quando muda, "
+                 "vira fato no repertório do redator — não vira post na marra."
+                 % (prancheta["build_id"], str(prancheta.get("medido_em") or "data não registrada")[:16]))
+        l.append("")
     return "\n".join(l) + "\n"
 
 
