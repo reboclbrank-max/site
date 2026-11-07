@@ -603,5 +603,51 @@ ok("o placar escrito tem a seção da projeção",
    "Pelo ritmo medido" in open(metricas.SAIDA_PLACAR, encoding="utf-8").read(),
    metricas.SAIDA_PLACAR)
 
+# ------------------------------------------------------------------ o dia seguinte ao prazo
+# (07/11/2026 — cinco dias antes do prazo de 12/11). A frase antiga dizia "-3 dia(s) restante(s)".
+import datetime as _dt  # noqa: E402
+
+_pasta_venc = tempfile.mkdtemp(prefix="vencido-")
+_salvo_saida = metricas.SAIDA_PLACAR
+metricas.SAIDA_PLACAR = os.path.join(_pasta_venc, "placar-metas.md")
+
+
+def _placar_em(dia, observado=None):
+    observado = observado or {"ig_posts": 39, "ig_seguidores": 0, "bsky_seguidores": 32,
+                              "yt_inscritos": 24, "yt_shorts": 7, "itch_downloads": 48,
+                              "itch_visitas": 206}
+    linhas, contexto = metricas.placar_metas(observado, hoje=dia)
+    metricas.aplicar_politica_de_ritmo(
+        linhas, dias_decorridos=max(1, (dia - _dt.date(2026, 10, 13)).days),
+        dias_restantes=contexto["dias_restantes"], hoje=dia)
+    caminho = metricas.gravar_placar(linhas, contexto, hoje=dia)
+    return open(caminho, encoding="utf-8").read()
+
+
+_txt_vencido = _placar_em(_dt.date(2026, 11, 15))
+ok("prazo vencido é dito com a palavra 'vencido'", "vencido" in _txt_vencido)
+ok("prazo vencido não aparece como número negativo de dias",
+   "dia(s) restante(s)" not in _txt_vencido and "há 3 dia(s)" in _txt_vencido)
+ok("o veredito conta quantas metas com alvo fecharam",
+   "Fecharam 2 de 6 meta(s) com alvo" in _txt_vencido, _txt_vencido[:400])
+ok("o veredito nomeia cada meta que não fechou, com observado e alvo",
+   "Instagram: seguidores (observado 0 de 50, faltaram 50)" in _txt_vencido)
+ok("meta aposentada fica FORA do veredito de falha",
+   "itch: seguidores (aposentada) (observado" not in _txt_vencido
+   and "aposentada(s) ficam fora do veredito" in _txt_vencido)
+ok("o veredito não decide pelo dono", "decisão dele" in _txt_vencido)
+ok("prazo vencido explica por que a coluna por_dia fica vazia",
+   "não há prazo para dividir" in _txt_vencido)
+
+_txt_hoje = _placar_em(_dt.date(2026, 11, 12))
+ok("no dia do prazo, o placar diz 'vence hoje'", "vence hoje" in _txt_hoje, _txt_hoje[:300])
+ok("no dia do prazo ainda não há veredito de vencido", "vencido" not in _txt_hoje)
+
+_txt_antes = _placar_em(_dt.date(2026, 11, 8))
+ok("antes do prazo a frase antiga continua (N dias restantes)",
+   "dia(s) restante(s)" in _txt_antes and "vencido" not in _txt_antes)
+
+metricas.SAIDA_PLACAR = _salvo_saida
+
 print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
 raise SystemExit(1 if falhas else 0)

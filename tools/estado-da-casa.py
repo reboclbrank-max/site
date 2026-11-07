@@ -172,9 +172,20 @@ def texto(dados=None):
     if d.get("regua_horas") is not None:
         horas = d["regua_horas"]
         vencida = " · VENCIDA (medir de novo)" if horas > 24 else ""
-        linha = "Régua de metas: medida há %.1f h · prazo %s · %s dia(s) restante(s)%s" % (
-            horas, d.get("regua_prazo") or "—",
-            "?" if d.get("regua_dias_restantes") is None else d["regua_dias_restantes"], vencida)
+        # O NÚMERO NEGATIVO NÃO É RESPOSTA (07/11/2026): depois de 12/11 esta linha diria
+        # "-3 dia(s) restante(s)". Prazo vencido tem nome próprio — e no dia do prazo, "0 dia(s)"
+        # também não diz nada.
+        _dias = d.get("regua_dias_restantes")
+        if _dias is None:
+            quando = "· dias restantes: ?"
+        elif _dias == 0:
+            quando = "· vence hoje"
+        elif _dias < 0:
+            quando = "· prazo vencido há %d dia(s)" % abs(_dias)
+        else:
+            quando = "· %d dia(s) restante(s)" % _dias
+        linha = "Régua de metas: medida há %.1f h · prazo %s %s%s" % (
+            horas, d.get("regua_prazo") or "—", quando, vencida)
         linhas.append(linha)
 
     pulsos = d.get("pulsos")

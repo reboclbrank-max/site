@@ -628,11 +628,53 @@ def gravar_placar(linhas, contexto, hoje=None):
            "seria necessário por dia para fechar no prazo — não é previsão.\n\n")
     dias = contexto.get("dias_restantes")
     prazo = contexto.get("prazo") or "sem prazo definido"
-    rodape = (f"\nPrazo: **{prazo}**" + (f" · {dias} dia(s) restante(s)" if dias is not None else "")
-              + f" · {contexto['metas_com_leitura']} meta(s) com leitura, "
-                f"{contexto['metas_sem_leitura']} sem leitura automática"
-              + (f" · {contexto['metas_aposentadas']} aposentada(s) com o motivo no arquivo"
-                 if contexto.get("metas_aposentadas") else "") + ".\n")
+    # O DIA SEGUINTE AO PRAZO (07/11/2026, cinco dias antes de ele chegar). A frase antiga dizia
+    # "-3 dia(s) restante(s)", que é conta certa e leitura nenhuma: ninguém sabe o que fazer com
+    # um número negativo. Prazo vencido pede veredito — quais metas fecharam, quais não, com o
+    # número de cada uma — e o robô não decide o que fazer com isso: quem decide é o dono.
+    vencido = dias is not None and dias < 0
+    if dias == 0:
+        # o dia do prazo ainda é prazo; dizer "0 dia(s) restante(s)" é não dizer nada
+        rodape = (f"\nPrazo: **{prazo}** · **vence hoje**"
+                  + f" · {contexto['metas_com_leitura']} meta(s) com leitura"
+                  + (f" · {contexto['metas_aposentadas']} aposentada(s) com o motivo no arquivo"
+                     if contexto.get("metas_aposentadas") else "") + ".\n")
+    elif vencido:
+        # META APOSENTADA NÃO ENTRA NO VEREDITO (07/11/2026): "itch: seguidores (aposentada)"
+        # tem alvo escrito e leitura impossível — contá-la como "não fechou" seria cobrar do
+        # robô o que não tem API para medir. Ela sai do placar de falhas e é dita à parte.
+        com_alvo = [l for l in linhas
+                    if l.get("alvo") not in ("—", None) and l.get("status") != "SEM_LEITURA"]
+        aposentadas = [l for l in linhas
+                       if l.get("status") == "SEM_LEITURA" and l.get("alvo") not in ("—", None)]
+        fecharam = [l for l in com_alvo if l.get("status") == "ATINGIDO"]
+        nao_fecharam = [l for l in com_alvo if l.get("status") != "ATINGIDO"]
+        veredito = (f"\nPrazo **vencido** em **{prazo}** (há {abs(dias)} dia(s)). "
+                    f"Fecharam {len(fecharam)} de {len(com_alvo)} meta(s) com alvo.")
+        if nao_fecharam:
+            veredito += " Não fecharam: " + "; ".join(
+                "%s (observado %s de %s, faltaram %s)" % (
+                    l["meta"],
+                    "sem leitura" if l["observado"] is None else l["observado"],
+                    l["alvo"], "—" if l["falta"] is None else l["falta"])
+                for l in nao_fecharam) + "."
+        else:
+            veredito += " Todas fecharam."
+        if aposentadas:
+            veredito += (" %d meta(s) aposentada(s) ficam fora do veredito, sem leitura possível: "
+                         % len(aposentadas)
+                         + ", ".join(l["meta"] for l in aposentadas) + ".")
+        veredito += (" O prazo era do dono, não do robô: renovar, aposentar ou manter o alvo "
+                     "escrito é decisão dele, com este número na mão.\n")
+        rodape = veredito
+        rodape += ("\n`por_dia` fica vazio a partir daqui: não há prazo para dividir a falta"
+                   " por dia.\n")
+    else:
+        rodape = (f"\nPrazo: **{prazo}**" + (f" · {dias} dia(s) restante(s)" if dias is not None else "")
+                  + f" · {contexto['metas_com_leitura']} meta(s) com leitura, "
+                    f"{contexto['metas_sem_leitura']} sem leitura automática"
+                  + (f" · {contexto['metas_aposentadas']} aposentada(s) com o motivo no arquivo"
+                     if contexto.get("metas_aposentadas") else "") + ".\n")
     # Decisão que o placar passa a tomar sozinho: canal medido, com partida conhecida, que
     # não moveu um único número em N dias. Não atribui causa — só diz que o esforço não
     # voltou, e nomeia a decisão (manter ou aposentar) que passa a ser do dono.

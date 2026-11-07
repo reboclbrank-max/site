@@ -28,6 +28,12 @@ def ok(nome, condicao, dado=None):
 
 
 tmp = tempfile.mkdtemp(prefix="estado-da-casa-")
+
+
+def _agora_iso():
+    """Agora em ISO — a régua é lida como 'medida há X h', então precisa ser recente."""
+    import datetime as _dt
+    return _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 _original = est.POSTS
 est.POSTS = tmp
 
@@ -82,6 +88,17 @@ try:
        "medir 2" in bloco and "publicar 1" in bloco and "há" in bloco, bloco)
     ok("o bloco mostra os pulsos", "Pulsos: 132" in bloco, bloco)
     ok("o bloco data a medida das capas", "medido em 2026-11-07" in bloco, bloco)
+
+    # 1b. prazo vencido tem nome (07/11/2026)
+    for _dias, _esperado, _proibido in ((-3, "prazo vencido há 3 dia(s)", "-3 dia(s)"),
+                                        (0, "vence hoje", "0 dia(s) restante"),
+                                        (5, "5 dia(s) restante(s)", "vencido")):
+        with open(os.path.join(tmp, "placar-estado.json"), "w", encoding="utf-8") as f:
+            json.dump({"medido_em": _agora_iso(), "dias_restantes": _dias,
+                       "prazo": "2026-11-12"}, f)
+        _t = est.texto(est.estado())
+        ok("régua com %s dia(s): %s" % (_dias, _esperado),
+           _esperado in _t and _proibido not in _t, _t.splitlines()[4][:160])
 
     # 2a. PRANCHETA: o build que está no itch é dito, e sem prometer que sobe por aqui
     with open(os.path.join(tmp, "prancheta-build.json"), "w", encoding="utf-8") as f:
