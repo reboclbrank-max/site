@@ -69,6 +69,7 @@ def estado(agora=None):
     capas = _lista(_ler("capas-aplicadas.json"), "aplicadas")
     fila = _lista(_ler("fila-tarefas.json"), "tarefas")
     capas_estado = _ler("capas-estado.json") or {}
+    prancheta = _ler("prancheta-build.json") or {}
     orq = _ler("orquestrador.json") or {}
 
     pendentes = [t for t in fila if isinstance(t, dict) and t.get("estado") == "pendente"]
@@ -99,6 +100,8 @@ def estado(agora=None):
         "capas_outros_jogos": capas_estado.get("outros_jogos"),
         "capas_da_casa": capas_estado.get("da_casa"),
         "capas_com_capa_no_canal": capas_estado.get("com_capa_no_canal"),
+        "prancheta_build": prancheta.get("build_id"),
+        "prancheta_medido_em": prancheta.get("medido_em"),
         "fila_pendentes": len(pendentes),
         "fila_por_tipo": por_tipo,
         "fila_mais_velha": mais_velha[0] if mais_velha else None,
@@ -142,6 +145,16 @@ def texto(dados=None):
     if d.get("capas_medido_em"):
         linha += " (medido em %s)" % str(d["capas_medido_em"])[:16]
     linhas.append(linha)
+
+    # O PRANCHETA É O ÚNICO JOGO QUE NÃO SOBE POR AQUI (07/11/2026): o build dele vive no itch e
+    # o dono publica na mão. Sem esta linha, "atualizei o PRANCHETA" e "não atualizei" eram a
+    # mesma coisa para todo mundo da casa. O vigia lê o id do build servido e diz qual é.
+    if d.get("prancheta_build"):
+        linha = "PRANCHETA no itch: build %s" % d["prancheta_build"]
+        if d.get("prancheta_medido_em"):
+            linha += " (a casa viu em %s)" % str(d["prancheta_medido_em"])[:16]
+        linha += " · esse build não sobe por aqui: o dono publica no itch"
+        linhas.append(linha)
 
     if d["fila_pendentes"]:
         tipos = ", ".join("%s %d" % (tipo, qtd) for tipo, qtd in sorted(d["fila_por_tipo"].items()))

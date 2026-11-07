@@ -83,6 +83,18 @@ try:
     ok("o bloco mostra os pulsos", "Pulsos: 132" in bloco, bloco)
     ok("o bloco data a medida das capas", "medido em 2026-11-07" in bloco, bloco)
 
+    # 2a. PRANCHETA: o build que está no itch é dito, e sem prometer que sobe por aqui
+    with open(os.path.join(tmp, "prancheta-build.json"), "w", encoding="utf-8") as f:
+        json.dump({"build_id": "19604665", "medido_em": "2026-11-07T05:38:08Z"}, f)
+    _bloco_prancheta = est.texto(est.estado())
+    ok("o bloco diz qual build do PRANCHETA está no itch", "build 19604665" in _bloco_prancheta,
+       _bloco_prancheta)
+    ok("o bloco diz que esse build não sobe por aqui",
+       "não sobe por aqui" in _bloco_prancheta, _bloco_prancheta)
+    os.unlink(os.path.join(tmp, "prancheta-build.json"))
+    ok("sem registro do PRANCHETA, o bloco não inventa linha",
+       "PRANCHETA" not in est.texto(est.estado()))
+
     # 2b. os três números do canal aparecem cada um com nome (e nada de conta que o leitor faça só)
     with open(os.path.join(tmp, "capas-estado.json"), "w", encoding="utf-8") as f:
         json.dump({"no_canal": 169, "sem_capa": 0, "da_casa": 11, "outros_jogos": 158,

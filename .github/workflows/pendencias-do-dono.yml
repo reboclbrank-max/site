@@ -34,6 +34,22 @@ jobs:
       - name: Barreiras offline
         run: python3 tools/rodar-contratos-isolados.py tools/testes-pendencias.py
 
+      # O PRANCHETA é o único jogo cujo build não passa por este repositório: o dono publica no
+      # itch. Este passo lê qual build o itch está servindo e registra — é o que faz "atualizei o
+      # PRANCHETA" virar fato observável em vez de memória. Não sobe nada, não publica nada.
+      - name: Qual build do PRANCHETA está no ar
+        run: |
+          set -o pipefail -e
+          python3 tools/rodar-contratos-isolados.py tools/testes-vigia-build-prancheta.py
+          python3 tools/vigia-build-prancheta.py --gravar | tee /tmp/prancheta.txt
+          {
+            echo "### PRANCHETA no itch"
+            echo
+            echo '```'
+            cat /tmp/prancheta.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Mede o que falta (leitura pública, sem cookie)
         env:
           PEDIR_AVISO: "1"
@@ -44,7 +60,7 @@ jobs:
         run: |
           git config user.name "reboclbrank-max"
           git config user.email "reboclbrank@gmail.com"
-          git add posts/pendencias-do-dono.json posts/pendencias-do-dono.md
+          git add posts/pendencias-do-dono.json posts/pendencias-do-dono.md posts/prancheta-build.json
           if git diff --cached --quiet; then
             echo "relatório sem mudança"
             exit 0
