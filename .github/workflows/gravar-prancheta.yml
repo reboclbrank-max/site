@@ -273,6 +273,12 @@ jobs:
           git config user.email "reboclbrank@gmail.com"
           git add posts/youtube-publicados.json
           [ -e posts/videos-enviados.json ] && git add posts/videos-enviados.json || true
+          # A CAPA TAMBÉM É REGISTRO (06/11/2026): o envio anota em posts/capas-aplicadas.json
+          # qual capa aplicou — e este passo commitava só os outros dois JSON. Resultado: o
+          # registro da capa ficava no caminho de trabalho, ia para o stash no fim do run e
+          # desaparecia. O vídeo O04ajm1t54Q foi publicado com capa às 00:04 e, minutos depois,
+          # a ferramenta das capas o listou como "sem capa".
+          [ -e posts/capas-aplicadas.json ] && git add posts/capas-aplicadas.json || true
           if git diff --cached --quiet; then
             echo "registro sem mudança"
             exit 0

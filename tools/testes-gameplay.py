@@ -410,6 +410,39 @@ def main():
     ok("o relatório de decisões sem movimento ainda gera legenda",
        prod.montar_ass([], 20).count("Dialogue:") == 0)
 
+    # 4b. TÍTULO DE CADA JOGO (06/11/2026): o kit é montado para todos os jogos do registro.
+    # Ler n["colhidas"] direto estourava no PRANCHETA e derrubava o run DEPOIS da gravação
+    # (run 42318206616, KeyError 'colhidas' no passo "Monta o kit de envio do gameplay").
+    import importlib.util as _iu
+    _spec_kit = _iu.spec_from_file_location("kitgp", os.path.join(RAIZ, "tools", "kit-gameplay.py"))
+    _kit = _iu.module_from_spec(_spec_kit)
+    _spec_kit.loader.exec_module(_kit)
+    # o kit recebe o registro do kit-youtube por PARÂMETRO (é assim que o montar() faz)
+    _spec_kj = _iu.spec_from_file_location("kityt", os.path.join(RAIZ, "tools", "kit-youtube.py"))
+    _kit_yt = _iu.module_from_spec(_spec_kj)
+    _spec_kj.loader.exec_module(_kit_yt)
+    import tempfile as _tmpmod
+    _pasta = _tmpmod.mkdtemp(prefix="titulos-")
+    os.makedirs(os.path.join(_pasta, "media", "gameplay"), exist_ok=True)
+    with open(os.path.join(_pasta, "media", "gameplay", "ceifalume-gameplay-cru-decisoes.json"),
+              "w", encoding="utf-8") as _f:
+        json.dump({"plantadas": 3, "colhidas": 2, "bicos": 7,
+                   "decisoes": [{"t": 0}, {"t": 130}]}, _f)
+    with open(os.path.join(_pasta, "media", "gameplay", "prancheta-cru-decisoes.json"),
+              "w", encoding="utf-8") as _f:
+        json.dump({"passos_confirmados": 11, "toques_partida": 6, "estrategia": "pressao_rapida",
+                   "decisoes": [{"t": 0, "ok": True}, {"t": 80, "ok": False}]}, _f)
+    _titulos = {}
+    for _slug in _kit.GAMEPLAY:
+        _titulos[_slug] = _kit.titulo_da_partida(_slug, _kit_yt, raiz=_pasta)
+    ok("o título da partida é montado para TODO jogo do kit (sem KeyError)",
+       all(_titulos.values()), _titulos)
+    ok("o título do CEIFALUME fala em colheita e o do PRANCHETA não inventa colheita",
+       "colheita" in str(_titulos.get("ceifalume", "")).lower()
+       and "colheita" not in str(_titulos.get("prancheta", "")).lower(), _titulos)
+    ok("cada jogo tem título diferente do outro (não é molde)",
+       len(set(_titulos.values())) == len(_titulos), _titulos)
+
     # 5. envio continua trancado
     env = dict(os.environ, KIT_YOUTUBE=os.path.join("posts", "kit-gameplay.json"), CONFIRMACAO="")
     r = subprocess.run([sys.executable, "tools/enviar-youtube.py", "ceifalume-gameplay"],

@@ -249,6 +249,15 @@ def main():
         ok("%s: falha se o vídeo final sumir depois do commit" % nome,
            re.search(r"test\s+-s\s+media/gameplay/[\w.-]+\.mp4", fonte) is not None)
 
+    # O REGISTRO DA CAPA É COMMITADO (06/11/2026): quem envia capa anota em
+    # posts/capas-aplicadas.json; se o passo de commit esquece esse arquivo, a anotação morre no
+    # stash do fim do run e a ferramenta das capas repinta o que já estava pintado.
+    for nome, fonte in fontes().items():
+        if "enviar-youtube.py" not in fonte or "Registra o que foi publicado" not in fonte:
+            continue
+        ok("%s: o commit do envio versiona o registro de capas" % nome,
+           "git add posts/capas-aplicadas.json" in fonte)
+
     print("\n%d/%d verificações de higiene de workflow passaram"
           % (len(certos), len(certos) + len(falhas)))
     return 0 if not falhas else 1

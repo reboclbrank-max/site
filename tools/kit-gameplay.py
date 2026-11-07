@@ -148,14 +148,26 @@ def titulo_da_partida(slug, kit, raiz=RAIZ):
         return None
     jogo = kit.JOGOS.get(slug) or {}
     nome = (jogo.get("nome") or slug) + ((" " + jogo.get("versao")) if jogo.get("versao") else "")
+    # CADA JOGO MEDE O QUE TEM (06/11/2026). Aqui se lia n["colhidas"] direto, o que só valia
+    # para o CEIFALUME: o kit é montado para TODOS os jogos, e ao gerar o pacote do PRANCHETA
+    # (que não tem colheita) o run 42318206616 morreu com KeyError 'colhidas' no passo 12 — depois
+    # de gravar o vídeo. Título se monta com o que existe, nunca com o que se supõe.
     partes = []
-    if n["colhidas"]:
-        partes.append("%d colheita%s" % (n["colhidas"], "" if n["colhidas"] == 1 else "s"))
-    if n["plantadas"]:
-        partes.append("%d muda%s plantada%s" % (n["plantadas"], "" if n["plantadas"] == 1 else "s",
-                                                "" if n["plantadas"] == 1 else "s"))
-    if n["toques"]:
-        partes.append("%d toques" % n["toques"])
+
+    def _plural(qtd, singular, plural):
+        return "%d %s" % (qtd, singular if qtd == 1 else plural)
+
+    if n.get("colhidas"):
+        partes.append(_plural(n["colhidas"], "colheita", "colheitas"))
+    if n.get("plantadas"):
+        partes.append(_plural(n["plantadas"], "muda plantada", "mudas plantadas"))
+    if n.get("passos"):
+        partes.append(_plural(n["passos"], "passo", "passos"))
+    if n.get("passos_confirmados"):
+        partes.append("%d confirmados" % n["passos_confirmados"])
+    _toques = n.get("toques") or n.get("toques_partida") or 0
+    if _toques:
+        partes.append(_plural(_toques, "toque", "toques"))
     corpo = ", ".join(partes)
     titulo = "%s: %s em %d min de jogo" % (nome, corpo, n["minutos"]) if corpo else None
     if not titulo:
