@@ -53,6 +53,16 @@ def _horas(quando, agora=None):
     return round(max(0.0, (agora - valor).total_seconds() / 3600.0), 1)
 
 
+def _corte(texto, limite=48):
+    """Corta no fim de uma palavra. Título cortado no meio ("11 mudas plantadas, )") parece erro
+    de leitura, e é o primeiro número que o dono vê."""
+    texto = (texto or "").strip()
+    if len(texto) <= limite:
+        return texto
+    corte = texto[:limite].rsplit(" ", 1)[0].rstrip(" ,.;:-")
+    return corte + "…"
+
+
 def estado(agora=None):
     """Devolve um dicionário só com o que foi lido de arquivo — nada estimado."""
     publicados = _lista(_ler("youtube-publicados.json"), "publicados")
@@ -73,7 +83,12 @@ def estado(agora=None):
 
     sem_capa = capas_estado.get("sem_capa")
     no_canal = capas_estado.get("no_canal")
+    regua = _ler("placar-estado.json") or {}
     return {
+        "regua_medida_em": regua.get("medido_em"),
+        "regua_horas": _horas(regua.get("medido_em"), agora),
+        "regua_dias_restantes": regua.get("dias_restantes"),
+        "regua_prazo": regua.get("prazo"),
         "publicados": len(publicados),
         "ultimo_publicado": (publicados[0].get("id") if publicados else None),
         "ultimo_publicado_titulo": (publicados[0].get("titulo") if publicados else None),
@@ -99,7 +114,7 @@ def texto(dados=None):
 
     linhas.append("Vídeos publicados: %d%s" % (
         d["publicados"],
-        (" · último: %s (%s)" % (d["ultimo_publicado"], (d["ultimo_publicado_titulo"] or "")[:48]))
+        (" · último: %s (%s)" % (d["ultimo_publicado"], _corte(d["ultimo_publicado_titulo"])))
         if d["ultimo_publicado"] else ""))
 
     # SEM RAZÃO INVENTADA (07/11/2026): o canal tem 169 vídeos e só 51 têm capa da casa — os
@@ -126,6 +141,17 @@ def texto(dados=None):
             d["fila_pendentes"], tipos, velha, d["fila_feitas"]))
     else:
         linhas.append("Fila: vazia · %d tarefa(s) já feita(s)" % d["fila_feitas"])
+
+    # A RÉGUA VELHA APARECE (07/11/2026): a régua de metas ficou 4 dias parada e o pulso decidia
+    # com números de 03/11. Um relatório que mostra a decisão e esconde a idade do número que a
+    # sustenta é o mesmo defeito com outra roupa.
+    if d.get("regua_horas") is not None:
+        horas = d["regua_horas"]
+        vencida = " · VENCIDA (medir de novo)" if horas > 24 else ""
+        linha = "Régua de metas: medida há %.1f h · prazo %s · %s dia(s) restante(s)%s" % (
+            horas, d.get("regua_prazo") or "—",
+            "?" if d.get("regua_dias_restantes") is None else d["regua_dias_restantes"], vencida)
+        linhas.append(linha)
 
     pulsos = d.get("pulsos")
     if pulsos is not None:

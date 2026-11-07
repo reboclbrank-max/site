@@ -22,7 +22,11 @@ on:
         required: false
         default: ""
   schedule:
-    - cron: "50 2,10,18 * * *"   # 3 gravações por dia, só gravação
+    # DENTRO DA JANELA (07/11/2026): era "50 2,10,18" — 07:50, 12:50 e 22:50 de Brasília. As duas
+    # pontas nasciam fora da janela 9h-22h (07:50 ainda não abre, 22:50 já fechou), então um terço
+    # das gravações não podia publicar. Mesmo defeito do gravar-gameplay, corrigido no mesmo dia:
+    # agora 09:50, 13:50 e 16:50, as três com a janela aberta.
+    - cron: "50 12,16,19 * * *"   # 3 gravações por dia, só gravação
 
 permissions:
   contents: write      # só para o registro do que foi publicado, atrás do cadeado PUBLICAR

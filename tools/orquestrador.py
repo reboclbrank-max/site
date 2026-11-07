@@ -239,11 +239,30 @@ def usar_fila(agora, estado):
     if _podadas:
         print("fila: %d cópia(s) vencida(s) podada(s) — fica a mais nova de cada ação repetível"
               % len(_podadas))
-    tipos = ("publicar", "medir")
+    # A JANELA DO RELÓGIO MANDA QUANDO ELA EXISTE (07/11/2026): `decidir()` tem horas que só
+    # servem para pesquisar (03h local) e aprender (04h local). Mas esta função sempre pedia
+    # ("publicar", "medir") à fila — então, na madrugada, um `medir` pendente atropelava a
+    # pesquisa do dia, e a tarefa de pesquisar que o relógio acabara de enfileirar nunca era
+    # escolhida por ninguém: entrava na fila e morria lá (ou batia no teto e era recusada).
+    # Agora, se o relógio pede pesquisar/aprender, é essa a tarefa do pulso.
     _pode, _por_que = pode_publicar(agora, ler_calendario())
-    if not _pode:
+    _ultima = ler_iso(estado.get("ultima_publicacao"))
+    _cedo = bool(_pode and _ultima and (agora - _ultima) < INTERVALO_PUBLICACAO)
+    if relogio in ("pesquisar", "aprender"):
+        tipos = (relogio,)
+    elif not _pode:
         tipos = ("medir",)
         print("fila: publicar fora de cogitação agora — %s" % _por_que)
+    elif _cedo:
+        # A FILA NÃO FUROU O INTERVALO (07/11/2026): o portão olhava janela e teto do dia, mas não
+        # o mínimo de 2 h entre publicações. Com publicar pendente na fila, o pulso podia publicar
+        # 20 min depois da última. Agora a fila espera o mesmo intervalo que o relógio.
+        tipos = ("medir",)
+        print("fila: publicar ainda não — publicou há %.0f min (mínimo %dh)"
+              % ((agora - _ultima).total_seconds() / 60,
+                 INTERVALO_PUBLICACAO.total_seconds() / 3600))
+    else:
+        tipos = ("publicar", "medir")
     tarefas = fila.selecionar_pulso(dados, tipos=tipos, agora=agora)
     fila.gravar(dados, FILA)
     if not tarefas:

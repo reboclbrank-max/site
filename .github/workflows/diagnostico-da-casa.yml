@@ -9,6 +9,14 @@ name: diagnostico-da-casa
 # em que pé está o marketing.
 on:
   workflow_dispatch:
+  schedule:
+    # A RÉGUA DE METAS FICOU SEM QUEM A ESCREVESSE (07/11/2026). Medido: posts/placar-metas.md
+    # parado em 03/11 06:52Z — "9 dia(s) restante(s)" quando faltavam 5 — e o pulso decidindo com
+    # aqueles números ("faltam 16, ritmo 1.78/dia" era literalmente a linha de 03/11). O único
+    # workflow que COMMITAVA a medição era o postagem-diaria, cuja agenda saiu na contenção de
+    # 03/11. Este aqui já mede (metricas.py) de forma só-leitura; faltava a agenda e o commit.
+    # 12:45Z = 09:45 de Brasília: dentro da janela e depois do relatório de pendências (12:20Z).
+    - cron: "45 12 * * *"
 
 concurrency:
   group: diagnostico-da-casa
@@ -91,6 +99,25 @@ jobs:
                   l["arquivo"], l["estado"], l["repo"], l["itch"]))
           print("jogo igual ao repositório:", "SIM" if r["jogo_igual_ao_repo"] else "NÃO")
           PY
+
+      - name: Versiona a medição (a régua precisa de quem a escreva)
+        # A REGRA DA CASA VALE AQUI: nada de `git push` seco. Quem entra no main é
+        # tools/entrar-no-main.sh, com o gerador declarado — e só quando a medição mudou.
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/placar-metas.md posts/desempenho.md posts/placar-estado.json \
+                  posts/progresso-metas.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "medição sem mudança — nada a versionar"
+            exit 0
+          fi
+          git commit -m "📊 desempenho $(date -u +'%d/%m %H:%M')"
+          GERAR="python3 tools/metricas.py" \
+            bash tools/entrar-no-main.sh "medição do dia" || {
+            echo "::error::a medição não entrou no main"
+            exit 1
+          }
 
       - name: Resumo no painel da execução
         if: always()

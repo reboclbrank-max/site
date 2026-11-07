@@ -803,6 +803,23 @@ def main(argv):
     linhas_metas, contexto_metas = placar_metas(observado)
     dados["placar"] = linhas_metas
     dados["placar_contexto"] = contexto_metas
+    # O CARIMBO DA RÉGUA (07/11/2026): a régua de metas ficou 4 dias parada em 03/11 — e o pulso
+    # seguiu decidindo com "faltam 16, ritmo 1.78/dia" de quatro dias atrás, porque nada dizia
+    # QUANDO a régua foi medida. Data de arquivo não serve (o checkout reescreve o mtime); então
+    # a própria medição deixa o carimbo no JSON, e o estado da casa pode dizer "medida há X h".
+    try:
+        carimbo = os.path.join(os.path.dirname(SAIDA_PLACAR) or ".", "placar-estado.json")
+        with open(carimbo, "w", encoding="utf-8") as f:
+            json.dump({"_o_que_e": "quando a régua de metas foi medida pela última vez",
+                       "medido_em": datetime.datetime.now(datetime.timezone.utc)
+                       .strftime("%Y-%m-%dT%H:%M:%SZ"),
+                       "dias_restantes": contexto_metas.get("dias_restantes"),
+                       "prazo": contexto_metas.get("prazo"),
+                       "fonte": [SAIDA_PLACAR, "posts/desempenho.md"]},
+                      f, ensure_ascii=False, indent=1)
+            f.write("\n")
+    except OSError:
+        pass
     if "--json" in argv:
         print(json.dumps(dados, ensure_ascii=False, indent=1))
         return 0

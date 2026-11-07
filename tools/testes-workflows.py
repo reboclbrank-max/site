@@ -313,6 +313,46 @@ def main():
     ok("sobrou gravação de madrugada? (04h e 22h de Brasília eram inúteis)",
        all(h not in (7,) for h in _horas), _horas)
 
+    # ---- A RÉGUA DE METAS TEM QUEM A ESCREVA (07/11/2026) -----------------------------
+    # Medido: posts/placar-metas.md parado em 03/11 06:52Z ("9 dias restantes" quando faltavam 5).
+    # O único workflow que COMMITAVA a medição era o postagem-diaria, cuja agenda saiu na
+    # contenção. O diagnostico-da-casa mede, mas não tinha agenda nem commit — e o pulso seguia
+    # decidindo com números de 03/11.
+    _diag = fontes().get("diagnostico-da-casa.yml", "")
+    _gatilhos_diag = _diag.split("permissions:")[0]
+    _crons_diag = [l.split('"')[1] for l in _gatilhos_diag.splitlines() if l.strip().startswith("- cron:")]
+    ok("diagnostico-da-casa tem agenda (a régua não fica sem quem a escreva)", bool(_crons_diag),
+       _crons_diag)
+    _horas_diag = []
+    for _c in _crons_diag:
+        _horas_diag += [int(x) for x in _c.split()[1].split(",") if x.isdigit()]
+    ok("a medição do dia roda dentro da janela (9-22h de Brasília)",
+       _horas_diag and all(12 <= h <= 22 for h in _horas_diag), _horas_diag)
+    ok("diagnostico-da-casa versiona a régua de metas", "git add posts/placar-metas.md" in _diag)
+    ok("o commit da medição entra pelo entrar-no-main (sem push seco)",
+       "entrar-no-main.sh" in _diag.split("Versiona a medição")[-1])
+    ok("o commit da medição só acontece quando algo mudou",
+       "git diff --cached --quiet" in _diag.split("Versiona a medição")[-1])
+    ok("a medição deixa carimbo de quando foi medida (posts/placar-estado.json)",
+       "placar-estado.json" in open(os.path.join(RAIZ, "tools", "metricas.py"),
+                                    encoding="utf-8").read())
+    ok("o estado da casa lê o carimbo da régua",
+       "placar-estado.json" in open(os.path.join(RAIZ, "tools", "estado-da-casa.py"),
+                                    encoding="utf-8").read())
+
+    # ---- PRANCHETA TAMBÉM NASCE DENTRO DA JANELA (07/11/2026) --------------------------
+    # Mesmo defeito do gravar-gameplay: "50 2,10,18" = 07:50, 12:50 e 22:50 de Brasília; as duas
+    # pontas fora da janela 9-22h.
+    _prancheta = fontes().get("gravar-prancheta.yml", "")
+    _horas_pr = []
+    for _linha in _prancheta.splitlines():
+        if _linha.strip().startswith("- cron:"):
+            _horas_pr += [int(h) for h in _linha.split('"')[1].split()[1].split(",")]
+    ok("as gravações da prancheta nascem dentro da janela", _horas_pr and
+       all(12 <= h <= 22 for h in _horas_pr), _horas_pr)
+    ok("nada de prancheta às 07:50 nem às 22:50 de Brasília",
+       not any((h - 3) % 24 in (7, 23) for h in _horas_pr), _horas_pr)
+
     print("\n%d/%d verificações de higiene de workflow passaram"
           % (len(certos), len(certos) + len(falhas)))
     return 0 if not falhas else 1

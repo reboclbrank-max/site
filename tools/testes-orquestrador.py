@@ -273,6 +273,62 @@ def main():
        all(12 <= h <= 22 for h in _horas_utc), _horas_utc)
     ok("as gravações ficam às 09h e 16h de Brasília", sorted(_horas_utc) == [12, 19], _horas_utc)
 
+    # ---- A FILA NÃO ATROPELA A JANELA DO RELÓGIO (07/11/2026) ---------------------------
+    # `decidir()` tem horas só para pesquisar (03h local) e aprender (04h local), mas
+    # `usar_fila()` pedia sempre ("publicar", "medir") — na madrugada, um `medir` pendente
+    # tomava o pulso e a pesquisa do dia nunca rodava (a tarefa entrava e morria na fila).
+    import shutil as _sh
+    _bancada = tempfile.mkdtemp(prefix="pulso-")
+    _fila_tmp = os.path.join(_bancada, "fila.json")
+    with open(_fila_tmp, "w", encoding="utf-8") as f:
+        json.dump({"tarefas": [
+            {"id": "publicar-na-fila", "tipo": "publicar", "prioridade": 60, "estado": "pendente",
+             "tentativas": 0, "criada": "2026-11-07T06:00:00Z", "motivo": "tema", "chave": "p"},
+            {"id": "medir-na-fila", "tipo": "medir", "prioridade": 90, "estado": "pendente",
+             "tentativas": 0, "criada": "2026-11-07T06:00:00Z", "motivo": "placar", "chave": "m"},
+        ]}, f)
+    _fila_real, _decidir_real, _pode_real = orquestrador.FILA, orquestrador.decidir, orquestrador.pode_publicar
+    try:
+        orquestrador.FILA = _fila_tmp
+        orquestrador.pode_publicar = lambda agora, calendario: (False, "fora da janela (03h local)")
+        orquestrador.decidir = lambda *a, **k: ("pesquisar", "janela diária de pesquisa (03h local)")
+        _agora = datetime.datetime(2026, 11, 7, 6, 0, tzinfo=datetime.timezone.utc)  # 03h local
+        _tipo, _motivo, _trios = orquestrador.usar_fila(_agora, {"ultima_medicao": "2026-11-07T05:30:00Z"})
+        _levados = [t[2]["tipo"] for t in (_trios or [])]
+        ok("na janela de pesquisa o pulso pega pesquisar (não medir)", _levados == ["pesquisar"], _levados)
+        ok("a publicar da fila não é gasta na madrugada",
+           "publicar-na-fila" not in [t[2]["id"] for t in (_trios or [])], _levados)
+
+        orquestrador.decidir = lambda *a, **k: ("aprender", "janela diária de aprendizado (04h local)")
+        _tipo, _motivo, _trios = orquestrador.usar_fila(_agora, {"ultima_medicao": "2026-11-07T05:30:00Z"})
+        ok("na janela de aprendizado o pulso pega aprender",
+           [t[2]["tipo"] for t in (_trios or [])] == ["aprender"], [t[2]["tipo"] for t in (_trios or [])])
+
+        # intervalo mínimo entre publicações: a fila também espera
+        with open(_fila_tmp, "w", encoding="utf-8") as f:
+            json.dump({"tarefas": [
+                {"id": "publicar-cedo", "tipo": "publicar", "prioridade": 60, "estado": "pendente",
+                 "tentativas": 0, "criada": "2026-11-07T13:00:00Z", "motivo": "tema", "chave": "p"},
+            ]}, f)
+        orquestrador.pode_publicar = lambda agora, calendario: (True, "janela aberta")
+        orquestrador.decidir = lambda *a, **k: ("dormir", "publicou há 20 min")
+        _agora2 = datetime.datetime(2026, 11, 7, 13, 20, tzinfo=datetime.timezone.utc)  # 10:20 local
+        _estado_cedo = {"ultima_medicao": "2026-11-07T13:10:00Z",
+                        "ultima_publicacao": "2026-11-07T13:00:00Z"}  # 20 min atrás
+        _tipo, _motivo, _trios = orquestrador.usar_fila(_agora2, _estado_cedo)
+        ok("a fila não publica antes do intervalo mínimo de 2 h",
+           not _trios or [t[2]["tipo"] for t in _trios] != ["publicar"],
+           [t[2]["tipo"] for t in (_trios or [])])
+        # e publica quando o intervalo passou
+        _estado_ok = {"ultima_medicao": "2026-11-07T13:10:00Z",
+                      "ultima_publicacao": "2026-11-07T10:00:00Z"}  # 3h20 atrás
+        _tipo, _motivo, _trios = orquestrador.usar_fila(_agora2, _estado_ok)
+        ok("passado o intervalo, a fila publica",
+           [t[2]["tipo"] for t in (_trios or [])] == ["publicar"], [t[2]["tipo"] for t in (_trios or [])])
+    finally:
+        orquestrador.FILA, orquestrador.decidir, orquestrador.pode_publicar = _fila_real, _decidir_real, _pode_real
+        _sh.rmtree(_bancada, ignore_errors=True)
+
     # ---- CÓPIAS VELHAS DE AÇÃO REPETÍVEL (07/11/2026) ---------------------------------
     # Medido na fila real: 8 pendentes, 5 delas `medir`, quatro de 03/11. Medir o placar de
     # 03/11 hoje não é trabalho útil — é cópia. Publicar é o contrário: cada uma vale por si.
@@ -323,7 +379,7 @@ def main():
        'tipos = ("medir",)' in _src_orq and "pode_publicar(agora, ler_calendario())" in _src_orq,
        [l for l in _src_orq.splitlines() if "tipos =" in l])
 
-    total = 24 + 15 + 8 + 7
+    total = 24 + 15 + 8 + 7 + 5
     print("\n%d/%d testes do orquestrador 24h passaram" % (total - falhas, total))
     return 1 if falhas else 0
 

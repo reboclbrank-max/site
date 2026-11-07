@@ -83,7 +83,40 @@ try:
     ok("o bloco mostra os pulsos", "Pulsos: 132" in bloco, bloco)
     ok("o bloco data a medida das capas", "medido em 2026-11-07" in bloco, bloco)
 
-    # 3. capa faltando aparece como falta, não como zero
+    # 3. a régua de metas: idade visível, e vencida quando passa de 24 h
+    with open(os.path.join(tmp, "placar-estado.json"), "w", encoding="utf-8") as f:
+        json.dump({"medido_em": "2026-11-03T06:52:00Z", "dias_restantes": 9, "prazo": "2026-11-12"}, f)
+    dados_regua = est.estado()
+    ok("o estado carrega quando a régua foi medida", dados_regua["regua_medida_em"] == "2026-11-03T06:52:00Z",
+       dados_regua["regua_medida_em"])
+    ok("a idade da régua é calculada em horas", dados_regua["regua_horas"] and dados_regua["regua_horas"] > 24,
+       dados_regua["regua_horas"])
+    _bloco_regua = est.texto(dados_regua)
+    ok("a régua velha aparece no bloco", "Régua de metas: medida há" in _bloco_regua, _bloco_regua)
+    ok("régua de mais de 24 h é dita VENCIDA", "VENCIDA" in _bloco_regua, _bloco_regua)
+    ok("o bloco mostra o prazo e os dias que a régua diz",
+       "2026-11-12" in _bloco_regua and "9 dia(s)" in _bloco_regua, _bloco_regua)
+
+    with open(os.path.join(tmp, "placar-estado.json"), "w", encoding="utf-8") as f:
+        json.dump({"medido_em": "2026-11-07T02:00:00Z", "dias_restantes": 5, "prazo": "2026-11-12"}, f)
+    ok("régua fresca não é chamada de vencida", "VENCIDA" not in est.texto(est.estado()),
+       est.texto(est.estado()))
+
+    # 4. título longo cortado em palavra inteira (o número que o dono lê primeiro)
+    ok("título curto não é cortado", est._corte("CEIFALUME 0.1") == "CEIFALUME 0.1")
+    _longo = est._corte("CEIFALUME 0.1: 8 colheitas, 11 mudas plantadas, e mais um texto enorme aqui")
+    ok("título longo termina em palavra inteira", _longo.endswith("…") and " ," not in _longo, _longo)
+    _original = "CEIFALUME 0.1: 8 colheitas, 11 mudas plantadas, e mais um texto enorme aqui"
+    _sem_reticencias = _longo[:-1]
+    _proximo = _original[len(_sem_reticencias):len(_sem_reticencias) + 1]
+    # fronteira de palavra: o próximo caractere do original não pode ser letra/número
+    ok("o corte é prefixo do original e cai numa fronteira de palavra",
+       _original.startswith(_sem_reticencias) and not _proximo.isalnum(),
+       (_sem_reticencias, _proximo))
+    _cortado = est._corte("a" * 60)
+    ok("palavra única gigante não quebra (corta e avisa)", _cortado.endswith("…"), _cortado)
+
+    # 5. capa faltando aparece como falta, não como zero
     with open(os.path.join(tmp, "capas-estado.json"), "w", encoding="utf-8") as f:
         json.dump({"no_canal": 50, "sem_capa": 3, "medido_em": "2026-11-07T01:00:00Z"}, f)
     dados2 = est.estado()
