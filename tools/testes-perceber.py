@@ -107,6 +107,14 @@ ok("meta batida e meta de ritmo baixo ficam de fora", all("shorts" not in i["o_q
                                                           "Instagram" not in i["o_que"] for i in _r), _r)
 ok("o porquê mostra falta, ritmo e prazo",
    _r and "53" in _r[0]["porque"] and "4.15" in _r[0]["porque"] and "13 dias" in _r[0]["porque"], _r)
+# a régua em markdown carrega a coluna "desde a partida" como número (o ritmo medido depende dela)
+_linhas_regua = p.placar_linhas()
+ok("a régua real chega com delta numérico (sem isso não há ritmo medido)",
+   _linhas_regua and any(isinstance(l.get("delta"), (int, float)) for l in _linhas_regua),
+   [(l.get("meta"), l.get("delta")) for l in _linhas_regua[:4]])
+ok("delta ausente na régua vira None, não zero",
+   all(l.get("delta") is None or isinstance(l.get("delta"), (int, float)) for l in _linhas_regua),
+   [(l.get("meta"), l.get("delta")) for l in _linhas_regua[:4]])
 ok("meta em risco enfileira publicação (é o que empurra número)",
    _r and _r[0]["tipo_fila"] == "publicar", _r)
 

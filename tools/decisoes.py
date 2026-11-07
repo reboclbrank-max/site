@@ -61,8 +61,19 @@ def tabela_placar():
         celulas = [c.strip() for c in linha.strip().strip("|").split("|")]
         if len(celulas) < 7 or celulas[0].lower() == "meta" or set(celulas[0]) <= {"-"}:
             continue
+        # A SÉTIMA COLUNA ("desde a partida") VIRA NÚMERO (07/11/2026): ela existia na régua e era
+        # jogada fora aqui — por isso a frase de meta em risco nunca conseguia dizer o ritmo
+        # MEDIDO ("0.0 por dia em 25 dias"), só o necessário.
+        delta = None
+        try:
+            bruto = celulas[6].replace("+", "").replace(",", ".").strip()
+            delta = float(bruto)
+            delta = int(delta) if delta == int(delta) else delta
+        except (ValueError, IndexError):
+            delta = None
         linhas.append({"meta": celulas[0], "alvo": celulas[1], "observado": celulas[2],
-                       "falta": celulas[3], "por_dia": celulas[4], "status": celulas[5]})
+                       "falta": celulas[3], "por_dia": celulas[4], "status": celulas[5],
+                       "delta": delta})
     return linhas
 
 
