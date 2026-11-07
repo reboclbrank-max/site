@@ -1,6 +1,6 @@
 # O que precisa ser feito
 
-Gerado em 2026-11-07T02:55:14Z pelo próprio ciclo, olhando o estado medido (não o relógio).
+Gerado em 2026-11-07T04:21:37Z pelo próprio ciclo, olhando o estado medido (não o relógio).
 
 > necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.
 
@@ -8,10 +8,10 @@ Gerado em 2026-11-07T02:55:14Z pelo próprio ciclo, olhando o estado medido (nã
 
 | o que | por quê (medido) | como | verifica |
 | --- | --- | --- | --- |
-| empurrar a meta: Instagram: seguidores | faltam 50 e o ritmo necessário é 5.56 por dia | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
-| empurrar a meta: Bluesky: seguidores | faltam 18 e o ritmo necessário é 2.0 por dia | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
-| empurrar a meta: YouTube: inscritos | faltam 16 e o ritmo necessário é 1.78 por dia | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
-| empurrar a meta: itch: downloads | faltam 52 e o ritmo necessário é 5.78 por dia | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
+| empurrar a meta: Instagram: seguidores | faltam 50 e o ritmo necessário é 10.0 por dia (prazo em 5 dias) | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
+| empurrar a meta: Bluesky: seguidores | faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias) | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
+| empurrar a meta: YouTube: inscritos | faltam 16 e o ritmo necessário é 3.2 por dia (prazo em 5 dias) | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
+| empurrar a meta: itch: downloads | faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) | priorizar essa meta no próximo ciclo editorial | o número observado sobe no placar (posts/placar-metas.md) |
 
 ## Espera o dono (3)
 
