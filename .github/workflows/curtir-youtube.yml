@@ -1,0 +1,59 @@
+name: Curtir YouTube
+# Curtir vídeo do YouTube usando OAuth do dono
+on:
+  workflow_dispatch:
+    inputs:
+      video_id:
+        required: true
+        description: ID do vídeo no YouTube
+permissions:
+  contents: read
+jobs:
+  curtir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: Curtir vídeo do YouTube
+        shell: bash -o pipefail -e {0}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          VIDEO_ID: ${{ inputs.video_id }}
+        run: |
+          pip install -q pynacl requests_oauthlib
+          python3 - <<'PY'
+          import os, requests
+          
+          client_id = os.environ['YT_CLIENT_ID']
+          client_secret = os.environ['YT_CLIENT_SECRET']
+          refresh_token = os.environ['YT_REFRESH_TOKEN']
+          video_id = os.environ['VIDEO_ID']
+          
+          # Renovar access token
+          token_url = "https://oauth2.googleapis.com/token"
+          data = {
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'refresh_token': refresh_token,
+            'grant_type': 'refresh_token',
+          }
+          r = requests.post(token_url, data=data)
+          if r.status_code != 200:
+            print(f"Falha ao renovar token: {r.status_code} {r.text}")
+            exit(1)
+          access_token = r.json()['access_token']
+          
+          # Curtir vídeo (rating: like)
+          url = f"https://www.googleapis.com/youtube/v3/videos/rate?id={video_id}&rating=like"
+          headers = {
+            'Authorization': f'Bearer {access_token}',
+          }
+          rr = requests.post(url, headers=headers)
+          if rr.status_code == 204:
+            print(f"Vídeo {video_id} curtido com sucesso")
+          else:
+            print(f"Falha ao curtir: {rr.status_code} {rr.text}")
+            exit(1)
+          PY
