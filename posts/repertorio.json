@@ -317,6 +317,24 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e modo escuro"
+  },
+  {
+   "quando": "2026-11-09T22:05:29Z",
+   "canal": "site",
+   "angulo": "pergunta_ao_publico",
+   "assunto": "casa",
+   "fatos": [
+    "casa-site-gratis"
+   ],
+   "abertura": "quer testar",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "pergunta",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot"
   }
  ],
  "fatos_de_uma_vez": [
@@ -352,32 +370,26 @@
   "medido-views-ice6o3d-wd0-2026-11-08",
   "medido-youtube-shorts-2026-11-08",
   "marco-instagram-publicacoes",
-  "marco-youtube-shorts"
+  "marco-youtube-shorts",
+  "casa-site-gratis"
  ],
  "ultimo": {
-  "quando": "2026-11-09T18:24:26Z",
+  "quando": "2026-11-09T22:05:29Z",
   "canal": "site",
-  "angulo": "convite_a_testar",
-  "assunto": "prancheta",
+  "angulo": "pergunta_ao_publico",
+  "assunto": "casa",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-offline",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "casa-site-gratis"
   ],
-  "abertura": "procurando testadores",
+  "abertura": "quer testar",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "frase",
-   "rotulo",
+   "pergunta",
    "frase"
   ],
-  "hashtags": 0,
-  "nota": 0.692,
-  "texto": "Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e modo escuro"
+  "hashtags": 1,
+  "nota": 0.769,
+  "texto": "Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot"
  },
  "publicacoes": [
   {
@@ -411,6 +423,17 @@
    "texto": "Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e modo escuro/claro.",
    "titulo": "Procurando testadores para o Prancheta!",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-09T22:05:29Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot",
+   "titulo": "Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra?",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]

@@ -355,3 +355,6 @@ Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e a
 
 ## 09/11/2026 18:24 UTC
 Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e modo escuro/claro.
+
+## 09/11/2026 22:05 UTC
+Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot

@@ -2982,3 +2982,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=42(api) · itch_downloads=48(api) · itch_visitas=207(api) · youtube_inscritos=24(api) · youtube_shorts=9(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
 
 > Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e m
+
+## 09/11/2026 22:05 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.77 |
+| pauta do ciclo | ✅ pergunta_ao_publico · casa |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ pergunta_ao_publico · casa |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18054319850603 |
+| threads | ⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ sem GHPAT no ambiente |
+| censo mundial | ✅ sem GHPAT |
+| vigia da caixa (auto-recovery) | ✅ cofare sem gmail |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=43(api) · itch_downloads=48(api) · itch_visitas=207(api) · youtube_inscritos=24(api) · youtube_shorts=9(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
+
+> Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot
