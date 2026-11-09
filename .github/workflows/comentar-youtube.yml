@@ -1,0 +1,76 @@
+name: Comentar YouTube
+# Comenta em vídeo do YouTube usando OAuth do dono
+on:
+  workflow_dispatch:
+    inputs:
+      video_id:
+        required: true
+        description: ID do vídeo no YouTube
+      comentario:
+        required: true
+        description: Texto do comentário
+permissions:
+  contents: read
+jobs:
+  comentar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: Comentar no vídeo do YouTube
+        shell: bash -o pipefail -e {0}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          VIDEO_ID: ${{ inputs.video_id }}
+          COMENTARIO: ${{ inputs.comentario }}
+        run: |
+          pip install -q pynacl requests_oauthlib
+          python3 - <<'PY'
+          import os, requests
+          from requests_oauthlib import OAuth1Session
+          
+          client_id = os.environ['YT_CLIENT_ID']
+          client_secret = os.environ['YT_CLIENT_SECRET']
+          refresh_token = os.environ['YT_REFRESH_TOKEN']
+          video_id = os.environ['VIDEO_ID']
+          comentario = os.environ['COMENTARIO']
+          
+          # Renovar access token
+          token_url = "https://oauth2.googleapis.com/token"
+          data = {
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'refresh_token': refresh_token,
+            'grant_type': 'refresh_token',
+          }
+          r = requests.post(token_url, data=data)
+          if r.status_code != 200:
+            print(f"Falha ao renovar token: {r.status_code} {r.text}")
+            exit(1)
+          access_token = r.json()['access_token']
+          
+          # Comentar no vídeo
+          url = f"https://www.googleapis.com/youtube/v3/commentThreads?part=snippet"
+          body = {
+            "snippet": {
+              "videoId": video_id,
+              "topLevelComment": {
+                "snippet": {
+                  "textOriginal": comentario
+                }
+              }
+            }
+          }
+          headers = {
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json',
+          }
+          rr = requests.post(url, json=body, headers=headers)
+          if rr.status_code == 200:
+            print(f"Comentário postado com sucesso no vídeo {video_id}")
+          else:
+            print(f"Falha ao comentar: {rr.status_code} {rr.text}")
+            exit(1)
+          PY
