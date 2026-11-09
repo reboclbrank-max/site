@@ -1,0 +1,39 @@
+name: Postar em todas as redes sociais
+# Posta conteúdo real em todas as redes sociais usando os secrets do repositorio site
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: postar-todas-as-redes
+  cancel-in-progress: false
+jobs:
+  postar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: '22'
+      - run: npm ci --omit=dev --no-audit --no-fund
+      - name: Instala imapflow para teste de Gmail
+        run: npm install imapflow --omit=dev --no-audit --no-fund
+      - name: Postar em todas as redes sociais
+        run: node tools/postar-todas-as-redes.js
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
+          GMAIL_CHAT_ADDRESS: ${{ secrets.GMAIL_CHAT_ADDRESS }}
+          GMAIL_CHAT_PASS: ${{ secrets.GMAIL_CHAT_PASS }}
+          GMAIL_CHAT_APPPASS: ${{ secrets.GMAIL_CHAT_APPPASS }}
