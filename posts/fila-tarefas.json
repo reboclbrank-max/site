@@ -1432,6 +1432,19 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "publicar-2026110914"
+  },
+  {
+   "id": "publicar-20261109T162021Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-09T16:20:21Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: itch: downloads: faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
+   "chave": "meta-itch: downloads",
+   "origem": "perceber"
   }
  ],
  "recusadas": [

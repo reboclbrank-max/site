@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-09T12:00:15Z",
  "ultima_pesquisa": "2026-11-08T06:00:15Z",
  "ultima_aprendizagem": "2026-11-09T07:00:16Z",
- "pulsos": 251,
+ "pulsos": 252,
  "historico": [
-  {
-   "quando": "2026-11-08T18:20:15Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261107T164014Z] decisão do relógio",
-   "codigo": 0,
-   "saida": "fila: 1 tarefa(s) adiada(s) neste pulso (nada a fazer agora)"
-  },
   {
    "quando": "2026-11-08T18:25:04Z",
    "acao": "dormir",
@@ -286,6 +279,13 @@
    "motivo": "fila: [publicar-20261108T164013Z] empurrar a meta: itch: downloads: faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
    "codigo": 0,
    "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-09T16:20:21Z",
+   "acao": "dormir",
+   "motivo": "publicou há 20 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
   }
  ]
 }
