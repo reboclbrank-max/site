@@ -1352,11 +1352,13 @@
    "estado": "pendente",
    "tentativas": 0,
    "criada": "2026-11-08T16:40:13Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-09T14:00:15Z",
+   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
    "motivo": "empurrar a meta: itch: downloads: faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
    "chave": "meta-itch: downloads",
-   "origem": "perceber"
+   "origem": "perceber",
+   "adiamentos": 1,
+   "adiada_em": "2026-11-09T14:00:15Z"
   },
   {
    "id": "medir-20261108T190013Z",
@@ -1418,6 +1420,18 @@
    "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias) · ritmo medido: 0.76 por dia em 25 dias — não fecha no prazo",
    "chave": "meta-Bluesky: seguidores",
    "origem": "perceber"
+  },
+  {
+   "id": "publicar-20261109T140015Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-09T14:00:15Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026110914"
   }
  ],
  "recusadas": [
