@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-09T01:12:09Z",
+ "quando": "2026-11-09T12:04:58Z",
  "regra": {
   "janela_horas": 72,
   "criterio": "views do vídeo novo > mediana de views dos vídeos que o canal já tinha antes dele e inscritos ganhos >= 1 na mesma janela",
@@ -24,8 +24,8 @@
   "comentarios": 0
  },
  "base_da_regua": {
-  "videos_comparados": 49,
-  "mediana_views": 7.0,
+  "videos_comparados": 47,
+  "mediana_views": 6.0,
   "views": [
    230,
    134,
@@ -53,19 +53,19 @@
  "motivo": "1 vídeo(s) fecharam a janela sem bater a régua: f5kQFOQs0To em 2026-11-07T05:17:32Z",
  "numeros": {
   "views_novo": 0,
-  "mediana_base": 7.0,
+  "mediana_base": 6.0,
   "inscritos_ganhos": null,
-  "horas_no_ar": 2.1,
+  "horas_no_ar": 13.0,
   "janela_horas": 72
  },
  "video_novo_veredito": {
   "veredito": "AINDA_MEDINDO",
-  "motivo": "2.1 horas no ar de 72 — a régua só fecha no fim da janela",
+  "motivo": "13.0 horas no ar de 72 — a régua só fecha no fim da janela",
   "numeros": {
    "views_novo": 0,
-   "mediana_base": 7.0,
+   "mediana_base": 6.0,
    "inscritos_ganhos": null,
-   "horas_no_ar": 2.1,
+   "horas_no_ar": 13.0,
    "janela_horas": 72
   }
  },
@@ -81,14 +81,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 7.0,
+   "mediana_base": 6.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "2.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "13.0 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 7.0,
+    "mediana_base": 6.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 2.1,
+    "horas_no_ar": 13.0,
     "janela_horas": 72
    }
   },
@@ -103,14 +103,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 7.0,
+   "mediana_base": 6.5,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "7.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "18.0 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 7.0,
+    "mediana_base": 6.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 7.1,
+    "horas_no_ar": 18.0,
     "janela_horas": 72
    }
   },
@@ -127,12 +127,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 7.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "26.3 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "37.2 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 1,
     "mediana_base": 7.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 26.3,
+    "horas_no_ar": 37.2,
     "janela_horas": 72
    }
   },
@@ -149,12 +149,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 7.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "31.3 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "42.2 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 1,
     "mediana_base": 7.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 31.3,
+    "horas_no_ar": 42.2,
     "janela_horas": 72
    }
   },
@@ -171,12 +171,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 7.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "47.3 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "58.2 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 7.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 47.3,
+    "horas_no_ar": 58.2,
     "janela_horas": 72
    }
   },
@@ -193,12 +193,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 7.5,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "49.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "60.0 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 1,
     "mediana_base": 7.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 49.1,
+    "horas_no_ar": 60.0,
     "janela_horas": 72
    }
   },
@@ -215,12 +215,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 8.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "53.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "64.0 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 8.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 53.1,
+    "horas_no_ar": 64.0,
     "janela_horas": 72
    }
   },
@@ -235,14 +235,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 8.0,
+   "mediana_base": 8.5,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "54.8 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "65.7 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 8.0,
+    "mediana_base": 8.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 54.8,
+    "horas_no_ar": 65.7,
     "janela_horas": 72
    }
   },
@@ -257,14 +257,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 8.0,
+   "mediana_base": 9.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "56.7 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "67.6 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 8.0,
+    "mediana_base": 9.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 56.7,
+    "horas_no_ar": 67.6,
     "janela_horas": 72
    }
   },
@@ -279,14 +279,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 8.5,
+   "mediana_base": 10.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "56.9 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "67.8 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 8.5,
+    "mediana_base": 10.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 56.9,
+    "horas_no_ar": 67.8,
     "janela_horas": 72
    }
   },
@@ -301,14 +301,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 9.0,
+   "mediana_base": 11.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "57.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "67.9 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 9.0,
+    "mediana_base": 11.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 57.1,
+    "horas_no_ar": 67.9,
     "janela_horas": 72
    }
   },
@@ -323,14 +323,14 @@
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
-   "mediana_base": 10.0,
+   "mediana_base": 11.0,
    "veredito": "NAO_PROVADO",
-   "motivo": "0 views não passaram a mediana de 10.0; nenhum inscrito ganho na janela",
+   "motivo": "0 views não passaram a mediana de 11.0; nenhum inscrito ganho na janela",
    "numeros": {
     "views_novo": 0,
-    "mediana_base": 10.0,
+    "mediana_base": 11.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 115.9,
+    "horas_no_ar": 126.8,
     "janela_horas": 72
    }
   }
