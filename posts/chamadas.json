@@ -2,6 +2,23 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-09T22:59:42Z",
+   "video_id": "ihxVpjQoczQ",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"O que CEIFALUME pede para rodar\". Na partida gravada: 11 mudas, 8 colheitas, em 2 minutos. É o CEIFALUME-GAMEPLAY. #ceifalume-gameplay\nhttps://youtu.be/ihxVpjQoczQ",
+   "titulo": "O que CEIFALUME pede para rodar",
+   "resultado": "recusado",
+   "motivo": "mesma forma de um post recente do canal (abertura rotulo, 4 frases, 1 hashtags): Como este vídeo de CEIFALUME foi gravado",
+   "numeros": {
+    "video": "ihxVpjQoczQ",
+    "historico_do_canal": 5,
+    "nota_juizo": 0.538,
+    "jogos_citados": [
+     "ceifalume"
+    ]
+   }
+  },
+  {
    "quando": "2026-11-08T18:22:23Z",
    "video_id": "hBvkQhSS-_4",
    "canal": "bluesky",
