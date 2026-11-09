@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-09T12:04:58Z",
+ "medido_em": "2026-11-09T23:50:59Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "ihxVpjQoczQ",
+   "titulo": "O que CEIFALUME pede para rodar",
+   "publicado_em": "2026-11-09T22:38:29Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "FNzW9c45E3M",
    "titulo": "Onde falar com quem fez CEIFALUME",
@@ -100,7 +108,7 @@
   }
  ],
  "totais": {
-  "videos": 12,
+  "videos": 13,
   "views": 3,
   "likes": 0,
   "comentarios": 0
