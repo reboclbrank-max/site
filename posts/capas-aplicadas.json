@@ -385,6 +385,13 @@
    "titulo": "Onde falar com quem fez CEIFALUME",
    "capa": "media/gameplay/ceifalume-capa.png",
    "sha256": "0db883b1ef767ca8"
+  },
+  {
+   "id": "ihxVpjQoczQ",
+   "quando": "2026-11-09T22:38:13Z",
+   "titulo": "O que CEIFALUME pede para rodar",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "0c900f56fb35c0ab"
   }
  ]
 }

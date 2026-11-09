@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "ihxVpjQoczQ",
+   "url": "https://youtu.be/ihxVpjQoczQ",
+   "slug": "ceifalume-gameplay",
+   "titulo": "O que CEIFALUME pede para rodar",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNão pediu nada aqui: o build abriu no navegador e a gravação rodou 800 toques em 2 minutos.\n\nSem conta, sem instalação obrigatória e sem fila de espera.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "descricao_completa": false,
+   "angulo": "requisito:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 11,
+    "colhidas": 8,
+    "toques": 800,
+    "minutos": 2,
+    "toques_por_minuto": 400
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-09T22:38:08Z"
+  },
+  {
    "id": "FNzW9c45E3M",
    "url": "https://youtu.be/FNzW9c45E3M",
    "slug": "ceifalume-gameplay",
