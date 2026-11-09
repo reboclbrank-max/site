@@ -247,6 +247,27 @@
    "hashtags": 1,
    "nota": 0.769,
    "texto": "7 shorts hoje no YouTube, medidos pela própria casa em 08/11, trazem lógicas que curiosamente guiam Ceifalume. #gamedevbr"
+  },
+  {
+   "quando": "2026-11-09T12:02:25Z",
+   "canal": "site",
+   "angulo": "marco_com_data",
+   "assunto": "casa",
+   "fatos": [
+    "marco-instagram-publicacoes",
+    "marco-youtube-shorts"
+   ],
+   "abertura": "meta de",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.769,
+   "texto": "Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nessa caminhada. Marco alcançado em vinte e cinco de julho. #gamedevbr #godot"
   }
  ],
  "fatos_de_uma_vez": [
@@ -280,29 +301,42 @@
   "medido-bluesky-seguidores-2026-11-08",
   "medido-youtube-inscritos-2026-11-08",
   "medido-views-ice6o3d-wd0-2026-11-08",
-  "medido-youtube-shorts-2026-11-08"
+  "medido-youtube-shorts-2026-11-08",
+  "marco-instagram-publicacoes",
+  "marco-youtube-shorts"
  ],
  "ultimo": {
-  "quando": "2026-11-08T20:21:36Z",
+  "quando": "2026-11-09T12:02:25Z",
   "canal": "site",
-  "angulo": "numero_medido",
+  "angulo": "marco_com_data",
   "assunto": "casa",
   "fatos": [
-   "medido-video",
-   "medido-instagram-publicacoes-2026-11-08",
-   "medido-bluesky-seguidores-2026-11-08",
-   "medido-youtube-inscritos-2026-11-08",
-   "medido-views-ice6o3d-wd0-2026-11-08",
-   "medido-youtube-shorts-2026-11-08"
+   "marco-instagram-publicacoes",
+   "marco-youtube-shorts"
   ],
-  "abertura": "7 shorts",
-  "tipo_abertura": "frase",
+  "abertura": "meta de",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
+   "rotulo",
+   "frase",
    "frase",
    "frase"
   ],
-  "hashtags": 1,
+  "hashtags": 2,
   "nota": 0.769,
-  "texto": "7 shorts hoje no YouTube, medidos pela própria casa em 08/11, trazem lógicas que curiosamente guiam Ceifalume. #gamedevbr"
- }
+  "texto": "Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nessa caminhada. Marco alcançado em vinte e cinco de julho. #gamedevbr #godot"
+ },
+ "publicacoes": [
+  {
+   "quando": "2026-11-09T12:02:25Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nessa caminhada. Marco alcançado em vinte e cinco de julho. #gamedevbr #godot",
+   "titulo": "Meta de posts do Instagram batida: 40 de 30!",
+   "nota": 0.769,
+   "tipo": "publicacao"
+  }
+ ]
 }

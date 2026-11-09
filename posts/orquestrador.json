@@ -1,19 +1,12 @@
 {
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
- "ultima_publicacao": "2026-11-08T20:20:16Z",
- "ultima_medicao": "2026-11-09T01:57:52Z",
+ "ultima_publicacao": "2026-11-09T12:00:15Z",
+ "ultima_medicao": "2026-11-09T12:00:15Z",
  "ultima_pesquisa": "2026-11-08T06:00:15Z",
  "ultima_aprendizagem": "2026-11-09T07:00:16Z",
- "pulsos": 237,
+ "pulsos": 238,
  "historico": [
-  {
-   "quando": "2026-11-08T13:40:14Z",
-   "acao": "dormir",
-   "motivo": "publicou há 100 min (mínimo 2h)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-08T14:00:14Z",
    "acao": "publicar",
@@ -286,6 +279,13 @@
    "motivo": "fora da janela (04h local)",
    "codigo": 0,
    "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-09T12:00:15Z",
+   "acao": "medir",
+   "motivo": "fila: [publicar-20261108T122013Z] empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias) · ritmo medido: 0.76 por dia em 25 dias — não fecha no prazo; fila: [medir-20261109T120015Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 2 de 2 tarefa(s) feita(s) neste pulso"
   }
  ]
 }

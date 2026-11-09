@@ -2904,3 +2904,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=41(api) · itch_downloads=48(api) · itch_visitas=207(api) · youtube_inscritos=24(api) · youtube_shorts=7(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
 
 > 7 shorts hoje no YouTube, medidos pela própria casa em 08/11, trazem lógicas que curiosamente guiam Ceifalume. #gamedevbr
+
+## 09/11/2026 12:02 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.77 |
+| pauta do ciclo | ✅ marco_com_data · casa |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ marco_com_data · casa |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ❌ portão recusou o reel: nota do juízo abaixo do mínimo (0.61 < 0.65) |
+| instagram | ❌ portão recusou o instagram: nota do juízo abaixo do mínimo (0.61 < 0.6 |
+| threads | ⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ sem GHPAT no ambiente |
+| censo mundial | ✅ sem GHPAT |
+| vigia da caixa (auto-recovery) | ✅ cofare sem gmail |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=41(api) · itch_downloads=48(api) · itch_visitas=207(api) · youtube_inscritos=24(api) · youtube_shorts=9(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
+
+> Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nessa caminhada. Marco alcançado em vinte e cinco de julho. #gamedevbr #godo
