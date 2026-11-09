@@ -612,12 +612,12 @@
    "slug": "prancheta",
    "angulo": "estrategia_da_vez",
    "origem_do_texto": "redator:estrategia_da_vez",
-   "estrategia": "pressao_rapida",
-   "vinheta": "f609708c6d7d",
+   "estrategia": "posse_normal",
+   "vinheta": "d490c81759b5",
    "numeros": {
-    "passos": 12,
+    "passos": 11,
     "passos_confirmados": 9,
-    "toques_partida": 3
+    "toques_partida": 4
    },
    "arquivo": "media/gameplay/prancheta-gameplay.mp4",
    "capa": "media/gameplay/prancheta-capa.png",
@@ -626,8 +626,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
-   "descricao": "Esta gravação foi feita com uma escolha declarada: instrução de pressão no intervalo e velocidade rápida.\n\nA escolha não é enfeite de título: ela muda os botões que o agente aperta dentro da partida, e a cena de um vídeo para o outro deixa de ser a mesma.\n\nO relatório da gravação guarda a assinatura da partida, então duas gravações iguais não passam por novas. O jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no APK.\n\nFonte: posts/cenas.json (partida f609708c6d7d, conferida em 2026-11-08T23:14:53Z).\n\nGameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#prancheta #jogobrasileiro",
+   "titulo": "PRANCHETA: a partida inteira em ritmo normal, sem mexer no plano",
+   "descricao": "Esta gravação foi feita com uma escolha declarada: a partida inteira em ritmo normal, sem mexer no plano.\n\nA escolha não é enfeite de título: ela muda os botões que o agente aperta dentro da partida, e a cena de um vídeo para o outro deixa de ser a mesma.\n\nO relatório da gravação guarda a assinatura da partida, então duas gravações iguais não passam por novas. O jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no APK.\n\nFonte: posts/cenas.json (partida d490c81759b5, conferida em 2026-11-09T22:46:40Z).\n\nGameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#prancheta #jogobrasileiro",
    "tags": [
     "prancheta",
     "manager de futebol",
@@ -643,7 +643,7 @@
    "feito_para_criancas": "não",
    "origem": "Gameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida.",
    "arquivo_existe": true,
-   "bytes": 1074766,
+   "bytes": 1028576,
    "capa_existe": true
   }
  ],
