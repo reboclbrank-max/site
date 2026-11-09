@@ -131,7 +131,8 @@ async function postarBluesky() {
     if (r2.ok) {
       registro('Bluesky', true, 'post publicado', texto.slice(0, 60));
     } else {
-      registro('Bluesky', false, `falha ao postar: HTTP ${r2.status}`, await r2.text().slice(0, 100));
+      const textoErro = await r2.text().catch(() => '');
+      registro('Bluesky', false, `falha ao postar: HTTP ${r2.status}`, textoErro.slice(0, 100));
     }
   } catch (e) { registro('Bluesky', false, 'erro de conexão', e.message.slice(0, 100)); }
 }
