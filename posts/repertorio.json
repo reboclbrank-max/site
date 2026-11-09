@@ -268,6 +268,30 @@
    "hashtags": 2,
    "nota": 0.769,
    "texto": "Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nessa caminhada. Marco alcançado em vinte e cinco de julho. #gamedevbr #godot"
+  },
+  {
+   "quando": "2026-11-09T16:04:35Z",
+   "canal": "site",
+   "angulo": "mecanica_por_dentro",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "faca ate",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o reserva para o titular. A mudança é imediata. #prancheta"
   }
  ],
  "fatos_de_uma_vez": [
@@ -306,25 +330,28 @@
   "marco-youtube-shorts"
  ],
  "ultimo": {
-  "quando": "2026-11-09T12:02:25Z",
+  "quando": "2026-11-09T16:04:35Z",
   "canal": "site",
-  "angulo": "marco_com_data",
-  "assunto": "casa",
+  "angulo": "mecanica_por_dentro",
+  "assunto": "prancheta",
   "fatos": [
-   "marco-instagram-publicacoes",
-   "marco-youtube-shorts"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "meta de",
+  "abertura": "faca ate",
   "tipo_abertura": "rotulo",
   "esqueleto": [
    "rotulo",
    "frase",
-   "frase",
    "frase"
   ],
-  "hashtags": 2,
+  "hashtags": 1,
   "nota": 0.769,
-  "texto": "Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nessa caminhada. Marco alcançado em vinte e cinco de julho. #gamedevbr #godot"
+  "texto": "Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o reserva para o titular. A mudança é imediata. #prancheta"
  },
  "publicacoes": [
   {
@@ -335,6 +362,17 @@
    "fatos": [],
    "texto": "Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nessa caminhada. Marco alcançado em vinte e cinco de julho. #gamedevbr #godot",
    "titulo": "Meta de posts do Instagram batida: 40 de 30!",
+   "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-09T16:04:35Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o reserva para o titular. A mudança é imediata. #prancheta",
+   "titulo": "Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o r",
    "nota": 0.769,
    "tipo": "publicacao"
   }

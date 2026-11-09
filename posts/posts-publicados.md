@@ -349,3 +349,6 @@ Você sabia que o Bluesky chega a 32 seguidores hoje mesmo? Como isso pode refin
 
 ## 09/11/2026 12:02 UTC
 Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nessa caminhada. Marco alcançado em vinte e cinco de julho. #gamedevbr #godot
+
+## 09/11/2026 16:05 UTC
+Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o reserva para o titular. A mudança é imediata. #prancheta
