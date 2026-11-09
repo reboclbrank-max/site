@@ -1,0 +1,114 @@
+name: pendencias-do-dono
+
+# Fecha o ciclo do único passo que sobra para o dono (publicar no painel do itch).
+#
+# O painel é bloqueado por reputação de IP para servidor — medido, não suposto
+# (docs/sondagens/ITCH-403-CLOUDFLARE.json). Mas o devlog do itch é PÚBLICO: dá para ver de fora
+# se o post saiu. Então este workflow:
+#   1. mede o estado sem painel e sem cookie;
+#   2. registra posts/pendencias-do-dono.json + .md no repositório;
+#   3. avisa por ntfy SÓ quando o conjunto de pendências muda (aviso diário igual vira ruído);
+#   4. quando o dono publicar, o próximo run marca "feito" sozinho — ninguém precisa avisar.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 12 * * *"   # 1 leitura por dia, meio-dia UTC
+
+concurrency:
+  group: pendencias-do-dono
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Contrato de preservação de estado (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-conciliacao-estado.py
+      - name: Barreiras offline
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-pendencias.py
+
+      # A AGENDA MEDIDA (07/11/2026): cron de repositório é melhor esforço e o GitHub entrega uma
+      # fração. Medido na semana: 14 disparos/dia contra 63 que o cron pede; o pulso de 20 em 20
+      # minutos roda 1,86 vez por dia. Este passo lê a API e grava posts/cadencia.json — o
+      # relatório abre com o número, porque é ele que explica um dia parado.
+      - name: Quanto o GitHub entrega da agenda
+        continue-on-error: true
+        env:
+          GHPAT: ${{ secrets.GHPAT }}
+        run: |
+          set -o pipefail -e
+          python3 tools/rodar-contratos-isolados.py tools/testes-medir-cadencia.py
+          python3 tools/medir-cadencia.py --dias 7 | tee /tmp/cadencia.txt
+          {
+            echo "### Agenda medida"
+            echo
+            echo '```'
+            cat /tmp/cadencia.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # A ORIGINALIDADE MEDIDA (07/11/2026): "coisas únicas" era opinião até aqui. Medido no
+      # registro de posts: um mesmo texto saiu 40 vezes entre 13/10 e 25/10; desde 26/10 nenhum
+      # dia repetiu. Este passo não publica nada — ele conta, e a bateria reprova se voltar.
+      - name: Quantos posts diferentes a casa publicou
+        run: |
+          set -o pipefail -e
+          python3 tools/rodar-contratos-isolados.py tools/testes-unicidade.py
+          python3 tools/medir-unicidade.py | tee /tmp/unicidade.txt
+          {
+            echo "### Originalidade medida"
+            echo
+            echo '```'
+            cat /tmp/unicidade.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # O PRANCHETA é o único jogo cujo build não passa por este repositório: o dono publica no
+      # itch. Este passo lê qual build o itch está servindo e registra — é o que faz "atualizei o
+      # PRANCHETA" virar fato observável em vez de memória. Não sobe nada, não publica nada.
+      - name: Qual build do PRANCHETA está no ar
+        run: |
+          set -o pipefail -e
+          python3 tools/rodar-contratos-isolados.py tools/testes-vigia-build-prancheta.py
+          python3 tools/vigia-build-prancheta.py --gravar | tee /tmp/prancheta.txt
+          {
+            echo "### PRANCHETA no itch"
+            echo
+            echo '```'
+            cat /tmp/prancheta.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Mede o que falta (leitura pública, sem cookie)
+        env:
+          PEDIR_AVISO: "1"
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python3 tools/pendencias-do-dono.py
+
+      - name: Guarda o relatório no repositório
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/pendencias-do-dono.json posts/pendencias-do-dono.md \
+                  posts/prancheta-build.json posts/cadencia.json posts/unicidade.json
+          if git diff --cached --quiet; then
+            echo "relatório sem mudança"
+            exit 0
+          fi
+          git commit -m "pendências do dono: estado medido ($(date -u +%d/%m %H:%M UTC))"
+          git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+          # Quem entra no main é tools/entrar-no-main.sh: rebase quando dá, merge com o gerador
+          # reescrevendo o arquivo quando os dois lados mexeram no mesmo relatório. O laço de
+          # rebase antigo parava em conflito quando o ciclo regerava os mesmos arquivos.
+          GERAR="python3 tools/pendencias-do-dono.py" \
+            bash tools/entrar-no-main.sh "pendências do dono" || {
+            echo "::error::o relatório não entrou no main"
+            exit 1
+          }

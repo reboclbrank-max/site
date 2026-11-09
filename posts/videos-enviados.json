@@ -1,0 +1,82 @@
+{
+ "_o_que_e": "impressão sha256 de cada vídeo já enviado ao YouTube — é isto que impede o mesmo vídeo de subir duas vezes",
+ "enviados": [
+  {
+   "sha256": "3738aec423f249849159ae3008db4616a8bf9f8b8ede72a41fb20f6fbcf933a3",
+   "slug": "ceifalume-gameplay",
+   "id": "FNzW9c45E3M",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-08T23:03:16Z"
+  },
+  {
+   "sha256": "a7e4d270af6ad74381289b41b4be7d56da3f69b183ce17fc6c23793206161ba1",
+   "slug": "ceifalume-gameplay",
+   "id": "hBvkQhSS-_4",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-08T18:03:42Z"
+  },
+  {
+   "sha256": "f4e6d99b101d98caf586ce2ecefbb51addd9bcd0d034b8cffa23267bba436a26",
+   "slug": "ceifalume-gameplay",
+   "id": "iCE6O3d_WD0",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-07T22:54:55Z"
+  },
+  {
+   "sha256": "76f9866f95bba67884129b8b3f8ae63f319e0fc3e07f67116b01b33b0f63ff83",
+   "slug": "ceifalume-gameplay",
+   "id": "cfB5ZBdC-NA",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-07T17:52:17Z"
+  },
+  {
+   "sha256": "228627edbee7524c61bb41fa50290818522cdeb349f7f580ffa7b4372906f580",
+   "slug": "ceifalume-gameplay",
+   "id": "_ffmjSMsW0Y",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-07T01:55:42Z"
+  },
+  {
+   "sha256": "a0f37e9be7d2c34c92446d29030dc18f1b724e0ab7defc0d0eee801f54962490",
+   "slug": "prancheta-gameplay",
+   "id": "O04ajm1t54Q",
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "quando": "2026-11-07T00:04:42Z"
+  },
+  {
+   "sha256": "2fd3195cbc3550d84582086a694460eb1c1b3ee46f74132fc423107488cff3ca",
+   "slug": "ceifalume-gameplay",
+   "id": "FRCzgqUlMFY",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T20:04:19Z"
+  },
+  {
+   "sha256": "fd212c1fbf29cc187633ef903a0c38948c6777e859b680d2e93b75853ff078ab",
+   "slug": "ceifalume-gameplay",
+   "id": "PRyg0Ncz5U8",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T18:24:11Z"
+  },
+  {
+   "sha256": "7f51407e8bc4070ea0f2ccee5b7e9fe770b9e51e3d60796d67e6d7652a055146",
+   "slug": "ceifalume-gameplay",
+   "id": "HmbEdojjhsU",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T16:29:50Z"
+  },
+  {
+   "sha256": "30caed5bb092d1e9b585b487ef18248896f42020362ae3ae65c98d9321222ddb",
+   "slug": "ceifalume-gameplay",
+   "id": "L2UIYmofEiE",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T16:16:47Z"
+  },
+  {
+   "sha256": "83536fa844fd0f675bc2353f1398e80469676d927da34a38dd5aca12829afb3e",
+   "slug": "ceifalume-gameplay",
+   "id": "03313IcXvEo",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T16:08:00Z"
+  }
+ ]
+}

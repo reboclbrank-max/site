@@ -1,0 +1,15 @@
+{
+  "quando": "2026-10-30T15:41:06Z",
+  "modo": "ler",
+  "caminho": "",
+  "cookie": "2 cookie(s): itchio, itchio_token - 278 caracteres",
+  "sessao": "",
+  "resultado": "",
+  "resumo": [
+    "caminho de edicao: /dashboard/game/5017404/edit",
+    "cookie: 2 cookie(s): itchio, itchio_token - 278 caracteres",
+    "SEM RESPOSTA sessao: bloqueado pela Cloudflare: /dashboard devolve 403 a partir daqui, inclusive sem cookie — nao e a sessao, e o IP",
+    "· isto nao e sessao invalida: e o itch fechando a porta para este IP"
+  ],
+  "run": "https://github.com/reboclbrank-max/site/actions/runs/41082945952"
+}

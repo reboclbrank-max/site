@@ -1,0 +1,81 @@
+name: marketing-continuo (bloco manual — não roda sozinho)
+
+# DECISÃO TOMADA, COM MEDIÇÃO (07/11/2026): NÃO revive a agenda — e o motivo não é gosto.
+#   - A agenda deste arquivo foi removida em `d2ded0a` (03/11/2026, PR #7 "fase 0: contenção
+#     segura"). Os 4 runs vermelhos foram os últimos AGENDADOS (01/11 13:09Z até 03/11 00:52Z);
+#     desde então não houve mais nenhum, porque não há mais cron. Nada ficou quebrado: ficou contido.
+#   - O papel do bloco contínuo (pulsar sem parar) já é do `marketing-24h`, que roda o orquestrador
+#     a cada janela e está verde. Dois relógios publicando é o defeito que a contenção pagou caro
+#     para tirar; reviver a agenda seria reintroduzi-lo.
+#   - O que ERA defeito de verdade — e foi consertado no `tools/loop-24h.py` — é o bloco chamar de
+#     "pulso incompleto" o pulso que dormiu de propósito, fora da janela. Era isso que pintava de
+#     vermelho o run que tinha feito a coisa certa.
+#   Uso legítimo daqui em diante: execução manual (PUBLICAR) para um bloco longo de trabalho.
+
+# Bloco contínuo: um job que fica trabalhando por horas, em vez de acordar a cada 15 min.
+# Isto é o mais perto de "processo sempre vivo" que o GitHub Actions permite (teto de 6 h
+# por job). 4 blocos por dia cobrem 24 h sem depender de cron curto.
+#
+# Travas:
+#   - posts/PARAR (commitando esse arquivo) encerra o bloco na hora;
+#   - janela 9-22h e teto de 5 publicações/dia continuam valendo (quem decide é o orquestrador);
+#   - concorrência serializada: dois blocos nunca rodam juntos;
+#   - não publica no itch nem envia vídeo ao YouTube (regras da casa).
+
+on:
+  # Fase 0: nenhum bloco automático; somente uma execução humana explícita.
+  workflow_dispatch:
+    inputs:
+      confirmacao:
+        description: "Digite PUBLICAR para autorizar este ciclo legado"
+        required: true
+        type: string
+      pulsos:
+        description: "quantos pulsos neste bloco"
+        required: true
+        default: "30"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marketing-continuo
+  cancel-in-progress: false
+
+jobs:
+  bloco:
+    if: github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - name: Contrato de preservação de estado (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-conciliacao-estado.py
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/rodar-contratos-isolados.py tools/testes-v2.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-gameplay.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-orquestrador.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-janela.py
+
+      - name: Instala o que o postador precisa
+        run: pip install -q coincurve websocket-client
+
+      - name: Bloco contínuo
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID3 }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET3 }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN3 }}
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          NTFY_TOPICO: ${{ secrets.NTFY_TOPICO }}
+          PULSOS_PEDIDO: ${{ github.event.inputs.pulsos || '30' }}
+        run: python3 tools/loop-24h.py --pulsos "$PULSOS_PEDIDO" --intervalo 600

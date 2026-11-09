@@ -1,0 +1,653 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Barreira do medidor de desempenho — 2026-10-24.
+
+O risco deste tipo de ferramenta é virar enfeite: inventar número, contar post como
+resultado, escolher "melhor horário" com quatro amostras ou duplicar o registro a cada
+uma das oito execuções diárias. Cada teste abaixo cerca um desses riscos, sem tocar a
+rede (a busca HTTP é substituída por dados de teste).
+"""
+import datetime
+import json
+import importlib.util
+import os
+import sys
+import tempfile
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+spec = importlib.util.spec_from_file_location("metricas", os.path.join(RAIZ, "tools", "metricas.py"))
+metricas = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(metricas)
+
+# placar_metas() GRAVA posts/placar-metas.md. A suíte calcula o placar para conferir números —
+# não para publicar o placar da casa. (06/11/2026: cada execução reescrevia o arquivo.)
+metricas.SAIDA_PLACAR = os.path.join(tempfile.mkdtemp(prefix="placar-"), "placar-metas.md")
+
+certos = 0
+falhas = 0
+
+
+def ok(nome, cond, detalhe=""):
+    global certos, falhas
+    if cond:
+        certos += 1
+        print("✔ " + nome)
+    else:
+        falhas += 1
+        print("✘ " + nome + (" — " + detalhe if detalhe else ""))
+
+
+def post(texto, curtidas=0, reposts=0, respostas=0, quando="2026-10-24T12:00:00.000Z", repost=False):
+    item = {
+        "post": {
+            "uri": "at://x/" + str(abs(hash(texto))),
+            "author": {"handle": metricas.ATOR},
+            "record": {"text": texto, "createdAt": quando},
+            "likeCount": curtidas,
+            "repostCount": reposts,
+            "replyCount": respostas,
+        }
+    }
+    if repost:
+        item["reason"] = {"$type": "app.bsky.feed.defs#reasonRepost"}
+    return item
+
+
+def com_fonte(itens, perfil_dados=None, erro_feed=None, erro_perfil=None):
+    """Substitui a leitura de rede por dados de teste."""
+    def falso_http(url, tentativas=2):
+        if "getProfile" in url:
+            return (perfil_dados if perfil_dados is not None else {}, erro_perfil)
+        return ({"feed": itens, "cursor": None}, erro_feed) if not erro_feed else (None, erro_feed)
+    metricas.http_json = falso_http
+
+
+# 1. classificação: conteúdo dos jogos vs comentário em post alheio
+ok("separa conteúdo dos jogos de comentário em post alheio",
+   metricas.classificar("⚽ Sou TÉCNICO — PRANCHETA é manager de futebol") == "promo"
+   and metricas.classificar("Nice insight! Love how you use invisible lines") == "comentario")
+
+# 2. engajamento soma curtida, repost e resposta
+ok("engajamento soma curtidas, reposts e respostas",
+   metricas.engajamento({"likeCount": 2, "repostCount": 1, "replyCount": 3}) == 6)
+
+# 3. repost de terceiro não entra como conteúdo próprio
+com_fonte([
+    post("⚽ PRANCHETA", curtidas=2),
+    post("post de outra pessoa", curtidas=9, repost=True),
+])
+dados = metricas.analisar()
+ok("repost de terceiro não conta como post da casa",
+   dados["resumo"]["total"]["posts"] == 1, str(dados["resumo"]["total"]))
+
+# 4. média é por classe, não global
+com_fonte([
+    post("⚽ PRANCHETA", curtidas=4),
+    post("⚽ CEIFALUME", curtidas=2),
+    post("Great, I get it! Keep pushing", curtidas=0),
+])
+dados = metricas.analisar()
+ok("média por classe está correta",
+   dados["resumo"]["promo"]["media"] == 3.0 and dados["resumo"]["comentario"]["media"] == 0.0,
+   str(dados["resumo"]))
+
+# 5. conta a taxa de posts sem nenhum engajamento
+com_fonte([post("Great!", curtidas=0), post("Nice!", curtidas=0), post("Ok!", curtidas=1)])
+dados = metricas.analisar()
+ok("taxa sem engajamento é calculada, não estimada",
+   dados["resumo"]["comentario"]["taxa_sem_engajamento"] == 66.7,
+   str(dados["resumo"]["comentario"]))
+
+# 6. fonte fora do ar NÃO vira zero
+com_fonte([], erro_feed="URLError")
+dados = metricas.analisar()
+linha = metricas.linha_do_dia(dados)
+ok("fonte indisponível aparece como NAO_OBSERVAVEL, nunca como zero",
+   "NAO_OBSERVAVEL" in linha and "eng_medio=0" not in linha, linha)
+
+# 7. horário com amostra pequena é declarado ruído
+com_fonte([post(f"⚽ PRANCHETA {i}", curtidas=i % 3, quando=f"2026-10-24T{h:02d}:00:00Z") for i, h in enumerate(range(0, 6))])
+dados = metricas.analisar()
+_, suficiente = metricas.por_hora(dados["posts"])
+ok("amostra pequena não sustenta escolher horário", suficiente is False)
+
+# 8. horário com massa suficiente pode concluir
+muitos = [post(f"⚽ PRANCHETA {i}", curtidas=i % 5, quando=f"2026-10-24T{h:02d}:00:00Z")
+          for h in range(0, 20) for i in range(6)]
+com_fonte(muitos)
+dados = metricas.analisar()
+_, suficiente = metricas.por_hora(dados["posts"])
+ok("amostra grande libera a leitura por horário", suficiente is True)
+
+# 9. regravar o mesmo dia não duplica o bloco (o workflow roda 8x/dia)
+com_fonte([post("⚽ PRANCHETA", curtidas=3)])
+antigo_cwd = os.getcwd()
+tmp = tempfile.mkdtemp()
+os.chdir(tmp)
+try:
+    dados = metricas.analisar()
+    metricas.SAIDA = "desempenho.md"
+    metricas.gravar(dados)
+    metricas.gravar(dados)
+    metricas.gravar(dados)
+    texto = open("desempenho.md", encoding="utf-8").read()
+    hoje = datetime.datetime.now(datetime.timezone.utc).strftime("%d/%m/%Y")
+    ok("regravar o mesmo dia não duplica o bloco",
+       texto.count("## " + hoje) == 1, f"blocos de hoje: {texto.count('## ' + hoje)}")
+finally:
+    os.chdir(antigo_cwd)
+
+# 10. não usa token, segredo nem escrita em rede
+fonte = open(os.path.join(RAIZ, "tools", "metricas.py"), encoding="utf-8").read()
+# O Bluesky continua sendo lido sem credencial; o Instagram usa token do ambiente,
+# e o teste garante que ele nunca sai do cabeçalho HTTP (nem em log, nem em arquivo).
+trecho_publico = fonte.split("def http_json_autorizado")[0]
+ok("medição pública do Bluesky não manda Authorization",
+   "Authorization" not in trecho_publico, "credencial vazou para o caminho público")
+ok("token do Instagram vem do ambiente, nunca literal no código",
+   'os.environ.get("IG_TOKEN")' in fonte and "ghp_" not in fonte
+   and all(t not in fonte for t in ("IGAA", "Bearer IG", "ATATT")))
+ok("nenhum print grava token nem cabeçalho",
+   not any("print(" in l and ("token" in l or "Authorization" in l) for l in fonte.splitlines()))
+ok("não publica nada (nenhum POST, nenhum createRecord)",
+   "method=\"POST\"" not in fonte and "createRecord" not in fonte)
+
+# 11. o registro diário traz os dois tipos e o total, sem inventar
+com_fonte([post("⚽ PRANCHETA", curtidas=2), post("Nice!", curtidas=0)],
+          perfil_dados={"followersCount": 34, "followsCount": 10, "postsCount": 338})
+dados = metricas.analisar()
+linha = metricas.linha_do_dia(dados)
+ok("linha do dia tem seguidores, posts, média e os dois tipos",
+   all(t in linha for t in ("bsky_seguidores=34", "posts_proprios=2", "eng_medio=", "promo:", "comentario:")), linha)
+
+# 12. conversa: quem respondeu ao conteúdo da casa e quem ficou sem resposta
+def com_threads(respostas_por_uri, erro_thread=None):
+    """Fonte falsa: feed genérico + thread descrita caso a caso."""
+    def falso(url, tentativas=2):
+        if "getProfile" in url:
+            return ({"followersCount": 34, "followsCount": 10, "postsCount": 338}, None)
+        if "getPostThread" in url:
+            uri = url.split("uri=")[1].split("&")[0]
+            if erro_thread:
+                return (None, erro_thread)
+            return ({"thread": {"replies": [
+                {"post": {"author": {"handle": a}}} for a in respostas_por_uri.get(uri, [])
+            ]}}, None)
+        return ({"feed": [], "cursor": None}, None)
+    metricas.http_json = falso
+
+
+def meu(uri, classe_texto, respostas=1):
+    return {"uri": uri, "classe": metricas.classificar(classe_texto), "respostas": respostas}
+
+
+# dois posts de conteúdo próprio: um com resposta de fã, outro já atendido pela casa
+com_threads({
+    "at://promo-sem-resposta": ["fa.novo"],
+    "at://promo-atendido": ["fa.antigo", metricas.ATOR],
+})
+conv = metricas.interacao([meu("at://promo-sem-resposta", "⚽ PRANCHETA"),
+                           meu("at://promo-atendido", "🌙 CEIFALUME")])
+ok("resposta ao conteúdo da casa sem retorno vira pendência",
+   conv["por_classe"]["promo"]["pendentes"] == 1, str(conv["por_classe"]["promo"]))
+ok("resposta já atendida não conta como pendente",
+   conv["por_classe"]["promo"]["respondidas"] == 1, str(conv["por_classe"]["promo"]))
+
+# 13. retribuição em post alheio não é fila de resposta
+com_threads({"at://comentario": ["autor.do.post"]})
+conv = metricas.interacao([meu("at://comentario", "que jogo bonito")])
+ok("agradecimento em post alheio não entra como pendência de resposta",
+   conv["por_classe"]["promo"]["pendentes"] == 0 and conv["por_classe"]["comentario"]["respostas"] == 1,
+   str(conv["por_classe"]))
+
+# 14. thread ilegível não vira zero: vira NAO_OBSERVAVEL
+com_threads({}, erro_thread="URLError")
+conv = metricas.interacao([meu("at://x", "⚽ PRANCHETA")])
+ok("thread fora do ar = fonte_ok False (não zero)",
+   conv["fonte_ok"] is False and conv["posts_checados"] == 0, str(conv))
+com_fonte([post("⚽ PRANCHETA", respostas=3)])
+metricas.interacao = lambda posts, max_threads=40: {"posts_checados": 0, "por_classe": {},
+                                                    "respostas_recebidas": 0, "respondidas": 0,
+                                                    "pendentes": 0, "fonte_ok": False, "erro": "URLError"}
+dados = metricas.analisar()
+ok("linha do dia marca interacao=NAO_OBSERVAVEL quando a thread falha",
+   "interacao=NAO_OBSERVAVEL" in metricas.linha_do_dia(dados), metricas.linha_do_dia(dados))
+
+# 15. placar de metas: alvo, falta e ausência de leitura
+import tempfile as _tf
+metas_teste = {
+    "ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+    "bsky_30_dias": {"seguidores": 50},
+    "yt_30_dias": {"inscritos": 40, "shorts": 4},
+}
+with _tf.TemporaryDirectory() as d:
+    caminho = os.path.join(d, "metas.json")
+    json.dump(metas_teste, open(caminho, "w"))
+    linhas, ctx = metricas.placar_metas(
+        {"bsky_seguidores": 34, "ig_seguidores": None, "ig_posts": None},
+        caminho=caminho, hoje=datetime.date(2026, 10, 24))
+b = [l for l in linhas if l["meta"].startswith("Bluesky")][0]
+i = [l for l in linhas if l["meta"] == "Instagram: seguidores"][0]
+y = [l for l in linhas if l["meta"].startswith("YouTube: inscritos")][0]
+ok("placar calcula o que falta para a meta observável", b["observado"] == 34 and b["falta"] == 16, str(b))
+ok("meta sem leitura vira SEM_LEITURA, nunca zero",
+   i["observado"] is None and i["status"] == "SEM_LEITURA", str(i))
+ok("meta de canal sem API não é contada como observada", y["status"] == "SEM_LEITURA", str(y))
+ok("placar informa prazo e dias restantes", ctx["dias_restantes"] == 19, str(ctx))
+ok("o placar não inventa ritmo quando não há leitura", i["por_dia"] is None, str(i))
+
+# 16. Instagram: contadores e engajamento por formato, sem inventar zero
+def com_instagram(contadores, midias=None, erro=None):
+    def falso(url, token, tentativas=2):
+        if "/media" in url:
+            if erro:
+                return (None, erro)
+            return ({"data": midias or []}, None)
+        return (contadores, None)
+    metricas.http_json_autorizado = falso
+
+
+os.environ["IG_TOKEN"] = "valor-de-teste"
+os.environ["IG_USER_ID"] = "123"
+com_instagram({"followers_count": 0, "media_count": 15},
+              [{"like_count": 3, "comments_count": 1, "media_type": "IMAGE"},
+               {"like_count": 0, "comments_count": 0, "media_type": "IMAGE"},
+               {"like_count": 9, "comments_count": 0, "media_type": "VIDEO"}])
+ig, motivo = metricas.observado_instagram()
+ok("Instagram: zero seguidores só é zero se a API disser zero",
+   ig["seguidores"] == 0 and motivo is None, str(motivo))
+ok("Instagram: engajamento separado por formato",
+   ig["por_tipo"]["IMAGE"]["media"] == 2.0 and ig["por_tipo"]["VIDEO"]["media"] == 9.0, str(ig["por_tipo"]))
+ok("Instagram: conta publicação sem engajamento",
+   ig["por_tipo"]["IMAGE"]["zero"] == 1, str(ig["por_tipo"]["IMAGE"]))
+
+com_instagram({"followers_count": 12}, None)
+ig, motivo = metricas.observado_instagram()
+ok("Instagram: resposta sem os contadores não vira medição", ig is None and "contadores" in motivo, str(motivo))
+
+com_instagram({"followers_count": 5, "media_count": 3}, erro="403")
+ig, motivo = metricas.observado_instagram()
+ok("Instagram: lista de mídias recusada não zera o engajamento",
+   ig["seguidores"] == 5 and "midias_motivo" in ig and "por_tipo" not in ig, str(ig))
+
+os.environ.pop("IG_TOKEN", None)
+ig, motivo = metricas.observado_instagram()
+ok("Instagram: sem credencial no runtime é NAO_OBSERVAVEL, não zero",
+   ig is None and "sem credencial" in motivo, str(motivo))
+
+# 17. itch: duas contas, uma chave cada, sem inventar zero
+def com_itch(resposta_por_chave):
+    def falso(url, token, tentativas=2):
+        return resposta_por_chave.get(token, (None, "403"))
+    metricas.http_json_autorizado = falso
+
+
+com_itch({
+    "chave-a": ({"games": [{"title": "Ceifalume", "downloads_count": 44, "views_count": 900, "published": True},
+                           {"title": "Rascunho", "downloads_count": 99, "published": False}]}, None),
+    "chave-b": ({"games": [{"title": "Prancheta", "downloads_count": 12, "views_count": 200}]}, None),
+})
+itch, motivo = metricas.observado_itch("chave-a,chave-b")
+ok("itch soma as duas contas", itch["downloads"] == 56 and itch["contas_lidas"] == 2, str(motivo))
+ok("itch ignora jogo não publicado", all(j["titulo"] != "Rascunho" for j in itch["jogos"]))
+ok("itch ordena por download", itch["jogos"][0]["titulo"] == "Ceifalume")
+
+com_itch({})  # todas as chaves recusadas
+itch, motivo = metricas.observado_itch("chave-a")
+ok("itch com chave recusada é NAO_OBSERVAVEL, não zero", itch is None and "recusada" in motivo, str(motivo))
+os.environ.pop("ITCH_API_KEYS", None)
+itch, motivo = metricas.observado_itch()
+ok("itch sem chave no runtime é NAO_OBSERVAVEL", itch is None and "sem chave" in motivo, motivo)
+
+# 18. YouTube: contadores públicos e contagem de shorts
+def com_youtube(canal, playlist=None, videos=None, erro=None):
+    def falso(url, tentativas=2):
+        if erro:
+            return (None, erro)
+        if "/channels" in url:
+            return (canal, None)
+        if "/playlistItems" in url:
+            return (playlist if playlist is not None else {}, None)
+        return (videos if videos is not None else {}, None)
+    metricas.http_json = falso
+
+
+canal_ok = {"items": [{"statistics": {"subscriberCount": "24", "videoCount": "7", "viewCount": "1500"},
+                       "contentDetails": {"relatedPlaylists": {"uploads": "UUxxx"}}}]}
+com_youtube(canal_ok,
+            {"items": [{"contentDetails": {"videoId": "a"}}, {"contentDetails": {"videoId": "b"}},
+                       {"contentDetails": {"videoId": "c"}}]},
+            {"items": [{"contentDetails": {"duration": "PT45S"}},
+                       {"contentDetails": {"duration": "PT8M"}},
+                       {"contentDetails": {"duration": "PT59S"}}]})
+yt, motivo = metricas.observado_youtube("chave-yt")
+ok("YouTube lê inscritos e vídeos", yt["inscritos"] == 24 and yt["videos"] == 7, str(motivo))
+ok("YouTube conta shorts por duração (até 61s)", yt["shorts"] == 2 and yt["videos_conferidos"] == 3, str(yt))
+
+com_youtube({"items": []})
+yt, motivo = metricas.observado_youtube("chave-yt")
+ok("YouTube sem canal encontrado não vira zero", yt is None and "recusada" in motivo, str(motivo))
+
+com_youtube({"items": [{"statistics": {"hiddenSubscriberCount": True}}]})
+yt, motivo = metricas.observado_youtube("chave-yt")
+ok("YouTube com inscritos ocultos é NAO_OBSERVAVEL", yt is None and "contadores" in motivo, str(motivo))
+
+com_youtube(canal_ok, erro="quotaExceeded")
+yt, motivo = metricas.observado_youtube("chave-yt")
+ok("YouTube com erro de cota é NAO_OBSERVAVEL", yt is None and "recusada" in motivo, str(motivo))
+
+os.environ.pop("YT_API_KEY", None)
+yt, motivo = metricas.observado_youtube()
+ok("YouTube sem chave no runtime é NAO_OBSERVAVEL", yt is None and "sem chave" in motivo, motivo)
+ok("a chave do YouTube não é impressa em nenhum caminho",
+   not any(("print(" in l and "YT_API_KEY" in l) for l in open(os.path.join(RAIZ, "tools", "metricas.py"), encoding="utf-8").read().splitlines()))
+
+# 19. YouTube: separar o que é da casa do que é de outros jogos
+videos_teste = [
+    {"titulo": "Ceifalume: a horta acordou à noite", "descricao": "", "views": 230, "likes": 1,
+     "comentarios": 0, "segundos": 27, "quando": "2026-10-01"},
+    {"titulo": "Prancheta — simulador de futebol", "descricao": "", "views": 4, "likes": 0,
+     "comentarios": 0, "segundos": 59, "quando": "2026-09-20"},
+    {"titulo": "New game Rumble Knights - idle RPG", "descricao": "", "views": 700, "likes": 9,
+     "comentarios": 2, "segundos": 40, "quando": "2026-08-11"},
+    {"titulo": "New game Dragon Village Collection", "descricao": "jogo de terceiro", "views": 211,
+     "likes": 3, "comentarios": 0, "segundos": 35, "quando": "2026-08-02"},
+]
+r = metricas.resumo_youtube(videos_teste)
+ok("reconhece conteúdo da casa pelo título", r["casa"]["n"] == 2 and r["terceiros"]["n"] == 2, str(r["casa"]))
+ok("soma visualizações por grupo", r["casa"]["views"] == 234 and r["terceiros"]["views"] == 911)
+ok("calcula a fatia de visualizações da casa", r["casa"]["fatia_views"] == 20.4, str(r["casa"].get("fatia_views")))
+ok("lista os melhores da casa em ordem", [m["views"] for m in r["casa"]["melhores"]] == [230, 4])
+ok("vídeo sem título não quebra", metricas.resumo_youtube([{"titulo": "", "views": 0}])["terceiros"]["n"] == 1)
+ok("canal vazio não vira média zero falsa",
+   metricas.resumo_youtube([])["casa"]["media_views"] is None)
+
+# ---- 12. o placar não pode chamar de "sem leitura" o que é lido ---------------------------
+# Defeito medido em 25/10/2026: a coluna "fonte" dizia "sem leitura automática" para YouTube e
+# itch downloads, que o medidor lia normalmente (45 downloads, 24 inscritos). O dono leu esse
+# rótulo e concluiu que não havia leitura. Rótulo errado é medição errada.
+_meta_tmp = tempfile.mkdtemp()
+_arq_metas = os.path.join(_meta_tmp, "metas.json")
+with open(_arq_metas, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "yt_30_dias": {"inscritos": 40, "shorts": 4},
+               "itch_30_dias": {"downloads": 100, "seguidores": 10},
+               "bsky_30_dias": {"seguidores": 50}}, f)
+_linhas, _ctx = metricas.placar_metas(observado={"yt_inscritos": 24, "yt_shorts": 5,
+                                                 "itch_downloads": 45, "bsky_seguidores": 34,
+                                                 "ig_seguidores": 0, "ig_posts": 18},
+                                      caminho=_arq_metas)
+_por_meta = {(l["meta"].split(" (")[0]): l for l in _linhas}
+ok("YouTube inscritos não é rotulado 'sem leitura automática'",
+   "sem leitura" not in _por_meta["YouTube: inscritos"]["fonte"].lower(),
+   _por_meta["YouTube: inscritos"]["fonte"])
+ok("itch downloads não é rotulado 'sem leitura automática'",
+   "sem leitura" not in _por_meta["itch: downloads"]["fonte"].lower(),
+   _por_meta["itch: downloads"]["fonte"])
+ok("itch seguidores declara SEM_API com a data da conferência",
+   "SEM_API" in _por_meta["itch: seguidores"]["fonte"]
+   and "25/10/2026" in _por_meta["itch: seguidores"]["fonte"])
+ok("o que é lido aparece com número, não com NAO_OBSERVAVEL",
+   _por_meta["itch: downloads"]["observado"] == 45 and _por_meta["yt_inscritos"] if False else
+   (_por_meta["itch: downloads"]["observado"] == 45 and _por_meta["YouTube: inscritos"]["observado"] == 24))
+
+# ---- 13. o rodapé diz o que é impossível e qual o substituto medido -----------------------
+_saida = metricas.gravar_placar(_linhas, _ctx)
+_texto_placar = open(_saida, encoding="utf-8").read()
+ok("o placar avisa que itch seguidores não tem API", "não publica contagem de seguidores" in _texto_placar)
+ok("o placar registra que a troca pela visitas foi FEITA, não sugere de novo",
+   "itch: visitas" in _texto_placar and "aposentada" in _texto_placar)
+ok("o placar não inventa número para a meta impossível",
+   "NAO_OBSERVAVEL" in _texto_placar and "| itch: seguidores (aposentada) | 10 |" in _texto_placar,
+   _texto_placar[_texto_placar.find("itch"):][:120])
+
+# ---- 16. o placar mede o RETORNO desde a linha de partida --------------------------------
+# "0 seguidores" sozinho não diz nada: pode ser canal parado desde sempre. A coluna nova
+# mostra o que andou desde 13/10, e o rodapé nomeia a decisão quando nada andou.
+_arq_partida = os.path.join(_meta_tmp, "metas2.json")
+with open(_arq_partida, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "bsky_30_dias": {"seguidores": 50},
+               "itch_30_dias": {"downloads": 100, "seguidores": 10},
+               "yt_30_dias": {"inscritos": 40, "shorts": 4},
+               "linha_de_partida_13_10": {"ig_seguidores": 0, "bsky_seguidores": 13,
+                                          "itch_downloads": 44, "yt_inscritos": 24}}, f)
+_obs = {"ig_seguidores": 0, "ig_posts": 18, "bsky_seguidores": 34,
+        "itch_downloads": 46, "yt_inscritos": 24, "yt_shorts": 5}
+_l2, _c2 = metricas.placar_metas(observado=_obs, caminho=_arq_partida)
+_por2 = {(l["meta"].split(" (")[0]): l for l in _l2}
+ok("o placar calcula o quanto andou desde a partida", _por2["Bluesky: seguidores"]["delta"] == 21,
+   str(_por2["Bluesky: seguidores"].get("delta")))
+ok("canal que não moveu tem delta zero", _por2["Instagram: seguidores"]["delta"] == 0)
+ok("meta sem leitura não ganha delta inventado", _por2["itch: seguidores"]["delta"] is None)
+_c2["dias_decorridos"] = 20  # simula o prazo de duas semanas já vencido
+_saida2 = metricas.gravar_placar(_l2, _c2)
+_texto2 = open(_saida2, encoding="utf-8").read()
+ok("a tabela mostra a coluna 'desde a partida'", "desde a partida" in _texto2)
+ok("o placar diz em quantos dias nada voltou", "Sem retorno em" in _texto2, _texto2[-300:])
+ok("a decisão de manter ou aposentar é nomeada como do dono",
+   "decisão do dono" in _texto2 and "o robô não decide" in _texto2)
+# amostra curta NÃO vira veredicto: 2 dias de canal parado é cedo para aposentar nada
+_c3 = dict(_c2); _c3["dias_decorridos"] = 10
+_saida3 = metricas.gravar_placar(_l2, _c3)
+ok("poucos dias não viram veredicto de aposentadoria",
+   "Sem retorno em" not in open(_saida3, encoding="utf-8").read())
+
+# ---- 17. meta impossível é aposentada com substituto medido, não esquecida ----------------
+# Decisão tomada em 25/10/2026: `itch: seguidores` não tem como ser medida (o itch não publica
+# seguidores em API nem em página pública: 5 caminhos conferidos). Em vez de deixá-la em
+# NAO_OBSERVAVEL para sempre — que não informa nada e parece falha do robô — ela é aposentada
+# NO ARQUIVO, e o que o itch mede de audiência (visitas) entra como linha ACOMPANHADA, sem
+# alvo inventado.
+_arq_aposentada = os.path.join(_meta_tmp, "metas3.json")
+with open(_arq_aposentada, "w", encoding="utf-8") as f:
+    json.dump({"ig_30_dias": {"inicio": "2026-10-13", "posts": 30, "seguidores": 50},
+               "itch_30_dias": {"downloads": 100},
+               "itch_visitas": {"no_lugar_de": "itch_seguidores", "alvo": None},
+               "_meta_aposentada_25_10": {"meta": "itch: seguidores", "alvo_original": 10,
+                                          "motivo": "o itch não publica contagem de seguidores em API nem em página pública"},
+               "linha_de_partida_13_10": {"ig_seguidores": 0, "itch_downloads": 44}}, f)
+_obs3 = {"ig_seguidores": 0, "ig_posts": 18, "itch_downloads": 46, "itch_visitas": 175}
+_l3, _c3b = metricas.placar_metas(observado=_obs3, caminho=_arq_aposentada)
+_por3 = {l["meta"]: l for l in _l3}
+_por3["itch: seguidores (aposentada)"] = next(l for l in _l3 if l["meta"].startswith("itch: seguidores"))
+ok("a meta aposentada não some do placar sem registro",
+   "itch: seguidores (aposentada)" in _por3)
+ok("a meta aposentada diz por que foi aposentada",
+   ("não publica" in (_por3["itch: seguidores (aposentada)"].get("motivo") or "")
+    and "25/10/2026" in (_por3["itch: seguidores (aposentada)"].get("motivo") or "")))
+ok("as visitas do itch entram como medida acompanhada",
+   _por3["itch: visitas"]["status"] == "ACOMPANHADA" and _por3["itch: visitas"]["observado"] == 175)
+ok("a linha acompanhada não inventa alvo", _por3["itch: visitas"]["alvo"] == "—")
+ok("a linha acompanhada não inventa 'falta' nem 'por dia'",
+   _por3["itch: visitas"]["falta"] is None and _por3["itch: visitas"]["por_dia"] is None)
+ok("sem leitura, a acompanhada também não vira zero",
+   metricas.placar_metas(observado={"itch_visitas": None}, caminho=_arq_aposentada)[0][-1]["status"] == "SEM_LEITURA")
+_saida4 = metricas.gravar_placar(_l3, _c3b)
+_texto4 = open(_saida4, encoding="utf-8").read()
+ok("o placar mostra a visitas e o número do download", "| itch: visitas | — | 175 |" in _texto4, _texto4)
+ok("o placar não conta mais a aposentada como meta sem leitura",
+   "0 sem leitura automática" in _texto4 or "1 sem leitura automática" not in _texto4, _texto4[-400:])
+
+# ---- 14. o relatório diário do postador usa o MESMO medidor ------------------------------
+# Era aqui que nascia o "sem leitura automática": a régua do postador escrevia
+# itch_downloads=NAO_OBSERVAVEL e youtube=NAO_OBSERVAVEL à mão.
+_fonte_postador = open(os.path.join(RAIZ, "tools", "postador.py"), encoding="utf-8").read()
+ok("o postador mede o itch pelo medidor de verdade", "observado_itch()" in _fonte_postador)
+ok("o postador mede o YouTube pelo medidor de verdade", "observado_youtube()" in _fonte_postador)
+ok("o postador não escreve mais itch/youtube como NAO_OBSERVAVEL fixo",
+   '"itch_downloads=NAO_OBSERVAVEL",' not in _fonte_postador
+   and '"youtube=NAO_OBSERVAVEL",' not in _fonte_postador)
+ok("itch seguidores é declarado SEM_API no relatório diário", "itch_seguidores=SEM_API" in _fonte_postador)
+
+# ---- 15. a régua do dia realmente devolve número (função, não texto) ----------------------
+import types
+sys.path.insert(0, os.path.join(RAIZ, "tools"))
+import postador
+
+_falso = types.SimpleNamespace(
+    observado_itch=lambda: ({"downloads": 45, "visitas": 175}, None),
+    observado_youtube=lambda: ({"inscritos": 24, "shorts": 5}, None))
+_linhas_dia, _lidas = postador.medicoes_de_plataforma(medidor=_falso)
+ok("relatório do dia traz o download medido", "itch_downloads=45(api)" in _linhas_dia, str(_linhas_dia))
+ok("relatório do dia traz os inscritos medidos", "youtube_inscritos=24(api)" in _linhas_dia, str(_linhas_dia))
+ok("relatório do dia conta as leituras reais", _lidas == 2, str(_lidas))
+ok("relatório do dia declara itch seguidores como SEM_API", "itch_seguidores=SEM_API" in _linhas_dia)
+
+_sem = types.SimpleNamespace(observado_itch=lambda: (None, "sem chave no runtime"),
+                             observado_youtube=lambda: (None, "HTTP 403"))
+_linhas_sem, _lidas_sem = postador.medicoes_de_plataforma(medidor=_sem)
+ok("sem leitura, o motivo aparece em vez do silêncio",
+   "ITCH_API_KEYS" not in str(_linhas_sem) and "sem chave no runtime" in " ".join(_linhas_sem),
+   str(_linhas_sem))
+ok("sem leitura, nada é contado como lido", _lidas_sem == 0)
+ok("medidor quebrado não derruba o ciclo", postador.medicoes_de_plataforma(
+    medidor=types.SimpleNamespace(observado_itch=lambda: 1 / 0, observado_youtube=lambda: 1 / 0))[1] == 0)
+
+# ---- a régua não piora por falta de credencial (07/11/2026) -------------------------------
+# Medido no run 42337480653: a medição COM segredos leu 7 metas; o merge do entrar-no-main
+# re-rodou o gerador SEM segredos e a régua virou 1 leitura com seis NAO_OBSERVAVEL.
+ok("régua pior que a atual é recusada", metricas.manter_regua(7, 1) is True)
+ok("régua igual é aceita (número pode atualizar)", metricas.manter_regua(7, 7) is False)
+ok("régua melhor é aceita", metricas.manter_regua(1, 7) is False)
+ok("sem régua anterior, escreve (primeira vez)", metricas.manter_regua(None, 0) is False)
+ok("o dono pode forçar (--forcar)", metricas.manter_regua(7, 1, forcar=True) is False)
+_bancada_regua = tempfile.mkdtemp(prefix="regua-")
+_caminho_regua = os.path.join(_bancada_regua, "placar-metas.md")
+open(_caminho_regua, "w", encoding="utf-8").write(
+    "# Placar\n\nPrazo: **2026-11-12** · 5 dia(s) restante(s) · 7 meta(s) com leitura, "
+    "0 sem leitura automática.\n")
+ok("a régua atual diz quantas metas leu", metricas._leituras_da_regua(_caminho_regua) == 7,
+   metricas._leituras_da_regua(_caminho_regua))
+ok("régua que não existe não inventa número", metricas._leituras_da_regua("/nao/existe.md") is None)
+
+# ---- o placar em JSON existe de verdade (07/11/2026) --------------------------------------
+# `perceber.py` procurava posts/placar-metas.json para saber o prazo — e o arquivo NUNCA era
+# escrito por ninguém: toda frase de meta em risco saía sem "(prazo em N dias)".
+_bancada_json = tempfile.mkdtemp(prefix="placar-json-")
+_placar_md = os.path.join(_bancada_json, "placar-metas.md")
+_placar_original = metricas.SAIDA_PLACAR
+metricas.SAIDA_PLACAR = _placar_md
+metricas.gravar_placar(
+    [{"meta": "YouTube: inscritos", "alvo": 40, "observado": 24, "falta": 16, "status": "EM_CURSO",
+      "fonte": "x", "partida": 24, "delta": 0, "por_dia": 3.2}],
+    {"dias_restantes": 5, "prazo": "2026-11-12", "dias_decorridos": 25,
+     "metas_com_leitura": 1, "metas_sem_leitura": 0, "metas_aposentadas": 0})
+metricas.SAIDA_PLACAR = _placar_original
+_caminho_json = os.path.join(_bancada_json, "placar-metas.json")
+ok("o placar em JSON é escrito junto com o markdown", os.path.exists(_caminho_json), _caminho_json)
+if os.path.exists(_caminho_json):
+    _dados = json.load(open(_caminho_json, encoding="utf-8"))
+    ok("o JSON traz o prazo que o pulso lê",
+       (_dados.get("placar_contexto") or {}).get("prazo") == "2026-11-12", _dados.get("placar_contexto"))
+    ok("o JSON traz os dias decorridos (para o ritmo medido)",
+       (_dados.get("placar_contexto") or {}).get("dias_decorridos") == 25,
+       _dados.get("placar_contexto"))
+    ok("o JSON traz as linhas do placar", isinstance(_dados.get("linhas"), list) and _dados["linhas"],
+       _dados.get("linhas"))
+
+# ---- a meta que não anda não tem prazo (07/11/2026) ----------------------------------------
+# Decisão com número: o prazo de 12/11 chegava com 4 metas em curso e nenhuma ao alcance.
+_d, _data = metricas.previsao_da_meta(18, 0.76, hoje=datetime.date(2026, 11, 7))
+ok("previsão: falta 18 a 0,76/dia leva 24 dias", _d == 24, _d)
+ok("previsão devolve a data que o ritmo entrega", _data == "2026-12-01", _data)
+ok("previsão com ritmo zero não inventa data", metricas.previsao_da_meta(18, 0) == (None, None))
+ok("previsão sem falta não inventa data", metricas.previsao_da_meta(None, 1.0) == (None, None))
+
+def _meta(**kw):
+    base = {"meta": "x", "alvo": 50, "observado": 32, "falta": 18, "status": "EM_CURSO",
+            "delta": 0, "partida": 0}
+    base.update(kw)
+    return base
+
+_parada = metricas.aplicar_politica_de_ritmo([_meta(delta=0)], 25, 5, datetime.date(2026, 11, 7))
+ok("ritmo 0 por 25 dias vira PARADA", _parada[0]["status"] == "PARADA", _parada[0]["status"])
+ok("PARADA diz o motivo com o número de dias", "25 dias" in _parada[0]["motivo"], _parada[0]["motivo"])
+ok("PARADA não tem prazo cumprível", _parada[0]["no_prazo"] is False)
+
+_jovem = metricas.aplicar_politica_de_ritmo([_meta(delta=0)], 10, 5, datetime.date(2026, 11, 7))
+ok("ritmo 0 em 10 dias ainda não é veredito", _jovem[0]["status"] == "EM_CURSO", _jovem[0]["status"])
+ok("e o motivo diz quando o julgamento acontece", "21 dias" in _jovem[0]["motivo"], _jovem[0]["motivo"])
+
+_lento = metricas.aplicar_politica_de_ritmo([_meta(delta=19, falta=18)], 25, 5,
+                                            datetime.date(2026, 11, 7))
+ok("ritmo que não fecha o prazo vira RENOVADA", _lento[0]["status"] == "RENOVADA",
+   _lento[0]["status"])
+ok("RENOVADA carrega a data que o ritmo entrega", _lento[0]["prazo_estimado"] == "2026-12-01",
+   _lento[0].get("prazo_estimado"))
+ok("RENOVADA diz que não fecha no prazo", _lento[0]["no_prazo"] is False)
+
+_rapido = metricas.aplicar_politica_de_ritmo([_meta(delta=200, falta=18)], 25, 5,
+                                             datetime.date(2026, 11, 7))
+ok("ritmo que fecha o prazo continua EM_CURSO", _rapido[0]["status"] == "EM_CURSO",
+   _rapido[0]["status"])
+ok("e é dito que fecha no prazo", _rapido[0]["no_prazo"] is True)
+
+_sem_delta = metricas.aplicar_politica_de_ritmo([_meta(delta=None)], 25, 5, None)
+ok("sem delta a política não chuta status", _sem_delta[0]["status"] == "EM_CURSO",
+   _sem_delta[0]["status"])
+ok("sem delta não inventa ritmo medido", "ritmo_medido" not in _sem_delta[0])
+
+# e o placar REAL, gerado agora, já sai com a política aplicada
+_linhas_reais, _ctx_real = metricas.placar_metas({
+    "bsky_seguidores": 32, "ig_posts": 39, "ig_seguidores": 0, "itch_downloads": 48,
+    "itch_visitas": 206, "yt_inscritos": 24, "yt_shorts": 7, "itch_seguidores": None})
+_em_curso = [l for l in _linhas_reais if l["status"] in ("EM_CURSO", "RENOVADA", "PARADA")]
+ok("todas as metas em curso carregam ritmo medido", _em_curso and
+   all(l.get("ritmo_medido") is not None for l in _em_curso),
+   [(l["meta"], l.get("ritmo_medido")) for l in _em_curso])
+ok("nenhuma delas fecha o prazo no ritmo medido",
+   all(l.get("no_prazo") is False for l in _em_curso),
+   [(l["meta"], l.get("no_prazo")) for l in _em_curso])
+ok("o placar escrito tem a seção da projeção",
+   "Pelo ritmo medido" in open(metricas.SAIDA_PLACAR, encoding="utf-8").read(),
+   metricas.SAIDA_PLACAR)
+
+# ------------------------------------------------------------------ o dia seguinte ao prazo
+# (07/11/2026 — cinco dias antes do prazo de 12/11). A frase antiga dizia "-3 dia(s) restante(s)".
+import datetime as _dt  # noqa: E402
+
+_pasta_venc = tempfile.mkdtemp(prefix="vencido-")
+_salvo_saida = metricas.SAIDA_PLACAR
+metricas.SAIDA_PLACAR = os.path.join(_pasta_venc, "placar-metas.md")
+
+
+def _placar_em(dia, observado=None):
+    observado = observado or {"ig_posts": 39, "ig_seguidores": 0, "bsky_seguidores": 32,
+                              "yt_inscritos": 24, "yt_shorts": 7, "itch_downloads": 48,
+                              "itch_visitas": 206}
+    linhas, contexto = metricas.placar_metas(observado, hoje=dia)
+    metricas.aplicar_politica_de_ritmo(
+        linhas, dias_decorridos=max(1, (dia - _dt.date(2026, 10, 13)).days),
+        dias_restantes=contexto["dias_restantes"], hoje=dia)
+    caminho = metricas.gravar_placar(linhas, contexto, hoje=dia)
+    return open(caminho, encoding="utf-8").read()
+
+
+_txt_vencido = _placar_em(_dt.date(2026, 11, 15))
+ok("prazo vencido é dito com a palavra 'vencido'", "vencido" in _txt_vencido)
+ok("prazo vencido não aparece como número negativo de dias",
+   "dia(s) restante(s)" not in _txt_vencido and "há 3 dia(s)" in _txt_vencido)
+ok("o veredito conta quantas metas com alvo fecharam",
+   "Fecharam 2 de 6 meta(s) com alvo" in _txt_vencido, _txt_vencido[:400])
+ok("o veredito nomeia cada meta que não fechou, com observado e alvo",
+   "Instagram: seguidores (observado 0 de 50, faltaram 50)" in _txt_vencido)
+ok("meta aposentada fica FORA do veredito de falha",
+   "itch: seguidores (aposentada) (observado" not in _txt_vencido
+   and "aposentada(s) ficam fora do veredito" in _txt_vencido)
+ok("o veredito não decide pelo dono", "decisão dele" in _txt_vencido)
+ok("prazo vencido explica por que a coluna por_dia fica vazia",
+   "não há prazo para dividir" in _txt_vencido)
+
+_txt_hoje = _placar_em(_dt.date(2026, 11, 12))
+ok("no dia do prazo, o placar diz 'vence hoje'", "vence hoje" in _txt_hoje, _txt_hoje[:300])
+ok("no dia do prazo ainda não há veredito de vencido", "vencido" not in _txt_hoje)
+
+_txt_antes = _placar_em(_dt.date(2026, 11, 8))
+ok("antes do prazo a frase antiga continua (N dias restantes)",
+   "dia(s) restante(s)" in _txt_antes and "vencido" not in _txt_antes)
+
+metricas.SAIDA_PLACAR = _salvo_saida
+
+print("\n%d/%d testes do medidor de desempenho passaram" % (certos, certos + falhas))
+raise SystemExit(1 if falhas else 0)

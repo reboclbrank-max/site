@@ -1,0 +1,71 @@
+{
+ "quando": "2026-11-08T06:00:15Z",
+ "meta_em_risco": {
+  "meta": "itch: downloads",
+  "falta": 52.0,
+  "por_dia": 10.4,
+  "status": "RENOVADA"
+ },
+ "metas_paradas": [
+  {
+   "meta": "Instagram: seguidores",
+   "falta": 50.0,
+   "ritmo_medido": "0,0/dia",
+   "porque": "post não move: a pesquisa é sobre outra abordagem"
+  },
+  {
+   "meta": "YouTube: inscritos",
+   "falta": 16.0,
+   "ritmo_medido": "0,0/dia",
+   "porque": "post não move: a pesquisa é sobre outra abordagem"
+  }
+ ],
+ "ranking_de_risco": [
+  {
+   "meta": "itch: downloads",
+   "falta": 52.0,
+   "por_dia": 10.4,
+   "status": "RENOVADA"
+  },
+  {
+   "meta": "Instagram: seguidores",
+   "falta": 50.0,
+   "por_dia": 10.0,
+   "status": "PARADA"
+  },
+  {
+   "meta": "Bluesky: seguidores",
+   "falta": 18.0,
+   "por_dia": 3.6,
+   "status": "RENOVADA"
+  },
+  {
+   "meta": "YouTube: inscritos",
+   "falta": 16.0,
+   "por_dia": 3.2,
+   "status": "PARADA"
+  }
+ ],
+ "formatos_a_evitar": [
+  {
+   "formato": "comentário em post alheio",
+   "zeros": 85,
+   "total": 210,
+   "pct": 40.5
+  }
+ ],
+ "tema_do_dia": {
+  "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: desenhe a bola parada e veja a partida simular.\nGrátis no navegador ou APK. Feito no Brasil com Godot.\n#indiedev #gamedev",
+  "url": "https://reboclbrank-max.github.io/site/jogos/prancheta/"
+ },
+ "horario": {
+  "hora": null,
+  "motivo": "sem prova estatística: mantém a janela do calendário",
+  "janela": [
+   9,
+   22
+  ]
+ },
+ "_fonte": "placar-metas.md, desempenho.md, calendario.json, aprendizado.json",
+ "_o_que_nao_sei": "não há pesquisa externa de tendência aqui: só dado medido da própria casa"
+}

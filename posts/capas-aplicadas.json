@@ -1,0 +1,390 @@
+{
+ "_o_que_e": "uma linha por vídeo que recebeu capa da casa",
+ "aplicadas": [
+  {
+   "id": "PRyg0Ncz5U8",
+   "quando": "2026-11-06T19:05:58Z",
+   "titulo": "Onde jogar CEIFALUME sem instalar loja",
+   "capa": "media/capas/PRyg0Ncz5U8-capa.png",
+   "sha256": "5d643aac5f7cb9c1"
+  },
+  {
+   "id": "HmbEdojjhsU",
+   "quando": "2026-11-06T19:06:01Z",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
+   "capa": "media/capas/HmbEdojjhsU-capa.png",
+   "sha256": "fa5a21305b34c5b0"
+  },
+  {
+   "id": "L2UIYmofEiE",
+   "quando": "2026-11-06T19:06:05Z",
+   "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
+   "capa": "media/capas/L2UIYmofEiE-capa.png",
+   "sha256": "bc2f53ec105dfad0"
+  },
+  {
+   "id": "03313IcXvEo",
+   "quando": "2026-11-06T19:06:08Z",
+   "titulo": "6 colheitas em 2 min de CEIFALUME 0.1",
+   "capa": "media/capas/03313IcXvEo-capa.png",
+   "sha256": "f9f058d81486725e"
+  },
+  {
+   "id": "f5kQFOQs0To",
+   "quando": "2026-11-06T19:06:13Z",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "capa": "media/capas/f5kQFOQs0To-capa.png",
+   "sha256": "4c21699b40432844"
+  },
+  {
+   "id": "YK2flr2JGz4",
+   "quando": "2026-11-06T19:06:17Z",
+   "titulo": "PRANCHETA — simulador de gestão de futebol 100% fictício (jogo indie brasileiro)",
+   "capa": "media/capas/YK2flr2JGz4-capa.png",
+   "sha256": "cbbb70f9a8ae1708"
+  },
+  {
+   "id": "_6V1NtfgMkI",
+   "quando": "2026-11-06T23:12:33Z",
+   "titulo": "Desenhe a prancheta e decida a partida — Prancheta, grátis no itch.io #Shorts",
+   "capa": "media/capas/_6V1NtfgMkI-capa.png",
+   "sha256": "8fc8dc8382c9b347"
+  },
+  {
+   "id": "pRwGAeNrtrY",
+   "quando": "2026-11-06T23:12:36Z",
+   "titulo": "Prancheta — simulador de gestão de futebol em português do Brasil (trailer)",
+   "capa": "media/capas/pRwGAeNrtrY-capa.png",
+   "sha256": "94b1f5fb0a916659"
+  },
+  {
+   "id": "Gm7ZIGNRLTg",
+   "quando": "2026-11-06T23:12:39Z",
+   "titulo": "Ceifalume: a horta acordou à noite 🌙 jogo grátis",
+   "capa": "media/capas/Gm7ZIGNRLTg-capa.png",
+   "sha256": "1bd5dd8789d97ce9"
+  },
+  {
+   "id": "tB449xupDzY",
+   "quando": "2026-11-06T23:12:42Z",
+   "titulo": "Ceifalume — trailer oficial (jogo de fazenda noturna grátis)",
+   "capa": "media/capas/tB449xupDzY-capa.png",
+   "sha256": "a90292ff96edabd6"
+  },
+  {
+   "id": "O04ajm1t54Q",
+   "quando": "2026-11-07T00:04:42Z",
+   "titulo": "16 passos do menu à prancheta, 13 confirmados por imagem",
+   "capa": "media/gameplay/prancheta-capa.png",
+   "sha256": "9d5ebbd7ebf71c35"
+  },
+  {
+   "id": "FRCzgqUlMFY",
+   "quando": "2026-11-07T01:34:44Z",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "capa": "media/capas/FRCzgqUlMFY-capa.png",
+   "sha256": "103a69afc5e95a4c"
+  },
+  {
+   "id": "bYyFqHcQyd4",
+   "quando": "2026-11-07T01:34:50Z",
+   "titulo": "\"NOVO APLICATIVO pra assistir jogos do CR7 e do MESSI AO VIVO! 😱⚽\"",
+   "capa": "media/capas/bYyFqHcQyd4-capa.png",
+   "sha256": "e2b88a2029758a48"
+  },
+  {
+   "id": "GImbDGwzdA4",
+   "quando": "2026-11-07T01:34:53Z",
+   "titulo": "Racing Master: O MELHOR jogo de carros realista de 2025!",
+   "capa": "media/capas/GImbDGwzdA4-capa.png",
+   "sha256": "33826069991afd92"
+  },
+  {
+   "id": "wVZiuhXuV0c",
+   "quando": "2026-11-07T01:34:56Z",
+   "titulo": "Monmate Master: Idle Adventure",
+   "capa": "media/capas/wVZiuhXuV0c-capa.png",
+   "sha256": "583e7d1c94c76361"
+  },
+  {
+   "id": "BipekhsirnY",
+   "quando": "2026-11-07T01:35:01Z",
+   "titulo": "Cooking Bride to Primrose Lake",
+   "capa": "media/capas/BipekhsirnY-capa.png",
+   "sha256": "6e0b76f54f55b4a0"
+  },
+  {
+   "id": "lGRWmcJyVdc",
+   "quando": "2026-11-07T01:35:06Z",
+   "titulo": "Concessionária Carros: Jogos",
+   "capa": "media/capas/lGRWmcJyVdc-capa.png",
+   "sha256": "54c1a6a37591be55"
+  },
+  {
+   "id": "HGQQOnzpw3M",
+   "quando": "2026-11-07T01:35:08Z",
+   "titulo": "Tiny Reaper: Reborn",
+   "capa": "media/capas/HGQQOnzpw3M-capa.png",
+   "sha256": "13a6801b7393578d"
+  },
+  {
+   "id": "k2fic4gPhYA",
+   "quando": "2026-11-07T01:35:14Z",
+   "titulo": "SSR Summoners Brasil",
+   "capa": "media/capas/k2fic4gPhYA-capa.png",
+   "sha256": "71c4c3c4f1466bcd"
+  },
+  {
+   "id": "iYJTlC3mV7w",
+   "quando": "2026-11-07T01:35:19Z",
+   "titulo": "DC Worlds Collide",
+   "capa": "media/capas/iYJTlC3mV7w-capa.png",
+   "sha256": "6ff7252214567dd4"
+  },
+  {
+   "id": "TY5lPSPY0wI",
+   "quando": "2026-11-07T01:35:24Z",
+   "titulo": "Dreamscape Diner",
+   "capa": "media/capas/TY5lPSPY0wI-capa.png",
+   "sha256": "51dbb76141f28c49"
+  },
+  {
+   "id": "D2KsmH2Z37g",
+   "quando": "2026-11-07T01:35:27Z",
+   "titulo": "Earth Arcade M: Torong Wanted",
+   "capa": "media/capas/D2KsmH2Z37g-capa.png",
+   "sha256": "aa27c340538023d2"
+  },
+  {
+   "id": "20_c6h7Mpy0",
+   "quando": "2026-11-07T01:35:30Z",
+   "titulo": "Stickman vs Zombie: Dark War",
+   "capa": "media/capas/20_c6h7Mpy0-capa.png",
+   "sha256": "ef2c6cfaa6fcde2b"
+  },
+  {
+   "id": "I-yULI289RI",
+   "quando": "2026-11-07T01:35:36Z",
+   "titulo": "Tree of Savior: NEO",
+   "capa": "media/capas/I-yULI289RI-capa.png",
+   "sha256": "da4e76ca6380bc4e"
+  },
+  {
+   "id": "8xrJLg8gy9I",
+   "quando": "2026-11-07T01:35:39Z",
+   "titulo": "FIFA Rivals - Jogo de futebol",
+   "capa": "media/capas/8xrJLg8gy9I-capa.png",
+   "sha256": "299f0bf13c75754d"
+  },
+  {
+   "id": "nSS3uY9JyHk",
+   "quando": "2026-11-07T01:35:42Z",
+   "titulo": "Abyss of Dungeons",
+   "capa": "media/capas/nSS3uY9JyHk-capa.png",
+   "sha256": "070fcb9c81f1c86a"
+  },
+  {
+   "id": "6gVwykdO5Vw",
+   "quando": "2026-11-07T01:35:44Z",
+   "titulo": "Mini Market Adventure - Tycoon",
+   "capa": "media/capas/6gVwykdO5Vw-capa.png",
+   "sha256": "bfe5ce71bef17232"
+  },
+  {
+   "id": "BvcWdzZIgEg",
+   "quando": "2026-11-07T01:35:50Z",
+   "titulo": "Pudgy Party - Batalha Real",
+   "capa": "media/capas/BvcWdzZIgEg-capa.png",
+   "sha256": "fed2270a07bd9f89"
+  },
+  {
+   "id": "GgN-AIWtAMk",
+   "quando": "2026-11-07T01:35:55Z",
+   "titulo": "Etheria: Restart",
+   "capa": "media/capas/GgN-AIWtAMk-capa.png",
+   "sha256": "5579744913181865"
+  },
+  {
+   "id": "S6a1Zhsb-r8",
+   "quando": "2026-11-07T01:35:57Z",
+   "titulo": "Wittle Defender",
+   "capa": "media/capas/S6a1Zhsb-r8-capa.png",
+   "sha256": "9112fb9bd488055e"
+  },
+  {
+   "id": "0dRZUZX3Udw",
+   "quando": "2026-11-07T01:36:00Z",
+   "titulo": "Age of Ashes: Dark Nuns",
+   "capa": "media/capas/0dRZUZX3Udw-capa.png",
+   "sha256": "1769bdb91c48e584"
+  },
+  {
+   "id": "E_4_-avEVVo",
+   "quando": "2026-11-07T01:36:02Z",
+   "titulo": "Construtores Subterrâneo",
+   "capa": "media/capas/E_4_-avEVVo-capa.png",
+   "sha256": "519a6ceff4a7442b"
+  },
+  {
+   "id": "dbsLbe2lWs8",
+   "quando": "2026-11-07T01:36:05Z",
+   "titulo": "Prime Football 2025",
+   "capa": "media/capas/dbsLbe2lWs8-capa.png",
+   "sha256": "d96fe9e548613ba3"
+  },
+  {
+   "id": "6TN1e3B_iK0",
+   "quando": "2026-11-07T01:36:08Z",
+   "titulo": "Basketball PvP - Buzzer Beater",
+   "capa": "media/capas/6TN1e3B_iK0-capa.png",
+   "sha256": "849d9e4fa6f4dd9b"
+  },
+  {
+   "id": "aYMc07LV5M8",
+   "quando": "2026-11-07T01:36:11Z",
+   "titulo": "Ash & Snow: Cat Pop'n Match",
+   "capa": "media/capas/aYMc07LV5M8-capa.png",
+   "sha256": "5c5628c0d850e154"
+  },
+  {
+   "id": "9dxDNdADz_s",
+   "quando": "2026-11-07T01:36:13Z",
+   "titulo": "Trimo Heroes:Ofensiva Pixelada",
+   "capa": "media/capas/9dxDNdADz_s-capa.png",
+   "sha256": "b89235fdb0d5063b"
+  },
+  {
+   "id": "4Dy9tzgI5vg",
+   "quando": "2026-11-07T01:42:05Z",
+   "titulo": "PUZZLE & DRAGONS 0",
+   "capa": "media/capas/4Dy9tzgI5vg-capa.png",
+   "sha256": "3a509b434b33de02"
+  },
+  {
+   "id": "iD-eTCkuVw8",
+   "quando": "2026-11-07T01:42:08Z",
+   "titulo": "War Drone: Jogos de tiro",
+   "capa": "media/capas/iD-eTCkuVw8-capa.png",
+   "sha256": "da1337cf673e1f63"
+  },
+  {
+   "id": "8mDwkT9rQ94",
+   "quando": "2026-11-07T01:42:14Z",
+   "titulo": "Summoners War: Rush",
+   "capa": "media/capas/8mDwkT9rQ94-capa.png",
+   "sha256": "57cce7ff1f81a7b7"
+  },
+  {
+   "id": "Xdyij5GWxOo",
+   "quando": "2026-11-07T01:42:17Z",
+   "titulo": "Magic Chess: Go Go",
+   "capa": "media/capas/Xdyij5GWxOo-capa.png",
+   "sha256": "058656b0f35e2138"
+  },
+  {
+   "id": "8CfSVLNwg0A",
+   "quando": "2026-11-07T01:42:21Z",
+   "titulo": "Abyss: Chosen Heirs",
+   "capa": "media/capas/8CfSVLNwg0A-capa.png",
+   "sha256": "d16a850b0ed92792"
+  },
+  {
+   "id": "mjR8-OjuImc",
+   "quando": "2026-11-07T01:42:23Z",
+   "titulo": "New game Wall Breaker: Remastered",
+   "capa": "media/capas/mjR8-OjuImc-capa.png",
+   "sha256": "7fa8d395d010060c"
+  },
+  {
+   "id": "fRP8N7wQTUk",
+   "quando": "2026-11-07T01:42:26Z",
+   "titulo": "New game Era of Conquest",
+   "capa": "media/capas/fRP8N7wQTUk-capa.png",
+   "sha256": "452c05db7dc77e5e"
+  },
+  {
+   "id": "nSkoyOPBklM",
+   "quando": "2026-11-07T01:42:30Z",
+   "titulo": "New game Sinag",
+   "capa": "media/capas/nSkoyOPBklM-capa.png",
+   "sha256": "bd5fdfb802faa536"
+  },
+  {
+   "id": "9qx936pRMAE",
+   "quando": "2026-11-07T01:42:34Z",
+   "titulo": "New game Magical Girls Idle",
+   "capa": "media/capas/9qx936pRMAE-capa.png",
+   "sha256": "6b8f61c397d9e2c6"
+  },
+  {
+   "id": "elWcjhyhrxo",
+   "quando": "2026-11-07T01:42:36Z",
+   "titulo": "New game Stone Adventure",
+   "capa": "media/capas/elWcjhyhrxo-capa.png",
+   "sha256": "8e8bbc4a1c8d972e"
+  },
+  {
+   "id": "AB4RQbGefeo",
+   "quando": "2026-11-07T01:42:42Z",
+   "titulo": "New game Idle Goblin Slayer",
+   "capa": "media/capas/AB4RQbGefeo-capa.png",
+   "sha256": "30362bc1c8a0f165"
+  },
+  {
+   "id": "ey2kIURTlIA",
+   "quando": "2026-11-07T01:42:45Z",
+   "titulo": "New game Triple Tile Quest",
+   "capa": "media/capas/ey2kIURTlIA-capa.png",
+   "sha256": "20364e59d0526bc9"
+  },
+  {
+   "id": "fyHC05z6FPw",
+   "quando": "2026-11-07T01:42:48Z",
+   "titulo": "New game Queen's Castle: Merge & Story",
+   "capa": "media/capas/fyHC05z6FPw-capa.png",
+   "sha256": "d87b6b3c10bca9de"
+  },
+  {
+   "id": "-QeHBzpsVYk",
+   "quando": "2026-11-07T01:42:50Z",
+   "titulo": "New game Cat Hero : Idle RPG",
+   "capa": "media/capas/-QeHBzpsVYk-capa.png",
+   "sha256": "b419dd626f643d59"
+  },
+  {
+   "id": "_ffmjSMsW0Y",
+   "quando": "2026-11-07T02:12:00Z",
+   "titulo": "CEIFALUME 0.1: 8 colheitas, 11 mudas plantadas, 794 toques em 2 min de jogo",
+   "capa": "media/capas/_ffmjSMsW0Y-capa.png",
+   "sha256": "fdf6428b6b86c425"
+  },
+  {
+   "id": "cfB5ZBdC-NA",
+   "quando": "2026-11-07T17:52:20Z",
+   "titulo": "O que tem dentro de CEIFALUME",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "d991760a467bd88e"
+  },
+  {
+   "id": "iCE6O3d_WD0",
+   "quando": "2026-11-07T22:55:00Z",
+   "titulo": "Por que CEIFALUME é grátis de verdade",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "c1d7462f1fef1020"
+  },
+  {
+   "id": "hBvkQhSS-_4",
+   "quando": "2026-11-08T18:03:44Z",
+   "titulo": "Como este vídeo de CEIFALUME foi gravado",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "e312274deb5810b2"
+  },
+  {
+   "id": "FNzW9c45E3M",
+   "quando": "2026-11-08T23:03:18Z",
+   "titulo": "Onde falar com quem fez CEIFALUME",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "0db883b1ef767ca8"
+  }
+ ]
+}

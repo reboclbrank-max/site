@@ -1,0 +1,57 @@
+
+## 13/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 14/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 15/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 16/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 17/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 18/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 19/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 20/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 21/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 22/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 23/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 24/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 25/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 26/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 27/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 28/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 29/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(anubis), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 30/10/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(captcha), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)
+
+## 02/11/2026
+- pesquisei 5 redes: LIVRES meta.discourse, tilvids-peertube, plume, friendica, mastodon.social | MURO lemmy.world(captcha), lemmy.ml(captcha), flarum(turnstile), bookwyrm(captcha), writefreely(inacessivel), diaspora*(inacessivel), pixelfed(inacessivel)

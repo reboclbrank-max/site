@@ -1,0 +1,68 @@
+{
+ "quando": "2026-10-30",
+ "pergunta": "por que o painel do itch.io (editar página e postar devlog) não responde a partir de servidor",
+ "resultado": "bloqueio por reputação de IP (Cloudflare), não por cookie e não por JavaScript",
+ "medidas": [
+  {
+   "onde": "runner ubuntu-24.04 (Azure)",
+   "teste": "GET urllib, com e sem cookie",
+   "resultado": "/dashboard 403 + desafio · /game/edit/5017404 403 + desafio · itch.io/ 200 sem desafio"
+  },
+  {
+   "onde": "runner macos-latest",
+   "teste": "GET urllib, com e sem cookie",
+   "resultado": "idêntico ao ubuntu: 403 + desafio nas duas rotas de painel"
+  },
+  {
+   "onde": "runner windows-latest",
+   "teste": "GET urllib, com e sem cookie",
+   "resultado": "idêntico: 403 + desafio"
+  },
+  {
+   "onde": "runner ubuntu, Chromium headless shell",
+   "teste": "navegador real com cookie",
+   "resultado": "redireciona para /login?__cf_chl_rt_tk=… e fica no desafio ('Um momento…')"
+  },
+  {
+   "onde": "runner ubuntu, Chromium completo sob Xvfb, pt-BR, sem marca de automação",
+   "teste": "96 s de espera, 12 amostras",
+   "resultado": "403 até o fim: 'Just a moment...' e depois 'Um momento…', 28 729 bytes, sem login"
+  },
+  {
+   "onde": "runner ubuntu, Google Chrome 156 estável, perfil persistente em disco, headed sob Xvfb 1440x900, pt-BR",
+   "teste": "144 s de espera, 18 amostras",
+   "resultado": "403 até o fim ('Just a moment...' -> 'Um momento…') — run 41123330408"
+  },
+  {
+   "onde": "sandbox (outro datacenter), rotas alternativas",
+   "teste": "GET em /posts, /dashboard/post/new, /game/5017404/devlog, /api/1/x/me, /games",
+   "resultado": "só /dashboard e /game/edit/* são desafiados; as demais respondem 404/200 — o desafio é por rota protegida + IP"
+  }
+ ],
+ "conclusao": [
+  "desafio é JS, mas o navegador executa o JS e continua reprovado: a reprovação é do IP/reputação, não da execução",
+  "não é sessão: o mesmo cookie não muda nada, e o corpo do desafio diz que é o IP",
+  "não é impressão digital de automação: Chrome estável com perfil persistente e janela real também falha",
+  "não é falta de rota: o desafio cobre /dashboard e /game/edit/*, que são as únicas rotas de escrita",
+  "não existe API de escrita: o itch declara publicamente que não fornece API para postar (itch.io/t/2097903)",
+  "saída legítima = uma rede que o próprio dono controle (ITCH_PROXY). Proxy público entregaria a sessão a terceiro; captcha seria burla. Nenhum dos dois foi feito"
+ ],
+ "caminho_que_funciona": "butler (canal de escrita oficial). O build é o conteúdo que a página do itch exibe: o selo do gameplay entrou em ceifalume/index.html e chega ao jogador no próximo push.",
+ "workflows": [
+  "sondar-ip-itch.yml",
+  "sondar-itch-browser.yml",
+  "sondar-itch-browser2.yml"
+ ],
+ "complemento_31_10_2026": {
+  "pergunta": "e o JOGO que a página entrega? é o do repositório?",
+  "metodo": "tools/enviar-itch.py conferir — baixa o que a página serve e compara sha256 arquivo por arquivo",
+  "resultado": {
+   "index.html": "DIFERENTE (o itch reescreve e injeta htmlgame.js)",
+   "index.js": "IGUAL",
+   "index.pck": "IGUAL",
+   "index.wasm": "IGUAL"
+  },
+  "conclusao": "o conteúdo do jogo no itch está ATUALIZADO; só a casca HTML é do itch. O selo do gameplay não está na casca, mas chega ao visitante pelo GIF da descrição, que é servido por nós (media/ceifalume/gif-jogo-ceifalume-640x360.gif).",
+  "butler": "v15.32.0 não tem comando para marcar canal como HTML5/jogável no navegador (butler --help conferido em 31/10/2026); o itch.io/docs/butler/pushing.html diz que essa marcação é feita pelo site."
+ }
+}

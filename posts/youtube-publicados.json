@@ -1,0 +1,244 @@
+{
+ "publicados": [
+  {
+   "id": "FNzW9c45E3M",
+   "url": "https://youtu.be/FNzW9c45E3M",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Onde falar com quem fez CEIFALUME",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nQuem fez o jogo responde por lá — e o vídeo mostra o que essa pessoa construiu: 9 colheitas na partida.\n\nO convite é para conversar sobre o jogo, não para inflar número.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "descricao_completa": false,
+   "angulo": "onde_esta_a_comunidade:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 15,
+    "colhidas": 9,
+    "toques": 724,
+    "minutos": 2,
+    "toques_por_minuto": 362
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-08T23:03:16Z"
+  },
+  {
+   "id": "hBvkQhSS-_4",
+   "url": "https://youtu.be/hBvkQhSS-_4",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Como este vídeo de CEIFALUME foi gravado",
+   "descricao": "Nada aqui foi editado à mão: o build web rodou no navegador e um agente decidiu cada toque.\n\nAs plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nO relatório da gravação fecha em 13 mudas e 8 colheitas.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "descricao_completa": false,
+   "angulo": "como_foi_gravado:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 13,
+    "colhidas": 8,
+    "toques": 673,
+    "minutos": 2,
+    "toques_por_minuto": 336
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-08T18:03:42Z"
+  },
+  {
+   "id": "iCE6O3d_WD0",
+   "url": "https://youtu.be/iCE6O3d_WD0",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Por que CEIFALUME é grátis de verdade",
+   "descricao": "A pergunta é justa. A resposta: as plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNesta gravação, 9 colheitas saíram de 14 mudas, sem nada bloqueado por pagamento.\n\nO que sustenta a casa é o trabalho aparecer, não o jogador pagar.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
+   "descricao_completa": false,
+   "angulo": "por_que_gratis:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 14,
+    "colhidas": 9,
+    "toques": 717,
+    "minutos": 2,
+    "toques_por_minuto": 358
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-07T22:54:55Z"
+  },
+  {
+   "id": "cfB5ZBdC-NA",
+   "url": "https://youtu.be/cfB5ZBdC-NA",
+   "slug": "ceifalume-gameplay",
+   "titulo": "O que tem dentro de CEIFALUME",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nO que aparece na tela desta gravação é a partida de verdade: 966 toques no campo.\n\nSem corte de tela e sem fala: a legenda descreve a decisão tomada no momento.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "descricao_completa": false,
+   "angulo": "o_que_tem_dentro:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 13,
+    "colhidas": 9,
+    "toques": 966,
+    "minutos": 2,
+    "toques_por_minuto": 483
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-07T17:52:17Z"
+  },
+  {
+   "id": "_ffmjSMsW0Y",
+   "url": "https://youtu.be/_ffmjSMsW0Y",
+   "slug": "ceifalume-gameplay",
+   "titulo": "CEIFALUME 0.1: 8 colheitas, 11 mudas plantadas, 794 toques em 2 min de jogo",
+   "descricao": "CEIFALUME 0.1 — jogo idle de fazenda noturna.\n\nComo funciona: plante, colha e negocie à luz da lanterna.\nO que chama atenção: as plantações crescem por até 8 horas mesmo com o jogo fechado.\nOnde jogar: grátis no navegador ou no Android, sem conta.\nFeito com Godot, feito no Brasil.",
+   "descricao_completa": false,
+   "angulo": null,
+   "fato": null,
+   "numeros": null,
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-07T01:55:42Z"
+  },
+  {
+   "id": "O04ajm1t54Q",
+   "url": "https://youtu.be/O04ajm1t54Q",
+   "slug": "prancheta-gameplay",
+   "titulo": "16 passos do menu à prancheta, 13 confirmados por imagem",
+   "descricao": "A gravação atravessa o jogo do começo ao fim: menu, nova carreira, convite de clube, sugestão do staff, microciclo da semana e, por fim, a prancheta tática.\n\nSão 16 passos, e 13 deles foram confirmados por MUDANÇA DE TELA — o gravador compara o quadro antes e depois de cada toque, então passo que não muda nada não conta.\n\nO jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no APK.\n\nFonte: posts/cenas.json (partida 028ba44e6805, conferida em 2026-11-07T00:04:37Z).",
+   "descricao_completa": false,
+   "angulo": "roteiro_do_agente",
+   "fato": null,
+   "numeros": {
+    "passos": 16,
+    "passos_confirmados": 13,
+    "toques_partida": 7
+   },
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "quando": "2026-11-07T00:04:42Z",
+   "descricao_no_canal": 906,
+   "conferido_em": "2026-11-07T01:28:27Z"
+  },
+  {
+   "id": "FRCzgqUlMFY",
+   "url": "https://youtu.be/FRCzgqUlMFY",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "descricao": "A chuva rega de graça: não custa água nem moeda.\n\nNa gravação desta partida: 10 mudas plantadas e 4 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "angulo": "como_funciona:ceifalume-chuva",
+   "fato": "ceifalume-chuva",
+   "numeros": {
+    "plantadas": 10,
+    "colhidas": 4,
+    "toques": 1074,
+    "minutos": 2,
+    "toques_por_minuto": 537
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T20:04:19Z",
+   "descricao_completa": false,
+   "descricao_no_canal": 695,
+   "conferido_em": "2026-11-07T01:28:27Z"
+  },
+  {
+   "id": "PRyg0Ncz5U8",
+   "url": "https://youtu.be/PRyg0Ncz5U8",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Onde jogar CEIFALUME sem instalar loja",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nA partida do vídeo saiu do build web: 9 colheitas em 2 minutos de tela.\n\nNada de cadastro, compra ou espera para abrir o jogo.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "angulo": "onde_jogar:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 13,
+    "colhidas": 9,
+    "toques": 640,
+    "minutos": 2,
+    "toques_por_minuto": 320
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T18:24:11Z",
+   "descricao_completa": false,
+   "descricao_no_canal": 704,
+   "conferido_em": "2026-11-07T01:28:27Z"
+  },
+  {
+   "id": "HmbEdojjhsU",
+   "url": "https://youtu.be/HmbEdojjhsU",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNa gravação desta partida: 15 mudas plantadas e 8 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "angulo": "como_funciona:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 15,
+    "colhidas": 8,
+    "toques": 1236,
+    "minutos": 2,
+    "toques_por_minuto": 618
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T16:29:50Z",
+   "correcoes": [
+    {
+     "campo": "titulo",
+     "de": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+     "para": "Como funciona: as plantações crescem e as vendas acontecem",
+     "quando": "2026-11-06T16:46:08Z"
+    }
+   ],
+   "descricao_completa": false,
+   "descricao_no_canal": 720,
+   "conferido_em": "2026-11-07T01:28:27Z"
+  },
+  {
+   "id": "L2UIYmofEiE",
+   "url": "https://youtu.be/L2UIYmofEiE",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
+   "descricao": "Quanto cabe em 2 minutos de uma fazenda que cresce enquanto você olha para outro lado?\n\nNesta partida deu 9 colheitas, 9 mudas semeadas e 806 toques espalhados pelo terreno.\n\nA resposta curta é que o limite não é a pressa: é o tempo de cada planta.\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "angulo": "pergunta",
+   "numeros": {
+    "plantadas": 9,
+    "colhidas": 9,
+    "toques": 806,
+    "minutos": 2,
+    "toques_por_minuto": 403
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T16:16:47Z",
+   "descricao_completa": false,
+   "descricao_no_canal": 666,
+   "conferido_em": "2026-11-07T01:28:27Z"
+  },
+  {
+   "id": "03313IcXvEo",
+   "url": "https://youtu.be/03313IcXvEo",
+   "slug": "ceifalume-gameplay",
+   "titulo": "6 colheitas em 2 min de CEIFALUME 0.1",
+   "descricao": "Em 2 minutos de gravação o agente plantou 13 mudas e colheu 6, sem esperar parado em nenhum momento.\n\nCada célula do campo tem o seu próprio tempo de crescimento, e o celeiro guarda o que sobra.\n\nForam 725 toques na tela, cerca de 362 por minuto, distribuídos entre semear e colher.\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "angulo": "numeros",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-06T16:08:00Z",
+   "descricao_completa": false,
+   "descricao_no_canal": 711,
+   "conferido_em": "2026-11-07T01:28:27Z"
+  },
+  {
+   "id": "f5kQFOQs0To",
+   "url": "https://youtu.be/f5kQFOQs0To",
+   "slug": "ceifalume-gameplay",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-04T05:17:32Z",
+   "descricao": "CEIFALUME 0.1 — jogo idle de fazenda noturna.\n\nComo funciona: plante, colha e negocie à luz da lanterna.\nO que chama atenção: as plantações crescem por até 8 horas mesmo com o jogo fechado.\nOnde jogar: grátis no navegador ou no Android, sem conta.\nFeito com Godot, feito no Brasil.",
+   "descricao_completa": false,
+   "descricao_no_canal": 742,
+   "conferido_em": "2026-11-07T01:28:27Z"
+  },
+  {
+   "id": "GuE7af6dYo8",
+   "url": "https://youtu.be/GuE7af6dYo8",
+   "slug": "ceifalume-gameplay",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-10-30T15:32:48Z"
+  },
+  {
+   "id": "2qsSknSyeAs",
+   "url": "https://youtu.be/2qsSknSyeAs",
+   "slug": "ceifalume",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "arquivo": "media/gameplay/ceifalume-gameplay.mp4",
+   "quando": "2026-10-27T15:34:14Z"
+  }
+ ]
+}

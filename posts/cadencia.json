@@ -1,0 +1,322 @@
+{
+ "medido_em": "2026-11-08",
+ "janela_dias": 7,
+ "linhas": [
+  {
+   "workflow": "administrar-itch",
+   "cron": "17 6 * * *",
+   "esperado_por_dia": 1,
+   "medido_por_dia": 1.0,
+   "entrega_pct": 100.0,
+   "frase": "o agendador entrega o que o cron pede",
+   "por_dia": {
+    "2026-11-08": 1,
+    "2026-11-07": 1,
+    "2026-11-06": 1,
+    "2026-11-05": 1,
+    "2026-11-04": 1,
+    "2026-11-03": 1,
+    "2026-11-02": 1
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 20,
+   "dias_no_ar": 14,
+   "por_evento": {
+    "schedule": 7
+   },
+   "manuais": 0
+  },
+  {
+   "workflow": "administrar-youtube",
+   "cron": "43 6 * * *",
+   "esperado_por_dia": 1,
+   "medido_por_dia": 1.0,
+   "entrega_pct": 100.0,
+   "frase": "o agendador entrega o que o cron pede",
+   "por_dia": {
+    "2026-11-08": 1,
+    "2026-11-07": 1,
+    "2026-11-06": 1,
+    "2026-11-05": 1,
+    "2026-11-04": 1,
+    "2026-11-03": 1,
+    "2026-11-02": 1
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 20,
+   "dias_no_ar": 14,
+   "por_evento": {
+    "schedule": 7,
+    "workflow_dispatch": 3
+   },
+   "manuais": 3
+  },
+  {
+   "workflow": "chamar-video",
+   "cron": "20 13,17 * * *",
+   "esperado_por_dia": 2,
+   "medido_por_dia": 0.29,
+   "entrega_pct": null,
+   "frase": "no ar há 3 dia(s): comparar com 7 dia(s) de janela ainda não vale",
+   "por_dia": {
+    "2026-11-07": 1,
+    "2026-11-06": 1
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 4,
+   "dias_no_ar": 3,
+   "por_evento": {
+    "schedule": 2,
+    "workflow_dispatch": 2
+   },
+   "manuais": 2
+  },
+  {
+   "workflow": "corrente",
+   "cron": "0 */3 * * *",
+   "esperado_por_dia": 8,
+   "medido_por_dia": 0.57,
+   "entrega_pct": null,
+   "frase": "no ar há 2 dia(s): comparar com 7 dia(s) de janela ainda não vale",
+   "por_dia": {
+    "2026-11-08": 2,
+    "2026-11-07": 2
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 74,
+   "dias_no_ar": 2,
+   "por_evento": {
+    "workflow_dispatch": 70,
+    "schedule": 4
+   },
+   "manuais": 70
+  },
+  {
+   "workflow": "gravar-gameplay",
+   "cron": "25 12,19 * * *",
+   "esperado_por_dia": 2,
+   "medido_por_dia": 1.71,
+   "entrega_pct": 85.5,
+   "frase": "o agendador entrega 85.5% do cron",
+   "por_dia": {
+    "2026-11-07": 2,
+    "2026-11-06": 2,
+    "2026-11-05": 2,
+    "2026-11-04": 2,
+    "2026-11-03": 2,
+    "2026-11-02": 2
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 60,
+   "dias_no_ar": 13,
+   "por_evento": {
+    "schedule": 12,
+    "workflow_dispatch": 16
+   },
+   "manuais": 16
+  },
+  {
+   "workflow": "gravar-prancheta",
+   "cron": "50 12,16,19 * * *",
+   "esperado_por_dia": 3,
+   "medido_por_dia": 2.29,
+   "entrega_pct": 76.3,
+   "frase": "o agendador entrega 76.3% do cron",
+   "por_dia": {
+    "2026-11-07": 2,
+    "2026-11-06": 3,
+    "2026-11-05": 3,
+    "2026-11-04": 3,
+    "2026-11-03": 3,
+    "2026-11-02": 2
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 45,
+   "dias_no_ar": 13,
+   "por_evento": {
+    "schedule": 16,
+    "workflow_dispatch": 8
+   },
+   "manuais": 8
+  },
+  {
+   "workflow": "ler-comentarios",
+   "cron": "27 12 * * *",
+   "esperado_por_dia": 1,
+   "medido_por_dia": 0.86,
+   "entrega_pct": 86.0,
+   "frase": "o agendador entrega 86.0% do cron",
+   "por_dia": {
+    "2026-11-07": 1,
+    "2026-11-06": 1,
+    "2026-11-05": 1,
+    "2026-11-04": 1,
+    "2026-11-03": 1,
+    "2026-11-02": 1
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 15,
+   "dias_no_ar": 14,
+   "por_evento": {
+    "workflow_dispatch": 2,
+    "schedule": 6
+   },
+   "manuais": 2
+  },
+  {
+   "workflow": "marketing-24h",
+   "cron": "*/20 0,6,7,12-23 * * *",
+   "esperado_por_dia": 45,
+   "medido_por_dia": 11.43,
+   "entrega_pct": 25.4,
+   "frase": "o agendador entrega 25.4% do cron: o número do papel não é o número da vida",
+   "por_dia": {
+    "2026-11-08": 29,
+    "2026-11-07": 44,
+    "2026-11-06": 2,
+    "2026-11-03": 2,
+    "2026-11-02": 3
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 100,
+   "dias_no_ar": 14,
+   "por_evento": {
+    "repository_dispatch": 67,
+    "schedule": 13,
+    "workflow_dispatch": 10
+   },
+   "manuais": 10
+  },
+  {
+   "workflow": "medir-itch",
+   "cron": "0 13 * * *",
+   "esperado_por_dia": 1,
+   "medido_por_dia": 0.86,
+   "entrega_pct": 86.0,
+   "frase": "o agendador entrega 86.0% do cron",
+   "por_dia": {
+    "2026-11-07": 1,
+    "2026-11-06": 1,
+    "2026-11-05": 1,
+    "2026-11-04": 1,
+    "2026-11-03": 1,
+    "2026-11-02": 1
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 15,
+   "dias_no_ar": 14,
+   "por_evento": {
+    "workflow_dispatch": 2,
+    "schedule": 6
+   },
+   "manuais": 2
+  },
+  {
+   "workflow": "medir-o-dia",
+   "cron": "45 12 * * *",
+   "esperado_por_dia": 1,
+   "medido_por_dia": 0.14,
+   "entrega_pct": null,
+   "frase": "no ar há 2 dia(s): comparar com 7 dia(s) de janela ainda não vale",
+   "por_dia": {
+    "2026-11-07": 1
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 7,
+   "dias_no_ar": 2,
+   "por_evento": {
+    "workflow_dispatch": 6,
+    "schedule": 1
+   },
+   "manuais": 6
+  },
+  {
+   "workflow": "metricas-youtube",
+   "cron": "40 3,9,15,21 * * *",
+   "esperado_por_dia": 4,
+   "medido_por_dia": 2.71,
+   "entrega_pct": 67.8,
+   "frase": "o agendador entrega 67.8% do cron",
+   "por_dia": {
+    "2026-11-08": 2,
+    "2026-11-07": 3,
+    "2026-11-06": 3,
+    "2026-11-05": 3,
+    "2026-11-04": 3,
+    "2026-11-03": 2,
+    "2026-11-02": 3
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 39,
+   "dias_no_ar": 13,
+   "por_evento": {
+    "schedule": 19,
+    "workflow_dispatch": 3
+   },
+   "manuais": 3
+  },
+  {
+   "workflow": "pendencias-do-dono",
+   "cron": "20 12 * * *",
+   "esperado_por_dia": 1,
+   "medido_por_dia": 1.0,
+   "entrega_pct": 100.0,
+   "frase": "o agendador entrega o que o cron pede",
+   "por_dia": {
+    "2026-11-08": 1,
+    "2026-11-07": 1,
+    "2026-11-06": 1,
+    "2026-11-05": 1,
+    "2026-11-04": 1,
+    "2026-11-03": 1,
+    "2026-11-02": 1
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 19,
+   "dias_no_ar": 10,
+   "por_evento": {
+    "schedule": 7,
+    "workflow_dispatch": 9
+   },
+   "manuais": 9
+  },
+  {
+   "workflow": "vigia-sessao-itch",
+   "cron": "0 12 * * *",
+   "esperado_por_dia": 1,
+   "medido_por_dia": 1.0,
+   "entrega_pct": 100.0,
+   "frase": "o agendador entrega o que o cron pede",
+   "por_dia": {
+    "2026-11-08": 1,
+    "2026-11-07": 1,
+    "2026-11-06": 1,
+    "2026-11-05": 1,
+    "2026-11-04": 1,
+    "2026-11-03": 1,
+    "2026-11-02": 1
+   },
+   "amostra_cobre": true,
+   "runs_lidos": 16,
+   "dias_no_ar": 14,
+   "por_evento": {
+    "schedule": 7,
+    "workflow_dispatch": 2
+   },
+   "manuais": 2
+  }
+ ],
+ "erros": [],
+ "total_esperado_por_dia": 71,
+ "total_medido_por_dia": 24.86,
+ "corrente": {
+  "agora": "2026-11-08T17:57:47.998426+00:00",
+  "ultimo_pulso": "2026-11-08T17:40:01+00:00",
+  "idade_min": 17.8,
+  "slot_devido": "2026-11-08T17:40:00+00:00",
+  "atraso_min": 17.8,
+  "pulsos_perdidos": 0,
+  "veredito": "em dia (último pulso 08/11 14:40, há 18 min)",
+  "buracos": []
+ }
+}

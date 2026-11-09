@@ -1,0 +1,133 @@
+name: capas-dos-antigos
+
+# 🖼️ Capa própria para os vídeos que subiram com a thumbnail automática do YouTube.
+#
+# Por que existe (06/11/2026): quando a casa passou a desenhar capa, só os vídeos NOVOS ganharam
+# uma. Os antigos ficaram com o quadro automático — três deles com a mesma cara no grid do canal.
+# O dono viu e cobrou. Este workflow roda o tools/capa-dos-antigos.py, que lista os uploads pela
+# API, pega um QUADRO DO PRÓPRIO VÍDEO, desenha o título real por cima e aplica com thumbnails/set.
+#
+# REGRA: capa é publicação. Só sai com a palavra APLICAR no campo de confirmação.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmacao:
+        description: "digite APLICAR para pintar as capas (vazio = só lista os candidatos)"
+        required: false
+        default: ""
+      limite:
+        description: "quantas capas no máximo neste run"
+        required: false
+        default: "6"
+      ids:
+        description: "ids separados por espaço (vazio = todos os que não têm capa)"
+        required: false
+        default: ""
+      forcar:
+        description: "digite FORCAR para repintar quem já tem capa (quando o desenho melhorou)"
+        required: false
+        default: ""
+      todos:
+        description: "digite TODOS para incluir vídeos que não citam jogo da casa (07/11/2026)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write      # só para versionar posts/capas-aplicadas.json
+
+concurrency:
+  group: capas-dos-antigos
+  cancel-in-progress: false
+
+jobs:
+  capas:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Pillow (o que desenha a capa)
+        run: python3 -m pip install --quiet --disable-pip-version-check Pillow
+
+      - name: Barreiras offline
+        run: |
+          python3 -m py_compile tools/capa-dos-antigos.py tools/desenhar-capa.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-capas-antigas.py
+
+      - name: Lista os vídeos sem capa da casa (ensaio)
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          LIMITE: ${{ github.event.inputs.limite }}
+          TODOS: ${{ github.event.inputs.todos }}
+        run: |
+          EXTRA=""
+          if [ "$TODOS" = "TODOS" ]; then EXTRA="--todos"; fi
+          python3 tools/capa-dos-antigos.py --ensaio --limite "$LIMITE" $EXTRA
+
+      - name: Aplica as capas (só com a palavra APLICAR)
+        if: ${{ github.event.inputs.confirmacao == 'APLICAR' }}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          LIMITE: ${{ github.event.inputs.limite }}
+          IDS: ${{ github.event.inputs.ids }}
+          FORCAR: ${{ github.event.inputs.forcar }}
+          TODOS: ${{ github.event.inputs.todos }}
+        run: |
+          set +e
+          EXTRA=""
+          if [ "$FORCAR" = "FORCAR" ]; then EXTRA="--forcar"; fi
+          if [ "$TODOS" = "TODOS" ]; then EXTRA="$EXTRA --todos"; fi
+          if [ -n "$IDS" ]; then
+            python3 tools/capa-dos-antigos.py --confirmacao APLICAR --limite "$LIMITE" --so $IDS $EXTRA \
+              | tee /tmp/capas.txt
+          else
+            python3 tools/capa-dos-antigos.py --confirmacao APLICAR --limite "$LIMITE" $EXTRA \
+              | tee /tmp/capas.txt
+          fi
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Capas dos vídeos antigos"
+            echo '```'
+            cat /tmp/capas.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código: $codigo"
+          exit 0
+
+      - name: Guarda as capas desenhadas e o registro
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: capas-dos-antigos
+          path: |
+            media/capas/
+            posts/capas-aplicadas.json
+          retention-days: 14
+
+      - name: Versiona o registro do que recebeu capa
+        # Roda também no ensaio: o retrato da cobertura (posts/capas-estado.json) é medido ali, e
+        # é ele que o estado da casa lê para responder "50 de 50, nenhum sem capa".
+        run: |
+          if [ ! -f posts/capas-aplicadas.json ] && [ ! -f posts/capas-estado.json ]; then
+            echo "nada medido nem aplicado — sem registro para guardar"
+            exit 0
+          fi
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          # só a capa desenhada entra: o quadro bruto é intermediário e está no .gitignore
+          [ -e posts/capas-aplicadas.json ] && git add posts/capas-aplicadas.json || true
+          [ -e posts/capas-estado.json ] && git add posts/capas-estado.json || true
+          git add 'media/capas/*-capa.png' 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "registro sem mudança"
+            exit 0
+          fi
+          git commit -m "capas: vídeos antigos com capa própria ($(date -u +'%d/%m %H:%M UTC'))"
+          bash tools/entrar-no-main.sh "capas dos antigos" || {
+            echo "::error::o registro das capas não entrou no main"
+            exit 1
+          }

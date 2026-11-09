@@ -1,0 +1,126 @@
+name: marketing-24h
+
+# Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa (45 pulsos/dia).
+#
+# O que este workflow NÃO faz (para não vender ilusão):
+#   - não é "a cada segundo": o cron do GitHub é melhor esforço e pode atrasar;
+#   - não publica fora da janela 9-22h (Brasília) nem acima do teto diário;
+#   - não posta no itch (Cloudflare barra IP de datacenter — medido);
+#   - não envia vídeo ao YouTube sem confirmação do dono (regra da casa).
+#
+# Cada pulso: mede (6h) → pesquisa (03h) → aprende (04h) → publica (janela) → dorme.
+# O estado fica em posts/orquestrador.json e é commitado: pulso atrasado não duplica post.
+
+on:
+  # CADÊNCIA LIGADA (06/11/2026, autorização expressa do dono).
+  #
+  # O cron acorda o robô; ele NÃO publica por ter acordado. Quem decide é o orquestrador
+  # (medir → pesquisar → aprender → publicar → dormir), e quem autoriza é o portão de
+  # publicação. Fora da janela 9-22h, acima do teto diário ou com texto repetido, o pulso
+  # termina sem publicar — e registra o motivo.
+  #
+  # Escolha de intervalo: 20 minutos. É o suficiente para um pulso cair dentro da janela,
+  # não gasta runner à toa e continua abaixo do teto de 5 publicações por dia, que é do
+  # orquestrador, não do cron.
+  # HORÁRIO ÚTIL, NÃO 24 HORAS (07/11/2026). Antes: `*/20 * * * *` — 72 pulsos por dia, dos
+  # quais 27 caíam em horas em que nada pode acontecer: nem publicar (janela fechada), nem
+  # pesquisar (03h local), nem aprender (04h local). Eles só dormiam e poluíam o histórico.
+  # Agora o cron cobre exatamente o que a casa usa, em UTC (BRT = UTC-3):
+  #   12-23 e 0  → 09h a 21h de Brasília (a janela 9-22h, com o pulso das 21h incluído)
+  #   6          → 03h de Brasília (janela diária de pesquisa)
+  #   7          → 04h de Brasília (janela diária de aprendizado)
+  schedule:
+    - cron: "*/20 0,6,7,12-23 * * *"
+  # A CORRENTE CHAMA POR AQUI (07/11/2026). O cron entrega 4% do que promete; quem toca o
+  # relógio agora é `corrente.yml`. Ela não usa `workflow_dispatch` porque esse caminho exige
+  # a palavra PUBLICAR digitada por uma pessoa — e a corrente NÃO digita PUBLICAR por ninguém.
+  # `repository_dispatch` é o gatilho próprio para "isto vem da corrente", e o pulso roda as
+  # mesmas barreiras e o mesmo portão do pulso agendado.
+  repository_dispatch:
+    types: [pulso]
+  # O caminho manual continua existindo — para quando o dono quiser forçar um ciclo.
+  workflow_dispatch:
+    inputs:
+      confirmacao:
+        description: "Digite PUBLICAR para rodar um pulso agora"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: marketing-24h
+  cancel-in-progress: false
+
+jobs:
+  pulso:
+    # Pulso agendado roda sozinho; pulso manual continua exigindo o dono e a palavra.
+    if: >-
+      (github.event_name == 'schedule' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'repository_dispatch' && github.event.action == 'pulso') ||
+      (github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - name: Contrato de preservação de estado (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-bancada-isolada.py tools/testes-conciliacao-estado.py
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/rodar-contratos-isolados.py tools/testes-janela.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-orquestrador.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-perceber.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-juizo.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-autonomia-marketing.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-colher-fatos.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-fila-tarefas.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-elo-assunto-publicacao.py
+          node tools/montar-bookmarklet.js --verificar
+          python3 tools/rodar-contratos-isolados.py tools/testes-bookmarklet-itch.js
+
+      - name: Pulso do orquestrador
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID3 }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET3 }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN3 }}
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          NTFY_TOPICO: ${{ secrets.NTFY_TOPICO }}
+        run: |
+          pip install -q coincurve websocket-client
+          # REABASTECE A PAUTA ANTES DE PUBLICAR (08/11/2026): se os pares assunto+ângulo
+          # livreiros caírem abaixo do piso (12), o colhedor grava fato novo vindo dos arquivos
+          # que a casa já mediu. Acima do piso não escreve nada — pulso limpo, sem commit ruído.
+          # O fato novo só entra no repertório na próxima leitura; aqui o que importa é que o
+          # orquestrador tenha assunto para publicar.
+          python3 tools/colher-fatos.py --se-faltar-pauta || echo "colhedor: nada a colher (pauta suficiente)"
+          # O olho antes do relógio: perceber() enfileira o que está faltando (arquivo parado,
+          # canal cego, meta em risco, repetição alta). O pulso já dá prioridade à fila.
+          python3 tools/perceber.py
+          python3 tools/orquestrador.py
+
+      - name: Registra o pulso no repositório
+        run: |
+          git config user.name "rebocl"
+          git config user.email "reboclbrank@gmail.com"
+          # Um `git add` por arquivo: caminho ausente aborta o add INTEIRO, e o pulso
+          # inteiro deixava de ser versionado (medido em 06/11/2026, pulso 129:
+          # "nada a commitar" com cinco arquivos modificados na árvore).
+          for f in posts/orquestrador.json posts/calendario.json posts/plano-do-dia.json \
+                   posts/aprendizado.json posts/log.md posts/posts-publicados.md \
+                   posts/fatos.json \
+                   posts/fila-tarefas.json posts/percebido.json posts/percebido.md \
+                   posts/repertorio.json posts/portao-decisoes.jsonl; do
+            [ -e "$f" ] && git add "$f" || true
+          done
+          git commit -m "🤖 pulso 24h $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
+          bash tools/entrar-no-main.sh "pulso 24h" || echo "pulso não entrou no main"

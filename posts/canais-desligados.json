@@ -1,0 +1,18 @@
+{
+ "_o_que_e": "canais que o dono decidiu NÃO ligar. Ficam fora da cobrança diária do relatório, com o motivo escrito — cobrar todo dia o que já foi decidido é ruído, não pendência",
+ "_decidido_em": "2026-11-07",
+ "canais": {
+  "telegram": {
+   "motivo": "nunca publicou em 20 ciclos por falta de TELEGRAM_TOKEN + TELEGRAM_CHAT; decisão de 07/11/2026: não ligar agora",
+   "segredo": "TELEGRAM_TOKEN + TELEGRAM_CHAT"
+  },
+  "mastodon": {
+   "motivo": "nunca publicou em 20 ciclos por falta de MASTODON_URL + MASTODON_TOKEN; decisão de 07/11/2026: não ligar agora",
+   "segredo": "MASTODON_URL + MASTODON_TOKEN"
+  },
+  "discord": {
+   "motivo": "nunca publicou em 20 ciclos por falta de DISCORD_WEBHOOK; decisão de 07/11/2026: não ligar agora",
+   "segredo": "DISCORD_WEBHOOK"
+  }
+ }
+}

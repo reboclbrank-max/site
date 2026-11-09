@@ -1,0 +1,102 @@
+name: diagnostico-da-casa
+
+# Diagnóstico sob demanda: roda as três barreiras offline e uma única leitura do
+# medidor. NÃO publica, NÃO faz commit, NÃO tem cron — só responde, em um clique e
+# em dois minutos, à pergunta "o que a casa está medindo agora?".
+#
+# Existe porque esperar o próximo ciclo de três horas para descobrir se a medição
+# funciona é tempo perdido, e porque o dono não deve precisar ler código para saber
+# em que pé está o marketing.
+on:
+  # SÓ-LEITURA E SOB DEMANDA (07/11/2026): este workflow mede e NÃO escreve no repositório —
+  # `contents: read` é a promessa dele. Quem grava a régua de metas todo dia é `medir-o-dia.yml`.
+  workflow_dispatch:
+
+concurrency:
+  group: diagnostico-da-casa
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: As ferramentas que as suítes medem (Pillow, PyYAML)
+        # MEDIDO (run 42337161718, 07/11/2026): o run morria em `testes-gif-com-selo.py` com
+        # `ModuleNotFoundError: No module named 'PIL'` — 55 suítes verdes e o job vermelho por
+        # dependência faltando. O workflow é sob demanda, então o vermelho ficou meses sem ser
+        # visto; com agenda ele seria vermelho todo dia.
+        run: python3 -m pip install --quiet --disable-pip-version-check Pillow==12.0.0 PyYAML==6.0.2
+
+      - name: Barreiras offline (nenhuma delas toca a rede)
+        run: |
+          python3 tools/rodar-contratos-isolados.py tools/testes-autonomia-marketing.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-metricas.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-interacao.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-devlog.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-sondar-trava-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-kit-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-youtube-oauth.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-itch-navegador.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-administrar-itch.py
+          node tools/montar-bookmarklet.js --verificar
+          python3 tools/rodar-contratos-isolados.py tools/testes-bookmarklet-itch.js
+          python3 tools/rodar-contratos-isolados.py tools/testes-administrar-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-enviar-itch.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-media-limpa.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-workflows.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-painel-marketing.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-pendencias.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-estado-da-casa.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-publicar-devlog.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-decisoes.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-aprender-horario.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-auditar-inteligencia.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-perceber.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-juizo.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-melhorias.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-publicacoes.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-gif-com-selo.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-entrar-no-main.py
+
+      - name: Mede o que foi postado e o que voltou (só leitura)
+        env:
+          # Só leitura de contadores. Sem estes segredos o medidor escreve
+          # NAO_OBSERVAVEL, nunca zero, e o diagnóstico continua válido.
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          # Uma chave por conta do itch (a casa publica em duas). Sem elas: NAO_OBSERVAVEL.
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          # Leitura pública do YouTube (inscritos, vídeos, shorts). Não é OAuth.
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+        run: |
+          python3 tools/metricas.py
+          echo "──────────── placar de metas ────────────"
+          cat posts/placar-metas.md
+          echo "──────────── desempenho do dia ────────────"
+          cat posts/desempenho.md
+
+      # O que a página do itch entrega é o jogo do repositório? Só leitura: baixa a casca e o
+      # pck (≈3,5 MB) e compara sha256. O wasm (38 MB) fica de fora do diagnóstico diário de
+      # propósito — o modo `conferir` do enviar-itch compara os quatro arquivos quando é preciso.
+      - name: Confere o que a página do itch entrega (só leitura)
+        continue-on-error: true
+        run: |
+          python3 tools/enviar-itch.py conferir ceifalume --enxuto
+
+      - name: Resumo no painel da execução
+        if: always()
+        run: |
+          {
+            echo "### Diagnóstico da casa"
+            echo
+            echo "Somente leitura: nada foi publicado e nada foi commitado."
+            echo
+            sed -n '1,40p' posts/placar-metas.md 2>/dev/null || echo "placar indisponível nesta rodada"
+          } >> "$GITHUB_STEP_SUMMARY"

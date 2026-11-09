@@ -1,0 +1,65 @@
+{
+ "_lei": "REGUA DE METAS — o robô mede cada ciclo e compara; quando bate, comemora no log; quando atrasa, registra plano no proximo ciclo. Dono aprovou 15/10/2026.",
+ "ig_30_dias": {
+  "inicio": "2026-10-13",
+  "posts": 30,
+  "seguidores": 50
+ },
+ "yt_30_dias": {
+  "inscritos": 40,
+  "shorts": 4
+ },
+ "itch_30_dias": {
+  "downloads": 100
+ },
+ "bsky_30_dias": {
+  "seguidores": 50
+ },
+ "total_90_dias": {
+  "fas_somados": 1000
+ },
+ "linha_de_partida_13_10": {
+  "ig_posts": 2,
+  "ig_seguidores": 0,
+  "yt_inscritos": 24,
+  "itch_downloads": 44,
+  "itch_seguidores": 0,
+  "bsky_seguidores": 13
+ },
+ "como_medir": "ig: graph.instagram.com (followers_count, media_count) · bsky: getProfile (API pública) · itch: api.itch.io/profile/games com chave nos segredos (downloads e visitas) · yt: YouTube Data API v3 com chave (inscritos, vídeos, shorts) · itch seguidores: SEM_API — o itch não publica contagem de seguidores (conferido em 25/10/2026). Meta impossível de medir fica em NAO_OBSERVAVEL para sempre; substituto medido já disponível: itch: visitas.",
+ "_correcao_25_10": "A linha antiga dizia 'itch: pagina publica; yt: PENDENTE-PORTA' e o relatório diário do postador escrevia itch/youtube como NAO_OBSERVAVEL sem tentar medir — o dono lia 'sem leitura automática' com as duas leituras funcionando. Agora o relatório usa o mesmo medidor do placar, e o motivo aparece quando falha.",
+ "_meta_aposentada_25_10": {
+  "meta": "itch: seguidores",
+  "alvo_original": 10,
+  "decisao": "aposentada e substituída por 'itch: visitas' (medida, sem alvo)",
+  "motivo": "o itch não publica contagem de seguidores em API nem em página pública",
+  "evidencia": [
+   "GET api/1/user/<id>/followers -> 404 (25/10/2026)",
+   "GET itch.io/user/followers/<id> -> 404",
+   "GET itch.io/follow_button/<id> -> 404",
+   "perfil público itch.io/profile/rebocl-brank -> só mostra 'Posts'",
+   "página do criador -> só mostra os jogos"
+  ],
+  "por_que_nao_retirar_em_silencio": "meta que some sem registro vira promessa esquecida; fica aqui com o motivo e a data"
+ },
+ "itch_visitas": {
+  "no_lugar_de": "itch_seguidores",
+  "desde": "2026-10-25",
+  "alvo": null,
+  "motivo": "único número de audiência que o itch publica além de download"
+ },
+ "_politica_de_prazo_07_11": {
+  "_o_que_e": "regra com que a régua decide o destino do prazo de cada meta, aplicada pelo metricas.py",
+  "ritmo_medido": "delta desde a linha de partida de 13/10 dividido pelos dias decorridos",
+  "ritmo_zero_por_21_dias": "meta vira PARADA: perde o prazo (alvo continua escrito, porque alvo é decisão do dono) e segue medida todo dia",
+  "ritmo_positivo_que_nao_fecha_o_prazo": "meta vira RENOVADA: o prazo passa a ser a data que o ritmo medido entrega",
+  "ritmo_positivo_que_fecha": "meta segue EM_CURSO",
+  "por_que": "em 07/11/2026, a 5 dias do prazo, as quatro metas em curso tinham ritmo medido abaixo do necessário (0,0 · 0,0 · 0,16 · 0,76 por dia) e nenhuma fecharia 12/11: manter o prazo sem ritmo era encenação",
+  "efeito_medido_07_11": {
+   "Instagram: seguidores": "PARADA (0,0/dia em 25 dias)",
+   "YouTube: inscritos": "PARADA (0,0/dia em 25 dias)",
+   "Bluesky: seguidores": "RENOVADA para 2026-12-01 (0,76/dia)",
+   "itch: downloads": "RENOVADA para 2027-09-28 (0,16/dia)"
+  }
+ }
+}

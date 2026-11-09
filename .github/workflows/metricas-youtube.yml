@@ -1,0 +1,81 @@
+name: metricas-youtube
+
+# 📈 Mede o que os vídeos publicados fizeram (views, likes, comentários).
+#
+# Por que existe: o envio ao YouTube registrava id e título, e depois disso nada era medido.
+# Este workflow lê a YouTube Data API (dados públicos, chave YT_API_KEY) dos ids registrados em
+# posts/youtube-publicados.json e grava posts/youtube-metricas.json, que o chat lê com !views.
+#
+# REGRA: se a API não responder, o workflow FALHA e não reescreve o JSON. Número velho com data
+# nova seria mentira; número nenhum é honesto.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 3,9,15,21 * * *"   # 4 leituras por dia
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metricas-youtube
+  cancel-in-progress: false
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Contrato de preservação de estado (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-conciliacao-estado.py
+      - name: Barreira offline do medidor
+        run: |
+          python3 -m py_compile tools/metricas-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-metricas-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-medir-adesao.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-registro-do-vivo.py
+
+      - name: Mede os vídeos publicados
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+        run: python3 tools/metricas-youtube.py
+
+      # ADESÃO: a régua escrita antes do número. Views do vídeo novo contra a mediana dos vídeos
+      # que o canal já tinha, mais inscritos ganhos na janela de 72h. Se a API não responder, o
+      # medidor falha e NÃO reescreve o JSON — número velho com data nova é mentira.
+      - name: Mede a adesão (a régua é declarada, o veredito vem com número)
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+        run: python3 tools/medir-adesao.py
+
+      # O REGISTRO CONFERE O QUE ESTÁ NO AR (07/11/2026): o registro guardava resumos cortados no
+      # meio da palavra e três entradas com descrição vazia, e isso foi lido como "descrição
+      # truncada no YouTube". As descrições estão inteiras (666-742 caracteres). Este passo lê a
+      # página de cada vídeo e regrava o resumo certo + o tamanho real no canal.
+      - name: Confere o registro contra o que está no ar
+        # SKIP legítimo (exit 2): nenhum vídeo respondeu — não é falha de medição, é sem rede.
+        # Número velho com data nova seria mentira; número nenhum é honesto. Saída 2 não reescreve
+        # o JSON e não conta como falha do workflow.
+        run: python3 tools/registro-do-vivo.py || [ $? -eq 2 ]
+
+      - name: Guarda o número medido
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/youtube-metricas.json
+          [ -e posts/adesao.json ] && git add posts/adesao.json || true
+          git add posts/youtube-publicados.json
+          if git diff --cached --quiet; then
+            echo "sem mudança nas métricas"
+            exit 0
+          fi
+          git commit -m "metricas do YouTube: $(date -u +%d/%m\ %H:%M\ UTC)"
+          git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+          # Mesmo caminho dos outros escritores: rebase quando dá, merge quando o main mexeu
+          # nos mesmos arquivos (ver tools/entrar-no-main.sh).
+          bash tools/entrar-no-main.sh "métricas do YouTube" || {
+            echo "::error::o registro não entrou no main"
+            exit 1
+          }

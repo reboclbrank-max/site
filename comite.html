@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icone-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Comitê">
+<title>🏛 Comitê no Bolso — Rebocl Brank</title>
+<style>
+  :root{--preto:#0a0a0a;--preto-2:#0f0e0c;--preto-3:#14120e;--dourado:#d4af37;
+    --dourado-claro:#f0d97a;--dourado-escuro:#9c7a24;--texto:#e8e6e1;--suave:#9d9a93;
+    --borda:rgba(212,175,55,.32)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--preto);color:var(--texto);font-family:"Segoe UI",Roboto,Arial,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:60px}
+  header{text-align:center;padding:38px 5% 24px;border-bottom:1px solid var(--borda)}
+  .linha{font-size:.72rem;letter-spacing:.5em;text-transform:uppercase;color:var(--dourado-escuro)}
+  h1{font-size:clamp(1.4rem,5vw,2rem);font-weight:300;letter-spacing:.2em;color:var(--dourado);margin-top:8px}
+  .sub{color:var(--suave);font-size:.9rem;margin-top:10px}
+  main{width:min(860px,92%);margin:0 auto}
+  textarea{width:100%;min-height:110px;background:var(--preto-3);color:var(--dourado-claro);
+    border:1px solid var(--borda);border-radius:12px;padding:14px;font-size:16px;margin-top:24px;resize:vertical}
+  button{width:100%;padding:16px;margin-top:14px;background:var(--dourado);color:#0a0a0a;border:0;
+    border-radius:12px;font-size:17px;font-weight:700;letter-spacing:.06em;cursor:pointer}
+  button:disabled{opacity:.5}
+  #placar{text-align:center;color:var(--suave);margin-top:16px;font-size:.95rem;min-height:1.4em}
+  .robo{background:var(--preto-2);border:1px solid var(--borda);border-radius:12px;
+    padding:14px 16px;margin-top:14px}
+  .robo h3{font-size:.95rem;color:var(--dourado-claro);display:flex;justify-content:space-between;gap:8px}
+  .robo .tempo{color:var(--suave);font-weight:400;font-size:.82rem}
+  .robo p{margin-top:8px;white-space:pre-wrap;font-size:.95rem}
+  .estado{color:var(--suave);font-style:italic}
+  .vencedor{border-color:var(--dourado);box-shadow:0 0 18px rgba(212,175,55,.25)}
+  .grupo{margin-top:16px;text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--dourado-escuro);border-top:1px solid var(--borda);padding-top:8px}
+  .grupo .res{color:var(--suave);font-weight:700;margin-left:6px}
+  .grupo.viva .res{color:#8fd18f}
+  .selo{background:var(--dourado);color:#0a0a0a;border-radius:6px;padding:1px 8px;font-size:.75rem;font-weight:700}
+  footer{text-align:center;color:var(--suave);font-size:.8rem;padding:34px 10% 0;border-top:1px solid var(--borda);margin-top:40px}
+  footer a{color:var(--dourado-claro)}
+</style>
+</head>
+<body>
+<header>
+  <span class="linha">Rebocl Brank</span>
+  <h1>🏛 Comitê no Bolso</h1>
+  <p class="sub">A pergunta sai do SEU celular para todos os motores ao mesmo tempo.<br>
+  Sem chave, sem conta, sem IP queimado — residencial é poder.</p>
+</header>
+<main>
+  <div id="dica-app" style="display:none;margin-top:14px;background:var(--preto-3);border:1px solid var(--borda);border-radius:12px;padding:10px 14px;font-size:.9rem;color:var(--suave)">
+    📱 Este comitê é um APP: menu do navegador → <b style="color:var(--dourado-claro)">Adicionar à tela inicial</b> — abre tela cheia e funciona até offline. <span id="fechar-dica" style="cursor:pointer;color:var(--dourado)">✕</span>
+  </div>
+  <textarea id="pergunta" placeholder="Sua pergunta para o comitê…"></textarea>
+  <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
+    <button id="btn-ditado" onclick="ditado()" title="Fale com o comitê (pt-BR)" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">🎤 falar</button>
+    <button onclick="rapida(&quot;Quem é você?&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">Quem é você?</button>
+    <button onclick="rapida(&quot;Me dê 3 ideias de jogo&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">3 ideias de jogo</button>
+    <button onclick="rapida(&quot;Explique IA como se eu tivesse 10 anos&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">IA pra criança</button>
+    <button onclick="rapida(&quot;Qual o melhor motor da casa hoje?&quot;)" style="background:var(--preto-3);color:var(--suave);border:1px solid var(--borda);font-size:.78rem;padding:4px 10px">Melhor motor hoje</button>
+    <span style="color:var(--suave);font-size:.72rem;align-self:center">atalho: Ctrl+Enter</span>
+  </div>
+  <details style="margin-top:18px;background:var(--preto-3);border:1px solid var(--borda);border-radius:12px;padding:12px 14px">
+    <summary style="cursor:pointer;color:var(--dourado-claro);font-size:.95rem">🔑 Robôs turbo com SUA chave (opcional · a chave fica só neste aparelho)</summary>
+    <p style="color:var(--suave);font-size:.82rem;margin-top:6px">Atualização 11/10: OVH e Kilo passaram a EXIGIR token — os robôs OVH mudaram pra cá. Com token da OVH (grátis em console.ovh.ai) eles voltam a atirar.</p>
+    <p style="color:var(--suave);font-size:.85rem;margin-top:8px">Cole a chave e toque em guardar: ela vive apenas no armazenamento do SEU navegador — não vai pra nenhum servidor da casa nem aparece no código desta página. Consiga em: console.groq.com/keys · openrouter.ai/settings/keys · huggingface.co/settings/tokens · ollama.com (nuvem)</p>
+    <input id="cg" type="password" placeholder="chave Groq (gsk_…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="co" type="password" placeholder="chave OpenRouter (sk-or-…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="ch" type="password" placeholder="token HuggingFace (hf_…)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="cov" type="password" placeholder="token OVH (opcional · endpoints.ai.cloud.ovh.net → Get your free token)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="cl7" type="password" placeholder="token llm7 (opcional · token.llm7.io — sobe seus limites nos grátis)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <input id="coll" type="password" placeholder="chave Ollama Nuvem (opcional · ollama.com → Settings → API keys)" style="width:100%;margin-top:8px;padding:10px;background:var(--preto-2);color:var(--dourado-claro);border:1px solid var(--borda);border-radius:8px">
+    <button onclick="salvarChaves()" style="margin-top:10px">GUARDAR NESTE APARELHO</button>
+  <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+    <button onclick="backupExportar()" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);font-size:.8rem">💾 EXPORTAR BACKUP (chaves+histórico)</button>
+    <button onclick="backupImportar()" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);font-size:.8rem">📥 IMPORTAR BACKUP</button>
+  </div>
+    <p id="status-chaves" style="color:var(--suave);font-size:.85rem;margin-top:8px"></p>
+  </details>
+  <button id="disparar" onclick="disparar()">🏛 CONVOCAR O COMITÊ</button>
+  <button id="preguica" onclick="togglePreguica()" style="background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);margin-top:10px">⚡ PREGUIÇA: SÓ A RESPOSTA MAIS RÁPIDA</button>
+  <div id="historico"></div>
+  <div id="placar"></div>
+  <button id="copiar-tudo" onclick="copiarTudo()" style="display:none;background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);margin-top:10px">📋 COPIAR TODAS AS RESPOSTAS</button>
+  <button id="baixar-tudo" onclick="baixarTudo()" style="display:none;background:var(--preto-3);color:var(--dourado-claro);border:1px solid var(--borda);margin-top:10px">💾 BAIXAR .MD</button>
+  <div id="saidas"></div>
+</main>
+<footer>
+  Toque numa resposta para copiá-la. Os motores gratuitos têm limites — se um fechar a janela, outro responde.<br>
+  <a href="../blog/">Diário de bordo</a> · <a href="../">site oficial</a> · <a href="museu.html">🏛 museu dos motores</a>
+</footer>
+<script>
+const LLM7 = [
+  "GLM-5.3-Flash", "mistral-Nemo-Instruct-2407", "codestral-latest", "DeepSeek-V4-Flash-0731", "gpt-oss:20b", "nemotron-3-nano:30b", "default", "fast"
+];
+const ROBOS = [
+  ...LLM7.map(m => ({nome: "LLM7 · " + m, tipo: "llm7", modelo: m})),
+  {nome: "Mundial · Pollinations fast", tipo: "polli", modelo: "openai-fast"},
+  {nome: "Mundial · GLM-5.3", tipo: "g4fn", modelo: "z-ai/glm-5.3"},
+  {nome: "Mundial · Kimi-K3", tipo: "g4fn", modelo: "moonshotai/kimi-k3"},
+  {nome: "Mundial · GPT-OSS-20B", tipo: "g4fn", modelo: "openai/gpt-oss-20b"},
+  {nome: "Mundial · GLM-5.3-Flash", tipo: "g4fn", modelo: "z-ai/glm-5.3-flash"},
+  {nome: "Mundial · Nano-Omni", tipo: "g4fn", modelo: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning"},
+  {nome: "Mundial · Lightning", tipo: "g4fn", modelo: "nvidia/nemotron-3.5-lightning-30b-a3b"},
+  {nome: "Mundial · Nemotron-Ultra-550B", tipo: "g4fn", modelo: "nvidia/nemotron-3-ultra-550b-a55b"},
+  {nome: "Mundial · Nemotron-Super-120B", tipo: "g4fn", modelo: "nvidia/nemotron-3-super-120b-a12b"},
+  {nome: "Mundial · Auto (melhor vivo)", tipo: "g4fn", modelo: "auto"},
+  {nome: "Mundial · DeepSeek-V4.1 (janela)", tipo: "g4fn", modelo: "deepseek-ai/deepseek-v4.1-flash"},
+  {nome: "Mundial · Gemma-4-31B (janela)", tipo: "g4fn", modelo: "google/gemma-4-31b-it"},
+  {nome: "Mundial · Muse-Glimmer (janela)", tipo: "g4fn", modelo: "nvidia/muse-glimmer-30b"},
+  {nome: "Mundial · Laguna-XS-g4f (janela)", tipo: "g4fn", modelo: "nvidia/laguna-xs-2.1"},
+  {nome: "Mundial · DiffusionGemma (janela)", tipo: "g4fn", modelo: "nvidia/diffusiongemma-26b-a4b-it"},
+  {nome: "OR · Apodex (janela)", tipo: "or", modelo: "apodex/apodex-1.1-mini:free"},
+  {nome: "OR · Liquid (janela)", tipo: "or", modelo: "liquid/lfm-2.5-2.6b:free"},
+  {nome: "OR · Inkling-Small (janela)", tipo: "or", modelo: "thinkingmachines/inkling-small:free"},
+  {nome: "OR · Safety (janela)", tipo: "or", modelo: "nvidia/nemotron-3.5-content-safety:free"},
+  {nome: "OR · Gemma-26B (janela)", tipo: "or", modelo: "google/gemma-4-26b-a4b-it:free"},
+  {nome: "OR · Gemma-31B (janela)", tipo: "or", modelo: "google/gemma-4-31b-it:free"}
+];
+const BASES = {polli: "https://text.pollinations.ai/openai", g4fn: "https://nvidia.g4f.dev/v1", llm7: "https://api.llm7.io/v1", ovh: "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+  groq: "https://api.groq.com/openai/v1", or: "https://openrouter.ai/api/v1", hf: "https://router.huggingface.co/v1", ollama: "https://ollama.com/v1"};
+let PRE = false, VENCEDOR = false;
+const CTRLS = {};
+function togglePreguica() {
+  PRE = !PRE;
+  document.getElementById("preguica").textContent = PRE ? "⚡ PREGUIÇA LIGADA (llm7 + mundial, para no 1º)" : "⚡ PREGUIÇA: SÓ A RESPOSTA MAIS RÁPIDA";
+}
+const KEYED = [
+  {tipo: "ovh", nome: "OVH · Qwen-397B 🛰", modelo: "Qwen3.5-397B-A17B"},
+  {tipo: "ovh", nome: "OVH · Llama-70B 🛰", modelo: "Meta-Llama-3_3-70B-Instruct"},
+  {tipo: "ovh", nome: "OVH · GPT-OSS-120B 🛰", modelo: "gpt-oss-120b"},
+  {tipo: "ovh", nome: "OVH · Qwen3.8-27B 🛰", modelo: "Qwen3.8-27B"},
+  {tipo: "ovh", nome: "OVH · Mistral-24B 🛰", modelo: "Mistral-Small-3.2-24B-Instruct-2506"},
+  {tipo: "groq", nome: "Groq · Llama-3.3-70B ⚡", modelo: "llama-3.3-70b-versatile"},
+  {tipo: "groq", nome: "Groq · Llama-3.1-8B ⚡", modelo: "llama-3.1-8b-instant"},
+  {tipo: "groq", nome: "Groq · GPT-OSS-120B ⚡", modelo: "openai/gpt-oss-120b"},
+  {tipo: "groq", nome: "Groq · GPT-OSS-20B ⚡", modelo: "openai/gpt-oss-20b"},
+  {tipo: "groq", nome: "Groq · Gemma-2-9B (beta)", modelo: "gemma2-9b-it"},
+  {tipo: "groq", nome: "Groq · Llama-3.2-3B (beta)", modelo: "llama-3.2-3b"},
+  {tipo: "groq", nome: "Groq · Llama-4-Scout (beta)", modelo: "meta-llama/llama-4-scout-17b-16e-instruct"},
+  {tipo: "groq", nome: "Groq · Qwen3-32B (beta)", modelo: "qwen/qwen3-32b"},
+  {tipo: "or", nome: "OpenRouter · Nemotron-550B", modelo: "nvidia/nemotron-3-ultra-550b-a55b:free"},
+  {tipo: "or", nome: "OpenRouter · Nemotron-Super-120B", modelo: "nvidia/nemotron-3-super-120b-a12b:free"},
+  {tipo: "or", nome: "OpenRouter · Nemotron-3.5-Lightning ⚡", modelo: "nvidia/nemotron-3.5-lightning:free"},
+  {tipo: "or", nome: "OpenRouter · Laguna-XS", modelo: "poolside/laguna-xs-2.1:free"},
+  {tipo: "or", nome: "OpenRouter · North-Code", modelo: "cohere/north-mini-code:free"},
+  {tipo: "or", nome: "OpenRouter · Inkling", modelo: "thinkingmachines/inkling:free"},
+  {tipo: "or", nome: "OpenRouter · Dots-3", modelo: "dots-studio/dots-3-note-preview:free"},
+  {tipo: "or", nome: "OpenRouter · Laguna", modelo: "poolside/laguna-s-2.1:free"},
+  {tipo: "hf", nome: "HF · DeepSeek-V4-Flash", modelo: "deepseek-ai/DeepSeek-V4-Flash"},
+  {tipo: "hf", nome: "HF · Qwen3.5-122B", modelo: "Qwen/Qwen3.5-122B-A10B"},
+  {tipo: "hf", nome: "HF · Kimi-K2.7-Code", modelo: "moonshotai/Kimi-K2.7-Code"},
+  {tipo: "or", nome: "OpenRouter · Nemotron-Nano-Omni", modelo: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"},
+  {tipo: "ollama", nome: "Ollama ☁ · Nemotron-Ultra-550B", modelo: "nemotron-3-ultra"},
+  {tipo: "ollama", nome: "Ollama ☁ · Nemotron-Super", modelo: "nemotron-3-super"},
+  {tipo: "ollama", nome: "Ollama ☁ · GPT-OSS-120B", modelo: "gpt-oss:120b"},
+  {tipo: "ollama", nome: "Ollama ☁ · GPT-OSS-20B", modelo: "gpt-oss:20b"},
+];
+
+function caixa(nome) {
+  const d = document.createElement("div");
+  d.className = "robo"; d.id = "r-" + btoa(nome).replace(/=/g, "");
+  d.innerHTML = "<h3><span>" + nome + "</span><span class='tempo'>&#8203;</span></h3><p class='estado'>⏳ convocando…</p>";
+  const bt = document.createElement("span");
+  bt.textContent = "🔊"; bt.title = "ouvir a resposta"; bt.style.cursor = "pointer"; bt.style.marginLeft = "6px";
+  bt.onclick = (ev) => { ev.stopPropagation(); falar(d); };
+  d.querySelector("h3").insertBefore(bt, d.querySelector(".tempo"));
+  document.getElementById("saidas").appendChild(d);
+  return d;
+}
+function escreve(nome, html, cls) {
+  const d = document.getElementById("r-" + btoa(nome).replace(/=/g, ""));
+  if (!d) return;
+  if (cls) d.classList.add(cls);
+  if (cls === "vencedor") d.querySelector("h3 span").insertAdjacentHTML("beforeend", " <span class='selo'>★ MELHOR</span>");
+  d.querySelector("p").outerHTML = "<p>" + html + "</p>";
+}
+function tempo(nome, t0) {
+  const el = document.getElementById("r-" + btoa(nome).replace(/=/g, ""));
+  if (el) el.querySelector(".tempo").textContent = ((Date.now() - t0) / 1000).toFixed(1) + "s";
+}
+async function um(robo, pergunta, t0) {
+  escreve(robo.nome, "<span class='estado'>⏳ pensando…</span>");
+  const ctrl = new AbortController();
+  CTRLS[robo.nome] = ctrl;
+  const timer = setTimeout(() => ctrl.abort(), 90000);
+  try {
+    const cab = {"Content-Type": "application/json", "Authorization": "Bearer " + (robo.chave || localStorage.getItem("bolso_chave_" + robo.tipo) || localStorage.getItem("bolso_chave_llm7") || "unused")};
+    if (robo.tipo === "or") { cab["HTTP-Referer"] = "https://reboclbrank-max.github.io/site/"; cab["X-Title"] = "Comite no Bolso"; }
+    const ep = robo.tipo === "polli" ? BASES.polli : BASES[robo.tipo] + "/chat/completions";
+    const r = await fetch(ep, {
+      method: "POST", signal: ctrl.signal,
+      headers: cab,
+      body: JSON.stringify({model: robo.modelo, messages: [{role: "user", content: pergunta}], max_tokens: 400})
+    });
+    clearTimeout(timer); tempo(robo.nome, t0);
+    if (!r.ok) {
+      const msg = robo.prova ? ("<span class='estado'>🔎 este palco pede chave/token ou não abre deste IP (HTTP " + r.status + ")</span>") : ("<span class='estado'>🚫 janela fechada (HTTP " + r.status + ")</span>");
+      escreve(robo.nome, msg); return null;
+    }
+    const d = await r.json();
+    const m = (d.choices || [{}])[0].message || {};
+    const txt = (m.content || m.reasoning_content || "").trim();
+    if (!txt) { escreve(robo.nome, "<span class='estado'>🤫 respondeu vazio</span>"); return null; }
+    const escapado = txt.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    escreve(robo.nome, escapado);
+    if (PRE && !VENCEDOR) { VENCEDOR = true; for (const k in CTRLS) { if (k !== robo.nome) { try { CTRLS[k].abort(); } catch (e) {} } } }
+    return {nome: robo.nome, txt};
+  } catch (e) {
+    clearTimeout(timer); tempo(robo.nome, t0);
+    if (PRE && VENCEDOR) { const el = document.getElementById("r-" + btoa(robo.nome).replace(/=/g, "")); if (el) el.remove(); return null; }
+    escreve(robo.nome, "<span class='estado'>💀 " + (e.name === "AbortError" ? "tempo esgotado (90s)" : "sem resposta") + "</span>");
+    return null;
+  }
+}
+async function disparar() {
+  const pergunta = document.getElementById("pergunta").value.trim();
+  if (!pergunta) { document.getElementById("pergunta").focus(); return; }
+  const btn = document.getElementById("disparar");
+  if (btn.dataset.rolando === "1") return;
+  btn.dataset.rolando = "1";
+  btn.disabled = true;
+  document.getElementById("saidas").innerHTML = "";
+  const t0 = Date.now();
+  VENCEDOR = false;
+  let ativos;
+  if (PRE) {
+    ativos = ROBOS.filter(r => r.tipo === "llm7" || r.tipo === "polli" || r.tipo === "g4fn");
+  } else {
+    ativos = [...ROBOS];
+    for (const k of KEYED) {
+      const ch = localStorage.getItem("bolso_chave_" + k.tipo);
+      if (ch) { k.chave = ch; ativos.push(k); }
+    }
+  }
+  const GRUPOS = [
+    {id: "llm7", titulo: "LLM7 grátis", robs: ativos.filter(r => r.tipo === "llm7")},
+    {id: "groq", titulo: "Groq turbo ⚡ · sua chave", robs: ativos.filter(r => r.tipo === "groq")},
+    {id: "or", titulo: "OpenRouter turbo · sua chave", robs: ativos.filter(r => r.tipo === "or")},
+    {id: "hf", titulo: "HuggingFace turbo · sua chave", robs: ativos.filter(r => r.tipo === "hf")},
+    {id: "ovh", titulo: "OVH turbo 🛰 · sua chave", robs: ativos.filter(r => r.tipo === "ovh")},
+    {id: "polli", titulo: "Mundial keyless 🌸 (15 motores!)", robs: ativos.filter(r => r.tipo === "polli" || r.tipo === "g4fn")},
+    {id: "ollama", titulo: "Ollama Nuvem ☁ · sua chave", robs: ativos.filter(r => r.tipo === "ollama")},
+  ].filter(g => g.robs.length);
+  const resultados = [];
+  for (const g of GRUPOS) {
+    const sep = document.createElement("div");
+    sep.className = "grupo"; sep.id = "g-" + g.id;
+    sep.innerHTML = "<span>" + g.titulo + " · " + g.robs.length + "</span><span class='res'></span>";
+    document.getElementById("saidas").appendChild(sep);
+    for (const r of g.robs) resultados.push(um(r, pergunta, t0).then(x => ({res: x, grupo: g.id})));
+  }
+  const concluidos = await Promise.all(resultados);
+  const respostas = concluidos.filter(x => x.res).map(x => x.res);
+  for (const g of GRUPOS) {
+    const okG = concluidos.filter(x => x.grupo === g.id && x.res).length;
+    const el = document.getElementById("g-" + g.id);
+    if (el) {
+      el.querySelector(".res").textContent = okG ? ("✓ " + okG + "/" + g.robs.length) : ("✗ 0/" + g.robs.length);
+      if (okG) el.classList.add("viva");
+    }
+  }
+  const placar = document.getElementById("placar");
+  if (respostas.length) {
+    const melhor = respostas.reduce((a, b) => (b.txt.length > a.txt.length && b.txt.length > 200 ? b : a));
+    if (melhor.txt.length > 200) escreve(melhor.nome, melhor.txt.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"), "vencedor");
+    const nProva = ativos.filter(x => x.prova).length;
+  document.getElementById("copiar-tudo").style.display = respostas.length ? "block" : "none";
+  document.getElementById("baixar-tudo").style.display = respostas.length ? "block" : "none";
+  if (respostas.length) salvarHist(pergunta, respostas.length);
+  placar.textContent = "🏛 " + respostas.length + "/" + ativos.length + " robôs responderam em " + ((Date.now() - t0) / 1000).toFixed(1) + "s";
+  } else {
+    placar.textContent = "🏛 Todas as janelas fecharam — reconecte o Wi-Fi (IP novo = cotas novas) e convoque de novo.";
+  }
+  delete btn.dataset.rolando;
+  btn.disabled = false;
+}
+function salvarChaves() {
+  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"], ["cl7", "llm7"], ["coll", "ollama"]]) {
+    const v = document.getElementById(par[0]).value.trim();
+    if (v) localStorage.setItem("bolso_chave_" + par[1], v); else localStorage.removeItem("bolso_chave_" + par[1]);
+  }
+  atualizarChaves();
+}
+function sincronizarEstado() {
+  const el = document.getElementById("placar");
+  if (el && el.dataset.rolando !== "1" && !el.textContent) el.textContent = "⭐ toque e segure em qualquer parte para convocar de novo";
+}
+setInterval(sincronizarEstado, 1500);
+let _timer = null, _y0 = 0;
+document.addEventListener("touchstart", (e) => { _y0 = e.touches[0].clientY; }, {passive: true});
+document.addEventListener("touchend", (e) => {
+  const dy = e.changedTouches[0].clientY - _y0;
+  if (dy > 90 && window.scrollY < 4) disparar();
+}, {passive: true});
+document.addEventListener("pointerdown", (e) => {
+  if (_timer) { clearTimeout(_timer); _timer = null; }
+  const alvo = e.target.closest("p:not(.estado), .robo h3");
+  if (!alvo) return;
+  const px = e.clientX, py = e.clientY;
+  _timer = setTimeout(() => disparar(), 700);
+  const cancela = (ev) => {
+    if (Math.hypot(ev.clientX - px, ev.clientY - py) > 24) { clearTimeout(_timer); _timer = null; }
+  };
+  document.addEventListener("pointermove", cancela, {once: true});
+  document.addEventListener("pointerup", () => { clearTimeout(_timer); _timer = null; }, {once: true});
+});
+function atualizarChaves() {
+  const n = ["groq", "or", "hf", "ovh", "llm7"].filter(t => localStorage.getItem("bolso_chave_" + t)).length;
+  document.getElementById("status-chaves").textContent = n ? ("✅ " + n + " fonte(s) turbo ativa(s) — " + KEYED.filter(k => localStorage.getItem("bolso_chave_" + k.tipo)).length + " robôs turbo na próxima convocação") : "sem chaves locais — só os robôs gratuitos convocam";
+}
+(function () {
+  try {
+    if (!localStorage.getItem("bolso_dica_vista") && window.matchMedia("(display-mode: browser)").matches) {
+      document.getElementById("dica-app").style.display = "block";
+      document.getElementById("fechar-dica").onclick = () => {
+        document.getElementById("dica-app").style.display = "none";
+        localStorage.setItem("bolso_dica_vista", "1");
+      };
+    }
+  } catch (e) {}
+})();
+document.getElementById("saidas").addEventListener("click", (ev) => {
+  const p = ev.target.closest("p");
+  if (!p || p.classList.contains("estado")) return;
+  navigator.clipboard.writeText(p.textContent).then(() => {
+    const antigo = p.textContent;
+    p.textContent = "✅ copiado";
+    setTimeout(() => { p.textContent = antigo; }, 900);
+  }).catch(() => {});
+});
+try { localStorage.removeItem("bolso_dica_vista"); } catch (e) {}
+function falar(d) {
+  const p = d.querySelector("p");
+  if (!p || p.classList.contains("estado")) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(p.textContent.slice(0, 1200));
+    u.lang = "pt-BR"; u.rate = 1.02;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+function juntarTudo() {
+  const caixas = [...document.querySelectorAll(".robo")];
+  const partes = caixas.map(c => {
+    const nome = c.querySelector("h3 span").textContent.replace(" ★ MELHOR", "");
+    const txt = c.querySelector("p").textContent.trim();
+    return "—" + nome + "—\n" + txt;
+  }).filter(p => p.length > 12);
+  return "🏛 Comitê no Bolso\n\n" + partes.join("\n\n");
+}
+function baixarTudo() {
+  const txt = juntarTudo();
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([txt], {type: "text/markdown"}));
+  a.download = "comite-respostas.md";
+  a.click();
+  const b = document.getElementById("baixar-tudo");
+  b.textContent = "✅ BAIXADO";
+  setTimeout(() => { b.textContent = "💾 BAIXAR .MD"; }, 1200);
+}
+function backupExportar() {
+  const d = { quando: new Date().toISOString(), chaves: {}, hist: [] };
+  for (const t of ["groq","or","hf","ovh","llm7","ollama"]) { const v = localStorage.getItem("bolso_chave_" + t); if (v) d.chaves[t] = v; }
+  try { d.hist = JSON.parse(localStorage.getItem("bolso_hist") || "[]"); } catch (e) {}
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(d, null, 1)], {type: "application/json"}));
+  a.download = "bolso-backup.json";
+  a.click();
+  alert("💾 Backup baixado — guarde o arquivo bolso-backup.json (leva suas chaves e histórico pra qualquer aparelho).");
+}
+function backupImportar() {
+  const inp = document.createElement("input");
+  inp.type = "file"; inp.accept = ".json,application/json";
+  inp.onchange = () => {
+    const f = inp.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      try {
+        const d = JSON.parse(rd.result);
+        let n = 0;
+        for (const t in (d.chaves || {})) { localStorage.setItem("bolso_chave_" + t, d.chaves[t]); n++; }
+        if (Array.isArray(d.hist) && d.hist.length) localStorage.setItem("bolso_hist", JSON.stringify(d.hist.slice(0, 15)));
+        alert("✅ Backup restaurado: " + n + " chaves + histórico de volta. A página vai recarregar.");
+        location.reload();
+      } catch (e) { alert("Arquivo inválido — não é um backup do Bolso."); }
+    };
+    rd.readAsText(f);
+  };
+  inp.click();
+}
+function copiarTudo() {
+  const partes = juntarTudo();
+  navigator.clipboard.writeText(partes).then(() => {
+    const b = document.getElementById("copiar-tudo");
+    const n = partes.split("\n\n").length - 1;
+    b.textContent = "✅ COPIADO (" + n + " respostas)";
+    setTimeout(() => { b.textContent = "📋 COPIAR TODAS AS RESPOSTAS"; }, 1200);
+  }).catch(() => {});
+}
+function salvarHist(q, n) {
+  try {
+    const h = JSON.parse(localStorage.getItem("bolso_hist") || "[]");
+    h.unshift({q: q.slice(0, 120), n: n, em: new Date().toLocaleTimeString()});
+    localStorage.setItem("bolso_hist", JSON.stringify(h.slice(0, 15)));
+    desenharHist();
+  } catch (e) {}
+}
+function desenharHist() {
+  try {
+    const h = JSON.parse(localStorage.getItem("bolso_hist") || "[]");
+    const d = document.getElementById("historico");
+    if (!d) return;
+    if (!h.length) { d.innerHTML = ""; return; }
+    d.innerHTML = "<details style='margin-top:12px'><summary style='cursor:pointer;color:var(--dourado-claro);font-size:.9rem'>🕘 Histórico (" + h.length + ") — toque pra re-convocar</summary>" +
+      h.map((x, i) => "<div class='hi' data-i='" + i + "' style='cursor:pointer;padding:6px;border-bottom:1px solid var(--borda);font-size:.88rem;color:var(--suave)'>🕘 " + x.q.replace(/&/g, "&amp;").replace(/</g, "&lt;") + " <span style='opacity:.6'>(" + x.n + " respostas)</span></div>").join("") + "</details>";
+    d.querySelectorAll(".hi").forEach(el => el.onclick = () => {
+      const hh = JSON.parse(localStorage.getItem("bolso_hist") || "[]");
+      const it = hh[Number(el.dataset.i)];
+      if (it) { document.getElementById("pergunta").value = it.q; document.getElementById("pergunta").focus(); }
+    });
+  } catch (e) {}
+}
+desenharHist();
+if ("serviceWorker" in navigator) {
+  try { navigator.serviceWorker.register("sw.js").catch(() => {}); } catch (e) {}
+}
+(function () {
+  for (const par of [["cg", "groq"], ["co", "or"], ["ch", "hf"], ["cov", "ovh"], ["cl7", "llm7"], ["coll", "ollama"]]) {
+    const v = localStorage.getItem("bolso_chave_" + par[1]);
+    if (v) document.getElementById(par[0]).value = v;
+  }
+  atualizarChaves();
+  function rapida(t) { document.getElementById("pergunta").value = t; perguntar(); }
+  window.rapida = rapida;
+  document.getElementById("pergunta").addEventListener("keydown", (e) => { if (e.ctrlKey && e.key === "Enter") perguntar(); });
+  window.ditado = function() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { alert("Este navegador não tem ditado — digite na caixa. (Chrome tem 🎤)"); return; }
+    const rec = new SR();
+    rec.lang = "pt-BR"; rec.interimResults = true; rec.continuous = false;
+    const bt = document.getElementById("btn-ditado");
+    if (bt) bt.textContent = "🔴 ouvindo…";
+    rec.onresult = (ev) => {
+      let final = "", parcial = "";
+      for (let i = ev.resultIndex; i < ev.results.length; i++) {
+        if (ev.results[i].isFinal) final += ev.results[i][0].transcript; else parcial += ev.results[i][0].transcript;
+      }
+      document.getElementById("pergunta").value = (final || parcial).trim();
+    };
+    rec.onend = () => { if (bt) bt.textContent = "🎤 falar"; };
+    rec.onerror = () => { if (bt) bt.textContent = "🎤 falar"; };
+    rec.start();
+  };
+  const qq = new URLSearchParams(location.search).get("q");
+  if (qq) { document.getElementById("pergunta").value = qq; perguntar(); }
+})();
+</script>
+</body>
+</html>

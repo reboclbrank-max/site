@@ -1,0 +1,79 @@
+{
+ "medido_em": "2026-11-09",
+ "posts": 116,
+ "dias_com_post": 25,
+ "media_por_dia": 4.64,
+ "dias_com_repeticao": [
+  {
+   "dia": "2026-10-13",
+   "posts": 15,
+   "unicos": 4
+  },
+  {
+   "dia": "2026-10-14",
+   "posts": 8,
+   "unicos": 4
+  },
+  {
+   "dia": "2026-10-15",
+   "posts": 8,
+   "unicos": 2
+  },
+  {
+   "dia": "2026-10-16",
+   "posts": 8,
+   "unicos": 2
+  },
+  {
+   "dia": "2026-10-17",
+   "posts": 5,
+   "unicos": 2
+  },
+  {
+   "dia": "2026-10-18",
+   "posts": 5,
+   "unicos": 1
+  },
+  {
+   "dia": "2026-10-19",
+   "posts": 3,
+   "unicos": 1
+  },
+  {
+   "dia": "2026-10-20",
+   "posts": 6,
+   "unicos": 2
+  },
+  {
+   "dia": "2026-10-21",
+   "posts": 4,
+   "unicos": 3
+  },
+  {
+   "dia": "2026-10-23",
+   "posts": 5,
+   "unicos": 3
+  },
+  {
+   "dia": "2026-10-24",
+   "posts": 5,
+   "unicos": 2
+  },
+  {
+   "dia": "2026-10-25",
+   "posts": 5,
+   "unicos": 1
+  }
+ ],
+ "ultimo_dia_com_repeticao": "2026-10-25",
+ "ultimos_dias": {
+  "janela": 7,
+  "posts": 11,
+  "textos_unicos": 11,
+  "repetidos": 0,
+  "quase_repetidos": []
+ },
+ "veredito": "últimos 7 dias: 11 post(s), todos textos diferentes · média 4.64/dia · o último dia com repetição foi 2026-10-25",
+ "de": "2026-10-13",
+ "ate": "2026-11-08"
+}

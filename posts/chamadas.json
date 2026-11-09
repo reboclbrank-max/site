@@ -1,0 +1,93 @@
+{
+ "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
+ "chamadas": [
+  {
+   "quando": "2026-11-08T18:22:23Z",
+   "video_id": "hBvkQhSS-_4",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"Como este vídeo de CEIFALUME foi gravado\". Na partida gravada: 13 mudas, 8 colheitas, em 2 minutos. É o CEIFALUME-GAMEPLAY. #ceifalume-gameplay\nhttps://youtu.be/hBvkQhSS-_4",
+   "titulo": "Como este vídeo de CEIFALUME foi gravado",
+   "resultado": "recusado",
+   "motivo": "mesma forma de um post recente do canal (abertura rotulo, 4 frases, 1 hashtags): O que tem dentro de CEIFALUME",
+   "numeros": {
+    "video": "hBvkQhSS-_4",
+    "historico_do_canal": 4,
+    "nota_juizo": 0.538,
+    "jogos_citados": [
+     "ceifalume"
+    ]
+   }
+  },
+  {
+   "quando": "2026-11-07T18:03:32Z",
+   "video_id": "cfB5ZBdC-NA",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"O que tem dentro de CEIFALUME\". Na partida gravada: 13 mudas, 9 colheitas, em 2 minutos. É o CEIFALUME-GAMEPLAY. #ceifalume-gameplay\nhttps://youtu.be/cfB5ZBdC-NA",
+   "titulo": "O que tem dentro de CEIFALUME",
+   "resultado": "recusado",
+   "motivo": "mesma forma de um post recente do canal (abertura rotulo, 4 frases, 1 hashtags): Como funciona: a chuva rega de graça: não custa ág",
+   "numeros": {
+    "video": "cfB5ZBdC-NA",
+    "historico_do_canal": 3,
+    "nota_juizo": 0.538,
+    "jogos_citados": [
+     "ceifalume"
+    ]
+   }
+  },
+  {
+   "quando": "2026-11-06T22:07:54Z",
+   "video_id": "FRCzgqUlMFY",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"Como funciona: a chuva rega de graça: não custa água nem moeda\". Na partida gravada: 10 mudas, 4 colheitas, em 2 minutos. É o CEIFALUME-GAMEPLAY. #ceifalume-gameplay\nhttps://youtu.be/FRCzgqUlMFY",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "resultado": "recusado",
+   "motivo": "nota do juízo abaixo do mínimo (0.46 < 0.65)",
+   "numeros": {
+    "video": "FRCzgqUlMFY",
+    "historico_do_canal": 2,
+    "nota_juizo": 0.462,
+    "jogos_citados": [
+     "ceifalume"
+    ],
+    "semelhanca_maxima": 0.429,
+    "nota_minima": 0.65
+   }
+  },
+  {
+   "quando": "2026-11-06T16:47:12Z",
+   "video_id": "HmbEdojjhsU",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"Como funciona: as plantações crescem e as vendas acontecem\". Na partida gravada: 15 mudas, 8 colheitas, em 2 minutos.\nhttps://youtu.be/HmbEdojjhsU",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
+   "uri": "at://did:plc:ypmicjqbhpoxf6xd3ee4zke3/app.bsky.feed.post/3mzntimke6p2h",
+   "refeita": true,
+   "resultado": "publicado",
+   "erro": null,
+   "numeros": {
+    "video": "HmbEdojjhsU",
+    "historico_do_canal": 0,
+    "jogos_citados": [],
+    "semelhanca_maxima": 0.0,
+    "primeira_do_canal": true
+   }
+  },
+  {
+   "quando": "2026-11-06T16:44:14Z",
+   "video_id": "HmbEdojjhsU",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"Como funciona: as plantações crescem e as vendas acontecem por até 8\". Na partida gravada: 15 mudas, 8 colheitas, em 2 minutos.\nhttps://youtu.be/HmbEdojjhsU",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem por até 8",
+   "uri": "at://did:plc:ypmicjqbhpoxf6xd3ee4zke3/app.bsky.feed.post/3mzntdcydgh2r",
+   "resultado": "substituida",
+   "erro": null,
+   "numeros": {
+    "video": "HmbEdojjhsU",
+    "historico_do_canal": 0,
+    "jogos_citados": [],
+    "semelhanca_maxima": 0.0,
+    "primeira_do_canal": true
+   }
+  }
+ ]
+}

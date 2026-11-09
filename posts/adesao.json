@@ -1,0 +1,444 @@
+{
+ "quando": "2026-11-09T01:12:09Z",
+ "regra": {
+  "janela_horas": 72,
+  "criterio": "views do vídeo novo > mediana de views dos vídeos que o canal já tinha antes dele e inscritos ganhos >= 1 na mesma janela",
+  "mede": "views, likes, comentários e inscritos (todos públicos)",
+  "nao_mede": "tempo de exibição, retenção e origem do tráfego (só com OAuth do dono)"
+ },
+ "canal": {
+  "id": "UCQdxKtfRnqNLd1ZOs9B6eaQ",
+  "nome": "Rebocl Brank",
+  "inscritos": 24,
+  "inscritos_base": 24,
+  "inscritos_ganhos": null
+ },
+ "video_novo": {
+  "id": "FNzW9c45E3M",
+  "titulo": "Onde falar com quem fez CEIFALUME",
+  "angulo": "onde_esta_a_comunidade:ceifalume-8h",
+  "quando": "2026-11-08T23:03:16Z",
+  "publicado_em": "2026-11-08T23:03:45Z",
+  "views": 0,
+  "likes": 0,
+  "comentarios": 0
+ },
+ "base_da_regua": {
+  "videos_comparados": 49,
+  "mediana_views": 7.0,
+  "views": [
+   230,
+   134,
+   90,
+   60,
+   57,
+   35,
+   25,
+   23,
+   22,
+   19,
+   18,
+   18,
+   17,
+   15,
+   14,
+   14,
+   13,
+   11,
+   11,
+   9
+  ]
+ },
+ "veredito": "NAO_PROVADO",
+ "motivo": "1 vídeo(s) fecharam a janela sem bater a régua: f5kQFOQs0To em 2026-11-07T05:17:32Z",
+ "numeros": {
+  "views_novo": 0,
+  "mediana_base": 7.0,
+  "inscritos_ganhos": null,
+  "horas_no_ar": 2.1,
+  "janela_horas": 72
+ },
+ "video_novo_veredito": {
+  "veredito": "AINDA_MEDINDO",
+  "motivo": "2.1 horas no ar de 72 — a régua só fecha no fim da janela",
+  "numeros": {
+   "views_novo": 0,
+   "mediana_base": 7.0,
+   "inscritos_ganhos": null,
+   "horas_no_ar": 2.1,
+   "janela_horas": 72
+  }
+ },
+ "videos": [
+  {
+   "id": "FNzW9c45E3M",
+   "titulo": "Onde falar com quem fez CEIFALUME",
+   "angulo": "onde_esta_a_comunidade:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "quando": "2026-11-08T23:03:16Z",
+   "fecha_em": "2026-11-11T23:03:16Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 7.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "2.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 7.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 2.1,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "hBvkQhSS-_4",
+   "titulo": "Como este vídeo de CEIFALUME foi gravado",
+   "angulo": "como_foi_gravado:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "quando": "2026-11-08T18:03:42Z",
+   "fecha_em": "2026-11-11T18:03:42Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 7.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "7.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 7.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 7.1,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "iCE6O3d_WD0",
+   "titulo": "Por que CEIFALUME é grátis de verdade",
+   "angulo": "por_que_gratis:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "quando": "2026-11-07T22:54:55Z",
+   "fecha_em": "2026-11-10T22:54:55Z",
+   "views": 1,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 7.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "26.3 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 1,
+    "mediana_base": 7.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 26.3,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "cfB5ZBdC-NA",
+   "titulo": "O que tem dentro de CEIFALUME",
+   "angulo": "o_que_tem_dentro:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "quando": "2026-11-07T17:52:17Z",
+   "fecha_em": "2026-11-10T17:52:17Z",
+   "views": 1,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 7.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "31.3 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 1,
+    "mediana_base": 7.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 31.3,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "_ffmjSMsW0Y",
+   "titulo": "CEIFALUME 0.1: 8 colheitas, 11 mudas plantadas, 794 toques em 2 min de jogo",
+   "angulo": null,
+   "fato": null,
+   "quando": "2026-11-07T01:55:42Z",
+   "fecha_em": "2026-11-10T01:55:42Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 7.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "47.3 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 7.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 47.3,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "O04ajm1t54Q",
+   "titulo": "16 passos do menu à prancheta, 13 confirmados por imagem",
+   "angulo": "roteiro_do_agente",
+   "fato": null,
+   "quando": "2026-11-07T00:04:42Z",
+   "fecha_em": "2026-11-10T00:04:42Z",
+   "views": 1,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 7.5,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "49.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 1,
+    "mediana_base": 7.5,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 49.1,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "FRCzgqUlMFY",
+   "titulo": "Como funciona: a chuva rega de graça: não custa água nem moeda",
+   "angulo": "como_funciona:ceifalume-chuva",
+   "fato": "ceifalume-chuva",
+   "quando": "2026-11-06T20:04:19Z",
+   "fecha_em": "2026-11-09T20:04:19Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 8.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "53.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 8.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 53.1,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "PRyg0Ncz5U8",
+   "titulo": "Onde jogar CEIFALUME sem instalar loja",
+   "angulo": "onde_jogar:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "quando": "2026-11-06T18:24:11Z",
+   "fecha_em": "2026-11-09T18:24:11Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 8.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "54.8 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 8.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 54.8,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "HmbEdojjhsU",
+   "titulo": "Como funciona: as plantações crescem e as vendas acontecem",
+   "angulo": "como_funciona:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "quando": "2026-11-06T16:29:50Z",
+   "fecha_em": "2026-11-09T16:29:50Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 8.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "56.7 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 8.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 56.7,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "L2UIYmofEiE",
+   "titulo": "Quantas colheitas cabem em 2 minutos de CEIFALUME?",
+   "angulo": "pergunta",
+   "fato": null,
+   "quando": "2026-11-06T16:16:47Z",
+   "fecha_em": "2026-11-09T16:16:47Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 8.5,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "56.9 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 8.5,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 56.9,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "03313IcXvEo",
+   "titulo": "6 colheitas em 2 min de CEIFALUME 0.1",
+   "angulo": "numeros",
+   "fato": null,
+   "quando": "2026-11-06T16:08:00Z",
+   "fecha_em": "2026-11-09T16:08:00Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 9.0,
+   "veredito": "AINDA_MEDINDO",
+   "motivo": "57.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 9.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 57.1,
+    "janela_horas": 72
+   }
+  },
+  {
+   "id": "f5kQFOQs0To",
+   "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
+   "angulo": null,
+   "fato": null,
+   "quando": "2026-11-04T05:17:32Z",
+   "fecha_em": "2026-11-07T05:17:32Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0,
+   "inscritos_ganhos": 0,
+   "mediana_base": 10.0,
+   "veredito": "NAO_PROVADO",
+   "motivo": "0 views não passaram a mediana de 10.0; nenhum inscrito ganho na janela",
+   "numeros": {
+    "views_novo": 0,
+    "mediana_base": 10.0,
+    "inscritos_ganhos": 0,
+    "horas_no_ar": 115.9,
+    "janela_horas": 72
+   }
+  }
+ ],
+ "inscritos_por_video": {
+  "HmbEdojjhsU": 24,
+  "L2UIYmofEiE": 24,
+  "03313IcXvEo": 24,
+  "f5kQFOQs0To": 24,
+  "FRCzgqUlMFY": 24,
+  "PRyg0Ncz5U8": 24,
+  "O04ajm1t54Q": 24,
+  "iCE6O3d_WD0": 24,
+  "cfB5ZBdC-NA": 24,
+  "_ffmjSMsW0Y": 24,
+  "hBvkQhSS-_4": 24,
+  "FNzW9c45E3M": 24
+ },
+ "publicados_medidos": [
+  {
+   "id": "FNzW9c45E3M",
+   "publicado_em": "2026-11-08T23:03:45Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "hBvkQhSS-_4",
+   "publicado_em": "2026-11-08T18:03:59Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "iCE6O3d_WD0",
+   "publicado_em": "2026-11-07T22:55:20Z",
+   "views": 1,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "cfB5ZBdC-NA",
+   "publicado_em": "2026-11-07T17:52:36Z",
+   "views": 1,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "_ffmjSMsW0Y",
+   "publicado_em": "2026-11-07T01:55:59Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "O04ajm1t54Q",
+   "publicado_em": "2026-11-07T00:04:58Z",
+   "views": 1,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "FRCzgqUlMFY",
+   "publicado_em": "2026-11-06T20:04:46Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "PRyg0Ncz5U8",
+   "publicado_em": "2026-11-06T18:24:35Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "HmbEdojjhsU",
+   "publicado_em": "2026-11-06T16:30:04Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "L2UIYmofEiE",
+   "publicado_em": "2026-11-06T16:17:08Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "03313IcXvEo",
+   "publicado_em": "2026-11-06T16:08:17Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "f5kQFOQs0To",
+   "publicado_em": "2026-11-04T05:17:56Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "GuE7af6dYo8"
+  },
+  {
+   "id": "2qsSknSyeAs"
+  }
+ ]
+}

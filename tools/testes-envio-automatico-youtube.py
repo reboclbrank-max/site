@@ -1,0 +1,465 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Contratos do portão do vídeo: o mesmo vídeo não sobe duas vezes.
+
+O que se prova aqui, sem rede, sem segredo e sem subir nada:
+
+  1. AUTOMÁTICO sem vídeo novo é recusado, com o id do anterior no motivo.
+  2. AUTOMÁTICO com vídeo novo passa e registra a impressão (sha256) do que subiu.
+  3. MANUAL (PUBLICAR) continua funcionando — e também registra a impressão.
+  4. Palavra errada é recusada nos dois caminhos.
+  5. Um envio que falha NÃO registra impressão (senão o vídeo ficaria "gasto" sem ter subido).
+
+Contexto medido em 06/11/2026: o canal tinha 163 vídeos e o mesmo título de gameplay foi ao ar
+três vezes. A palavra humana liberou a duplicata igualzinho ao primeiro envio.
+"""
+import importlib.util
+import json
+import os
+import pathlib
+import shutil
+import tempfile
+
+RAIZ = pathlib.Path(__file__).resolve().parents[1]
+ROOT_DIR = str(RAIZ)
+spec = importlib.util.spec_from_file_location("enviar_youtube", RAIZ / "tools" / "enviar-youtube.py")
+enviar = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(enviar)
+
+# ID DO DUBLÊ (06/11/2026): era "VIDEO123" — 8 caracteres, cara de teste. O registro passou a
+# recusar id sem cara de id do YouTube (11 caracteres de base64url), então um dublê de mentira
+# deixava de exercitar o caminho de registro. Este parece de verdade e continua sendo inventado.
+ID_DUBLE = "kJ8mQ2xTz9A"
+
+resultados = []
+
+
+def checar(nome, condicao, detalhe=""):
+    ok = bool(condicao)
+    resultados.append((nome, ok))
+    print(("PASS" if ok else "FAIL") + " — " + nome + (("  [" + str(detalhe)[:140] + "]") if detalhe and not ok else ""))
+
+
+PACOTE = {"id": "ceifalume-gameplay", "slug": "ceifalume", "arquivo": "media/video.mp4",
+          "titulo": "CEIFALUME 0.1 — gameplay gravado no navegador",
+          # descrição REALISTA de propósito: desde 06/11/2026 o portão mede a descrição pela
+          # régua de descrição (fonte, número, link, sem corte). Fixture falsa mediria a fixture.
+          "descricao": ("As plantações crescem por até 8 horas com o jogo fechado. A partida do "
+                        "vídeo fez 9 colheitas em 2 minutos.\n\nFonte: posts/cenas.json "
+                        "(partida 62da85d4dd28, conferida em 2026-11-06).\n\nJogar: "
+                        "https://reboclbrank-max.github.io/site/jogos/ceifalume/"),
+          "tags": ["indie", "godot"],
+          "capa": "media/capa.png", "dimensoes": [1280, 720],
+          "formato": "vídeo normal (16:9)"}
+
+
+def bancada(video_bytes=b"v" * 20_000, kit=None, publicados=None, impressos=None):
+    """Um repositório descartável com kit, vídeo e registros."""
+    tmp = pathlib.Path(tempfile.mkdtemp(prefix="bancada-youtube-"))
+    (tmp / "media").mkdir(parents=True, exist_ok=True)
+    (tmp / "posts").mkdir(parents=True, exist_ok=True)
+    (tmp / "media" / "video.mp4").write_bytes(video_bytes)
+    (tmp / "media" / "capa.png").write_bytes(b"x" * 1000)
+    dados = kit if kit is not None else {"pacotes": [dict(PACOTE)]}
+    (tmp / "posts" / "kit-gameplay.json").write_text(json.dumps(dados), encoding="utf-8")
+    # o caminho do kit é variável de ambiente na casa (KIT_YOUTUBE); a bancada imita isso
+    os.environ["KIT_YOUTUBE"] = str(tmp / "posts" / "kit-gameplay.json")
+    os.environ["YT_REGISTRO"] = "1"
+    if publicados is not None:
+        (tmp / "posts" / "youtube-publicados.json").write_text(json.dumps(publicados), encoding="utf-8")
+    if impressos is not None:
+        (tmp / "posts" / "videos-enviados.json").write_text(json.dumps(impressos), encoding="utf-8")
+    return tmp
+
+
+def dublês(ok=True):
+    chamadas = {"iniciar": 0, "enviar": 0}
+
+    def renovar(*a, **k):
+        return "token-de-teste", None
+
+    def iniciar(token, meta, tamanho):
+        chamadas["iniciar"] += 1
+        return ("https://upload.exemplo/sessao", None) if ok else (None, "sem sessão")
+
+    def enviar_bytes(url, caminho):
+        chamadas["enviar"] += 1
+        return ({"id": "kJ8mQ2xTz9A"}, None) if ok else (None, "falhou no meio")
+
+    return renovar, iniciar, enviar_bytes, chamadas
+
+
+def validador_ok(pacote):
+    return []
+
+
+def rodar(raiz, confirmacao, ok=True, impressora=None, hora_local=12, publicacoes=(),
+          aplicar_capa=None):
+    """Roda o envio na bancada. `publicacoes` é o histórico do canal; vazio = canal novo.
+
+    `hora_local=12` é o padrão de propósito: a janela do dono (09-22h) faz parte do portão, e um
+    teste que dependesse da hora do relógio reprovaria de madrugada sem nada estar quebrado.
+    """
+    renovar, iniciar, enviar_bytes, chamadas = dublês(ok)
+    enviou, msg = enviar.executar("ceifalume-gameplay", confirmacao, raiz=str(raiz),
+                                  renovar=renovar, validador=validador_ok,
+                                  iniciar=iniciar, enviar=enviar_bytes,
+                                  escrever=lambda *a, **k: None, impressora=impressora,
+                                  hora_local=hora_local, publicacoes=list(publicacoes),
+                                  aplicar_capa=aplicar_capa)
+    return enviou, msg, chamadas
+
+
+# 0. ENSAIO (06/11/2026): roda todos os portões e para antes do token
+# O PRANCHETA nunca foi enviado ao canal; provar o pacote dele exigia um caminho que valida tudo
+# e não publica nada. É este. O dublê abaixo estoura se alguém pedir token: ensaio que pede token
+# não é ensaio, é envio disfarçado.
+def _token_proibido(*a, **k):
+    raise AssertionError("ENSAIO pediu token — ensaio não fala com o YouTube")
+
+
+raiz = bancada()
+ensaio_ok, ensaio_msg = enviar.executar(
+    "ceifalume-gameplay", "ENSAIO", raiz=str(raiz), renovar=_token_proibido,
+    validador=validador_ok, iniciar=_token_proibido, enviar=_token_proibido,
+    escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("ENSAIO roda os portões e não pede token", ensaio_ok is True and "ensaio" in ensaio_msg,
+       ensaio_msg)
+checar("ENSAIO não grava registro de envio",
+       not (raiz / "posts" / "youtube-publicados.json").exists()
+       or len(json.loads((raiz / "posts" / "youtube-publicados.json").read_text(
+           encoding="utf-8")).get("publicados") or []) == 0,
+       "registro foi escrito")
+checar("ENSAIO não registra impressão de arquivo",
+       not (raiz / "posts" / "videos-enviados.json").exists(),
+       "impressão foi escrita")
+def _capa_proibida(*a, **k):
+    raise AssertionError("ENSAIO aplicou capa — ensaio não toca no vídeo")
+
+
+raiz_capa = bancada()
+enviar.executar("ceifalume-gameplay", "ENSAIO", raiz=str(raiz_capa), renovar=_token_proibido,
+                validador=validador_ok, iniciar=_token_proibido, enviar=_token_proibido,
+                escrever=lambda *a, **k: None, hora_local=12, publicacoes=[],
+                aplicar_capa=_capa_proibida)
+checar("ENSAIO não aplica capa", not (raiz_capa / "posts" / "capas-aplicadas.json").exists())
+checar("ENSAIO diz o que faria quando o pacote passa", "passaria no portão" in ensaio_msg,
+       ensaio_msg)
+
+raiz_ruim = bancada()
+recusou, msg_ruim = enviar.executar(
+    "ceifalume-gameplay", "ENSAIO", raiz=str(raiz_ruim), renovar=_token_proibido,
+    validador=lambda pacote: ["vídeo pequeno demais"], iniciar=_token_proibido,
+    enviar=_token_proibido, escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("ENSAIO recusa pacote inválido e diz que recusaria", recusou is False, msg_ruim)
+checar("a recusa do ensaio é sobre o portão, não sobre envio",
+       "recusado" in msg_ruim.lower() or "RECUSARIA" in msg_ruim, msg_ruim)
+
+# 0. CÓDIGO DE SAÍDA: recusa ≠ falha operacional (06/11/2026)
+checar("publicado devolve 0", enviar.codigo_de_saida(True, "publicado: https://youtu.be/x") == 0)
+for _recusa in ("portão do vídeo recusou: vídeo idêntico já publicado",
+                "portão do texto recusou: hashtag demais",
+                "porta fechada: prancheta não sai por este caminho",
+                "ensaio RECUSARIA o envio: janela",
+                "faltou a confirmação explícita"):
+    checar("recusa devolve 2 (%s)" % _recusa[:28],
+           enviar.codigo_de_saida(False, _recusa) == 2, enviar.codigo_de_saida(False, _recusa))
+for _falha in ("não consegui falar com o YouTube", "o YouTube não devolveu o id do vídeo",
+               "renovação recusada pelo Google"):
+    checar("falha operacional devolve 3 (%s)" % _falha[:28],
+           enviar.codigo_de_saida(False, _falha) == 3, enviar.codigo_de_saida(False, _falha))
+_wf_gp = open(os.path.join(ROOT_DIR, ".github", "workflows", "gravar-gameplay.yml"),
+              encoding="utf-8").read()
+checar("o passo agendado só derruba o run em falha operacional (código 3)",
+       'if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi' in _wf_gp)
+
+# 0a. PORTA FECHADA do PRANCHETA (06/11/2026)
+# O kit manual envia o arquivo COMMITADO; o vídeo do PRANCHETA é gravado a cada run. Enquanto a
+# porta estava aberta, "PUBLICAR prancheta" subia uma partida velha com texto velho — e parecia
+# envio do dia. Contrato: recusa com motivo, manda para o workflow certo e não pede token.
+_kit_fechado = {"pacotes": [], "fora_do_kit": {"prancheta": {
+    "motivo": "o vídeo deste jogo é gravado a cada run; o que está no repositório é sempre uma "
+              "partida velha",
+    "workflow": "gravar-prancheta.yml (grava a partida e envia no mesmo run)"}}}
+raiz_porta = bancada(kit=_kit_fechado)
+_porta_ok, _porta_msg = enviar.executar(
+    "prancheta", "PUBLICAR", raiz=str(raiz_porta), renovar=_token_proibido,
+    validador=validador_ok, iniciar=_token_proibido, enviar=_token_proibido,
+    escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("pedir prancheta no kit manual é recusado", _porta_ok is False, _porta_msg)
+checar("a recusa diz que a porta está fechada e qual é a porta certa",
+       "porta fechada" in _porta_msg and "gravar-prancheta.yml" in _porta_msg, _porta_msg)
+checar("a recusa não pede token (acontece antes de qualquer credencial)",
+       "token" not in _porta_msg.lower() and "porta fechada" in _porta_msg, _porta_msg)
+_porta_ok2, _porta_msg2 = enviar.executar(
+    "prancheta-gameplay", "ENSAIO", raiz=str(raiz_porta), renovar=_token_proibido,
+    validador=validador_ok, iniciar=_token_proibido, enviar=_token_proibido,
+    escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("o id do pacote (prancheta-gameplay) cai na mesma porta fechada",
+       _porta_ok2 is False and "porta fechada" in _porta_msg2, _porta_msg2)
+_kit_vazio = {"pacotes": []}
+raiz_vazia = bancada(kit=_kit_vazio)
+_ok_v, _msg_v = enviar.executar("nao-existe", "PUBLICAR", raiz=str(raiz_vazia),
+                                renovar=_token_proibido, validador=validador_ok,
+                                iniciar=_token_proibido, enviar=_token_proibido,
+                                escrever=lambda *a, **k: None, hora_local=12, publicacoes=[])
+checar("pacote inexistente recusa diferente de porta fechada",
+       _ok_v is False and "não tem o pacote" in _msg_v, _msg_v)
+
+# 0b. a capa aplicada é a DO PACOTE (06/11/2026)
+# O ensaio do PRANCHETA mostrou que caminho_da_capa() caía num padrão do CEIFALUME: o vídeo de
+# futebol ia ao ar com a capa da fazenda. Contrato: a capa sai do pacote; o padrão do CEIFALUME
+# só vale para pacote do CEIFALUME.
+_kit_capa = {"pacotes": [dict(PACOTE, id="prancheta-gameplay", slug="prancheta",
+                              capa="media/capa-prancheta.png",
+                              arquivo="media/video.mp4")]}
+raiz_c = bancada(kit=_kit_capa)
+(raiz_c / "media" / "capa-prancheta.png").write_bytes(b"p" * 20_000)
+(raiz_c / "media" / "gameplay").mkdir(parents=True, exist_ok=True)
+(raiz_c / "media" / "gameplay" / "ceifalume-capa.png").write_bytes(b"c" * 20_000)
+_achada = enviar.caminho_da_capa({"slug": "prancheta", "capa": "media/capa-prancheta.png"},
+                                 raiz=str(raiz_c))
+checar("a capa do pacote do PRANCHETA é a dele, não a do CEIFALUME",
+       str(_achada).endswith("capa-prancheta.png"), _achada)
+_achada_ceif = enviar.caminho_da_capa({"slug": "ceifalume"}, raiz=str(raiz_c))
+checar("pacote do CEIFALUME ainda cai no padrão dele quando não traz capa",
+       str(_achada_ceif).endswith("ceifalume-capa.png"), _achada_ceif)
+
+# 1. palavra errada
+with tempfile.TemporaryDirectory() as tmp:
+    raiz = bancada()
+    ok, msg, _ = rodar(raiz, "vai")
+    checar("palavra errada é recusada", ok is False and "confirmação" in msg, msg)
+    ok, msg, _ = rodar(raiz, "")
+    checar("sem palavra nenhuma é recusada", ok is False, msg)
+    shutil.rmtree(raiz, ignore_errors=True)
+
+# 2. automático com vídeo novo
+raiz = bancada()
+ok, msg, _ = rodar(raiz, "AUTOMATICO")
+checar("automático com vídeo novo envia", ok is True and "kJ8mQ2xTz9A" in msg, msg)
+registro = json.loads((raiz / "posts" / "videos-enviados.json").read_text(encoding="utf-8"))
+checar("o envio grava a impressão sha256", len(registro["enviados"]) == 1
+      and len(registro["enviados"][0]["sha256"]) == 64, registro.get("enviados"))
+checar("a impressão aponta o vídeo que subiu", registro["enviados"][0]["id"] == "kJ8mQ2xTz9A")
+sha_primeiro = registro["enviados"][0]["sha256"]
+
+# 3. o mesmo vídeo, de novo, no automático
+ok, msg, _ = rodar(raiz, "AUTOMATICO")
+checar("o MESMO vídeo não sobe duas vezes", ok is False and "já publicado" in msg, msg)
+checar("e o motivo diz qual vídeo já existe", "kJ8mQ2xTz9A" in msg, msg)
+checar("recusar não apaga nem duplica a impressão existente",
+      len(json.loads((raiz / "posts" / "videos-enviados.json").read_text())["enviados"]) == 1)
+
+# 4. vídeo diferente (mesmo kit, outro arquivo) sobe
+(raiz / "media" / "video.mp4").write_bytes(b"z" * 20_500)
+ok, msg, _ = rodar(raiz, "AUTOMATICO")
+checar("vídeo diferente é aceito como novo", ok is True, msg)
+checar("agora são duas impressões distintas",
+      len(json.loads((raiz / "posts" / "videos-enviados.json").read_text())["enviados"]) == 2)
+
+# 5. manual continua valendo — e também registra
+(raiz / "media" / "video.mp4").write_bytes(b"w" * 20_900)
+ok, msg, _ = rodar(raiz, "PUBLICAR")
+checar("manual (PUBLICAR) continua funcionando", ok is True, msg)
+checar("manual também grava impressão",
+      len(json.loads((raiz / "posts" / "videos-enviados.json").read_text())["enviados"]) == 3)
+ok, msg, _ = rodar(raiz, "AUTOMATICO")
+checar("depois do manual, o automático não repete o mesmo arquivo",
+      ok is False and "já publicado" in msg, msg)
+shutil.rmtree(raiz, ignore_errors=True)
+
+# 6. envio que falha não gasta o vídeo
+raiz = bancada()
+ok, msg, _ = rodar(raiz, "AUTOMATICO", ok=False)
+checar("falha no upload não é sucesso", ok is False, msg)
+nao_existe = not (raiz / "posts" / "videos-enviados.json").exists()
+checar("falha no upload NÃO registra impressão (o vídeo pode tentar de novo)", nao_existe)
+ok, msg, _ = rodar(raiz, "AUTOMATICO", ok=True)
+checar("depois da falha, o mesmo vídeo ainda pode subir", ok is True, msg)
+shutil.rmtree(raiz, ignore_errors=True)
+
+# 7. vídeo ausente e kit inválido
+raiz = bancada()
+(raiz / "media" / "video.mp4").unlink()
+ok, msg, _ = rodar(raiz, "AUTOMATICO")
+checar("vídeo ausente é recusado", ok is False and "ausente" in msg, msg)
+shutil.rmtree(raiz, ignore_errors=True)
+
+raiz = bancada(video_bytes=b"x" * 500)
+ok, msg, _ = rodar(raiz, "AUTOMATICO")
+checar("arquivo pequeno demais para ser vídeo é recusado", ok is False and "pequeno" in msg, msg)
+shutil.rmtree(raiz, ignore_errors=True)
+
+# 8. o registro é do repositório e começa vazio
+if (RAIZ / "posts" / "videos-enviados.json").exists():
+    dados = json.loads((RAIZ / "posts" / "videos-enviados.json").read_text(encoding="utf-8"))
+    checar("o registro de impressões do repositório é uma lista", isinstance(dados.get("enviados"), list))
+else:
+    checar("o registro de impressões ainda não existe no repositório (nada foi enviado desde o portão)",
+           True)
+
+# 9. o workflow não publica vídeo por horário: só pelo portão
+wf = (RAIZ / ".github" / "workflows" / "gravar-gameplay.yml").read_text(encoding="utf-8")
+checar("o workflow passa AUTOMATICO (não PUBLICAR) no caminho agendado",
+      "AUTOMATICO" in wf and "CONFIRMACAO: AUTOMATICO" in wf)
+checar("o caminho manual do workflow continua existindo", "github.event.inputs.publicar == 'PUBLICAR'" in wf)
+checar("o workflow versiona o registro de impressões", "posts/videos-enviados.json" in wf)
+checar("o registro guarda o ângulo do vídeo (é o que faz o redator rodar)",
+      "angulo=pacote.get(\"angulo\")" in open(RAIZ / "tools" / "enviar-youtube.py", encoding="utf-8").read())
+# Medido no run 42248857217 (06/11/2026 16:08 UTC): o vídeo subiu, o registro entrou no main e o
+# run terminou VERMELHO porque o resumo fazia `cat /tmp/envio.txt`, arquivo que só o caminho
+# manual cria. Trabalho feito com run vermelho é o mesmo defeito de antes, só que ao contrário.
+checar("o resumo do workflow não depende de arquivo que só o caminho manual cria",
+      "cat /tmp/envio.txt 2>/dev/null" in wf and "envio-auto.txt 2>/dev/null" in wf)
+checar("o passo do registro roda também no caminho automático",
+      "github.event.inputs.publicar == 'AUTOMATICO'" in wf)
+
+# 10. o arquivo novo NÃO basta: o mesmo título não sobe de novo
+#     (medido em 06/11/2026: três uploads com o mesmo título, arquivos diferentes)
+HISTORICO = [{"canal": "youtube", "id": "f5kQFOQs0To",
+              "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)"
+                        " — gameplay gravado no navegador",
+              "texto": "", "quando": "2026-11-04T05:17:32Z"}]
+raiz = bancada()
+kit_repetido = {"pacotes": [dict(PACOTE, titulo=HISTORICO[0]["titulo"])]}
+(raiz / "posts" / "kit-gameplay.json").write_text(json.dumps(kit_repetido), encoding="utf-8")
+ok, msg, chamadas = rodar(raiz, "AUTOMATICO", publicacoes=HISTORICO)
+checar("título já publicado é recusado mesmo com arquivo novo",
+       ok is False and "texto recusou" in msg, msg)
+checar("e a recusa por forma não chama o upload", chamadas["enviar"] == 0, chamadas)
+checar("a recusa por forma não grava impressão",
+       not (raiz / "posts" / "videos-enviados.json").exists())
+shutil.rmtree(raiz, ignore_errors=True)
+
+# 11. título próprio (o da partida) passa contra o mesmo histórico
+raiz = bancada()
+kit_novo = {"pacotes": [dict(PACOTE, titulo="CEIFALUME 0.1: 9 colheitas, 14 mudas plantadas, "
+                                            "728 toques em 2 min de jogo")]}
+(raiz / "posts" / "kit-gameplay.json").write_text(json.dumps(kit_novo), encoding="utf-8")
+ok, msg, _ = rodar(raiz, "AUTOMATICO", publicacoes=HISTORICO)
+checar("título que descreve a partida passa contra o histórico", ok is True, msg)
+shutil.rmtree(raiz, ignore_errors=True)
+
+# 12. a janela do dono vale para o vídeo também
+raiz = bancada()
+ok, msg, chamadas = rodar(raiz, "AUTOMATICO", hora_local=3)
+checar("vídeo às 3h de Brasília é recusado pela janela", ok is False and "janela" in msg, msg)
+checar("e a recusa por horário não chama o upload", chamadas["enviar"] == 0, chamadas)
+ok, msg, _ = rodar(raiz, "AUTOMATICO", hora_local=20)
+checar("às 20h de Brasília o mesmo vídeo passa", ok is True, msg)
+shutil.rmtree(raiz, ignore_errors=True)
+
+# 13. o registro guarda a descrição — é o que o próximo portão de forma vai comparar
+raiz = bancada()
+rodar(raiz, "AUTOMATICO")
+publicado = json.loads((raiz / "posts" / "youtube-publicados.json").read_text(encoding="utf-8"))
+checar("o registro público guarda a descrição do que subiu",
+       publicado["publicados"][0].get("descricao") == PACOTE["descricao"],
+       publicado["publicados"][0].get("descricao"))
+checar("o histórico do canal sai do mais novo para o mais antigo",
+       [x["quando"] for x in enviar.historico_publicado(str(raiz))]
+       == sorted([x["quando"] for x in enviar.historico_publicado(str(raiz))], reverse=True))
+shutil.rmtree(raiz, ignore_errors=True)
+
+# 14. o kit do gameplay monta o título a partir da PARTIDA, não de uma frase fixa
+spec_kit = importlib.util.spec_from_file_location("kit_gameplay", RAIZ / "tools" / "kit-gameplay.py")
+kitg = importlib.util.module_from_spec(spec_kit)
+spec_kit.loader.exec_module(kitg)
+spec_kit_yt = importlib.util.spec_from_file_location("kit_youtube", RAIZ / "tools" / "kit-youtube.py")
+kityt = importlib.util.module_from_spec(spec_kit_yt)
+spec_kit_yt.loader.exec_module(kityt)
+
+
+def bancada_de_partida(plantadas, colhidas, toques, segundos):
+    tmp = pathlib.Path(tempfile.mkdtemp(prefix="bancada-partida-"))
+    (tmp / "media" / "gameplay").mkdir(parents=True, exist_ok=True)
+    caminho = tmp / "media" / "gameplay" / "ceifalume-gameplay-cru-decisoes.json"
+    caminho.write_text(json.dumps({"decisoes": [{"t": segundos, "motivo": "colheu"}],
+                                   "plantadas": plantadas, "colhidas": colhidas,
+                                   "bicos": toques}), encoding="utf-8")
+    return tmp
+
+
+a = bancada_de_partida(14, 9, 728, 118)
+b = bancada_de_partida(6, 2, 133, 96)
+ta = kitg.titulo_da_partida("ceifalume", kityt, raiz=str(a))
+tb = kitg.titulo_da_partida("ceifalume", kityt, raiz=str(b))
+checar("o título do gameplay sai da partida medida", ta and "9 colheitas" in ta and "728 toques" in ta, ta)
+checar("duas partidas diferentes dão dois títulos diferentes", ta != tb, (ta, tb))
+checar("o título da partida é diferente do título fixo que repetiu três vezes",
+      ta != "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro)"
+            " — gameplay gravado no navegador", ta)
+checar("o título da partida cabe no limite do YouTube", 0 < len(ta) <= kityt.LIMITE_TITULO, len(ta))
+# A FRASE MUDOU DE FORMA, NÃO DE CONTEÚDO (06/11/2026): a linha passou a ser montada com o que
+# cada jogo mede (o PRANCHETA não tem colheita), então os números continuam os mesmos e o que se
+# cobra é isso — os três números medidos e a duração, na ordem em que aconteceram.
+_linha = kitg.linha_da_partida("ceifalume", raiz=str(a))
+checar("a descrição diz o que aconteceu naquela partida",
+      _linha.startswith("Esta partida:") and "14 mudas plantadas" in _linha
+      and "9 colheitas" in _linha and "728 toques" in _linha and "2 minutos" in _linha, _linha)
+checar("sem relatório da partida, o título próprio não é inventado",
+      kitg.titulo_da_partida("ceifalume", kityt, raiz=str(tempfile.mkdtemp())) is None)
+shutil.rmtree(a, ignore_errors=True)
+shutil.rmtree(b, ignore_errors=True)
+
+
+# ---- CAPA ÚNICA: os três vídeos de 06/11 subiram com o mesmo primeiro quadro ----------------
+# A capa é desenhada na gravação e APLICADA aqui. Estes contratos cobram isso — e cobram também
+# que uma falha de capa não esconda um vídeo que já subiu.
+raiz = bancada()
+capa = pathlib.Path(raiz) / "media" / "gameplay" / "ceifalume-capa.png"
+capa.parent.mkdir(parents=True, exist_ok=True)
+capa.write_bytes(b"PNG" + b"z" * 40_000)
+chamadas_capa = []
+
+
+def aplicar(token, vid, caminho):
+    chamadas_capa.append((token, vid, caminho))
+    return True, "capa aplicada no vídeo " + str(vid)
+
+
+ok, msg, _ = rodar(raiz, "AUTOMATICO", aplicar_capa=aplicar)
+checar("com capa desenhada, o envio aplica a capa", ok is True and len(chamadas_capa) == 1, msg)
+checar("a capa vai para o vídeo que acabou de subir",
+      bool(chamadas_capa) and chamadas_capa[0][1] == "kJ8mQ2xTz9A", chamadas_capa)
+checar("a capa aplicada é a capa daquele vídeo",
+      bool(chamadas_capa) and chamadas_capa[0][2].endswith("ceifalume-capa.png"), chamadas_capa)
+
+raiz_sem_capa = bancada()
+chamadas_capa.clear()
+ok, msg, _ = rodar(raiz_sem_capa, "AUTOMATICO", aplicar_capa=aplicar)
+checar("sem capa desenhada, publica e não inventa capa",
+      ok is True and chamadas_capa == [], (msg, chamadas_capa))
+
+raiz_falha = bancada()
+capa2 = pathlib.Path(raiz_falha) / "media" / "gameplay" / "ceifalume-capa.png"
+capa2.parent.mkdir(parents=True, exist_ok=True)
+capa2.write_bytes(b"PNG" + b"y" * 40_000)
+
+
+def aplicar_quebrado(*a, **k):
+    raise RuntimeError("thumbnails/set recusou")
+
+
+ok, msg, _ = rodar(raiz_falha, "AUTOMATICO", aplicar_capa=aplicar_quebrado)
+checar("capa que falha não derruba uma publicação que deu certo",
+      ok is True and "publicado" in msg, msg)
+
+for r in (raiz, raiz_sem_capa, raiz_falha):
+    shutil.rmtree(r, ignore_errors=True)
+
+
+# ---- o registro não pode guardar descrição cortada no meio da frase -------------------------
+# Medido em 06/11/2026: quatro descrições em posts/youtube-publicados.json terminavam em
+# "…A trilha". Registro quebrado mente sobre o que está no ar.
+_longa = ("Linha curta.\n\n" + "Frase completa sobre a partida medida. " * 40)
+_resumo = enviar._resumo_da_descricao(_longa)
+checar("resumo da descrição não termina no meio de uma palavra",
+      _resumo.endswith("…") or _resumo.endswith("."), _resumo[-25:])
+checar("resumo da descrição cabe no registro", len(_resumo) <= 640, len(_resumo))
+checar("descrição curta passa inteira", enviar._resumo_da_descricao("Texto curto.") == "Texto curto.")
+
+certos = sum(1 for _, ok in resultados if ok)
+print("%d/%d contratos do portão do vídeo passaram" % (certos, len(resultados)))
+raise SystemExit(0 if certos == len(resultados) else 1)

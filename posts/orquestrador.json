@@ -1,0 +1,291 @@
+{
+ "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
+ "versao": 1,
+ "ultima_publicacao": "2026-11-08T20:20:16Z",
+ "ultima_medicao": "2026-11-09T01:57:52Z",
+ "ultima_pesquisa": "2026-11-08T06:00:15Z",
+ "ultima_aprendizagem": "2026-11-08T07:00:14Z",
+ "pulsos": 234,
+ "historico": [
+  {
+   "quando": "2026-11-08T13:00:13Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261108T130013Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-08T13:01:55Z",
+   "acao": "dormir",
+   "motivo": "publicou há 62 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T13:20:13Z",
+   "acao": "dormir",
+   "motivo": "publicou há 80 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T13:40:14Z",
+   "acao": "dormir",
+   "motivo": "publicou há 100 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T14:00:14Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261107T192012Z] empurrar a meta: itch: downloads: faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
+   "codigo": 0,
+   "saida": "fila: 1 tarefa(s) adiada(s) neste pulso (nada a fazer agora)"
+  },
+  {
+   "quando": "2026-11-08T14:20:11Z",
+   "acao": "dormir",
+   "motivo": "publicou há 20 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T14:40:16Z",
+   "acao": "dormir",
+   "motivo": "publicou há 40 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T15:00:12Z",
+   "acao": "dormir",
+   "motivo": "publicou há 60 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T15:20:15Z",
+   "acao": "dormir",
+   "motivo": "publicou há 80 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T15:40:12Z",
+   "acao": "dormir",
+   "motivo": "publicou há 100 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T16:00:12Z",
+   "acao": "dormir",
+   "motivo": "publicou há 120 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T16:20:12Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261107T192012Z] empurrar a meta: itch: downloads: faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-08T16:40:13Z",
+   "acao": "dormir",
+   "motivo": "publicou há 20 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T17:00:12Z",
+   "acao": "dormir",
+   "motivo": "publicou há 40 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T17:20:11Z",
+   "acao": "dormir",
+   "motivo": "publicou há 60 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T17:40:11Z",
+   "acao": "dormir",
+   "motivo": "publicou há 80 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T18:00:12Z",
+   "acao": "dormir",
+   "motivo": "publicou há 100 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T18:20:15Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261107T164014Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 1 tarefa(s) adiada(s) neste pulso (nada a fazer agora)"
+  },
+  {
+   "quando": "2026-11-08T18:25:04Z",
+   "acao": "dormir",
+   "motivo": "publicou há 5 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T18:40:12Z",
+   "acao": "dormir",
+   "motivo": "publicou há 20 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T19:00:13Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261108T190013Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-08T19:20:13Z",
+   "acao": "dormir",
+   "motivo": "publicou há 60 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T19:40:14Z",
+   "acao": "dormir",
+   "motivo": "publicou há 80 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T20:00:14Z",
+   "acao": "dormir",
+   "motivo": "publicou há 100 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T20:20:16Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261107T164014Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-08T20:40:13Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T21:00:21Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T21:20:14Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T21:40:17Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T22:00:17Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T22:20:14Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T22:28:43Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T22:40:15Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T23:00:16Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T23:20:13Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-08T23:40:13Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-09T00:00:14Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-09T00:20:15Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-09T00:40:12Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-09T01:57:52Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261109T015752Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  }
+ ]
+}

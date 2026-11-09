@@ -1,0 +1,134 @@
+# O que a casa publicou (arquivo)
+
+Gerado em 2026-11-03T08:42:00Z. Este arquivo é o inventário do que já foi publicado, com data, tamanho e impressão digital (sha256, 16 primeiros caracteres).
+
+> tudo o que a casa publicou fica aqui com data, tamanho e impressão digital; hash é o que prova que o publicado não mudou desde então.
+
+## Resumo
+
+| o quê | quantos |
+| --- | --- |
+| ciclos de marketing | 114 |
+| posts sociais registrados | 106 |
+| canais que já publicaram | 5 |
+| vídeos no YouTube (com id real) | 2 |
+| builds no itch.io (com id real) | 1 |
+| builds que o jogador do itch realmente abre | 1 |
+| builds conferidos: conteúdo servido = repositório (sha256) | 1 |
+| documentos | 16 |
+| páginas públicas | 20 |
+| arquivos de mídia | 12 |
+
+## Canal por canal
+
+| canal | ciclos | publicou | último resultado |
+| --- | --- | --- | --- |
+| ntfy (push do dono) | 114 | 114 | ✅ push 200 |
+| aula do cerebro | 111 | 111 | ✅ cerebro calado hoje |
+| vigia da caixa (auto-recovery) | 106 | 106 | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| descobridor de redes | 105 | 105 | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | 105 | 105 | ✅ censo de hoje ja registrado (1 por dia) |
+| nostr | 113 | 102 | ✅ nota em 2 relays (id 5ac6fe56d2) |
+| bluesky | 114 | 101 | ✅ postado 200 |
+| threads | 112 | 101 | ✅ publicado id 181288261278 |
+| regua de metas (medicao) | 102 | 101 | ✅ bsky_seg=13 ig_seg=0 ig_posts=4 itch_dl=? yt=PENDENTE-PORTA |
+| cacador de oportunidades | 111 | 83 | ✅ 1 interacoes (q=#gamedev) |
+| cerebro | 111 | 61 | ✅ post novo criado |
+| destino editorial | 48 | 48 | ✅ rota oficial prancheta |
+| instagram | 105 | 38 | ✅ postado id 18118576288983 |
+| tema do ciclo | 28 | 28 | ✅ fale da alegria do primeiro jogador que nao e da familia |
+| respondedor de conversa | 23 | 5 | ✅ 3 resposta(s) enviada(s) de 7 pendente(s) |
+| telegram | 114 | 0 |  |
+| mastodon | 114 | 0 |  |
+| reel semanal | 98 | 0 |  |
+| discord | 114 | 0 |  |
+
+## Vídeos
+
+- ceifalume `VIDEO123` — CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) · (sem id real)
+- ceifalume-gameplay `GuE7af6dYo8` — CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador · https://youtu.be/GuE7af6dYo8
+- ceifalume `2qsSknSyeAs` — CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador · https://youtu.be/2qsSknSyeAs
+
+## Builds no itch.io
+
+| jogo | canal | build | versão | arquivos | quando |
+| --- | --- | --- | --- | --- | --- |
+| ceifalume | html5 | `2257110` | 2026.10.31-0046 | 13 | 2026-10-31T00:46:17Z |
+- prova de ceifalume:`2257110` — push run 41151936756 ('✓ enviado'); status run 41152028164 → IGUAL, 0 novos, 0 modificados, 0 apagados, 13 iguais contra o build 2257110; MAS o run 41153867292 (modo uploads) lista só os uploads 19268311 e 19268322, ambos de 16/09, e a pági
+- conferência do servido (sha256, arquivo por arquivo): index.html DIFERENTE, index.js IGUAL, index.pck IGUAL, index.wasm IGUAL
+- o conteúdo do jogo que o jogador recebe é o do repositório: **sim**
+- ressalva: o upload que a página abre é o 19268311 (16/09), NÃO o do canal html5; porém o conteúdo do jogo servido (index.js, index.pck, index.wasm) é byte a byte igual ao do repositório — medido em 31/10/2026 por sha256. A casca HTML é a do itch (injeta htmlgame.js e não tem o selo), e o vídeo chega ao visita
+
+## Páginas públicas
+
+| arquivo | bytes | sha256 |
+| --- | --- | --- |
+| canais.html | 7184 | `1727c70fdc6b1779` |
+| comite.html | 29820 | `4fa39f17ee212e4d` |
+| escola.html | 3343 | `0fc79cbc5841eb35` |
+| index.html | 13685 | `c0942bdf8ca12917` |
+| jogos.html | 3255 | `4b17c4ecdda44233` |
+| marketing.html | 15816 | `fb07f42b1471e1f1` |
+| melhorias.html | 10451 | `bc27c5d055141ac9` |
+| museu.html | 226788 | `959bee2b9addade2` |
+| oauth-youtube.html | 3704 | `0db038b5d8986d9b` |
+| postar.html | 10463 | `559892cc1dd855ec` |
+| privacidade.html | 2684 | `d4c4bce26a1c1093` |
+| publicacoes.html | 15255 | `89bce2dbbc872453` |
+| termos.html | 2613 | `a1a98745bc144972` |
+| vitrina.html | 8285 | `18c36df607adeaa7` |
+| blog/ceifalume-01-o-que-e-que-vem.html | 2934 | `d3272d5e446e934a` |
+| blog/ceifalume-gameplay.html | 3003 | `f6696f117267397a` |
+| blog/ceifalume-no-navegador.html | 2346 | `7f0b46d1fab5cc7d` |
+| blog/index.html | 2699 | `81a2c744b661b652` |
+| jogos/ceifalume/index.html | 11054 | `9abc42d7e5b6016d` |
+| jogos/prancheta/index.html | 10098 | `a22499d46307f850` |
+
+## Documentos
+
+| documento | título | sha256 |
+| --- | --- | --- |
+| docs/INTEGRIDADE-ESTADO-2026-11-01.md | Estado concorrente e resultado verificável | `f3dc873007266b89` |
+| docs/PLANO-MARKETING-24H.md | Plano de marketing 24h — arquitetura medida | `b1c53a149afb0ca4` |
+| docs/RODADA-111-VIDEO-INSTRUCOES.md | Rodada 111 — vídeo de gameplay com as instruções de como jogar na tela, sempre | `61e742ba0045e7f8` |
+| docs/RODADA-112-GAMEPLAY-NO-SITE.md | Rodada 112 — o vídeo saiu do canal e chegou no site; a gravação parou de falhar calada | `36f2ba36d2dfab7d` |
+| docs/RODADA-115-MARKETING-AUTONOMO.md | Rodada 115 — marketing autônomo: o que já roda sozinho, medido | `e64e8e5245bcc706` |
+| docs/RODADA-116-SABEDORIA-DAS-DECISOES.md | Rodada 116 — a sabedoria das decisões (o que a casa decide, o que ela recusa, o que ela não sabe) | `8d82b4ab803b503d` |
+| docs/RODADA-117-INTELIGENCIA-MEDIDA.md | Rodada 117 — a inteligência medida (não a prometida) | `14d7dea92fcea774` |
+| docs/RODADA-118-O-QUE-PRECISA-SER-FEITO.md | Rodada 118 — o olho: saber o que precisa ser feito | `2bd2a1e7f665516f` |
+| docs/RODADA-119-MENTE-QUE-ESCOLHE.md | Rodada 119 — a mente que escolhe (juízo, gosto aprendido e revisão) | `570ca2cfa7af379c` |
+| docs/RODADA-120-MELHORIAS-PUBLICAS.md | Rodada 120 — as melhorias agora têm endereço público | `5e21091540ef080e` |
+| docs/RODADA-121-ARQUIVO-DAS-PUBLICACOES.md | Rodada 121 — o cofre: toda publicação fica salva, com prova | `e76fe6bef1f61536` |
+| docs/RODADA-122-PUBLICADO.md | Rodada 122 — o que estava travado foi resolvido e publicado | `63f9ba8f578e4764` |
+| docs/RODADA-123-ENTRAR-NO-MAIN.md | Rodada 123 — "resolva tudo": os runs vermelhos, o motivo deles e o conserto medido | `1786c53dd2152ced` |
+| docs/RODADA-124-SELO-CHEGA-NO-ITCH.md | Rodada 124 — "resolva": o selo do gameplay agora chega a quem abre o jogo no itch | `b70ab0f9e5b903a5` |
+| docs/RODADA-125-CONFERENCIA-DO-SERVIDO.md | Rodada 125 — "resolva": a medida que faltava (e a vez em que eu errei contra mim mesmo) | `11ec930e9548212c` |
+| docs/VIDEO-GAMEPLAY.md | Vídeo de gameplay — o que agora é medido, não prometido | `1dab0e5a47cf8301` |
+
+## Últimos posts registrados (texto)
+
+- **03/11/2026 00:53 UTC** — PRANCHETA: futebol tático 100% fictício, desenhe a bola parada e simule (Godot, grátis nav/APK) 🇧🇷 CEIFALUME 0.1: fazenda noturna idle, a lavoura cresce 8h offl
+- **02/11/2026 19:48 UTC** — Dois jogos, um coração brasileiro ❤️🇧🇷 PRANCHETA: futebol tático na prancheta, grátis no nav/APK (Godot). CEIFALUME 0.1: fazenda idle noturna que cresce enquant
+- **02/11/2026 15:36 UTC** — Ei! Do REBOCL BRANK: PRANCHETA, simulador 100% fictício de futebol onde você desenha a bola parada na prancheta e ve a partida simular grátis no navegador ou AP
+- **01/11/2026 21:57 UTC** — Tática na PRANCHETA ⚽ ou colheita noturna na CEIFALUME 🌙? Dois jogos, um dev solo brasileiro (Godot). Grátis no navegador/APK. Vem testar! #GameDevBR #GodotEngi
+- **01/11/2026 19:04 UTC** — Da tática na PRANCHETA 📋 à fazenda que não dorme no CEIFALUME 0.1 🌙 Dois jogos 100% brasileiros, grátis no navegador (e APK!), feitos com carinho no Godot. Vem 
+- **01/11/2026 13:10 UTC** — Dois jeitos de jogar por aqui: ⚽ **PRANCHETA** (grátis, browser/APK, Godot) pra desenhar a bola parada e ver o jogo simular. 🌙 **CEIFALUME 0.1** (já Bastidores 
+- **01/11/2026 00:45 UTC** — Feito no Brasil com Godot 🇧🇷 Dois mundos: PRANCHETA (tática de bola parada grátis no navegador/APK) e CEIFALUME 0.1 (fazenda noturna idle que cresce Bastidores 
+- **31/10/2026 21:23 UTC** — Dois projetos, muito café ☕ PRANCHETA: seu tático de bolso, desenha a jogada e vê simular (grátis no nav/APK). CEIFALUME 0.1: a fazenda noturna que cresce enqua
+- **31/10/2026 18:16 UTC** — Tático ou aconchegante? Aqui tem os dois 🇧🇷 PRANCHETA: desenhe bolas paradas e simule (grátis no browser/APK, Godot). CEIFALUME 0.1: a fazenda não dorme, colhei
+- **31/10/2026 12:10 UTC** — Duas paixões, um dev solo 🇧🇷 PRANCHETA: futebol fictício na prancheta, simula ao vivo ou instantâneo, grátis no navegador/APK (Godot). CEIFALUME 0.1: a fazenda 
+- **30/10/2026 18:03 UTC** — Tática na PRANCHETA (grátis, Godot, Brasil) ou lavoura noturna no CEIFALUME 0.1 (cresce 8h offline). Dois jeitos de jogar, uma paixão solo dev. 🇧🇷💚 #PRANCHETA #
+- **30/10/2026 15:58 UTC** — 💰 No CEIFALUME o preço do mercado muda todo dia. ⏎ Vender tudo de uma vez é o jeito fácil de ganhar menos.
+- **29/10/2026 23:30 UTC** — Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática pura no Godot. Desenhe jogadas, simule grátis no navegador/APK. CEIFALUME 0.1: fazenda idle noturna que nã
+- **29/10/2026 18:31 UTC** — Dois mundos, um código feito com carinho no Brasil 🇧🇷❤️ Desenhe jogadas e veja a partida rolar no **PRANCHETA** (grátis no navegador/APK, Godot) ou cuide da lav
+- **29/10/2026 13:49 UTC** — E aí, comunidade! 🌟 Sou o REBOCL BRANK, desenvolvedor solo brasileiro. O PRANCHETA é um simulador de gestão de futebol 100% fictício: você desenha a bola parada
+- **29/10/2026 00:53 UTC** — Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática na prancheta, simulação viva (Godot, grátis nav/APK). CEIFALUME 0.1: fazenda noturna idle que Bastidores e
+- **28/10/2026 20:20 UTC** — 🌙 CEIFALUME é idle de fazenda noturna, grátis e sem instalar. ⏎ Plante antes de dormir; a lavoura cresce até 8 h com o jogo fechado.
+- **28/10/2026 13:04 UTC** — Dois jeitos de jogar por aqui: desenhar a jogada perfeita no **PRANCHETA** (grátis no navegador/APK) ou cuidar da lavoura que cresce enquanto você d Bastidores 
+- **27/10/2026 22:17 UTC** — PRANCHETA: desenhe a bola parada e veja o jogo simular, grátis no navegador/APK. CEIFALUME 0.1: a fazenda não dorme, plantações crescem 8h offline Bastidores e 
+- **27/10/2026 19:43 UTC** — Dois mundos, um dev brasileiro 🇧🇷✨ PRANCHETA: tático de futebol fictício, grátis no navegador/APK (Godot). CEIFALUME 0.1: fazenda noturna idle onde a colheita c
+- **27/10/2026 15:25 UTC** — Dois mundos, um código feito com carinho no Brasil 🇧🇷✨ Desenhe jogadas e veja a partida rolar no **PRANCHETA** (grátis no navegador/APK, Godot) ou cuide da lavo
+- **27/10/2026 12:10 UTC** — Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: futebol tático na prancheta (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna onde a colheita cresce enq
+- **26/10/2026 23:51 UTC** — Tática na PRANCHETA ⚽ ou colheita noturna no CEIFALUME 🌙? Dois projetos solo, feitos no Brasil com Godot. PRANCHETA: grátis no navegador/APK. CEIFALUME 0.1: a f
+- **26/10/2026 13:09 UTC** — Desenho tática na PRANCHETA ⚽ ou cuido da fazenda noturna no CEIFALUME 🌙? Dois jeitos de jogar, ambos feitos com carinho no Brasil (Godot). Grátis n Bastidores 
+- **26/10/2026 04:53 UTC** — Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso (Godot, grátis no nav/APK). CEIFALUME 0.1: fazenda noturna que cresce enquanto você dorme 🌙🌱

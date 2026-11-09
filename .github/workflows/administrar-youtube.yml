@@ -1,0 +1,96 @@
+name: administrar-youtube
+
+# Administração automática do YouTube: organiza e corrige o que já está publicado (título,
+# descrição, tags) sem clique do dono. Não publica nada novo — publicar de verdade depende do
+# consentimento único (autorizar-youtube) e, para o vídeo sair público, da auditoria de
+# conformidade do Google ou do envio pelo navegador. O workflow diz isso quando falta.
+on:
+  schedule:
+    - cron: "43 6 * * *"
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "estado = só leitura · auto = corrige metadados"
+        required: true
+        default: estado
+        type: choice
+        options:
+          - estado
+          - auto
+          - corrigir
+      # Correção de UM vídeo já publicado, com o id dito. Nasceu do título que subiu cortado no
+      # meio do sentido em 06/11/2026 (HmbEdojjhsU). Sem id e sem texto, nada é tocado.
+      corrigir_id:
+        description: "id do vídeo a corrigir (só no modo corrigir)"
+        required: false
+        default: ""
+      corrigir_titulo:
+        description: "novo título (vazio = não mexe no título)"
+        required: false
+        default: ""
+
+permissions:
+  # write porque corrigir sincroniza posts/youtube-publicados.json: registro que diz título
+  # antigo depois de o vídeo ter sido corrigido é o mesmo defeito, só que espalhado.
+  contents: write
+
+concurrency:
+  group: administrar-youtube
+  cancel-in-progress: false
+
+jobs:
+  administrar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/rodar-contratos-isolados.py tools/testes-administrar-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-youtube-oauth.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-kit-youtube.py
+
+      - name: Administra
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          MODO_PEDIDO: ${{ inputs.modo }}
+          CORRIGIR_ID: ${{ inputs.corrigir_id }}
+          CORRIGIR_TITULO: ${{ inputs.corrigir_titulo }}
+        run: |
+          MODO="$MODO_PEDIDO"
+          if [ -z "$MODO" ]; then MODO=auto; fi
+          echo "modo: $MODO"
+          if [ "$MODO" = "corrigir" ]; then
+            python3 tools/administrar-youtube.py corrigir "$CORRIGIR_ID" --titulo "$CORRIGIR_TITULO" \
+              | tee /tmp/yt.txt || true
+          else
+            python3 tools/administrar-youtube.py "$MODO" | tee /tmp/yt.txt || true
+          fi
+          {
+            echo "### YouTube — administração ($MODO)"
+            echo
+            echo '```'
+            cat /tmp/yt.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Guarda o registro sincronizado (só quando houve correção)
+        run: |
+          if [ ! -e posts/youtube-publicados.json ]; then exit 0; fi
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/youtube-publicados.json
+          if git diff --cached --quiet; then
+            echo "registro sem mudança"
+            exit 0
+          fi
+          git commit -m "registro: título do vídeo corrigido no canal ($(date -u +'%d/%m %H:%M UTC'))"
+          bash tools/entrar-no-main.sh "registro do YouTube" || {
+            echo "::error::o registro corrigido não entrou no main"
+            exit 1
+          }

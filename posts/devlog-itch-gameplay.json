@@ -1,0 +1,6 @@
+{
+  "versao": "2026-10-30-gameplay",
+  "titulo": "O Ceifalume jogando sozinho: 2 minutos de gameplay com as instruções na tela",
+  "corpo": "Gravei o jogo rodando no navegador, do plantio a colheita, e coloquei uma faixa fixa explicando o que fazer em cada momento.\n\nNao e trailer nem montagem: e a build que esta aqui no itch, rodando em HTML5. O robo planta, espera a casca amadurecer, colhe, vende no bico e compra melhoria. Na captura de 130 segundos o relatorio da partida registrou 16 sementes plantadas e 8 colhidas.\n\nA faixa de instrucoes fica presa no rodape do comeco ao fim, medida segundo a segundo. Quem abre o video sem saber o que e o jogo entende o jogo sem procurar explicacao em outro lugar.\n\nAssistir: https://youtu.be/GuE7af6dYo8\n\nSe alguma duvida sua nao estiver respondida na faixa, escreve nos comentarios: a proxima gravacao usa a mesma captura automatica, entao a resposta pode virar instrucao na tela.",
+  "_nota": "Devlog do itch sobre o video de gameplay (30/10). Fica SEPARADO do devlog da 0.1 (posts/devlog-itch.json) para nao sobrescrever texto que ainda nao foi publicado. O favorito itch/devlog-gameplay-bookmarklet.txt envia este texto pelo navegador do dono (a Cloudflare bloqueia datacenter, entao este passo nao roda em servidor)."
+}

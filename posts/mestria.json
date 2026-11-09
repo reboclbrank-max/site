@@ -1,0 +1,58 @@
+{
+ "_lei": "MESTRIA POR CANAL — dono: 'especializar em tudo'. Cada canal tem padrão de qualidade, formato e cadência próprios. O robô segue, a régua cobra, o diário prova. Aprovado 15/10/2026.",
+ "instagram": {
+  "formatos": {
+   "foto_unica": "arte do jogo + legenda única (dedup total)",
+   "carrossel": "quando 2+ artes combinam (breve: pós-estudo)",
+   "reels": "1 por semana, sábado 19h BRT, gerado por ffmpeg"
+  },
+  "cadencia": "2/dia (10h e 19h BRT) — anti-bot de conta nova",
+  "proibido": "texto repetido, arte repetida, mais de 2 posts/dia, links encurtados",
+  "estudo_pendente": "carrossel via API (children),filtros de 1ª linha que seguram o dedo"
+ },
+ "bluesky": {
+  "formatos": {
+   "post": "texto único + hashtag certa",
+   "interacao": "3 devs/dia, comentário genuíno SEM link"
+  },
+  "cadencia": "8/dia",
+  "proibido": "spam de hashtag, responder mesmo dev 2x (dedup ativo)"
+ },
+ "threads": {
+  "formatos": {
+   "post": "conversa casual, tom humano"
+  },
+  "cadencia": "8/dia",
+  "proibido": "hashtag em excesso (cultura da rede)"
+ },
+ "nostr": {
+  "formatos": {
+   "nota": "anúncio curto com link"
+  },
+  "cadencia": "8/dia",
+  "proibido": "texto longo demais"
+ },
+ "push_dono": {
+  "formatos": {
+   "ntfy": "resumo do ciclo"
+  },
+  "cadencia": "8/dia",
+  "proibido": "texto gigante"
+ },
+ "youtube": {
+  "estado": "PENDENTE-PORTA (Google Cloud/OAuth quando o dono quiser: 20 min, upload automático de vídeos gerados pelo ffmpeg)",
+  "formatos_planejados": {
+   "short": "reels de 12.5s reutilizados + jogabilidade gravada",
+   "video": "trailer novo a cada versão"
+  }
+ },
+ "itch": {
+  "estado": "PENDENTE-CHAVE (API key: builds sobem sozinhos via butler)",
+  "formatos_planejados": {
+   "devlog": "casa escreve rascunho, dono cola (API de devlog não pública)"
+  }
+ },
+ "instagram_delete": {
+  "estado": "A Meta NÃO expõe delete de post na API (list/create/update ✓, delete ✗ — confirmado em docs/stack/elfsight 2026). Gêmeos saem pelo app do dono: ⋯ → Excluir. A casa NUNCA mais cria gêmeos (dedup total)."
+ }
+}

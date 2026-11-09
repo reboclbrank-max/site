@@ -1,0 +1,571 @@
+{
+ "pacotes": [
+  {
+   "id": "ceifalume-gameplay",
+   "angulo": "onde_esta_a_comunidade:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 15,
+    "colhidas": 9,
+    "toques": 724,
+    "minutos": 2,
+    "toques_por_minuto": 362
+   },
+   "slug": "ceifalume",
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "arquivo_existe": true,
+   "bytes": 4008932,
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "capa_existe": true,
+   "dimensoes": [
+    1280,
+    720
+   ],
+   "formato": "vídeo normal (16:9)",
+   "titulo": "Onde falar com quem fez CEIFALUME",
+   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nQuem fez o jogo responde por lá — e o vídeo mostra o que essa pessoa construiu: 9 colheitas na partida.\n\nO convite é para conversar sobre o jogo, não para inflar número.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #comunidade",
+   "tags": [
+    "ceifalume",
+    "jogo de fazenda",
+    "idle game",
+    "jogo indie brasileiro",
+    "godot",
+    "jogo offline",
+    "fazenda noturna"
+   ],
+   "idioma": "pt-BR",
+   "categoria": "Gaming",
+   "visibilidade": "público",
+   "feito_para_criancas": "não",
+   "origem": "Gameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
+   "recusas_do_redator": [
+    {
+     "angulo": "como_funciona:ceifalume-8h",
+     "motivo": "título já publicado neste canal: Como funciona: as plantações crescem e as vendas acontecem"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-8h",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-8h",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "quem_fe_z:ceifalume-8h",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-8h",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-8h",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-8h",
+     "motivo": "mesmo ângulo do último vídeo publicado (como_foi_gravado:ceifalume-8h) — o ângulo roda"
+    },
+    {
+     "angulo": "o_que_muda_depois:ceifalume-8h",
+     "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "bastidor_do_dia:ceifalume-8h",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+    },
+    {
+     "angulo": "como_funciona:ceifalume-chuva",
+     "motivo": "título já publicado neste canal: Como funciona: a chuva rega de graça: não custa água nem moeda"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-chuva",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-chuva",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "quem_fe_z:ceifalume-chuva",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-chuva",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-chuva",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-chuva",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:ceifalume-chuva",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "como_funciona:ceifalume-tutorial",
+     "motivo": "texto repetido: 0.62 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-tutorial",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-tutorial",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-tutorial",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-tutorial",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-tutorial",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:ceifalume-apk",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-apk",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-apk",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-apk",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-apk",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-apk",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:ceifalume-anuncio",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-anuncio",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-anuncio",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-anuncio",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-anuncio",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-anuncio",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:ceifalume-save",
+     "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-save",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-save",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-save",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-save",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-save",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-culturas",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-melhorias",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:ceifalume-versao",
+     "motivo": "texto repetido: 0.69 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:ceifalume-versao",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-versao",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:ceifalume-versao",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:ceifalume-versao",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:ceifalume-versao",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:oficio-devlog",
+     "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:oficio-devlog",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:oficio-devlog",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:oficio-devlog",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:oficio-devlog",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:oficio-devlog",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:casa-canais",
+     "motivo": "texto repetido: 0.62 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:casa-canais",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:casa-canais",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:casa-canais",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:casa-canais",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:casa-canais",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:casa-newsletter",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:casa-newsletter",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:casa-newsletter",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:casa-newsletter",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:casa-newsletter",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:casa-newsletter",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:casa-telegram",
+     "motivo": "texto repetido: 0.70 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:casa-telegram",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:casa-telegram",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:casa-telegram",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:casa-telegram",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:casa-telegram",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:casa-site-gratis",
+     "motivo": "texto repetido: 0.67 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:casa-site-gratis",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "o_que_tem_dentro:casa-site-gratis",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:casa-site-gratis",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:casa-site-gratis",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:video-iCE6O3d_WD0",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-iCE6O3d_WD0",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:marco-instagram-publicacoes",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:marco-instagram-publicacoes",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "o_que_tem_dentro:marco-instagram-publicacoes",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:marco-instagram-publicacoes",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:marco-instagram-publicacoes",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:video-cfB5ZBdC-NA",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-cfB5ZBdC-NA",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-cfB5ZBdC-NA",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-cfB5ZBdC-NA",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-cfB5ZBdC-NA",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-cfB5ZBdC-NA",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:video-_ffmjSMsW0Y",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-_ffmjSMsW0Y",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-_ffmjSMsW0Y",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-_ffmjSMsW0Y",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-_ffmjSMsW0Y",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-_ffmjSMsW0Y",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:video-hBvkQhSS-_4",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-hBvkQhSS-_4",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-hBvkQhSS-_4",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-hBvkQhSS-_4",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-hBvkQhSS-_4",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-hBvkQhSS-_4",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "como_funciona:marco-youtube-shorts",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:marco-youtube-shorts",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "o_que_tem_dentro:marco-youtube-shorts",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:marco-youtube-shorts",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:marco-youtube-shorts",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "numeros",
+     "motivo": "título quase igual a um já publicado (0.97)"
+    },
+    {
+     "angulo": "pergunta",
+     "motivo": "título já publicado neste canal: Quantas colheitas cabem em 2 minutos de CEIFALUME?"
+    },
+    {
+     "angulo": "cultivo",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 0 hashtags): O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "comparacao",
+     "motivo": "fato ausente no relatório desta partida: _anterior"
+    }
+   ],
+   "angulos_aprovados": 133,
+   "angulos_candidatos": 254
+  },
+  {
+   "id": "prancheta-gameplay",
+   "slug": "prancheta",
+   "angulo": "estrategia_da_vez",
+   "origem_do_texto": "redator:estrategia_da_vez",
+   "estrategia": "pressao_rapida",
+   "vinheta": "f609708c6d7d",
+   "numeros": {
+    "passos": 12,
+    "passos_confirmados": 9,
+    "toques_partida": 3
+   },
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "capa": "media/gameplay/prancheta-capa.png",
+   "dimensoes": [
+    1280,
+    720
+   ],
+   "formato": "vídeo normal (16:9)",
+   "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
+   "descricao": "Esta gravação foi feita com uma escolha declarada: instrução de pressão no intervalo e velocidade rápida.\n\nA escolha não é enfeite de título: ela muda os botões que o agente aperta dentro da partida, e a cena de um vídeo para o outro deixa de ser a mesma.\n\nO relatório da gravação guarda a assinatura da partida, então duas gravações iguais não passam por novas. O jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no APK.\n\nFonte: posts/cenas.json (partida f609708c6d7d, conferida em 2026-11-08T23:14:53Z).\n\nGameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#prancheta #jogobrasileiro",
+   "tags": [
+    "prancheta",
+    "manager de futebol",
+    "jogo de futebol",
+    "jogo indie brasileiro",
+    "godot",
+    "futebol ficticio",
+    "jogo de navegador"
+   ],
+   "idioma": "pt-BR",
+   "categoria": "Gaming",
+   "visibilidade": "público",
+   "feito_para_criancas": "não",
+   "origem": "Gameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida.",
+   "arquivo_existe": true,
+   "bytes": 1074766,
+   "capa_existe": true
+  }
+ ],
+ "problemas": {}
+}

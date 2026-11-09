@@ -1,0 +1,53 @@
+{
+ "quando": "2026-10-31T01:06:59Z",
+ "pergunta": "existe algum caminho automático para publicar o devlog do gameplay no itch.io, sem sessão humana logada?",
+ "resposta": "não — e agora está medido por dois lados: (1) o painel do itch responde 403 com desafio do Cloudflare para IP de datacenter; (2) a API oficial não tem endpoint de devlog/post, e o próprio itch diz que não oferece API de publicação para evitar spam.",
+ "medidas": [
+  {
+   "url": "https://itch.io/dashboard",
+   "http": "403",
+   "bytes": 5529,
+   "url_final": "https://itch.io/login",
+   "desafio_cloudflare": true
+  },
+  {
+   "url": "https://itch.io/game/edit/5017404",
+   "http": "403",
+   "bytes": 5529,
+   "url_final": "https://itch.io/login",
+   "desafio_cloudflare": true
+  },
+  {
+   "url": "https://rebocl-brank.itch.io/ceifalume/devlog",
+   "http": "200",
+   "bytes": 18764,
+   "url_final": "https://rebocl-brank.itch.io/ceifalume/devlog",
+   "desafio_cloudflare": false
+  },
+  {
+   "url": "https://api.itch.io/credentials/info",
+   "http": "401",
+   "bytes": 38,
+   "url_final": "https://api.itch.io/credentials/info",
+   "desafio_cloudflare": false
+  }
+ ],
+ "api_oficial": {
+  "documento": "https://github.com/itchio/itch.io/blob/master/docs/api/serverside.md",
+  "http_ao_baixar": "200",
+  "tem_endpoint_de_devlog": false,
+  "endpoints": [
+   "credentials/info",
+   "me",
+   "my-games",
+   "game/GAME_ID/download_keys",
+   "game/GAME_ID/purchases"
+  ],
+  "fala_do_itch": "itch.io/t/2097903 — \"Generally we don't provide APIs for people to post things since it may contribute to spam that we have to moderate\""
+ },
+ "onde_o_conteudo_chega_mesmo_assim": [
+  "build no ar (2257110): ceifalume/index.html tem o selo ▶ gameplay com instruções → https://youtu.be/GuE7af6dYo8",
+  "blog/ceifalume-gameplay.html (site da casa, sem trava)",
+  "https://youtu.be/GuE7af6dYo8 (YouTube, público)"
+ ]
+}

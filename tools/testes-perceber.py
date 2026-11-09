@@ -1,0 +1,316 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Testes do perceber: o olho da casa.
+
+O que este arquivo cobra é o que separa "saber o que fazer" de "seguir o relógio":
+necessidade sem número não entra, canal cego é do dono, artefato velho é do robô, e a
+fila recebe a tarefa — sem duplicar, sem inventar, sem quebrar o ciclo se a fila falhar.
+"""
+import datetime
+import importlib.util
+import io
+import json
+import os
+import sys
+import tempfile
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FALHAS = []
+TOTAL = []
+
+
+def ok(nome, condicao, detalhe=None):
+    TOTAL.append(nome)
+    if condicao:
+        print("OK  " + nome)
+    else:
+        FALHAS.append(nome)
+        print("FALHA  " + nome + (("  <" + str(detalhe) + ">") if detalhe is not None else ""))
+
+
+def carregar():
+    caminho = os.path.join(RAIZ, "tools", "perceber.py")
+    spec = importlib.util.spec_from_file_location("perceber", caminho)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+p = carregar()
+AGORA = datetime.datetime(2026, 10, 30, 12, 0, tzinfo=datetime.timezone.utc)
+
+
+# ---------------------------------------------------------------- canais cegos
+def log_de(linhas_por_ciclo):
+    return [{"quando": "01/10/2026 12:00 UTC", "linhas": l} for l in linhas_por_ciclo]
+
+
+_cego = [{"telegram": "⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT"}] * 6
+_r = p.canais_cegos(lambda n: log_de(_cego)[:n], {"telegram": ["TELEGRAM_TOKEN", "TELEGRAM_CHAT"]})
+ok("canal que nunca publicou vira necessidade do DONO", _r and _r[0]["quem"] == "dono", _r)
+ok("o porquê traz o número de ciclos e o nome do segredo",
+   _r and "6 ciclos" in _r[0]["porque"] and "TELEGRAM_TOKEN + TELEGRAM_CHAT" in _r[0]["porque"], _r)
+
+_redacao = ([{"mastodon": "➖ sem chave ainda"}] * 3
+            + [{"mastodon": "⚪ configuracao de publicacao ausente"}] * 3)
+_r2 = p.canais_cegos(lambda n: log_de(_redacao)[:n], {"mastodon": ["MASTODON_URL"]})
+ok("o reconhecimento não depende da redação antiga ('sem chave', 'configuracao ausente')",
+   _r2 and _r2[0]["quem"] == "dono", _r2)
+
+_publica = ([{"bluesky": "✅ postado 200"}] * 5)
+ok("canal que publica NÃO vira necessidade",
+   p.canais_cegos(lambda n: log_de(_publica)[:n], {"bluesky": ["BLUESKY_HANDLE"]}) == [])
+ok("amostra menor que 5 ciclos não acusa canal",
+   p.canais_cegos(lambda n: log_de(_cego)[:n], {"telegram": ["TELEGRAM_TOKEN"]}) != []
+   and p.canais_cegos(lambda n: log_de(_cego[:3])[:n], {"telegram": ["TELEGRAM_TOKEN"]}) == [])
+
+# ---------------------------------------------------------------- artefatos velhos
+tmp = tempfile.mkdtemp(prefix="perceber-")
+_raiz_antiga = p.RAIZ
+p.RAIZ = tmp
+os.makedirs(os.path.join(tmp, "posts"), exist_ok=True)
+for caminho, _nome, _tipo in p.ARTEFATOS_VENCIVEIS:
+    alvo = os.path.join(tmp, caminho)
+    os.makedirs(os.path.dirname(alvo), exist_ok=True)
+    open(alvo, "w").write("{}")
+_velhos = p.artefatos_velhos(AGORA)
+ok("arquivo recém-escrito NÃO vira necessidade", _velhos == [], [i["o_que"] for i in _velhos])
+
+_antigo = (AGORA - datetime.timedelta(hours=48)).timestamp()
+os.utime(os.path.join(tmp, "posts", "plano-do-dia.json"), (_antigo, _antigo))
+_velhos = p.artefatos_velhos(AGORA)
+ok("arquivo parado há 48h vira necessidade do ROBÔ",
+   len(_velhos) == 1 and _velhos[0]["quem"] == "robô", _velhos)
+ok("o porquê mede a idade em horas",
+   _velhos and "48 h" in _velhos[0]["porque"], _velhos)
+ok("a necessidade velha vira tarefa do tipo que a resolve",
+   _velhos and _velhos[0]["tipo_fila"] == "pesquisar", _velhos)
+
+os.remove(os.path.join(tmp, "posts", "aprendizado.json"))
+_velhos = p.artefatos_velhos(AGORA)
+ok("arquivo ausente também é necessidade (e diz 'ausente')",
+   any("ausente" in i["porque"] for i in _velhos), [i["porque"] for i in _velhos])
+p.RAIZ = _raiz_antiga
+
+# ---------------------------------------------------------------- metas em risco
+_placar = [
+    {"meta": "itch: downloads", "alvo": "100", "observado": "47", "falta": "53",
+     "por_dia": "4.15", "status": "EM_CURSO"},
+    {"meta": "YouTube: shorts", "alvo": "4", "observado": "6", "falta": "0",
+     "por_dia": "—", "status": "ATINGIDO"},
+    {"meta": "Instagram: seguidores", "alvo": "50", "observado": "0", "falta": "50",
+     "por_dia": "0.15", "status": "EM_CURSO"},
+]
+_r = p.metas_em_risco(_placar, dias_restantes=13)
+ok("meta com ritmo alto vira necessidade", len(_r) == 1 and "itch: downloads" in _r[0]["o_que"], _r)
+ok("meta batida e meta de ritmo baixo ficam de fora", all("shorts" not in i["o_que"] and
+                                                          "Instagram" not in i["o_que"] for i in _r), _r)
+ok("o porquê mostra falta, ritmo e prazo",
+   _r and "53" in _r[0]["porque"] and "4.15" in _r[0]["porque"] and "13 dias" in _r[0]["porque"], _r)
+# a régua em markdown carrega a coluna "desde a partida" como número (o ritmo medido depende dela)
+_linhas_regua = p.placar_linhas()
+ok("a régua real chega com delta numérico (sem isso não há ritmo medido)",
+   _linhas_regua and any(isinstance(l.get("delta"), (int, float)) for l in _linhas_regua),
+   [(l.get("meta"), l.get("delta")) for l in _linhas_regua[:4]])
+ok("delta ausente na régua vira None, não zero",
+   all(l.get("delta") is None or isinstance(l.get("delta"), (int, float)) for l in _linhas_regua),
+   [(l.get("meta"), l.get("delta")) for l in _linhas_regua[:4]])
+ok("meta em risco enfileira publicação (é o que empurra número)",
+   _r and _r[0]["tipo_fila"] == "publicar", _r)
+
+# ---- o ritmo MEDIDO na frase (07/11/2026) ------------------------------------------------
+# Medido hoje: yt_inscritos saiu de 24 para 24 em 25 dias; a frase só dizia "faltam 16 e o
+# ritmo necessário é 3.2 por dia". Necessário e medido lado a lado, ou o dono lê esperança.
+_placar_ritmo = [
+    {"meta": "YouTube: inscritos", "alvo": "40", "observado": "24", "falta": "16",
+     "por_dia": "3.2", "status": "EM_CURSO", "delta": 0, "partida": 24},
+]
+_r_ritmo = p.metas_em_risco(_placar_ritmo, dias_restantes=5, dias_decorridos=25)
+ok("o porquê mostra o ritmo medido quando ele existe",
+   _r_ritmo and "ritmo medido: 0.0 por dia em 25 dias" in _r_ritmo[0]["porque"],
+   _r_ritmo[0]["porque"] if _r_ritmo else None)
+ok("e diz, em letras claras, que não fecha no prazo",
+   _r_ritmo and "não fecha no prazo" in _r_ritmo[0]["porque"],
+   _r_ritmo[0]["porque"] if _r_ritmo else None)
+ok("o necessário continua na frase (os dois números lado a lado)",
+   _r_ritmo and "3.2" in _r_ritmo[0]["porque"], _r_ritmo[0]["porque"] if _r_ritmo else None)
+_r_rapido = p.metas_em_risco(
+    [{"meta": "itch: downloads", "alvo": "100", "observado": "48", "falta": "52",
+      "por_dia": "2.0", "status": "EM_CURSO", "delta": 60, "partida": 0}],
+    dias_restantes=5, dias_decorridos=25)
+ok("ritmo medido suficiente NÃO é chamado de fora de alcance",
+   _r_rapido and "não fecha no prazo" not in _r_rapido[0]["porque"],
+   _r_rapido[0]["porque"] if _r_rapido else None)
+_r_sem = p.metas_em_risco(
+    [{"meta": "Bluesky: seguidores", "alvo": "50", "observado": "32", "falta": "18",
+      "por_dia": "3.6", "status": "EM_CURSO"}], dias_restantes=5)
+ok("sem delta, não inventa ritmo medido",
+   _r_sem and "ritmo medido" not in _r_sem[0]["porque"],
+   _r_sem[0]["porque"] if _r_sem else None)
+
+# ---- meta parada: plano novo, não repetição (07/11/2026) ----------------------------------
+# Empurrar uma meta com ritmo 0,0/dia há 25 dias é repetição com outro nome. A necessidade vira
+# pesquisa de abordagem — e não uma publicação a mais no mesmo canal.
+_paradas = p.metas_paradas([
+    {"meta": "YouTube: inscritos", "status": "PARADA", "observado": "24", "alvo": "40"},
+    {"meta": "Bluesky: seguidores", "status": "RENOVADA", "observado": "32", "alvo": "50"},
+])
+ok("meta PARADA vira necessidade", len(_paradas) == 1, _paradas)
+ok("meta parada pede pesquisa, não publicação", _paradas and _paradas[0]["tipo_fila"] == "pesquisar",
+   _paradas[0]["tipo_fila"] if _paradas else None)
+ok("meta parada não é chamada de 'empurrar'", _paradas and "empurrar" not in _paradas[0]["o_que"],
+   _paradas[0]["o_que"] if _paradas else None)
+ok("meta parada diz os dias REAIS, não o mínimo da regra",
+   p.metas_paradas([{"meta": "x", "status": "PARADA", "observado": "24", "dias_sem_ritmo": 25}])
+   and "24 em 25 dias" in p.metas_paradas([{"meta": "x", "status": "PARADA", "observado": "24",
+                                            "dias_sem_ritmo": 25}])[0]["porque"],
+   p.metas_paradas([{"meta": "x", "status": "PARADA", "observado": "24", "dias_sem_ritmo": 25}]))
+ok("meta parada diz que o ritmo é 0,0/dia", _paradas and "0,0/dia" in _paradas[0]["porque"],
+   _paradas[0]["porque"] if _paradas else None)
+ok("meta RENOVADA não entra como parada", all("Bluesky" not in i["o_que"] for i in _paradas), _paradas)
+_renovada = p.metas_em_risco(
+    [{"meta": "itch: downloads", "alvo": "100", "observado": "48", "falta": "52",
+      "por_dia": "10.4", "status": "RENOVADA", "delta": 4}], dias_restantes=5, dias_decorridos=25)
+ok("meta RENOVADA continua sendo empurrada", len(_renovada) == 1, _renovada)
+
+# ---- canais desligados por decisão não voltam como cobrança (07/11/2026) -------------------
+# Telegram, Mastodon e Discord nunca publicaram por falta de segredo e voltavam TODO dia no
+# relatório. A decisão de 07/11 foi não ligar: o registro fica, a cobrança para.
+_ciclos_falsos = [{"linhas": {"telegram": "INDISPONIVEL: falta o segredo TELEGRAM_TOKEN",
+                             "discord": "INDISPONIVEL: falta o segredo DISCORD_WEBHOOK"}}
+                  for _ in range(6)]
+_segredos = {"telegram": ["TELEGRAM_TOKEN", "TELEGRAM_CHAT"], "discord": ("DISCORD_WEBHOOK",)}
+_antes = p.canais_cegos(lambda n: _ciclos_falsos, _segredos)
+ok("canal cego sem decisão continua cobrado", len(_antes) == 2, [n["o_que"] for n in _antes])
+_depois = p.canais_cegos(lambda n: _ciclos_falsos, _segredos, desligados={"telegram": "não ligar"})
+ok("canal desligado sai da cobrança", [n["o_que"] for n in _depois] == ["ligar o canal discord"],
+   [n["o_que"] for n in _depois])
+ok("o arquivo da decisão é lido de verdade",
+   set(p.ler_canais_desligados()) >= {"telegram", "mastodon", "discord"},
+   p.ler_canais_desligados())
+ok("cada canal desligado tem motivo escrito",
+   all(len(v) > 20 for v in p.ler_canais_desligados().values()), p.ler_canais_desligados())
+
+# ---------------------------------------------------------------- repetição
+ok("repetição acima do limite vira necessidade",
+   len(p.repeticao_alta({"repeticao_desde_o_conserto": {"pct": 22.0, "ciclos": 9}})) == 1)
+ok("repetição dentro do limite não vira nada",
+   p.repeticao_alta({"repeticao_desde_o_conserto": {"pct": 4.0, "ciclos": 9}}) == [])
+ok("sem medição de repetição, não inventa necessidade", p.repeticao_alta({}) == [])
+
+# ---------------------------------------------------------------- fila travada
+ok("tarefa que desistiu vira necessidade de reenfileirar",
+   len(p.fila_travada({"tarefas": [{"tipo": "publicar", "estado": "falhou"}]})) == 1)
+ok("fila saudável não vira nada", p.fila_travada({"tarefas": [{"tipo": "medir", "estado": "feito"}]}) == [])
+
+# ---------------------------------------------------------------- kit esperando o dono
+_r = p.kit_esperando([{"slug": "ceifalume", "quando": "2026-10-29T12:00:00Z"}], AGORA)
+ok("vídeo pronto e não publicado vira necessidade do DONO", _r and _r[0]["quem"] == "dono", _r)
+ok("o caminho do dono é a palavra PUBLICAR", _r and "PUBLICAR" in _r[0]["como"], _r)
+ok("vídeo já publicado (com id) não vira nada", p.kit_esperando([{"slug": "x", "id": "abc"}], AGORA) == [])
+
+# ---------------------------------------------------------------- pendências paradas
+_r = p.pendencias_paradas({"quando": "2026-10-20T12:00:00Z",
+                           "itens": [{"id": "devlog", "titulo": "devlog no itch",
+                                      "estado": "esperando o dono", "como": "1 clique"}]}, AGORA)
+ok("pendência parada há mais de 2 dias é lembrada com número",
+   _r and "dia(s)" in _r[0]["porque"], _r)
+ok("pendência de hoje não vira cobrança",
+   p.pendencias_paradas({"quando": "2026-10-30T06:00:00Z",
+                         "itens": [{"id": "x", "titulo": "x", "estado": "esperando o dono"}]}, AGORA) == [])
+ok("pendência feita nunca vira cobrança",
+   p.pendencias_paradas({"quando": "2026-10-01T00:00:00Z",
+                         "itens": [{"id": "x", "titulo": "x", "estado": "feito"}]}, AGORA) == [])
+
+# ---------------------------------------------------------------- o livro de verdade
+_real = p.perceber(agora=AGORA, enfileirar=False)
+ok("o perceber do repositório roda e separa robô × dono",
+   isinstance(_real["robo"], list) and isinstance(_real["dono"], list))
+ok("toda necessidade tem número no porquê",
+   all(any(ch.isdigit() for ch in i["porque"]) for i in _real["robo"] + _real["dono"]),
+   [i["porque"] for i in _real["robo"] + _real["dono"] if not any(ch.isdigit() for ch in i["porque"])])
+ok("toda necessidade diz quem faz e como verificar",
+   all(i["quem"] in ("robô", "dono") and i["como"] and i["verifica"]
+       for i in _real["robo"] + _real["dono"]))
+# A COBRANÇA DE CANAL MUDOU DE REGRA EM 07/11/2026: telegram, mastodon e discord foram
+# desligados por decisão (posts/canais-desligados.json) e não voltam como item do dia. O que se
+# cobra agora é o invariante: canal desligado NÃO aparece, e a mecânica continua provada acima
+# (canal cego sem decisão vira necessidade do dono).
+_desligados_reais = p.ler_canais_desligados()
+ok("os canais desligados por decisão não voltam como cobrança do dono",
+   not [i for i in _real["dono"] if any(canal in i["o_que"] for canal in _desligados_reais)],
+   [i["o_que"] for i in _real["dono"]])
+ok("o arquivo dos canais desligados é lido pelo perceber do repositório",
+   set(_desligados_reais) == {"telegram", "mastodon", "discord"}, _desligados_reais)
+ok("nenhuma necessidade se repete (chave única)",
+   len({i.get("chave") or i["o_que"] for i in _real["robo"] + _real["dono"]})
+   == len(_real["robo"] + _real["dono"]))
+ok("a lei está escrita: necessidade sem número não entra",
+   "sem número não entra" in _real["_lei"])
+
+# ---------------------------------------------------------------- enfileirar de verdade
+_tmp2 = tempfile.mkdtemp(prefix="perceber-fila-")
+os.makedirs(os.path.join(_tmp2, "posts"), exist_ok=True)
+_fila = p.carregar_fila()                      # carrega do RAIZ real (o módulo é o mesmo)
+_fila.ARQUIVO = os.path.join(_tmp2, "posts", "fila-tarefas.json")
+_dados = _fila.carregar(_fila.ARQUIVO)
+_antes = len(_dados["tarefas"])
+_criada = _fila.adicionar(_dados, "publicar", motivo="teste", chave="meta-x")
+_fila.gravar(_dados, _fila.ARQUIVO)
+ok("a fila aceita a tarefa com a chave da necessidade",
+   _criada and _criada["chave"] == "meta-x" and len(_dados["tarefas"]) == _antes + 1)
+_dados2 = _fila.carregar(_fila.ARQUIVO)
+ok("enfileirar duas vezes não duplica (chave)",
+   _fila.adicionar(_dados2, "publicar", motivo="teste", chave="meta-x") is None)
+
+# A necessidade tem de PASSAR NA FRENTE da rotina do relógio (medir=90), senão o olho vê
+# o problema e a mão faz o de sempre.
+_fila.adicionar(_dados2, "medir", motivo="rotina", chave="medir-teste")
+for _t in _dados2["tarefas"]:
+    if _t.get("chave") == "meta-x":
+        _t["prioridade"] = p.PRIORIDADE_NECESSIDADE
+_escolhida = _fila.proxima(_dados2)
+ok("necessidade percebida passa na frente da rotina de medir",
+   _escolhida and _escolhida.get("chave") == "meta-x", _escolhida)
+ok("a prioridade da necessidade é maior que a de qualquer tipo de rotina",
+   p.PRIORIDADE_NECESSIDADE > max(_fila.PRIORIDADES.values()))
+
+# ---------------------------------------------------------------- markdown e escrita
+_md = p.markdown(_real)
+ok("o markdown separa robô e dono", "O robô já colocou na fila" in _md and "Espera o dono" in _md)
+ok("o markdown diz 'nada pendente' quando não há nada (sem inventar)",
+   "Nada pendente" in p.markdown({"quando": "x", "_lei": "l", "robo": [], "dono": [],
+                                  "enfileiradas": [], "contagem": {"robo": 0, "dono": 0,
+                                                                   "enfileiradas": 0}}))
+_js, _mds = os.path.join(_tmp2, "percebido.json"), os.path.join(_tmp2, "percebido.md")
+_a1, _a2 = p.SAIDA_JSON, p.SAIDA_MD
+p.SAIDA_JSON, p.SAIDA_MD = _js, _mds
+_out, sys.stdout = sys.stdout, io.StringIO()
+try:
+    p.main(["--sem-fila"])
+finally:
+    sys.stdout = _out
+    p.SAIDA_JSON, p.SAIDA_MD = _a1, _a2
+ok("grava percebido.json e .md", os.path.exists(_js) and os.path.exists(_mds))
+ok("escrita atômica (sem .tmp)", not os.path.exists(_js + ".tmp") and not os.path.exists(_mds + ".tmp"))
+ok("o json gravado tem contagem", "contagem" in json.load(open(_js, encoding="utf-8")))
+# A SUÍTE NÃO PODE ESCREVER NA FILA DA CASA (06/11/2026): até hoje o CLI era chamado com
+# enfileirar no padrão e a suíte enfiava uma tarefa em posts/fila-tarefas.json a cada execução —
+# rodei a bateria em paralelo e quatro suítes brigaram pelo mesmo arquivo.
+ok("o CLI tem porta que não escreve na fila (--sem-fila)",
+   "--sem-fila" in open(os.path.join(RAIZ, "tools", "perceber.py"), encoding="utf-8").read())
+
+# ---------------------------------------------------------------- integração com o pulso
+_fonte_orq = open(os.path.join(RAIZ, "tools", "orquestrador.py"), encoding="utf-8").read()
+ok("o pulso consulta a fila antes do relógio",
+   "usar_fila" in _fonte_orq and "if da_fila:" in _fonte_orq)
+_fonte_wf = open(os.path.join(RAIZ, ".github", "workflows", "marketing-24h.yml"),
+                 encoding="utf-8").read()
+ok("o ciclo roda o perceber antes do pulso",
+   _fonte_wf.index("tools/perceber.py") < _fonte_wf.index("tools/orquestrador.py"))
+
+print()
+if FALHAS:
+    print("%d de %d verificações do perceber FALHARAM" % (len(FALHAS), len(TOTAL)))
+    sys.exit(1)
+print("%d/%d verificações do perceber passaram" % (len(TOTAL), len(TOTAL)))

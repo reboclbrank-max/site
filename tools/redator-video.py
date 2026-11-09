@@ -1,0 +1,905 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Redator do vídeo — o texto do gameplay sai de um ÂNGULO declarado e dos fatos da partida.
+
+POR QUE EXISTE (06/11/2026). O canal repetiu o mesmo título de gameplay três vezes
+(`f5kQFOQs0To`, `GuE7af6dYo8`, `2qsSknSyeAs`). O portão de forma passou a recusar repetição —
+e aí apareceu o outro lado: com o texto do kit sendo um MOLDE, a segunda gravação é recusada
+sempre (título 0.94 de semelhança, descrição 1.00 de Jaccard). Freio sem redator é canal parado.
+
+O que este arquivo faz, e o que ele NÃO faz:
+
+  * escolhe um ÂNGULO entre os DECLARADOS abaixo — não há sorteio nem geração livre de texto;
+  * escreve só com números MEDIDOS naquela partida (mudas, colheitas, toques, minutos) e com
+    fatos do jogo que estão no kit oficial (`tools/kit-youtube.py`);
+  * passa o texto pelo MESMO portão dos outros canais (`tools/portao-publicacao.py`, canal
+    youtube, janela 9h–22h de Brasília) contra o histórico do canal;
+  * recusa quando não há fato para dizer ou quando nenhum ângulo passa — e diz o número e o
+    motivo da recusa. Melhor não publicar do que publicar o mesmo de novo.
+
+Ângulo declarado não é enfeite: é o contrato de variedade. Cada um tem abertura, esqueleto de
+frases e quantidade de hashtags diferentes, porque é isso que o portão compara quando pergunta
+"isto é o mesmo post de novo?".
+"""
+import importlib.util
+import json
+import os
+import sys
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+JANELA_DO_CANAL = {"janela": {"inicio": 9, "fim": 22}}
+FUSO_DO_CANAL = -3
+
+# Fatos do jogo que o texto pode afirmar — todos vêm do kit oficial, não daqui.
+FATOS_DO_KIT = {
+    "prancheta": {
+        "mecanica": "você desenha a bola parada na prancheta e vê a partida simular",
+        "o_que_e": "simulador de gestão de futebol 100% fictício",
+        "onde": "grátis no navegador ou no APK",
+        "motor": "feito com Godot, feito no Brasil",
+    },
+    "ceifalume": {
+        "mecanica": "plante, colha e negocie à luz da lanterna",
+        "atencao": "as plantações crescem por até 8 horas mesmo com o jogo fechado",
+        "onde": "grátis no navegador ou no Android, sem conta",
+        "motor": "feito com Godot, feito no Brasil",
+    },
+}
+
+
+# ESTRATÉGIAS DA GRAVAÇÃO, em português — a mesma lista de tools/cena.py, dita para o espectador.
+ESTRATEGIAS_EM_TEXTO = {
+    "pressao_rapida": "instrução de pressão no intervalo e velocidade rápida",
+    "posse_normal": "a partida inteira em ritmo normal, sem mexer no plano",
+    "contra_ataque": "sem instrução e velocidade rápida, mostrando a virada",
+}
+
+# ÂNGULOS DO PRANCHETA. Cada um declara de que fato precisa ("precisa") e é pulado com motivo se
+# o relatório daquela gravação não tiver o número. Nada aqui é estimado: é o que o gravador viu.
+ANGULOS_PRANCHETA = [
+    {
+        "id": "roteiro_do_agente",
+        "precisa": ("passos", "passos_confirmados"),
+        "hashtags": ["#prancheta", "#godot"],
+        "titulo": lambda f, j: "%d passos do menu à prancheta, %d confirmados por imagem" % (
+            f["passos"], f["passos_confirmados"]),
+        "corpo": lambda f, j: [
+            "A gravação atravessa o jogo do começo ao fim: menu, nova carreira, convite de clube, "
+            "sugestão do staff, microciclo da semana e, por fim, a prancheta tática.",
+            "São %d passos, e %d deles foram confirmados por MUDANÇA DE TELA — o gravador compara "
+            "o quadro antes e depois de cada toque, então passo que não muda nada não conta."
+            % (f["passos"], f["passos_confirmados"]),
+            "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+    {
+        "id": "estrategia_da_vez",
+        "precisa": ("estrategia",),
+        "hashtags": ["#prancheta", "#jogobrasileiro"],
+        "titulo": lambda f, j: "PRANCHETA: %s" % ESTRATEGIAS_EM_TEXTO.get(
+            f["estrategia"], f["estrategia"]),
+        "corpo": lambda f, j: [
+            "Esta gravação foi feita com uma escolha declarada: %s."
+            % ESTRATEGIAS_EM_TEXTO.get(f["estrategia"], f["estrategia"]),
+            "A escolha não é enfeite de título: ela muda os botões que o agente aperta dentro da "
+            "partida, e a cena de um vídeo para o outro deixa de ser a mesma.",
+            "O relatório da gravação guarda a assinatura da partida, então duas gravações iguais "
+            "não passam por novas. O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+    {
+        "id": "toques_da_partida",
+        "precisa": ("toques_partida",),
+        "hashtags": ["#prancheta", "#devlog"],
+        "titulo": lambda f, j: "O que %d toques fizeram na partida do PRANCHETA" % f["toques_partida"],
+        "corpo": lambda f, j: [
+            "Na partida, o agente deu %d toques e o gravador registrou o que cada um mudou na tela."
+            % f["toques_partida"],
+            "O plano veio do staff, o microciclo foi aplicado antes de jogar e a instrução do "
+            "intervalo mudou o comportamento do time — tudo isso está no vídeo, na ordem.",
+            "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+    {
+        "id": "como_funciona_prancheta",
+        "precisa": ("_fatos_do_jogo",),
+        "hashtags": ["#prancheta", "#futebol"],
+        "titulo": lambda f, j: "Como o PRANCHETA simula uma partida a partir da prancheta",
+        "corpo": lambda f, j: [
+            "O PRANCHETA é %s: %s." % (j["o_que_e"], j["mecanica"]),
+            "Na gravação, o agente escolhe o plano recomendado pelo staff e vê a partida simular "
+            "a partir dele — sem tempo real de comando, sem refleflexo: decisão antes do apito.",
+            "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+]
+
+# ---------------------------------------------------------------- FORMAS NOVAS (06-07/11/2026)
+# POR QUE (medido): rodando o CEIFALUME em 07/11/2026, o portão recusou 54 ângulos — 21 deles por
+# "mesma forma de um post recente do canal". A leitura certa não era afrouxar o portão: era o
+# redator ter FORMAS que o canal ainda não usou. Cada ângulo abaixo tem esqueleto próprio —
+# rótulo com passos numerados, abertura com pergunta no fim, abertura com desenho, ficha com
+# fecho de convite — e usa só número que está no relatório da partida.
+ANGULOS_CEIFALUME_FORMAS_NOVAS = [
+    {
+        "id": "passo_a_passo",
+        "precisa": ("plantadas", "colhidas", "toques", "minutos"),
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda f, j: "Passo a passo: %d mudas e %d colheitas em %d min de %s" % (
+            f["plantadas"], f["colhidas"], f["minutos"], f["nome_curto"]),
+        "corpo": lambda f, j: [
+            "Nesta partida: %d mudas plantadas, %d colheitas e %d toques em %d minutos."
+            % (f["plantadas"], f["colhidas"], f["toques"], f["minutos"]),
+            "Primeiro o agente abre o campo e escolhe a célula livre mais próxima.",
+            "Depois volta só quando a planta fica pronta, porque cada célula tem relógio próprio.",
+            "No fim, o que sobra da venda vai para o celeiro e é o celeiro que autoriza a próxima compra.",
+            "Se quiser ver isso do começo: o jogo abre no navegador, sem conta e sem instalar.",
+        ],
+    },
+    {
+        "id": "medida_por_minuto",
+        "precisa": ("colhidas", "toques", "minutos", "toques_por_minuto"),
+        "hashtags": [],
+        "titulo": lambda f, j: "A conta por minuto em %s: %d colheitas em %d min" % (
+            f["nome_curto"], f["colhidas"], f["minutos"]),
+        "corpo": lambda f, j: [
+            "A régua do vídeo é simples: quantas colheitas saem por minuto de tela.",
+            "Nesta gravação foram %d colheitas em %d minutos, com %d toques — cerca de %d toques por minuto."
+            % (f["colhidas"], f["minutos"], f["toques"], f["toques_por_minuto"]),
+            "O tempo que não aparece no vídeo é o do crescimento: %s." % j["atencao"],
+            "Cada colheita contada aqui veio do relatório do gravador, e o número que falta é o que não aconteceu.",
+            "Vale a pena esperar a planta em vez de tocar mais rápido?",
+        ],
+    },
+    {
+        "id": "semente_do_dia",
+        "precisa": ("plantadas", "colhidas", "minutos"),
+        "hashtags": ["#godot", "#jogobrasileiro"],
+        "titulo": lambda f, j: "Semente do dia: %d mudas para %d colheitas em %d min" % (
+            f["plantadas"], f["colhidas"], f["minutos"]),
+        "corpo": lambda f, j: [
+            "🌱 Semente do dia: %d mudas no chão e %d colheitas na cesta em %d minutos de gravação."
+            % (f["plantadas"], f["colhidas"], f["minutos"]),
+            "O campo é noturno de propósito: enxergar pouco faz parte da escolha de onde apertar.",
+            "O relógio de cada canteiro corre mesmo com o aplicativo fechado, e é ele que dá o ritmo.",
+            "Quem abrir o jogo no navegador vê a mesma fazenda, com o mesmo relógio.",
+        ],
+    },
+    {
+        "id": "ficha_da_partida",
+        "precisa": ("plantadas", "colhidas", "toques", "minutos"),
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda f, j: "Ficha da partida: %d colheitas, %d toques, %d min" % (
+            f["colhidas"], f["toques"], f["minutos"]),
+        "corpo": lambda f, j: [
+            "Ficha da partida: %d mudas plantadas, %d colheitas, %d toques e %d minutos de tela."
+            % (f["plantadas"], f["colhidas"], f["toques"], f["minutos"]),
+            "A ficha não tem estimativa: é o que o gravador anotou enquanto o jogo rodava no navegador.",
+            "O que muda de uma partida para a outra é a decisão de onde plantar, não a sorte.",
+            "Jogue você também e compare a sua ficha com esta.",
+        ],
+    },
+]
+
+ANGULOS_POR_JOGO = {"ceifalume": None, "prancheta": ANGULOS_PRANCHETA}
+
+
+def angulos_do_jogo(slug):
+    """Os ângulos daquele jogo. Sem lista própria, vale a lista do CEIFALUME.
+
+    As FORMAS NOVAS vêm primeiro: o portão recusa por forma repetida, e forma que o canal já
+    usou não deve competir de igual para igual com forma que ele nunca viu.
+    """
+    if ANGULOS_POR_JOGO.get(slug):
+        return ANGULOS_POR_JOGO[slug]
+    return list(ANGULOS_CEIFALUME_FORMAS_NOVAS) + list(ANGULOS)
+
+
+def _modulo(nome, arquivo):
+    spec = importlib.util.spec_from_file_location(nome, os.path.join(RAIZ, "tools", arquivo))
+    modulo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(modulo)
+    return modulo
+
+
+def _kit_gameplay():
+    return _modulo("kit_gameplay", "kit-gameplay.py")
+
+
+def _kit_youtube():
+    return _modulo("kit_youtube", "kit-youtube.py")
+
+
+def _portao():
+    return _modulo("portao_publicacao", "portao-publicacao.py")
+
+
+def hora_local_do_canal(agora=None):
+    import datetime
+    agora = agora or datetime.datetime.now(datetime.timezone.utc)
+    if agora.tzinfo is None:
+        agora = agora.replace(tzinfo=datetime.timezone.utc)
+    return (agora + datetime.timedelta(hours=FUSO_DO_CANAL)).hour
+
+
+# ------------------------------------------------------------------ os ângulos declarados
+# Cada ângulo é uma forma de contar a MESMA partida. `titulo` e `corpo` recebem os fatos medidos.
+# Regras que valem para todos (e que a suíte cobra):
+#   - nada de "garantido", "viral", "imperdível", "em breve";
+#   - nada de mecânica que o jogo não tem (inimigo, tiro, corrida, chefe);
+#   - todo número escrito existe no relatório da partida ou no kit;
+#   - a linha de origem e os links oficiais ficam em todos.
+ANGULOS = [
+    {
+        "id": "numeros",
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda f, j: "%d colheitas em %d min de %s" % (f["colhidas"], f["minutos"], f["nome"]),
+        "corpo": lambda f, j: [
+            "Em %d minutos de gravação o agente plantou %d mudas e colheu %d, sem esperar parado em nenhum momento."
+            % (f["minutos"], f["plantadas"], f["colhidas"]),
+            "Cada célula do campo tem o seu próprio tempo de crescimento, e o celeiro guarda o que sobra.",
+            "Foram %d toques na tela, cerca de %d por minuto, distribuídos entre semear e colher."
+            % (f["toques"], f["toques_por_minuto"]),
+        ],
+    },
+    {
+        "id": "pergunta",
+        "hashtags": [],
+        "titulo": lambda f, j: "Quantas colheitas cabem em %d minutos de %s?" % (f["minutos"], f["nome_curto"]),
+        "corpo": lambda f, j: [
+            "Quanto cabe em %d minutos de uma fazenda que cresce enquanto você olha para outro lado?"
+            % f["minutos"],
+            "Nesta partida deu %d colheitas, %d mudas semeadas e %d toques espalhados pelo terreno."
+            % (f["colhidas"], f["plantadas"], f["toques"]),
+            "A resposta curta é que o limite não é a pressa: é o tempo de cada planta."
+        ],
+    },
+    {
+        "id": "rotulo",
+        "hashtags": ["#godot", "#jogobrasileiro"],
+        "titulo": lambda f, j: "%s: %d toques e %d colheitas na partida de %d min" % (
+            f["nome_curto_upper"], f["toques"], f["colhidas"], f["minutos"]),
+        "corpo": lambda f, j: [
+            "Partida de hoje: %d mudas, %d colheitas e %d toques em %d minutos de tela."
+            % (f["plantadas"], f["colhidas"], f["toques"], f["minutos"]),
+            "Como se joga: %s; o que sobra da venda fica no celeiro." % j["mecanica"],
+            "O jogo em si: %s, %s." % (j["onde"], j["motor"]),
+        ],
+    },
+    {
+        "id": "convite",
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda f, j: "Plante à luz da lanterna: %d mudas em %d min de %s" % (
+            f["plantadas"], f["minutos"], f["nome_curto"]),
+        "corpo": lambda f, j: [
+            "Jogue no navegador e plante à luz da lanterna: nesta gravação saíram %d colheitas de %d mudas."
+            % (f["colhidas"], f["plantadas"]),
+            "Não precisa instalar nada nem criar conta: abre a página, toca no campo e espera a resposta.",
+            "Com o jogo fechado, %s." % j["atencao"],
+        ],
+    },
+    {
+        "id": "bastidor",
+        "hashtags": ["#godot", "#jogobrasileiro"],
+        "titulo": lambda f, j: "Como um agente joga %s sozinho: %d min de gravação" % (
+            f["nome_curto"], f["minutos"]),
+        "corpo": lambda f, j: [
+            "A gravação é do jogo rodando no navegador, capturada por um agente que olha o estado da tela e decide o próximo toque.",
+            "Na prática: %d mudas semeadas, %d colheitas e %d toques em %d minutos de partida."
+            % (f["plantadas"], f["colhidas"], f["toques"], f["minutos"]),
+            "Nada de vídeo editado à mão: a legenda descreve a decisão tomada, e o áudio é sintetizado pela produção.",
+        ],
+    },
+    {
+        "id": "moedas",
+        "precisa": ("moedas_inicio", "moedas_fim"),
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda f, j: "De %d a %d moedas em %d min de %s" % (
+            f["moedas_inicio"], f["moedas_fim"], f["minutos"], f["nome_curto"]),
+        "corpo": lambda f, j: [
+            "A fazenda começou com %d moedas e terminou a gravação com %d no bolso."
+            % (f["moedas_inicio"], f["moedas_fim"]),
+            "O bolso não enche sozinho: cada moeda veio de colheita vendida, e cada compra saiu dele.",
+            "É a diferença entre fazenda idle e passatempo de espera — o número mede decisão, não sorte.",
+        ],
+    },
+    {
+        "id": "cultivo",
+        "precisa": ("celulas_prontas", "plantas"),
+        "hashtags": [],
+        "titulo": lambda f, j: "%d células com %s pronto no fim da partida" % (
+            f["celulas_prontas"], f["plantas"][0]),
+        "corpo": lambda f, j: [
+            "No fim da gravação, %d das %d células do terreno estavam com planta pronta."
+            % (f["celulas_prontas"], f["celulas_total"]),
+            "O cultivo da partida foi %s." % " e ".join(f["plantas"]),
+            "Nenhuma célula anda junto com a outra: cada uma tem o seu relógio de crescimento.",
+        ],
+    },
+    {
+        "id": "tutorial",
+        "precisa": ("tutorial_segundos", "telas"),
+        "hashtags": ["#godot", "#gamedevbr"],
+        "titulo": lambda f, j: "Tutorial de %s resolvido em %s segundo" % (
+            f["nome_curto"], str(f["tutorial_segundos"]).replace(".", ",")),
+        "corpo": lambda f, j: [
+            "O tutorial do jogo abriu e fechou em %s segundo, com %d toque."
+            % (str(f["tutorial_segundos"]).replace(".", ","), f["tutorial_toques"]),
+            "Depois disso ninguém digita nada: um agente olha a tela e escolhe onde tocar.",
+            "A captura atravessou %d telas diferentes antes do campo ficar cheio." % f["telas"],
+        ],
+    },
+    {
+        "id": "compra",
+        "precisa": ("compras",),
+        "hashtags": ["#godot", "#jogobrasileiro"],
+        "titulo": lambda f, j: "O que o agente comprou jogando %s: %s" % (
+            f["nome_curto"], f["compras"][0]),
+        "corpo": lambda f, j: [
+            "As %d melhorias compradas nesta gravação: %s." % (
+                len(f["compras"]), ", ".join(f["compras"])),
+            "Cada uma saiu de moeda economizada colheita a colheita, dentro da mesma partida: "
+            "as moedas foram de %d para %d em %d minutos." % (
+                f["moedas_inicio"], f["moedas_fim"], f["minutos"]),
+            "O jogo é %s, e a produção é %s." % (j["motor"], j["onde"]),
+        ],
+    },
+    {
+        "id": "comparacao",
+        "precisa": ("_anterior",),
+        "hashtags": ["#devlog", "#jogobrasileiro"],
+        "titulo": lambda f, j: "%d colheitas contra %d da partida anterior" % (
+            f["colhidas"], f["_anterior"]["colhidas"]),
+        "corpo": lambda f, j: [
+            "Esta gravação colheu %d; a anterior, que já está no canal, tinha colhido %d."
+            % (f["colhidas"], f["_anterior"]["colhidas"]),
+            "Os toques foram %d agora e %d antes — tudo lido do relatório, nada estimado."
+            % (f["toques"], f["_anterior"]["toques"]),
+            "A fazenda muda de uma partida para a outra, e o registro do canal mostra a diferença.",
+        ],
+    },
+]
+
+# ------------------------------------------------------------------ perguntas do leitor
+# O banco de formas não pode ser limitado ao número de modelos que alguém digitou. Cada
+# PERGUNTA abaixo é uma forma diferente de abrir o mesmo assunto — intenções de leitor
+# distintas, não sinônimos. O assunto vem de um FATO real da casa (posts/fatos.json), com
+# origem e data, que ainda não foi usado em vídeo. Forma × fato é o estoque.
+PERGUNTAS_DO_LEITOR = [
+    {
+        "id": "como_funciona",
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda fa, f: "Como funciona: %s" % _resumo(fa["afirmacao"]),
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Na gravação desta partida: %d mudas plantadas e %d colheitas em %d minutos."
+            % (f["plantadas"], f["colhidas"], f["minutos"]),
+            "O dado não veio de fórum: veio do próprio jogo, medido durante a captura.",
+        ],
+    },
+    {
+        "id": "onde_jogar",
+        "hashtags": ["#jogobrasileiro"],
+        "titulo": lambda fa, f: "Onde jogar %s sem instalar loja" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "A partida do vídeo saiu do build web: %d colheitas em %d minutos de tela."
+            % (f["colhidas"], f["minutos"]),
+            "Nada de cadastro, compra ou espera para abrir o jogo.",
+        ],
+    },
+    {
+        "id": "quanto_rende",
+        "hashtags": [],
+        "titulo": lambda fa, f: "Quanto rende %s em %d minutos" % (f["nome_curto"], f["minutos"]),
+        "corpo": lambda fa, f: [
+            "A conta da partida: %d mudas, %d colheitas e %d toques em %d minutos."
+            % (f["plantadas"], f["colhidas"], f["toques"], f["minutos"]),
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Todo número deste vídeo vem do relatório da gravação, não de estimativa.",
+        ],
+    },
+    {
+        "id": "quem_fe_z",
+        "hashtags": ["#godot", "#gamedevbr"],
+        "titulo": lambda fa, f: "Quem fez %s e por quê" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Uma pessoa só, em português do Brasil, com o jogo rodando no navegador durante a gravação.",
+            "O vídeo mostra a partida medida: %d colheitas e %d mudas plantadas." % (
+                f["colhidas"], f["plantadas"]),
+        ],
+    },
+    {
+        "id": "o_que_tem_dentro",
+        "hashtags": ["#godot"],
+        "titulo": lambda fa, f: "O que tem dentro de %s" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "O que aparece na tela desta gravação é a partida de verdade: %d toques no campo." % f["toques"],
+            "Sem corte de tela e sem fala: a legenda descreve a decisão tomada no momento.",
+        ],
+    },
+    {
+        "id": "por_que_gratis",
+        "hashtags": [],
+        "titulo": lambda fa, f: "Por que %s é grátis de verdade" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "A pergunta é justa. A resposta: %s." % fa["afirmacao"],
+            "Nesta gravação, %d colheitas saíram de %d mudas, sem nada bloqueado por pagamento."
+            % (f["colhidas"], f["plantadas"]),
+            "O que sustenta a casa é o trabalho aparecer, não o jogador pagar.",
+        ],
+    },
+    {
+        "id": "como_foi_gravado",
+        "hashtags": ["#godot", "#jogobrasileiro"],
+        "titulo": lambda fa, f: "Como este vídeo de %s foi gravado" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "Nada aqui foi editado à mão: o build web rodou no navegador e um agente decidiu cada toque.",
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "O relatório da gravação fecha em %d mudas e %d colheitas." % (f["plantadas"], f["colhidas"]),
+        ],
+    },
+    {
+        "id": "o_que_muda_depois",
+        "hashtags": ["#jogobrasileiro", "#ceifalume"],
+        "titulo": lambda fa, f: "O que muda em %s depois de %d minutos" % (f["nome_curto"], f["minutos"]),
+        "corpo": lambda fa, f: [
+            "Em %d minutos de partida o campo passou por %d mudas e %d colheitas." % (
+                f["minutos"], f["plantadas"], f["colhidas"]),
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Quem joga vê a diferença no próprio terreno, não em número de fórum.",
+        ],
+    },
+    {
+        "id": "onde_esta_a_comunidade",
+        "hashtags": ["#godot", "#comunidade"],
+        "titulo": lambda fa, f: "Onde falar com quem fez %s" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Quem fez o jogo responde por lá — e o vídeo mostra o que essa pessoa construiu: %d colheitas na partida."
+            % f["colhidas"],
+            "O convite é para conversar sobre o jogo, não para inflar número.",
+        ],
+    },
+    {
+        "id": "requisito",
+        "hashtags": ["#navegador"],
+        "titulo": lambda fa, f: "O que %s pede para rodar" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "Não pediu nada aqui: o build abriu no navegador e a gravação rodou %d toques em %d minutos."
+            % (f["toques"], f["minutos"]),
+            "Sem conta, sem instalação obrigatória e sem fila de espera.",
+        ],
+    },
+    {
+        "id": "genero",
+        "hashtags": [],
+        "titulo": lambda fa, f: "%s é idle farm — e o que isso quer dizer" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "Idle farm é o jogo que continua enquanto você não está olhando. Aqui, %s." % fa["afirmacao"],
+            "Na partida gravada isso aparece nos números: %d mudas e %d colheitas em %d minutos."
+            % (f["plantadas"], f["colhidas"], f["minutos"]),
+            "Nada de reflexo rápido: o ritmo é o do campo.",
+        ],
+    },
+    {
+        "id": "bastidor_do_dia",
+        "hashtags": ["#godot", "#gamedevbr"],
+        "titulo": lambda fa, f: "Bastidor de %s: o que está por trás da partida" % f["nome_curto"],
+        "corpo": lambda fa, f: [
+            "O vídeo é uma gravação crua de build web, feita por um agente que lê o estado da tela.",
+            "%s." % _maiuscula(fa["afirmacao"]),
+            "O que dá para medir da partida: %d toques no campo e %d colheitas." % (f["toques"], f["colhidas"]),
+        ],
+    },
+]
+
+
+def _maiuscula(texto):
+    texto = str(texto or "").strip()
+    return texto[:1].upper() + texto[1:] if texto else texto
+
+
+VAZIAS_NO_FIM = {"a", "o", "as", "os", "de", "da", "do", "das", "dos", "e", "ou", "com", "sem",
+                 "por", "para", "pra", "em", "no", "na", "nos", "nas", "um", "uma", "que", "ate",
+                 "até", "ao", "aos", "se", "sob", "sobre", "entre"}
+
+
+def _resumo(texto, limite=58):
+    """Primeiras palavras da afirmação, sem cortar no meio do sentido.
+
+    Medido em 06/11/2026: o corte cru produziu o título "Como funciona: as plantações crescem e
+    as vendas acontecem por até 8" — frase pendurada num número solto. Título de vídeo é a
+    primeira coisa que o leitor vê; cortar assim é defeito, não estilo. Agora o fim vazio
+    (preposição, artigo, conjunção ou número solto) cai fora.
+    """
+    inteiro = str(texto or "")
+    # 1ª escolha: cortar numa fronteira natural (vírgula, dois pontos, ponto e vírgula) antes do
+    # limite — é assim que uma frase é interrompida sem perder o sentido.
+    corte = max(inteiro.rfind(",", 0, limite), inteiro.rfind(":", 0, limite),
+                inteiro.rfind(";", 0, limite))
+    if corte >= max(12, int(limite * 0.55)):
+        return inteiro[:corte].strip().rstrip(",;:")
+    palavras = inteiro.split()
+    saida = ""
+    for palavra in palavras:
+        if len(saida) + len(palavra) + 1 > limite:
+            break
+        saida = (saida + " " + palavra).strip()
+    palavras = saida.rstrip(",.;:").split()
+    while palavras and (palavras[-1].lower() in VAZIAS_NO_FIM or palavras[-1].isdigit()):
+        palavras.pop()
+    return " ".join(palavras) or " ".join(str(texto or "").split()[:4])
+
+
+def fatos_da_casa(raiz=RAIZ):
+    """Os fatos com origem e data que podem virar assunto de vídeo (posts/fatos.json)."""
+    try:
+        with open(os.path.join(raiz, "posts", "fatos.json"), encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return []
+    itens = dados.get("fatos") if isinstance(dados, dict) else dados
+    saida = []
+    for item in itens or []:
+        if not isinstance(item, dict):
+            continue
+        # O vídeo é do gameplay do Ceifalume: fato de outro jogo da casa viraria "dois assuntos
+        # no mesmo post", que o portão recusa — e com razão.
+        if (item.get("assunto") or "").strip().lower() not in ("ceifalume", "casa", "oficio"):
+            continue
+        if item.get("classe") == "numero":
+            continue  # número de OUTRA gravação: usaria um valor que não é o desta partida
+        # Fato cuja origem é outro jogo não serve: ao citar a fonte, o texto falaria de dois
+        # jogos e o portão recusaria — com razão (um assunto por post).
+        texto_do_fato = "%s %s %s" % (item.get("afirmacao") or "", item.get("origem") or "",
+                                      item.get("assunto") or "")
+        outros = [j for j in ("prancheta",) if item.get("assunto") != j and j in texto_do_fato.lower()]
+        if outros:
+            continue
+        if not (item.get("afirmacao") and item.get("origem") and item.get("id")):
+            continue
+        saida.append(item)
+    return saida
+
+
+def angulos_de_fato(fatos_usados, fatos=None, raiz=RAIZ):
+    """Pergunta do leitor × fato ainda não usado. Um ângulo por par, na ordem declarada."""
+    usados = set(fatos_usados or ())
+    disponiveis = [x for x in (fatos if fatos is not None else fatos_da_casa(raiz))
+                   if x.get("id") not in usados]
+    angulos = []
+    for fato in disponiveis:
+        for pergunta in PERGUNTAS_DO_LEITOR:
+            angulos.append({
+                "id": "%s:%s" % (pergunta["id"], fato["id"]),
+                "precisa": (),
+                "hashtags": pergunta["hashtags"],
+                "fato": fato["id"],
+                "titulo": (lambda fa, f, _p=pergunta: _p["titulo"](fa, f)),
+                "corpo": (lambda fa, f, _p=pergunta: _p["corpo"](fa, f)),
+                "_fato": fato,
+            })
+    return angulos
+
+FECHAMENTO = "Canal de dev solo: bastidores, versões e o que quebrou no caminho."
+PROIBIDOS = ("garantido", "viral", "imperdivel", "imperdível", "melhor do mundo",
+             "nao perca", "não perca", "em breve", "clique aqui")
+MECANICA_INVENTADA = ("inimigo", "tiro", "chefe", "boss", "corrida", "pulo", "pular")
+
+
+def relatorio_cru(slug, raiz=RAIZ):
+    """O relatório da partida, cru. {} quando não existe (o redator então não escreve nada)."""
+    kitg = _kit_gameplay()
+    info = (getattr(kitg, "GAMEPLAY", {}) or {}).get(slug) or {}
+    caminho = os.path.join(raiz, info.get("decisoes") or "")
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return {}
+    return dados if isinstance(dados, dict) else {}
+
+
+def _compras(relatorio):
+    """As compras que o agente fez na partida, do relatório ("comprar Poço (40 moedas · …)")."""
+    nomes = []
+    for d in relatorio.get("decisoes") or []:
+        if not isinstance(d, dict):
+            continue
+        motivo = str(d.get("motivo") or "")
+        if not motivo.lower().startswith("comprar"):
+            continue
+        nome = motivo[len("comprar"):].strip().split("(")[0].strip()
+        if nome and nome not in nomes:
+            nomes.append(nome)
+    return nomes
+
+
+def _plantas(relatorio, limite=3):
+    """As plantas que estavam no campo no fim, sem repetir."""
+    fim = ((relatorio.get("economia") or {}).get("fim") or {})
+    plantas = []
+    for campo in fim.get("camposLista") or []:
+        nome = str((campo or {}).get("planta") or "").strip()
+        if nome and nome not in plantas:
+            plantas.append(nome)
+    return plantas[:limite]
+
+
+def fatos_do_pacote(slug, raiz=RAIZ):
+    """Os números medidos + os nomes do jogo. {} quando a partida não foi medida."""
+    kitg = _kit_gameplay()
+    kit = _kit_youtube()
+    n = kitg.numeros_da_partida(slug, raiz=raiz)
+    if not n:
+        return {}
+    jogo = (kit.JOGOS.get(slug) or {})
+    f = dict(n)
+    f["nome"] = (jogo.get("nome") or slug) + ((" " + jogo.get("versao")) if jogo.get("versao") else "")
+    f["nome_curto"] = jogo.get("nome") or slug
+    f["nome_curto_upper"] = f["nome_curto"].upper()
+    if n.get("toques") is not None:
+        f["toques_por_minuto"] = int(round(n["toques"] / max(1, n["minutos"])))
+    if slug == "prancheta":
+        # O ângulo precisa saber que estratégia foi essa gravação — é o que muda de um vídeo para
+        # o outro, e sem isso dois vídeos seguidos dizem a mesma coisa com palavras diferentes.
+        f["estrategia"] = n.get("estrategia") or "posse_normal"
+        f["toques"] = n.get("toques_partida") or 0
+    f["slug"] = slug
+    j = dict(FATOS_DO_KIT.get(slug) or {})
+    if not j:
+        return {}
+    f["_fatos_do_jogo"] = j
+    # Fatos extras do relatório: cada ângulo novo declara de qual precisa ("precisa"), e ângulo
+    # sem o fato é pulado com motivo — nunca preenchido com estimativa.
+    rel = relatorio_cru(slug, raiz=raiz)
+    economia = rel.get("economia") or {}
+    inicio, fim = economia.get("inicio") or {}, economia.get("fim") or {}
+    for chave, valor in (
+        ("moedas_inicio", inicio.get("moedas")),
+        ("moedas_fim", fim.get("moedas")),
+        ("campos_inicio", inicio.get("campos")),
+        ("campos_fim", fim.get("campos")),
+        ("telas", rel.get("telas")),
+        ("tutorial_toques", rel.get("tutorial_toques")),
+    ):
+        try:
+            f[chave] = int(valor)
+        except (TypeError, ValueError):
+            pass
+    try:
+        f["tutorial_segundos"] = round(float(rel.get("tutorial_segundos") or 0), 1)
+    except (TypeError, ValueError):
+        pass
+    f["tutorial_fechou"] = bool(rel.get("tutorial_fechou"))
+    f["compras"] = _compras(rel)
+    f["plantas"] = _plantas(rel)
+    campos = fim.get("camposLista") or []
+    if campos:
+        f["celulas_total"] = len(campos)
+        f["celulas_prontas"] = sum(1 for c in campos if (c or {}).get("pronto"))
+    return f
+
+
+def links_do_kit(slug, raiz=RAIZ):
+    """As linhas oficiais de link — obrigatórias em toda descrição (o kit é a fonte)."""
+    kit = _kit_youtube()
+    try:
+        base = kit.descricao(slug)
+    except Exception:
+        return ""
+    linhas = [l for l in base.splitlines() if l.strip().startswith(("Jogar:", "Todos os canais"))]
+    return "\n".join(linhas)
+
+
+def texto_do_angulo(angulo, fatos, raiz=RAIZ):
+    """(titulo, descricao) daquele ângulo. Descrição sempre com origem, links e hashtags.
+
+    Ângulo cujo dado a partida não tem devolve (None, None) — NUNCA estoura. Defeito medido em
+    06/11/2026 (run 42269026877): a cena "nabo" gravou uma partida sem nome de planta no
+    relatório, e o ângulo "cultivo" fazia f["plantas"][0] direto: IndexError logo na barreira
+    offline, antes de qualquer gravação. Um dado que falta é uma recusa, não um acidente.
+    """
+    faltando = [c for c in (angulo.get("precisa") or ()) if fatos.get(c) in (None, "", [])]
+    if faltando:
+        return None, None
+    j = fatos["_fatos_do_jogo"]
+    if angulo.get("_fato"):
+        fatos = dict(fatos, **{"_fato_da_casa": angulo["_fato"]})
+        titulo = angulo["titulo"](angulo["_fato"], fatos)
+        corpo = [str(x).strip() for x in angulo["corpo"](angulo["_fato"], fatos) if str(x).strip()]
+    else:
+        titulo = angulo["titulo"](fatos, j)
+        corpo = [str(x).strip() for x in angulo["corpo"](fatos, j) if str(x).strip()]
+    kitg = _kit_gameplay()
+    kit = _kit_youtube()
+    info = (getattr(kitg, "GAMEPLAY", {}) or {}).get(fatos["slug"]) or {}
+    origem = info.get("origem") or ""
+    partes = ["\n\n".join(corpo)]
+    fato_da_casa = angulo.get("_fato") or {}
+    if fato_da_casa:
+        # Todo fato citado carrega a fonte: sem isso o vídeo afirma e o leitor não confere.
+        partes.append("Fonte: %s (conferido em %s)." % (fato_da_casa.get("origem"),
+                                                        fato_da_casa.get("quando")))
+    if not fato_da_casa and fatos.get("slug"):
+        # Ângulo que fala da GRAVAÇÃO, não de um fato do jogo: a fonte é o próprio registro da
+        # partida. Sem isso a descrição afirmava número sem dizer de onde saiu — medido pela
+        # régua de descrição em 06/11/2026 (nota 0,636 < 0,73, ângulo "compra").
+        registro = _registro_da_cena(fatos["slug"])
+        if registro:
+            partes.append("Fonte: posts/cenas.json (partida %s, conferida em %s)."
+                          % (registro.get("assinatura", "?"), registro.get("quando", "?")))
+    if origem:
+        partes.append(origem)
+    partes.append(FECHAMENTO)
+    links = links_do_kit(fatos["slug"], raiz=raiz)
+    if links:
+        partes.append(links)
+    if angulo["hashtags"]:
+        partes.append(" ".join(angulo["hashtags"]))
+    descricao = "\n\n".join(partes)
+    limite = getattr(kit, "LIMITE_DESCRICAO", 5000)
+    return titulo[:getattr(kit, "LIMITE_TITULO", 100)], descricao[:limite]
+
+
+def _registro_da_cena(slug, raiz=RAIZ):
+    """Último registro de partida daquele jogo em posts/cenas.json (ou None)."""
+    try:
+        with open(os.path.join(raiz, "posts", "cenas.json"), encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return None
+    itens = dados.get("partidas") if isinstance(dados, dict) else dados
+    if not isinstance(itens, list):
+        return None
+    do_jogo = [x for x in itens if isinstance(x, dict) and x.get("jogo") == slug]
+    if not do_jogo:
+        # registros antigos não declaram "jogo": todos são da primeira cena da casa
+        do_jogo = [x for x in itens if isinstance(x, dict) and not x.get("jogo")]
+    return do_jogo[-1] if do_jogo else None
+
+
+def problemas_do_texto(titulo, descricao, fatos):
+    """O que o redator se recusa a escrever — checado antes do portão, não depois."""
+    baixo = (titulo + " " + descricao).lower()
+    problemas = []
+    for termo in PROIBIDOS:
+        if termo in baixo:
+            problemas.append("promessa que a casa não sustenta: \"%s\"" % termo)
+    for termo in MECANICA_INVENTADA:
+        if termo in baixo:
+            problemas.append("mecânica que o jogo não tem: \"%s\"" % termo)
+    if not (12 <= len(titulo) <= 90):
+        problemas.append("título fora da faixa (%d caracteres)" % len(titulo))
+    for obrigatorio in ("Jogar:", "Todos os canais"):
+        if obrigatorio not in descricao:
+            problemas.append("descrição sem a linha oficial \"%s\"" % obrigatorio)
+    return problemas
+
+
+def historico(raiz=RAIZ):
+    """O que o canal já publicou, do mais novo para o mais antigo (o portão compara assim)."""
+    caminho = os.path.join(raiz, "posts", "youtube-publicados.json")
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return []
+    itens = dados.get("publicados") if isinstance(dados, dict) else dados
+    if not isinstance(itens, list):
+        return []
+    saida = [{"canal": "youtube", "titulo": str(i.get("titulo") or ""),
+              "texto": str(i.get("descricao") or i.get("texto") or ""),
+              "angulo": i.get("angulo"), "id": i.get("id"), "quando": i.get("quando")}
+             for i in itens if isinstance(i, dict)]
+    saida.sort(key=lambda x: str(x.get("quando") or ""), reverse=True)
+    return saida
+
+
+def ultimo_angulo(publicacoes):
+    for item in publicacoes or []:
+        if item.get("angulo"):
+            return item["angulo"]
+    return None
+
+
+def escolher(slug, raiz=RAIZ, hora_local=None, publicacoes=None, avaliador=None, relatorio=None):
+    """Escolhe o ângulo do vídeo. Devolve (escolha, recusas).
+
+    escolha = {"angulo", "titulo", "descricao", "numeros"} ou None.
+    recusas = [{"angulo", "motivo"}] — a lista inteira, para a decisão sair com número e motivo.
+    """
+    fatos = fatos_do_pacote(slug, raiz=raiz)
+    if not fatos:
+        return None, [{"angulo": None,
+                       "motivo": "sem partida medida: não há número para descrever (nada é inventado)"}]
+    portao = _portao()
+    avalia = avaliador or portao.avalia
+    hist = historico(raiz) if publicacoes is None else publicacoes
+    hora = hora_local_do_canal() if hora_local is None else int(hora_local)
+    anterior = ultimo_angulo(hist)
+    # A comparação precisa da partida anterior publicada — e ela existe porque o registro guarda
+    # os números de cada vídeo. Sem anterior, o ângulo não é oferecido (não se inventa passado).
+    for item in hist:
+        if isinstance(item.get("numeros"), dict) and item["numeros"].get("colhidas") is not None:
+            fatos["_anterior"] = dict(item["numeros"], quando=item.get("quando"))
+            break
+    usados = {x.get("fato") for x in hist if isinstance(x, dict) and x.get("fato")}
+    # Os ângulos "de fato" vêm de posts/fatos.json, que é a base de fatos do CEIFALUME. Aplicá-los
+    # ao PRANCHETA quebrava com KeyError('plantadas') — e pior: se um dia passasse, seria um vídeo
+    # do futebol citando número de plantio. Fato de jogo não atravessa jogo.
+    do_fato = angulos_de_fato(usados, raiz=raiz) if slug == "ceifalume" else []
+    # O canal não deve emendar dez vídeos sobre a própria partida: alterna assunto (fato da casa)
+    # com número (partida). Se o último vídeo foi de fato, tenta a partida primeiro — e vice-versa.
+    ultimo_teve_fato = bool(hist and isinstance(hist[0], dict) and hist[0].get("fato"))
+    do_jogo = angulos_do_jogo(slug)
+    candidatos = ([a for a in do_fato] + list(do_jogo)) if not ultimo_teve_fato \
+        else (list(do_jogo) + list(do_fato))
+    recusas = []
+    aprovados = []
+    for angulo in candidatos:
+        faltando = [c for c in (angulo.get("precisa") or ()) if fatos.get(c) in (None, "", [])]
+        if faltando:
+            recusas.append({"angulo": angulo["id"],
+                            "motivo": "fato ausente no relatório desta partida: " + ", ".join(faltando)})
+            continue
+        titulo, descricao = texto_do_angulo(angulo, fatos, raiz=raiz)
+        problemas = problemas_do_texto(titulo, descricao, fatos)
+        if problemas:
+            recusas.append({"angulo": angulo["id"], "motivo": "; ".join(problemas)})
+            continue
+        if anterior and angulo["id"] == anterior:
+            recusas.append({"angulo": angulo["id"],
+                            "motivo": "mesmo ângulo do último vídeo publicado (%s) — o ângulo roda" % anterior})
+            continue
+        decisao = avalia({"titulo": titulo, "texto": descricao}, canal="youtube",
+                         publicacoes=hist, calendario=JANELA_DO_CANAL, hora_local=hora) or {}
+        if not decisao.get("publica"):
+            recusas.append({"angulo": angulo["id"], "motivo": str(decisao.get("motivo") or "recusado")})
+            continue
+        # Os números que o registro guarda são os MEDIDOS daquela gravação, e cada jogo mede o que
+        # tem: o CEIFALUME conta mudas/colheitas, o PRANCHETA conta passos e toques. Guardar
+        # "plantadas: KeyError" ou inventar zero seria pior que não guardar.
+        aprovados.append({"angulo": angulo["id"], "fato": angulo.get("fato"),
+                          "titulo": titulo, "descricao": descricao,
+                          "numeros": {k: fatos[k] for k in (
+                              "plantadas", "colhidas", "toques", "minutos", "toques_por_minuto",
+                              "passos", "passos_confirmados", "toques_partida", "estrategia")
+                              if k in fatos}})
+    # O NÚMERO QUE FALTAVA (07/11/2026): a saída imprimia só as recusas, e eu li "54 ✘" como se
+    # o estoque estivesse acabando. Estava errado: 128 dos 182 candidatos eram APROVADOS, e só o
+    # primeiro publica. Quem lê o log precisa ver os dois lados da conta.
+    if relatorio is not None:
+        relatorio.update({"candidatos": len(candidatos), "aprovados": len(aprovados),
+                          "recusas": len(recusas)})
+    if aprovados:
+        # Todos os ângulos foram julgados (a recusa de cada um fica registrada); o primeiro
+        # aprovado na ordem declarada é o que publica.
+        return aprovados[0], recusas
+    return None, recusas
+
+
+def main(argv):
+    slug = argv[1] if len(argv) > 1 else "ceifalume"
+    rel = {}
+    escolha, recusas = escolher(slug, relatorio=rel)
+    for r in recusas:
+        print("✘ ângulo %s: %s" % (r["angulo"], r["motivo"]))
+    print("ângulos: %d candidatos · %d aprovados · %d recusados"
+          % (rel.get("candidatos", 0), rel.get("aprovados", 0), rel.get("recusas", 0)))
+    if not escolha:
+        print("nenhum ângulo aprovado — o vídeo não publica (e a recusa fica registrada)")
+        return 1
+    print("ângulo escolhido: %s" % escolha["angulo"])
+    print("título: %s" % escolha["titulo"])
+    print("descrição:\n%s" % escolha["descricao"])
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

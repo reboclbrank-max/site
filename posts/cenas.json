@@ -1,0 +1,1206 @@
+{
+ "_o_que_e": "uma linha por partida gravada; assinatura igual = partida repetida (o vídeo novo não seria novo)",
+ "partidas": [
+  {
+   "quando": "2026-11-06T18:14:22Z",
+   "estrategia": "nabo",
+   "assinatura": "b7a21c8180c7",
+   "resumo": {
+    "estrategia": "nabo",
+    "plantadas": 18,
+    "colhidas": 9,
+    "bicos": 717,
+    "sementes": [],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 28.3
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 12,
+      "t": 51.4
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 62,
+      "t": 53.9
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
+  },
+  {
+   "quando": "2026-11-06T18:24:00Z",
+   "estrategia": "milho",
+   "assinatura": "62da85d4dd28",
+   "resumo": {
+    "estrategia": "milho",
+    "plantadas": 13,
+    "colhidas": 9,
+    "bicos": 640,
+    "sementes": [],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 29
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 18,
+      "t": 53
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 68,
+      "t": 55.3
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
+  },
+  {
+   "quando": "2026-11-06T19:02:55Z",
+   "estrategia": "pressao_rapida",
+   "assinatura": "b1236f6e1199",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "pressao_rapida",
+    "passos": [
+     [
+      "toque em 500,87",
+      17.0
+     ],
+     [
+      "toque em 500,179",
+      23.0
+     ],
+     [
+      "toque em 500,232",
+      28.0
+     ],
+     [
+      "toque em 500,612",
+      33.0
+     ],
+     [
+      "toque em 500,259",
+      39.0
+     ],
+     [
+      "toque em 500,289",
+      46.0
+     ],
+     [
+      "toque em 110,608",
+      51.0
+     ],
+     [
+      "toque em 700,685",
+      56.0
+     ],
+     [
+      "toque em 700,685",
+      61.0
+     ],
+     [
+      "toque em 640,360",
+      66.0
+     ],
+     [
+      "toque em 110,608",
+      71.0
+     ],
+     [
+      "toque em 636,573",
+      76.0
+     ],
+     [
+      "toque em 900,705",
+      82.0
+     ]
+    ],
+    "toques_partida": 4,
+    "passos_confirmados": 10
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-06T19:11:09Z",
+   "estrategia": "posse_normal",
+   "assinatura": "437edede36a1",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "posse_normal",
+    "passos": [
+     [
+      "toque em 500,87",
+      16.0
+     ],
+     [
+      "toque em 500,179",
+      22.0
+     ],
+     [
+      "toque em 500,232",
+      27.0
+     ],
+     [
+      "toque em 500,612",
+      32.0
+     ],
+     [
+      "toque em 500,259",
+      37.0
+     ],
+     [
+      "toque em 500,289",
+      45.0
+     ],
+     [
+      "toque em 636,573",
+      50.0
+     ],
+     [
+      "toque em 640,360",
+      55.0
+     ],
+     [
+      "toque em 110,608",
+      60.0
+     ],
+     [
+      "toque em 636,573",
+      65.0
+     ],
+     [
+      "toque em 640,360",
+      70.0
+     ],
+     [
+      "toque em 640,360",
+      75.0
+     ]
+    ],
+    "toques_partida": 5,
+    "passos_confirmados": 10
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-06T19:15:20Z",
+   "estrategia": "contra_ataque",
+   "assinatura": "00705ec6dba5",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "contra_ataque",
+    "passos": [
+     [
+      "toque em 500,87",
+      16.0
+     ],
+     [
+      "toque em 500,179",
+      22.0
+     ],
+     [
+      "toque em 500,232",
+      27.0
+     ],
+     [
+      "toque em 500,612",
+      32.0
+     ],
+     [
+      "toque em 500,259",
+      37.0
+     ],
+     [
+      "toque em 500,289",
+      45.0
+     ],
+     [
+      "toque em 636,573",
+      49.0
+     ],
+     [
+      "toque em 700,685",
+      54.0
+     ],
+     [
+      "toque em 700,685",
+      59.0
+     ],
+     [
+      "toque em 640,360",
+      64.0
+     ],
+     [
+      "toque em 110,608",
+      70.0
+     ],
+     [
+      "toque em 636,573",
+      75.0
+     ],
+     [
+      "toque em 900,705",
+      80.0
+     ]
+    ],
+    "toques_partida": 4,
+    "passos_confirmados": 10
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-06T20:04:09Z",
+   "estrategia": "trigo",
+   "assinatura": "54c5219a7f4e",
+   "resumo": {
+    "estrategia": "trigo",
+    "plantadas": 10,
+    "colhidas": 4,
+    "bicos": 1074,
+    "sementes": [
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 21,
+      "t": 31.2
+     },
+     {
+      "id": "lanterna",
+      "nome": "Acender Lanterna",
+      "custo": 81,
+      "t": 33.3
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": -8,
+      "t": 53.5
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 42,
+      "t": 55.4
+     }
+    ],
+    "verde_final": "A:0.056 B:0.051 C:0.052 D:0.073 E:0.000"
+   }
+  },
+  {
+   "quando": "2026-11-06T23:16:25Z",
+   "estrategia": "pressao_rapida",
+   "assinatura": "58f401f0dc03",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "pressao_rapida",
+    "passos": [
+     [
+      "toque em 500,87",
+      15.0
+     ],
+     [
+      "toque em 500,179",
+      21.0
+     ],
+     [
+      "toque em 500,232",
+      25.0
+     ],
+     [
+      "toque em 500,612",
+      30.0
+     ],
+     [
+      "toque em 500,259",
+      34.0
+     ],
+     [
+      "toque em 500,289",
+      41.0
+     ],
+     [
+      "toque em 110,608",
+      45.0
+     ],
+     [
+      "toque em 700,685",
+      49.0
+     ],
+     [
+      "toque em 700,685",
+      54.0
+     ],
+     [
+      "toque em 640,360",
+      58.0
+     ],
+     [
+      "toque em 110,608",
+      63.0
+     ],
+     [
+      "toque em 636,573",
+      68.0
+     ],
+     [
+      "toque em 700,685",
+      72.0
+     ],
+     [
+      "toque em 900,705",
+      77.0
+     ]
+    ],
+    "toques_partida": 5,
+    "passos_confirmados": 11
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-06T23:20:15Z",
+   "estrategia": "posse_normal",
+   "assinatura": "75f41d0fa668",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "posse_normal",
+    "passos": [
+     [
+      "toque em 500,87",
+      15.0
+     ],
+     [
+      "toque em 500,179",
+      20.0
+     ],
+     [
+      "toque em 500,232",
+      24.0
+     ],
+     [
+      "toque em 500,612",
+      27.0
+     ],
+     [
+      "toque em 500,259",
+      32.0
+     ],
+     [
+      "toque em 500,289",
+      38.0
+     ],
+     [
+      "toque em 636,573",
+      41.0
+     ],
+     [
+      "toque em 640,360",
+      45.0
+     ],
+     [
+      "toque em 110,608",
+      50.0
+     ],
+     [
+      "toque em 636,573",
+      54.0
+     ],
+     [
+      "toque em 640,360",
+      58.0
+     ],
+     [
+      "toque em 640,360",
+      62.0
+     ],
+     [
+      "toque em 110,608",
+      66.0
+     ],
+     [
+      "toque em 636,573",
+      70.0
+     ],
+     [
+      "toque em 640,360",
+      74.0
+     ]
+    ],
+    "toques_partida": 8,
+    "passos_confirmados": 13
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-06T23:35:15Z",
+   "estrategia": "contra_ataque",
+   "assinatura": "f17b55044573",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "contra_ataque",
+    "passos": [
+     [
+      "toque em 500,87",
+      16.0
+     ],
+     [
+      "toque em 500,179",
+      22.0
+     ],
+     [
+      "toque em 500,232",
+      28.0
+     ],
+     [
+      "toque em 500,612",
+      32.0
+     ],
+     [
+      "toque em 500,259",
+      38.0
+     ],
+     [
+      "toque em 500,289",
+      45.0
+     ],
+     [
+      "toque em 636,573",
+      50.0
+     ],
+     [
+      "toque em 700,685",
+      55.0
+     ],
+     [
+      "toque em 700,685",
+      60.0
+     ],
+     [
+      "toque em 640,360",
+      65.0
+     ],
+     [
+      "toque em 110,608",
+      70.0
+     ],
+     [
+      "toque em 636,573",
+      75.0
+     ],
+     [
+      "toque em 900,705",
+      81.0
+     ]
+    ],
+    "toques_partida": 4,
+    "passos_confirmados": 10
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-06T23:54:44Z",
+   "estrategia": "pressao_rapida",
+   "assinatura": "fa530f6ea9ef",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "pressao_rapida",
+    "passos": [
+     [
+      "toque em 500,87",
+      15.0
+     ],
+     [
+      "toque em 500,179",
+      20.0
+     ],
+     [
+      "toque em 500,232",
+      25.0
+     ],
+     [
+      "toque em 500,612",
+      29.0
+     ],
+     [
+      "toque em 500,259",
+      34.0
+     ],
+     [
+      "toque em 500,289",
+      40.0
+     ],
+     [
+      "toque em 110,608",
+      44.0
+     ],
+     [
+      "toque em 700,685",
+      47.0
+     ],
+     [
+      "toque em 700,685",
+      52.0
+     ],
+     [
+      "toque em 640,360",
+      56.0
+     ],
+     [
+      "toque em 110,608",
+      60.0
+     ],
+     [
+      "toque em 636,573",
+      65.0
+     ],
+     [
+      "toque em 700,685",
+      69.0
+     ],
+     [
+      "toque em 640,360",
+      74.0
+     ],
+     [
+      "toque em 900,705",
+      78.0
+     ]
+    ],
+    "toques_partida": 6,
+    "passos_confirmados": 12
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-06T23:59:16Z",
+   "estrategia": "posse_normal",
+   "assinatura": "f773ca35437f",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "posse_normal",
+    "passos": [
+     [
+      "toque em 500,87",
+      17.0
+     ],
+     [
+      "toque em 500,179",
+      23.0
+     ],
+     [
+      "toque em 500,232",
+      28.0
+     ],
+     [
+      "toque em 500,612",
+      33.0
+     ],
+     [
+      "toque em 500,259",
+      38.0
+     ],
+     [
+      "toque em 500,289",
+      46.0
+     ],
+     [
+      "toque em 636,573",
+      51.0
+     ],
+     [
+      "toque em 640,360",
+      56.0
+     ],
+     [
+      "toque em 110,608",
+      61.0
+     ],
+     [
+      "toque em 636,573",
+      66.0
+     ],
+     [
+      "toque em 640,360",
+      72.0
+     ]
+    ],
+    "toques_partida": 4,
+    "passos_confirmados": 9
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-07T00:04:37Z",
+   "estrategia": "contra_ataque",
+   "assinatura": "028ba44e6805",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "contra_ataque",
+    "passos": [
+     [
+      "toque em 500,87",
+      15.0
+     ],
+     [
+      "toque em 500,179",
+      20.0
+     ],
+     [
+      "toque em 500,232",
+      24.0
+     ],
+     [
+      "toque em 500,612",
+      28.0
+     ],
+     [
+      "toque em 500,259",
+      33.0
+     ],
+     [
+      "toque em 500,289",
+      39.0
+     ],
+     [
+      "toque em 636,573",
+      43.0
+     ],
+     [
+      "toque em 700,685",
+      46.0
+     ],
+     [
+      "toque em 700,685",
+      50.0
+     ],
+     [
+      "toque em 640,360",
+      54.0
+     ],
+     [
+      "toque em 110,608",
+      59.0
+     ],
+     [
+      "toque em 636,573",
+      62.0
+     ],
+     [
+      "toque em 700,685",
+      67.0
+     ],
+     [
+      "toque em 640,360",
+      71.0
+     ],
+     [
+      "toque em 110,608",
+      75.0
+     ],
+     [
+      "toque em 900,705",
+      79.0
+     ]
+    ],
+    "toques_partida": 7,
+    "passos_confirmados": 13
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-07T00:55:44Z",
+   "estrategia": "cara",
+   "assinatura": "e1b17585a009",
+   "resumo": {
+    "estrategia": "cara",
+    "plantadas": 14,
+    "colhidas": 5,
+    "bicos": 1059,
+    "sementes": [
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 23.4
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 50,
+      "t": 27.5
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": -7,
+      "t": 49.4
+     }
+    ],
+    "verde_final": "A:0.055 B:0.051 C:0.052 D:0.073 E:0.044"
+   }
+  },
+  {
+   "quando": "2026-11-07T01:55:33Z",
+   "estrategia": "meia-cela",
+   "assinatura": "42a0d27b3ab1",
+   "resumo": {
+    "estrategia": "meia-cela",
+    "plantadas": 11,
+    "colhidas": 8,
+    "bicos": 794,
+    "sementes": [],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 27.4
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 13,
+      "t": 50.6
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 63,
+      "t": 53.3
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
+  },
+  {
+   "quando": "2026-11-07T17:52:07Z",
+   "estrategia": "nabo",
+   "assinatura": "2e66317e57ba",
+   "resumo": {
+    "estrategia": "nabo",
+    "plantadas": 13,
+    "colhidas": 9,
+    "bicos": 966,
+    "sementes": [],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 24.4
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 50,
+      "t": 28.6
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": -4,
+      "t": 50.2
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.044"
+   }
+  },
+  {
+   "quando": "2026-11-07T17:54:34Z",
+   "estrategia": "pressao_rapida",
+   "assinatura": "b5ab68d6acca",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "pressao_rapida",
+    "passos": [
+     [
+      "toque em 500,87",
+      15.0
+     ],
+     [
+      "toque em 500,179",
+      20.0
+     ],
+     [
+      "toque em 500,232",
+      24.0
+     ],
+     [
+      "toque em 500,612",
+      27.0
+     ],
+     [
+      "toque em 500,259",
+      32.0
+     ],
+     [
+      "toque em 500,289",
+      38.0
+     ],
+     [
+      "toque em 110,608",
+      41.0
+     ],
+     [
+      "toque em 700,685",
+      45.0
+     ],
+     [
+      "toque em 700,685",
+      49.0
+     ],
+     [
+      "toque em 640,360",
+      53.0
+     ],
+     [
+      "toque em 110,608",
+      58.0
+     ],
+     [
+      "toque em 636,573",
+      62.0
+     ],
+     [
+      "toque em 700,685",
+      66.0
+     ],
+     [
+      "toque em 640,360",
+      70.0
+     ],
+     [
+      "toque em 110,608",
+      74.0
+     ],
+     [
+      "toque em 900,705",
+      79.0
+     ]
+    ],
+    "toques_partida": 7,
+    "passos_confirmados": 13
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-07T22:54:45Z",
+   "estrategia": "milho",
+   "assinatura": "839dcf94feea",
+   "resumo": {
+    "estrategia": "milho",
+    "plantadas": 14,
+    "colhidas": 9,
+    "bicos": 717,
+    "sementes": [
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 38,
+      "t": 45.6
+     },
+     {
+      "id": "lanterna",
+      "nome": "Acender Lanterna",
+      "custo": 98,
+      "t": 48
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 50,
+      "t": 50.5
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 80,
+      "t": 66.1
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
+  },
+  {
+   "quando": "2026-11-07T23:09:35Z",
+   "estrategia": "posse_normal",
+   "assinatura": "c6ebc36e8c7d",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "posse_normal",
+    "passos": [
+     [
+      "toque em 500,87",
+      18.0
+     ],
+     [
+      "toque em 500,179",
+      24.0
+     ],
+     [
+      "toque em 500,232",
+      29.0
+     ],
+     [
+      "toque em 500,612",
+      34.0
+     ],
+     [
+      "toque em 500,259",
+      39.0
+     ],
+     [
+      "toque em 500,289",
+      47.0
+     ],
+     [
+      "toque em 636,573",
+      52.0
+     ],
+     [
+      "toque em 640,360",
+      57.0
+     ],
+     [
+      "toque em 110,608",
+      62.0
+     ],
+     [
+      "toque em 636,573",
+      68.0
+     ],
+     [
+      "toque em 640,360",
+      73.0
+     ]
+    ],
+    "toques_partida": 4,
+    "passos_confirmados": 9
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-08T18:03:32Z",
+   "estrategia": "trigo",
+   "assinatura": "2f6428b78c15",
+   "resumo": {
+    "estrategia": "trigo",
+    "plantadas": 13,
+    "colhidas": 8,
+    "bicos": 673,
+    "sementes": [
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 29.3
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 15,
+      "t": 53.3
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 65,
+      "t": 55.8
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
+  },
+  {
+   "quando": "2026-11-08T18:09:19Z",
+   "estrategia": "contra_ataque",
+   "assinatura": "a4277be8da4c",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "contra_ataque",
+    "passos": [
+     [
+      "toque em 500,87",
+      16.0
+     ],
+     [
+      "toque em 500,179",
+      21.0
+     ],
+     [
+      "toque em 500,232",
+      26.0
+     ],
+     [
+      "toque em 500,612",
+      30.0
+     ],
+     [
+      "toque em 500,259",
+      35.0
+     ],
+     [
+      "toque em 500,289",
+      42.0
+     ],
+     [
+      "toque em 636,573",
+      46.0
+     ],
+     [
+      "toque em 700,685",
+      50.0
+     ],
+     [
+      "toque em 700,685",
+      55.0
+     ],
+     [
+      "toque em 640,360",
+      59.0
+     ],
+     [
+      "toque em 110,608",
+      64.0
+     ],
+     [
+      "toque em 636,573",
+      69.0
+     ],
+     [
+      "toque em 700,685",
+      73.0
+     ],
+     [
+      "toque em 900,705",
+      78.0
+     ]
+    ],
+    "toques_partida": 5,
+    "passos_confirmados": 11
+   },
+   "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-08T23:03:04Z",
+   "estrategia": "cara",
+   "assinatura": "28c63634f218",
+   "resumo": {
+    "estrategia": "cara",
+    "plantadas": 15,
+    "colhidas": 9,
+    "bicos": 724,
+    "sementes": [
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 28.4
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 9,
+      "t": 51.8
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 59,
+      "t": 54.1
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
+  },
+  {
+   "quando": "2026-11-08T23:14:53Z",
+   "estrategia": "pressao_rapida",
+   "assinatura": "f609708c6d7d",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "pressao_rapida",
+    "passos": [
+     [
+      "toque em 500,87",
+      18.0
+     ],
+     [
+      "toque em 500,179",
+      24.0
+     ],
+     [
+      "toque em 500,232",
+      29.0
+     ],
+     [
+      "toque em 500,612",
+      34.0
+     ],
+     [
+      "toque em 500,259",
+      40.0
+     ],
+     [
+      "toque em 500,289",
+      47.0
+     ],
+     [
+      "toque em 110,608",
+      52.0
+     ],
+     [
+      "toque em 700,685",
+      56.0
+     ],
+     [
+      "toque em 700,685",
+      61.0
+     ],
+     [
+      "toque em 640,360",
+      66.0
+     ],
+     [
+      "toque em 110,608",
+      71.0
+     ],
+     [
+      "toque em 900,705",
+      77.0
+     ]
+    ],
+    "toques_partida": 3,
+    "passos_confirmados": 9
+   },
+   "jogo": "prancheta"
+  }
+ ]
+}

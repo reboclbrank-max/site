@@ -1,0 +1,497 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Barreira offline do orquestrador 24h, da pesquisa e do aprendizado.
+
+Nenhum teste toca a rede: a execução é injetada (`rodar_fn`) e os arquivos são temporários.
+O que se prova:
+  - prioridade de decisão (medir > pesquisar > aprender > publicar > dormir);
+  - janela e teto respeitados; intervalo mínimo de 2h entre publicações;
+  - estado é lido/gravado e não perde o histórico;
+  - pesquisa escolhe a meta de maior risco e não escolhe tema acima de 220 caracteres;
+  - aprendizado NÃO troca horário com amostra pequena (a regra que evita achismo);
+  - o workflow 24h existe, tem cron, concorrência e roda o orquestrador.
+"""
+import datetime
+import importlib.util
+import json
+import os
+import sys
+import tempfile
+
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RAIZ, "tools"))
+import orquestrador  # noqa: E402
+
+UTC = datetime.timezone.utc
+falhas = 0
+# O DENOMINADOR VIRAVA MENTIRA (07/11/2026): a soma `24 + 15 + 8 + 7 + 5 + 5 = 64` era escrita à
+# mão e o arquivo já rodava 75 verificações. Suíte que diz "64/64" enquanto roda 75 esconde o que
+# ninguém contou — e um teste que deixa de ser chamado não aparece em lugar nenhum.
+certos = 0
+
+
+def ok(nome, cond, detalhe=""):
+    global falhas, certos
+    if cond:
+        certos += 1
+        print("OK  " + nome)
+    else:
+        falhas += 1
+        print("FALHOU  " + nome + ("  <" + str(detalhe) + ">" if detalhe else ""))
+
+
+def em_utc_para_local(hora_local, dia=27):
+    """UTC correspondente a `hora_local` em Brasília (UTC-3), virada de dia tratada."""
+    total = hora_local + 3
+    if total >= 24:
+        return datetime.datetime(2026, 10, dia + 1, total - 24, 30, tzinfo=UTC)
+    return datetime.datetime(2026, 10, dia, total, 30, tzinfo=UTC)
+
+
+CAL = {"janela": {"inicio": 9, "fim": 22, "fuso": "America/Fortaleza"}, "teto_diario": 5}
+
+
+def estado(**kw):
+    base = orquestrador.estado_vazio()
+    base.update(kw)
+    return base
+
+
+def main():
+    # 1. medição vencida tem prioridade sobre tudo
+    acao, motivo = orquestrador.decidir(em_utc_para_local(10), estado(), CAL)
+    ok("sem medição registrada → mede primeiro", acao == "medir", acao)
+
+    # 2. com medição fresca, dentro da janela → publica
+    agora = em_utc_para_local(11)
+    acao, motivo = orquestrador.decidir(
+        agora, estado(ultima_medicao=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
+    ok("medição fresca + janela → publicar", acao == "publicar", "%s (%s)" % (acao, motivo))
+
+    # 3. intervalo mínimo entre publicações
+    agora = em_utc_para_local(12)
+    acao, motivo = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - datetime.timedelta(hours=1)),
+        ultima_publicacao=orquestrador.iso(agora - datetime.timedelta(minutes=40))), CAL)
+    ok("publicou há 40 min → dorme (mínimo 2h)", acao == "dormir" and "min" in motivo, "%s (%s)" % (acao, motivo))
+
+    # 4. fora da janela não publica
+    agora = em_utc_para_local(3)
+    acao, motivo = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - datetime.timedelta(hours=1)),
+        ultima_pesquisa=orquestrador.iso(agora - datetime.timedelta(hours=1)),
+        ultima_aprendizagem=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
+    ok("03h local, pesquisa já feita → dorme", acao == "dormir" and "janela" in motivo, "%s (%s)" % (acao, motivo))
+
+    # 5. janelas diárias de pesquisa e aprendizado
+    agora = em_utc_para_local(3)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
+    ok("03h local sem pesquisa hoje → pesquisar", acao == "pesquisar", acao)
+    agora = em_utc_para_local(4)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - datetime.timedelta(hours=1)),
+        ultima_pesquisa=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
+    ok("04h local sem aprendizado hoje → aprender", acao == "aprender", acao)
+
+    # 5b. A MEDIÇÃO VENCIDA NÃO PODE ENGOLIR A JANELA (07/11/2026)
+    # A ordem antiga devolvia "medir" às 03h porque a medição vence a cada 6 h; a pesquisa ficou
+    # 5 dias sem rodar e as tarefas `pesquisar` da fila morriam lá.
+    _velha = datetime.timedelta(hours=8)
+    agora = em_utc_para_local(3)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - _velha)), CAL)
+    ok("03h local com medição vencida → pesquisar (não medir)", acao == "pesquisar", acao)
+
+    agora = em_utc_para_local(4)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - _velha),
+        ultima_pesquisa=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
+    ok("04h local com medição vencida → aprender (não medir)", acao == "aprender", acao)
+
+    agora = em_utc_para_local(3)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - _velha),
+        ultima_pesquisa=orquestrador.iso(agora - datetime.timedelta(hours=1))), CAL)
+    ok("03h local com pesquisa feita e medição vencida → medir", acao == "medir", acao)
+
+    agora = em_utc_para_local(10)
+    acao, _ = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - _velha)), CAL)
+    ok("fora das janelas, medição vencida continua sendo medir", acao == "medir", acao)
+
+    # 6. pesquisa não repete no mesmo dia
+    agora = em_utc_para_local(6)
+    acao, motivo = orquestrador.decidir(agora, estado(
+        ultima_medicao=orquestrador.iso(agora - datetime.timedelta(hours=1)),
+        ultima_pesquisa=orquestrador.iso(agora - datetime.timedelta(minutes=90))), CAL)
+    ok("pesquisa já feita hoje não repete", acao != "pesquisar", "%s (%s)" % (acao, motivo))
+
+    # 7. estado: grava, lê e preserva histórico
+    with tempfile.TemporaryDirectory() as pasta:
+        caminho = os.path.join(pasta, "estado.json")
+        dados = orquestrador.carregar_estado(caminho)
+        dados["pulsos"] = 7
+        dados["historico"] = [{"acao": "publicar"}]
+        orquestrador.gravar_estado(dados, caminho)
+        lido = orquestrador.carregar_estado(caminho)
+        ok("estado grava e relê", lido["pulsos"] == 7 and lido["historico"][0]["acao"] == "publicar")
+        dados["historico"] = [{"n": i} for i in range(60)]
+        orquestrador.gravar_estado(dados, caminho)
+        ok("histórico fica limitado a 40", len(orquestrador.carregar_estado(caminho)["historico"]) == 40)
+
+    # 8. execução injetada: publicar chama o postador
+    chamadas = []
+
+    def falso(comando, **_):
+        chamadas.append(comando)
+        return 0, "ok simulado"
+
+    orquestrador.executar("publicar", rodar_fn=falso)
+    ok("publicar chama tools/postador.py",
+       chamadas and chamadas[0][-1].endswith("postador.py"), chamadas)
+
+    # 9. pesquisa: meta de risco e tema
+    spec = importlib.util.spec_from_file_location("pesq", os.path.join(RAIZ, "tools", "pesquisar-oportunidade.py"))
+    pesq = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pesq)
+
+    placar = ("| meta | alvo | observado | falta | por dia | status |\n"
+              "|---|---|---|---|---|---|\n"
+              "| Instagram: seguidores | 50 | 0 | 50 | 2.94 | EM_CURSO |\n"
+              "| itch: downloads | 100 | 46 | 54 | 3.18 | EM_CURSO |\n"
+              "| YouTube: shorts | 4 | 5 | 0 | — | ATINGIDO |\n")
+    riscos = pesq.metas_em_risco(placar)
+    ok("pesquisa ordena por ritmo necessário (maior risco primeiro)",
+       riscos[0][0].startswith("itch"), riscos[:2])
+    ok("a pesquisa sabe o status de cada meta", riscos[0][3] == "EM_CURSO", riscos[0])
+
+    # 9b. META PARADA NÃO É A META DO DIA (07/11/2026)
+    _placar_parado = ("| meta | alvo | observado | falta | por dia | status | desde a partida |\n"
+                      "|---|---|---|---|---|---|---|\n"
+                      "| Instagram: seguidores | 50 | 0 | 50 | 10.0 | PARADA | 0 |\n"
+                      "| Bluesky: seguidores | 50 | 32 | 18 | 3.6 | RENOVADA | +19 |\n")
+    _r_parado = pesq.metas_em_risco(_placar_parado)
+    ok("a linha PARADA entra na lista com o status", _r_parado[0][3] == "PARADA", _r_parado[0])
+    ok("PARADA tem o maior ritmo necessário (é a que parece pior)",
+       _r_parado[0][0].startswith("Instagram"), _r_parado)
+    _atacaveis = [r for r in _r_parado if r[3] != "PARADA"]
+    ok("a meta a atacar com post é a que ainda anda", _atacaveis[0][0].startswith("Bluesky"),
+       _atacaveis)
+
+    desempenho = ("| tipo | posts | engajamento médio | melhor | sem engajamento |\n"
+                  "|---|---|---|---|---|\n"
+                  "| conteúdo dos jogos | 82 | 2.07 | 4 | 9 (11.0%) |\n"
+                  "| comentário em post alheio | 218 | 0.84 | 3 | 91 (41.7%) |\n")
+    ruins = pesq.formatos_ruins(desempenho)
+    ok("pesquisa identifica formato com 40%+ de zeros",
+       len(ruins) == 1 and "comentário" in ruins[0]["formato"], ruins)
+
+    with tempfile.TemporaryDirectory() as pasta:
+        fila = os.path.join(pasta, "fila.json")
+        with open(fila, "w", encoding="utf-8") as f:
+            json.dump({"posts": [{"texto": "x" * 300, "url": "u1"}, {"texto": "texto bom", "url": "u2"}]}, f)
+        tema = pesq.escolher_tema(caminho_fila=fila)
+        ok("pesquisa nunca escolhe tema acima de 220 caracteres", tema and tema["texto"] == "texto bom", tema)
+
+    # 10. aprendizado: NÃO troca horário com amostra pequena
+    spec = importlib.util.spec_from_file_location("apr", os.path.join(RAIZ, "tools", "aprender-horario.py"))
+    apr = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(apr)
+
+    # (a) nenhuma hora chega a 30 posts: o relatório real de hoje é assim, tirando 01h
+    pouca = [(0, 1.12, 8), (2, 2.0, 4), (8, 1.52, 23), (20, 1.31, 26)]
+    confiavel, melhor, motivo, det = apr.decidir(pouca)
+    ok("aprendizado não troca horário com amostra pequena",
+       confiavel is False and melhor is None and "amostra" in motivo, motivo)
+    ok("aprendizado registra a maior média observada sem agir",
+       det.get("maior_media_observada", {}).get("hora") == 2, det.get("maior_media_observada"))
+
+    # (b) uma hora passa da amostra mínima, mas o ganho não supera o desvio: mantém
+    com_uma_elegivel = [(0, 1.12, 8), (1, 1.14, 36), (2, 2.0, 4), (8, 1.52, 23), (20, 1.31, 26)]
+    confiavel_b, melhor_b, motivo_b, _ = apr.decidir(com_uma_elegivel)
+    ok("amostra mínima sozinha não basta: ganho dentro do ruído mantém a janela",
+       confiavel_b is False and melhor_b is None and "ruído" in motivo_b, motivo_b)
+
+    forte = [(0, 1.0, 40), (10, 3.5, 45), (15, 1.1, 40), (20, 1.0, 50)]
+    confiavel2, melhor2, _, _ = apr.decidir(forte)
+    ok("aprendizado troca horário quando a prova existe", confiavel2 and melhor2 == 10, (confiavel2, melhor2))
+
+    # 11. o workflow 24h existe e está amarrado
+    caminho_wf = os.path.join(RAIZ, ".github", "workflows", "marketing-24h.yml")
+    texto = open(caminho_wf, encoding="utf-8").read() if os.path.exists(caminho_wf) else ""
+    ok("workflow 24h existe", bool(texto))
+    # 06/11/2026: o dono autorizou a cadência. O contrato antigo exigia "sem cron"; o novo
+    # exige o que importa: o cron acorda, mas quem decide continua sendo o orquestrador
+    # (janela + teto) e o portão, e o pulso manual segue exigindo o dono e a palavra.
+    # ---- O CRON COBRE A JANELA E AS JANELAS DE PESQUISA/APRENDIZADO ---------------
+    # MEDIDO (07/11/2026): `*/20 * * * *` dava 72 pulsos/dia; 27 caíam em horas em que nada pode
+    # acontecer (nem publicar, nem pesquisar às 03h, nem aprender às 04h). Eles só dormiam.
+    _wf24 = open(os.path.join(RAIZ, ".github", "workflows", "marketing-24h.yml"),
+                 encoding="utf-8").read()
+    _cron24 = [l.split('"')[1] for l in _wf24.split("permissions:")[0].splitlines()
+               if l.strip().startswith("- cron:")]
+    ok("workflow 24h tem cadência agendada", "schedule:" in texto and "cron:" in texto)
+    ok("workflow 24h só agenda no main", "github.ref == 'refs/heads/main'" in texto)
+    ok("workflow 24h mantém o pulso manual com confirmação", "inputs.confirmacao == 'PUBLICAR'" in texto)
+    ok("workflow 24h não publica por conta própria: chama o orquestrador", "python3 tools/orquestrador.py" in texto)
+    ok("workflow 24h roda o orquestrador", "tools/orquestrador.py" in texto)
+    ok("workflow 24h tem concorrência (não duplica pulso)", "concurrency:" in texto)
+    if _cron24:
+        _campo = _cron24[0].split()[1]
+        _horas, _passo = set(), 0
+        for _parte in _campo.split(","):
+            if "-" in _parte:
+                _a, _b = _parte.split("-")
+                _horas |= set(range(int(_a), int(_b) + 1))
+            else:
+                _horas.add(int(_parte))
+        _passo = int(_cron24[0].split()[0].split("/")[1])
+        ok("o cron cobre a janela de publicação (09h-21h de Brasília)", {0, 12, 15, 18, 21, 23} <= _horas,
+           sorted(_horas))
+        ok("o cron cobre a pesquisa das 03h e o aprendizado das 04h de Brasília",
+           {6, 7} <= _horas, sorted(_horas))
+        ok("o cron não acorda em horas mortas (23h-02h, 05h-08h de Brasília)",
+           not ({2, 3, 4, 5, 8, 9, 10, 11} & _horas), sorted(_horas))
+        ok("a cadência de 20 minutos foi mantida", _passo == 20, _cron24[0])
+        ok("o cron roda no máximo 45 vezes por dia (era 72)", len(_horas) * (60 // _passo) <= 45,
+           len(_horas) * (60 // _passo))
+    ok("workflow 24h commita o estado", "git commit" in texto)
+
+    # ---- ANTI-FOME DA FILA (07/11/2026) ------------------------------------------------
+    # MEDIDO antes do conserto: o pulso fechava 1 tarefa e o ciclo enfileirava ~2, e a mais velha
+    # tinha 03/11 09:33 com 0 tentativas — 89 h esperando sem ninguém notar. Três cobranças:
+    # teto por tipo, prioridade efetiva depois de FOME_HORAS e pulso que fecha um de cada tipo.
+    _f = importlib.util.spec_from_file_location(
+        "fila_tarefas", os.path.join(RAIZ, "tools", "fila-tarefas.py"))
+    fila = importlib.util.module_from_spec(_f)
+    _f.loader.exec_module(fila)
+
+    ok("a fila tem teto por tipo (não cresce sem fim)", getattr(fila, "TETO_POR_TIPO", None) == 3,
+       getattr(fila, "TETO_POR_TIPO", None))
+    ok("a fila tem limiar de fome declarado", getattr(fila, "FOME_HORAS", None) == 24,
+       getattr(fila, "FOME_HORAS", None))
+
+    _agora = datetime.datetime(2026, 11, 7, 2, 0, tzinfo=datetime.timezone.utc)
+
+    def _t(tid, tipo, horas, prio=60, estado_t="pendente"):
+        quando = (_agora - datetime.timedelta(hours=horas)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        return {"id": tid, "tipo": tipo, "estado": estado_t, "criada": quando,
+                "prioridade": prio, "tentativas": 0}
+
+    _tarefas = {"tarefas": [_t("publicar-nova", "publicar", 0),
+                            _t("medir-faminta", "medir", 30)]}
+    _antiga = fila.prioridade_efetiva(_tarefas["tarefas"][1], _agora)
+    _nova = fila.prioridade_efetiva(_tarefas["tarefas"][0], _agora)
+    ok("tarefa de 30 h passa na frente de tarefa nova", _antiga > _nova, (_antiga, _nova))
+    ok("a fome vira número grande, não empate", _antiga - _nova >= 500, (_antiga, _nova))
+    ok("tarefa nova não ganha bônus de fome",
+       _nova == _tarefas["tarefas"][0]["prioridade"], (_nova, _tarefas["tarefas"][0]["prioridade"]))
+
+    _escolhidas = fila.selecionar_pulso(_tarefas, tipos=("publicar", "medir"), agora=_agora)
+    _tipos = sorted(t["tipo"] for t in _escolhidas)
+    ok("o pulso fecha um de cada tipo", _tipos == ["medir", "publicar"], _escolhidas)
+    ok("o pulso escolhe a tarefa faminta do tipo",
+       any(t["tipo"] == "medir" and t["id"] == "medir-faminta" for t in _escolhidas), _escolhidas)
+    ok("o pulso nunca repete o mesmo id", len({t["id"] for t in _escolhidas}) == len(_escolhidas),
+       _escolhidas)
+    ok("o pulso marca o que levou como executando (não some da conta)",
+       all(t["estado"] == "executando" for t in _escolhidas), [t["estado"] for t in _escolhidas])
+    ok("o que ficou na fila continua pendente",
+       _tarefas["tarefas"][0]["estado"] == "executando" and
+       all(t["estado"] != "pendente" for t in _escolhidas), _tarefas)
+    ok("tarefa já executada não volta no pulso",
+       fila.selecionar_pulso({"tarefas": [_t("x", "publicar", 5, estado_t="executando")]},
+                             tipos=("publicar",), agora=_agora) == [],
+       fila.selecionar_pulso({"tarefas": [_t("x", "publicar", 5, estado_t="executando")]},
+                             tipos=("publicar",), agora=_agora))
+
+    _cheia = {"tarefas": [_t("m%d" % i, "medir", i) for i in range(3)]}
+    ok("com o tipo no teto, a fila recusa mais uma",
+       fila.adicionar(_cheia, "medir", motivo="mais uma") is None, len(_cheia["tarefas"]))
+    ok("a recusa do teto sai com motivo e números",
+       _cheia.get("recusadas") and _cheia["recusadas"][-1]["ja_pendentes"] == 3
+       and _cheia["recusadas"][-1]["teto"] == 3, _cheia.get("recusadas"))
+    ok("a fila no teto não cresce", len(_cheia["tarefas"]) == 3, len(_cheia["tarefas"]))
+    _abaixo = {"tarefas": [_t("m%d" % i, "medir", i) for i in range(2)]}
+    # id único mesmo no mesmo segundo (a fila real chegou a ter 4 tarefas com o mesmo id)
+    _mesmo_segundo = fila.vazia()
+    _ids = set()
+    _teto_original = fila.TETO_POR_TIPO
+    fila.TETO_POR_TIPO = 10          # o teto de 3 é outra regra (e tem o seu próprio contrato)
+    try:
+        for i in range(4):
+            _unica = fila.adicionar(_mesmo_segundo, "publicar", motivo="meta %d" % i,
+                                    quando="2026-11-01T07:10:25Z")
+            _ids.add(_unica["id"])
+    finally:
+        fila.TETO_POR_TIPO = _teto_original
+    ok("quatro tarefas no mesmo segundo ganham quatro ids", len(_ids) == 4, sorted(_ids))
+    ok("o primeiro id não ganha sufixo", "publicar-20261101T071025Z" in _ids, sorted(_ids))
+
+    ok("abaixo do teto ainda entra", fila.adicionar(_abaixo, "medir", motivo="cabe") is not None,
+       len(_abaixo["tarefas"]))
+
+    ok("o orquestrador usa a seleção por tipo (não pega uma e sai)",
+       "selecionar_pulso" in open(os.path.join(RAIZ, "tools", "orquestrador.py"),
+                                  encoding="utf-8").read())
+
+    # ---- DORMIR NÃO É FALHA ------------------------------------------------------------
+    # MEDIDO: o marketing-continuo morreu 4 dias em "pulso 8/30 · ação: dormir · fora da janela
+    # (23h local)" seguido de "pulso incompleto". O pulso tinha feito o certo: dormir.
+    _loop = open(os.path.join(RAIZ, "tools", "loop-24h.py"), encoding="utf-8").read()
+    ok("o bloco contínuo não trata dormir como pulso incompleto", "dormiu" in _loop,
+       [l for l in _loop.splitlines() if "incompleto" in l])
+    ok("dormir está nomeado na condição de falha",
+       "codigo != 0 and not dormiu" in _loop,
+       [l for l in _loop.splitlines() if "not dormiu" in l])
+
+    # ---- CRON DENTRO DA JANELA ---------------------------------------------------------
+    _gameplay = open(os.path.join(RAIZ, ".github", "workflows", "gravar-gameplay.yml"),
+                     encoding="utf-8").read()
+    _crons = [l.split('"')[1] for l in _gameplay.splitlines() if l.strip().startswith("- cron:")]
+    ok("o gravar-gameplay tem cadência agendada", len(_crons) == 1, _crons)
+    _horas_utc = []
+    for _c in _crons:
+        _h = _c.split()[1]
+        _horas_utc += [int(x) for x in _h.split(",")]
+    ok("nenhuma gravação nasce fora da janela 9-22h de Brasília",
+       all(12 <= h <= 22 for h in _horas_utc), _horas_utc)
+    ok("as gravações ficam às 09h e 16h de Brasília", sorted(_horas_utc) == [12, 19], _horas_utc)
+
+    # ---- A FILA NÃO ATROPELA A JANELA DO RELÓGIO (07/11/2026) ---------------------------
+    # `decidir()` tem horas só para pesquisar (03h local) e aprender (04h local), mas
+    # `usar_fila()` pedia sempre ("publicar", "medir") — na madrugada, um `medir` pendente
+    # tomava o pulso e a pesquisa do dia nunca rodava (a tarefa entrava e morria na fila).
+    import shutil as _sh
+    _bancada = tempfile.mkdtemp(prefix="pulso-")
+    _fila_tmp = os.path.join(_bancada, "fila.json")
+    with open(_fila_tmp, "w", encoding="utf-8") as f:
+        json.dump({"tarefas": [
+            {"id": "publicar-na-fila", "tipo": "publicar", "prioridade": 60, "estado": "pendente",
+             "tentativas": 0, "criada": "2026-11-07T06:00:00Z", "motivo": "tema", "chave": "p"},
+            {"id": "medir-na-fila", "tipo": "medir", "prioridade": 90, "estado": "pendente",
+             "tentativas": 0, "criada": "2026-11-07T06:00:00Z", "motivo": "placar", "chave": "m"},
+        ]}, f)
+    _fila_real, _decidir_real, _pode_real = orquestrador.FILA, orquestrador.decidir, orquestrador.pode_publicar
+    try:
+        orquestrador.FILA = _fila_tmp
+        orquestrador.pode_publicar = lambda agora, calendario: (False, "fora da janela (03h local)")
+        orquestrador.decidir = lambda *a, **k: ("pesquisar", "janela diária de pesquisa (03h local)")
+        _agora = datetime.datetime(2026, 11, 7, 6, 0, tzinfo=datetime.timezone.utc)  # 03h local
+        _tipo, _motivo, _trios = orquestrador.usar_fila(_agora, {"ultima_medicao": "2026-11-07T05:30:00Z"})
+        _levados = [t[2]["tipo"] for t in (_trios or [])]
+        ok("na janela de pesquisa o pulso pega pesquisar (não medir)", _levados == ["pesquisar"], _levados)
+        ok("a publicar da fila não é gasta na madrugada",
+           "publicar-na-fila" not in [t[2]["id"] for t in (_trios or [])], _levados)
+
+        orquestrador.decidir = lambda *a, **k: ("aprender", "janela diária de aprendizado (04h local)")
+        _tipo, _motivo, _trios = orquestrador.usar_fila(_agora, {"ultima_medicao": "2026-11-07T05:30:00Z"})
+        ok("na janela de aprendizado o pulso pega aprender",
+           [t[2]["tipo"] for t in (_trios or [])] == ["aprender"], [t[2]["tipo"] for t in (_trios or [])])
+
+        # intervalo mínimo entre publicações: a fila também espera
+        with open(_fila_tmp, "w", encoding="utf-8") as f:
+            json.dump({"tarefas": [
+                {"id": "publicar-cedo", "tipo": "publicar", "prioridade": 60, "estado": "pendente",
+                 "tentativas": 0, "criada": "2026-11-07T13:00:00Z", "motivo": "tema", "chave": "p"},
+            ]}, f)
+        orquestrador.pode_publicar = lambda agora, calendario: (True, "janela aberta")
+        orquestrador.decidir = lambda *a, **k: ("dormir", "publicou há 20 min")
+        _agora2 = datetime.datetime(2026, 11, 7, 13, 20, tzinfo=datetime.timezone.utc)  # 10:20 local
+        _estado_cedo = {"ultima_medicao": "2026-11-07T13:10:00Z",
+                        "ultima_publicacao": "2026-11-07T13:00:00Z"}  # 20 min atrás
+        _tipo, _motivo, _trios = orquestrador.usar_fila(_agora2, _estado_cedo)
+        ok("a fila não publica antes do intervalo mínimo de 2 h",
+           not _trios or [t[2]["tipo"] for t in _trios] != ["publicar"],
+           [t[2]["tipo"] for t in (_trios or [])])
+        # e publica quando o intervalo passou
+        _estado_ok = {"ultima_medicao": "2026-11-07T13:10:00Z",
+                      "ultima_publicacao": "2026-11-07T10:00:00Z"}  # 3h20 atrás
+        _tipo, _motivo, _trios = orquestrador.usar_fila(_agora2, _estado_ok)
+        ok("passado o intervalo, a fila publica",
+           [t[2]["tipo"] for t in (_trios or [])] == ["publicar"], [t[2]["tipo"] for t in (_trios or [])])
+    finally:
+        orquestrador.FILA, orquestrador.decidir, orquestrador.pode_publicar = _fila_real, _decidir_real, _pode_real
+        _sh.rmtree(_bancada, ignore_errors=True)
+
+    # ---- CÓPIAS VELHAS DE AÇÃO REPETÍVEL (07/11/2026) ---------------------------------
+    # Medido na fila real: 8 pendentes, 5 delas `medir`, quatro de 03/11. Medir o placar de
+    # 03/11 hoje não é trabalho útil — é cópia. Publicar é o contrário: cada uma vale por si.
+    _repetidas = {"tarefas": [_t("medir-velha", "medir", 90), _t("medir-meio", "medir", 40),
+                              _t("medir-nova", "medir", 2),
+                              _t("publicar-a", "publicar", 30), _t("publicar-b", "publicar", 1),
+                              _t("aprender-velha", "aprender", 50),
+                              _t("aprender-nova", "aprender", 3)]}
+    _saíram = fila.podar_repetidas(_repetidas)
+    ok("a poda deixa uma medir só", len(fila.pendentes_por_tipo(_repetidas, "medir")) == 1,
+       [t["id"] for t in fila.pendentes_por_tipo(_repetidas, "medir")])
+    ok("a medir que fica é a mais nova",
+       fila.pendentes_por_tipo(_repetidas, "medir")[0]["id"] == "medir-nova",
+       [t["id"] for t in fila.pendentes_por_tipo(_repetidas, "medir")])
+    ok("a poda deixa uma aprender só", len(fila.pendentes_por_tipo(_repetidas, "aprender")) == 1,
+       [t["id"] for t in fila.pendentes_por_tipo(_repetidas, "aprender")])
+    ok("a poda NÃO toca em publicar", len(fila.pendentes_por_tipo(_repetidas, "publicar")) == 2,
+       [t["id"] for t in fila.pendentes_por_tipo(_repetidas, "publicar")])
+    ok("a poda diz quantas saíram", len(_saíram) == 3, len(_saíram))
+    ok("podada não vira 'feita': vira vencida, com motivo",
+       all(t["estado"] == "vencida" and "vencida" in (t.get("resultado") or "") for t in _saíram),
+       [(t["id"], t["estado"]) for t in _saíram])
+    ok("o pulso poda antes de pegar",
+       ".podar_repetidas(" in open(os.path.join(RAIZ, "tools", "orquestrador.py"),
+                                   encoding="utf-8").read())
+
+    # ---- PULAR NÃO É CONCLUIR (07/11/2026) ---------------------------------------------
+    # Medido no run 42331047208: às 23h locais o pulso levou a `publicar`, o portão respondeu
+    # "janela: fora da janela" / "RESUMO: janela=PULADO" e a tarefa foi fechada como `feito`.
+    # Publicação que não houve virou tarefa concluída — e a fila perdeu a tarefa.
+    _tardia = _t("publicar-de-noite", "publicar", 1)
+    _dados_adiar = {"tarefas": [_tardia]}
+    _antes_tentativas = int(_tardia.get("tentativas", 0))
+    _dito = fila.adiar(_dados_adiar, _tardia, "janela: fora da janela (23h local)")
+    ok("adiar devolve a tarefa para a fila", _tardia["estado"] == "pendente", _tardia["estado"])
+    ok("adiar não gasta tentativa (não foi falha)", _tardia["tentativas"] == _antes_tentativas,
+       _tardia["tentativas"])
+    ok("adiar deixa o motivo escrito", "fora da janela" in (_tardia.get("resultado") or ""),
+       _tardia.get("resultado"))
+    ok("adiar conta o adiamento", _tardia.get("adiamentos") == 1, _tardia.get("adiamentos"))
+    ok("adiar diz o que fez", _dito and "adiada" in _dito, _dito)
+
+    _src_orq = open(os.path.join(RAIZ, "tools", "orquestrador.py"), encoding="utf-8").read()
+    ok("o pulso não fecha como feito o que o portão pulou",
+       '"PULADO" in saida_t' in _src_orq, [l for l in _src_orq.splitlines() if "PULADO" in l])
+    ok("o pulso usa adiar (e não concluir) no pulo", ".adiar(" in _src_orq)
+    # ---- TODAS ADIADAS NÃO É FALHA (07/11/2026) ------------------------------------------
+    # Medido nos runs 42379491657 (14:00Z) e 42390760232 (16:20Z): a única tarefa do pulso era
+    # `publicar`, o postador respondeu "PULADO (intervalo mínimo entre ciclos)", a tarefa foi
+    # adiada — e o pulso morreu com `ValueError: max() iterable argument is empty`. O run ficou
+    # vermelho por ter feito a coisa certa.
+    ok("pulso com todas as tarefas adiadas não estoura (código 0)",
+       orquestrador.resultado_do_pulso([], 1) == (0, "fila: 1 tarefa(s) adiada(s) neste pulso "
+                                            "(nada a fazer agora)"),
+       orquestrador.resultado_do_pulso([], 1))
+    ok("e a frase diz que foram adiadas, não que falharam",
+       "adiada" in orquestrador.resultado_do_pulso([], 2)[1], orquestrador.resultado_do_pulso([], 2))
+    ok("pulso sem tarefa nenhuma também não estoura", orquestrador.resultado_do_pulso([], 0)[0] == 0)
+    ok("pulso com tarefa feita devolve o pior código",
+       orquestrador.resultado_do_pulso([0, 2], 2) == (2, "fila: 2 de 2 tarefa(s) feita(s) neste pulso"),
+       orquestrador.resultado_do_pulso([0, 2], 2))
+    ok("a frase separa feitas de adiadas (não conta adiada como feita)",
+       "2 de 3" in orquestrador.resultado_do_pulso([0, 0], 3)[1], orquestrador.resultado_do_pulso([0, 0], 3))
+    # o `max(codigos)` DENTRO da função é o certo; o que não pode voltar é a linha do main que
+    # estourava com a lista vazia.
+    ok("o main usa a função (a linha que estourava não volta)",
+       "codigo, saida = resultado_do_pulso(codigos" in _src_orq
+       and "codigo, saida = max(codigos)" not in _src_orq,
+       [l for l in _src_orq.splitlines() if "codigo, saida" in l][:4])
+
+    ok("fora da janela o pulso nem pega publicar",
+       'tipos = ("medir",)' in _src_orq and "pode_publicar(agora, ler_calendario())" in _src_orq,
+       [l for l in _src_orq.splitlines() if "tipos =" in l])
+
+    print("\n%d/%d testes do orquestrador 24h passaram" % (certos, certos + falhas))
+    return 1 if falhas else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

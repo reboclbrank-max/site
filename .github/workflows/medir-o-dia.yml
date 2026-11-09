@@ -1,0 +1,83 @@
+name: medir-o-dia
+
+# A RÉGUA DE METAS PRECISA DE QUEM A ESCREVA (07/11/2026).
+# Medido: `posts/placar-metas.md` estava parado em 03/11 06:52Z — dizia "9 dia(s) restante(s)"
+# quando faltavam 5 — e o pulso decidia com aqueles números ("faltam 16 e o ritmo necessário é
+# 1.78 por dia" era literalmente a linha de 03/11). O único workflow que COMMITAVA a medição era
+# o `postagem-diaria`, cuja agenda saiu na contenção de 03/11; o `diagnostico-da-casa` mede, mas
+# é só-leitura e sob demanda. Resultado: a casa ficou 4 dias sem anotar o próprio placar.
+#
+# Este workflow existe só para isso, e faz o mínimo: mede, carimba quando mediu e versiona.
+# Nada de publicar, curtir, seguir ou comentar aqui.
+
+on:
+  # SEM CRON: o cron do GitHub é melhor esforço (entregou 4,1% na semana medida).
+  # A corrente (DIARIAS_GARANTIDAS em tools/corrente.py) é a fonte de verdade:
+  # verifica se medir-o-dia rodou hoje após as 9h20 BRT e dispara se não rodou.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: medir-o-dia
+  cancel-in-progress: false
+
+jobs:
+  medir:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Contratos da medição e do estado da casa (offline)
+        run: |
+          python3 tools/rodar-contratos-isolados.py tools/testes-metricas.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-estado-da-casa.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-workflows.py
+
+      - name: Mede o placar (só leitura nas APIs; sem segredo escreve NAO_OBSERVAVEL)
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+        run: |
+          python3 tools/metricas.py
+          echo "──────────── estado da casa ────────────"
+          python3 tools/estado-da-casa.py
+
+      - name: Versiona a medição do dia
+        # OS SEGREDOS VÊM JUNTO, E ISSO É O CONSERTO (07/11/2026): o `entrar-no-main.sh` re-roda o
+        # gerador quando o merge concilia arquivo gerado. Sem os segredos aqui, essa segunda
+        # rodada escrevia NAO_OBSERVAVEL em cima dos números que a primeira tinha acabado de ler
+        # (medido no run 42337480653: 7 metas com leitura viraram 1). Além disto, `metricas.py`
+        # passou a recusar régua pior que a atual.
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          # `posts/placar-metas.json` ENTRA NA LISTA (07/11/2026): é dele que o `perceber.py` lê
+          # prazo e dias decorridos para dizer o ritmo medido. Ficou de fora na primeira versão e
+          # o arquivo era criado e jogado fora a cada run (medido no run 42338086387: 2 arquivos
+          # versionados, o JSON não era um deles).
+          git add posts/placar-metas.md posts/placar-metas.json posts/desempenho.md \
+                  posts/placar-estado.json posts/progresso-metas.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "medição sem mudança — nada a versionar"
+            exit 0
+          fi
+          git commit -m "📊 desempenho $(date -u +'%d/%m %H:%M')"
+          # Regra da casa: nada de `git push` seco. O entrar-no-main trata rebase, merge com
+          # gerador declarado e recusa quando o conflito é em arquivo que não é gerado.
+          GERAR="python3 tools/metricas.py" \
+            bash tools/entrar-no-main.sh "medição do dia" || {
+            echo "::error::a medição não entrou no main"
+            exit 1
+          }

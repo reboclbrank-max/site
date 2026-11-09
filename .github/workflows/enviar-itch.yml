@@ -1,0 +1,123 @@
+name: enviar-itch
+
+# Envio de build para o itch.io pela ferramenta oficial (butler).
+#
+# Sem cron e com a palavra PUBLICAR obrigatória: build ao vivo substitui o que o jogador
+# baixa. O modo padrão é `status`, que é SOMENTE LEITURA — mostra o que mudaria, sem enviar.
+#
+# O que este workflow NÃO faz (e não tem como fazer): criar página de jogo no itch e publicar
+# devlog. O itch não expõe API para essas duas coisas; isso é só pelo site, na mão.
+on:
+  workflow_dispatch:
+    inputs:
+      jogo:
+        description: "qual jogo (só existe build do ceifalume no repositório)"
+        required: true
+        default: ceifalume
+        type: choice
+        options:
+          - ceifalume
+      modo:
+        description: "api · uploads · jogador = o que a página abre · conferir = compara o servido com o repo (sha256) · status · ensaio · push"
+        required: true
+        default: status
+        type: choice
+        options:
+          - status
+          - api
+          - uploads
+          - jogador
+          - conferir
+          - ensaio
+          - push
+      canal:
+        description: "canal do itch (html5 é o padrão para jogo web)"
+        required: true
+        default: html5
+      confirmacao:
+        description: "para modo push, digite PUBLICAR"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: enviar-itch
+  cancel-in-progress: false
+
+jobs:
+  enviar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nenhuma toca a rede)
+        run: |
+          python3 tools/rodar-contratos-isolados.py tools/testes-enviar-itch.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-kit-youtube.py
+
+      - name: Instala o butler (ferramenta oficial e gratuita do itch)
+        run: |
+          curl -sSL -o /tmp/butler.zip "https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default"
+          mkdir -p /tmp/butler && unzip -q /tmp/butler.zip -d /tmp/butler
+          chmod +x /tmp/butler/butler
+          /tmp/butler/butler version
+          echo "BUTLER_PATH=/tmp/butler/butler" >> "$GITHUB_ENV"
+
+      # REQUISITO DO DONO: o vídeo de gameplay precisa chegar em quem joga. A página do itch não
+      # pode ser editada por servidor (sem API, e o desafio da Cloudflare não passa nem com
+      # Chromium real — medido em 30/10 nos 3 runners e sob Xvfb). O caminho que existe é o build:
+      # ele carrega o selo que abre o vídeo. Então todo push leva um carimbo de versão, e o
+      # carimbo entra num arquivo do pacote — é isso que faz o butler ver diferença e publicar.
+      - name: Carimba a versão do build (só no push confirmado)
+        if: inputs.modo == 'push'
+        run: |
+          data=$(date -u +%Y.%m.%d-%H%M)
+          python3 - "$data" <<'PY'
+          import json, sys
+          data = sys.argv[1]
+          # FORA da pasta enviada: carimbo dentro do pacote fazia o push-preview acusar
+          # "1 apagado" para sempre (medido no run 41151770746) e o status nunca dizer IGUAL.
+          with open("posts/versao-build.json", "w", encoding="utf-8") as f:
+              json.dump({"versao": data, "selo_gameplay": "https://youtu.be/GuE7af6dYo8"}, f,
+                        ensure_ascii=False, indent=1)
+          print("build carimbado:", data)
+          PY
+          echo "VERSAO_BUILD=$data" >> "$GITHUB_ENV"
+
+      - name: Status (somente leitura) ou envio confirmado
+        # DEFEITO MEDIDO EM 31/10/2026 (run 41151339470): o passo usava `| tee` e o run ficou
+        # VERDE com o butler recusando o envio (400). Pipeline sem pipefail devolve o status do
+        # tee, não o do envio. Com pipefail, recusa do itch vira run vermelho.
+        shell: bash -o pipefail -e {0}
+        env:
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          CONFIRMACAO: ${{ inputs.confirmacao }}
+          MODO_PEDIDO: ${{ inputs.modo }}
+          JOGO_PEDIDO: ${{ inputs.jogo }}
+          CANAL_PEDIDO: ${{ inputs.canal }}
+        run: |
+          if [ "$MODO_PEDIDO" = "api" ]; then
+            python3 tools/enviar-itch.py api | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "uploads" ]; then
+            python3 tools/enviar-itch.py uploads "$JOGO_PEDIDO" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "jogador" ]; then
+            python3 tools/enviar-itch.py jogador "$JOGO_PEDIDO" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "conferir" ]; then
+            python3 tools/enviar-itch.py conferir "$JOGO_PEDIDO" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "ensaio" ]; then
+            python3 tools/enviar-itch.py ensaio "$JOGO_PEDIDO" "$CANAL_PEDIDO" | tee /tmp/itch.txt
+          elif [ "$MODO_PEDIDO" = "push" ]; then
+            python3 tools/enviar-itch.py push "$JOGO_PEDIDO" "$CANAL_PEDIDO" | tee /tmp/itch.txt
+          else
+            python3 tools/enviar-itch.py status "$JOGO_PEDIDO" | tee /tmp/itch.txt
+          fi
+          {
+            echo "### itch.io — $MODO_PEDIDO ($JOGO_PEDIDO)"
+            echo
+            echo '```'
+            cat /tmp/itch.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

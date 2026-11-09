@@ -1,0 +1,72 @@
+name: corrente
+
+# A CORRENTE DE PULSOS (07/11/2026). O cron não é agenda: medido na semana, o pulso
+# `marketing-24h` tem cron de 45 disparos por dia e recebeu 1,86 (4,1%); `medir-o-dia` recebeu
+# zero. Enquanto isso a casa documentava "um pulso a cada 20 minutos" e vivia outra coisa.
+#
+# Esta corrente substitui a promessa do GitHub por conta da casa: um run espera até o próximo
+# horário de pulso, dispara o pulso, dispara a si mesmo e dorme de novo. O cron de 3 em 3 horas
+# fica aqui só como partida de segurança — se a corrente quebrar, ela volta.
+#
+# Ela também garante as DIÁRIAS que medem: na hora de preferência de cada uma (com uma passada de
+# graça para o cron não ser atropelado), se ela não rodou hoje, a corrente dispara. Medido: as
+# diárias simples recebem 86% e `medir-o-dia`, a régua da casa, recebeu ZERO. Só entra o que mede —
+# `administrar-itch` e `administrar-youtube` exigem a palavra de confirmação e ficam de fora.
+#
+# UMA CORRENTE SÓ, MEDIDO (07/11/2026). O risco de uma corrente que se reagenda é dobrar: dois runs
+# acordando no mesmo minuto, cada um disparando o pulso e mais dois runs. Medi com três disparos
+# seguidos no repositório de verdade: o run 42352222476 ficou `in_progress`, o 42355781857 ficou
+# `pending` e o 42355819311 — o terceiro — **cancelou o pendente**. É o `concurrency` abaixo
+# trabalhando: no máximo um run rodando e um pendente por grupo, e o pendente mais novo substitui o
+# mais velho. Por construção a corrente não pode dobrar, e a dupla que eu criei de propósito foi
+# cancelada na hora.
+#
+# Limites (todos medidos no próprio código, não em promessa):
+#   - `posts/PARAR` existe -> não dispara nada, nem antes nem durante a espera;
+#   - espera máxima de 5h20 dentro de um job que morre em 6h;
+#   - só acorda em hora que tem o que fazer: janela 9-22 (publicar) e 3-4 (pesquisa/aprendizado);
+#   - disparo que falha encerra a corrente com código 3 — falha nunca vira sucesso.
+on:
+  workflow_dispatch:
+  schedule:
+    # CRON_SEGURANCA: este cron não é agenda de entrega — é partida de segurança.
+    # A corrente se reagenda por workflow_dispatch; este cron só existe para
+    # reiniciar a corrente se ela morrer (medido: o GitHub entrega 4,1% dos
+    # pulsos agendados, não é confiável como agenda).
+    - cron: "0 */3 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: corrente
+  cancel-in-progress: false
+
+jobs:
+  corrente:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350     # 5h49: cobre a espera máxima (5h20) com folga, abaixo do teto de 6h
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Contratos da corrente (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-corrente.py
+      - name: Contratos da auditoria de agendas (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-auditar-agendas.py
+
+      - name: Espera o próximo pulso, dispara o pulso e a si mesma
+        env:
+          GHPAT: ${{ secrets.GHPAT }}
+        run: |
+          set -o pipefail -e
+          python3 tools/corrente.py --ensaiar | tee /tmp/corrente-ensaio.txt
+          python3 tools/corrente.py | tee /tmp/corrente.txt
+          {
+            echo "### Corrente de pulsos"
+            echo
+            echo '```'
+            cat /tmp/corrente-ensaio.txt
+            echo
+            cat /tmp/corrente.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

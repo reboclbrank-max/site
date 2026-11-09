@@ -1,0 +1,26 @@
+__pycache__/
+*.pyc
+
+# Artefatos INTERMEDIÁRIOS da produção de vídeo: o pipeline (tools/produzir-video.py) cria e
+# consome durante o run. Versioná-los só engordou o repositório — 9,7 MB de arquivo que nenhuma
+# página e nenhum teste lê. O que fica versionado é o vídeo final e o relatório.
+# O QUADRO BRUTO DE CADA VÍDEO (07/11/2026): 49 arquivos, 4,8 MB. Ele só serve para
+# desenhar a capa dentro do run; o que vale guardar é a capa desenhada.
+media/capas/*-quadro.jpg
+media/gameplay/trecho-*.mp4
+media/gameplay/cru-*.mp4
+media/gameplay/cartao.mp4
+media/gameplay/trilha.m4a
+media/gameplay/*-cru.mp4
+media/gameplay/prancheta-cru.mp4
+# Dependência de runtime NÃO se versiona: 14 MB / 117 arquivos de node_modules que os dois
+# workflows de gravação já instalam sozinhos (npm install --no-save playwright-core@1). Versionar
+# isso só faz todo clone e todo checkout de CI baixarem 14 MB à toa.
+node_modules/
+
+# VÍDEO GRAVADO NÃO SE VERSIONA (06/11/2026): cada run grava o seu; o que fica no git envelhece
+# e o envio manual acaba mandando uma partida de outro dia. O artefato do run guarda o arquivo.
+# O que continua versionado é o vídeo que o SITE toca (ceifalume-gameplay-instrucoes.mp4), que é
+# mídia de página, não entrega de run.
+media/gameplay/prancheta-gameplay.mp4
+media/gameplay/ceifalume-gameplay.mp4

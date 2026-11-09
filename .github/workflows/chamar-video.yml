@@ -1,0 +1,88 @@
+name: chamar-video
+
+# 📣 Leva quem já segue a casa até o vídeo que acabou de sair.
+#
+# Por que existe (06/11/2026): a régua de adesão mediu o óbvio que ninguém tinha medido — canal
+# com 24 inscritos, mediana de 9 views nos últimos 49 vídeos, e os três vídeos do dia com 0 views.
+# Não era título nem horário: nada apontava para eles. A casa TEM audiência, só que no Bluesky
+# (32 seguidores, 300 posts — posts/desempenho.md). Este workflow liga as duas pontas.
+#
+# Regras (as mesmas de sempre, no portão): janela 9h-22h de Brasília, o mesmo vídeo não é chamado
+# duas vezes, texto repetido não sai, e recusa fica registrada com motivo.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ensaio:
+        description: "ENSAIAR = mostra a decisão sem publicar"
+        required: false
+        default: ""
+        type: string
+      refazer:
+        description: "REFAZER = apaga a chamada antiga do vídeo e publica o texto de hoje"
+        required: false
+        default: ""
+        type: string
+  schedule:
+    - cron: "20 13,17 * * *"   # 2 chamadas por dia (10h20 e 14h20 de Brasília)
+
+permissions:
+  contents: write
+
+concurrency:
+  group: chamar-video
+  cancel-in-progress: false
+
+jobs:
+  chamar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Barreiras offline (nada publica aqui)
+        run: |
+          python3 -m py_compile tools/chamar-video.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-chamar-video.py
+
+      - name: Chama o vídeo (o portão decide)
+        shell: bash -o pipefail -e {0}
+        env:
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}
+          ENSAIO_PEDIDO: ${{ github.event.inputs.ensaio }}
+          REFAZER_PEDIDO: ${{ github.event.inputs.refazer }}
+        run: |
+          set +e
+          ARG=""
+          if [ "$ENSAIO_PEDIDO" = "ENSAIAR" ]; then ARG="$ARG --ensaio"; fi
+          if [ "$REFAZER_PEDIDO" = "REFAZER" ]; then ARG="$ARG --refazer"; fi
+          python3 tools/chamar-video.py $ARG | tee /tmp/chamada.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Chamada do vídeo"
+            echo
+            echo '```'
+            cat /tmp/chamada.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código da chamada: $codigo"
+
+      - name: Guarda o registro das chamadas
+        run: |
+          if [ ! -e posts/chamadas.json ]; then
+            echo "sem registro para guardar"
+            exit 0
+          fi
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/chamadas.json
+          if git diff --cached --quiet; then
+            echo "registro sem mudança"
+            exit 0
+          fi
+          git commit -m "chamada: vídeo divulgado no Bluesky ($(date -u +'%d/%m %H:%M UTC'))"
+          bash tools/entrar-no-main.sh "chamada do vídeo" || {
+            echo "::error::o registro da chamada não entrou no main"
+            exit 1
+          }

@@ -1,0 +1,400 @@
+name: gravar-gameplay
+
+# 🎮 Grava o jogo rodando de verdade e transforma em arquivo de vídeo.
+#
+# Até 27/10/2026 a casa falava em "vídeo" e só tinha texto: o trailer 0.1 foi feito à mão e
+# não se repetia. Este workflow abre o build web do jogo (ceifalume/) num Chromium sem tela,
+# com WebGL por software, joga sozinho seguindo um roteiro determinístico, grava a tela e
+# converte para MP4. Depois MEDE o arquivo (tools/validar-video.py): tela preta, imagem parada
+# ou vídeo curto reprovam aqui, não viram "vídeo" no relatório.
+#
+# REGRA DA CASA: o vídeo é GRAVADO sempre (isso é produção, não publicação). O envio ao
+# YouTube só acontece com a palavra PUBLICAR no campo de confirmação — o mesmo cadeado do
+# enviar-youtube.yml. Sem a palavra, o run termina com o vídeo no artefato e nada sai.
+
+on:
+  workflow_dispatch:
+    inputs:
+      segundos:
+        description: "duração da gravação em segundos (precisa passar da colheita: ~130)"
+        required: false
+        default: "130"
+      publicar:
+        description: "digite PUBLICAR para enviar ao YouTube (vazio = só gravar)"
+        required: false
+        default: ""
+  schedule:
+    # DUAS GRAVAÇÕES POR DIA, DENTRO DA JANELA (07/11/2026): era "25 1,7,13,19" — 22:25, 04:25,
+    # 10:25 e 16:25 de Brasília. As duas da madrugada nasciam fora da janela 9h-22h e NUNCA
+    # podiam publicar: metade das gravações diárias era feita para o artefato. Agora 12:25Z e
+    # 19:25Z (09:25 e 16:25 de Brasília), as duas dentro da janela.
+    - cron: "25 12,19 * * *"
+
+permissions:
+  # write só por causa do registro do que foi publicado (posts/youtube-publicados.json), e esse
+  # passo está atrás do cadeado PUBLICAR. A gravação em si não escreve nada no repositório.
+  contents: write
+
+concurrency:
+  group: gravar-gameplay
+  cancel-in-progress: false
+
+jobs:
+  gravar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+
+      - name: Ferramentas de captura e de medida
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          npm install --no-save --no-audit --no-fund playwright-core@1
+          npx --yes playwright install --with-deps chromium-headless-shell
+          python3 -m pip install --quiet --disable-pip-version-check Pillow
+
+      - name: Barreiras offline (nada toca a rede de publicação)
+        run: |
+          node --check tools/gravar-gameplay.js
+          node --check tools/legenda-guia.js
+          python3 -m py_compile tools/validar-video.py tools/kit-gameplay.py \
+            tools/desenhar-faixa.py tools/validar-instrucoes.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-gameplay.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-envio-automatico-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-redator-video.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-instrucoes-video.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-cena.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-capa.py
+
+      # REQUISITO DO DONO: se o robô não jogar, a gravação NÃO é entregue. Antes bastava uma
+      # rodada sem HUD para o run inteiro morrer com tela de abertura; agora ele REPETE a captura
+      # uma vez, em outra resolução (mudar o tamanho da tela muda o caminho dos cliques e do
+      # canvas do Godot). Só o que passa no portão do plantio é aceito: em 30/10, sem a escala,
+      # 3 de 3 rodadas em 960x540 ficavam sem plantio; com a escala, 960/800/1280 plantaram.
+      # A CENA DA VEZ (06/11/2026): três vídeos do mesmo dia saíram da MESMA partida — mesmo
+      # Dia 1, mesmas células, mesmo primeiro quadro. A estratégia mudada a cada gravação é o
+      # que faz o vídeo novo ser outro vídeo, e não o velho com outro título.
+      - name: Escolhe a cena da vez (nunca a mesma da gravação anterior)
+        id: cena
+        run: |
+          ESTRATEGIA=$(python3 tools/cena.py proxima)
+          echo "estrategia=$ESTRATEGIA" >> "$GITHUB_OUTPUT"
+          echo "cena da vez: $ESTRATEGIA"
+          python3 tools/cena.py lista | tail -5
+
+      - name: Grava o gameplay do CEIFALUME (agente olha o estado e decide)
+        env:
+          SEGUNDOS_PEDIDO: ${{ github.event.inputs.segundos || '130' }}
+          ESTRATEGIA: ${{ steps.cena.outputs.estrategia }}
+        run: |
+          set -o pipefail
+          SEGUNDOS="$SEGUNDOS_PEDIDO"
+          ok=0
+          for tentativa in 1 2; do
+            if [ "$tentativa" = "1" ]; then L=1280; A=720; else L=1600; A=900; fi
+            echo "::group::captura $tentativa de 2 (${L}x${A}, ${SEGUNDOS}s)"
+            if node tools/gravar-gameplay.js \
+                 --saida media/gameplay/ceifalume-gameplay-cru.mp4 \
+                 --segundos "$SEGUNDOS" --largura "$L" --altura "$A" --quadros 24 \
+                 --estrategia "$ESTRATEGIA"; then
+              ok=1
+            fi
+            echo "::endgroup::"
+            if [ "$ok" = "1" ]; then echo "captura $tentativa aceita: o relatório prova plantio"; break; fi
+            echo "captura $tentativa reprovada (não provou que o jogo foi jogado) — repetindo"
+          done
+          if [ "$ok" != "1" ]; then
+            echo "::error::duas capturas seguidas não provaram plantio; nada é entregue nem publicado"
+            exit 1
+          fi
+
+      # O corte é escolhido pelo RELATÓRIO (quando o agente semeou e colheu), não por segundos
+      # fixos: no runner o relógio do jogo anda diferente do sandbox. Se o corte enxuto medir
+      # movimento abaixo do mínimo, o script tenta um corte mais largo e, se nenhum passar,
+      # termina em erro — vídeo parado não é entregue.
+      - name: Pós-produção (corte automático, legenda, trilha, cartão final)
+        env:
+          # A faixa de instruções ocupa 112 px do rodapé (era 150 até 06/11/2026 — o dono viu
+          # que ela engolia o campo): a legenda sobe para 138 px e não fica embaixo dela.
+          LEGENDA_MARGEM_V: "138"
+        run: |
+          python3 tools/produzir-video.py \
+            media/gameplay/ceifalume-gameplay-cru.mp4 \
+            media/gameplay/ceifalume-gameplay-cru-decisoes.json \
+            media/gameplay/ceifalume-gameplay.mp4 --trechos-auto
+
+      - name: Mede o vídeo final (tela preta e imagem parada reprovam aqui)
+        run: python3 tools/validar-video.py media/gameplay/ceifalume-gameplay.mp4
+
+      # REQUISITO DO DONO: "no vídeo as instruções de como jogar não saem da tela em momento
+      # algum". A faixa é queimada NO VÍDEO (não é legenda ativável) e depois MEDIDA: se sumir,
+      # encolher ou ficar ilegível em qualquer segundo, o run reprova e nada é publicado.
+      - name: Faixa de instruções fixa no rodapé (não sai da tela em momento algum)
+        run: |
+          node tools/legenda-guia.js \
+            --entrada media/gameplay/ceifalume-gameplay.mp4 \
+            --saida media/gameplay/ceifalume-gameplay-instrucoes.mp4
+
+      - name: Mede se as instruções estão na tela do começo ao fim
+        run: |
+          python3 tools/validar-video.py media/gameplay/ceifalume-gameplay-instrucoes.mp4
+          python3 tools/validar-instrucoes.py media/gameplay/ceifalume-gameplay-instrucoes.mp4
+
+      - name: Monta o kit de envio do gameplay
+        # SÓ O JOGO DESTE RUN: este workflow grava o CEIFALUME. Montar o kit inteiro fazia o passo
+        # reprovar por falta do vídeo do PRANCHETA, que outro workflow grava (run 42319687317).
+        run: python3 tools/kit-gameplay.py --jogo ceifalume
+
+      # A CENA ENTRA NO REGISTRO ANTES DE VIRAR VÍDEO: duas partidas com a mesma assinatura não
+      # entram, e o run para aqui em vez de publicar "o mesmo vídeo com outro título".
+      - name: Registra a cena (duas partidas iguais não entram)
+        id: cena_gravada
+        run: |
+          set +e
+          python3 tools/cena.py registrar \
+            --relatorio media/gameplay/ceifalume-gameplay-cru-decisoes.json \
+            --estrategia "${{ steps.cena.outputs.estrategia }}" | tee /tmp/cena.txt
+          codigo=${PIPESTATUS[0]}
+          ASSINATURA=$(grep -oE '[0-9a-f]{12}' /tmp/cena.txt | head -1)
+          echo "assinatura=$ASSINATURA" >> "$GITHUB_OUTPUT"
+          if [ "$codigo" != "0" ]; then
+            echo "::error::esta partida já foi gravada antes (assinatura repetida) — vídeo novo, não: $(cat /tmp/cena.txt)"
+            exit 1
+          fi
+          echo "cena registrada: $ASSINATURA"
+
+      # CAPA ÚNICA: os três vídeos de 06/11 subiram com o mesmo primeiro quadro. A capa leva o
+      # título do próprio vídeo, os números daquela partida e a assinatura da cena.
+      - name: Desenha a capa do vídeo (uma por vídeo)
+        env:
+          ASSINATURA_CENA: ${{ steps.cena_gravada.outputs.assinatura }}
+        run: |
+          python3 - <<'PY'
+          import json, os, shutil, subprocess
+          kit = json.load(open("posts/kit-gameplay.json", encoding="utf-8"))
+          pacotes = kit.get("pacotes") or []
+          kit = pacotes[0] if pacotes else {}
+          rel = json.load(open("media/gameplay/ceifalume-gameplay-cru-decisoes.json", encoding="utf-8"))
+          titulo = (kit.get("titulo") or "").strip()
+          numeros = "%s mudas · %s colheitas · %s min" % (
+              rel.get("plantadas", "?"), rel.get("colhidas", "?"),
+              rel.get("minutos", 2))
+          quadro = "media/gameplay/quadro-para-capa.png"
+          ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
+          subprocess.run([ffmpeg, "-y", "-hide_banner", "-loglevel", "error",
+                          "-ss", "20", "-i", "media/gameplay/ceifalume-gameplay-cru.mp4",
+                          "-frames:v", "1", quadro], check=True)
+          subprocess.run(["python3", "tools/desenhar-capa.py", "--quadro", quadro,
+                          "--saida", "media/gameplay/ceifalume-capa.png",
+                          "--titulo", titulo, "--numeros", numeros,
+                          "--assinatura", os.environ.get("ASSINATURA_CENA", "")], check=True)
+          print("capa do vídeo: " + titulo)
+          PY
+
+      # REMONTA O KIT DEPOIS DA CAPA (07/11/2026): a capa é desenhada depois do primeiro kit, e o
+      # pacote levava a imagem de perfil do itch (630x500) como capa do YouTube — o vídeo
+      # _ffmjSMsW0Y subiu assim. Remontar é barato e faz o pacote apontar para o desenho desta
+      # partida, que é 1280x720.
+      - name: Remonta o kit com a capa desenhada
+        run: python3 tools/kit-gameplay.py --jogo ceifalume
+
+      - name: Confere que o vídeo tem legenda, som e cartão
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-video-final.py media/gameplay/ceifalume-gameplay.mp4
+
+      - name: Guarda o registro no repositório (o vídeo vai como artefato, não como binário)
+        # POLÍTICA NOVA (06/11/2026). Até aqui este passo commitava o .mp4 a cada gravação —
+        # 4 por dia no CEIFALUME (≈9 MB por rodada, contando o arquivo com instruções) e 3 no
+        # PRANCHETA. O repositório chegou a 325 MB de histórico por causa disso, e crescia
+        # ~40 MB/dia: em um mês seria mais de 1 GB de vídeo antigo guardado para sempre.
+        # O vídeo NÃO precisa ficar no git para ser enviado: quem envia é este mesmo job, logo
+        # depois, com o arquivo ainda em disco. O que precisa de histórico é o registro
+        # (decisões, capa, cena, kit) — e esse continua sendo commitado.
+        # O arquivo publicado fica no artefato do run (14 dias) para quem quiser baixar.
+        run: |
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add media/gameplay/ceifalume-gameplay-cru-decisoes.json \
+                  media/gameplay/ceifalume-capa.png \
+                  posts/kit-gameplay.json \
+                  posts/cenas.json
+          if git diff --cached --quiet; then
+            echo "vídeo sem mudança"
+            exit 0
+          fi
+          git commit -m "gameplay: CEIFALUME gravado ($(date -u +%d/%m\ %H:%M\ UTC))"
+          # O push pode ser recusado se outro workflow commitar no main entre o checkout e
+          # aqui — foi o que derrubou o run 41030633953 (30/10 09:05) e o que quase repetiu no
+          # 41090257198. Duas lições medidas nesses dois runs:
+          #   1) rebase recusa com "You have unstaged changes" porque o run deixa sobras na
+          #      árvore (trechos, cru, quadro de prova) — então as sobras saem do caminho antes;
+          #   2) falhar nas 3 tentativas NÃO pode passar batido: sem o `exit 1` o run terminava
+          #      verde com o vídeo fora do repositório.
+          # O VÍDEO DA ENTREGA NÃO PODE IR PARA O STASH (06/11/2026, run 42314703025): o .mp4
+          # deixou de ser versionado, então `git stash -u` passou a guardar o próprio vídeo
+          # junto com as sobras. Efeito medido: artefato subiu 3 arquivos (sem o vídeo), o
+          # resumo morreu no ffprobe ("No such file or directory") e o run ficou vermelho
+          # depois de gravar. Agora a entrega sai para /tmp antes do stash e volta depois.
+          mkdir -p /tmp/entrega
+          for f in media/gameplay/ceifalume-gameplay.mp4 media/gameplay/ceifalume-gameplay-instrucoes.mp4; do
+            if [ -s "$f" ]; then cp "$f" /tmp/entrega/; fi
+          done
+          git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+          enviado=0
+          for tentativa in 1 2 3; do
+            if git fetch -q origin main && git rebase -q origin/main && git push; then
+              echo "vídeo registrado no main (tentativa $tentativa)"
+              enviado=1
+              break
+            fi
+            echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          if [ "$enviado" != "1" ]; then
+            echo "::error::3 tentativas e o vídeo não entrou no main (o arquivo existe só neste run)"
+            exit 1
+          fi
+          for f in /tmp/entrega/*; do
+            if [ -s "$f" ]; then cp "$f" "media/gameplay/$(basename "$f")"; fi
+          done
+          test -s media/gameplay/ceifalume-gameplay.mp4 || { echo "::error::o vídeo final não sobreviveu ao commit (o stash engoliu a entrega)"; exit 1; }
+          git log --oneline -1
+
+      - name: Guarda o vídeo e o quadro de prova
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: gameplay-ceifalume
+          path: |
+            media/gameplay/ceifalume-gameplay.mp4
+            media/gameplay/ceifalume-gameplay-instrucoes.mp4
+            media/gameplay/ceifalume-gameplay-cru.mp4
+            media/gameplay/ceifalume-gameplay-cru-decisoes.json
+            media/gameplay/legendas.ass
+            media/gameplay/legendas.srt
+            media/gameplay/ceifalume-capa.png
+            posts/kit-gameplay.json
+            posts/cenas.json
+          retention-days: 14
+
+      - name: Resumo
+        env:
+          STATUS_PUBLICACAO: ${{ github.event.inputs.publicar == 'PUBLICAR' && 'pedido neste run' || 'não pedido — só gravação' }}
+        run: |
+          {
+            echo "### Gameplay gravado"
+            echo
+            echo '```'
+            ffprobe -hide_banner -v error -show_entries format=duration,size:stream=width,height,r_frame_rate \
+              -of default=noprint_wrappers=1 media/gameplay/ceifalume-gameplay.mp4
+            echo '```'
+            echo
+            echo "Envio ao YouTube: $STATUS_PUBLICACAO"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Envia ao YouTube no automático (o portão do vídeo decide)
+        shell: bash -o pipefail -e {0}
+        # Caminho agendado. O vídeo só sobe se for comprovadamente NOVO: o sha256 do arquivo
+        # não pode estar em posts/videos-enviados.json. Em 06/11/2026 o canal tinha 163 vídeos
+        # e o mesmo título de gameplay foi ao ar três vezes — palavra humana não impedia isso.
+        # Recusa aqui é comportamento normal e NÃO derruba o run.
+        # `publicar == 'AUTOMATICO'` existe só para provar o portão sob demanda, sem upload
+        # garantido: se o vídeo for novo, ele sobe — e é isso que o dono quer.
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.publicar == 'AUTOMATICO' }}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          CONFIRMACAO: AUTOMATICO
+          KIT_YOUTUBE: posts/kit-gameplay.json
+        run: |
+          set +e
+          python3 tools/enviar-youtube.py ceifalume-gameplay | tee /tmp/envio-auto.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Portão do vídeo"
+            echo '```'
+            cat /tmp/envio-auto.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código do envio: $codigo"
+          # 0 = publicado · 2 = recusa do portão com motivo (normal no agendado) · 3 = falha
+          # operacional (token, upload, rede). Só a terceira derruba o run: recusa silenciosa
+          # era o defeito, mas token vencido também ficava verde.
+          if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi
+          exit 0
+
+      - name: Envia ao YouTube (só com a palavra PUBLICAR)
+        shell: bash -o pipefail -e {0}
+        if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          CONFIRMACAO: ${{ github.event.inputs.publicar }}
+          KIT_YOUTUBE: posts/kit-gameplay.json
+        run: |
+          python3 tools/enviar-youtube.py ceifalume-gameplay | tee /tmp/envio.txt
+
+      - name: Registra o que foi publicado (JSON público que o chat lê)
+        if: ${{ github.event.inputs.publicar == 'PUBLICAR' || github.event.inputs.publicar == 'AUTOMATICO' || github.event_name == 'schedule' }}
+        run: |
+          if [ ! -f posts/youtube-publicados.json ]; then
+            echo "sem registro para guardar (o envio pode ter falhado antes)"
+            exit 0
+          fi
+          git config user.name "reboclbrank-max"
+          git config user.email "reboclbrank@gmail.com"
+          git add posts/youtube-publicados.json
+          [ -e posts/videos-enviados.json ] && git add posts/videos-enviados.json || true
+          # A CAPA TAMBÉM É REGISTRO (06/11/2026): o envio anota em posts/capas-aplicadas.json
+          # qual capa aplicou — e este passo commitava só os outros dois JSON. Resultado: o
+          # registro da capa ficava no caminho de trabalho, ia para o stash no fim do run e
+          # desaparecia. O vídeo O04ajm1t54Q foi publicado com capa às 00:04 e, minutos depois,
+          # a ferramenta das capas o listou como "sem capa".
+          [ -e posts/capas-aplicadas.json ] && git add posts/capas-aplicadas.json || true
+          if git diff --cached --quiet; then
+            echo "registro sem mudança"
+            exit 0
+          fi
+          git commit -m "registro: vídeo do gameplay publicado no YouTube ($(date -u +'%d/%m %H:%M UTC'))"
+          # O push pode ser recusado se outro workflow commitar no main entre o checkout e
+          # aqui — foi o que derrubou o run 41030633953 (30/10 09:05) e o que quase repetiu no
+          # 41090257198. Duas lições medidas nesses dois runs:
+          #   1) rebase recusa com "You have unstaged changes" porque o run deixa sobras na
+          #      árvore (trechos, cru, quadro de prova) — então as sobras saem do caminho antes;
+          #   2) falhar nas 3 tentativas NÃO pode passar batido: sem o `exit 1` o run terminava
+          #      verde com o vídeo fora do repositório.
+          git stash push -u -q -m "sobras-do-run" >/dev/null 2>&1 || true
+          enviado=0
+          for tentativa in 1 2 3; do
+            if git fetch -q origin main && git rebase -q origin/main && git push; then
+              echo "vídeo registrado no main (tentativa $tentativa)"
+              enviado=1
+              break
+            fi
+            echo "push recusado (tentativa $tentativa) — rebase e nova tentativa"
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          if [ "$enviado" != "1" ]; then
+            echo "::error::3 tentativas e o vídeo não entrou no main (o arquivo existe só neste run)"
+            exit 1
+          fi
+          git log --oneline -1
+          {
+            echo "### Envio ao YouTube"
+            echo
+            echo '```'
+            # O caminho agendado grava a saída em /tmp/envio-auto.txt; o manual, em /tmp/envio.txt.
+            # Em 06/11/2026 este `cat` sem guarda derrubou o run 42248857217 DEPOIS de o vídeo
+            # já ter subido e o registro já ter entrado no main: o run ficou vermelho com o
+            # trabalho feito. Resumo não pode ser o que reprova a publicação.
+            cat /tmp/envio.txt 2>/dev/null || cat /tmp/envio-auto.txt 2>/dev/null \
+              || echo "sem saída de envio neste caminho"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

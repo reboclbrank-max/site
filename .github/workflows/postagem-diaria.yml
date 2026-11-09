@@ -1,0 +1,179 @@
+name: postagem-diaria (legado — não roda sozinho)
+
+# MORTO COMO AGENDA POR DECISÃO (07/11/2026), e a decisão é medida:
+#   - o `cron` deste arquivo saiu em `d2ded0a` (03/11/2026, PR #7 "fase 0: contenção segura"); o
+#     último run AGENDADO foi 03/11 08:41Z. Depois disso só houve disparo manual. Não "parou de
+#     funcionar": foi contido de propósito.
+#   - quem publica hoje é o pulso de 24h (`marketing-24h` + `orquestrador`, ~4 pulsos/dia, verde) e
+#     os `gravar-*` com a palavra PUBLICAR. A agenda diária deste arquivo seria um terceiro relógio
+#     publicando — exatamente o que a contenção proíbe (e a suíte `testes-contencao-marketing` cobra).
+#   - o arquivo FICA porque seis suítes medem o que ele contém (cadeado, entrada-no-main, sem push
+#     seco). O que ele não pode é voltar a rodar por conta própria.
+on:
+  # Fase 0: publicação e retaguarda agendadas permanecem contidas no código.
+  workflow_dispatch:
+    inputs:
+      confirmacao:
+        description: "Digite PUBLICAR para autorizar este ciclo legado"
+        required: true
+        type: string
+permissions:
+  contents: write
+# Somente o ciclo manual confirmado permanece; a concorrência é estável e previsível.
+concurrency:
+  group: postagem-diaria
+  cancel-in-progress: false
+jobs:
+  postar:
+    if: github.actor == 'reboclbrank-max' && inputs.confirmacao == 'PUBLICAR'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Contrato de preservação de estado (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-conciliacao-estado.py
+      - name: Dependências da barreira offline
+        run: python3 -m pip install --disable-pip-version-check Pillow==12.0.0 PyYAML==6.0.2
+      - name: Barreira offline de autonomia e marca
+        run: |
+          python3 tools/rodar-contratos-isolados.py tools/testes-autonomia-marketing.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-metricas.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-interacao.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-devlog.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-sondar-trava-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-kit-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-itch-navegador.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-administrar-itch.py
+          node tools/montar-bookmarklet.js --verificar
+          python3 tools/rodar-contratos-isolados.py tools/testes-bookmarklet-itch.js
+          python3 tools/rodar-contratos-isolados.py tools/testes-redator.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-portao-publicacao.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-administrar-youtube.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-painel-marketing.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-decisoes.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-aprender-horario.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-auditar-inteligencia.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-perceber.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-juizo.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-melhorias.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-publicacoes.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-gif-com-selo.py
+          python3 tools/rodar-contratos-isolados.py tools/testes-entrar-no-main.py
+      - name: A casa posta sozinha
+        run: |
+          pip install -q coincurve websocket-client
+          python3 tools/postador.py
+          # Kit de envio do YouTube: PRODUZ, não publica. O envio depende do OAuth do dono.
+          python3 tools/kit-youtube.py || echo "kit do YouTube com problema — registrado, sem publicar"
+          # O painel público é gerado do MESMO log que acabou de ser escrito: autonomia sem
+          # vitrine vira promessa. Ele é versionado e o site publica.
+          python3 tools/decisoes.py
+          python3 tools/auditar-inteligencia.py
+          python3 tools/perceber.py
+          python3 tools/painel-marketing.py
+          # Página pública das melhorias: lista as rodadas e mostra os números dos artefatos.
+          # Melhoria invisível é quase promessa — e não dá para discordar dela.
+          python3 tools/melhorias.py
+          # Cofre das publicações: inventário com data, tamanho e sha256 de tudo o que saiu.
+          # "Salvo" sem hash é só uma lista de nomes; o hash é o que prova que não mudou.
+          python3 tools/publicacoes.py
+          # Selo do gameplay na imagem que a página do itch mostra (o itch não aceita automação
+          # na página; a imagem é servida por nós). Idempotente: sempre a partir da fonte.
+          python3 tools/gif-com-selo.py || echo "selo no GIF indisponível nesta rodada"
+          git config user.name "casa-rebocl"
+          git config user.email "casa@rebocl.local"
+          git add marketing.html melhorias.html publicacoes.html posts/log.md posts/decisoes.json posts/decisoes.md posts/auditoria-inteligencia.json posts/auditoria-inteligencia.md posts/percebido.json posts/percebido.md posts/publicacoes.json docs/PUBLICACOES.md posts/fila-tarefas.json
+          for f in posts/repertorio.json posts/portao-decisoes.jsonl; do [ -e "$f" ] && git add "$f" || true; done
+          if ! git diff --cached --quiet; then
+            git commit -q -m "marketing: painel e log do ciclo ($(date -u +'%d/%m %H:%M UTC'))"
+            # Sem -u: artefato NOVO (não versionado ainda) não pode ser levado embora pelo stash,
+            # senão o juízo perde a memória dele antes do commit. Untracked não bloqueia rebase.
+            git stash push -q --keep-index -m "sobras-do-run" >/dev/null 2>&1 || true
+            # DEFEITO MEDIDO (31/10/2026, runs 41128039668 e 41128399021): o laço "rebase e
+            # tenta de novo" parava em conflito TODA vez que o outro escritor regerava o mesmo
+            # arquivo. Agora quem entra no main é tools/entrar-no-main.sh: rebase quando dá,
+            # merge com regeneração pela fonte quando não dá (e recusa se o conflito for em
+            # arquivo que não é gerado).
+            if ! GERAR="python3 tools/melhorias.py && python3 tools/publicacoes.py && python3 tools/painel-marketing.py" \
+                 bash tools/entrar-no-main.sh "painel e log do ciclo"; then
+              # Não aborta o ciclo: o devlog e o log do ciclo ainda têm de entrar. O run
+              # termina vermelho no fim, com o motivo medido.
+              echo "::error::o painel não entrou no main"
+              painel_falhou=1
+            fi
+          fi
+          # Devlog no site da casa: o itch não tem API para devlog, então o diário de bordo é
+          # publicado onde não existe trava — por commit, no nosso próprio domínio.
+          python3 tools/devlog.py
+          git config user.name "casa-rebocl"
+          git config user.email "casa@rebocl.local"
+          git add posts/ blog/
+          git commit -m "🤖 postagem automatica $(date -u +'%d/%m %H:%M')" || echo "nada a commitar"
+          GERAR="python3 tools/melhorias.py && python3 tools/publicacoes.py" \
+            bash tools/entrar-no-main.sh "ciclo e devlog" || {
+            echo "::error::o ciclo não entrou no main (o log ficaria só neste run)"
+            exit 1
+          }
+          if [ "${painel_falhou:-0}" = "1" ]; then
+            echo "::error::o ciclo entrou, mas o painel marketing.html ficou velho"
+            exit 1
+          fi
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          GHPAT: ${{ secrets.GHPAT }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT: ${{ secrets.TELEGRAM_CHAT }}
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}
+          MASTODON_URL: ${{ secrets.MASTODON_URL }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+
+      - name: Mede o que foi postado e o que voltou
+        # Só leitura pública: não publica, não usa segredo, não consome cota de repo privado.
+        # Fica fora do caminho crítico: se a medição falhar, a postagem já aconteceu.
+        if: always()
+        continue-on-error: true
+        env:
+          # Leitura de contadores e insights do Instagram. Sem estes segredos o medidor
+          # registra NAO_OBSERVAVEL — nunca zero. Nada é impresso nem versionado.
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          # Uma chave por conta do itch (a casa publica em duas). Sem elas: NAO_OBSERVAVEL.
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          # Leitura pública do YouTube (inscritos, vídeos, shorts). Não é OAuth.
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+        run: |
+          python3 tools/metricas.py || echo "medição indisponível nesta rodada"
+          # O aprendizado de horário lia posts/desempenho.md e NUNCA era executado: a regra
+          # existia e ninguém a cobrava. Agora roda a cada medição e grava o motivo da decisão.
+          python3 tools/aprender-horario.py || echo "aprendizado de horário indisponível nesta rodada"
+          # O juízo relê o feed medido: só vira "gosto" o traço com amostra e sinal claros.
+          python3 tools/juizo.py || echo "juízo indisponível nesta rodada"
+          git config user.name "casa-rebocl"
+          git config user.email "casa@rebocl.local"
+          # Um `git add` por arquivo: com um caminho ausente o git aborta o add INTEIRO, e a
+          # medição (com o feed e o perfil do juízo) ficava fora do commit sem avisar.
+          for _f in posts/desempenho.md posts/placar-metas.md posts/aprendizado.json \
+                    posts/feed-medido.json posts/perfil-de-gosto.json posts/memoria-de-gosto.json; do
+            git add "$_f" 2>/dev/null || true
+          done
+          git commit -m "📊 desempenho $(date -u +'%d/%m %H:%M')" || echo "sem mudança de medição"
+          bash tools/entrar-no-main.sh "medição do ciclo" || {
+            echo "::error::a medição não entrou no main"
+            exit 1
+          }
+
+      - name: Acorda o vigia da casa (chat de e-mail)
+        if: always()
+        continue-on-error: true
+        run: |
+          curl -s -o /dev/null -w "vigia do chat: %{http_code}\n" -X POST \
+            -H "Authorization: Bearer ${{ secrets.GHPAT }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/reboclbrank-max/chat/actions/workflows/vigia.yml/dispatches \
+            -d '{"ref":"main"}' || true

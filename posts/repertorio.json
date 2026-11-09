@@ -1,0 +1,308 @@
+{
+ "_o_que_e": "Memória de pauta da casa: o que já foi dito, com ângulo, assunto, fatos e forma. É isto que impede o mesmo ângulo de voltar cedo e o mesmo par (ângulo, assunto) de se repetir.",
+ "_por_que_existe": "Medido em 06/11/2026: 106 posts sociais e quatro seguidos com a mesma estrutura. Sem memória de pauta não existe novidade — existe sorte.",
+ "_lei": "Ângulo em descanso por 6 publicações; par (ângulo, assunto) em descanso por 20. Só o ato humano revoga estas janelas (tools/redator.py).",
+ "versao": 1,
+ "usos": [
+  {
+   "quando": "2026-11-06T14:38:51Z",
+   "canal": "site",
+   "angulo": "pergunta_que_ensina",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias",
+    "medido-bicos",
+    "medido-moedas",
+    "medido-plantadas",
+    "medido-tutorial"
+   ],
+   "abertura": "voce programa",
+   "tipo_abertura": "voce",
+   "esqueleto": [
+    "pergunta",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 1.0,
+   "texto": "Voce programa colheitas longas antes de dormir sabendo que o jogo roda offline por até 8h e acorda com o celeiro cheio? #Ceifalume #IdleFarm"
+  },
+  {
+   "quando": "2026-11-06T20:35:43Z",
+   "canal": "site",
+   "angulo": "pergunta_ao_publico",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-ficticio",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "qual ferramenta",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Qual ferramenta da Prancheta do Android você acha mais útil para acompanhar as trocas de jogadores? Durante a partida, o técnico pode fazer até 5 trocas e dar. "
+  },
+  {
+   "quando": "2026-11-07T00:21:22Z",
+   "canal": "site",
+   "angulo": "ponte_de_canal",
+   "assunto": "casa",
+   "fatos": [
+    "casa-canais",
+    "casa-newsletter",
+    "casa-telegram",
+    "prancheta-trailer"
+   ],
+   "abertura": "tudo sobre",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Tudo sobre os canais oficiais está na nossa página. Já conhece o Prancheta? Descubra mais nos outros canais da casa! #gamedevbr"
+  },
+  {
+   "quando": "2026-11-07T12:02:29Z",
+   "canal": "site",
+   "angulo": "dica_de_jogador",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias",
+    "medido-bicos",
+    "medido-moedas",
+    "medido-plantadas",
+    "medido-tutorial"
+   ],
+   "abertura": "faltando espaco",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "pergunta",
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Faltando espaço no celeiro? Não gaste sementes à toa: só plante abóbora quando tiver slot livre pro processador, senão a colheita apodrece na fila. #ceifalume"
+  },
+  {
+   "quando": "2026-11-07T14:22:46Z",
+   "canal": "site",
+   "angulo": "convite_a_testar",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-apk",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "ceifalume: 6",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase",
+    "pergunta"
+   ],
+   "hashtags": 0,
+   "nota": 0.923,
+   "texto": "Ceifalume: 6 culturas no celeiro (tem abóbora). Busco testadores pra caçar bugs e dar feedback no idle noturno (navegador/Android). Vem testar?"
+  },
+  {
+   "quando": "2026-11-07T16:42:33Z",
+   "canal": "site",
+   "angulo": "comparacao_honesta",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-offline",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "no navegador,",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "No navegador, Prancheta roda suave nas configurações, mas no APK Android a experiência tem latência leve. Se quer rapidez, prefira o modo Android. #prancheta"
+  },
+  {
+   "quando": "2026-11-07T19:04:07Z",
+   "canal": "site",
+   "angulo": "tres_passos",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-apk",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "1. abra",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "passo",
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "1. Abra no navegador ou instale no Android 2. Toque na tela para colher a primeira alma 3. Invista nas 6 melhorias e deixe a foice trabalhar sozinha #ceifalume"
+  },
+  {
+   "quando": "2026-11-08T12:02:08Z",
+   "canal": "site",
+   "angulo": "devlog_aberto",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-godot",
+    "oficio-apk-fora-de-loja"
+   ],
+   "abertura": "eu, ceifalume,",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Eu, Ceifalume, refaço 2 jogos em Godot sozinho e continuo no processo criativo. Oficiar esse caminho solo é desafio + arte. #godot"
+  },
+  {
+   "quando": "2026-11-08T16:23:52Z",
+   "canal": "site",
+   "angulo": "pergunta_que_ensina",
+   "assunto": "casa",
+   "fatos": [
+    "medido-video",
+    "medido-instagram-publicacoes-2026-11-08",
+    "medido-bluesky-seguidores-2026-11-08"
+   ],
+   "abertura": "voce sabia",
+   "tipo_abertura": "voce",
+   "esqueleto": [
+    "pergunta",
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Você sabia que o Bluesky chega a 32 seguidores hoje mesmo? Como isso pode refinar sua estratégia de divulgação? Descubra com Prancheta. #gamedevbr"
+  },
+  {
+   "quando": "2026-11-08T20:21:36Z",
+   "canal": "site",
+   "angulo": "numero_medido",
+   "assunto": "casa",
+   "fatos": [
+    "medido-video",
+    "medido-instagram-publicacoes-2026-11-08",
+    "medido-bluesky-seguidores-2026-11-08",
+    "medido-youtube-inscritos-2026-11-08",
+    "medido-views-ice6o3d-wd0-2026-11-08",
+    "medido-youtube-shorts-2026-11-08"
+   ],
+   "abertura": "7 shorts",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "7 shorts hoje no YouTube, medidos pela própria casa em 08/11, trazem lógicas que curiosamente guiam Ceifalume. #gamedevbr"
+  }
+ ],
+ "fatos_de_uma_vez": [
+  "ceifalume-8h",
+  "ceifalume-chuva",
+  "ceifalume-tutorial",
+  "ceifalume-save",
+  "ceifalume-culturas",
+  "ceifalume-melhorias",
+  "medido-bicos",
+  "medido-moedas",
+  "medido-plantadas",
+  "medido-tutorial",
+  "prancheta-trocas",
+  "prancheta-narracao",
+  "prancheta-ficticio",
+  "prancheta-divisoes",
+  "prancheta-mercado",
+  "prancheta-acessibilidade",
+  "prancheta-guia",
+  "casa-canais",
+  "casa-newsletter",
+  "casa-telegram",
+  "prancheta-trailer",
+  "ceifalume-apk",
+  "prancheta-offline",
+  "oficio-godot",
+  "oficio-apk-fora-de-loja",
+  "medido-video",
+  "medido-instagram-publicacoes-2026-11-08",
+  "medido-bluesky-seguidores-2026-11-08",
+  "medido-youtube-inscritos-2026-11-08",
+  "medido-views-ice6o3d-wd0-2026-11-08",
+  "medido-youtube-shorts-2026-11-08"
+ ],
+ "ultimo": {
+  "quando": "2026-11-08T20:21:36Z",
+  "canal": "site",
+  "angulo": "numero_medido",
+  "assunto": "casa",
+  "fatos": [
+   "medido-video",
+   "medido-instagram-publicacoes-2026-11-08",
+   "medido-bluesky-seguidores-2026-11-08",
+   "medido-youtube-inscritos-2026-11-08",
+   "medido-views-ice6o3d-wd0-2026-11-08",
+   "medido-youtube-shorts-2026-11-08"
+  ],
+  "abertura": "7 shorts",
+  "tipo_abertura": "frase",
+  "esqueleto": [
+   "frase",
+   "frase"
+  ],
+  "hashtags": 1,
+  "nota": 0.769,
+  "texto": "7 shorts hoje no YouTube, medidos pela própria casa em 08/11, trazem lógicas que curiosamente guiam Ceifalume. #gamedevbr"
+ }
+}
