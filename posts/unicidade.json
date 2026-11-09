@@ -1,8 +1,8 @@
 {
  "medido_em": "2026-11-09",
- "posts": 116,
- "dias_com_post": 25,
- "media_por_dia": 4.64,
+ "posts": 117,
+ "dias_com_post": 26,
+ "media_por_dia": 4.5,
  "dias_com_repeticao": [
   {
    "dia": "2026-10-13",
@@ -68,12 +68,12 @@
  "ultimo_dia_com_repeticao": "2026-10-25",
  "ultimos_dias": {
   "janela": 7,
-  "posts": 11,
-  "textos_unicos": 11,
+  "posts": 12,
+  "textos_unicos": 12,
   "repetidos": 0,
   "quase_repetidos": []
  },
- "veredito": "últimos 7 dias: 11 post(s), todos textos diferentes · média 4.64/dia · o último dia com repetição foi 2026-10-25",
+ "veredito": "últimos 7 dias: 12 post(s), todos textos diferentes · média 4.5/dia · o último dia com repetição foi 2026-10-25",
  "de": "2026-10-13",
- "ate": "2026-11-08"
+ "ate": "2026-11-09"
 }
