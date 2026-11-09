@@ -292,6 +292,31 @@
    "hashtags": 1,
    "nota": 0.769,
    "texto": "Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o reserva para o titular. A mudança é imediata. #prancheta"
+  },
+  {
+   "quando": "2026-11-09T18:24:26Z",
+   "canal": "site",
+   "angulo": "convite_a_testar",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-offline",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "procurando testadores",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.692,
+   "texto": "Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e modo escuro"
   }
  ],
  "fatos_de_uma_vez": [
@@ -330,28 +355,29 @@
   "marco-youtube-shorts"
  ],
  "ultimo": {
-  "quando": "2026-11-09T16:04:35Z",
+  "quando": "2026-11-09T18:24:26Z",
   "canal": "site",
-  "angulo": "mecanica_por_dentro",
+  "angulo": "convite_a_testar",
   "assunto": "prancheta",
   "fatos": [
    "prancheta-trocas",
    "prancheta-narracao",
    "prancheta-divisoes",
    "prancheta-mercado",
+   "prancheta-offline",
    "prancheta-acessibilidade",
    "prancheta-guia"
   ],
-  "abertura": "faca ate",
-  "tipo_abertura": "rotulo",
+  "abertura": "procurando testadores",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "rotulo",
    "frase",
+   "rotulo",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.769,
-  "texto": "Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o reserva para o titular. A mudança é imediata. #prancheta"
+  "hashtags": 0,
+  "nota": 0.692,
+  "texto": "Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e modo escuro"
  },
  "publicacoes": [
   {
@@ -374,6 +400,17 @@
    "texto": "Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o reserva para o titular. A mudança é imediata. #prancheta",
    "titulo": "Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o r",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-09T18:24:26Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e modo escuro/claro.",
+   "titulo": "Procurando testadores para o Prancheta!",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]

@@ -352,3 +352,6 @@ Meta de posts do Instagram batida: 40 de 30! 🎉 Ceifalume agradece o apoio nes
 
 ## 09/11/2026 16:05 UTC
 Faça até 5 trocas durante o jogo: pause a partida, abra o painel do elenco e arraste o reserva para o titular. A mudança é imediata. #prancheta
+
+## 09/11/2026 18:24 UTC
+Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e sugerir melhorias na usabilidade. Temos ajuste de texto (16, 18, 20) e modo escuro/claro.

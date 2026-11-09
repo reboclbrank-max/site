@@ -1412,11 +1412,11 @@
    "id": "publicar-20261109T122012Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-09T12:20:12Z",
-   "executada": "2026-11-09T18:00:26Z",
-   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
+   "executada": "2026-11-09T18:20:12Z",
+   "resultado": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strftime(\"%d/%m\"), perguntas[dia % len(perguntas)], aula[:400].replace(\"\\n\", \" \")))\n/home/runner/work/site/site/tools/postador.py:1627: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
    "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias) · ritmo medido: 0.76 por dia em 25 dias — não fecha no prazo",
    "chave": "meta-Bluesky: seguidores",
    "origem": "perceber",
@@ -1654,6 +1654,18 @@
     "publicar-20261108T164013Z",
     "publicar-20261109T122012Z",
     "publicar-20261109T140015Z"
+   ]
+  },
+  {
+   "tipo": "publicar",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-09T18:20:12Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261109T122012Z",
+    "publicar-20261109T140015Z",
+    "publicar-20261109T162021Z"
    ]
   }
  ]
