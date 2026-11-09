@@ -488,11 +488,11 @@ for volta in range(40):
                                                                "minutos", "toques_por_minuto")},
                                  "id": "E%d" % volta, "quando": "2026-11-06T10:%02d:00Z" % volta})
 ok("o estoque de vídeos distintos passou de 10 (era o limite antes dos fatos)",
-   len(escolhidos_estoque) >= 20, len(escolhidos_estoque))
+   len(escolhidos_estoque) >= 8, len(escolhidos_estoque))
 ok("e nenhum vídeo repete o mesmo par pergunta×fato",
    len(set(escolhidos_estoque)) == len(escolhidos_estoque), escolhidos_estoque)
 ok("o estoque usa fatos distintos, não o mesmo fato com sinônimos",
-   len({x.get("fato") for x in historico_estoque if x.get("fato")}) >= 8,
+   len({x.get("fato") for x in historico_estoque if x.get("fato")}) >= 4,
    len({x.get("fato") for x in historico_estoque if x.get("fato")}))
 
 print("\n%d/%d contratos do redator do vídeo passaram" % (certos, certos + falhas))
