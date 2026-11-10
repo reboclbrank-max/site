@@ -383,6 +383,34 @@
    "hashtags": 2,
    "nota": 0.769,
    "texto": "Finalizando a base dos 3 primeiros dias de Ceifalume. Limite honesto: acaba rápido, sem late game ainda. #ceifalume #jogobrasileiro"
+  },
+  {
+   "quando": "2026-11-10T20:43:42Z",
+   "canal": "site",
+   "angulo": "tres_passos",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-offline",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "1. abra",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "passo",
+    "frase",
+    "passo",
+    "rotulo",
+    "passo",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "1. Abra o Prancheta no Android. 2. Selecione a divisão: Liga ou Copa Nacional. 3. Sincronize dados FIFA e gerencie seu time. #prancheta"
   }
  ],
  "fatos_de_uma_vez": [
@@ -422,28 +450,32 @@
   "casa-site-gratis"
  ],
  "ultimo": {
-  "quando": "2026-11-10T18:25:51Z",
+  "quando": "2026-11-10T20:43:42Z",
   "canal": "site",
-  "angulo": "devlog_aberto",
-  "assunto": "ceifalume",
+  "angulo": "tres_passos",
+  "assunto": "prancheta",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-offline",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "finalizando a",
+  "abertura": "1. abra",
   "tipo_abertura": "frase",
   "esqueleto": [
+   "passo",
    "frase",
+   "passo",
    "rotulo",
+   "passo",
    "frase"
   ],
-  "hashtags": 2,
+  "hashtags": 1,
   "nota": 0.769,
-  "texto": "Finalizando a base dos 3 primeiros dias de Ceifalume. Limite honesto: acaba rápido, sem late game ainda. #ceifalume #jogobrasileiro"
+  "texto": "1. Abra o Prancheta no Android. 2. Selecione a divisão: Liga ou Copa Nacional. 3. Sincronize dados FIFA e gerencie seu time. #prancheta"
  },
  "publicacoes": [
   {
@@ -509,6 +541,17 @@
    "fatos": [],
    "texto": "Finalizando a base dos 3 primeiros dias de Ceifalume. Limite honesto: acaba rápido, sem late game ainda. #ceifalume #jogobrasileiro",
    "titulo": "Finalizando a base dos 3 primeiros dias de Ceifalume.",
+   "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-10T20:43:42Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "1. Abra o Prancheta no Android. 2. Selecione a divisão: Liga ou Copa Nacional. 3. Sincronize dados FIFA e gerencie seu time. #prancheta",
+   "titulo": "Prancheta — 1. Abra o Prancheta no Android. 2. Selecione a divisão: Liga ou Copa Naciona",
    "nota": 0.769,
    "tipo": "publicacao"
   }
