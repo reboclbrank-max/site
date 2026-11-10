@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-10T11:43:57Z",
+ "medido_em": "2026-11-10T21:25:15Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "QPRgb4ny43s",
+   "titulo": "CEIFALUME é idle farm — e o que isso quer dizer",
+   "publicado_em": "2026-11-10T19:57:40Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "ihxVpjQoczQ",
    "titulo": "O que CEIFALUME pede para rodar",
@@ -108,7 +116,7 @@
   }
  ],
  "totais": {
-  "videos": 13,
+  "videos": 14,
   "views": 4,
   "likes": 0,
   "comentarios": 0
