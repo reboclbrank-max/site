@@ -2,6 +2,23 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-10T20:28:32Z",
+   "video_id": "QPRgb4ny43s",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"CEIFALUME é idle farm — e o que isso quer dizer\". Na partida gravada: 9 mudas, 12 colheitas, em 2 minutos. É o CEIFALUME-GAMEPLAY. #ceifalume-gameplay\nhttps://youtu.be/QPRgb4ny43s",
+   "titulo": "CEIFALUME é idle farm — e o que isso quer dizer",
+   "resultado": "recusado",
+   "motivo": "mesma forma de um post recente do canal (abertura rotulo, 4 frases, 1 hashtags): O que CEIFALUME pede para rodar",
+   "numeros": {
+    "video": "QPRgb4ny43s",
+    "historico_do_canal": 6,
+    "nota_juizo": 0.462,
+    "jogos_citados": [
+     "ceifalume"
+    ]
+   }
+  },
+  {
    "quando": "2026-11-09T22:59:42Z",
    "video_id": "ihxVpjQoczQ",
    "canal": "bluesky",
