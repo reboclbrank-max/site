@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "QPRgb4ny43s",
+   "url": "https://youtu.be/QPRgb4ny43s",
+   "slug": "ceifalume-gameplay",
+   "titulo": "CEIFALUME é idle farm — e o que isso quer dizer",
+   "descricao": "Idle farm é o jogo que continua enquanto você não está olhando. Aqui, as plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNa partida gravada isso aparece nos números: 9 mudas e 12 colheitas em 2 minutos.\n\nNada de reflexo rápido: o ritmo é o do campo.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
+   "descricao_completa": false,
+   "angulo": "genero:ceifalume-8h",
+   "fato": "ceifalume-8h",
+   "numeros": {
+    "plantadas": 9,
+    "colhidas": 12,
+    "toques": 986,
+    "minutos": 2,
+    "toques_por_minuto": 493
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-10T19:57:22Z"
+  },
+  {
    "id": "ihxVpjQoczQ",
    "url": "https://youtu.be/ihxVpjQoczQ",
    "slug": "ceifalume-gameplay",
