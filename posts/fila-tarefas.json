@@ -1540,11 +1540,11 @@
    "id": "publicar-20261110T122014Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-10T12:20:14Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-10T18:20:19Z",
+   "resultado": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strftime(\"%d/%m\"), perguntas[dia % len(perguntas)], aula[:400].replace(\"\\n\", \" \")))\n/home/runner/work/site/site/tools/postador.py:1627: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
    "motivo": "empurrar a meta: itch: downloads: faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
    "chave": "meta-itch: downloads",
    "origem": "perceber"
@@ -1828,6 +1828,18 @@
     "publicar-20261109T220016Z",
     "publicar-20261110T120013Z",
     "publicar-20261110T122014Z"
+   ]
+  },
+  {
+   "tipo": "publicar",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-10T18:20:19Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261110T120013Z",
+    "publicar-20261110T122014Z",
+    "publicar-20261110T164015Z"
    ]
   }
  ]

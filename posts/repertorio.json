@@ -359,6 +359,30 @@
    "hashtags": 1,
    "nota": 0.846,
    "texto": "Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fora) a coleta fica mais rápida. #ceifalume"
+  },
+  {
+   "quando": "2026-11-10T18:25:51Z",
+   "canal": "site",
+   "angulo": "devlog_aberto",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "finalizando a",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.769,
+   "texto": "Finalizando a base dos 3 primeiros dias de Ceifalume. Limite honesto: acaba rápido, sem late game ainda. #ceifalume #jogobrasileiro"
   }
  ],
  "fatos_de_uma_vez": [
@@ -398,28 +422,28 @@
   "casa-site-gratis"
  ],
  "ultimo": {
-  "quando": "2026-11-10T12:04:52Z",
+  "quando": "2026-11-10T18:25:51Z",
   "canal": "site",
-  "angulo": "comparacao_honesta",
+  "angulo": "devlog_aberto",
   "assunto": "ceifalume",
   "fatos": [
    "ceifalume-8h",
    "ceifalume-chuva",
    "ceifalume-tutorial",
-   "ceifalume-apk",
    "ceifalume-save",
    "ceifalume-culturas",
    "ceifalume-melhorias"
   ],
-  "abertura": "ceifalume: no",
-  "tipo_abertura": "rotulo",
+  "abertura": "finalizando a",
+  "tipo_abertura": "frase",
   "esqueleto": [
+   "frase",
    "rotulo",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.846,
-  "texto": "Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fora) a coleta fica mais rápida. #ceifalume"
+  "hashtags": 2,
+  "nota": 0.769,
+  "texto": "Finalizando a base dos 3 primeiros dias de Ceifalume. Limite honesto: acaba rápido, sem late game ainda. #ceifalume #jogobrasileiro"
  },
  "publicacoes": [
   {
@@ -475,6 +499,17 @@
    "texto": "Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fora) a coleta fica mais rápida. #ceifalume",
    "titulo": "Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fo",
    "nota": 0.846,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-10T18:25:51Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Finalizando a base dos 3 primeiros dias de Ceifalume. Limite honesto: acaba rápido, sem late game ainda. #ceifalume #jogobrasileiro",
+   "titulo": "Finalizando a base dos 3 primeiros dias de Ceifalume.",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]
