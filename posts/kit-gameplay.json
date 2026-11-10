@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "requisito:ceifalume-8h",
+   "angulo": "genero:ceifalume-8h",
    "fato": "ceifalume-8h",
    "numeros": {
-    "plantadas": 11,
-    "colhidas": 8,
-    "toques": 800,
+    "plantadas": 9,
+    "colhidas": 12,
+    "toques": 986,
     "minutos": 2,
-    "toques_por_minuto": 400
+    "toques_por_minuto": 493
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 3774031,
+   "bytes": 4170836,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "O que CEIFALUME pede para rodar",
-   "descricao": "As plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNão pediu nada aqui: o build abriu no navegador e a gravação rodou 800 toques em 2 minutos.\n\nSem conta, sem instalação obrigatória e sem fila de espera.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#navegador",
+   "titulo": "CEIFALUME é idle farm — e o que isso quer dizer",
+   "descricao": "Idle farm é o jogo que continua enquanto você não está olhando. Aqui, as plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNa partida gravada isso aparece nos números: 9 mudas e 12 colheitas em 2 minutos.\n\nNada de reflexo rápido: o ritmo é o do campo.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -73,7 +73,11 @@
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-8h",
-     "motivo": "mesmo ângulo do último vídeo publicado (onde_esta_a_comunidade:ceifalume-8h) — o ângulo roda"
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:ceifalume-8h",
+     "motivo": "mesmo ângulo do último vídeo publicado (requisito:ceifalume-8h) — o ângulo roda"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-8h",
@@ -116,6 +120,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:ceifalume-chuva",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "como_funciona:ceifalume-tutorial",
      "motivo": "texto repetido: 0.62 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -142,6 +150,10 @@
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-tutorial",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:ceifalume-tutorial",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
      "angulo": "como_funciona:ceifalume-apk",
@@ -172,6 +184,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:ceifalume-apk",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "como_funciona:ceifalume-anuncio",
      "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -198,6 +214,10 @@
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-anuncio",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:ceifalume-anuncio",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
      "angulo": "como_funciona:ceifalume-save",
@@ -228,6 +248,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:ceifalume-save",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "onde_jogar:ceifalume-culturas",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
@@ -248,6 +272,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "onde_jogar:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
@@ -266,6 +294,10 @@
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
      "angulo": "como_funciona:ceifalume-versao",
@@ -296,6 +328,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:ceifalume-versao",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "como_funciona:oficio-devlog",
      "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
     },
@@ -322,6 +358,10 @@
     {
      "angulo": "onde_esta_a_comunidade:oficio-devlog",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:oficio-devlog",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
      "angulo": "como_funciona:casa-canais",
@@ -352,6 +392,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:casa-canais",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "como_funciona:casa-newsletter",
      "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -378,6 +422,10 @@
     {
      "angulo": "onde_esta_a_comunidade:casa-newsletter",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:casa-newsletter",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
      "angulo": "como_funciona:casa-telegram",
@@ -408,6 +456,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:casa-telegram",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "como_funciona:casa-site-gratis",
      "motivo": "texto repetido: 0.67 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -430,6 +482,10 @@
     {
      "angulo": "onde_esta_a_comunidade:casa-site-gratis",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:casa-site-gratis",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
      "angulo": "como_funciona:video-iCE6O3d_WD0",
@@ -456,6 +512,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "como_funciona:marco-instagram-publicacoes",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -478,6 +538,10 @@
     {
      "angulo": "onde_esta_a_comunidade:marco-instagram-publicacoes",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:marco-instagram-publicacoes",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
      "angulo": "como_funciona:video-cfB5ZBdC-NA",
@@ -508,6 +572,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:video-cfB5ZBdC-NA",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "como_funciona:video-_ffmjSMsW0Y",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -534,6 +602,10 @@
     {
      "angulo": "onde_esta_a_comunidade:video-_ffmjSMsW0Y",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-_ffmjSMsW0Y",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
      "angulo": "como_funciona:video-hBvkQhSS-_4",
@@ -564,6 +636,10 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:video-hBvkQhSS-_4",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "como_funciona:marco-youtube-shorts",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -588,8 +664,12 @@
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
     {
+     "angulo": "requisito:marco-youtube-shorts",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
      "angulo": "numeros",
-     "motivo": "título quase igual a um já publicado (0.97)"
+     "motivo": "título quase igual a um já publicado (0.96)"
     },
     {
      "angulo": "pergunta",
@@ -604,7 +684,7 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 113,
+   "angulos_aprovados": 93,
    "angulos_candidatos": 254
   },
   {
