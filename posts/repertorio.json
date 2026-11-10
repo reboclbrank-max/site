@@ -335,6 +335,30 @@
    "hashtags": 1,
    "nota": 0.769,
    "texto": "Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot"
+  },
+  {
+   "quando": "2026-11-10T12:04:52Z",
+   "canal": "site",
+   "angulo": "comparacao_honesta",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-apk",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "ceifalume: no",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fora) a coleta fica mais rápida. #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -374,22 +398,28 @@
   "casa-site-gratis"
  ],
  "ultimo": {
-  "quando": "2026-11-09T22:05:29Z",
+  "quando": "2026-11-10T12:04:52Z",
   "canal": "site",
-  "angulo": "pergunta_ao_publico",
-  "assunto": "casa",
+  "angulo": "comparacao_honesta",
+  "assunto": "ceifalume",
   "fatos": [
-   "casa-site-gratis"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-apk",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias"
   ],
-  "abertura": "quer testar",
-  "tipo_abertura": "frase",
+  "abertura": "ceifalume: no",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "pergunta",
+   "rotulo",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.769,
-  "texto": "Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot"
+  "nota": 0.846,
+  "texto": "Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fora) a coleta fica mais rápida. #ceifalume"
  },
  "publicacoes": [
   {
@@ -434,6 +464,17 @@
    "texto": "Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot",
    "titulo": "Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra?",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-10T12:04:52Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fora) a coleta fica mais rápida. #ceifalume",
+   "titulo": "Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fo",
+   "nota": 0.846,
    "tipo": "publicacao"
   }
  ]

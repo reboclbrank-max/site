@@ -358,3 +358,6 @@ Procurando testadores para o Prancheta! Seu papel: jogar normal, achar bugs e su
 
 ## 09/11/2026 22:05 UTC
 Quer testar os protótipos do Prancheta direto no navegador, sem cadastro nem compra? #godot
+
+## 10/11/2026 12:04 UTC
+Ceifalume: no navegador a fazenda idle rola num suspiro, mas no APK de 79 MB (instala fora) a coleta fica mais rápida. #ceifalume
