@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-10T06:20:23Z",
  "ultima_pesquisa": "2026-11-10T06:00:14Z",
  "ultima_aprendizagem": "2026-11-10T07:00:13Z",
- "pulsos": 272,
+ "pulsos": 273,
  "historico": [
-  {
-   "quando": "2026-11-09T00:40:12Z",
-   "acao": "dormir",
-   "motivo": "teto diario atingido (5 de 5)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-09T01:57:52Z",
    "acao": "medir",
@@ -286,6 +279,13 @@
    "motivo": "fila: [aprender-20261110T070013Z] decisão do relógio",
    "codigo": 0,
    "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-10T07:20:21Z",
+   "acao": "dormir",
+   "motivo": "fora da janela (04h local)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
   }
  ]
 }
