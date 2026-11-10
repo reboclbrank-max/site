@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-10T20:40:16Z",
+ "quando": "2026-11-10T21:00:16Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -39,11 +39,39 @@
    "chave": "parada-YouTube: inscritos"
   }
  ],
- "dono": [],
+ "dono": [
+  {
+   "o_que": "ligar o canal bluesky",
+   "porque": "nunca publicou em 20 ciclos: falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS",
+   "quem": "dono",
+   "como": "criar o segredo BLUESKY_HANDLE + BLUESKY_APPPASS em Settings → Secrets → Actions",
+   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
+   "tipo_fila": null,
+   "chave": "dono-segredo-bluesky"
+  },
+  {
+   "o_que": "ligar o canal threads",
+   "porque": "nunca publicou em 20 ciclos: falta o segredo THREADS_USER_ID + THREADS_TOKEN",
+   "quem": "dono",
+   "como": "criar o segredo THREADS_USER_ID + THREADS_TOKEN em Settings → Secrets → Actions",
+   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
+   "tipo_fila": null,
+   "chave": "dono-segredo-threads"
+  },
+  {
+   "o_que": "ligar o canal nostr",
+   "porque": "nunca publicou em 20 ciclos: falta o segredo NOSTR_KEY",
+   "quem": "dono",
+   "como": "criar o segredo NOSTR_KEY em Settings → Secrets → Actions",
+   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
+   "tipo_fila": null,
+   "chave": "dono-segredo-nostr"
+  }
+ ],
  "enfileiradas": [],
  "contagem": {
   "robo": 4,
-  "dono": 0,
+  "dono": 3,
   "enfileiradas": 0
  }
 }
