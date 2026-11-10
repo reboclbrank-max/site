@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-10T16:40:15Z",
+ "quando": "2026-11-10T17:00:17Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -40,12 +40,10 @@
   }
  ],
  "dono": [],
- "enfileiradas": [
-  "publicar-20261110T164015Z"
- ],
+ "enfileiradas": [],
  "contagem": {
   "robo": 4,
   "dono": 0,
-  "enfileiradas": 1
+  "enfileiradas": 0
  }
 }
