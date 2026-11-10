@@ -90,7 +90,7 @@ r = portao.avalia(cand("Um título qualquer e próprio", "texto novo sobre outra
 checar("itch não publica: a casa só mede", r["publica"] is False and "chave de API" in r["motivo"])
 r = portao.avalia(cand("Um título qualquer e próprio", "x"), canal="instagram", hora_local=14, calendario=CAL)
 checar("instagram recusa declarada sem credencial", r["publica"] is False and "credencial" in r["motivo"])
-r = portao.avalia(cand("Um título qualquer e próprio", "x"), canal="tiktok", hora_local=14, calendario=CAL)
+r = portao.avalia(cand("Um título qualquer e próprio", "x"), canal="reels", hora_local=14, calendario=CAL)
 checar("canal desconhecido recusa", r["publica"] is False and "desconhecido" in r["motivo"])
 
 # 2. falha fechada: sem calendário, nada publica

@@ -224,38 +224,6 @@ async function testeX() {
   } catch (e) { registro('X (Twitter)', false, 'erro de conexão', e.message.slice(0, 100)); }
 }
 
-async function testeTikTok() {
-  try {
-    const key = process.env.TIKTOK_CLIENT_KEY;
-    const secret = process.env.TIKTOK_CLIENT_SECRET;
-    const accessToken = process.env.TIKTOK_ACCESS_TOKEN;
-    const refreshToken = process.env.TIKTOK_REFRESH_TOKEN;
-
-    if (!key || !secret || !accessToken) {
-      registro('TikTok', false, 'sem TIKTOK_CLIENT_KEY / TIKTOK_CLIENT_SECRET / TIKTOK_ACCESS_TOKEN');
-      return;
-    }
-
-    // Valida o access token via User Info endpoint da TikTok API
-    const r = await busca('https://open.tiktokapis.com/v2/oauth/userinfo/', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({}),
-    });
-
-    if (r.ok) {
-      const j = await r.json();
-      const data = j.data || {};
-      registro('TikTok', true, 'access token válido', data.username ? `@${data.username}` : 'ok');
-    } else {
-      registro('TikTok', false, `HTTP ${r.status} (verificar TIKTOK_ACCESS_TOKEN)`, await r.text().slice(0, 100));
-    }
-  } catch (e) { registro('TikTok', false, 'erro de conexão', e.message.slice(0, 100)); }
-}
-
 async function testeGmail() {
   try {
     const addr = process.env.GMAIL_CHAT_ADDR;
@@ -290,7 +258,6 @@ async function main() {
   await testeDevto();
   await testeTumblr();
   await testeNostr();
-  await testeTikTok();
   await testeX();
   await testeGmail();
 
