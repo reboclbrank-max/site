@@ -2,18 +2,11 @@
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
  "ultima_publicacao": "2026-11-09T22:00:16Z",
- "ultima_medicao": "2026-11-10T00:02:38Z",
+ "ultima_medicao": "2026-11-10T06:20:23Z",
  "ultima_pesquisa": "2026-11-10T06:00:14Z",
  "ultima_aprendizagem": "2026-11-09T07:00:16Z",
- "pulsos": 269,
+ "pulsos": 270,
  "historico": [
-  {
-   "quando": "2026-11-08T23:40:13Z",
-   "acao": "dormir",
-   "motivo": "teto diario atingido (5 de 5)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-09T00:00:14Z",
    "acao": "dormir",
@@ -284,6 +277,13 @@
    "quando": "2026-11-10T06:00:14Z",
    "acao": "pesquisar",
    "motivo": "fila: [pesquisar-20261107T070013Z] meta parada: Instagram: seguidores: 0 em 25 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-10T06:20:23Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261110T062023Z] decisão do relógio",
    "codigo": 0,
    "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
   }

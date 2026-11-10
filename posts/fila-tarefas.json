@@ -1484,6 +1484,31 @@
    "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 207,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
    "motivo": "decisão do relógio",
    "chave": "medir-2026111000"
+  },
+  {
+   "id": "pesquisar-20261110T062023Z",
+   "tipo": "pesquisar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-10T06:20:23Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "meta parada: Instagram: seguidores: 0 em 25 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "chave": "parada-Instagram: seguidores",
+   "origem": "perceber"
+  },
+  {
+   "id": "medir-20261110T062023Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-10T06:20:23Z",
+   "executada": "2026-11-10T06:20:23Z",
+   "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 207,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026111006"
   }
  ],
  "recusadas": [
