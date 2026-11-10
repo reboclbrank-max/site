@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-09T23:50:59Z",
+ "medido_em": "2026-11-10T11:43:57Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -38,7 +38,7 @@
    "id": "cfB5ZBdC-NA",
    "titulo": "O que tem dentro de CEIFALUME",
    "publicado_em": "2026-11-07T17:52:36Z",
-   "views": 1,
+   "views": 2,
    "likes": 0,
    "comentarios": 0
   },
@@ -109,7 +109,7 @@
  ],
  "totais": {
   "videos": 13,
-  "views": 3,
+  "views": 4,
   "likes": 0,
   "comentarios": 0
  }
