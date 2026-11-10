@@ -1467,11 +1467,13 @@
    "estado": "pendente",
    "tentativas": 0,
    "criada": "2026-11-09T22:00:16Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-10T14:00:17Z",
+   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
    "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias) · ritmo medido: 0.76 por dia em 25 dias — não fecha no prazo",
    "chave": "meta-Bluesky: seguidores",
-   "origem": "perceber"
+   "origem": "perceber",
+   "adiamentos": 1,
+   "adiada_em": "2026-11-10T14:00:17Z"
   },
   {
    "id": "medir-20261110T000238Z",
@@ -1789,6 +1791,18 @@
     "pesquisar-20261107T064637Z",
     "pesquisar-20261107T070013Z",
     "pesquisar-20261108T062010Z"
+   ]
+  },
+  {
+   "tipo": "publicar",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-10T14:00:17Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261109T220016Z",
+    "publicar-20261110T120013Z",
+    "publicar-20261110T122014Z"
    ]
   }
  ]
