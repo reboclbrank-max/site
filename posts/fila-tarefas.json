@@ -1699,6 +1699,19 @@
    "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 208,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
    "motivo": "decisão do relógio",
    "chave": "medir-2026111118"
+  },
+  {
+   "id": "publicar-20261111T190054Z",
+   "tipo": "publicar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-11T19:00:54Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias) · ritmo medido: 0.76 por dia em 25 dias — não fecha no prazo",
+   "chave": "meta-Bluesky: seguidores",
+   "origem": "perceber"
   }
  ],
  "recusadas": [
