@@ -1,22 +1,22 @@
 # Pendências do dono
 
-Medido em 2026-11-10T19:49:32Z (o devlog do itch é público: dá para conferir de fora).
+Medido em 2026-11-11T12:20:35Z (o devlog do itch é público: dá para conferir de fora).
 
 ## Estado da casa
 
-- Vídeos publicados: 15 · último: ihxVpjQoczQ (O que CEIFALUME pede para rodar)
-- Capas da casa: 56 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
+- Vídeos publicados: 16 · último: QPRgb4ny43s (CEIFALUME é idle farm — e o que isso quer dizer)
+- Capas da casa: 57 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
 - PRANCHETA no itch: build 19604665 (a casa viu em 2026-11-07T05:38) · esse build não sobe por aqui: o dono publica no itch
-- Fila: 6 pendente(s) (pesquisar 3, publicar 3) · a mais velha: pesquisar-20261107T064637Z há 85.0 h · 117 feita(s)
-- Régua de metas: medida há 74.0 h · prazo 2026-11-12 · 5 dia(s) restante(s) · VENCIDA (medir de novo)
-- Pulsos: 300 · última publicação 2026-11-10T18:20:19Z · última medição 2026-11-10T19:00:17Z
+- Fila: 5 pendente(s) (pesquisar 3, publicar 2) · a mais velha: pesquisar-20261107T064637Z há 101.6 h · 123 feita(s)
+- Régua de metas: medida há 90.5 h · prazo 2026-11-12 · 5 dia(s) restante(s) · VENCIDA (medir de novo)
+- Pulsos: 325 · última publicação 2026-11-11T12:00:14Z · última medição 2026-11-11T12:00:14Z
 
-- Agenda: o cron pede **62** disparos/dia e o GitHub entregou **12.57/dia** (janela de 7 dia(s), medido em 2026-11-10).
-- Corrente: em dia (último pulso 10/11 16:40, há 10 min) · próximo pulso 10/11 17:00
+- Agenda: o cron pede **62** disparos/dia e o GitHub entregou **11.72/dia** (janela de 7 dia(s), medido em 2026-11-11).
+- Corrente: em dia (último pulso 11/11 09:20, há 1 min) · próximo pulso 11/11 09:40
 
-- Originalidade: últimos 7 dias: 16 post(s), todos textos diferentes · média 4.52/dia · o último dia com repetição foi 2026-10-25
+- Originalidade: últimos 7 dias: 18 post(s), todos textos diferentes · média 4.43/dia · o último dia com repetição foi 2026-10-25
 
-- Pauta: 17 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
+- Pauta: 18 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
 
 | item | estado | como |
 | --- | --- | --- |

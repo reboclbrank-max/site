@@ -1,28 +1,27 @@
 {
- "medido_em": "2026-11-10",
+ "medido_em": "2026-11-11",
  "janela_dias": 7,
  "linhas": [
   {
    "workflow": "administrar-itch",
    "cron": "17 6 * * *",
    "esperado_por_dia": 1,
-   "medido_por_dia": 1.0,
-   "entrega_pct": 100.0,
-   "frase": "o agendador entrega o que o cron pede",
+   "medido_por_dia": 0.86,
+   "entrega_pct": 86.0,
+   "frase": "o agendador entrega 86.0% do cron",
    "por_dia": {
     "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 1,
     "2026-11-07": 1,
     "2026-11-06": 1,
-    "2026-11-05": 1,
-    "2026-11-04": 1
+    "2026-11-05": 1
    },
    "amostra_cobre": true,
    "runs_lidos": 22,
-   "dias_no_ar": 16,
+   "dias_no_ar": 17,
    "por_evento": {
-    "schedule": 7
+    "schedule": 6
    },
    "manuais": 0
   },
@@ -30,23 +29,22 @@
    "workflow": "administrar-youtube",
    "cron": "43 6 * * *",
    "esperado_por_dia": 1,
-   "medido_por_dia": 1.0,
-   "entrega_pct": 100.0,
-   "frase": "o agendador entrega o que o cron pede",
+   "medido_por_dia": 0.86,
+   "entrega_pct": 86.0,
+   "frase": "o agendador entrega 86.0% do cron",
    "por_dia": {
     "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 1,
     "2026-11-07": 1,
     "2026-11-06": 1,
-    "2026-11-05": 1,
-    "2026-11-04": 1
+    "2026-11-05": 1
    },
    "amostra_cobre": true,
    "runs_lidos": 22,
-   "dias_no_ar": 16,
+   "dias_no_ar": 17,
    "por_evento": {
-    "schedule": 7,
+    "schedule": 6,
     "workflow_dispatch": 3
    },
    "manuais": 3
@@ -55,20 +53,21 @@
    "workflow": "chamar-video",
    "cron": "20 13,17 * * *",
    "esperado_por_dia": 2,
-   "medido_por_dia": 0.57,
+   "medido_por_dia": 0.71,
    "entrega_pct": null,
-   "frase": "no ar há 5 dia(s): comparar com 7 dia(s) de janela ainda não vale",
+   "frase": "no ar há 6 dia(s): comparar com 7 dia(s) de janela ainda não vale",
    "por_dia": {
+    "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 1,
     "2026-11-07": 1,
     "2026-11-06": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 6,
-   "dias_no_ar": 5,
+   "runs_lidos": 7,
+   "dias_no_ar": 6,
    "por_evento": {
-    "schedule": 4,
+    "schedule": 5,
     "workflow_dispatch": 2
    },
    "manuais": 2
@@ -81,63 +80,63 @@
    "entrega_pct": null,
    "frase": "amostra não cobre a janela (100 run(s) lido(s)): não afirmo quantos por dia",
    "por_dia": {
-    "2026-11-10": 2,
-    "2026-11-09": 3,
-    "2026-11-08": 1
+    "2026-11-11": 1,
+    "2026-11-10": 3,
+    "2026-11-09": 3
    },
    "amostra_cobre": false,
    "runs_lidos": 100,
-   "dias_no_ar": 4,
+   "dias_no_ar": 5,
    "por_evento": {
-    "workflow_dispatch": 94,
-    "schedule": 6
+    "workflow_dispatch": 93,
+    "schedule": 7
    },
-   "manuais": 94
+   "manuais": 93
   },
   {
    "workflow": "gravar-gameplay",
    "cron": "25 12,19 * * *",
    "esperado_por_dia": 2,
-   "medido_por_dia": 1.57,
-   "entrega_pct": 78.5,
-   "frase": "o agendador entrega 78.5% do cron",
+   "medido_por_dia": 1.43,
+   "entrega_pct": 71.5,
+   "frase": "o agendador entrega 71.5% do cron",
    "por_dia": {
+    "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 2,
     "2026-11-07": 2,
     "2026-11-06": 2,
-    "2026-11-05": 2,
-    "2026-11-04": 2
+    "2026-11-05": 2
    },
    "amostra_cobre": true,
-   "runs_lidos": 63,
-   "dias_no_ar": 15,
+   "runs_lidos": 64,
+   "dias_no_ar": 16,
    "por_evento": {
-    "schedule": 11,
-    "workflow_dispatch": 16
+    "schedule": 10,
+    "workflow_dispatch": 14
    },
-   "manuais": 16
+   "manuais": 14
   },
   {
    "workflow": "gravar-prancheta",
    "cron": "50 12,16,19 * * *",
    "esperado_por_dia": 3,
-   "medido_por_dia": 2.0,
-   "entrega_pct": 66.7,
-   "frase": "o agendador entrega 66.7% do cron",
+   "medido_por_dia": 1.71,
+   "entrega_pct": 57.0,
+   "frase": "o agendador entrega 57.0% do cron",
    "por_dia": {
+    "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 2,
     "2026-11-07": 2,
     "2026-11-06": 3,
-    "2026-11-05": 3,
-    "2026-11-04": 3
+    "2026-11-05": 3
    },
    "amostra_cobre": true,
-   "runs_lidos": 48,
-   "dias_no_ar": 15,
+   "runs_lidos": 49,
+   "dias_no_ar": 16,
    "por_evento": {
-    "schedule": 14,
+    "schedule": 12,
     "workflow_dispatch": 8
    },
    "manuais": 8
@@ -150,21 +149,21 @@
    "entrega_pct": 86.0,
    "frase": "o agendador entrega 86.0% do cron",
    "por_dia": {
+    "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 1,
     "2026-11-07": 1,
     "2026-11-06": 1,
-    "2026-11-05": 1,
-    "2026-11-04": 1
+    "2026-11-05": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 19,
-   "dias_no_ar": 16,
+   "runs_lidos": 21,
+   "dias_no_ar": 17,
    "por_evento": {
-    "workflow_dispatch": 4,
+    "workflow_dispatch": 5,
     "schedule": 6
    },
-   "manuais": 4
+   "manuais": 5
   },
   {
    "workflow": "marketing-24h",
@@ -174,13 +173,14 @@
    "entrega_pct": null,
    "frase": "amostra não cobre a janela (100 run(s) lido(s)): não afirmo quantos por dia",
    "por_dia": {
-    "2026-11-10": 36,
+    "2026-11-11": 12,
+    "2026-11-10": 49,
     "2026-11-09": 37,
-    "2026-11-08": 27
+    "2026-11-08": 2
    },
    "amostra_cobre": false,
    "runs_lidos": 100,
-   "dias_no_ar": 16,
+   "dias_no_ar": 17,
    "por_evento": {
     "repository_dispatch": 93,
     "schedule": 7
@@ -195,19 +195,19 @@
    "entrega_pct": 86.0,
    "frase": "o agendador entrega 86.0% do cron",
    "por_dia": {
+    "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 1,
     "2026-11-07": 1,
     "2026-11-06": 1,
-    "2026-11-05": 1,
-    "2026-11-04": 1
+    "2026-11-05": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 19,
-   "dias_no_ar": 16,
+   "runs_lidos": 20,
+   "dias_no_ar": 17,
    "por_evento": {
-    "workflow_dispatch": 4,
-    "schedule": 6
+    "schedule": 6,
+    "workflow_dispatch": 4
    },
    "manuais": 4
   },
@@ -219,17 +219,17 @@
    "entrega_pct": 67.8,
    "frase": "o agendador entrega 67.8% do cron",
    "por_dia": {
-    "2026-11-10": 1,
+    "2026-11-11": 2,
+    "2026-11-10": 2,
     "2026-11-09": 3,
     "2026-11-08": 3,
     "2026-11-07": 3,
     "2026-11-06": 3,
-    "2026-11-05": 3,
-    "2026-11-04": 3
+    "2026-11-05": 3
    },
    "amostra_cobre": true,
-   "runs_lidos": 44,
-   "dias_no_ar": 15,
+   "runs_lidos": 47,
+   "dias_no_ar": 16,
    "por_evento": {
     "schedule": 19,
     "workflow_dispatch": 3
@@ -240,64 +240,62 @@
    "workflow": "pendencias-do-dono",
    "cron": "20 12 * * *",
    "esperado_por_dia": 1,
-   "medido_por_dia": 1.0,
-   "entrega_pct": 100.0,
-   "frase": "o agendador entrega o que o cron pede",
+   "medido_por_dia": 0.86,
+   "entrega_pct": 86.0,
+   "frase": "o agendador entrega 86.0% do cron",
    "por_dia": {
     "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 1,
     "2026-11-07": 1,
     "2026-11-06": 1,
-    "2026-11-05": 1,
-    "2026-11-04": 1
+    "2026-11-05": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 23,
-   "dias_no_ar": 12,
+   "runs_lidos": 24,
+   "dias_no_ar": 13,
    "por_evento": {
-    "schedule": 7,
-    "workflow_dispatch": 11
+    "workflow_dispatch": 12,
+    "schedule": 6
    },
-   "manuais": 11
+   "manuais": 12
   },
   {
    "workflow": "vigia-sessao-itch",
    "cron": "0 12 * * *",
    "esperado_por_dia": 1,
-   "medido_por_dia": 1.0,
-   "entrega_pct": 100.0,
-   "frase": "o agendador entrega o que o cron pede",
+   "medido_por_dia": 0.86,
+   "entrega_pct": 86.0,
+   "frase": "o agendador entrega 86.0% do cron",
    "por_dia": {
     "2026-11-10": 1,
     "2026-11-09": 1,
     "2026-11-08": 1,
     "2026-11-07": 1,
     "2026-11-06": 1,
-    "2026-11-05": 1,
-    "2026-11-04": 1
+    "2026-11-05": 1
    },
    "amostra_cobre": true,
-   "runs_lidos": 20,
-   "dias_no_ar": 16,
+   "runs_lidos": 21,
+   "dias_no_ar": 17,
    "por_evento": {
-    "schedule": 7,
-    "workflow_dispatch": 4
+    "workflow_dispatch": 5,
+    "schedule": 6
    },
-   "manuais": 4
+   "manuais": 5
   }
  ],
  "erros": [],
  "total_esperado_por_dia": 62,
- "total_medido_por_dia": 12.57,
+ "total_medido_por_dia": 11.72,
  "corrente": {
-  "agora": "2026-11-10T19:49:30.132652+00:00",
-  "ultimo_pulso": "2026-11-10T19:40:03+00:00",
-  "idade_min": 9.5,
-  "slot_devido": "2026-11-10T19:40:00+00:00",
-  "atraso_min": 9.5,
+  "agora": "2026-11-11T12:20:34.141463+00:00",
+  "ultimo_pulso": "2026-11-11T12:20:01+00:00",
+  "idade_min": 0.6,
+  "slot_devido": "2026-11-11T12:20:00+00:00",
+  "atraso_min": 0.6,
   "pulsos_perdidos": 0,
-  "veredito": "em dia (último pulso 10/11 16:40, há 10 min)",
+  "veredito": "em dia (último pulso 11/11 09:20, há 1 min)",
   "buracos": []
  }
 }
