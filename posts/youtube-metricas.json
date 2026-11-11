@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-10T21:25:15Z",
+ "medido_em": "2026-11-11T01:28:09Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -78,7 +78,7 @@
    "id": "PRyg0Ncz5U8",
    "titulo": "Onde jogar CEIFALUME sem instalar loja",
    "publicado_em": "2026-11-06T18:24:35Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -117,7 +117,7 @@
  ],
  "totais": {
   "videos": 14,
-  "views": 4,
+  "views": 5,
   "likes": 0,
   "comentarios": 0
  }
