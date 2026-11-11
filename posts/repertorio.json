@@ -411,6 +411,26 @@
    "hashtags": 1,
    "nota": 0.769,
    "texto": "1. Abra o Prancheta no Android. 2. Selecione a divisão: Liga ou Copa Nacional. 3. Sincronize dados FIFA e gerencie seu time. #prancheta"
+  },
+  {
+   "quando": "2026-11-11T12:08:12Z",
+   "canal": "site",
+   "angulo": "numero_medido",
+   "assunto": "ceifalume",
+   "fatos": [
+    "medido-bicos",
+    "medido-moedas",
+    "medido-plantadas",
+    "medido-tutorial"
+   ],
+   "abertura": "14 plantadas",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazenda idle noturna que ainda conquista Android e navegadores #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -450,32 +470,24 @@
   "casa-site-gratis"
  ],
  "ultimo": {
-  "quando": "2026-11-10T20:43:42Z",
+  "quando": "2026-11-11T12:08:12Z",
   "canal": "site",
-  "angulo": "tres_passos",
-  "assunto": "prancheta",
+  "angulo": "numero_medido",
+  "assunto": "ceifalume",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-offline",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "medido-bicos",
+   "medido-moedas",
+   "medido-plantadas",
+   "medido-tutorial"
   ],
-  "abertura": "1. abra",
+  "abertura": "14 plantadas",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "passo",
-   "frase",
-   "passo",
-   "rotulo",
-   "passo",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.769,
-  "texto": "1. Abra o Prancheta no Android. 2. Selecione a divisão: Liga ou Copa Nacional. 3. Sincronize dados FIFA e gerencie seu time. #prancheta"
+  "nota": 0.692,
+  "texto": "14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazenda idle noturna que ainda conquista Android e navegadores #ceifalume"
  },
  "publicacoes": [
   {
@@ -553,6 +565,17 @@
    "texto": "1. Abra o Prancheta no Android. 2. Selecione a divisão: Liga ou Copa Nacional. 3. Sincronize dados FIFA e gerencie seu time. #prancheta",
    "titulo": "Prancheta — 1. Abra o Prancheta no Android. 2. Selecione a divisão: Liga ou Copa Naciona",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-11T12:08:12Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazenda idle noturna que ainda conquista Android e navegadores #ceifalume",
+   "titulo": "14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazen",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]
