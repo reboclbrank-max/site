@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-11T01:46:08Z",
  "ultima_pesquisa": "2026-11-11T06:00:16Z",
  "ultima_aprendizagem": "2026-11-11T07:00:17Z",
- "pulsos": 321,
+ "pulsos": 322,
  "historico": [
-  {
-   "quando": "2026-11-10T14:00:17Z",
-   "acao": "publicar",
-   "motivo": "fila: [publicar-20261109T220016Z] empurrar a meta: Bluesky: seguidores: faltam 18 e o ritmo necessário é 3.6 por dia (prazo em 5 dias) · ritmo medido: 0.76 por dia em 25 dias — não fecha no prazo",
-   "codigo": 0,
-   "saida": "fila: 1 tarefa(s) adiada(s) neste pulso (nada a fazer agora)"
-  },
   {
    "quando": "2026-11-10T14:20:17Z",
    "acao": "dormir",
@@ -286,6 +279,13 @@
    "motivo": "fila: [aprender-20261111T070017Z] decisão do relógio",
    "codigo": 0,
    "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-11T07:20:14Z",
+   "acao": "dormir",
+   "motivo": "fora da janela (04h local)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
   }
  ]
 }
