@@ -1,19 +1,12 @@
 {
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
- "ultima_publicacao": "2026-11-11T14:00:16Z",
+ "ultima_publicacao": "2026-11-11T16:20:17Z",
  "ultima_medicao": "2026-11-11T12:00:14Z",
  "ultima_pesquisa": "2026-11-11T06:00:16Z",
  "ultima_aprendizagem": "2026-11-11T07:00:17Z",
- "pulsos": 337,
+ "pulsos": 338,
  "historico": [
-  {
-   "quando": "2026-11-10T19:00:17Z",
-   "acao": "medir",
-   "motivo": "fila: [medir-20261110T190017Z] decisão do relógio",
-   "codigo": 0,
-   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
-  },
   {
    "quando": "2026-11-10T19:20:16Z",
    "acao": "dormir",
@@ -286,6 +279,13 @@
    "motivo": "publicou há 120 min (mínimo 2h)",
    "codigo": 0,
    "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-11T16:20:17Z",
+   "acao": "publicar",
+   "motivo": "fila: [publicar-20261110T184016Z] empurrar a meta: itch: downloads: faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
   }
  ]
 }

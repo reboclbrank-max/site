@@ -1578,11 +1578,11 @@
    "id": "publicar-20261110T184016Z",
    "tipo": "publicar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-10T18:40:16Z",
-   "executada": "2026-11-11T14:00:16Z",
-   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos)",
+   "executada": "2026-11-11T16:20:17Z",
+   "resultado": "janela: dentro da janela (13h local); ciclos hoje 1/5\nRESUMO: publicacao=RECUSADA (nenhum dos 10 textos passou: nota do juízo abaixo do mínimo (0.54 < 0.65); motor não devolveu texto utilizável; motor não devolveu texto utilizável)\n/home/runner/work/site/site/tools/postador.py:896: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timez",
    "motivo": "empurrar a meta: itch: downloads: faltam 52 e o ritmo necessário é 10.4 por dia (prazo em 5 dias) · ritmo medido: 0.16 por dia em 25 dias — não fecha no prazo",
    "chave": "meta-itch: downloads",
    "origem": "perceber",
@@ -1965,6 +1965,18 @@
     "pesquisar-20261107T064637Z",
     "pesquisar-20261108T062010Z",
     "pesquisar-20261110T062023Z"
+   ]
+  },
+  {
+   "tipo": "publicar",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-11T16:20:17Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261110T184016Z",
+    "publicar-20261111T122016Z",
+    "publicar-20261111T140016Z"
    ]
   }
  ]
