@@ -3112,3 +3112,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=43(api) · itch_downloads=48(api) · itch_visitas=208(api) · youtube_inscritos=24(api) · youtube_shorts=9(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
 
 > 14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazenda idle noturna que ainda conquista Android e navegadores #cei
+
+## 11/11/2026 21:11 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.69 |
+| pauta do ciclo | ✅ o_que_nao_tem · casa |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ o_que_nao_tem · casa |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ❌ portão recusou o reel: nota do juízo abaixo do mínimo (0.61 < 0.65) |
+| instagram | ❌ portão recusou o instagram: nota do juízo abaixo do mínimo (0.61 < 0.6 |
+| threads | ⚪ falta o segredo THREADS_USER_ID + THREADS_TOKEN |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ sem GHPAT no ambiente |
+| censo mundial | ✅ sem GHPAT |
+| vigia da caixa (auto-recovery) | ✅ cofare sem gmail |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=43(api) · itch_downloads=48(api) · itch_visitas=208(api) · youtube_inscritos=24(api) · youtube_shorts=9(api) · itch_seguidores=SEM_API · alcance=NAO_OBSER |
+
+> Não tem cadastro, compras nem micro‑transações. A casa REBOCL BRANK corre direto no Prancheta, entregando jogo livre sem barreiras. #gamedevbr

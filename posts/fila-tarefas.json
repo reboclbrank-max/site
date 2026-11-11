@@ -1667,11 +1667,11 @@
    "id": "publicar-20261111T140016Z",
    "tipo": "publicar",
    "prioridade": 60,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-11T14:00:16Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-11T21:10:14Z",
+   "resultado": "d for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  f.write(\"\\n- **%s — %s**\\n  %s\" % (datetime.datetime.utcnow().strftime(\"%d/%m\"), perguntas[dia % len(perguntas)], aula[:400].replace(\"\\n\", \" \")))\n/home/runner/work/site/site/tools/postador.py:1627: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
    "motivo": "decisão do relógio",
    "chave": "publicar-2026111114"
   },
@@ -2027,6 +2027,18 @@
     "publicar-20261111T122016Z",
     "publicar-20261111T140016Z",
     "publicar-20261111T164155Z"
+   ]
+  },
+  {
+   "tipo": "publicar",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-11T21:10:14Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261111T140016Z",
+    "publicar-20261111T164155Z",
+    "publicar-20261111T190054Z"
    ]
   }
  ]

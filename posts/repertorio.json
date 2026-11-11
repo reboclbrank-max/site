@@ -431,6 +431,25 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazenda idle noturna que ainda conquista Android e navegadores #ceifalume"
+  },
+  {
+   "quando": "2026-11-11T21:11:31Z",
+   "canal": "site",
+   "angulo": "o_que_nao_tem",
+   "assunto": "casa",
+   "fatos": [
+    "casa-site-gratis"
+   ],
+   "abertura": "nao tem",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "Não tem cadastro, compras nem micro‑transações. A casa REBOCL BRANK corre direto no Prancheta, entregando jogo livre sem barreiras. #gamedevbr"
   }
  ],
  "fatos_de_uma_vez": [
@@ -470,24 +489,23 @@
   "casa-site-gratis"
  ],
  "ultimo": {
-  "quando": "2026-11-11T12:08:12Z",
+  "quando": "2026-11-11T21:11:31Z",
   "canal": "site",
-  "angulo": "numero_medido",
-  "assunto": "ceifalume",
+  "angulo": "o_que_nao_tem",
+  "assunto": "casa",
   "fatos": [
-   "medido-bicos",
-   "medido-moedas",
-   "medido-plantadas",
-   "medido-tutorial"
+   "casa-site-gratis"
   ],
-  "abertura": "14 plantadas",
+  "abertura": "nao tem",
   "tipo_abertura": "frase",
   "esqueleto": [
+   "frase",
+   "frase",
    "frase"
   ],
   "hashtags": 1,
   "nota": 0.692,
-  "texto": "14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazenda idle noturna que ainda conquista Android e navegadores #ceifalume"
+  "texto": "Não tem cadastro, compras nem micro‑transações. A casa REBOCL BRANK corre direto no Prancheta, entregando jogo livre sem barreiras. #gamedevbr"
  },
  "publicacoes": [
   {
@@ -575,6 +593,17 @@
    "fatos": [],
    "texto": "14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazenda idle noturna que ainda conquista Android e navegadores #ceifalume",
    "titulo": "14 plantadas na mesma gravação mostraram a produtividade de Ceifalume, seu jogo de fazen",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-11T21:11:31Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Não tem cadastro, compras nem micro‑transações. A casa REBOCL BRANK corre direto no Prancheta, entregando jogo livre sem barreiras. #gamedevbr",
+   "titulo": "Não tem cadastro, compras nem micro‑transações.",
    "nota": 0.692,
    "tipo": "publicacao"
   }
