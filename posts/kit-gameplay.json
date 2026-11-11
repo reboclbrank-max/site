@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "genero:ceifalume-8h",
-   "fato": "ceifalume-8h",
+   "angulo": "bastidor_do_dia:ceifalume-chuva",
+   "fato": "ceifalume-chuva",
    "numeros": {
-    "plantadas": 9,
-    "colhidas": 12,
-    "toques": 986,
+    "plantadas": 10,
+    "colhidas": 5,
+    "toques": 1539,
     "minutos": 2,
-    "toques_por_minuto": 493
+    "toques_por_minuto": 770
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4170836,
+   "bytes": 4269307,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "CEIFALUME é idle farm — e o que isso quer dizer",
-   "descricao": "Idle farm é o jogo que continua enquanto você não está olhando. Aqui, as plantações crescem e as vendas acontecem por até 8 horas com o jogo fechado.\n\nNa partida gravada isso aparece nos números: 9 mudas e 12 colheitas em 2 minutos.\n\nNada de reflexo rápido: o ritmo é o do campo.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html",
+   "titulo": "Bastidor de CEIFALUME: o que está por trás da partida",
+   "descricao": "O vídeo é uma gravação crua de build web, feita por um agente que lê o estado da tela.\n\nA chuva rega de graça: não custa água nem moeda.\n\nO que dá para medir da partida: 1539 toques no campo e 5 colheitas.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #gamedevbr",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -77,7 +77,11 @@
     },
     {
      "angulo": "requisito:ceifalume-8h",
-     "motivo": "mesmo ângulo do último vídeo publicado (requisito:ceifalume-8h) — o ângulo roda"
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:ceifalume-8h",
+     "motivo": "mesmo ângulo do último vídeo publicado (genero:ceifalume-8h) — o ângulo roda"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-8h",
@@ -124,6 +128,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:ceifalume-chuva",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "como_funciona:ceifalume-tutorial",
      "motivo": "texto repetido: 0.62 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -154,6 +162,10 @@
     {
      "angulo": "requisito:ceifalume-tutorial",
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:ceifalume-tutorial",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "como_funciona:ceifalume-apk",
@@ -188,6 +200,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:ceifalume-apk",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "como_funciona:ceifalume-anuncio",
      "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -218,6 +234,10 @@
     {
      "angulo": "requisito:ceifalume-anuncio",
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:ceifalume-anuncio",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "como_funciona:ceifalume-save",
@@ -252,6 +272,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:ceifalume-save",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "onde_jogar:ceifalume-culturas",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
@@ -276,6 +300,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "onde_jogar:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
@@ -298,6 +326,10 @@
     {
      "angulo": "requisito:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "como_funciona:ceifalume-versao",
@@ -332,6 +364,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:ceifalume-versao",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "como_funciona:oficio-devlog",
      "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
     },
@@ -362,6 +398,10 @@
     {
      "angulo": "requisito:oficio-devlog",
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:oficio-devlog",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "como_funciona:casa-canais",
@@ -396,6 +436,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:casa-canais",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "como_funciona:casa-newsletter",
      "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -426,6 +470,10 @@
     {
      "angulo": "requisito:casa-newsletter",
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:casa-newsletter",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "como_funciona:casa-telegram",
@@ -460,6 +508,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:casa-telegram",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "como_funciona:casa-site-gratis",
      "motivo": "texto repetido: 0.67 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -486,6 +538,10 @@
     {
      "angulo": "requisito:casa-site-gratis",
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:casa-site-gratis",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "como_funciona:video-iCE6O3d_WD0",
@@ -516,6 +572,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "como_funciona:marco-instagram-publicacoes",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -542,6 +602,10 @@
     {
      "angulo": "requisito:marco-instagram-publicacoes",
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:marco-instagram-publicacoes",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "como_funciona:video-cfB5ZBdC-NA",
@@ -576,6 +640,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:video-cfB5ZBdC-NA",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "como_funciona:video-_ffmjSMsW0Y",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -606,6 +674,10 @@
     {
      "angulo": "requisito:video-_ffmjSMsW0Y",
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-_ffmjSMsW0Y",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "como_funciona:video-hBvkQhSS-_4",
@@ -640,6 +712,10 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:video-hBvkQhSS-_4",
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "como_funciona:marco-youtube-shorts",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -668,8 +744,12 @@
      "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
     },
     {
+     "angulo": "genero:marco-youtube-shorts",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
      "angulo": "numeros",
-     "motivo": "título quase igual a um já publicado (0.96)"
+     "motivo": "título quase igual a um já publicado (0.97)"
     },
     {
      "angulo": "pergunta",
@@ -684,7 +764,7 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 93,
+   "angulos_aprovados": 73,
    "angulos_candidatos": 254
   },
   {
