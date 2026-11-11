@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-11T11:26:03Z",
+ "medido_em": "2026-11-11T22:14:37Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "igf33ZusQs8",
+   "titulo": "Bastidor de CEIFALUME: o que está por trás da partida",
+   "publicado_em": "2026-11-11T19:49:11Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "QPRgb4ny43s",
    "titulo": "CEIFALUME é idle farm — e o que isso quer dizer",
@@ -116,7 +124,7 @@
   }
  ],
  "totais": {
-  "videos": 14,
+  "videos": 15,
   "views": 5,
   "likes": 0,
   "comentarios": 0
