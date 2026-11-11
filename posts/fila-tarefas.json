@@ -1598,6 +1598,18 @@
    "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 207,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
    "motivo": "decisão do relógio",
    "chave": "medir-2026111019"
+  },
+  {
+   "id": "medir-20261111T014608Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-11T01:46:08Z",
+   "executada": "2026-11-11T01:46:08Z",
+   "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 208,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026111101"
   }
  ],
  "recusadas": [
