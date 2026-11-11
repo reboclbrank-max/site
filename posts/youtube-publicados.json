@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "igf33ZusQs8",
+   "url": "https://youtu.be/igf33ZusQs8",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Bastidor de CEIFALUME: o que está por trás da partida",
+   "descricao": "O vídeo é uma gravação crua de build web, feita por um agente que lê o estado da tela.\n\nA chuva rega de graça: não custa água nem moeda.\n\nO que dá para medir da partida: 1539 toques no campo e 5 colheitas.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "descricao_completa": false,
+   "angulo": "bastidor_do_dia:ceifalume-chuva",
+   "fato": "ceifalume-chuva",
+   "numeros": {
+    "plantadas": 10,
+    "colhidas": 5,
+    "toques": 1539,
+    "minutos": 2,
+    "toques_por_minuto": 770
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-11T19:48:50Z"
+  },
+  {
    "id": "QPRgb4ny43s",
    "url": "https://youtu.be/QPRgb4ny43s",
    "slug": "ceifalume-gameplay",
