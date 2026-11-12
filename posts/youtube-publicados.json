@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "85nRhygguhs",
+   "url": "https://youtu.be/85nRhygguhs",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Quem fez CEIFALUME e por quê",
+   "descricao": "Os três primeiros dias de jogo funcionam como tutorial: plantar, esperar a noite passar, colher e vender.\n\nUma pessoa só, em português do Brasil, com o jogo rodando no navegador durante a gravação.\n\nO vídeo mostra a partida medida: 8 colheitas e 12 mudas plantadas.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
+   "descricao_completa": false,
+   "angulo": "quem_fe_z:ceifalume-tutorial",
+   "fato": "ceifalume-tutorial",
+   "numeros": {
+    "plantadas": 12,
+    "colhidas": 8,
+    "toques": 952,
+    "minutos": 2,
+    "toques_por_minuto": 476
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-12T20:14:33Z"
+  },
+  {
    "id": "igf33ZusQs8",
    "url": "https://youtu.be/igf33ZusQs8",
    "slug": "ceifalume-gameplay",
