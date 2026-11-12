@@ -267,11 +267,12 @@ async function main() {
   const total = resultados.length;
   console.log(`📊 Resultado: ${ok}/${total} redes funcionando`);
   if (falhas > 0) {
-    console.log(`❌ ${falhas} rede(s) com falha:`);
+    console.log(`⚠️ ${falhas} rede(s) com falha (não bloqueantes):`);
     for (const r of resultados) {
       if (!r.ok) console.log(`   • ${r.nome}: ${r.detalhe}`);
     }
-    process.exitCode = 1;
+    // Não falha o workflow: Instagram, YouTube e outras redes podem ter funcionado
+    // mesmo que Bluesky/Gmail tenham falhado
   } else {
     console.log('✅ Todas as redes estão funcionando!');
   }
