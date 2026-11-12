@@ -1,0 +1,58 @@
+name: Publicar no Instagram
+
+# Publicação autônoma no Instagram: cria container de mídia, aguarda o processamento
+# ficar FINISHED e chama media_publish para colocar o post no ar.
+#
+# DISPARO: cron (dentro da janela 9-22h de Brasília) + repository_dispatch (chamado pelo
+# pulso do marketing-24h quando decide publicar). Nunca exige confirmação manual.
+#
+# O container criado pela sonda-instagram expira em 24h se não for publicado. Este workflow
+# fecha o ciclo: cria o container e publica de verdade.
+
+on:
+  # Janela 9-22h de Brasília (UTC-3): 12-23 e 0 em UTC
+  schedule:
+    - cron: "*/30 0,12-23 * * *"
+  # O pulso do marketing-24h chama aqui quando decide que é hora de publicar no Instagram
+  repository_dispatch:
+    types: [publicar-instagram]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publicar-instagram
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Contrato do publicador (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-sonda-instagram.py
+
+      - name: Publica no Instagram (cria container → aguarda FINISHED → media_publish)
+        shell: bash -o pipefail -e {0}
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_IMAGE_URL: https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5wbmc=/original/sNW2uy.png
+          IG_CAPTION: Postagem automática da casa — conteúdo gerado pelo ciclo de marketing.\n#Prancheta #Ceifalume #GamingDev
+          IG_PUBLICAR: 1
+        run: |
+          python3 tools/publicar-instagram.py | tee /tmp/publicar-instagram.json
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Publicação no Instagram"
+            echo '```json'
+            cat /tmp/publicar-instagram.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código da publicação: $codigo"
+          # 0 = publicado · 2 = ensaio (container pronto, não publicado) · 1 = erro
+          if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi
+          exit 0

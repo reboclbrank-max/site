@@ -211,7 +211,7 @@ jobs:
 
       - name: Resumo
         env:
-          STATUS_PUBLICACAO: ${{ github.event.inputs.publicar == 'PUBLICAR' && 'pedido neste run' || 'não pedido — só gravação' }}
+          STATUS_PUBLICACAO: ${{ github.event.inputs.publicar == 'PUBLICAR' && 'pedido neste run' || (github.event_name == 'schedule' && 'automático (portão decide)' || 'não pedido — só gravação') }}
         run: |
           {
             echo "### PRANCHETA gravado"
@@ -251,6 +251,34 @@ jobs:
           # código do passo.
           exit "$codigo"
 
+      - name: Envia ao YouTube no automático (o portão do vídeo decide)
+        shell: bash -o pipefail -e {0}
+        # Caminho agendado. O vídeo só sobe se for comprovadamente NOVO: o sha256 do arquivo
+        # não pode estar em posts/videos-enviados.json. Recusa aqui é comportamento normal
+        # e NÃO derruba o run.
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.publicar == 'AUTOMATICO' }}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          CONFIRMACAO: AUTOMATICO
+          KIT_YOUTUBE: posts/kit-gameplay.json
+        run: |
+          set +e
+          python3 tools/enviar-youtube.py prancheta-gameplay | tee /tmp/envio-auto.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Portão do vídeo"
+            echo '```'
+            cat /tmp/envio-auto.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código do envio: $codigo"
+          # 0 = publicado · 2 = recusa do portão com motivo (normal no agendado) · 3 = falha
+          # operacional (token, upload, rede). Só a terceira derruba o run.
+          if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi
+          exit 0
+
       - name: Envia ao YouTube (só com a palavra PUBLICAR)
         shell: bash -o pipefail -e {0}
         # Até 06/11/2026 este workflow tinha o campo PUBLICAR e NENHUM passo de envio: o resumo
@@ -267,7 +295,7 @@ jobs:
           python3 tools/enviar-youtube.py prancheta-gameplay | tee /tmp/envio.txt
 
       - name: Registra o que foi publicado (JSON público)
-        if: ${{ github.event.inputs.publicar == 'PUBLICAR' }}
+        if: ${{ github.event.inputs.publicar == 'PUBLICAR' || github.event.inputs.publicar == 'AUTOMATICO' || github.event_name == 'schedule' }}
         run: |
           if [ ! -f posts/youtube-publicados.json ]; then
             echo "sem registro para guardar (o envio pode ter falhado antes)"
