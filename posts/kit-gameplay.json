@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "bastidor_do_dia:ceifalume-chuva",
-   "fato": "ceifalume-chuva",
+   "angulo": "quem_fe_z:ceifalume-tutorial",
+   "fato": "ceifalume-tutorial",
    "numeros": {
-    "plantadas": 10,
-    "colhidas": 5,
-    "toques": 1539,
+    "plantadas": 12,
+    "colhidas": 8,
+    "toques": 952,
     "minutos": 2,
-    "toques_por_minuto": 770
+    "toques_por_minuto": 476
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4269307,
+   "bytes": 3680594,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Bastidor de CEIFALUME: o que está por trás da partida",
-   "descricao": "O vídeo é uma gravação crua de build web, feita por um agente que lê o estado da tela.\n\nA chuva rega de graça: não custa água nem moeda.\n\nO que dá para medir da partida: 1539 toques no campo e 5 colheitas.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #gamedevbr",
+   "titulo": "Quem fez CEIFALUME e por quê",
+   "descricao": "Os três primeiros dias de jogo funcionam como tutorial: plantar, esperar a noite passar, colher e vender.\n\nUma pessoa só, em português do Brasil, com o jogo rodando no navegador durante a gravação.\n\nO vídeo mostra a partida medida: 8 colheitas e 12 mudas plantadas.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #gamedevbr",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -81,11 +81,11 @@
     },
     {
      "angulo": "genero:ceifalume-8h",
-     "motivo": "mesmo ângulo do último vídeo publicado (genero:ceifalume-8h) — o ângulo roda"
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-8h",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Onde jogar CEIFALUME sem instalar loja\""
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:ceifalume-chuva",
@@ -132,6 +132,10 @@
      "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:ceifalume-chuva",
+     "motivo": "mesmo ângulo do último vídeo publicado (bastidor_do_dia:ceifalume-chuva) — o ângulo roda"
+    },
+    {
      "angulo": "como_funciona:ceifalume-tutorial",
      "motivo": "texto repetido: 0.62 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -166,6 +170,10 @@
     {
      "angulo": "genero:ceifalume-tutorial",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:ceifalume-tutorial",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:ceifalume-apk",
@@ -204,6 +212,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:ceifalume-apk",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "como_funciona:ceifalume-anuncio",
      "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -238,6 +250,10 @@
     {
      "angulo": "genero:ceifalume-anuncio",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:ceifalume-anuncio",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:ceifalume-save",
@@ -276,6 +292,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:ceifalume-save",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "onde_jogar:ceifalume-culturas",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
@@ -304,6 +324,10 @@
      "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "onde_jogar:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
@@ -330,6 +354,10 @@
     {
      "angulo": "genero:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:ceifalume-versao",
@@ -368,6 +396,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:ceifalume-versao",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "como_funciona:oficio-devlog",
      "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
     },
@@ -402,6 +434,10 @@
     {
      "angulo": "genero:oficio-devlog",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:oficio-devlog",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:casa-canais",
@@ -440,6 +476,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:casa-canais",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "como_funciona:casa-newsletter",
      "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -474,6 +514,10 @@
     {
      "angulo": "genero:casa-newsletter",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:casa-newsletter",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:casa-telegram",
@@ -512,6 +556,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:casa-telegram",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "como_funciona:casa-site-gratis",
      "motivo": "texto repetido: 0.67 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -542,6 +590,10 @@
     {
      "angulo": "genero:casa-site-gratis",
      "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:casa-site-gratis",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:video-iCE6O3d_WD0",
@@ -576,6 +628,10 @@
      "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "como_funciona:marco-instagram-publicacoes",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -606,6 +662,10 @@
     {
      "angulo": "genero:marco-instagram-publicacoes",
      "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:marco-instagram-publicacoes",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:video-cfB5ZBdC-NA",
@@ -644,6 +704,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:video-cfB5ZBdC-NA",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "como_funciona:video-_ffmjSMsW0Y",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -678,6 +742,10 @@
     {
      "angulo": "genero:video-_ffmjSMsW0Y",
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-_ffmjSMsW0Y",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:video-hBvkQhSS-_4",
@@ -716,6 +784,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:video-hBvkQhSS-_4",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "como_funciona:marco-youtube-shorts",
      "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
     },
@@ -748,6 +820,10 @@
      "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
+     "angulo": "bastidor_do_dia:marco-youtube-shorts",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "numeros",
      "motivo": "título quase igual a um já publicado (0.97)"
     },
@@ -764,7 +840,7 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 73,
+   "angulos_aprovados": 54,
    "angulos_candidatos": 254
   },
   {

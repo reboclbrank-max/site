@@ -1500,6 +1500,42 @@
     "passos_confirmados": 8
    },
    "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-12T20:14:22Z",
+   "estrategia": "trigo",
+   "assinatura": "2e90e7310e3a",
+   "resumo": {
+    "estrategia": "trigo",
+    "plantadas": 12,
+    "colhidas": 8,
+    "bicos": 952,
+    "sementes": [
+     "None",
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 24.5
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 50,
+      "t": 28.6
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 142,
+      "t": 58.2
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
   }
  ]
 }
