@@ -1749,6 +1749,18 @@
    "resultado": "tada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 208,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é de",
    "motivo": "decisão do relógio",
    "chave": "medir-2026111206"
+  },
+  {
+   "id": "aprender-20261112T070016Z",
+   "tipo": "aprender",
+   "prioridade": 30,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-12T07:00:16Z",
+   "executada": "2026-11-12T07:00:16Z",
+   "resultado": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.22) vs mediana 1.22, desvio 0.49\ngravado em posts/aprendizado.json",
+   "motivo": "decisão do relógio",
+   "chave": "aprender-2026111207"
   }
  ],
  "recusadas": [
