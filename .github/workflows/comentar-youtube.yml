@@ -11,6 +11,9 @@ on:
         description: Texto do comentário
 permissions:
   contents: read
+concurrency:
+  group: comentar-youtube
+  cancel-in-progress: false
 jobs:
   comentar:
     runs-on: ubuntu-24.04
