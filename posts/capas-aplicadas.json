@@ -406,6 +406,13 @@
    "titulo": "Bastidor de CEIFALUME: o que está por trás da partida",
    "capa": "media/gameplay/ceifalume-capa.png",
    "sha256": "36a4ea7b3230bba8"
+  },
+  {
+   "id": "3fGB7drCbTc",
+   "quando": "2026-11-13T19:58:58Z",
+   "titulo": "O que muda em CEIFALUME depois de 2 minutos",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "fd98c3358940cf5a"
   }
  ]
 }

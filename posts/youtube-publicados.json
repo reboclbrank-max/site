@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "3fGB7drCbTc",
+   "url": "https://youtu.be/3fGB7drCbTc",
+   "slug": "ceifalume-gameplay",
+   "titulo": "O que muda em CEIFALUME depois de 2 minutos",
+   "descricao": "Em 2 minutos de partida o campo passou por 11 mudas e 9 colheitas.\n\nOs três primeiros dias de jogo funcionam como tutorial: plantar, esperar a noite passar, colher e vender.\n\nQuem joga vê a diferença no próprio terreno, não em número de fórum.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "descricao_completa": false,
+   "angulo": "o_que_muda_depois:ceifalume-tutorial",
+   "fato": "ceifalume-tutorial",
+   "numeros": {
+    "plantadas": 11,
+    "colhidas": 9,
+    "toques": 697,
+    "minutos": 2,
+    "toques_por_minuto": 348
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-13T19:58:55Z"
+  },
+  {
    "id": "85nRhygguhs",
    "url": "https://youtu.be/85nRhygguhs",
    "slug": "ceifalume-gameplay",
