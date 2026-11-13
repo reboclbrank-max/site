@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "quem_fe_z:ceifalume-tutorial",
+   "angulo": "o_que_muda_depois:ceifalume-tutorial",
    "fato": "ceifalume-tutorial",
    "numeros": {
-    "plantadas": 12,
-    "colhidas": 8,
-    "toques": 952,
+    "plantadas": 11,
+    "colhidas": 9,
+    "toques": 697,
     "minutos": 2,
-    "toques_por_minuto": 476
+    "toques_por_minuto": 348
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 3680594,
+   "bytes": 4146652,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Quem fez CEIFALUME e por quê",
-   "descricao": "Os três primeiros dias de jogo funcionam como tutorial: plantar, esperar a noite passar, colher e vender.\n\nUma pessoa só, em português do Brasil, com o jogo rodando no navegador durante a gravação.\n\nO vídeo mostra a partida medida: 8 colheitas e 12 mudas plantadas.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #gamedevbr",
+   "titulo": "O que muda em CEIFALUME depois de 2 minutos",
+   "descricao": "Em 2 minutos de partida o campo passou por 11 mudas e 9 colheitas.\n\nOs três primeiros dias de jogo funcionam como tutorial: plantar, esperar a noite passar, colher e vender.\n\nQuem joga vê a diferença no próprio terreno, não em número de fórum.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro #ceifalume",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -53,7 +53,7 @@
     },
     {
      "angulo": "quem_fe_z:ceifalume-8h",
-     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-8h",
@@ -101,7 +101,7 @@
     },
     {
      "angulo": "quem_fe_z:ceifalume-chuva",
-     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-chuva",
@@ -133,7 +133,7 @@
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-chuva",
-     "motivo": "mesmo ângulo do último vídeo publicado (bastidor_do_dia:ceifalume-chuva) — o ângulo roda"
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
      "angulo": "como_funciona:ceifalume-tutorial",
@@ -146,6 +146,10 @@
     {
      "angulo": "quanto_rende:ceifalume-tutorial",
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "quem_fe_z:ceifalume-tutorial",
+     "motivo": "mesmo ângulo do último vídeo publicado (quem_fe_z:ceifalume-tutorial) — o ângulo roda"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-tutorial",
@@ -188,6 +192,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "quem_fe_z:ceifalume-apk",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:ceifalume-apk",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -226,6 +234,10 @@
     {
      "angulo": "quanto_rende:ceifalume-anuncio",
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "quem_fe_z:ceifalume-anuncio",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-anuncio",
@@ -268,6 +280,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "quem_fe_z:ceifalume-save",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:ceifalume-save",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -300,6 +316,10 @@
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "quem_fe_z:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:ceifalume-culturas",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -330,6 +350,10 @@
     {
      "angulo": "onde_jogar:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quem_fe_z:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-melhorias",
@@ -372,6 +396,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "quem_fe_z:ceifalume-versao",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:ceifalume-versao",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -410,6 +438,10 @@
     {
      "angulo": "quanto_rende:oficio-devlog",
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "quem_fe_z:oficio-devlog",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:oficio-devlog",
@@ -452,6 +484,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "quem_fe_z:casa-canais",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:casa-canais",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -490,6 +526,10 @@
     {
      "angulo": "quanto_rende:casa-newsletter",
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "quem_fe_z:casa-newsletter",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:casa-newsletter",
@@ -532,6 +572,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "quem_fe_z:casa-telegram",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:casa-telegram",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -566,6 +610,10 @@
     {
      "angulo": "onde_jogar:casa-site-gratis",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quem_fe_z:casa-site-gratis",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:casa-site-gratis",
@@ -604,6 +652,10 @@
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "quem_fe_z:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:video-iCE6O3d_WD0",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -638,6 +690,10 @@
     {
      "angulo": "onde_jogar:marco-instagram-publicacoes",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quem_fe_z:marco-instagram-publicacoes",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:marco-instagram-publicacoes",
@@ -680,6 +736,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "quem_fe_z:video-cfB5ZBdC-NA",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:video-cfB5ZBdC-NA",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -718,6 +778,10 @@
     {
      "angulo": "quanto_rende:video-_ffmjSMsW0Y",
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "quem_fe_z:video-_ffmjSMsW0Y",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:video-_ffmjSMsW0Y",
@@ -760,6 +824,10 @@
      "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "quem_fe_z:video-hBvkQhSS-_4",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
      "angulo": "o_que_tem_dentro:video-hBvkQhSS-_4",
      "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
     },
@@ -794,6 +862,10 @@
     {
      "angulo": "onde_jogar:marco-youtube-shorts",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quem_fe_z:marco-youtube-shorts",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:marco-youtube-shorts",
@@ -833,14 +905,14 @@
     },
     {
      "angulo": "cultivo",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 0 hashtags): O que tem dentro de CEIFALUME"
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 0 hashtags): Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "comparacao",
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 54,
+   "angulos_aprovados": 36,
    "angulos_candidatos": 254
   },
   {
