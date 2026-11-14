@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "806i-rPzC9w",
+   "url": "https://youtu.be/806i-rPzC9w",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Quanto rende CEIFALUME em 2 minutos",
+   "descricao": "A conta da partida: 18 mudas, 9 colheitas e 702 toques em 2 minutos.\n\nSão seis melhorias para comprar: celeiro, poço, lanterna, ajudante, composteira e carroça.\n\nTodo número deste vídeo vem do relatório da gravação, não de estimativa.\n\nFonte: media/gameplay/ceifalume-gameplay-cru-decisoes.json (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
+   "descricao_completa": false,
+   "angulo": "quanto_rende:ceifalume-melhorias",
+   "fato": "ceifalume-melhorias",
+   "numeros": {
+    "plantadas": 18,
+    "colhidas": 9,
+    "toques": 702,
+    "minutos": 2,
+    "toques_por_minuto": 351
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-14T23:14:50Z"
+  },
+  {
    "id": "WewOjNDzEDQ",
    "url": "https://youtu.be/WewOjNDzEDQ",
    "slug": "ceifalume-gameplay",
