@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "o_que_muda_depois:ceifalume-tutorial",
-   "fato": "ceifalume-tutorial",
+   "angulo": "como_funciona:ceifalume-culturas",
+   "fato": "ceifalume-culturas",
    "numeros": {
-    "plantadas": 11,
-    "colhidas": 9,
-    "toques": 697,
+    "plantadas": 10,
+    "colhidas": 4,
+    "toques": 1061,
     "minutos": 2,
-    "toques_por_minuto": 348
+    "toques_por_minuto": 530
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4146652,
+   "bytes": 4105029,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "O que muda em CEIFALUME depois de 2 minutos",
-   "descricao": "Em 2 minutos de partida o campo passou por 11 mudas e 9 colheitas.\n\nOs três primeiros dias de jogo funcionam como tutorial: plantar, esperar a noite passar, colher e vender.\n\nQuem joga vê a diferença no próprio terreno, não em número de fórum.\n\nFonte: jogos/ceifalume/index.html (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro #ceifalume",
+   "titulo": "Como funciona: são seis culturas no celeiro: abóbora, flor de lume",
+   "descricao": "São seis culturas no celeiro: abóbora, flor de lume, milho, nabo, tomate e trigo.\n\nNa gravação desta partida: 10 mudas plantadas e 4 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: media/gameplay/ceifalume-gameplay-cru-decisoes.json (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -69,7 +69,7 @@
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-8h",
-     "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-8h",
@@ -117,7 +117,7 @@
     },
     {
      "angulo": "o_que_muda_depois:ceifalume-chuva",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-chuva",
@@ -137,7 +137,7 @@
     },
     {
      "angulo": "como_funciona:ceifalume-tutorial",
-     "motivo": "texto repetido: 0.62 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.67 de semelhança com \"O que muda em CEIFALUME depois de 2 minutos\""
     },
     {
      "angulo": "onde_jogar:ceifalume-tutorial",
@@ -149,7 +149,7 @@
     },
     {
      "angulo": "quem_fe_z:ceifalume-tutorial",
-     "motivo": "mesmo ângulo do último vídeo publicado (quem_fe_z:ceifalume-tutorial) — o ângulo roda"
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "o_que_tem_dentro:ceifalume-tutorial",
@@ -162,6 +162,10 @@
     {
      "angulo": "como_foi_gravado:ceifalume-tutorial",
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:ceifalume-tutorial",
+     "motivo": "mesmo ângulo do último vídeo publicado (o_que_muda_depois:ceifalume-tutorial) — o ângulo roda"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-tutorial",
@@ -208,6 +212,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:ceifalume-apk",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:ceifalume-apk",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -250,6 +258,10 @@
     {
      "angulo": "como_foi_gravado:ceifalume-anuncio",
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:ceifalume-anuncio",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-anuncio",
@@ -296,6 +308,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:ceifalume-save",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:ceifalume-save",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -332,6 +348,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:ceifalume-culturas",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:ceifalume-culturas",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -366,6 +386,10 @@
     {
      "angulo": "como_foi_gravado:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:ceifalume-melhorias",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:ceifalume-melhorias",
@@ -412,6 +436,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:ceifalume-versao",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:ceifalume-versao",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -454,6 +482,10 @@
     {
      "angulo": "como_foi_gravado:oficio-devlog",
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:oficio-devlog",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:oficio-devlog",
@@ -500,6 +532,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:casa-canais",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:casa-canais",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -542,6 +578,10 @@
     {
      "angulo": "como_foi_gravado:casa-newsletter",
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:casa-newsletter",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:casa-newsletter",
@@ -588,6 +628,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:casa-telegram",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:casa-telegram",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -626,6 +670,10 @@
     {
      "angulo": "como_foi_gravado:casa-site-gratis",
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:casa-site-gratis",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:casa-site-gratis",
@@ -668,6 +716,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:video-iCE6O3d_WD0",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -706,6 +758,10 @@
     {
      "angulo": "como_foi_gravado:marco-instagram-publicacoes",
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:marco-instagram-publicacoes",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:marco-instagram-publicacoes",
@@ -752,6 +808,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:video-cfB5ZBdC-NA",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:video-cfB5ZBdC-NA",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -794,6 +854,10 @@
     {
      "angulo": "como_foi_gravado:video-_ffmjSMsW0Y",
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-_ffmjSMsW0Y",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
     },
     {
      "angulo": "onde_esta_a_comunidade:video-_ffmjSMsW0Y",
@@ -840,6 +904,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:video-hBvkQhSS-_4",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:video-hBvkQhSS-_4",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -880,6 +948,10 @@
      "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
     },
     {
+     "angulo": "o_que_muda_depois:marco-youtube-shorts",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
      "angulo": "onde_esta_a_comunidade:marco-youtube-shorts",
      "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
     },
@@ -912,7 +984,7 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 36,
+   "angulos_aprovados": 18,
    "angulos_candidatos": 254
   },
   {
