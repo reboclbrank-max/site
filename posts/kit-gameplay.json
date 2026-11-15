@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "quanto_rende:ceifalume-melhorias",
-   "fato": "ceifalume-melhorias",
+   "angulo": "passo_a_passo",
+   "fato": null,
    "numeros": {
-    "plantadas": 18,
-    "colhidas": 9,
-    "toques": 702,
+    "plantadas": 13,
+    "colhidas": 5,
+    "toques": 961,
     "minutos": 2,
-    "toques_por_minuto": 351
+    "toques_por_minuto": 480
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 3779161,
+   "bytes": 3719979,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Quanto rende CEIFALUME em 2 minutos",
-   "descricao": "A conta da partida: 18 mudas, 9 colheitas e 702 toques em 2 minutos.\n\nSão seis melhorias para comprar: celeiro, poço, lanterna, ajudante, composteira e carroça.\n\nTodo número deste vídeo vem do relatório da gravação, não de estimativa.\n\nFonte: media/gameplay/ceifalume-gameplay-cru-decisoes.json (conferido em 2026-11-06).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html",
+   "titulo": "Passo a passo: 13 mudas e 5 colheitas em 2 min de CEIFALUME",
+   "descricao": "Nesta partida: 13 mudas plantadas, 5 colheitas e 961 toques em 2 minutos.\n\nPrimeiro o agente abre o campo e escolhe a célula livre mais próxima.\n\nDepois volta só quando a planta fica pronta, porque cada célula tem relógio próprio.\n\nNo fim, o que sobra da venda vai para o celeiro e é o celeiro que autoriza a próxima compra.\n\nSe quiser ver isso do começo: o jogo abre no navegador, sem conta e sem instalar.\n\nFonte: posts/cenas.json (partida 33262780d262, conferida em 2026-11-15T19:03:19Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -97,7 +97,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-chuva",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-chuva",
@@ -329,7 +329,7 @@
     },
     {
      "angulo": "como_funciona:ceifalume-culturas",
-     "motivo": "mesmo ângulo do último vídeo publicado (como_funciona:ceifalume-culturas) — o ângulo roda"
+     "motivo": "título já publicado neste canal: Como funciona: são seis culturas no celeiro: abóbora, flor de lume"
     },
     {
      "angulo": "onde_jogar:ceifalume-culturas",
@@ -337,7 +337,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-culturas",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: são seis culturas no celeiro: abóbora, flor d\""
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-culturas",
@@ -382,6 +382,10 @@
     {
      "angulo": "onde_jogar:ceifalume-melhorias",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:ceifalume-melhorias",
+     "motivo": "mesmo ângulo do último vídeo publicado (quanto_rende:ceifalume-melhorias) — o ângulo roda"
     },
     {
      "angulo": "quem_fe_z:ceifalume-melhorias",
@@ -668,6 +672,10 @@
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "quanto_rende:casa-site-gratis",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
      "angulo": "quem_fe_z:casa-site-gratis",
      "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
@@ -712,6 +720,10 @@
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "quanto_rende:video-iCE6O3d_WD0",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
      "angulo": "quem_fe_z:video-iCE6O3d_WD0",
      "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
@@ -754,6 +766,10 @@
     {
      "angulo": "onde_jogar:marco-instagram-publicacoes",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:marco-instagram-publicacoes",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:marco-instagram-publicacoes",
@@ -944,6 +960,10 @@
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
     {
+     "angulo": "quanto_rende:marco-youtube-shorts",
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
      "angulo": "quem_fe_z:marco-youtube-shorts",
      "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
     },
@@ -989,14 +1009,14 @@
     },
     {
      "angulo": "cultivo",
-     "motivo": "fato ausente no relatório desta partida: plantas"
+     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 0 hashtags): Quem fez CEIFALUME e por quê"
     },
     {
      "angulo": "comparacao",
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 15,
+   "angulos_aprovados": 10,
    "angulos_candidatos": 254
   },
   {
