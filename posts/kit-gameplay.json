@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "passo_a_passo",
+   "angulo": "medida_por_minuto",
    "fato": null,
    "numeros": {
-    "plantadas": 13,
-    "colhidas": 5,
-    "toques": 961,
+    "plantadas": 11,
+    "colhidas": 8,
+    "toques": 1146,
     "minutos": 2,
-    "toques_por_minuto": 480
+    "toques_por_minuto": 573
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 3719979,
+   "bytes": 4241693,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Passo a passo: 13 mudas e 5 colheitas em 2 min de CEIFALUME",
-   "descricao": "Nesta partida: 13 mudas plantadas, 5 colheitas e 961 toques em 2 minutos.\n\nPrimeiro o agente abre o campo e escolhe a célula livre mais próxima.\n\nDepois volta só quando a planta fica pronta, porque cada célula tem relógio próprio.\n\nNo fim, o que sobra da venda vai para o celeiro e é o celeiro que autoriza a próxima compra.\n\nSe quiser ver isso do começo: o jogo abre no navegador, sem conta e sem instalar.\n\nFonte: posts/cenas.json (partida 33262780d262, conferida em 2026-11-15T19:03:19Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
+   "titulo": "A conta por minuto em CEIFALUME: 8 colheitas em 2 min",
+   "descricao": "A régua do vídeo é simples: quantas colheitas saem por minuto de tela.\n\nNesta gravação foram 8 colheitas em 2 minutos, com 1146 toques — cerca de 573 toques por minuto.\n\nO tempo que não aparece no vídeo é o do crescimento: as plantações crescem por até 8 horas mesmo com o jogo fechado.\n\nCada colheita contada aqui veio do relatório do gravador, e o número que falta é o que não aconteceu.\n\nVale a pena esperar a planta em vez de tocar mais rápido?\n\nFonte: posts/cenas.json (partida 8687d5fde58d, conferida em 2026-11-15T23:30:21Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -385,7 +385,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-melhorias",
-     "motivo": "mesmo ângulo do último vídeo publicado (quanto_rende:ceifalume-melhorias) — o ângulo roda"
+     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-melhorias",
@@ -1000,6 +1000,10 @@
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
+     "angulo": "passo_a_passo",
+     "motivo": "mesmo ângulo do último vídeo publicado (passo_a_passo) — o ângulo roda"
+    },
+    {
      "angulo": "numeros",
      "motivo": "título quase igual a um já publicado (0.97)"
     },
@@ -1016,7 +1020,7 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 10,
+   "angulos_aprovados": 9,
    "angulos_candidatos": 254
   },
   {

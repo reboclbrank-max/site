@@ -1680,6 +1680,48 @@
     ],
     "verde_final": "A:0.055 B:0.051 C:0.052 D:0.073 E:0.044"
    }
+  },
+  {
+   "quando": "2026-11-15T23:30:21Z",
+   "estrategia": "trigo",
+   "assinatura": "8687d5fde58d",
+   "resumo": {
+    "estrategia": "trigo",
+    "plantadas": 11,
+    "colhidas": 8,
+    "bicos": 1146,
+    "sementes": [
+     "None",
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 12,
+      "t": 37.7
+     },
+     {
+      "id": "lanterna",
+      "nome": "Acender Lanterna",
+      "custo": 174,
+      "t": 39.6
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": -18,
+      "t": 59.4
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 105,
+      "t": 61.1
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.073 E:0.000"
+   }
   }
  ]
 }
