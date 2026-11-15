@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "4dUlp9uODpw",
+   "url": "https://youtu.be/4dUlp9uODpw",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Passo a passo: 13 mudas e 5 colheitas em 2 min de CEIFALUME",
+   "descricao": "Nesta partida: 13 mudas plantadas, 5 colheitas e 961 toques em 2 minutos.\n\nPrimeiro o agente abre o campo e escolhe a célula livre mais próxima.\n\nDepois volta só quando a planta fica pronta, porque cada célula tem relógio próprio.\n\nNo fim, o que sobra da venda vai para o celeiro e é o celeiro que autoriza a próxima compra.\n\nSe quiser ver isso do começo: o jogo abre no navegador, sem conta e sem instalar.\n\nFonte: posts/cenas.json (partida 33262780d262, conferida em 2026-11-15T19:03:19Z).",
+   "descricao_completa": false,
+   "angulo": "passo_a_passo",
+   "fato": null,
+   "numeros": {
+    "plantadas": 13,
+    "colhidas": 5,
+    "toques": 961,
+    "minutos": 2,
+    "toques_por_minuto": 480
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-15T19:03:30Z"
+  },
+  {
    "id": "806i-rPzC9w",
    "url": "https://youtu.be/806i-rPzC9w",
    "slug": "ceifalume-gameplay",
