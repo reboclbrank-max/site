@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "IYi1JfJFgcU",
+   "url": "https://youtu.be/IYi1JfJFgcU",
+   "slug": "ceifalume-gameplay",
+   "titulo": "A conta por minuto em CEIFALUME: 8 colheitas em 2 min",
+   "descricao": "A régua do vídeo é simples: quantas colheitas saem por minuto de tela.\n\nNesta gravação foram 8 colheitas em 2 minutos, com 1146 toques — cerca de 573 toques por minuto.\n\nO tempo que não aparece no vídeo é o do crescimento: as plantações crescem por até 8 horas mesmo com o jogo fechado.\n\nCada colheita contada aqui veio do relatório do gravador, e o número que falta é o que não aconteceu.\n\nVale a pena esperar a planta em vez de tocar mais rápido?\n\nFonte: posts/cenas.json (partida 8687d5fde58d, conferida em 2026-11-15T23:30:21Z).",
+   "descricao_completa": false,
+   "angulo": "medida_por_minuto",
+   "fato": null,
+   "numeros": {
+    "plantadas": 11,
+    "colhidas": 8,
+    "toques": 1146,
+    "minutos": 2,
+    "toques_por_minuto": 573
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-15T23:30:31Z"
+  },
+  {
    "id": "4dUlp9uODpw",
    "url": "https://youtu.be/4dUlp9uODpw",
    "slug": "ceifalume-gameplay",
