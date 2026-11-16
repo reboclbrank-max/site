@@ -1,12 +1,60 @@
 {
- "medido_em": "2026-11-11T22:14:37Z",
+ "medido_em": "2026-11-16T19:12:13Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "IYi1JfJFgcU",
+   "titulo": "A conta por minuto em CEIFALUME: 8 colheitas em 2 min",
+   "publicado_em": "2026-11-15T23:30:49Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "4dUlp9uODpw",
+   "titulo": "Passo a passo: 13 mudas e 5 colheitas em 2 min de CEIFALUME",
+   "publicado_em": "2026-11-15T19:03:49Z",
+   "views": 2,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "806i-rPzC9w",
+   "titulo": "Quanto rende CEIFALUME em 2 minutos",
+   "publicado_em": "2026-11-14T23:15:07Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "WewOjNDzEDQ",
+   "titulo": "Como funciona: são seis culturas no celeiro: abóbora, flor de lume",
+   "publicado_em": "2026-11-14T18:24:42Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "3fGB7drCbTc",
+   "titulo": "O que muda em CEIFALUME depois de 2 minutos",
+   "publicado_em": "2026-11-13T19:59:16Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "85nRhygguhs",
+   "titulo": "Quem fez CEIFALUME e por quê",
+   "publicado_em": "2026-11-12T20:14:55Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "igf33ZusQs8",
    "titulo": "Bastidor de CEIFALUME: o que está por trás da partida",
    "publicado_em": "2026-11-11T19:49:11Z",
-   "views": 0,
+   "views": 2,
    "likes": 0,
    "comentarios": 0
   },
@@ -46,7 +94,7 @@
    "id": "iCE6O3d_WD0",
    "titulo": "Por que CEIFALUME é grátis de verdade",
    "publicado_em": "2026-11-07T22:55:20Z",
-   "views": 1,
+   "views": 4,
    "likes": 0,
    "comentarios": 0
   },
@@ -86,7 +134,7 @@
    "id": "PRyg0Ncz5U8",
    "titulo": "Onde jogar CEIFALUME sem instalar loja",
    "publicado_em": "2026-11-06T18:24:35Z",
-   "views": 1,
+   "views": 2,
    "likes": 0,
    "comentarios": 0
   },
@@ -118,14 +166,14 @@
    "id": "f5kQFOQs0To",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
    "publicado_em": "2026-11-04T05:17:56Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   }
  ],
  "totais": {
-  "videos": 15,
-  "views": 5,
+  "videos": 21,
+  "views": 14,
   "likes": 0,
   "comentarios": 0
  }
