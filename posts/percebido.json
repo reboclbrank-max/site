@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-16T23:40:13Z",
+ "quando": "2026-11-16T23:46:56Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -32,15 +32,6 @@
    "chave": "dono-segredo-bluesky"
   },
   {
-   "o_que": "ligar o canal threads",
-   "porque": "nunca publicou em 20 ciclos: falta o segredo THREADS_USER_ID + THREADS_TOKEN",
-   "quem": "dono",
-   "como": "criar o segredo THREADS_USER_ID + THREADS_TOKEN em Settings → Secrets → Actions",
-   "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
-   "tipo_fila": null,
-   "chave": "dono-segredo-threads"
-  },
-  {
    "o_que": "ligar o canal nostr",
    "porque": "nunca publicou em 20 ciclos: falta o segredo NOSTR_KEY",
    "quem": "dono",
@@ -53,7 +44,7 @@
  "enfileiradas": [],
  "contagem": {
   "robo": 2,
-  "dono": 3,
+  "dono": 2,
   "enfileiradas": 0
  }
 }
