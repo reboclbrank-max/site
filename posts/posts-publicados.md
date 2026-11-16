@@ -373,3 +373,6 @@ Finalizando a base dos 3 primeiros dias de Ceifalume. Limite honesto: acaba ráp
 
 ## 11/11/2026 21:11 UTC
 Não tem cadastro, compras nem micro‑transações. A casa REBOCL BRANK corre direto no Prancheta, entregando jogo livre sem barreiras. #gamedevbr
+
+## 16/11/2026 19:25 UTC
+Trava no mapa? Ceifalume roda em 2 min sem corte de tela: os canais se costuram sozinhos. Não decore, *flua*.
