@@ -251,6 +251,10 @@ async function testeGmail() {
     const { ImapFlow } = require('imapflow');
     const client = new ImapFlow({ host: 'imap.gmail.com', port: 993, secure: true, auth: { user: addr, pass: pass }, logger: false });
     await comTeto(client.connect(), 30000, 'IMAP connect');
+    // 16/11/2026 — O DIAGNÓSTICO QUE SÓ DIZIA "Command failed": o erro cru do imapflow não
+    // trazia código nem resposta do servidor, e por isso "senha de app revogada", "porta
+    // bloqueada" e "IMAP desligado na conta" ficavam indistinguíveis. Aqui a causa aparece
+    // escrita, com o código que o Gmail devolve, sem imprimir a senha.
     await comTeto(client.getMailboxLock('INBOX'), 30000, 'INBOX lock');
     const uids = await comTeto(client.search({ seen: false }), 30000, 'busca não lidos');
     client.logout();
@@ -259,10 +263,14 @@ async function testeGmail() {
     // A mensagem de erro do imapflow costuma ser só "Command failed": inútil para o dono.
     // Autenticação recusada é diagnóstico DIFERENTE de rede caída, e agora aparece escrito.
     const m = String(e && e.message || e);
-    const recusa = /auth|credential|invalid|535|534|LOGIN/i.test(m + String(e && e.responseText || ''));
+    const detalhe = [m, e && e.code, e && e.serverResponseCode, e && e.responseText]
+      .filter(Boolean).join(' | ').slice(0, 180);
+    const recusa = /auth|credential|invalid|535|534|LOGIN|AUTHENTICATIONFAILED/i.test(detalhe);
+    const bloqueio = /ETIMEDOUT|ECONNREFUSED|ENOTFOUND|socket|timeout/i.test(detalhe);
     registro('Gmail IMAP/SMTP', false,
-      recusa ? 'credencial recusada pelo Gmail (senha de app inválida/expirada)' : 'erro de conexão',
-      m.slice(0, 120));
+      recusa ? 'credencial recusada pelo Gmail (senha de app inválida/revogada ou IMAP desligado)'
+             : bloqueio ? 'IMAP não alcançado (porta 993/saída de rede)'
+             : 'erro de conexão', detalhe);
   }
 }
 
