@@ -469,6 +469,25 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "Trava no mapa? Ceifalume roda em 2 min sem corte de tela: os canais se costuram sozinhos. Não decore, *flua*."
+  },
+  {
+   "quando": "2026-11-16T23:40:46Z",
+   "canal": "site",
+   "angulo": "cena_de_dois_segundos",
+   "assunto": "casa",
+   "fatos": [
+    "casa-site-gratis"
+   ],
+   "abertura": "prancheta abre",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.769,
+   "texto": "Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr"
   }
  ],
  "fatos_de_uma_vez": [
@@ -508,23 +527,23 @@
   "casa-site-gratis"
  ],
  "ultimo": {
-  "quando": "2026-11-16T19:25:25Z",
+  "quando": "2026-11-16T23:40:46Z",
   "canal": "site",
-  "angulo": "dica_de_jogador",
+  "angulo": "cena_de_dois_segundos",
   "assunto": "casa",
   "fatos": [
-   "medido-video"
+   "casa-site-gratis"
   ],
-  "abertura": "trava no",
+  "abertura": "prancheta abre",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "pergunta",
+   "frase",
    "frase",
    "frase"
   ],
-  "hashtags": 0,
-  "nota": 0.692,
-  "texto": "Trava no mapa? Ceifalume roda em 2 min sem corte de tela: os canais se costuram sozinhos. Não decore, *flua*."
+  "hashtags": 2,
+  "nota": 0.769,
+  "texto": "Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr"
  },
  "publicacoes": [
   {
@@ -635,6 +654,17 @@
    "texto": "Trava no mapa? Ceifalume roda em 2 min sem corte de tela: os canais se costuram sozinhos. Não decore, *flua*.",
    "titulo": "Trava no mapa?",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-16T23:40:46Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr",
+   "titulo": "Prancheta abre o navegador, clica no canal e o jogo já roda na tela.",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]

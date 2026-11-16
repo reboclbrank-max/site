@@ -3164,3 +3164,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=44(api) · itch_downloads=49(api) · itch_visitas=211(api) · youtube_inscritos=24(api) · youtube_shorts=10(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
 
 > Trava no mapa? Ceifalume roda em 2 min sem corte de tela: os canais se costuram sozinhos. Não decore, *flua*.
+
+## 16/11/2026 23:41 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.77 |
+| pauta do ciclo | ✅ cena_de_dois_segundos · casa |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ cena_de_dois_segundos · casa |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 17887805040624 |
+| threads | ✅ publicado id 181018793330 |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
+| censo mundial | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=48(api) · itch_downloads=49(api) · itch_visitas=211(api) · youtube_inscritos=24(api) · youtube_shorts=12(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
+
+> Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr

@@ -376,3 +376,6 @@ Não tem cadastro, compras nem micro‑transações. A casa REBOCL BRANK corre d
 
 ## 16/11/2026 19:25 UTC
 Trava no mapa? Ceifalume roda em 2 min sem corte de tela: os canais se costuram sozinhos. Não decore, *flua*.
+
+## 16/11/2026 23:41 UTC
+Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr
