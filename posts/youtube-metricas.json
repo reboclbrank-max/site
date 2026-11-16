@@ -1,7 +1,39 @@
 {
- "medido_em": "2026-11-16T19:12:13Z",
+ "medido_em": "2026-11-16T23:50:02Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "TT6XP5Zs__c",
+   "titulo": "PRANCHETA: a partida inteira em ritmo normal, sem mexer no plano",
+   "publicado_em": "2026-11-16T22:37:49Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "a5AVwpewoGE",
+   "titulo": "Semente do dia: 8 mudas para 5 colheitas em 2 min",
+   "publicado_em": "2026-11-16T22:27:32Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "lvC90MIwQs0",
+   "titulo": "O que 6 toques fizeram na partida do PRANCHETA",
+   "publicado_em": "2026-11-16T21:12:54Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "C_KjgaipGJg",
+   "titulo": "PRANCHETA: sem instrução e velocidade rápida, mostrando a virada",
+   "publicado_em": "2026-11-16T19:20:34Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "IYi1JfJFgcU",
    "titulo": "A conta por minuto em CEIFALUME: 8 colheitas em 2 min",
@@ -172,7 +204,7 @@
   }
  ],
  "totais": {
-  "videos": 21,
+  "videos": 25,
   "views": 14,
   "likes": 0,
   "comentarios": 0
