@@ -13,11 +13,11 @@
 | conteúdo dos jogos | 90 | 1.89 | 4 | 17 (18.9%) |
 | comentário em post alheio | 210 | 0.91 | 4 | 85 (40.5%) |
 
-**Instagram (0 seguidores · 43 posts):** IMAGE n=30 média=0.0 zero=30
+**Instagram (0 seguidores · 44 posts):** IMAGE n=30 média=0.0 zero=30
 
 **itch.io:** 49 download(s) e 211 visita(s) em 1/1 conta(s). Ceifalume: 41 · Prancheta: 8
 
-**YouTube:** 24 inscrito(s) · 184 vídeo(s) · 5487 visualizaç(ões) · shorts=9 de 100 conferido(s)
+**YouTube:** 24 inscrito(s) · 184 vídeo(s) · 5493 visualizaç(ões) · shorts=9 de 100 conferido(s)
 **YouTube — o que o canal publica:** dos 100 vídeos lidos, **25 são dos jogos da casa** (305 views, média 12.2) e **75 são de outros jogos** (3026 views, média 40.3) — os da casa são 9.2% das visualizações.
 Melhores da casa: "Ceifalume: a horta acordou à noite 🌙 jog" (230) · "Desenhe a prancheta e decida a partida —" (22) · "PRANCHETA — simulador de gestão de futeb" (16)
 
