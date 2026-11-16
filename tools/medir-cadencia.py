@@ -429,7 +429,10 @@ def medir(token=None, dias=7, hoje=None, raiz=RAIZ):
     return dados
 
 
-def gravar(dados, caminho=SAIDA):
+def gravar(dados, caminho=None):
+    # 16/11/2026 — mesmo defeito do medir-unicidade: default avaliado na importação, então
+    # trocar `mod.SAIDA` nas suítes não protegia o repositório. Resolvido na chamada.
+    caminho = caminho or SAIDA
     os.makedirs(os.path.dirname(caminho), exist_ok=True)
     with open(caminho, "w", encoding="utf-8") as f:
         json.dump(dados, f, ensure_ascii=False, indent=1)

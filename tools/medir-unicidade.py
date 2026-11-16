@@ -173,7 +173,13 @@ def frase(dados):
             % (u["janela"], u["posts"], dados["media_por_dia"], cauda))
 
 
-def gravar(dados, caminho=SAIDA):
+def gravar(dados, caminho=None):
+    # 16/11/2026 — ERA `caminho=SAIDA`. O default era avaliado UMA vez, na importação: trocar
+    # `mod.SAIDA` (o que as suítes fazem para não escrever no repositório) não mudava nada, e a
+    # suíte gravava em posts/unicidade.json de verdade. O conferir-tudo #89 marcou
+    # "testes-unicidade FALHOU (código 0)" por causa exatamente disso — 28/28 verdes e o run
+    # vermelho por arquivo sujo. Agora o caminho é resolvido na CHAMADA.
+    caminho = caminho or SAIDA
     os.makedirs(os.path.dirname(caminho), exist_ok=True)
     with open(caminho, "w", encoding="utf-8") as f:
         json.dump(dados, f, ensure_ascii=False, indent=1)

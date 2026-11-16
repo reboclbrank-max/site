@@ -126,7 +126,19 @@ u.REGISTRO, u.SAIDA = _salvo_registro, _salvo_saida
 ok("o medidor roda no registro da casa e termina bem quando não há repetição",
    _codigo == 0, _codigo)
 
-_hoje_real = u.medir()
+# 16/11/2026 — a suíte escrevia em `posts/unicidade.json` (o alvo REAL) sem gitá-lo: o run
+# 89 do conferir-tudo marcou "testes-unicidade FALHOU (código 0)" — 28/28 contratos verdes,
+# código 0, e vermelho só porque a suíte sujou um arquivo versionado. `rodar-todas-as-suites`
+# restaura o arquivo depois, mas a suíte não pode depender disso.
+# Aqui o alvo da gravação real passa a ser temporário também, e o registro (posts/log.md) é
+# lido do real só para medir originalidade — que é o que importa.
+_salvo_saida2 = u.SAIDA
+with tempfile.TemporaryDirectory() as _tmp2:
+    u.SAIDA = os.path.join(_tmp2, "unicidade.json")
+    try:
+        _hoje_real = u.medir()
+    finally:
+        u.SAIDA = _salvo_saida2
 _janela = _hoje_real["ultimos_dias"]
 ok("contrato da casa: nenhum post repetido na janela recente do registro real",
    _janela["repetidos"] == 0, [r[1][:60] for r in
