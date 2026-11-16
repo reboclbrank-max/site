@@ -42,11 +42,19 @@ on:
   repository_dispatch:
     types: [pulso]
   # O caminho manual continua existindo — para quando o dono quiser forçar um ciclo.
+  #
+  # `required: true` SAIU EM 16/11/2026. Ele obrigava a palavra até para a API disparar o
+  # workflow (`POST /dispatches` responde HTTP 422 "Required input 'confirmacao' not
+  # provided"), então nem a casa nem o dono conseguiam acordar um pulso por API. O cadeado de
+  # verdade nunca foi o `required` — é a condição do job, logo abaixo: pulso manual exige
+  # `inputs.confirmacao == 'PUBLICAR'` E o dono como ator. Sem a palavra, o disparo acontece e
+  # o job é recusado: é isso que se quer (barreira no lugar certo, não na porta da frente).
   workflow_dispatch:
     inputs:
       confirmacao:
         description: "Digite PUBLICAR para rodar um pulso agora"
-        required: true
+        required: false
+        default: ""
         type: string
 
 permissions:
