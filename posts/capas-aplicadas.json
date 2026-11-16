@@ -441,6 +441,13 @@
    "titulo": "A conta por minuto em CEIFALUME: 8 colheitas em 2 min",
    "capa": "media/gameplay/ceifalume-capa.png",
    "sha256": "ef96e0738d3c6967"
+  },
+  {
+   "id": "C_KjgaipGJg",
+   "quando": "2026-11-16T19:20:23Z",
+   "titulo": "PRANCHETA: sem instrução e velocidade rápida, mostrando a virada",
+   "capa": "media/gameplay/prancheta-capa.png",
+   "sha256": "5fc713fbff1d038a"
   }
  ]
 }
