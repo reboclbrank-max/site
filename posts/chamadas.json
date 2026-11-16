@@ -2,6 +2,26 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-16T20:52:42Z",
+   "video_id": "C_KjgaipGJg",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"PRANCHETA: sem instrução e velocidade rápida, mostrando a virada\". É o PRANCHETA-GAMEPLAY. #prancheta-gameplay\nhttps://youtu.be/C_KjgaipGJg",
+   "titulo": "PRANCHETA: sem instrução e velocidade rápida, mostrando a virada",
+   "resultado": "recusado",
+   "motivo": "nota do juízo abaixo do mínimo (0.46 < 0.65)",
+   "numeros": {
+    "video": "C_KjgaipGJg",
+    "historico_do_canal": 8,
+    "nota_juizo": 0.462,
+    "jogos_citados": [
+     "prancheta"
+    ],
+    "semelhanca_maxima": 0.25,
+    "repeticao_janela": 8,
+    "nota_minima": 0.65
+   }
+  },
+  {
    "quando": "2026-11-11T20:12:47Z",
    "video_id": "igf33ZusQs8",
    "canal": "bluesky",
