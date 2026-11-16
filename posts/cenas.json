@@ -1862,6 +1862,48 @@
     "passos_confirmados": 11
    },
    "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-16T20:57:56Z",
+   "estrategia": "cara",
+   "assinatura": "13391c3a16eb",
+   "resumo": {
+    "estrategia": "cara",
+    "plantadas": 13,
+    "colhidas": 10,
+    "bicos": 1140,
+    "sementes": [
+     "None",
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 13,
+      "t": 37.7
+     },
+     {
+      "id": "lanterna",
+      "nome": "Acender Lanterna",
+      "custo": 175,
+      "t": 39.7
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": -17,
+      "t": 59.8
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 106,
+      "t": 61.8
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.073 E:0.000"
+   }
   }
  ]
 }

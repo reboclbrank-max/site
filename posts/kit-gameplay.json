@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "medida_por_minuto",
+   "angulo": "semente_do_dia",
    "fato": null,
    "numeros": {
-    "plantadas": 11,
-    "colhidas": 8,
-    "toques": 1146,
+    "plantadas": 13,
+    "colhidas": 10,
+    "toques": 1140,
     "minutos": 2,
-    "toques_por_minuto": 573
+    "toques_por_minuto": 570
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4241693,
+   "bytes": 4606824,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "A conta por minuto em CEIFALUME: 8 colheitas em 2 min",
-   "descricao": "A régua do vídeo é simples: quantas colheitas saem por minuto de tela.\n\nNesta gravação foram 8 colheitas em 2 minutos, com 1146 toques — cerca de 573 toques por minuto.\n\nO tempo que não aparece no vídeo é o do crescimento: as plantações crescem por até 8 horas mesmo com o jogo fechado.\n\nCada colheita contada aqui veio do relatório do gravador, e o número que falta é o que não aconteceu.\n\nVale a pena esperar a planta em vez de tocar mais rápido?\n\nFonte: posts/cenas.json (partida 8687d5fde58d, conferida em 2026-11-15T23:30:21Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html",
+   "titulo": "Semente do dia: 13 mudas para 10 colheitas em 2 min",
+   "descricao": "🌱 Semente do dia: 13 mudas no chão e 10 colheitas na cesta em 2 minutos de gravação.\n\nO campo é noturno de propósito: enxergar pouco faz parte da escolha de onde apertar.\n\nO relógio de cada canteiro corre mesmo com o aplicativo fechado, e é ele que dá o ritmo.\n\nQuem abrir o jogo no navegador vê a mesma fazenda, com o mesmo relógio.\n\nFonte: posts/cenas.json (partida 13391c3a16eb, conferida em 2026-11-16T20:57:56Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -61,7 +61,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-8h",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-8h",
@@ -109,7 +109,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-chuva",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-chuva",
@@ -157,7 +157,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-tutorial",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-tutorial",
@@ -205,7 +205,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-apk",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-apk",
@@ -253,7 +253,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-anuncio",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-anuncio",
@@ -301,7 +301,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-save",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-save",
@@ -349,7 +349,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-culturas",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-culturas",
@@ -397,7 +397,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-melhorias",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-melhorias",
@@ -445,7 +445,7 @@
     },
     {
      "angulo": "por_que_gratis:ceifalume-versao",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:ceifalume-versao",
@@ -493,7 +493,7 @@
     },
     {
      "angulo": "por_que_gratis:oficio-devlog",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:oficio-devlog",
@@ -541,7 +541,7 @@
     },
     {
      "angulo": "por_que_gratis:casa-canais",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:casa-canais",
@@ -589,7 +589,7 @@
     },
     {
      "angulo": "por_que_gratis:casa-newsletter",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:casa-newsletter",
@@ -637,7 +637,7 @@
     },
     {
      "angulo": "por_que_gratis:casa-telegram",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:casa-telegram",
@@ -685,7 +685,7 @@
     },
     {
      "angulo": "por_que_gratis:casa-site-gratis",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:casa-site-gratis",
@@ -733,7 +733,7 @@
     },
     {
      "angulo": "por_que_gratis:video-iCE6O3d_WD0",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:video-iCE6O3d_WD0",
@@ -781,7 +781,7 @@
     },
     {
      "angulo": "por_que_gratis:marco-instagram-publicacoes",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:marco-instagram-publicacoes",
@@ -829,7 +829,7 @@
     },
     {
      "angulo": "por_que_gratis:video-cfB5ZBdC-NA",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:video-cfB5ZBdC-NA",
@@ -877,7 +877,7 @@
     },
     {
      "angulo": "por_que_gratis:video-_ffmjSMsW0Y",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:video-_ffmjSMsW0Y",
@@ -925,7 +925,7 @@
     },
     {
      "angulo": "por_que_gratis:video-hBvkQhSS-_4",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:video-hBvkQhSS-_4",
@@ -973,7 +973,7 @@
     },
     {
      "angulo": "por_que_gratis:marco-youtube-shorts",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 9 frases, 0 hashtags): Por que CEIFALUME é grátis de verdade"
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
     },
     {
      "angulo": "como_foi_gravado:marco-youtube-shorts",
@@ -1001,11 +1001,15 @@
     },
     {
      "angulo": "passo_a_passo",
-     "motivo": "mesmo ângulo do último vídeo publicado (passo_a_passo) — o ângulo roda"
+     "motivo": "título quase igual a um já publicado (0.97)"
+    },
+    {
+     "angulo": "medida_por_minuto",
+     "motivo": "título quase igual a um já publicado (0.97)"
     },
     {
      "angulo": "numeros",
-     "motivo": "título quase igual a um já publicado (0.97)"
+     "motivo": "título quase igual a um já publicado (0.96)"
     },
     {
      "angulo": "pergunta",
@@ -1020,7 +1024,7 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 9,
+   "angulos_aprovados": 8,
    "angulos_candidatos": 254
   },
   {
