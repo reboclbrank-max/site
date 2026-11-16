@@ -1,64 +1,79 @@
 {
  "jogo": "prancheta",
- "estrategia": "pressao_rapida",
+ "estrategia": "posse_normal",
  "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920",
  "decisoes": [
   {
-   "t": 23,
+   "t": 15.2,
    "motivo": "abrir o menu do jogo",
    "acao": "toque em 500,87"
   },
   {
-   "t": 29.4,
+   "t": 20.7,
    "motivo": "aceitar o convite do clube",
    "acao": "toque em 500,179"
   },
   {
-   "t": 34.6,
+   "t": 25.1,
    "motivo": "aplicar a sugestão do staff",
    "acao": "toque em 500,232"
   },
   {
-   "t": 39.3,
+   "t": 29,
    "motivo": "aplicar o microciclo da semana",
    "acao": "toque em 500,612"
   },
   {
-   "t": 44.5,
+   "t": 33.7,
    "motivo": "abrir a prancheta",
    "acao": "toque em 500,259"
   },
   {
-   "t": 52.3,
+   "t": 40.2,
    "motivo": "jogar com o plano recomendado",
    "acao": "toque em 500,289"
   },
   {
-   "t": 56.8,
-   "motivo": "dar instrução no intervalo (pressionar)",
-   "acao": "toque em 110,608"
+   "t": 44,
+   "motivo": "seguir sem mexer (sem instrução)",
+   "acao": "toque em 636,573"
   },
   {
-   "t": 61.5,
-   "motivo": "acelerar a partida",
-   "acao": "toque em 700,685"
-  },
-  {
-   "t": 66.7,
-   "motivo": "partida em andamento",
-   "acao": "toque em 700,685"
-  },
-  {
-   "t": 71.8,
+   "t": 48.5,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 77.5,
-   "motivo": "pular para o fim da partida",
-   "acao": "toque em 900,705"
+   "t": 52.9,
+   "motivo": "partida em andamento",
+   "acao": "toque em 110,608"
+  },
+  {
+   "t": 57.4,
+   "motivo": "partida em andamento",
+   "acao": "toque em 636,573"
+  },
+  {
+   "t": 62,
+   "motivo": "partida em andamento",
+   "acao": "toque em 640,360"
+  },
+  {
+   "t": 66.5,
+   "motivo": "partida em andamento",
+   "acao": "toque em 640,360"
+  },
+  {
+   "t": 70.9,
+   "motivo": "partida em andamento",
+   "acao": "toque em 110,608"
+  },
+  {
+   "t": 75.3,
+   "motivo": "partida em andamento",
+   "acao": "toque em 636,573"
   }
  ],
- "passos_confirmados": 8,
- "toques_partida": 2
+ "passos_confirmados": 12,
+ "toques_partida": 7
 }
