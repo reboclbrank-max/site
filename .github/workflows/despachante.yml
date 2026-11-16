@@ -76,27 +76,35 @@ jobs:
               except Exception:
                   return {}
 
-          # ── os alvos: (arquivo, intervalo mínimo em minutos, janela de horas BRT ou None)
+          # ── os alvos: (arquivo, intervalo mínimo, janela BRT, inputs do dispatch)
+          #
+          # O INPUT É O PONTO. `gravar-prancheta` e `gravar-gameplay` só publicam no YouTube
+          # quando `github.event_name == 'schedule'` — e um `workflow_dispatch` do despachante
+          # chega como workflow_dispatch, não como schedule. Na primeira execução do despachante
+          # (run #72 do gameplay) o vídeo foi gravado, medido, capado — e o passo do YouTube
+          # ficou `skipped` com "não pedido — só gravação". O despacho funcionou e o trabalho
+          # não. Os dois workflows já tinham `publicar: AUTOMATICO` para exatamente este caso;
+          # é ele que precisa ir no corpo do dispatch.
           # O intervalo é o coração disto: só chama se a última execução estiver mais velha
           # que isso. Assim o despachante NUNCA duplica o trabalho do cron.
           ALVOS = [
-              # gravação: é o que alimenta o YouTube. 3h para 3 gravações/dia (09:50/13:50/16:50).
-              # Janela 8-19h BRT: a gravação precisa terminar antes de 22h para poder publicar.
-              ("gravar-prancheta.yml",       170, (8, 19)),
-              ("gravar-gameplay.yml",        230, (8, 19)),
+              # AUTOMATICO = "aja como se fosse o cron": publica se o portão deixar, recusa se
+              # não deixar. É o caminho que o dono pediu (autônomo) e que o cron perdido impedia.
+              ("gravar-prancheta.yml",       170, (8, 19),  {"publicar": "AUTOMATICO"}),
+              ("gravar-gameplay.yml",        230, (8, 19),  {"publicar": "AUTOMATICO"}),
               # saúde e relatório: diário, mas se o cron perder, isto salva o dia
-              ("health-check.yml",          1080, None),   # 18h
-              ("status-total.yml",           480, (7, 22)),  # 8h (3x/dia previsto)
-              ("alertas-proativos.yml",      100, (9, 22)),  # ~1h45
+              ("health-check.yml",          1080, None,     {}),
+              ("status-total.yml",           480, (7, 22),  {}),
+              ("alertas-proativos.yml",      100, (9, 22),  {}),
               # vídeo e comentários: a casa depende deles para não parar
-              ("chamar-video.yml",           230, (8, 20)),
-              ("ler-comentarios.yml",       1080, None),
-              ("pendencias-do-dono.yml",     720, None),
+              ("chamar-video.yml",           230, (8, 20),  {}),
+              ("ler-comentarios.yml",       1080, None,     {}),
+              ("pendencias-do-dono.yml",     720, None,     {}),
           ]
 
           chamados, pulados, erros = [], [], []
 
-          for arquivo, intervalo, janela in ALVOS:
+          for arquivo, intervalo, janela, entradas in ALVOS:
               if janela and not (janela[0] <= hora <= janela[1]):
                   pulados.append("%s (fora da janela %dh-%dh BRT, agora %dh)" % (arquivo, janela[0], janela[1], hora))
                   continue
@@ -120,10 +128,10 @@ jobs:
                    "-H", "Authorization: Bearer " + os.environ["GH_TOKEN"],
                    "-H", "Accept: application/vnd.github+json",
                    "https://api.github.com/repos/%s/actions/workflows/%s/dispatches" % (REPO, arquivo),
-                   "-d", json.dumps({"ref": "main"})],
+                   "-d", json.dumps({"ref": "main", "inputs": entradas})],
                   capture_output=True, text=True, timeout=60).stdout.strip()
               if codigo == "204":
-                  chamados.append(arquivo)
+                  chamados.append(arquivo + ("  (publicar=AUTOMATICO)" if entradas else ""))
               else:
                   erros.append("%s (HTTP %s)" % (arquivo, codigo))
 

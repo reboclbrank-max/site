@@ -381,6 +381,17 @@ ok("o despachante respeita intervalo (não duplica o trabalho do cron)",
 ok("o despachante respeita janela de Brasília",
    "janela" in _txt_desp and "BRT" in _txt_desp)
 
+ok("o despachante manda publicar=AUTOMATICO para os gravadores",
+   "AUTOMATICO" in _txt_desp,
+   "sem o input, o alvo grava e não publica: o passo do YouTube exige event_name==schedule")
+ok("o despachante manda o input no CORPO do dispatch (não só no comentário)",
+   '"inputs": entradas' in _txt_desp or "'inputs': entradas" in _txt_desp)
+# prova a razão: os gravadores só publicam pelo caminho agendado OU com AUTOMATICO
+for _wf in ("gravar-prancheta.yml", "gravar-gameplay.yml"):
+    _t = ler(os.path.join(WFS, _wf))
+    ok("%s aceita AUTOMATICO (o despacho consegue publicar)" % _wf,
+       "AUTOMATICO" in _t and "event_name == 'schedule'" in _t)
+
 ok("o despertador existente também usa dispatch (padrão que já funcionava)",
    "dispatches" in ler(os.path.join(WFS, "despertador.yml")))
 
