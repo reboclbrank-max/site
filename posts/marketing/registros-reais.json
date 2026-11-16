@@ -1,0 +1,17 @@
+{
+ "_o_que_e": "todo registro real já feito (auditoria do otimizador)",
+ "registros": [
+  {
+   "quando": "2026-11-16T20:24:25.448Z",
+   "evento": "publicacao",
+   "rede": "instagram",
+   "jogo": "ambos",
+   "origem": "cron",
+   "fonte": "",
+   "tipo": "acesso",
+   "hora": 17,
+   "quantidade": 1,
+   "acumulado_na_hora": 1
+  }
+ ]
+}
