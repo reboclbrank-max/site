@@ -281,6 +281,35 @@ ok("teste-redes distingue credencial recusada de rede caída",
 ok("existe um documento com os passos do Gmail",
    os.path.exists(os.path.join(RAIZ, "COMO-RESOLVER-GMAIL.md")))
 
+# ── 9. PERMISSÃO: workflow que versiona estado precisa de contents: write ────────
+# (16/11/2026, defeito real): o publicar-instagram tinha `contents: read`. O passo de commit
+# rodava, o git commit funcionava e o PUSH era recusado 6 vezes — o log dizia "autenticação/
+# permissão" e o estado nunca chegava ao main. O portão continuava decorativo, agora por
+# permissão em vez de por falta de commit. A regra vale para todo workflow que versiona.
+import re as _re
+_sem_escrita = []
+for _f in sorted(os.listdir(WFS)):
+    if not _f.endswith(".yml"):
+        continue
+    _txt = ler(os.path.join(WFS, _f))
+    # "versiona" = CHAMA entrar-no-main ou git commit em um `run:` de verdade — não basta
+    # citar o nome num teste. `diagnostico-da-casa` invoca os testes do entrar-no-main e por
+    # isso foi falso positivo na primeira versão deste contrato.
+    _linhas_de_run = [l for l in _txt.splitlines()
+                      if ("entrar-no-main" in l or "git commit" in l)
+                      and not l.strip().startswith("#")
+                      and "testes-" not in l and "rodar-contratos" not in l]
+    _versiona = bool(_linhas_de_run)
+    if not _versiona:
+        continue
+    _m = _re.search(r"^permissions:\n((?:  .*\n)+)", _txt, _re.M)
+    _perms = _m.group(1) if _m else ""
+    if "contents: write" not in _perms:
+        _sem_escrita.append(_f)
+ok("todo workflow que versiona estado tem contents: write",
+   not _sem_escrita,
+   "sem permissão de escrita: " + ", ".join(_sem_escrita))
+
 # ── 8. PERSISTÊNCIA: portão que não fica gravado é portão decorativo ─────────────
 # (16/11/2026, defeito real): o publicar-instagram registrava o media_id no disco do runner e
 # NÃO commitava. O run morria, o estado sumia, e a mesma peça ia ao ar de novo. A deduplicação

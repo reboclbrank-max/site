@@ -19,7 +19,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # 16/11/2026: era `read`, e o portão não conseguia persistir o media_id — o commit era feito e
+  # o push recusado 6 vezes ("autenticação/permissão"). O sintoma final era o mesmo de antes:
+  # registro vazio na execução seguinte. `write` é o que permite versionar o próprio estado.
+  contents: write
 
 concurrency:
   group: publicar-instagram
