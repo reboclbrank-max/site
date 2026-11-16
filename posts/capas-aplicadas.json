@@ -448,6 +448,13 @@
    "titulo": "PRANCHETA: sem instrução e velocidade rápida, mostrando a virada",
    "capa": "media/gameplay/prancheta-capa.png",
    "sha256": "5fc713fbff1d038a"
+  },
+  {
+   "id": "lvC90MIwQs0",
+   "quando": "2026-11-16T21:12:39Z",
+   "titulo": "O que 6 toques fizeram na partida do PRANCHETA",
+   "capa": "media/gameplay/prancheta-capa.png",
+   "sha256": "3e462de26c9ed703"
   }
  ]
 }

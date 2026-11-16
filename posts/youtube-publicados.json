@@ -1,6 +1,23 @@
 {
  "publicados": [
   {
+   "id": "lvC90MIwQs0",
+   "url": "https://youtu.be/lvC90MIwQs0",
+   "slug": "prancheta-gameplay",
+   "titulo": "O que 6 toques fizeram na partida do PRANCHETA",
+   "descricao": "Na partida, o agente deu 6 toques e o gravador registrou o que cada um mudou na tela.\n\nO plano veio do staff, o microciclo foi aplicado antes de jogar e a instrução do intervalo mudou o comportamento do time — tudo isso está no vídeo, na ordem.\n\nO jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no APK.\n\nFonte: posts/cenas.json (partida a3cb90b83df4, conferida em 2026-11-16T21:12:31Z).",
+   "descricao_completa": false,
+   "angulo": "toques_da_partida",
+   "fato": null,
+   "numeros": {
+    "passos": 15,
+    "passos_confirmados": 12,
+    "toques_partida": 6
+   },
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "quando": "2026-11-16T21:12:36Z"
+  },
+  {
    "id": "C_KjgaipGJg",
    "url": "https://youtu.be/C_KjgaipGJg",
    "slug": "prancheta-gameplay",
