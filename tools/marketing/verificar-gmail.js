@@ -22,7 +22,12 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 'use strict';
 
-const net = require('net');
+// 16/11/2026 — TLS, NÃO TCP PURO. A porta 993 é IMAP sobre TLS IMPLÍCITO: o Google só manda
+// o banner "* OK" DEPOIS do handshake. A primeira versão abria `net.connect` e concluía
+// "saída de rede filtrada" — veredito FALSO, e do pior tipo: mandava o dono caçar rede quando
+// o problema era a senha. Em produção o teste oficial dizia "Application-specific password
+// required" enquanto o meu dizia "não alcançado". Agora o handshake é parte da pergunta 2.
+const tls = require('tls');
 
 const ENDERECO = process.env.GMAIL_CHAT_ADDRESS || process.env.GMAIL_CHAT_ADDR || '';
 const SENHA = process.env.GMAIL_CHAT_APPPASS || process.env.GMAIL_CHAT_PASS || '';
@@ -75,7 +80,7 @@ if (resultado.codigo !== 0) {
 
 function conectar() {
   return new Promise((resolve) => {
-    const socket = net.createConnection({ host: HOST, port: PORTA });
+    const socket = tls.connect({ host: HOST, port: PORTA, servername: HOST });
     let etapa = 'conexao';
     let buffer = '';
     const fim = (r) => { try { socket.destroy(); } catch (e) {} resolve(r); };
@@ -93,6 +98,9 @@ function conectar() {
         'não conectou em ' + HOST + ':' + PORTA + ' (' + (e.code || e.message) + ')');
       fim({ ok: false, alcançou: false, motivo: (e.code || e.message), etapa });
     });
+
+    // erro de certificado/handshake tem nome próprio: não é rede nem senha
+    socket.on('secureConnect', () => { /* handshake TLS ok; o banner vem a seguir */ });
 
     socket.on('close', () => {
       if (etapa === 'conexao') {

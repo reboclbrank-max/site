@@ -281,5 +281,15 @@ ok("teste-redes distingue credencial recusada de rede caída",
 ok("existe um documento com os passos do Gmail",
    os.path.exists(os.path.join(RAIZ, "COMO-RESOLVER-GMAIL.md")))
 
+# ── 8. PERSISTÊNCIA: portão que não fica gravado é portão decorativo ─────────────
+# (16/11/2026, defeito real): o publicar-instagram registrava o media_id no disco do runner e
+# NÃO commitava. O run morria, o estado sumia, e a mesma peça ia ao ar de novo. A deduplicação
+# funcionava perfeitamente — contra um arquivo que voltava vazio toda vez.
+PUB_ = ler(os.path.join(WFS, "publicar-instagram.yml"))
+ok("o portão do Instagram PERSISTE o media_id (sem commit o portão é decorativo)",
+   "instagram-publicados.json" in PUB_
+   and ("entrar-no-main" in PUB_ or "git commit" in PUB_),
+   "publicar-instagram não versiona o registro: o runner morre e a próxima peça repete")
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)

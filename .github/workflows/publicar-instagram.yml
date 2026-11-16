@@ -116,4 +116,26 @@ jobs:
             echo "- hora de Brasília: ${hora}h"
             echo "- portão atualizado: sim (a próxima peça repetida será recusada)"
           } >> "$GITHUB_STEP_SUMMARY"
-          exit 0
+
+      - name: Versiona o registro (é o que faz o portão lembrar amanhã)
+        # SEM ESTE PASSO O PORTÃO É DECORATIVO. Ele grava o media_id no disco do runner e o
+        # runner morre ali: na próxima execução o registro está vazio de novo e a MESMA peça
+        # é publicada outra vez. Foi exatamente o sintoma reclamado (mesma arte a cada 30 min),
+        # agora com a causa certa: não era falta de deduplicação, era falta de commit.
+        env:
+          GH_TOKEN: ${{ secrets.GHPAT }}
+        run: |
+          set -u
+          git config user.name "rebocl"
+          git config user.email "reboclbrank@gmail.com"
+          for f in posts/marketing/instagram-publicados.json \
+                   posts/marketing/registros-reais.json \
+                   posts/marketing/auto-otimizador-avancado.json; do
+            [ -e "$f" ] && git add "$f" || true
+          done
+          if git diff --cached --quiet; then
+            echo "registro do Instagram sem mudança"
+            exit 0
+          fi
+          git commit -q -m "instagram: media_id registrado ($(date -u +'%d/%m %H:%M UTC'))"
+          bash tools/entrar-no-main.sh "registro do Instagram" || echo "registro não entrou no main"
