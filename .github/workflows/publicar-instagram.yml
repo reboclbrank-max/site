@@ -32,10 +32,44 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+
       - name: Contrato do publicador (offline)
-        run: python3 tools/rodar-contratos-isolados.py tools/testes-sonda-instagram.py
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-sonda-instagram.py tools/testes-fase2-producao.py
+
+      # ─── PORTÃO (16/11/2026) ───────────────────────────────────────────────────────────
+      # Antes desta mudança o cron publicava a MESMA imagem com a MESMA legenda a cada 30
+      # minutos, até 27 vezes por dia. Repetição é o que a Meta pune e é o que faz quem segue a
+      # conta deixar de seguir. O portão aplica: 2h de intervalo mínimo, teto de 3/dia, janela
+      # 9-22h de Brasília e deduplicação da peça (sha256 de imagem+legenda).
+      - name: Portão do Instagram (intervalo, teto, janela, repetição)
+        id: portao
+        shell: bash -o pipefail -e {0}
+        env:
+          IG_IMAGE_URL: https://img.itch.zone/aW1hZ2UvNTAxNzQwNC8zMDA0MDAyNy5wbmc=/original/sNW2uy.png
+          IG_CAPTION: "Postagem automática da casa — conteúdo gerado pelo ciclo de marketing.\n#Prancheta #Ceifalume #GamingDev"
+          IG_INTERVALO_MINUTOS: "120"
+          IG_TETO_DIARIO: "3"
+        run: |
+          set +e
+          node tools/marketing/instagram-estado.js --pode \
+            --imagem "$IG_IMAGE_URL" --legenda "$IG_CAPTION" | tee /tmp/portao.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Portão do Instagram"
+            echo '```'
+            cat /tmp/portao.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "pode_publicar=$([ "$codigo" = 0 ] && echo sim || echo nao)" >> "$GITHUB_OUTPUT"
+          echo "código do portão: $codigo"
+          exit 0
 
       - name: Publica no Instagram (cria container → aguarda FINISHED → media_publish)
+        # Sem a autorização do portão não há publicação: é o que impede o post repetido.
+        if: ${{ steps.portao.outputs.pode_publicar == 'sim' }}
         shell: bash -o pipefail -e {0}
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
@@ -55,4 +89,31 @@ jobs:
           echo "código da publicação: $codigo"
           # 0 = publicado · 2 = ensaio (container pronto, não publicado) · 1 = erro
           if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi
+          exit 0
+
+      # ─── MEMÓRIA E MEDIDA (16/11/2026) ────────────────────────────────────────────────
+      # Publicar sem registrar é publicar duas vezes no dia seguinte. Aqui o media_id que a
+      # Meta devolveu entra no portão (é ele que impede a repetição) e o fato da publicação
+      # alimenta o auto-otimizador com o horário REAL em que a peça foi ao ar.
+      - name: Registra o que foi publicado (portão + auto-otimizador)
+        shell: bash -o pipefail -e {0}
+        run: |
+          set +e
+          media_id=$(python3 -c 'import json;d=json.load(open("/tmp/publicar-instagram.json"));print((d.get("passos",{}).get("publicar") or {}).get("media_id") or "")' 2>/dev/null | tail -1)
+          if [ -z "$media_id" ]; then
+            echo "sem media_id (não publicou neste run) — nada a registrar"
+            exit 0
+          fi
+          node tools/marketing/instagram-estado.js --registrar \
+            --media-id "$media_id" \
+            --imagem "$IG_IMAGE_URL" --legenda "$IG_CAPTION"
+          hora=$(TZ=America/Sao_Paulo date +%-H)
+          node tools/marketing/registrar.js --evento publicacao \
+            --rede instagram --jogo ambos --hora "$hora" --quantidade 1 --origem cron
+          {
+            echo "### Registro da publicação"
+            echo "- media_id: \`$media_id\`"
+            echo "- hora de Brasília: ${hora}h"
+            echo "- portão atualizado: sim (a próxima peça repetida será recusada)"
+          } >> "$GITHUB_STEP_SUMMARY"
           exit 0

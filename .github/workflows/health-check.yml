@@ -1,0 +1,98 @@
+name: health-check
+
+# 🏥 HEALTH CHECK DAS CAMADAS DO SITE — audita em produção, todos os dias, sem clique.
+#
+# POR QUE ESTE WORKFLOW EXISTE (16/11/2026):
+# O health check da Fase 2 tinha sido escrito no repositório `chat` e nunca era executado
+# contra o `site`. Código que existe e ninguém chama não é monitoramento — é enfeite. Aqui ele
+# roda de verdade: audita 44 camadas (workflows, ferramentas, estado, credenciais, redes, jogos
+# e portões), tenta auto-recuperação no que é seguro e publica o resultado no resumo do run.
+#
+# O QUE ELE **NÃO** FAZ (para não vender ilusão):
+#   • não reescreve código com sintaxe quebrada — só reporta (foi reescrever no chute que
+#     transformou o `entrar-no-main.sh` em base64 em 12/11);
+#   • não inventa segredo que falta — diz o NOME e espera o dono;
+#   • não conta "não verificável neste ambiente" como queda (fora do Actions não há segredo).
+
+on:
+  schedule:
+    # 06:10 UTC = 03:10 de Brasília — logo depois da janela de pesquisa do pulso (03h),
+    # antes de qualquer publicação do dia. Se algo caiu de madrugada, a casa sabe antes das 9h.
+    - cron: "10 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: health-check
+  cancel-in-progress: false
+
+jobs:
+  auditar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+
+      - name: O health check obedece aos próprios contratos (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-fase2-producao.py
+
+      - name: Auditoria das camadas (com os segredos no ambiente — é assim que ele mede credencial)
+        shell: bash -o pipefail -e {0}
+        env:
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          GMAIL_CHAT_APPPASS: ${{ secrets.GMAIL_CHAT_APPPASS }}
+          GMAIL_CHAT_PASS: ${{ secrets.GMAIL_CHAT_PASS }}
+          GMAIL_CHAT_ADDRESS: ${{ secrets.GMAIL_CHAT_ADDRESS }}
+          GMAIL_CHAT_ADDR: ${{ secrets.GMAIL_CHAT_ADDR }}
+          NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          GHPAT: ${{ secrets.GHPAT }}
+        run: |
+          set +e
+          node tools/marketing/health-check-site.js | tee /tmp/hc.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Auditoria das camadas"
+            echo '```'
+            cat /tmp/hc.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          # 0 = saudável · 1 = camada crítica caída. Camada crítica caída NÃO derruba o run:
+          # o run é o relatório; quem interrompe a casa é o portão de publicação, não o vigia.
+          echo "código da auditoria: $codigo"
+          if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi
+          exit 0
+
+      - name: Guarda o retrato do health check no repositório
+        shell: bash -o pipefail -e {0}
+        run: |
+          git config user.name "rebocl"
+          git config user.email "reboclbrank@gmail.com"
+          [ -e posts/health-check-camadas.json ] && git add posts/health-check-camadas.json || true
+          if git diff --cached --quiet; then
+            echo "estado do health check sem mudança"
+            exit 0
+          fi
+          git commit -q -m "health check: retrato das camadas ($(date -u +'%d/%m %H:%M UTC'))"
+          bash tools/entrar-no-main.sh "retrato do health check" || echo "retrato não entrou no main"

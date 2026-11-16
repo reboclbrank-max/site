@@ -1,0 +1,11 @@
+{
+ "atualizadoEm": "2026-11-16T20:07:31.936Z",
+ "ultima_execucao": "2026-11-16T20:07:31.936Z",
+ "camadas": 44,
+ "ativas": 28,
+ "inativas": 16,
+ "criticas_caidas": [],
+ "recuperacoes_sucesso": 0,
+ "recuperacoes_falha": 0,
+ "saudavel": true
+}

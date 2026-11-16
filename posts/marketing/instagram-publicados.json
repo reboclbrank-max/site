@@ -1,0 +1,16 @@
+{
+ "_o_que_e": "memória de publicações do Instagram (é o portão contra repetição)",
+ "intervalo_minimo_minutos": 120,
+ "teto_diario": 3,
+ "publicados": [
+  {
+   "media_id": "111",
+   "quando": "2026-11-16T20:02:16.932Z",
+   "hora_brasilia": 17,
+   "imagem": "u1",
+   "legenda": "L1",
+   "impressao": "dd123822906f3744c378c45d74d5e7d08ccb615f31f22bedde42496bf59b1f11"
+  }
+ ],
+ "atualizadoEm": "2026-11-16T20:02:16.933Z"
+}

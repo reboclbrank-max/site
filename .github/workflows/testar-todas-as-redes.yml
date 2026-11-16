@@ -22,6 +22,31 @@ jobs:
       - run: npm ci --omit=dev --no-audit --no-fund
       - name: Instala imapflow para teste de Gmail
         run: npm install imapflow --omit=dev --no-audit --no-fund
+      - name: Gmail — as três perguntas (credencial · alcance · senha)
+        # 16/11/2026: "Command failed" não diz nada ao dono. Este passo separa falta de
+        # credencial, rede filtrada e senha recusada, e imprime o próximo passo exato.
+        continue-on-error: true
+        shell: bash -o pipefail -e {0}
+        env:
+          GMAIL_CHAT_ADDRESS: ${{ secrets.GMAIL_CHAT_ADDRESS }}
+          GMAIL_CHAT_ADDR: ${{ secrets.GMAIL_CHAT_ADDRESS }}
+          GMAIL_CHAT_APPPASS: ${{ secrets.GMAIL_CHAT_APPPASS }}
+          GMAIL_CHAT_PASS: ${{ secrets.GMAIL_CHAT_PASS }}
+        run: |
+          set +e
+          node tools/marketing/verificar-gmail.js | tee /tmp/gmail.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Gmail: veredito"
+            echo '```'
+            cat /tmp/gmail.txt
+            echo '```'
+            echo ""
+            echo "Documento com os passos: COMO-RESOLVER-GMAIL.md"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código do verificador do Gmail: $codigo (0 ok · 2 falta secret · 3 rede · 4 senha recusada)"
+          exit 0
+
       - name: Testa todas as APIs
         run: node tools/testar-todas-as-apis.js
         env:
@@ -56,5 +81,10 @@ jobs:
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
           NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
+          # 16/11/2026: a casa usa DOIS nomes para a mesma credencial — o repo `site` guarda
+          # GMAIL_CHAT_ADDRESS + GMAIL_CHAT_APPPASS; o repo `chat` guarda GMAIL_CHAT_ADDR +
+          # GMAIL_CHAT_PASS. O teste lia só um par e dizia "sem credenciais" com credencial boa.
+          GMAIL_CHAT_ADDRESS: ${{ secrets.GMAIL_CHAT_ADDRESS }}
           GMAIL_CHAT_ADDR: ${{ secrets.GMAIL_CHAT_ADDRESS }}
+          GMAIL_CHAT_APPPASS: ${{ secrets.GMAIL_CHAT_APPPASS }}
           GMAIL_CHAT_PASS: ${{ secrets.GMAIL_CHAT_PASS }}

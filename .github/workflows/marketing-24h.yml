@@ -95,6 +95,12 @@ jobs:
 
       - name: Pulso do orquestrador
         env:
+          # 16/11/2026: o pulso agora pede a vez ao publicar-instagram.yml quando decide
+          # publicar (repository_dispatch). Sem um PAT aqui, o pedido não tem credencial e o
+          # Instagram continuaria dependendo só do cron dele. O GITHUB_TOKEN do run serve de
+          # reserva; o GHPAT é o que tem permissão para disparar outro workflow.
+          GHPAT: ${{ secrets.GHPAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
           YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}

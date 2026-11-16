@@ -1,6 +1,6 @@
 # O que acontece quando você mexe em algo
 
-Gerado por `tools/o-que-acontece.py` a partir dos **48** arquivos de `.github/workflows/` — cada linha vem do próprio workflow, não da minha memória. O `conferir-tudo` falha se este documento deixar de bater com eles.
+Gerado por `tools/o-que-acontece.py` a partir dos **51** arquivos de `.github/workflows/` — cada linha vem do próprio workflow, não da minha memória. O `conferir-tudo` falha se este documento deixar de bater com eles.
 
 ## 1. Você deu push no `main`
 
@@ -23,7 +23,7 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 
 ## 2. O dia sem você tocar em nada (hora de Brasília)
 
-**88 disparos automáticos por dia**, em 12 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
+**105 disparos automáticos por dia**, em 15 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
 
 **Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-16): **58.15/dia** de 88 pedidos. O pior caso é `gravar-prancheta`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
 
@@ -33,7 +33,9 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 | 00h, 06h, 12h, 18h | `metricas-youtube` | Mede o que os vídeos publicados fizeram (views, likes, comentários). — **entregou 2.43/dia** de 4 pedidos (60.8%) ⚠️ fora da janela: 00h, 06h |
 | 03h | `administrar-itch` | Administração automática do itch.io: o robô olha o estado, decide e (se for o caso) sobe o build — sem clique do dono. — **entregou 1.0/dia** de 1 pedidos (100.0%) ⚠️ fora da janela: 03h |
 | 03h | `administrar-youtube` | Administração automática do YouTube: organiza e corrige o que já está publicado (título, descrição, tags) sem clique do dono. — **entregou 1.0/dia** de 1 pedidos (100.0%) ⚠️ fora da janela: 03h |
+| 03h | `health-check` | HEALTH CHECK DAS CAMADAS DO SITE — audita em produção, todos os dias, sem clique. ⚠️ fora da janela: 03h |
 | 03h, 04h, 09h–21h | `marketing-24h` | Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa. — **entregou 42.86/dia** de 45 pedidos (95.2%) ⚠️ fora da janela: 03h, 04h |
+| 09h–21h | `alertas-proativos` | ALERTAS PROATIVOS — vigia as métricas e avisa ANTES de a casa parar. |
 | 09h, 16h | `gravar-gameplay` | Grava o jogo rodando de verdade e transforma em arquivo de vídeo. — **entregou 1.14/dia** de 2 pedidos (57.0%) |
 | 09h, 13h, 16h | `gravar-prancheta` | Grava o PRANCHETA rodando (o segundo jogo da casa). — **entregou 1.14/dia** de 3 pedidos (38.0%) |
 | 09h | `ler-comentarios` | Lê comentários públicos só com a API key (sem OAuth, sem consentimento novo). — **entregou 0.86/dia** de 1 pedidos (86.0%) |
@@ -42,6 +44,7 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 | 09h | `vigia-sessao-itch` | A sessão do itch (segredo ITCH_COOKIE) é o único caminho para escrever na página. — **entregou 0.86/dia** de 1 pedidos (86.0%) |
 | 10h, 14h | `chamar-video` | Leva quem já segue a casa até o vídeo que acabou de sair. — **entregou 0.86/dia** de 2 pedidos (43.0%) |
 | 10h | `medir-itch` | Placar do itch pela API (que nao passa pela Cloudflare): downloads, visitas, publicacao. — **entregou 0.86/dia** de 1 pedidos (86.0%) |
+| 10h, 15h, 21h | `status-total` | STATUS TOTAL — o relatório integrado do marketing, gerado em produção. |
 
 ⚠️ = o workflow roda fora da janela 9h–22h. Não é erro por si: medir de madrugada é legítimo; **publicar** de madrugada não é, e o portão recusa.
 

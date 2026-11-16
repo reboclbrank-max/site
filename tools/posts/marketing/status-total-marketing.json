@@ -1,0 +1,281 @@
+{
+  "ativo": true,
+  "relatorios": [
+    {
+      "id": "st_1794859652112",
+      "geradoEm": "2026-11-16T20:07:32.112Z",
+      "resumo": {
+        "camadas_monitoradas": 44,
+        "camadas_ativas": 28,
+        "camadas_inativas": 16,
+        "recuperacoes_sucesso": 0,
+        "recuperacoes_falha": 0,
+        "sistemas_ativos": 2,
+        "comandos_disponiveis": 34,
+        "inicializacao_automatica": true,
+        "redes_proibidas_removidas": true,
+        "itch_io_removido": true
+      },
+      "status_camadas": [
+        {
+          "camada": "wf-gravar-prancheta",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-gravar-gameplay",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-publicar-instagram",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-enviar-youtube",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-postar-redes",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-marketing-24h",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-corrente",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-metricas-youtube",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-medir-o-dia",
+          "ativa": true,
+          "status": "so_manual"
+        },
+        {
+          "camada": "wf-conferir-tudo",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "wf-testar-redes",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "tool-entrar-no-main",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "tool-enviar-youtube",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "tool-publicar-instagram",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "tool-orquestrador",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "tool-medir-cadencia",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "tool-o-que-acontece",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "tool-rodar-contratos",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "estado-orquestrador",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "estado-videos-enviados",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "estado-youtube-publicados",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "estado-cadencia",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "estado-fila-tarefas",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "estado-log",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "cred-youtube",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "cred-yt-client",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "cred-instagram",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "cred-instagram-id",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "cred-gmail",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "cred-nostr",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "cred-threads",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "cred-bluesky",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "rede-youtube",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "rede-instagram",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "rede-threads",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "rede-nostr",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "rede-bluesky",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "rede-mastodon",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "rede-x",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "rede-gmail",
+          "ativa": false,
+          "status": "nao_verificavel_local"
+        },
+        {
+          "camada": "jogo-prancheta",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "jogo-ceifalume",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "portao-sha256",
+          "ativa": true,
+          "status": "ativa"
+        },
+        {
+          "camada": "portao-janela",
+          "ativa": true,
+          "status": "ativa"
+        }
+      ],
+      "metricas": {
+        "posts_hoje": 0,
+        "engajamento_medio": 0,
+        "crescimento_seguidores": 0,
+        "alertas_ativos": 0
+      },
+      "alertas": {
+        "total": 0,
+        "pendentes": 0,
+        "regras": 3,
+        "ultima_execucao": null
+      },
+      "orquestrador": {
+        "ativo": false,
+        "total_coordenacoes": 0,
+        "ultima_execucao": null
+      },
+      "auto_escalada": {
+        "ativo": false,
+        "total_escalas": 0,
+        "total_ajustes": 0
+      },
+      "inteligencia": {
+        "total_conversas": 0,
+        "jogos": [
+          "ceifalume",
+          "prancheta"
+        ]
+      },
+      "recomendacoes": [
+        "Monitore as métricas de engajamento em cada rede.",
+        "Ajuste horários de postagem baseado em dados reais de acesso.",
+        "Mantenha a inicialização automática ativa para zero intervenção humana.",
+        "Verifique camadas inativas no health check para auto-recuperação."
+      ]
+    }
+  ],
+  "ultima_execucao": "2026-11-16T20:07:32.112Z",
+  "criadoEm": "2026-11-16T20:07:31.931Z",
+  "atualizadoEm": "2026-11-16T20:07:32.112Z"
+}

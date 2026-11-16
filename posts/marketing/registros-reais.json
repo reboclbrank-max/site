@@ -1,0 +1,51 @@
+{
+ "_o_que_e": "todo registro real já feito (auditoria do otimizador)",
+ "registros": [
+  {
+   "quando": "2026-11-16T20:01:59.213Z",
+   "evento": "publicacao",
+   "rede": "youtube",
+   "jogo": "prancheta",
+   "origem": "schedule",
+   "fonte": "",
+   "tipo": "acesso",
+   "hora": 19,
+   "quantidade": 1,
+   "acumulado_na_hora": 1
+  },
+  {
+   "quando": "2026-11-16T20:01:59.242Z",
+   "evento": "publicacao",
+   "rede": "youtube",
+   "jogo": "ceifalume",
+   "origem": "schedule",
+   "fonte": "",
+   "tipo": "acesso",
+   "hora": 23,
+   "quantidade": 1,
+   "acumulado_na_hora": 1
+  },
+  {
+   "quando": "2026-11-16T20:01:59.277Z",
+   "evento": "engajamento",
+   "rede": "youtube",
+   "jogo": "ceifalume",
+   "origem": "run",
+   "fonte": "videos.list",
+   "tipo": "engajamento",
+   "metrica": "views",
+   "valor": 128
+  },
+  {
+   "quando": "2026-11-16T20:01:59.307Z",
+   "evento": "engajamento",
+   "rede": "youtube",
+   "jogo": "ceifalume",
+   "origem": "run",
+   "fonte": "videos.list",
+   "tipo": "engajamento",
+   "metrica": "likes",
+   "valor": 7
+  }
+ ]
+}

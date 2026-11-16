@@ -1,0 +1,83 @@
+name: alertas-proativos
+
+# 🚨 ALERTAS PROATIVOS — vigia as métricas e avisa ANTES de a casa parar.
+#
+# POR QUE ESTE WORKFLOW EXISTE (16/11/2026):
+# Os alertas da Fase 2 existiam como código no `chat` e nunca eram disparados no `site`. Um
+# alerta que ninguém executa é o mesmo que nenhum alerta. Aqui ele roda de hora em hora, lê os
+# DADOS REAIS que o registrador gravou (posts/marketing/auto-otimizador-avancado.json) e dispara
+# quando uma regra é violada:
+#
+#   • engajamento_baixo → a peça saiu mas a rede devolveu pouco engajamento;
+#   • fila_estagnada    → a rede que recebia publicação parou de receber;
+#   • token_expirando   → o registro de credencial não é tocado há ~7 dias.
+#
+# O QUE ELE **NÃO** FAZ: não inventa métrica. Sem dado do registrador, o alerta de engajamento
+# simplesmente não dispara (e o resumo diz "sem dado"), porque alerta falso treina o dono a
+# ignorar alerta — que é pior do que não ter alerta.
+
+on:
+  schedule:
+    # de hora em hora, na janela acordada (9h-22h de Brasília = 12-23 e 0 UTC).
+    - cron: "5 0,12-23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: alertas-proativos
+  cancel-in-progress: false
+
+jobs:
+  monitorar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+
+      - name: Contratos da Fase 2 (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-fase2-producao.py
+
+      - name: Ativa e monitora
+        shell: bash -o pipefail -e {0}
+        run: |
+          set +e
+          node tools/marketing/alertas-proativos-marketing.js --ativar-monitorar | tee /tmp/alertas.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Alertas proativos"
+            echo '```'
+            cat /tmp/alertas.txt
+            echo '```'
+            echo ""
+            echo "### Estado das métricas que alimentam as regras"
+            echo '```'
+            node tools/marketing/registrar.js --resumo
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código dos alertas: $codigo"
+          # 0 = rodou (com ou sem alerta novo). Alerta novo NÃO é falha do workflow: é
+          # informação. Quem falha é não conseguir rodar.
+          if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi
+          exit 0
+
+      - name: Guarda o estado dos alertas
+        shell: bash -o pipefail -e {0}
+        run: |
+          git config user.name "rebocl"
+          git config user.email "reboclbrank@gmail.com"
+          [ -e posts/marketing/alertas-proativos-marketing.json ] && \
+            git add posts/marketing/alertas-proativos-marketing.json || true
+          if git diff --cached --quiet; then
+            echo "alertas sem mudança"
+            exit 0
+          fi
+          git commit -q -m "alertas proativos: estado $(date -u +'%d/%m %H:%M UTC')"
+          bash tools/entrar-no-main.sh "alertas proativos" || echo "alertas não entraram no main"

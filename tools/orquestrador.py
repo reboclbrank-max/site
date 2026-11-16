@@ -203,7 +203,19 @@ def executar(acao, agora=None, rodar_fn=None):
     """Executa a ação decidida. `rodar_fn` é injetável para o teste rodar offline."""
     rodar_fn = rodar_fn or rodar
     if acao == "publicar":
-        return rodar_fn([sys.executable, "tools/postador.py"])
+        # 16/11/2026 — O INSTAGRAM ENTRA NA AUTONOMIA AQUI.
+        # Antes: `publicar` rodava só o postador (texto). O Instagram tinha workflow próprio,
+        # mas só o CRON dele publicava — ou seja, o pulso decidia "é hora de publicar" e o
+        # Instagram não ficava sabendo. Agora, quando o pulso abre a janela e passa o intervalo
+        # mínimo, ele avisa o `publicar-instagram.yml` por repository_dispatch, que é o gatilho
+        # que o workflow já aceita (`types: [publicar-instagram]`).
+        #
+        # Só dispara; não espera o resultado. Quem decide se PODE publicar de verdade é o portão
+        # do Instagram (2h de intervalo, teto 3/dia, janela 9-22h, peça repetida recusada) —
+        # o pulso não fura esse portão, apenas pede a vez.
+        codigo, saida = rodar_fn([sys.executable, "tools/postador.py"])
+        aviso = disparar_instagram(rodar_fn)
+        return codigo, (saida + (" | " + aviso if aviso else ""))
     if acao == "medir":
         return rodar_fn([sys.executable, "tools/metricas.py", "--json"])
     if acao == "pesquisar":
@@ -212,6 +224,36 @@ def executar(acao, agora=None, rodar_fn=None):
     if acao == "aprender":
         return rodar_fn([sys.executable, "tools/aprender-horario.py"])
     return 0, "nada a fazer (%s)" % acao
+
+
+def disparar_instagram(rodar_fn=None):
+    """Pede a vez ao workflow do Instagram (repository_dispatch). Devolve uma linha de log.
+
+    Regra da casa: falha de rede/credencial aqui NÃO derruba o pulso. O Instagram é um dos
+    canais; o pulso já publicou no que ele mesmo executa. Um aviso no log é o suficiente, e o
+    próximo pulso tenta de novo.
+    """
+    rodar_fn = rodar_fn or rodar
+    repo = os.environ.get("GITHUB_REPOSITORY", "reboclbrank-max/site")
+    token = os.environ.get("GHPAT") or os.environ.get("GITHUB_TOKEN") or ""
+    if not token:
+        return "instagram: sem token no ambiente (não pedi a vez)"
+    comando = [
+        "curl", "-sS", "-X", "POST",
+        "-H", "Authorization: Bearer " + token,
+        "-H", "Accept: application/vnd.github+json",
+        "-H", "X-GitHub-Api-Version: 2022-11-28",
+        "https://api.github.com/repos/%s/dispatches" % repo,
+        "-d", '{"event_type":"publicar-instagram"}',
+    ]
+    # o curl não é o que roda em teste (rodar_fn é injetado); não imprimimos o token jamais.
+    try:
+        codigo, saida = rodar_fn(comando)
+    except Exception as e:                       # nunca derruba o pulso
+        return "instagram: falha ao pedir a vez (%s)" % str(e)[:60]
+    if codigo == 0:
+        return "instagram: vez pedida ao publicar-instagram.yml"
+    return "instagram: o pedido falhou (código %s)" % codigo
 
 
 def usar_fila(agora, estado):

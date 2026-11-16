@@ -1,0 +1,24 @@
+{
+  "ativo": true,
+  "alertas": [],
+  "regras": [
+    {
+      "nome": "engajamento_baixo",
+      "limiar": 30,
+      "ativo": true
+    },
+    {
+      "nome": "fila_estagnada",
+      "limiar": 60,
+      "ativo": true
+    },
+    {
+      "nome": "token_expirando",
+      "limiar": 7,
+      "ativo": true
+    }
+  ],
+  "ultima_execucao": "2026-11-16T20:03:02.351Z",
+  "criadoEm": "2026-11-16T20:03:02.350Z",
+  "atualizadoEm": "2026-11-16T20:03:02.351Z"
+}

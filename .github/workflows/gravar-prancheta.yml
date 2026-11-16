@@ -294,6 +294,26 @@ jobs:
         run: |
           python3 tools/enviar-youtube.py prancheta-gameplay | tee /tmp/envio.txt
 
+      # ─── DADO REAL PARA O AUTO-OTIMIZADOR (16/11/2026) ─────────────────────────────────
+      # O otimizador da Fase 2 sabia calcular melhor horário e cadência, mas ninguém chamava
+      # `registrarAcesso` fora do navegador do chat: ele otimizava estrutura vazia. Aqui cada
+      # run registra o que REALMENTE aconteceu — horário e quantidade — com o jogo certo.
+      # Prancheta e Ceifalume entram pelo mesmo caminho e com o mesmo peso (regra do dono).
+      - name: Registra o acesso real (auto-otimizador)
+        shell: bash -o pipefail -e {0}
+        run: |
+          set +e
+          hora=$(TZ=America/Sao_Paulo date +%-H)
+          node tools/marketing/registrar.js --evento publicacao \
+            --rede youtube --jogo prancheta --hora "$hora" --quantidade 1 \
+            --origem "${{ github.event_name }}"
+          {
+            echo "### Dado real registrado"
+            echo "- rede: youtube · jogo: prancheta · hora: ${hora}h"
+            echo "- origem: ${{ github.event_name }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+
       - name: Registra o que foi publicado (JSON público)
         if: ${{ github.event.inputs.publicar == 'PUBLICAR' || github.event.inputs.publicar == 'AUTOMATICO' || github.event_name == 'schedule' }}
         run: |

@@ -340,6 +340,25 @@ jobs:
         run: |
           python3 tools/enviar-youtube.py ceifalume-gameplay | tee /tmp/envio.txt
 
+      # ─── DADO REAL PARA O AUTO-OTIMIZADOR (16/11/2026) ─────────────────────────────────
+      # Mesmo caminho do PRANCHETA, mesmo peso. O otimizador precisa dos DOIS jogos: se só o
+      # Prancheta alimentasse, o "melhor horário" calculado seria o melhor horário do Prancheta
+      # apresentado como se fosse da casa.
+      - name: Registra o acesso real (auto-otimizador)
+        shell: bash -o pipefail -e {0}
+        run: |
+          set +e
+          hora=$(TZ=America/Sao_Paulo date +%-H)
+          node tools/marketing/registrar.js --evento publicacao \
+            --rede youtube --jogo ceifalume --hora "$hora" --quantidade 1 \
+            --origem "${{ github.event_name }}"
+          {
+            echo "### Dado real registrado"
+            echo "- rede: youtube · jogo: ceifalume · hora: ${hora}h"
+            echo "- origem: ${{ github.event_name }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit 0
+
       - name: Registra o que foi publicado (JSON público que o chat lê)
         if: ${{ github.event.inputs.publicar == 'PUBLICAR' || github.event.inputs.publicar == 'AUTOMATICO' || github.event_name == 'schedule' }}
         run: |

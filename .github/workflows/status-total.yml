@@ -1,0 +1,94 @@
+name: status-total
+
+# 📋 STATUS TOTAL — o relatório integrado do marketing, gerado em produção.
+#
+# POR QUE ESTE WORKFLOW EXISTE (16/11/2026):
+# `!status-total` existia como comando no chat: alguém precisava digitar para saber o estado da
+# casa. O pedido do dono é autonomia — o relatório tem que existir sem ninguém pedir. Aqui ele
+# roda 3x por dia, junta health check + alertas + orquestrador + otimizador numa página única,
+# publica no resumo do run e versiona em `posts/marketing/status-total.json`.
+#
+# Ele NÃO decide nada e NÃO publica em rede nenhuma: é leitura. O valor é ser o lugar onde o
+# dono olha uma vez e entende o dia.
+
+on:
+  schedule:
+    # 10:00, 15:00 e 21:00 de Brasília (13, 18 e 0 UTC) — antes e depois dos horários de
+    # publicação, para o dono ver o dia acontecendo.
+    - cron: "0 0,13,18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: status-total
+  cancel-in-progress: false
+
+jobs:
+  relatorio:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+
+      - name: Contratos da Fase 2 (offline)
+        run: python3 tools/rodar-contratos-isolados.py tools/testes-fase2-producao.py
+
+      - name: Gera o relatório integrado
+        shell: bash -o pipefail -e {0}
+        env:
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          GMAIL_CHAT_APPPASS: ${{ secrets.GMAIL_CHAT_APPPASS }}
+          NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+        run: |
+          set +e
+          node tools/marketing/status-total-marketing.js --resumo | tee /tmp/status.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Status total do marketing"
+            echo '```'
+            cat /tmp/status.txt
+            echo '```'
+            echo ""
+            echo "### Dados reais que alimentam o auto-otimizador"
+            echo '```'
+            node tools/marketing/registrar.js --resumo
+            echo '```'
+            echo ""
+            echo "### Portão do Instagram"
+            echo '```'
+            node tools/marketing/instagram-estado.js --resumo
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código do status: $codigo"
+          if [ "$codigo" -ge 3 ]; then exit "$codigo"; fi
+          exit 0
+
+      - name: Guarda o relatório no repositório
+        shell: bash -o pipefail -e {0}
+        run: |
+          git config user.name "rebocl"
+          git config user.email "reboclbrank@gmail.com"
+          for f in posts/marketing/status-total.json posts/marketing/auto-otimizador-avancado.json \
+                   posts/marketing/instagram-publicados.json; do
+            [ -e "$f" ] && git add "$f" || true
+          done
+          if git diff --cached --quiet; then
+            echo "status sem mudança"
+            exit 0
+          fi
+          git commit -q -m "status total: relatório $(date -u +'%d/%m %H:%M UTC')"
+          bash tools/entrar-no-main.sh "status total" || echo "status não entrou no main"
