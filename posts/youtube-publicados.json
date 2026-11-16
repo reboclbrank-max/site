@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "a5AVwpewoGE",
+   "url": "https://youtu.be/a5AVwpewoGE",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Semente do dia: 8 mudas para 5 colheitas em 2 min",
+   "descricao": "🌱 Semente do dia: 8 mudas no chão e 5 colheitas na cesta em 2 minutos de gravação.\n\nO campo é noturno de propósito: enxergar pouco faz parte da escolha de onde apertar.\n\nO relógio de cada canteiro corre mesmo com o aplicativo fechado, e é ele que dá o ritmo.\n\nQuem abrir o jogo no navegador vê a mesma fazenda, com o mesmo relógio.\n\nFonte: posts/cenas.json (partida d8e6d4b45d9d, conferida em 2026-11-16T22:27:07Z).",
+   "descricao_completa": false,
+   "angulo": "semente_do_dia",
+   "fato": null,
+   "numeros": {
+    "plantadas": 8,
+    "colhidas": 5,
+    "toques": 793,
+    "minutos": 2,
+    "toques_por_minuto": 396
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-16T22:27:19Z"
+  },
+  {
    "id": "lvC90MIwQs0",
    "url": "https://youtu.be/lvC90MIwQs0",
    "slug": "prancheta-gameplay",

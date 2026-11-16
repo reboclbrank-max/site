@@ -455,6 +455,13 @@
    "titulo": "O que 6 toques fizeram na partida do PRANCHETA",
    "capa": "media/gameplay/prancheta-capa.png",
    "sha256": "3e462de26c9ed703"
+  },
+  {
+   "id": "a5AVwpewoGE",
+   "quando": "2026-11-16T22:27:24Z",
+   "titulo": "Semente do dia: 8 mudas para 5 colheitas em 2 min",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "2165ece27cf39302"
   }
  ]
 }
