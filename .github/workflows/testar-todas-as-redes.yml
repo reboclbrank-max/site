@@ -25,6 +25,9 @@ jobs:
       - name: Testa todas as APIs
         run: node tools/testar-todas-as-apis.js
         env:
+          # 16/11/2026: o "GitHub PAT: HTTP 403" era o token de INTEGRAÇÃO, não o PAT. O secret
+          # GHPAT existe desde 13/10 e nunca chegava ao teste. Agora chega.
+          GITHUB_PAT: ${{ secrets.GHPAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
           YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
@@ -44,6 +47,10 @@ jobs:
           TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
           TUMBLR_CONSUMER_SECRET: ${{ secrets.TUMBLR_CONSUMER_SECRET }}
           TUMBLR_REFRESH_TOKEN: ${{ secrets.TUMBLR_REFRESH_TOKEN }}
+          # Os quatro segredos do X vivem no repositório CHAT, não neste. Até 16/11/2026 este
+          # workflow pedia secrets.X_* daqui: vinha vazio, o teste dizia "sem X_API_KEY" e o
+          # dono achava que a credencial tinha caído. Vazio aqui é ausência de SECRET NO REPO,
+          # não token inválido — o teste agora distingue os dois casos.
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}

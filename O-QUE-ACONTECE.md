@@ -1,6 +1,6 @@
 # O que acontece quando você mexe em algo
 
-Gerado por `tools/o-que-acontece.py` a partir dos **46** arquivos de `.github/workflows/` — cada linha vem do próprio workflow, não da minha memória. O `conferir-tudo` falha se este documento deixar de bater com eles.
+Gerado por `tools/o-que-acontece.py` a partir dos **48** arquivos de `.github/workflows/` — cada linha vem do próprio workflow, não da minha memória. O `conferir-tudo` falha se este documento deixar de bater com eles.
 
 ## 1. Você deu push no `main`
 
@@ -23,22 +23,25 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 
 ## 2. O dia sem você tocar em nada (hora de Brasília)
 
-**62 disparos automáticos por dia**, em 11 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
+**88 disparos automáticos por dia**, em 12 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
+
+**Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-11): **12.28/dia** de 62 pedidos. O pior caso é `gravar-prancheta`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
 
 | hora (Brasília) | workflow | o que faz |
 | --- | --- | --- |
-| 00h, 03h, 06h, 09h, 12h, 15h, 18h, 21h | `corrente` | A CORRENTE DE PULSOS (07/11/2026). ⚠️ fora da janela: 00h, 03h, 06h |
-| 00h, 06h, 12h, 18h | `metricas-youtube` | Mede o que os vídeos publicados fizeram (views, likes, comentários). ⚠️ fora da janela: 00h, 06h |
-| 03h | `administrar-itch` | Administração automática do itch.io: o robô olha o estado, decide e (se for o caso) sobe o build — sem clique do dono. ⚠️ fora da janela: 03h |
-| 03h | `administrar-youtube` | Administração automática do YouTube: organiza e corrige o que já está publicado (título, descrição, tags) sem clique do dono. ⚠️ fora da janela: 03h |
-| 03h, 04h, 09h–21h | `marketing-24h` | Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa (45 pulsos/dia). ⚠️ fora da janela: 03h, 04h |
-| 09h, 16h | `gravar-gameplay` | Grava o jogo rodando de verdade e transforma em arquivo de vídeo. |
-| 09h, 13h, 16h | `gravar-prancheta` | Grava o PRANCHETA rodando (o segundo jogo da casa). |
-| 09h | `ler-comentarios` | Lê comentários públicos só com a API key (sem OAuth, sem consentimento novo). |
-| 09h | `pendencias-do-dono` | Fecha o ciclo do único passo que sobra para o dono (publicar no painel do itch). |
-| 09h | `vigia-sessao-itch` | A sessão do itch (segredo ITCH_COOKIE) é o único caminho para escrever na página. |
+| 00h, 03h, 06h, 09h, 12h, 15h, 18h, 21h | `corrente` | A CORRENTE DE PULSOS (07/11/2026). — *sem entrega comparável medida* (disparo por `repository_dispatch`) ⚠️ fora da janela: 00h, 03h, 06h |
+| 00h, 06h, 12h, 18h | `metricas-youtube` | Mede o que os vídeos publicados fizeram (views, likes, comentários). — **entregou 2.71/dia** de 4 pedidos (67.8%) ⚠️ fora da janela: 00h, 06h |
+| 03h | `administrar-itch` | Administração automática do itch.io: o robô olha o estado, decide e (se for o caso) sobe o build — sem clique do dono. — **entregou 1.0/dia** de 1 pedidos (100.0%) ⚠️ fora da janela: 03h |
+| 03h | `administrar-youtube` | Administração automática do YouTube: organiza e corrige o que já está publicado (título, descrição, tags) sem clique do dono. — **entregou 1.0/dia** de 1 pedidos (100.0%) ⚠️ fora da janela: 03h |
+| 03h, 04h, 09h–21h | `marketing-24h` | Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa. — *sem entrega comparável medida* (disparo por `repository_dispatch`) ⚠️ fora da janela: 03h, 04h |
+| 09h, 16h | `gravar-gameplay` | Grava o jogo rodando de verdade e transforma em arquivo de vídeo. — **entregou 1.43/dia** de 2 pedidos (71.5%) |
+| 09h, 13h, 16h | `gravar-prancheta` | Grava o PRANCHETA rodando (o segundo jogo da casa). — **entregou 1.71/dia** de 3 pedidos (57.0%) |
+| 09h | `ler-comentarios` | Lê comentários públicos só com a API key (sem OAuth, sem consentimento novo). — **entregou 0.86/dia** de 1 pedidos (86.0%) |
+| 09h | `pendencias-do-dono` | Fecha o ciclo do único passo que sobra para o dono (publicar no painel do itch). — **entregou 1.0/dia** de 1 pedidos (100.0%) |
+| 09h–21h | `publicar-instagram` | Publicação autônoma no Instagram: cria container de mídia, aguarda o processamento ficar FINISHED e chama media_publish para colocar o post no ar. |
+| 09h | `vigia-sessao-itch` | A sessão do itch (segredo ITCH_COOKIE) é o único caminho para escrever na página. — **entregou 1.0/dia** de 1 pedidos (100.0%) |
 | 10h, 14h | `chamar-video` | Leva quem já segue a casa até o vídeo que acabou de sair. |
-| 10h | `medir-itch` | Placar do itch pela API (que nao passa pela Cloudflare): downloads, visitas, publicacao. |
+| 10h | `medir-itch` | Placar do itch pela API (que nao passa pela Cloudflare): downloads, visitas, publicacao. — **entregou 0.86/dia** de 1 pedidos (86.0%) |
 
 ⚠️ = o workflow roda fora da janela 9h–22h. Não é erro por si: medir de madrugada é legítimo; **publicar** de madrugada não é, e o portão recusa.
 
@@ -76,6 +79,16 @@ O resto mede, grava ou registra — e o registro é o produto. Quando um run nã
 
 ## 5. O que depende de você (e o que sobe sozinho)
 
-_Não consegui ler a lista `PROJETOS` do `administrar-itch.py` — sem isso, não afirmo quem sobe sozinho._
+O `administrar-itch` conhece **2** projeto(s): `ceifalume`, `prancheta`. Só esses recebem build automaticamente (uma vez por dia, madrugada); o resto não sobe sozinho.
+
+| jogo | build versionado aqui | sobe sozinho? |
+| --- | --- | --- |
+| `ceifalume` | `ceifalume` (13 arquivos) | sim — `administrar-itch` de madrugada |
+| `prancheta` | não (só a página em `jogos/prancheta/`) | sim — `administrar-itch` de madrugada |
+
+⚠️ `prancheta` está na lista de administração mas não tem build aqui: o robô não tem o que empurrar.
+
 Para o jogo que sobe sozinho, a gravação automática filma **o build deste repositório**. Para o que não sobe (o PRANCHETA vive publicado no itch), a gravação filma **a página do itch** — logo, build novo só aparece lá depois de o dono subir.
+
+O build do PRANCHETA que o itch está servindo hoje: **19604665** (a casa viu em 2026-11-07T05:38, pelo `vigia-build-prancheta.py` que roda no relatório diário). Quando muda, vira fato no repertório do redator — não vira post na marra.
 

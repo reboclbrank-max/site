@@ -134,14 +134,30 @@ def comparar(esperado, medido):
     return entrega, frase
 
 
-def ler_runs(workflow, token, repo=REPO, por_pagina=100):
-    """Runs do workflow pela API. Erro de rede/rede levantado, nunca engolido."""
-    url = ("https://api.github.com/repos/%s/actions/workflows/%s.yml/runs?per_page=%d"
-           % (repo, workflow, por_pagina))
-    req = urllib.request.Request(url, headers={"Authorization": "Bearer " + token,
-                                               "Accept": "application/vnd.github+json"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode())["workflow_runs"]
+def ler_runs(workflow, token, repo=REPO, por_pagina=100, paginas=5):
+    """Runs do workflow pela API. Erro de rede/rede levantado, nunca engolido.
+
+    16/11/2026 — POR QUE PEGA MAIS DE UMA PÁGINA: `marketing-24h` e `corrente` passam de 14
+    runs/dia. Uma página de 100 cobre ~6 dias, e `amostra_cobre` (com razão) se recusa a afirmar
+    entrega: a linha ficava com `medido_por_dia: None` e o retrato lia isso como "não entregou
+    nada". Lendo até `paginas` páginas, a janela de 7 dias passa a caber na amostra e a medida
+    vira uma afirmação de verdade em vez de um buraco.
+    """
+    runs = []
+    for pagina in range(1, max(1, paginas) + 1):
+        url = ("https://api.github.com/repos/%s/actions/workflows/%s.yml/runs?per_page=%d&page=%d"
+               % (repo, workflow, por_pagina, pagina))
+        req = urllib.request.Request(url, headers={"Authorization": "Bearer " + token,
+                                                   "Accept": "application/vnd.github+json"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            lote = json.loads(r.read().decode())["workflow_runs"]
+        runs.extend(lote)
+        # lista curta = fim do histórico; e a janela já coberta = não precisa de mais
+        if len(lote) < por_pagina:
+            break
+        if amostra_cobre(runs, dias=7, por_pagina=por_pagina):
+            break
+    return runs
 
 
 def amostra_cobre(runs, hoje=None, dias=7, por_pagina=100):

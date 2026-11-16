@@ -14,6 +14,8 @@ Este teste é estático e roda em segundos: ele não executa workflow nenhum.
 """
 import glob
 import os
+import subprocess as _sp
+import tempfile
 import re
 import sys
 
@@ -179,8 +181,23 @@ def main():
     ajudante = os.path.join(RAIZ, "tools", "entrar-no-main.sh")
     ok("o ajudante existe e é executável", os.path.exists(ajudante) and os.access(ajudante, os.X_OK))
     texto_ajudante = open(ajudante, encoding="utf-8").read() if os.path.exists(ajudante) else ""
+    # Até 16/11/2026 este contrato lia o TEXTO do ajudante. Em 12/11 alguém "consertou" a
+    # permissão de executável e deixou o arquivo inteiro em base64: o texto continuou contendo
+    # "git merge --abort" e o contrato ficou VERDE sobre um script que não rodava (exit 127 em
+    # todos os 5 workflows que o chamam). Agora o contrato EXECUTA o ajudante e cobra o
+    # comportamento: conflito em arquivo que não é gerado tem que sair com código 1.
+    _ajudante = os.path.join(RAIZ, "tools", "entrar-no-main.sh")
+    _sintaxe = _sp.run(["bash", "-n", _ajudante], capture_output=True, text=True)
+    _execucao = _sp.run(["bash", _ajudante], capture_output=True, text=True,
+                        cwd=tempfile.mkdtemp(), timeout=120,
+                        env=dict(os.environ, TENTATIVAS="1", GIT_TERMINAL_PROMPT="0"))
+    _saida = _execucao.stdout + _execucao.stderr
     ok("o ajudante recusa conflito em arquivo que não é gerado",
-       "git merge --abort" in texto_ajudante and "GERADOS=" in texto_ajudante)
+       "git merge --abort" in texto_ajudante and "GERADOS=" in texto_ajudante
+       and _sintaxe.returncode == 0          # é bash válido (base64 não é)
+       and _execucao.returncode != 127       # não é "command not found"
+       and "command not found" not in _saida,
+       "sintaxe=%s execucao=%s: %s" % (_sintaxe.returncode, _execucao.returncode, _saida[:150]))
     ok("o ciclo diário não voltou ao laço de rebase cego",
        "for tentativa in 1 2 3" not in wfs.get("postagem-diaria.yml", ""))
     ok("o relatório de pendências usa o ajudante",
@@ -195,7 +212,7 @@ def main():
 
     # 8. O `run:` de cada passo precisa ser shell VÁLIDO. Sintaxe quebrada só aparece quando o
     #    run dispara — e aí já custou um ciclo. `bash -n` lê sem executar.
-    import glob as _glob, subprocess as _sp, yaml as _yaml
+    import glob as _glob, yaml as _yaml
     quebrados = []
     for arquivo in sorted(_glob.glob(os.path.join(PASTA, "*.yml"))):
         try:

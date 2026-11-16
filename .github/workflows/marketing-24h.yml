@@ -1,6 +1,9 @@
 name: marketing-24h
 
-# Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa (45 pulsos/dia).
+# Motor da casa: um pulso a cada 20 minutos decide UMA ação e executa.
+# O cron PEDE 45 pulsos/dia; o que o GitHub ENTREGA é medido à parte (posts/cadencia.json)
+# e aparece ao lado desta linha em O-QUE-ACONTECE.md — é de propósito que a promessa do
+# cron não esteja escrita aqui como se fosse fato (16/11/2026).
 #
 # O que este workflow NÃO faz (para não vender ilusão):
 #   - não é "a cada segundo": o cron do GitHub é melhor esforço e pode atrasar;

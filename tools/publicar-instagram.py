@@ -53,9 +53,19 @@ def mascara(valor):
 
 
 def http(metodo, url, dados=None):
-    corpo = urllib.parse.urlencode(dados).encode() if dados else None
-    req = urllib.request.Request(url, data=corpo, headers=dict(UA))
-    if metodo != "GET":
+    # 16/11/2026 — O BUG QUE DERRUBOU 11 RUNS SEGUIDOS DO publicar-instagram:
+    # a leitura de estado manda GET /{container}?fields=status_code,status. Em GET o
+    # access_token ia no CORPO e a Graph API NÃO lê corpo em GET (ela só lê query string).
+    # Resultado: HTTP 400 código 100 "Object with ID ... does not exist, cannot be loaded
+    # due to missing permissions" — e o container criado ficava órfão expirando em 24h.
+    # A sonda que funciona (sonda-instagram.py) sempre passou o token na URL. Agora é igual.
+    if metodo == "GET":
+        if dados:
+            url = url + ("&" if "?" in url else "?") + urllib.parse.urlencode(dados)
+        req = urllib.request.Request(url, headers=dict(UA))
+    else:
+        corpo = urllib.parse.urlencode(dados).encode() if dados else None
+        req = urllib.request.Request(url, data=corpo, headers=dict(UA))
         req.method = metodo
     with urllib.request.urlopen(req, timeout=60) as r:
         return json.loads(r.read().decode())

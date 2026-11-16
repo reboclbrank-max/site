@@ -6,11 +6,17 @@ const NL = '\n';
 const resultados = [];
 let falhas = 0;
 
+// 16/11/2026: nem todo vermelho é a mesma coisa. "Credencial não vive neste repositório"
+// (X_* mora no repo chat) e "token recusado" exigem ações diferentes do dono. Antes os dois
+// jogavam o run para vermelho e escondiam o resto do relatório.
+const FORA_DO_REPO = 'FORA_DO_REPO';
+
 function registro(nome, ok, detalhe, valor = '') {
-  const status = ok ? '✅' : '❌';
-  resultados.push({ nome, ok, detalhe, valor });
-  if (!ok) falhas++;
-  console.log(`${status} ${nome}: ${detalhe}${valor ? ` | ${valor}` : ''}`);
+  const fora = detalhe === FORA_DO_REPO;
+  const status = ok ? '✅' : (fora ? '⚪' : '❌');
+  resultados.push({ nome, ok, detalhe, valor, fora });
+  if (!ok && !fora) falhas++;
+  console.log(`${status} ${nome}: ${detalhe === FORA_DO_REPO ? 'credencial não vive neste repositório' : detalhe}${valor ? ` | ${valor}` : ''}`);
 }
 
 async function busca(url, opcoes = {}) {
@@ -28,8 +34,12 @@ async function busca(url, opcoes = {}) {
 
 async function testeGitHub() {
   try {
-    const token = process.env.GITHUB_TOKEN;
-    if (!token) { registro('GitHub PAT', false, 'sem segredo GITHUB_TOKEN'); return; }
+    // 16/11/2026: o teste usava GITHUB_TOKEN — que no Actions é o token de INTEGRAÇÃO
+    // (github-actions[bot]), não um PAT. Ele responde HTTP 403 "Resource not accessible by
+    // integration" em /user e fazia o diagnóstico acusar falta de credencial que EXISTE
+    // (secret GHPAT). Aqui a ordem é: PAT de verdade primeiro, token de integração como reserva.
+    const token = process.env.GITHUB_PAT || process.env.GHPAT || process.env.GITHUB_TOKEN;
+    if (!token) { registro('GitHub PAT', false, 'sem segredo GHPAT/GITHUB_TOKEN'); return; }
     const r = await busca('https://api.github.com/user', { headers: { Authorization: `Bearer ${token}` } });
     if (r.ok) {
       const j = await r.json();
@@ -201,7 +211,9 @@ async function testeX() {
     const accessToken = process.env.X_ACCESS_TOKEN;
     const accessTokenSecret = process.env.X_ACCESS_TOKEN_SECRET;
     if (!apiKey || !apiSecret || !accessToken || !accessTokenSecret) {
-      registro('X (Twitter)', false, 'sem X_API_KEY / X_API_SECRET / X_ACCESS_TOKEN / X_ACCESS_TOKEN_SECRET');
+      // Os quatro segredos do X estão no repositório chat; neste repo eles chegam vazios.
+      // Isso NÃO é token expirado — é escopo. Dizer a diferença evita caçar fantasma.
+      registro('X (Twitter)', false, FORA_DO_REPO);
       return;
     }
     // Verificar credenciais via verify credentials (GET /2/users/me)
@@ -226,9 +238,16 @@ async function testeX() {
 
 async function testeGmail() {
   try {
-    const addr = process.env.GMAIL_CHAT_ADDR;
-    const pass = process.env.GMAIL_CHAT_PASS;
-    if (!addr || !pass) { registro('Gmail IMAP/SMTP', false, 'sem credenciais'); return; }
+    // 16/11/2026: o repositório site guarda GMAIL_CHAT_ADDRESS e GMAIL_CHAT_APPPASS; o chat
+    // guarda GMAIL_CHAT_ADDR e GMAIL_CHAT_PASS. Ler só um dos nomes dava "sem credenciais"
+    // ou "erro de conexão" com credencial boa. Aqui os dois nomes valem.
+    const addr = process.env.GMAIL_CHAT_ADDR || process.env.GMAIL_CHAT_ADDRESS;
+    const pass = process.env.GMAIL_CHAT_PASS || process.env.GMAIL_CHAT_APPPASS;
+    if (!addr || !pass) {
+      registro('Gmail IMAP/SMTP', false,
+        'sem credenciais (esperado GMAIL_CHAT_ADDR/ADDRESS + GMAIL_CHAT_PASS/APPPASS)');
+      return;
+    }
     const { ImapFlow } = require('imapflow');
     const client = new ImapFlow({ host: 'imap.gmail.com', port: 993, secure: true, auth: { user: addr, pass: pass }, logger: false });
     await comTeto(client.connect(), 30000, 'IMAP connect');
@@ -237,7 +256,13 @@ async function testeGmail() {
     client.logout();
     registro('Gmail IMAP/SMTP', true, 'conexão OK', `${uids.length} email(s) não lido(s)`);
   } catch (e) {
-    registro('Gmail IMAP/SMTP', false, 'erro de conexão', e.message.slice(0, 100));
+    // A mensagem de erro do imapflow costuma ser só "Command failed": inútil para o dono.
+    // Autenticação recusada é diagnóstico DIFERENTE de rede caída, e agora aparece escrito.
+    const m = String(e && e.message || e);
+    const recusa = /auth|credential|invalid|535|534|LOGIN/i.test(m + String(e && e.responseText || ''));
+    registro('Gmail IMAP/SMTP', false,
+      recusa ? 'credencial recusada pelo Gmail (senha de app inválida/expirada)' : 'erro de conexão',
+      m.slice(0, 120));
   }
 }
 
@@ -263,18 +288,24 @@ async function main() {
 
   console.log(NL + '═══════════════════════════════════════════');
   const ok = resultados.filter(r => r.ok).length;
+  const fora = resultados.filter(r => r.fora).length;
   const total = resultados.length;
-  console.log(`📊 Resultado: ${ok}/${total} serviços funcionando`);
+  console.log(`📊 Resultado: ${ok}/${total} serviços funcionando` +
+    (fora ? ` · ${fora} fora deste repositório` : ''));
   if (falhas > 0) {
-    console.log(`❌ ${falhas} serviço(s) com falha:`);
+    console.log(`❌ ${falhas} serviço(s) com falha de verdade:`);
     for (const r of resultados) {
-      if (!r.ok) console.log(`   • ${r.nome}: ${r.detalhe}`);
+      if (!r.ok && !r.fora) console.log(`   • ${r.nome}: ${r.detalhe}`);
     }
     process.exitCode = 1;
   } else {
-    console.log('✅ Todos os serviços estão funcionando!');
+    console.log('✅ Nenhum serviço deste repositório está quebrado.');
   }
-  console.log('══════════════════════════════════════════');
+  if (fora) {
+    console.log(`⚪ ${fora} credencial(is) vivem em outro repositório (não é falha deste):`);
+    for (const r of resultados) if (r.fora) console.log(`   • ${r.nome}`);
+  }
+  console.log('═══════════════════════════════════════════');
 }
 
 main().catch(e => { console.error('Erro fatal:', e.message); process.exitCode = 2; });

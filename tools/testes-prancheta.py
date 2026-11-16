@@ -80,7 +80,11 @@ ok("o envio ao YouTube existe e depende da palavra PUBLICAR",
 envio = wf[wf.index("enviar-youtube.py prancheta-gameplay"):]
 ok("existe ensaio do envio que não publica e não usa segredo",
    "CONFIRMACAO: ENSAIO" in wf and "Ensaio do envio" in wf)
-_ensaio = wf[wf.index("Ensaio do envio"):wf.index("Envia ao YouTube (só com a palavra PUBLICAR)")]
+# 12/11/2026: a Fase 1 meteu o passo "Envia ao YouTube no automático" ENTRE o ensaio e o
+# passo do PUBLICAR. A fatia antiga ia até o PUBLICAR e por isso lia as credenciais do AUTOMATICO
+# e acusava o ensaio de pedir segredo. O fim da fatia é o PRÓXIMO passo depois do ensaio.
+_inicio_ensaio = wf.index("Ensaio do envio")
+_ensaio = wf[_inicio_ensaio:wf.index("Envia ao YouTube", _inicio_ensaio + len("Ensaio do envio"))]
 ok("o passo de ensaio não pede credencial do YouTube",
    "YT_REFRESH_TOKEN" not in _ensaio and "secrets." not in _ensaio)
 ok("o envio está atrás de uma condição de PUBLICAR (nunca no agendamento)",

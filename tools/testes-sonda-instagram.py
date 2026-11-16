@@ -6,6 +6,7 @@ A sonda fala com o servidor da Meta; aqui ela fala com um servidor de mentira. O
 é o que depende da casa: a ordem dos passos, a parada antes do publish, a máscara do token e o
 que significa cada resposta — inclusive as ruins.
 """
+import os
 import importlib.util
 import pathlib
 
@@ -109,6 +110,79 @@ def http_container_erro(metodo, url, dados=None):
 r = sonda_mod.sonda(token=TOKEN, ig_user_id="1", http=http_container_erro, pausa=lambda s: None)
 checar("container com erro é declarado, não escondido",
       r["conclusao"].startswith("CONTAINER_COM_ERRO"), r["conclusao"])
+
+# ---- 16/11/2026: o bug do access_token em GET -------------------------------------------
+# publicar-instagram.py passou 11 runs vermelhos porque mandava o access_token no CORPO de um
+# GET. A Graph API ignora corpo em GET, responde HTTP 400 código 100 ("Object with ID ...
+# does not exist") e o container morria órfão. Estes contratos travam a regressão nos DOIS
+# módulos: token em GET vai na QUERY STRING, token em POST pode ir no corpo.
+import importlib.util as _ilu
+
+_spec_pub = _ilu.spec_from_file_location(
+    "publicar_mod", str(RAIZ / "tools" / "publicar-instagram.py"))
+pub_mod = _ilu.module_from_spec(_spec_pub)
+_spec_pub.loader.exec_module(pub_mod)
+
+_pedidos = []
+
+
+class _Resp:
+    def __init__(self, corpo):
+        self._c = corpo
+
+    def read(self):
+        return self._c
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+
+class _Req:
+    # Captura o que o http() REAL monta: é aqui, e só aqui, que se vê se o token foi para a
+    # query string (GET) ou para o corpo (POST).
+    def __init__(self, url, data=None, headers=None, method=None):
+        self.url, self.data, self.method = url, data, method
+        _pedidos.append(self)
+
+
+def _urlopen(req, timeout=60):
+    if "/media_publish" in req.url:
+        return _Resp(b'{"id":"m1"}')
+    if req.url.rstrip("/").endswith("/media"):
+        return _Resp(b'{"id":"c1"}')
+    return _Resp(b'{"status_code":"FINISHED"}')
+
+
+_orig_req, _orig_open = pub_mod.urllib.request.Request, pub_mod.urllib.request.urlopen
+pub_mod.urllib.request.Request = _Req
+pub_mod.urllib.request.urlopen = _urlopen
+try:
+    # sem http_fn: publicar() usa o http() de verdade do módulo
+    pub_mod.publicar(token="T" * 20, ig_user_id="1784", image_url="http://x/y.png",
+                     caption="teste", publicar_de_verdade=True,
+                     pausa=lambda s: None, tentativas=1, intervalo=0)
+finally:
+    pub_mod.urllib.request.Request = _orig_req
+    pub_mod.urllib.request.urlopen = _orig_open
+
+_gets = [r for r in _pedidos if "fields=status_code" in r.url]
+checar("o publicador manda o token na URL no GET de estado",
+       bool(_gets) and all("access_token=" in r.url for r in _gets),
+       [r.url for r in _gets])
+checar("o publicador não manda corpo no GET de estado",
+       bool(_gets) and all(r.data is None for r in _gets),
+       [r.data for r in _gets])
+_publicacao = [r for r in _pedidos if "/media_publish" in r.url]
+checar("o media_publish recebe o creation_id e publica",
+       bool(_publicacao) and b"creation_id" in (_publicacao[0].data or b""),
+       [(r.url, r.data) for r in _publicacao])
+
+checar("o GET de estado pede status_code e status",
+       any("fields=status_code,status" in r.url for r in _gets), [r.url for r in _gets])
+
 
 certos = sum(1 for _, ok in resultados if ok)
 print("%d/%d contratos da sonda do Instagram passaram" % (certos, len(resultados)))

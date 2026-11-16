@@ -377,6 +377,17 @@ def gerar(raiz=RAIZ):
             entrega = " — **entregou %s/dia** de %s pedidos%s" % (
                 medida["medido_por_dia"], medida.get("esperado_por_dia"),
                 "" if pct is None else " (%.1f%%)" % pct)
+        elif any(x.get("workflow") == linha["workflow"]
+                 and x.get("entrega_pct") is None
+                 and x.get("medido_por_dia") is None
+                 for x in (cadencia.get("linhas") or [])):
+            # 16/11/2026: um workflow PODE ter linha na cadência e não ter entrega_pct (o
+            # `marketing-24h` é disparado por `repository_dispatch` da corrente, não pelo cron,
+            # e por isso aparece sem porcentagem). Nesse caso a linha da tabela dizia
+            # "45 pulsos/dia" — a PROMESSA do comentário — sem nada de medido ao lado, e o
+            # contrato acusava (com razão). Agora a ausência de medida é declarada como
+            # ausência; o retrato não repete promessa como fato.
+            entrega = " — *sem entrega comparável medida* (disparo por `repository_dispatch`)"
         l.append("| %s | `%s` | %s%s%s |" % (quando, linha["workflow"],
                                              linha["descricao"] or "—", entrega, fora))
     l.append("")
