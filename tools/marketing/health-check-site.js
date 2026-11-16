@@ -352,7 +352,19 @@ const ESQUELETO = {
   'posts/fila-tarefas.json': { tarefas: [] },
 };
 
+// 16/11/2026 — O BUG QUE MATOU A AUTO-RECUPERAÇÃO SEM NINGUÉM NOTAR:
+// `auditar()` devolve `{camada: id, tipo, status, motivo, ...}` — o campo `nome` NÃO volta.
+// Esta função lia `camada.nome` para saber QUAL arquivo recriar, recebia `undefined`,
+// `ESQUELETO[undefined]` era falso, e o ramo de recriação nunca executava. Resultado: quatro
+// camadas de estado ausentes em `criticas_caidas` e ZERO tentativas de recuperação. O
+// self-recovery nunca rodou uma vez sequer desde que foi escrito.
+// A assinatura agora aceita os dois formatos, e o `nome` é resolvido pela tabela CAMADAS
+// quando o objeto auditado não o traz.
 function tentarRecuperacao(camada) {
+  if (!camada.nome) {
+    const declarada = CAMADAS.find(c => c.id === camada.camada);
+    if (declarada) camada = { ...camada, nome: declarada.nome };
+  }
   // Só estado com esqueleto conhecido é recriado. Script quebrado NUNCA é "consertado".
   if (camada.tipo === 'estado' && ESQUELETO[camada.nome] && !fs.existsSync(path.join(RAIZ, camada.nome))) {
     try {

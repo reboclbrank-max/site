@@ -1,0 +1,160 @@
+name: Despachante (o cron do GitHub atrasa e perde execução)
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# POR QUE ISTO EXISTE (16/11/2026, medido):
+#
+# O `schedule:` do GitHub Actions é BEST-EFFORT. Não é uma promessa, é um palpite: sob carga,
+# o GitHub atrasa a fila e, quando precisa descartar, DESCARTA a execução agendada. Medido
+# neste repositório hoje, com os próprios dados do GitHub:
+#
+#   administrar-itch       agendado 06:17  →  rodou 15:52   (9h35 de atraso)
+#   administrar-youtube    agendado 06:43  →  rodou 16:21   (9h38 de atraso)
+#   metricas-youtube       agendado 21:40  →  rodou 01:21   (3h41 de atraso)
+#   gravar-prancheta       agendado 12:50  →  NÃO DISPAROU
+#   gravar-gameplay        agendado 12:25  →  NÃO DISPAROU
+#   health-check           agendado 06:10  →  NÃO DISPAROU
+#   status-total           agendado 13:00  →  NÃO DISPAROU
+#   alertas-proativos      agendado 5/hora →  NÃO DISPAROU
+#
+# Consequência: "autônomo" era falso. O Prancheta depende do cron de gravação para publicar no
+# YouTube, e o cron não disparou NENHUMA vez hoje. O health check e o status-total, que eu
+# havia acabado de entregar como "em produção", nunca teriam rodado sozinhos — só rodaram
+# porque eu disparei à mão.
+#
+# A SOLUÇÃO JÁ EXISTIA NA CASA: o `despertador.yml` usa cron a cada 20 min apenas como um
+# "acorde" e chama o alvo por `workflow_dispatch` — o dispatch não passa pela fila de schedule
+# e não é descartado. É o único workflow que disparou em todos os horários hoje.
+#
+# Este despachante faz o mesmo para os alvos que estavam sendo perdidos. Ele NÃO substitui o
+# cron deles: se o cron disparar primeiro, o despachante vê a execução recente e não faz nada.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+on:
+  # mesma cadência do despertador: 3 acordes por hora. O cron é só o acorde — quem trabalha
+  # é o dispatch, que não é descartado.
+  schedule:
+    - cron: '13,33,53 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write   # necessário para disparar outro workflow
+
+# um por vez: dois despachantes ao mesmo tempo disparariam o alvo duas vezes
+concurrency:
+  group: despachante
+  cancel-in-progress: false
+
+jobs:
+  despacha:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Decide quem chamar (janela + execução recente)
+        env:
+          GH_TOKEN: ${{ secrets.GHPAT }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -u
+          python3 - <<'PY'
+          import json, os, subprocess, sys
+          from datetime import datetime, timedelta, timezone
+
+          REPO = os.environ["REPO"]
+          agora = datetime.now(timezone.utc)
+          brt = agora - timedelta(hours=3)
+          hora = brt.hour
+
+          def api(caminho):
+              saida = subprocess.run(
+                  ["curl", "-sS", "-H", "Authorization: Bearer " + os.environ["GH_TOKEN"],
+                   "-H", "Accept: application/vnd.github+json",
+                   "https://api.github.com" + caminho],
+                  capture_output=True, text=True, timeout=60).stdout
+              try:
+                  return json.loads(saida)
+              except Exception:
+                  return {}
+
+          # ── os alvos: (arquivo, intervalo mínimo em minutos, janela de horas BRT ou None)
+          # O intervalo é o coração disto: só chama se a última execução estiver mais velha
+          # que isso. Assim o despachante NUNCA duplica o trabalho do cron.
+          ALVOS = [
+              # gravação: é o que alimenta o YouTube. 3h para 3 gravações/dia (09:50/13:50/16:50).
+              # Janela 8-19h BRT: a gravação precisa terminar antes de 22h para poder publicar.
+              ("gravar-prancheta.yml",       170, (8, 19)),
+              ("gravar-gameplay.yml",        230, (8, 19)),
+              # saúde e relatório: diário, mas se o cron perder, isto salva o dia
+              ("health-check.yml",          1080, None),   # 18h
+              ("status-total.yml",           480, (7, 22)),  # 8h (3x/dia previsto)
+              ("alertas-proativos.yml",      100, (9, 22)),  # ~1h45
+              # vídeo e comentários: a casa depende deles para não parar
+              ("chamar-video.yml",           230, (8, 20)),
+              ("ler-comentarios.yml",       1080, None),
+              ("pendencias-do-dono.yml",     720, None),
+          ]
+
+          chamados, pulados, erros = [], [], []
+
+          for arquivo, intervalo, janela in ALVOS:
+              if janela and not (janela[0] <= hora <= janela[1]):
+                  pulados.append("%s (fora da janela %dh-%dh BRT, agora %dh)" % (arquivo, janela[0], janela[1], hora))
+                  continue
+
+              # 1. quando foi a última execução (qualquer gatilho)?
+              dados = api("/repos/%s/actions/workflows/%s/runs?per_page=1" % (REPO, arquivo))
+              runs = dados.get("workflow_runs") or []
+              if runs:
+                  ultima = datetime.fromisoformat(runs[0]["created_at"].replace("Z", "+00:00"))
+                  idade = (agora - ultima).total_seconds() / 60
+                  # execução em andamento conta como "já feita": não empilha
+                  if runs[0].get("status") in ("queued", "in_progress"):
+                      pulados.append("%s (já rodando desde %d min)" % (arquivo, idade))
+                      continue
+                  if idade < intervalo:
+                      pulados.append("%s (%d min desde a última; mínimo %d)" % (arquivo, idade, intervalo))
+                      continue
+              # 2. dispara
+              codigo = subprocess.run(
+                  ["curl", "-sS", "-o", "/dev/null", "-w", "%{http_code}", "-X", "POST",
+                   "-H", "Authorization: Bearer " + os.environ["GH_TOKEN"],
+                   "-H", "Accept: application/vnd.github+json",
+                   "https://api.github.com/repos/%s/actions/workflows/%s/dispatches" % (REPO, arquivo),
+                   "-d", json.dumps({"ref": "main"})],
+                  capture_output=True, text=True, timeout=60).stdout.strip()
+              if codigo == "204":
+                  chamados.append(arquivo)
+              else:
+                  erros.append("%s (HTTP %s)" % (arquivo, codigo))
+
+          print("despachante · %s UTC · %dh BRT" % (agora.strftime("%d/%m %H:%M"), hora))
+          print("")
+          print("chamados (%d): %s" % (len(chamados), ", ".join(chamados) or "nenhum"))
+          print("pulados (%d):" % len(pulados))
+          for p in pulados:
+              print("  · " + p)
+          if erros:
+              print("ERROS (%d):" % len(erros))
+              for e in erros:
+                  print("  ! " + e)
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write("## 📣 Despachante\n\n")
+              f.write("| | |\n|---|---|\n")
+              f.write("| quando | %s UTC / %dh BRT |\n" % (agora.strftime("%d/%m %H:%M"), hora))
+              f.write("| chamados | **%d** — %s |\n" % (len(chamados), ", ".join(chamados) or "nenhum"))
+              f.write("| pulados | %d |\n" % len(pulados))
+              if erros:
+                  f.write("| erros | %d |\n" % len(erros))
+              if pulados:
+                  f.write("\n**Por que não chamei:**\n\n")
+                  for p in pulados:
+                      f.write("- %s\n" % p)
+              if erros:
+                  f.write("\n**Falhas de dispatch:**\n\n")
+                  for e in erros:
+                      f.write("- %s\n" % e)
+
+          # erro de dispatch não é motivo para derrubar o run: o próximo acorde tenta de novo
+          sys.exit(0)
+          PY

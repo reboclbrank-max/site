@@ -281,6 +281,46 @@ ok("teste-redes distingue credencial recusada de rede caída",
 ok("existe um documento com os passos do Gmail",
    os.path.exists(os.path.join(RAIZ, "COMO-RESOLVER-GMAIL.md")))
 
+# ── 10. AUTO-RECUPERAÇÃO: precisa RECUPERAR de verdade, não só existir ──────────
+# (16/11/2026): o self-recovery estava escrito e nunca rodou. `auditar()` devolve `camada`
+# (o id), não `nome` (o arquivo) — e `tentarRecuperacao()` lia `camada.nome`, recebia
+# undefined, e pulava a recriação. Quatro estados ausentes viravam quatro camadas críticas
+# caídas e ZERO tentativas de recuperação. Um teste que só chamasse `tentarRecuperacao()` com
+# um objeto "bonitinho" passaria; só apagar os arquivos de verdade expõe o defeito.
+_RAIZ_REC = tempfile.mkdtemp(prefix="fase2-rec-")
+for _d in (".github", "tools"):
+    _sh.copytree(os.path.join(RAIZ, _d), os.path.join(_RAIZ_REC, _d),
+                 ignore=_sh.ignore_patterns("__pycache__", "marketing"))
+_sh.copy(os.path.join(AQUI, "marketing", "health-check-site.js"),
+         os.path.join(_RAIZ_REC, "tools", "marketing", "health-check-site.js")) \
+    if os.path.isdir(os.path.join(_RAIZ_REC, "tools", "marketing")) else None
+os.makedirs(os.path.join(_RAIZ_REC, "posts"), exist_ok=True)
+
+_env_rec = {"SITE_RAIZ": _RAIZ_REC, "POSTS_DIR": os.path.join(_RAIZ_REC, "posts"),
+            "GITHUB_ACTIONS": "true"}
+# credenciais presentes: sem elas o resultado seria vermelho por credencial e esconderia a
+# pergunta que interessa, que é se o ESTADO ausente é recriado.
+for _k in ("YT_REFRESH_TOKEN", "YT_CLIENT_ID", "IG_TOKEN", "IG_USER_ID",
+           "GMAIL_CHAT_APPPASS", "NOSTR_KEY", "THREADS_TOKEN", "BLUESKY_APPPASS"):
+    _env_rec[_k] = "presente"
+_rec, _erro = jnode(HC, env=_env_rec)
+_tex = ""
+if isinstance(_rec, dict):
+    _tex = json.dumps(_rec)
+ok("o health check roda numa raiz sem estado nenhum e não quebra",
+   isinstance(_rec, dict) and _rec.get("camadas_total", 0) > 0, _erro)
+_recup = (_rec or {}).get("recuperacoes", {}) or {}
+ok("self-recovery RECRIA estado ausente (não fica só em 'críticas caídas')",
+   _recup.get("sucesso", 0) >= 1,
+   "recuperações: %s" % json.dumps(_recup)[:200])
+ok("estado recriado vira camada ativa (recuperação conclui o ciclo)",
+   (_rec or {}).get("camadas_ativas", 0) >= 20,
+   "ativas: %s" % (_rec or {}).get("camadas_ativas"))
+_criados = [f for f in ("orquestrador.json", "videos-enviados.json", "fila-tarefas.json")
+            if os.path.exists(os.path.join(_RAIZ_REC, "posts", f))]
+ok("os arquivos de estado voltaram ao disco, com esqueleto válido",
+   len(_criados) >= 3, "criados: %s" % _criados)
+
 # ── 9. PERMISSÃO: workflow que versiona estado precisa de contents: write ────────
 # (16/11/2026, defeito real): o publicar-instagram tinha `contents: read`. O passo de commit
 # rodava, o git commit funcionava e o PUSH era recusado 6 vezes — o log dizia "autenticação/
@@ -319,6 +359,30 @@ ok("o portão do Instagram PERSISTE o media_id (sem commit o portão é decorati
    "instagram-publicados.json" in PUB_
    and ("entrar-no-main" in PUB_ or "git commit" in PUB_),
    "publicar-instagram não versiona o registro: o runner morre e a próxima peça repete")
+
+# ── 11. O CRON DO GITHUB PERDE EXECUÇÃO: precisa de despacho, não de fé ────────
+# (16/11/2026, medido com dados do próprio GitHub): `administrar-itch` agendado 06:17 rodou
+# 15:52 (9h35 de atraso); `gravar-prancheta` agendado 12:50 NÃO disparou; `health-check`
+# agendado 06:10 NÃO disparou. `schedule:` é best-effort e descarta execução sob carga.
+# Os crons novos que eu entreguei como "em produção" nunca teriam rodado sozinhos — só rodaram
+# porque eu disparei à mão. Sem despacho, "autônomo" é falso.
+DESP = os.path.join(WFS, "despachante.yml")
+ok("existe um despachante (o cron não é confiável)", os.path.exists(DESP))
+_txt_desp = ler(DESP)
+ok("o despachante tem gatilho próprio (não depende de outro cron perdido)",
+   "schedule:" in _txt_desp and "workflow_dispatch:" in _txt_desp)
+ok("o despachante tem permissão de actions: write (sem ela o dispatch falha)",
+   "actions: write" in _txt_desp)
+for _alvo in ("gravar-prancheta.yml", "gravar-gameplay.yml", "health-check.yml",
+              "status-total.yml", "alertas-proativos.yml"):
+    ok("o despachante cobre %s" % _alvo, _alvo in _txt_desp)
+ok("o despachante respeita intervalo (não duplica o trabalho do cron)",
+   "intervalo" in _txt_desp and "idade" in _txt_desp)
+ok("o despachante respeita janela de Brasília",
+   "janela" in _txt_desp and "BRT" in _txt_desp)
+
+ok("o despertador existente também usa dispatch (padrão que já funcionava)",
+   "dispatches" in ler(os.path.join(WFS, "despertador.yml")))
 
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)

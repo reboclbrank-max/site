@@ -1,6 +1,6 @@
 # O que acontece quando você mexe em algo
 
-Gerado por `tools/o-que-acontece.py` a partir dos **51** arquivos de `.github/workflows/` — cada linha vem do próprio workflow, não da minha memória. O `conferir-tudo` falha se este documento deixar de bater com eles.
+Gerado por `tools/o-que-acontece.py` a partir dos **52** arquivos de `.github/workflows/` — cada linha vem do próprio workflow, não da minha memória. O `conferir-tudo` falha se este documento deixar de bater com eles.
 
 ## 1. Você deu push no `main`
 
