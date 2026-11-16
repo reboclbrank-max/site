@@ -2,8 +2,8 @@
   "ativo": true,
   "relatorios": [
     {
-      "id": "st_1794859652112",
-      "geradoEm": "2026-11-16T20:07:32.112Z",
+      "id": "st_1794859736846",
+      "geradoEm": "2026-11-16T20:08:56.846Z",
       "resumo": {
         "camadas_monitoradas": 44,
         "camadas_ativas": 28,
@@ -275,7 +275,7 @@
       ]
     }
   ],
-  "ultima_execucao": "2026-11-16T20:07:32.112Z",
-  "criadoEm": "2026-11-16T20:07:31.931Z",
-  "atualizadoEm": "2026-11-16T20:07:32.112Z"
+  "ultima_execucao": "2026-11-16T20:08:56.846Z",
+  "criadoEm": "2026-11-16T20:08:56.631Z",
+  "atualizadoEm": "2026-11-16T20:08:56.846Z"
 }

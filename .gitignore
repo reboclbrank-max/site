@@ -24,3 +24,8 @@ node_modules/
 # mídia de página, não entrega de run.
 media/gameplay/prancheta-gameplay.mp4
 media/gameplay/ceifalume-gameplay.mp4
+# 16/11/2026: módulo em tools/marketing/ que resolvia a raiz por __dirname/.. gravava aqui.
+# A raiz foi corrigida para ../../posts, e esta regra impede que o engano volte versionado.
+tools/posts/
+__pycache__/
+

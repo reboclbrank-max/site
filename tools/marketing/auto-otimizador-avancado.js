@@ -6,7 +6,16 @@
 const fs = require('fs');
 const path = require('path');
 
-const MARKETING_DIR = path.join(__dirname, '..', 'posts', 'marketing');
+// 16/11/2026 — DOIS NÍVEIS, NÃO UM: estes módulos nasceram em `tools/` do repo `chat`, onde
+// `../posts` era a raiz certa. Movidos para `tools/marketing/` no `site`, `../posts` aponta
+// para `tools/posts` — um diretório que ninguém lê. Em produção o estado iria para o lugar
+// errado e o painel mostraria zero para sempre. A raiz é `../../posts`.
+// POSTS_DIR permite que os contratos apontem o estado para um temporário e provem o módulo
+// sem escrever no repositório versionado (regra do `rodar-todas-as-suites`: suíte que passa
+// não deixa lixo). Em produção a variável não existe e a raiz é a do repositório.
+const MARKETING_DIR = process.env.POSTS_DIR
+  ? path.join(process.env.POSTS_DIR, 'marketing')
+  : path.join(__dirname, '..', '..', 'posts', 'marketing');
 if (!fs.existsSync(MARKETING_DIR)) fs.mkdirSync(MARKETING_DIR, { recursive: true });
 const ARQ = path.join(MARKETING_DIR, 'auto-otimizador-avancado.json');
 

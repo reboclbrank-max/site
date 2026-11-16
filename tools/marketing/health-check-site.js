@@ -37,8 +37,15 @@ const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const RAIZ = path.resolve(__dirname, '..', '..');
-const DIR_POSTS = path.join(RAIZ, 'posts');
+// SITE_RAIZ / POSTS_DIR existem para os CONTRATOS: eles auditam uma cópia isolada e não podem
+// escrever no repositório versionado (regra do rodar-todas-as-suites). Em produção nada disso
+// é definido e a raiz é a do checkout.
+const RAIZ = process.env.SITE_RAIZ
+  ? path.resolve(process.env.SITE_RAIZ)
+  : path.resolve(__dirname, '..', '..');
+const DIR_POSTS = process.env.POSTS_DIR
+  ? path.resolve(process.env.POSTS_DIR)
+  : path.join(RAIZ, 'posts');
 const DIR_WF = path.join(RAIZ, '.github', 'workflows');
 const DIR_TOOLS = path.join(RAIZ, 'tools');
 const SAIDA = path.join(DIR_POSTS, 'health-check-camadas.json');

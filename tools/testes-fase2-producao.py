@@ -49,9 +49,41 @@ def ler(caminho):
         return ""
 
 
+TMP_POSTS = tempfile.mkdtemp(prefix="fase2-posts-")
+TMP_RAIZ = tempfile.mkdtemp(prefix="fase2-raiz-")
+os.makedirs(os.path.join(TMP_POSTS, "marketing"), exist_ok=True)
+
+# CÓPIA ISOLADA DO REPOSITÓRIO: o health check precisa auditar o site DE VERDADE (44 camadas,
+# workflows, ferramentas) e mesmo assim não pode gravar em posts/ versionado. A cópia leva o
+# que ele audita — .github/workflows, tools e posts — e nada mais.
+import shutil as _sh
+ESPELHO = tempfile.mkdtemp(prefix="fase2-espelho-")
+_sh.copytree(os.path.join(RAIZ, ".github"), os.path.join(ESPELHO, ".github"))
+_sh.copytree(AQUI, os.path.join(ESPELHO, "tools"),
+             ignore=_sh.ignore_patterns("__pycache__", "posts"))
+_sh.copytree(os.path.join(RAIZ, "posts"), os.path.join(ESPELHO, "posts"))
+_sh.copytree(os.path.join(RAIZ, "ceifalume"), os.path.join(ESPELHO, "ceifalume")) \
+    if os.path.isdir(os.path.join(RAIZ, "ceifalume")) else None
+# estado mínimo para o health check poder auditar uma raiz de mentira sem inventar números
+for _arq, _conteudo in (
+    ("posts/orquestrador.json", '{"pulsos": 0}'),
+    ("posts/videos-enviados.json", '{"enviados": []}'),
+    ("posts/cadencia.json", '{}'),
+):
+    _p = os.path.join(TMP_RAIZ, _arq)
+    os.makedirs(os.path.dirname(_p), exist_ok=True)
+    with open(_p, "w", encoding="utf-8") as _f:
+        _f.write(_conteudo)
+
+
 def node(script, *args, env=None, cwd=None):
     ambiente = dict(os.environ)
     ambiente.pop("GITHUB_ACTIONS", None)   # local de propósito: prova o caso "não verificável"
+    # REGRA DO REPOSITÓRIO: suíte que passa não deixa arquivo. Todo estado que estes módulos
+    # gravam vai para um temporário (16/11/2026 — o runner marcou esta suíte como FALHOU por
+    # 2.895/2.895 verdes e um JSON sujo; o defeito era aqui, não no runner).
+    ambiente["POSTS_DIR"] = TMP_POSTS
+    ambiente["SITE_RAIZ"] = TMP_RAIZ
     if env:
         ambiente.update(env)
     return subprocess.run(["node", script] + list(args), capture_output=True, text=True,
@@ -78,7 +110,7 @@ ok("o health check audita as camadas do SITE, não as 60 do chat",
    and "sistema-cupons" not in _src_hc.split("const CAMADAS")[1].split("];")[0],
    "lista de camadas menciona módulo do chat")
 
-_dados, _r = jnode(HC)
+_dados, _r = jnode(HC, env={"SITE_RAIZ": ESPELHO, "POSTS_DIR": os.path.join(ESPELHO, "posts")})
 ok("o health check roda e devolve JSON válido", _dados is not None, _r.stderr[-200:])
 if _dados:
     ok("ele declara o total de camadas auditadas", _dados.get("camadas_total", 0) >= 35,
