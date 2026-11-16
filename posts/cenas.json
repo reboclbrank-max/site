@@ -1978,6 +1978,48 @@
     "passos_confirmados": 12
    },
    "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-16T22:27:07Z",
+   "estrategia": "meia-cela",
+   "assinatura": "d8e6d4b45d9d",
+   "resumo": {
+    "estrategia": "meia-cela",
+    "plantadas": 8,
+    "colhidas": 5,
+    "bicos": 793,
+    "sementes": [
+     "None",
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": -29,
+      "t": 44.9
+     },
+     {
+      "id": "lanterna",
+      "nome": "Acender Lanterna",
+      "custo": 99,
+      "t": 47.4
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 50,
+      "t": 50.3
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": 11,
+      "t": 73.6
+     }
+    ],
+    "verde_final": "A:0.055 B:0.051 C:0.052 D:0.000 E:0.000"
+   }
   }
  ]
 }

@@ -5,16 +5,16 @@
    "angulo": "semente_do_dia",
    "fato": null,
    "numeros": {
-    "plantadas": 13,
-    "colhidas": 10,
-    "toques": 1140,
+    "plantadas": 8,
+    "colhidas": 5,
+    "toques": 793,
     "minutos": 2,
-    "toques_por_minuto": 570
+    "toques_por_minuto": 396
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4606824,
+   "bytes": 4140062,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Semente do dia: 13 mudas para 10 colheitas em 2 min",
-   "descricao": "🌱 Semente do dia: 13 mudas no chão e 10 colheitas na cesta em 2 minutos de gravação.\n\nO campo é noturno de propósito: enxergar pouco faz parte da escolha de onde apertar.\n\nO relógio de cada canteiro corre mesmo com o aplicativo fechado, e é ele que dá o ritmo.\n\nQuem abrir o jogo no navegador vê a mesma fazenda, com o mesmo relógio.\n\nFonte: posts/cenas.json (partida 13391c3a16eb, conferida em 2026-11-16T20:57:56Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #jogobrasileiro",
+   "titulo": "Semente do dia: 8 mudas para 5 colheitas em 2 min",
+   "descricao": "🌱 Semente do dia: 8 mudas no chão e 5 colheitas na cesta em 2 minutos de gravação.\n\nO campo é noturno de propósito: enxergar pouco faz parte da escolha de onde apertar.\n\nO relógio de cada canteiro corre mesmo com o aplicativo fechado, e é ele que dá o ritmo.\n\nQuem abrir o jogo no navegador vê a mesma fazenda, com o mesmo relógio.\n\nFonte: posts/cenas.json (partida d8e6d4b45d9d, conferida em 2026-11-16T22:27:07Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -49,7 +49,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-8h",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-8h",
@@ -145,7 +145,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-tutorial",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-tutorial",
@@ -193,7 +193,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-apk",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-apk",
@@ -241,7 +241,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-anuncio",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-anuncio",
@@ -289,7 +289,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-save",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-save",
@@ -433,7 +433,7 @@
     },
     {
      "angulo": "quanto_rende:ceifalume-versao",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:ceifalume-versao",
@@ -481,7 +481,7 @@
     },
     {
      "angulo": "quanto_rende:oficio-devlog",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:oficio-devlog",
@@ -529,7 +529,7 @@
     },
     {
      "angulo": "quanto_rende:casa-canais",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:casa-canais",
@@ -577,7 +577,7 @@
     },
     {
      "angulo": "quanto_rende:casa-newsletter",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:casa-newsletter",
@@ -625,7 +625,7 @@
     },
     {
      "angulo": "quanto_rende:casa-telegram",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:casa-telegram",
@@ -817,7 +817,7 @@
     },
     {
      "angulo": "quanto_rende:video-cfB5ZBdC-NA",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:video-cfB5ZBdC-NA",
@@ -865,7 +865,7 @@
     },
     {
      "angulo": "quanto_rende:video-_ffmjSMsW0Y",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:video-_ffmjSMsW0Y",
@@ -913,7 +913,7 @@
     },
     {
      "angulo": "quanto_rende:video-hBvkQhSS-_4",
-     "motivo": "mesma forma de um post recente do canal (abertura rotulo, 8 frases, 0 hashtags): Como este vídeo de CEIFALUME foi gravado"
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
     },
     {
      "angulo": "quem_fe_z:video-hBvkQhSS-_4",
@@ -1005,11 +1005,11 @@
     },
     {
      "angulo": "medida_por_minuto",
-     "motivo": "título quase igual a um já publicado (0.97)"
+     "motivo": "título quase igual a um já publicado (0.98)"
     },
     {
      "angulo": "numeros",
-     "motivo": "título quase igual a um já publicado (0.96)"
+     "motivo": "título quase igual a um já publicado (0.97)"
     },
     {
      "angulo": "pergunta",
