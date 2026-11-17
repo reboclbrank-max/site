@@ -3242,3 +3242,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=51(api) · itch_downloads=49(api) · itch_visitas=211(api) · youtube_inscritos=24(api) · youtube_shorts=13(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
 
 > O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta
+
+## 17/11/2026 16:43 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.85 |
+| pauta do ciclo | ✅ marco_com_data · ceifalume |
+| destino editorial | ✅ rota oficial ceifalume |
+| tema do ciclo | ✅ marco_com_data · ceifalume |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18066592484526 |
+| threads | ✅ publicado id 181182657623 |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=53(api) · itch_downloads=49(api) · itch_visitas=215(api) · youtube_inscritos=24(api) · youtube_shorts=13(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
+
+> Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lançada em 17 de setembro de 2026. Prepare-se para a era da automação! #ce

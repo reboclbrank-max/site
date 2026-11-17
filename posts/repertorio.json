@@ -535,6 +535,26 @@
    "hashtags": 1,
    "nota": 0.769,
    "texto": "O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta"
+  },
+  {
+   "quando": "2026-11-17T16:42:50Z",
+   "canal": "site",
+   "angulo": "marco_com_data",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-versao"
+   ],
+   "abertura": "ceifalume (idle",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lançada em 17 de setembro de 2026. Prepare-se para a era da automação! #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -574,25 +594,28 @@
   "casa-site-gratis",
   "medido-itch-downloads-2026-11-17",
   "medido-itch-visitas-2026-11-17",
-  "prancheta-som"
+  "prancheta-som",
+  "ceifalume-versao"
  ],
  "ultimo": {
-  "quando": "2026-11-17T14:21:48Z",
+  "quando": "2026-11-17T16:42:50Z",
   "canal": "site",
-  "angulo": "bastidor_de_erro",
-  "assunto": "prancheta",
+  "angulo": "marco_com_data",
+  "assunto": "ceifalume",
   "fatos": [
-   "prancheta-som"
+   "ceifalume-versao"
   ],
-  "abertura": "o som",
-  "tipo_abertura": "rotulo",
+  "abertura": "ceifalume (idle",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "rotulo",
+   "frase",
+   "frase",
+   "frase",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.769,
-  "texto": "O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta"
+  "nota": 0.846,
+  "texto": "Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lançada em 17 de setembro de 2026. Prepare-se para a era da automação! #ceifalume"
  },
  "publicacoes": [
   {
@@ -736,6 +759,17 @@
    "texto": "O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta",
    "titulo": "O som só começa após o primeiro toque: política do navegador exige interação do usuário ",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-17T16:42:50Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lançada em 17 de setembro de 2026. Prepare-se para a era da automação! #ceifalume",
+   "titulo": "Ceifalume (idle night farm, navegador & Android) chega ao mundo!",
+   "nota": 0.846,
    "tipo": "publicacao"
   }
  ]

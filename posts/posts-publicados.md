@@ -385,3 +385,6 @@ Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações 
 
 ## 17/11/2026 14:22 UTC
 O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta
+
+## 17/11/2026 16:43 UTC
+Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lançada em 17 de setembro de 2026. Prepare-se para a era da automação! #ceifalume
