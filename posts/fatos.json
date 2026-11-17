@@ -670,6 +670,33 @@
    "origem": "posts/youtube-publicados.json",
    "quando": "2026-11-17",
    "usa_uma_vez": true
+  },
+  {
+   "id": "video-ihxVpjQoczQ",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"O que CEIFALUME pede para rodar\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "video-FNzW9c45E3M",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Onde falar com quem fez CEIFALUME\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "video-FRCzgqUlMFY",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Como funciona: a chuva rega de graça: não custa água nem moeda\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
   }
  ]
 }

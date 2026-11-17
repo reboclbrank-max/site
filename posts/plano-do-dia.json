@@ -1,51 +1,8 @@
 {
- "quando": "2026-11-12T06:00:15Z",
- "meta_em_risco": {
-  "meta": "itch: downloads",
-  "falta": 52.0,
-  "por_dia": 10.4,
-  "status": "RENOVADA"
- },
- "metas_paradas": [
-  {
-   "meta": "Instagram: seguidores",
-   "falta": 50.0,
-   "ritmo_medido": "0,0/dia",
-   "porque": "post não move: a pesquisa é sobre outra abordagem"
-  },
-  {
-   "meta": "YouTube: inscritos",
-   "falta": 16.0,
-   "ritmo_medido": "0,0/dia",
-   "porque": "post não move: a pesquisa é sobre outra abordagem"
-  }
- ],
- "ranking_de_risco": [
-  {
-   "meta": "itch: downloads",
-   "falta": 52.0,
-   "por_dia": 10.4,
-   "status": "RENOVADA"
-  },
-  {
-   "meta": "Instagram: seguidores",
-   "falta": 50.0,
-   "por_dia": 10.0,
-   "status": "PARADA"
-  },
-  {
-   "meta": "Bluesky: seguidores",
-   "falta": 18.0,
-   "por_dia": 3.6,
-   "status": "RENOVADA"
-  },
-  {
-   "meta": "YouTube: inscritos",
-   "falta": 16.0,
-   "por_dia": 3.2,
-   "status": "PARADA"
-  }
- ],
+ "quando": "2026-11-17T06:00:22Z",
+ "meta_em_risco": null,
+ "metas_paradas": [],
+ "ranking_de_risco": [],
  "formatos_a_evitar": [
   {
    "formato": "comentário em post alheio",
