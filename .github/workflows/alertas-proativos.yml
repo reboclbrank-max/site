@@ -104,4 +104,11 @@ jobs:
             exit 0
           fi
           git commit -q -m "alertas proativos: estado $(date -u +'%d/%m %H:%M UTC')"
-          bash tools/entrar-no-main.sh "alertas proativos" || echo "alertas não entraram no main"
+          # 17/11/2026 — `|| echo` AQUI ESCONDIA PERDA DE DADO.
+          # Se o push falha, o run terminava VERDE com o estado fora do main:
+          #   alerta disparado não fica registrado → dispara de novo para sempre.
+          # Commit feito e não publicado é perda; perda silenciosa é pior que falha ruidosa.
+          if ! bash tools/entrar-no-main.sh "alertas proativos"; then
+            echo "::error::estado gerado mas NÃO entrou no main — perdido neste run"
+            exit 1
+          fi

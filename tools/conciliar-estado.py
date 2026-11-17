@@ -10,6 +10,27 @@ import sys
 AUSENTE=object()
 class Conflito(ValueError):pass
 
+# ─── CAMPOS DE CARIMBO: DOIS RUNS NUNCA TÊM O MESMO VALOR ─────────────────────────────
+# 17/11/2026 — O DEFEITO QUE JOGAVA DADOS FORA EM SILÊNCIO.
+# `atualizadoEm`/`criadoEm`/`executadoEm` são timestamps. Quando dois workflows gravam o mesmo
+# estado de marketing, os dois lados do merge têm carimbos DIFERENTES por construção — e a
+# conciliação recusava ("alterações concorrentes incompatíveis"). Resultado medido: o
+# `status-total` #4 do GitHub Actions gravou `youtube/ceifalume/visualizacoes = 13`, fez o
+# commit, e o push morreu 6 vezes; `metricas_engajamento` no repo continuou `{}`.
+# Não era falha de rede nem de permissão: era o merge recusando um campo que NUNCA pode ser
+# igual dos dois lados.
+# Regra: carimbo não é dado — é metadado. O valor MAIS NOVO vence, porque é o que descreve
+# quando aquele estado foi escrito pela última vez.
+CARIMBOS = ('atualizadoEm', 'criadoEm', 'executadoEm', 'verificadoEm', 'geradoEm',
+            'ultima_execucao', 'ultimaExecucao', 'quando', 'atualizadoem')
+
+
+def _mais_novo(*valores):
+    """O maior ISO timestamp entre os lados. Comparação lexicográfica funciona em ISO-8601."""
+    c = [v for v in valores if isinstance(v, str) and v]
+    return max(c) if c else None
+
+
 def conciliar(base, local, remoto):
     if local==remoto:return local
     if local==base:return remoto
@@ -17,6 +38,11 @@ def conciliar(base, local, remoto):
     if isinstance(local,dict) and isinstance(remoto,dict) and (isinstance(base,dict) or base is AUSENTE):
         b={} if base is AUSENTE else base;out={}
         for k in sorted(b.keys()|local.keys()|remoto.keys()):
+            if k in CARIMBOS:
+                # carimbo: o mais novo vence; não é conflito, é relógio
+                mv=_mais_novo(local.get(k),remoto.get(k),b.get(k))
+                if mv is not None: out[k]=mv
+                continue
             v=conciliar(b.get(k,AUSENTE),local.get(k,AUSENTE),remoto.get(k,AUSENTE))
             if v is not AUSENTE:out[k]=v
         return out

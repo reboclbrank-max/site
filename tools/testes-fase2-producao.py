@@ -761,5 +761,72 @@ ok("o status-total EXECUTA o coletor de engajamento",
 ok("o workflow passa ao coletor as credenciais que ele lê",
    "IG_TOKEN" in _ST and "YT_API_KEY" in _ST)
 
+# ══════════ 17. CONCORRÊNCIA: DOIS RUNS GRAVANDO O MESMO ESTADO (perda silenciosa)
+# (17/11/2026) MEDIDO EM PRODUÇÃO, NÃO EM TEORIA: status-total #4 coletou
+# `youtube/ceifalume/visualizacoes = 13`, fez o commit, e o push foi RECUSADO 6 vezes. O run
+# terminou `success` e `metricas_engajamento` continuou `{}` no repo. Duas causas somadas:
+#
+#  (a) `conciliar-estado.py` recusava o merge porque `atualizadoEm` (timestamp) NUNCA é igual
+#      dos dois lados. Todo estado do marketing era descartado quando dois runs coincidiam.
+#  (b) o workflow usava `|| echo`, então a perda não aparecia: run verde, dado fora.
+#
+# Ambos são invisíveis lendo o código — só aparecem com dois runs concorrentes DE VERDADE.
+_CE = os.path.join(os.path.dirname(__file__), "conciliar-estado.py")
+ok("existe o conciliador de estado", os.path.exists(_CE))
+
+# conciliar-estado.py é PYTHON — chamar com `node` dava "Unknown file extension .py"
+_CONC = (
+    "import importlib.util,json;"
+    "spec=importlib.util.spec_from_file_location('ce',r'%s');"
+    "ce=importlib.util.module_from_spec(spec);spec.loader.exec_module(ce);"
+    "base={'ativo':True,'fluxo_acesso':{},'metricas_engajamento':{},'otimizacoes':[],"
+    "'atualizadoEm':'2026-11-17T02:00:00Z'};"
+    "loc=dict(base);loc['metricas_engajamento']={'youtube':{'ceifalume':{'visualizacoes':13}}};"
+    "loc['atualizadoEm']='2026-11-17T02:34:10Z';"
+    "rem=dict(base);rem['fluxo_acesso']={'instagram':{'ambos':{'17':1}}};"
+    "rem['atualizadoEm']='2026-11-17T02:34:07Z';"
+    "o=ce.conciliar(base,loc,rem);"
+    "campos=[k for k in ('fluxo_acesso','metricas_engajamento') if o.get(k)];"
+    "print(json.dumps({'ok':True,'campos':campos,'carimbo':o.get('atualizadoEm')}))"
+) % os.path.abspath(_CE)
+_r = subprocess.run([sys.executable, "-c", _CONC], capture_output=True, text=True, timeout=60)
+_d = {}
+try:
+    _d = json.loads((_r.stdout or "{}").strip().splitlines()[-1])
+except Exception:
+    pass
+ok("dois runs concorrentes NÃO perdem dado na conciliação (carimbo não é conflito)",
+   _d.get("ok") is True and len(_d.get("campos") or []) == 2,
+   (_r.stdout or _r.stderr or "")[:180])
+ok("o carimbo escolhido é o MAIS NOVO (não o do primeiro que chegou)",
+   _d.get("carimbo") == "2026-11-17T02:34:10Z", str(_d.get("carimbo")))
+
+# dados de verdade continuam sendo conflito — a correção não pode virar "aceita tudo"
+_CONC2 = (
+    # Cada instrução precisa de \n REAL: `import x;import y` numa linha só deixa o `try:`
+    # colado no statement anterior. (E o contrato anterior passava por ACIDENTE: rodava com
+    # `node`, falhava, e nada imprimia 'ACEITOU'. Falso positivo pego pela sabotagem.)
+    "import importlib.util\n"
+    "spec=importlib.util.spec_from_file_location('ce',r'%s')\n"
+    "ce=importlib.util.module_from_spec(spec);spec.loader.exec_module(ce)\n"
+    # (E o contrato anterior passava por ACIDENTE: rodava com `node`, que falhava sem
+    #  imprimir 'ACEITOU'. Falso positivo pego pela sabotagem.)
+    "try:\n ce.conciliar({'n':1},{'n':2},{'n':3}); print('ACEITOU')\n"
+    "except ce.Conflito: print('RECUSOU')\n"
+) % os.path.abspath(_CE)
+_r2 = subprocess.run([sys.executable, "-c", _CONC2], capture_output=True, text=True, timeout=60)
+ok("conflito REAL de dado continua recusado (carimbo não abriu a porteira)",
+   "RECUSOU" in (_r2.stdout or ""), (_r2.stdout or "")[:80])
+
+# (b) o workflow não pode mais esconder push recusado
+for _wf in ("status-total.yml", "publicar-instagram.yml", "health-check.yml",
+            "alertas-proativos.yml", "marketing-24h.yml"):
+    _t = ler(os.path.join(WFS, _wf))
+    ok("%s FALHA quando o estado não entra no main (sem `|| echo`)" % _wf,
+       # procurar o PADRÃO (entrar-no-main ... || echo), não a palavra no comentário
+       not _re.search(r'entrar-no-main\.sh[^\n]*\|\|\s*echo', _t)
+       and "entrar-no-main.sh" in _t,
+       "ainda engole a falha de push")
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)

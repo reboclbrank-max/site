@@ -130,4 +130,14 @@ jobs:
             exit 0
           fi
           git commit -q -m "status total: relatório $(date -u +'%d/%m %H:%M UTC')"
-          bash tools/entrar-no-main.sh "status total" || echo "status não entrou no main"
+          # 17/11/2026 — ESTE `|| echo` ESCONDIA PERDA DE DADO.
+          # Quando o push morria, o run terminava VERDE com o relatório fora do main. Foi
+          # exatamente o que aconteceu no #4: 13 visualizações do YouTube coletadas, commit
+          # feito, push recusado 6×, e o run dizendo "success". Um observador do painel
+          # concluiria que o dado estava lá. Não estava.
+          # Regra: se o dado foi gerado e não entrou no main, o run FALHA. Commit feito e não
+          # publicado é perda — e perda silenciosa é pior que falha ruidosa.
+          if ! bash tools/entrar-no-main.sh "status total"; then
+            echo "::error::o relatório foi gerado mas NÃO entrou no main — dado perdido neste run"
+            exit 1
+          fi
