@@ -1,79 +1,87 @@
 {
- "alertas": [
-  {
-   "id": "al_1794884895143_001",
-   "tipo": "engajamento_baixo",
-   "mensagem": "Engajamento baixo no youtube para ceifalume: 13 interações",
-   "severidade": "media",
-   "rede": "youtube",
-   "criadoEm": "2026-11-17T03:08:15.143Z",
-   "resolvido": false
-  },
-  {
-   "id": "al_1794884895143_002",
-   "tipo": "engajamento_baixo",
-   "mensagem": "Engajamento baixo no youtube para prancheta: 1 interações",
-   "severidade": "media",
-   "rede": "youtube",
-   "criadoEm": "2026-11-17T03:08:15.143Z",
-   "resolvido": false
-  },
-  {
-   "id": "al_1794884895144_003",
-   "tipo": "fila_estagnada",
-   "mensagem": "Fila estagnada em instagram para ambos há 7h",
-   "severidade": "alta",
-   "rede": "instagram",
-   "criadoEm": "2026-11-17T03:08:15.144Z",
-   "resolvido": false
-  },
-  {
-   "id": "al_1794884912683_001",
-   "tipo": "engajamento_baixo",
-   "mensagem": "Engajamento baixo no youtube para ceifalume: 13 interações",
-   "severidade": "media",
-   "rede": "youtube",
-   "criadoEm": "2026-11-17T03:08:32.683Z",
-   "resolvido": false
-  },
-  {
-   "id": "al_1794884912683_002",
-   "tipo": "engajamento_baixo",
-   "mensagem": "Engajamento baixo no youtube para prancheta: 1 interações",
-   "severidade": "media",
-   "rede": "youtube",
-   "criadoEm": "2026-11-17T03:08:32.683Z",
-   "resolvido": false
-  },
-  {
-   "id": "al_1794884912684_003",
-   "tipo": "fila_estagnada",
-   "mensagem": "Fila estagnada em instagram para ambos há 7h",
-   "severidade": "alta",
-   "rede": "instagram",
-   "criadoEm": "2026-11-17T03:08:32.684Z",
-   "resolvido": false
-  }
- ],
- "ativo": true,
- "atualizadoEm": "2026-11-17T03:08:32.685Z",
- "criadoEm": "2026-11-17T03:08:32.682Z",
- "regras": [
-  {
-   "nome": "engajamento_baixo",
-   "limiar": 30,
-   "ativo": true
-  },
-  {
-   "nome": "fila_estagnada",
-   "limiar": 60,
-   "ativo": true
-  },
-  {
-   "nome": "token_expirando",
-   "limiar": 7,
-   "ativo": true
-  }
- ],
- "ultima_execucao": "2026-11-17T03:08:32.683Z"
+  "ativo": true,
+  "alertas": [
+    {
+      "id": "al_1794885281273_001",
+      "tipo": "engajamento_baixo",
+      "mensagem": "Engajamento baixo no youtube para ceifalume: 13 interações",
+      "severidade": "media",
+      "rede": "youtube",
+      "criadoEm": "2026-11-17T03:14:41.273Z",
+      "resolvido": false
+    },
+    {
+      "id": "al_1794885281274_002",
+      "tipo": "engajamento_baixo",
+      "mensagem": "Engajamento baixo no youtube para prancheta: 1 interações",
+      "severidade": "media",
+      "rede": "youtube",
+      "criadoEm": "2026-11-17T03:14:41.274Z",
+      "resolvido": false
+    },
+    {
+      "id": "al_1794885281274_003",
+      "tipo": "fila_estagnada",
+      "mensagem": "Fila estagnada em instagram para ambos há 7h",
+      "severidade": "alta",
+      "rede": "instagram",
+      "criadoEm": "2026-11-17T03:14:41.274Z",
+      "resolvido": false
+    }
+  ],
+  "regras": [
+    {
+      "nome": "engajamento_baixo",
+      "limiar": 30,
+      "ativo": true
+    },
+    {
+      "nome": "fila_estagnada",
+      "limiar": 60,
+      "ativo": true
+    },
+    {
+      "nome": "token_expirando",
+      "limiar": 7,
+      "ativo": true
+    }
+  ],
+  "ultima_execucao": "2026-11-17T03:14:41.273Z",
+  "criadoEm": "2026-11-17T03:14:41.273Z",
+  "atualizadoEm": "2026-11-17T03:14:41.275Z",
+  "acoes_tomadas": [
+    {
+      "alerta_id": "al_1794885281273_001",
+      "tipo_alerta": "engajamento_baixo",
+      "rede": "youtube",
+      "quando": "2026-11-17T03:14:41.579Z",
+      "pausou_ate": null,
+      "avisou": true,
+      "descricao": "audiência baixa: NÃO pausa (o problema é conteúdo, não disponibilidade); avisa"
+    },
+    {
+      "alerta_id": "al_1794885281274_002",
+      "tipo_alerta": "engajamento_baixo",
+      "rede": "youtube",
+      "quando": "2026-11-17T03:14:41.579Z",
+      "pausou_ate": null,
+      "avisou": true,
+      "descricao": "audiência baixa: NÃO pausa (o problema é conteúdo, não disponibilidade); avisa"
+    },
+    {
+      "alerta_id": "al_1794885281274_003",
+      "tipo_alerta": "fila_estagnada",
+      "rede": "instagram",
+      "quando": "2026-11-17T03:14:41.579Z",
+      "pausou_ate": "2026-11-17T04:14:41.579Z",
+      "avisou": true,
+      "descricao": "rede parada: pausa 1h para não empilhar tentativa em cima de fila travada"
+    }
+  ],
+  "alertas_acionados": [
+    "al_1794885281273_001",
+    "al_1794885281274_002",
+    "al_1794885281274_003"
+  ],
+  "acoes_atualizado_em": "2026-11-17T03:14:41.579Z"
 }
