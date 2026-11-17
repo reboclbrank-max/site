@@ -787,6 +787,16 @@
    "origem": "posts/youtube-publicados.json",
    "quando": "2026-11-17",
    "usa_uma_vez": true
+  },
+  {
+   "id": "medido-views-lvc90miwqs0-2026-11-17",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "o vídeo \"O que 6 toques fizeram na partida do PRANCHETA\" está com 7 views, medido em 17/11",
+   "origem": "posts/youtube-metricas.json",
+   "quando": "2026-11-17",
+   "validade_dias": 3,
+   "repetivel": false
   }
  ]
 }
