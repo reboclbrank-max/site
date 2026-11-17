@@ -1,14 +1,53 @@
-# Como resolver o Gmail (o único item que depende do dono)
+# Como está o Gmail (RESOLVIDO em 17/11/2026)
 
-**Estado em 16/11/2026, medido:** `❌ Gmail IMAP/SMTP: credencial recusada pelo Gmail`
-— o servidor do Google respondeu **recusando** a senha, não "sem conexão". Isso significa que a
-senha de app que está no secret **não vale mais**: foi revogada, apagada ou trocada.
+## ✅ Funciona. Não precisa fazer nada.
 
-Todo o resto da casa está de pé (11/13 serviços). Este é o único ponto em que a automação não
-consegue ir sozinha — e o motivo é técnico, não preguiça: **o Google não deixa ninguém criar uma
-senha de app por API.** É preciso uma sessão logada no navegador com a conta do dono e o 2FA
-declarado. Não existe token de serviço que substitua isso para IMAP/SMTP de uma conta Gmail
-pessoal.
+Medido no run #23 de `testar-todas-as-redes.yml`:
+
+```
+✅ Gmail IMAP/SMTP: conexão OK | 0 email(s) não lido(s)
+```
+
+A senha de app **já existia** desde 13/10/2026, gravada em `GMAIL_CHAT_APPPASS`. O que estava
+errado era o CÓDIGO: dois arquivos liam `GMAIL_CHAT_PASS` (a senha comum da conta, que o Google
+recusa por definição) **antes** de `GMAIL_CHAT_APPPASS` (a senha de app, que funciona).
+
+O sintoma era `Application-specific password required` — que aponta para o dono ("gere uma senha
+de app"), quando a senha de app estava lá, sendo ignorada por uma ordem de `||`.
+
+A prova de que era o código e não a credencial: no run #22, no mesmo minuto, dois testes deram
+respostas opostas. O verificador novo (que lia APPPASS primeiro) disse **"LOGIN OK — credencial
+válida"**; o antigo disse **"Application-specific password required"**. Vencia o que lia o
+secret errado.
+
+Corrigido em `testar-todas-as-apis.js` e `postar-todas-as-redes.js`. Há contrato que falha se a
+ordem voltar a se inverter. **O Gmail nunca funcionou para POSTAR por esse motivo** — não era
+só o teste que estava vermelho; o envio também estava usando a senha errada.
+
+---
+
+# Se um dia o Gmail parar de funcionar de novo
+
+O diagnóstico automatizado existe e responde três perguntas separadas:
+
+```bash
+node tools/marketing/verificar-gmail.js
+```
+
+| Código | Veredito | O que significa |
+|---|---|---|
+| 0 | `OK` | credencial válida — nada a fazer |
+| 2 | `FALTA_CREDENCIAL` | o secret não chegou ao runner |
+| 3 | `IMAP_NAO_ALCANCADO` | rede/porta — **não** gere senha nova por causa disto |
+| 4 | `SENHA_RECUSADA` | aí sim: a senha de app foi revogada/expirada |
+
+Só o caso 4 exige ação do dono. E é o único item da casa que exige navegador, por um motivo
+técnico: **o Google não expõe API para criar senha de app.** Nenhum token de serviço substitui
+isso numa conta pessoal.
+
+---
+
+## (Histórico) Os passos, caso o caso 4 apareça
 
 ---
 
