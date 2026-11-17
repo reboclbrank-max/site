@@ -2,6 +2,23 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-17T12:19:23Z",
+   "video_id": "TT6XP5Zs__c",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"PRANCHETA: a partida inteira em ritmo normal, sem mexer no plano\". É o PRANCHETA-GAMEPLAY. #prancheta-gameplay\nhttps://youtu.be/TT6XP5Zs__c",
+   "titulo": "PRANCHETA: a partida inteira em ritmo normal, sem mexer no plano",
+   "resultado": "recusado",
+   "motivo": "mesma forma de um post recente do canal (abertura rotulo, 3 frases, 1 hashtags): PRANCHETA: a partida inteira em ritmo normal, sem ",
+   "numeros": {
+    "video": "TT6XP5Zs__c",
+    "historico_do_canal": 10,
+    "nota_juizo": 0.538,
+    "jogos_citados": [
+     "prancheta"
+    ]
+   }
+  },
+  {
    "quando": "2026-11-16T22:54:07Z",
    "video_id": "TT6XP5Zs__c",
    "canal": "bluesky",
