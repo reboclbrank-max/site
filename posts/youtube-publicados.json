@@ -1,6 +1,23 @@
 {
  "publicados": [
   {
+   "id": "RksiKWR1QfY",
+   "url": "https://youtu.be/RksiKWR1QfY",
+   "slug": "prancheta-gameplay",
+   "titulo": "Como o PRANCHETA simula uma partida a partir da prancheta",
+   "descricao": "O PRANCHETA é simulador de gestão de futebol 100% fictício: você desenha a bola parada na prancheta e vê a partida simular.\n\nNa gravação, o agente escolhe o plano recomendado pelo staff e vê a partida simular a partir dele — sem tempo real de comando, sem refleflexo: decisão antes do apito.\n\nO jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no APK.\n\nFonte: posts/cenas.json (partida c3206cc97d2b, conferida em 2026-11-17T12:21:47Z).",
+   "descricao_completa": false,
+   "angulo": "como_funciona_prancheta",
+   "fato": null,
+   "numeros": {
+    "passos": 15,
+    "passos_confirmados": 12,
+    "toques_partida": 6
+   },
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "quando": "2026-11-17T12:21:54Z"
+  },
+  {
    "id": "TT6XP5Zs__c",
    "url": "https://youtu.be/TT6XP5Zs__c",
    "slug": "prancheta-gameplay",

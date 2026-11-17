@@ -469,6 +469,13 @@
    "titulo": "PRANCHETA: a partida inteira em ritmo normal, sem mexer no plano",
    "capa": "media/gameplay/prancheta-capa.png",
    "sha256": "8eb134ecbb330d3f"
+  },
+  {
+   "id": "RksiKWR1QfY",
+   "quando": "2026-11-17T12:22:00Z",
+   "titulo": "Como o PRANCHETA simula uma partida a partir da prancheta",
+   "capa": "media/gameplay/prancheta-capa.png",
+   "sha256": "f69d8a3fab8302a4"
   }
  ]
 }

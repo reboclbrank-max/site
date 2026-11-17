@@ -2,6 +2,13 @@
  "_o_que_e": "impressão sha256 de cada vídeo já enviado ao YouTube — é isto que impede o mesmo vídeo de subir duas vezes",
  "enviados": [
   {
+   "sha256": "b25e7976edbb17d5fb1527372be6407ad813ba625bec55608d534038de71c54e",
+   "slug": "prancheta-gameplay",
+   "id": "RksiKWR1QfY",
+   "arquivo": "media/gameplay/prancheta-gameplay.mp4",
+   "quando": "2026-11-17T12:21:54Z"
+  },
+  {
    "sha256": "82c01e35da8ecee06deff7115fd790ad1ff2fc7b4a3782a67fc824bdbaeab982",
    "slug": "prancheta-gameplay",
    "id": "TT6XP5Zs__c",
