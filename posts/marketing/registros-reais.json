@@ -84,6 +84,18 @@
    "hora": 17,
    "quantidade": 1,
    "acumulado_na_hora": 1
+  },
+  {
+   "quando": "2026-11-17T21:00:47.935Z",
+   "evento": "publicacao",
+   "rede": "instagram",
+   "jogo": "ambos",
+   "origem": "cron",
+   "fonte": "",
+   "tipo": "acesso",
+   "hora": 18,
+   "quantidade": 1,
+   "acumulado_na_hora": 1
   }
  ]
 }
