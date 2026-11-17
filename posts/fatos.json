@@ -697,6 +697,33 @@
    "origem": "posts/youtube-publicados.json",
    "quando": "2026-11-17",
    "usa_uma_vez": true
+  },
+  {
+   "id": "video-PRyg0Ncz5U8",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Onde jogar CEIFALUME sem instalar loja\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "video-HmbEdojjhsU",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Como funciona: as plantações crescem e as vendas acontecem\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "video-L2UIYmofEiE",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Quantas colheitas cabem em 2 minutos de CEIFALUME?\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
   }
  ]
 }
