@@ -751,6 +751,15 @@
    "origem": "posts/youtube-publicados.json",
    "quando": "2026-11-17",
    "usa_uma_vez": true
+  },
+  {
+   "id": "video-2qsSknSyeAs",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
   }
  ]
 }
