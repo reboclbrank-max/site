@@ -760,6 +760,15 @@
    "origem": "posts/youtube-publicados.json",
    "quando": "2026-11-17",
    "usa_uma_vez": true
+  },
+  {
+   "id": "video-RksiKWR1QfY",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Como o PRANCHETA simula uma partida a partir da prancheta\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
   }
  ]
 }
