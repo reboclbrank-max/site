@@ -34,6 +34,12 @@ jobs:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
           NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
+          # 17/11/2026: o módulo aceita os DOIS nomes de endereço, como já faz com a senha.
+          # Faltava `GMAIL_CHAT_ADDR` aqui: o `site` usa `_ADDRESS` (funciona), mas o nome do
+          # repo `chat` não estava declarado — quem passasse a usar o outro nome teria
+          # "sem credenciais" sem nenhuma pista. Declarar os dois é barato; descobrir isso em
+          # produção não é.
           GMAIL_CHAT_ADDRESS: ${{ secrets.GMAIL_CHAT_ADDRESS }}
+          GMAIL_CHAT_ADDR: ${{ secrets.GMAIL_CHAT_ADDR }}
           GMAIL_CHAT_PASS: ${{ secrets.GMAIL_CHAT_PASS }}
           GMAIL_CHAT_APPPASS: ${{ secrets.GMAIL_CHAT_APPPASS }}

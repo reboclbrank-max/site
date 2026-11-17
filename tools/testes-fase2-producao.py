@@ -535,5 +535,46 @@ for _f in ("health-check.yml", "status-total.yml", "alertas-proativos.yml"):
 ok("todo workflow que audita camadas recebe a MESMA lista de credenciais",
    not _faltando, "; ".join(_faltando))
 
+# ══════════════════════ 13. O WORKFLOW PASSA O QUE O MÓDULO LÊ (fecha a classe)
+# (17/11/2026) A divergência de secrets entre `health-check` e `status-total` era UM caso de uma
+# classe: a lista de env de um passo é escrita à mão, e ninguém compara com o que o módulo lê.
+# O contrato 12 cobriu os 3 módulos auditores. Este cobre o resto.
+#
+# Duas escolhas que evitam contrato ruidoso (e contrato ruidoso é contrato ignorado):
+#   • só nomes com CARA de credencial — `PLAYWRIGHT_CORE` e `PYTHON` são caminhos de binário,
+#     não segredos; cobrar env para eles seria perseguir fumaça;
+#   • a checagem é por WORKFLOW, não por passo — `publicar-devlog-itch.yml` tem um passo de
+#     "verificar" (que não publica e por isso não precisa de cookie) e um de "publicar" (que
+#     passa ITCH_COOKIE/ITCH_PROXY). Exigir por passo acusaria um defeito que não existe.
+import glob as _glob
+import re as _re
+
+_CARA_DE_CREDENCIAL = _re.compile(r"_(TOKEN|PASS|APPPASS|PASSWORD|KEY|SECRET|COOKIE|ADDR|ADDRESS)$")
+_FERRAMENTAS = sorted(_glob.glob(os.path.join(AQUI, "*.js")) + _glob.glob(os.path.join(MARKETING, "*.js")))
+
+_neo = []
+for _f in sorted(os.listdir(WFS)):
+    if not _f.endswith(".yml"):
+        continue
+    _d = _yaml.safe_load(ler(os.path.join(WFS, _f))) or {}
+    _passa_no_wf = set()
+    _modulos = set()
+    for _j in (_d.get("jobs") or {}).values():
+        for _st in _j.get("steps", []):
+            _passa_no_wf |= {k for k, v in (_st.get("env") or {}).items() if "secrets." in str(v)}
+            _modulos |= set(_re.findall(r"tools/(?:marketing/)?([a-z0-9-]+\.js)", str(_st.get("run", ""))))
+    for _mod in sorted(_modulos):
+        _cand = [p for p in _FERRAMENTAS if p.endswith("/" + _mod)]
+        if not _cand:
+            continue
+        _le = {v for v in _re.findall(r"process\.env\.([A-Z0-9_]+)", ler(_cand[0]))
+               if _CARA_DE_CREDENCIAL.search(v)}
+        _falta = _le - _passa_no_wf
+        if _falta:
+            _neo.append("%s → %s: %s" % (_f, _mod, ", ".join(sorted(_falta))))
+
+ok("todo módulo executado por workflow recebe todas as envs que ele lê",
+   not _neo, " | ".join(_neo[:4]))
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)

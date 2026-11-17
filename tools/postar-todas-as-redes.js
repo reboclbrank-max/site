@@ -232,7 +232,12 @@ async function postarNostr() {
 // 📧 GMAIL — verificar conexão IMAP
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 async function postarGmail() {
-  const addr = process.env.GMAIL_CHAT_ADDR || process.env.GMAIL_CHAT_ADDRESS;
+  // ORDEM: o nome que o `site` REALMENTE usa vem primeiro. O painel deste repositório tem
+  // `GMAIL_CHAT_ADDRESS`; `GMAIL_CHAT_ADDR` é o nome do repo `chat` e aqui não existe.
+  // Antes estava invertido e funcionava por acidente (ADDR vazio → cai no ||). O dia em que
+  // alguém criasse ADDR no painel, este módulo passaria a ler o valor errado e ninguém
+  // entenderia por quê. O `testar-todas-as-apis.js` já usava esta ordem.
+  const addr = process.env.GMAIL_CHAT_ADDRESS || process.env.GMAIL_CHAT_ADDR;
   // 16/11/2026 — mesma inversão do testar-todas-as-apis, aqui no POST. Este repositório tem
   // os DOIS secrets, e `GMAIL_CHAT_PASS` é a senha comum da conta (o Google recusa por
   // definição em IMAP/SMTP). A senha de app é `GMAIL_CHAT_APPPASS`. Ler a comum primeiro
