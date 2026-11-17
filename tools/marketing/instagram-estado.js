@@ -261,8 +261,10 @@ function resumo() {
   // ausência de posts. Antes de existir, "não publiquei" era indistinguível de "não quis".
   try {
     const pausa = require('./acoes-dos-alertas.js').redePausada('instagram');
+    const motivo = pausa.motivo || '(sem motivo registrado)';
+    const restam = pausa.restam_min != null ? pausa.restam_min : '?';
     linhas.push('| rede pausada | ' + (pausa.pausada
-      ? 'SIM — ' + pausa.motivo + ', faltam ' + pausa.restam_min + ' min'
+      ? 'SIM — ' + motivo + ', faltam ' + restam + ' min'
       : 'não') + ' |');
   } catch (e) {
     linhas.push('| rede pausada | não verificável (módulo de ações ausente) |');

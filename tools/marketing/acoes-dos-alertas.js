@@ -25,7 +25,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const POSTS_DIR = process.env.POSTS_DIR || path.join(__dirname, '..', '..', 'posts');
+// No chat-clone este módulo vive em tools/ (raiz: __dirname/../posts).
+// No site repo vive em tools/marketing/ (raiz: __dirname/../../posts).
+// POSTS_DIR vence quando definido (contratos); senão sobe um nível a partir de tools/.
+const POSTS_DIR = process.env.POSTS_DIR || path.join(__dirname, '..', 'posts');
 const ARQ_ALERTAS = path.join(POSTS_DIR, 'marketing', 'alertas-proativos-marketing.json');
 const ARQ_PAUSAS = path.join(POSTS_DIR, 'marketing', 'redes-pausadas.json');
 
