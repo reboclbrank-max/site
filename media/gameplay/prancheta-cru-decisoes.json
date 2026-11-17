@@ -1,10 +1,10 @@
 {
  "jogo": "prancheta",
- "estrategia": "posse_normal",
+ "estrategia": "contra_ataque",
  "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920",
  "decisoes": [
   {
-   "t": 15.1,
+   "t": 15.2,
    "motivo": "abrir o menu do jogo",
    "acao": "toque em 500,87"
   },
@@ -14,12 +14,12 @@
    "acao": "toque em 500,179"
   },
   {
-   "t": 24.5,
+   "t": 24.6,
    "motivo": "aplicar a sugestão do staff",
    "acao": "toque em 500,232"
   },
   {
-   "t": 28.6,
+   "t": 28.7,
    "motivo": "aplicar o microciclo da semana",
    "acao": "toque em 500,612"
   },
@@ -29,51 +29,56 @@
    "acao": "toque em 500,259"
   },
   {
-   "t": 39.6,
+   "t": 39.7,
    "motivo": "jogar com o plano recomendado",
    "acao": "toque em 500,289"
   },
   {
-   "t": 43.5,
+   "t": 43.6,
    "motivo": "seguir sem mexer (sem instrução)",
    "acao": "toque em 636,573"
   },
   {
-   "t": 47.9,
+   "t": 47.4,
+   "motivo": "acelerar a partida",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 51.7,
+   "motivo": "partida em andamento",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 56.1,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 52.5,
+   "t": 60.5,
    "motivo": "partida em andamento",
    "acao": "toque em 110,608"
   },
   {
-   "t": 57.1,
+   "t": 64.9,
    "motivo": "partida em andamento",
    "acao": "toque em 636,573"
   },
   {
-   "t": 61.6,
+   "t": 69.3,
+   "motivo": "partida em andamento",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 73.7,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 66.1,
-   "motivo": "partida em andamento",
-   "acao": "toque em 640,360"
-  },
-  {
-   "t": 70.6,
-   "motivo": "partida em andamento",
-   "acao": "toque em 110,608"
-  },
-  {
-   "t": 75.1,
-   "motivo": "partida em andamento",
-   "acao": "toque em 636,573"
+   "t": 78.6,
+   "motivo": "pular para o fim da partida",
+   "acao": "toque em 900,705"
   }
  ],
  "passos_confirmados": 12,
- "toques_partida": 7
+ "toques_partida": 6
 }
