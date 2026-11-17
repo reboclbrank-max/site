@@ -643,6 +643,33 @@
    "quando": "2026-11-17",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "video-85nRhygguhs",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Quem fez CEIFALUME e por quê\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "video-igf33ZusQs8",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Bastidor de CEIFALUME: o que está por trás da partida\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "video-QPRgb4ny43s",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"CEIFALUME é idle farm — e o que isso quer dizer\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
   }
  ]
 }
