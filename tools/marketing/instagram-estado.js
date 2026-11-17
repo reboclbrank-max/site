@@ -31,11 +31,55 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const RAIZ = path.resolve(__dirname, '..', '..');
-const DIR = path.join(RAIZ, 'posts', 'marketing');
+// POSTS_DIR: os contratos apontam o estado para um temporário e provam o portão sem escrever
+// no repositório versionado. Em produção a variável não existe e o estado é o do repo.
+// (17/11/2026 — REGRESSÃO: esta linha existia desde 16/11 e foi PERDIDA quando o arquivo foi
+// reescrito para adicionar IG_AGORA. O contrato 96 do repositório continuou passando porque
+// checava outra coisa, e o teste que dependia do isolamento começou a ler o repo de verdade.)
+// Este é o mesmo defeito que já apareceu três vezes nesta casa: caminho fixo em módulo testável.
+const RAIZ = process.env.POSTS_DIR
+  ? path.dirname(path.resolve(process.env.POSTS_DIR))
+  : path.resolve(__dirname, '..', '..');
+const DIR = process.env.POSTS_DIR
+  ? path.join(path.resolve(process.env.POSTS_DIR), 'marketing')
+  : path.join(RAIZ, 'posts', 'marketing');
 const ARQ = path.join(DIR, 'instagram-publicados.json');
 
-const INTERVALO_MINIMO_MIN = Number(process.env.IG_INTERVALO_MINUTOS || 120);
+// ─── FECHO DE LOOP: O OTIMIZADOR MANDA AQUI ───────────────────────────────────────────
+// 17/11/2026 — até aqui este arquivo usava 120 fixo (ou IG_INTERVALO_MINUTOS do YAML), e o
+// `calcularCadencia()` do auto-otimizador calculava um intervalo REAL — 150 min com 600
+// acessos, 300 com 80 — que ninguém lia. Era um cálculo que não virava ação: o sistema media,
+// concluía e ignorava a própria conclusão.
+// Agora a ordem é: IG_INTERVALO_MINUTOS (força explícita) > otimizador (dado real) > 120.
+// A força explícita continua vencendo de propósito: quem quer testar ou travar a cadência não
+// deve brigar com o histórico.
+function intervaloDoOtimizador() {
+  try {
+    const mod = require('./auto-otimizador-avancado.js');
+    const cad = mod.calcularCadencia('instagram', 'ambos');
+    if (cad && cad.ok && Number(cad.intervalo_minutos) > 0) {
+      return { minutos: Number(cad.intervalo_minutos), fonte: 'otimizador', acessos: cad.total_acessos };
+    }
+    // o otimizador guarda por jogo; 'ambos' pode não existir. Tenta os dois jogos e usa o MAIOR
+    // intervalo (o mais conservador) — jamais publicar mais rápido do que o dado justifica.
+    const porJogo = ['ceifalume', 'prancheta']
+      .map(j => mod.calcularCadencia('instagram', j))
+      .filter(c => c && c.ok && Number(c.intervalo_minutos) > 0);
+    if (porJogo.length) {
+      const maior = porJogo.reduce((a, b) => (a.intervalo_minutos >= b.intervalo_minutos ? a : b));
+      return { minutos: Number(maior.intervalo_minutos), fonte: 'otimizador/' + maior.jogo,
+               acessos: maior.total_acessos };
+    }
+  } catch (e) { /* otimizador ausente ou sem estado: cai no padrão */ }
+  return null;
+}
+
+const _otim = process.env.IG_INTERVALO_MINUTOS ? null : intervaloDoOtimizador();
+const INTERVALO_MINIMO_MIN = Number(
+  process.env.IG_INTERVALO_MINUTOS || (_otim && _otim.minutos) || 120);
+const INTERVALO_FONTE = process.env.IG_INTERVALO_MINUTOS ? 'IG_INTERVALO_MINUTOS'
+  : (_otim ? _otim.fonte : 'padrão 120 (sem dado do otimizador)');
+
 const TETO_DIARIO = Number(process.env.IG_TETO_DIARIO || 3);
 const JANELA = [9, 22];   // hora de Brasília (0-23)
 
@@ -176,6 +220,8 @@ function resumo() {
   linhas.push('| --- | --- |');
   linhas.push('| publicações registradas | ' + d.publicados.length + ' |');
   linhas.push('| intervalo mínimo | ' + INTERVALO_MINIMO_MIN + ' min |');
+  // de onde veio o número: sem isso o painel mostra 150 e ninguém sabe se é dado ou chute
+  linhas.push('| origem do intervalo | ' + INTERVALO_FONTE + ' |');
   linhas.push('| teto diário | ' + TETO_DIARIO + ' |');
   linhas.push('| janela | ' + JANELA[0] + 'h–' + JANELA[1] + 'h (Brasília) |');
   if (d.publicados.length) {

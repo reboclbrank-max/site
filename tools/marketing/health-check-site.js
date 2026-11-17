@@ -370,15 +370,37 @@ function tentarRecuperacao(camada) {
     const declarada = CAMADAS.find(c => c.id === camada.camada);
     if (declarada) camada = { ...camada, nome: declarada.nome };
   }
-  // Só estado com esqueleto conhecido é recriado. Script quebrado NUNCA é "consertado".
-  if (camada.tipo === 'estado' && ESQUELETO[camada.nome] && !fs.existsSync(path.join(RAIZ, camada.nome))) {
-    try {
-      fs.mkdirSync(DIR_POSTS, { recursive: true });
-      fs.writeFileSync(path.join(RAIZ, camada.nome),
-        JSON.stringify(ESQUELETO[camada.nome], null, 1) + '\n', 'utf8');
-      return { recuperou: true, motivo: 'estado ausente recriado com esqueleto vazio (não é sucesso: é começo do zero)' };
-    } catch (e) {
-      return { recuperou: false, motivo: 'falha ao recriar: ' + String(e.message).slice(0, 80) };
+  const esqueleto = ESQUELETO[camada.nome];
+  if (camada.tipo === 'estado' && esqueleto) {
+    const caminho = path.join(RAIZ, camada.nome);
+    const ausente = !fs.existsSync(caminho);
+    // 17/11/2026 — ARQUIVO CORROMPIDO TAMBÉM É ESTADO AUSENTE.
+    // A recuperação só olhava `!existsSync`: um `posts/orquestrador.json` com JSON quebrado
+    // (escrita interrompida, merge ruim, disco cheio no meio do write) ficava `json_invalido`
+    // para sempre. Medido: com o arquivo corrompido, `recuperacoes.tentadas` = 3 e todas as
+    // outras camadas de estado voltavam — ESTA não voltava nunca. O sistema tinha um jeito de
+    // ficar doente permanentemente, e o painel dizia "sem recuperação automática".
+    // Regra nova: se o arquivo não abre como JSON, ele é lixo — preserve o lixo antes de
+    // sobrescrever (para não perder prova do que aconteceu) e recrie o esqueleto.
+    let corrompido = false;
+    if (!ausente) {
+      try { JSON.parse(fs.readFileSync(caminho, 'utf8')); } catch (e) { corrompido = true; }
+    }
+    if (ausente || corrompido) {
+      try {
+        fs.mkdirSync(DIR_POSTS, { recursive: true });
+        if (corrompido) {
+          // guarda o arquivo doente: recriar por cima apagaria a única evidência do defeito
+          const guarda = caminho + '.corrompido-' + Date.now();
+          try { fs.copyFileSync(caminho, guarda); } catch (e) { /* se não der, segue */ }
+        }
+        fs.writeFileSync(caminho, JSON.stringify(esqueleto, null, 1) + '\n', 'utf8');
+        return { recuperou: true, motivo: corrompido
+          ? 'estado CORROMPIDO (JSON inválido) guardado ao lado e recriado com esqueleto vazio'
+          : 'estado ausente recriado com esqueleto vazio (não é sucesso: é começo do zero)' };
+      } catch (e) {
+        return { recuperou: false, motivo: 'falha ao recriar: ' + String(e.message).slice(0, 80) };
+      }
     }
   }
   if (camada.tipo === 'script' && camada.status === 'sintaxe_invalida') {

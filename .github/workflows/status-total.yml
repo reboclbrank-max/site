@@ -41,6 +41,31 @@ jobs:
       - name: Contratos da Fase 2 (offline)
         run: python3 tools/rodar-contratos-isolados.py tools/testes-fase2-producao.py
 
+      # ── O DADO REAL QUE O OTIMIZADOR PRECISA ──────────────────────────────────────────
+      # 17/11/2026: `metricas_engajamento` vivia vazio porque ninguém COLETAVA engajamento —
+      # só se registrava "publiquei às Xh". Sem curtida/vídeo assistido, `calcularCadencia()`
+      # usava metade da informação e o "auto-otimizador" não otimizava: media.
+      # Este passo lê as redes (Instagram Graph, YouTube Data) e grava o que elas devolveram.
+      # `continue-on-error` porque API de terceiro fora do ar não é defeito desta casa — mas o
+      # código do coletor vai para o resumo (0 ok · 2 nada a coletar · 3 falha/credencial).
+      - name: Coleta o engajamento real (alimenta o auto-otimizador)
+        continue-on-error: true
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+        run: |
+          set +e
+          node tools/marketing/coletar-engajamento.js | tee /tmp/engajamento.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Engajamento real coletado"
+            echo '```'
+            cat /tmp/engajamento.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "código do coletor: $codigo (0 coletou · 2 nada a coletar · 3 falha)"
+          exit 0
+
       - name: Gera o relatório integrado
         shell: bash -o pipefail -e {0}
         env:

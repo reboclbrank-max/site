@@ -165,12 +165,29 @@ function main() {
     console.log('❌ jogo inválido: ' + jogo + ' (aceitos: ' + JOGOS.join(', ') + ')');
     return 2;
   }
+  // 17/11/2026 — `ambos` É REGISTRO CEGO, NÃO REGISTRO DUPLO.
+  // O otimizador itera `['ceifalume','prancheta']`. Um registro com jogo='ambos' entra em
+  // `fluxo_acesso[rede]['ambos']` e NUNCA é lido por ninguém: medido em produção, 2 registros
+  // de Instagram gravados e `otimizacoes: []` — o Instagram trabalhou e o otimizador não viu.
+  // Pior: os dois jogos têm prioridade igual por regra do dono, então registrar "ambos" também
+  // impede saber qual jogo o público procurou.
+  // Agora a postagem em que os DOIS aparecem grava um registro PARA CADA JOGO. É honesto: a
+  // peça falou dos dois, então os dois ganham o ponto de acesso naquela hora.
 
   const regs = lerRegistros();
   const registro = { quando: new Date().toISOString(), evento, rede, jogo, origem, fonte };
 
   if (evento === 'publicacao') {
-    const total = registrarAcesso(rede, jogo, hora, quantidade, origem);
+    // peça que fala dos dois jogos conta para os dois (prioridade igual, registros separados)
+    // ATENÇÃO: UMA chamada por jogo. A primeira versão chamava `registrarAcesso` no laço E
+    // no `total`, contando 2× a mesma peça (o contrato pegou: esperava 2, viu 4). O total
+    // vem do primeiro jogo só para a mensagem — não soma de novo.
+    const jogos = jogo === 'ambos' ? ['ceifalume', 'prancheta'] : [jogo];
+    let total = null;
+    for (const j of jogos) {
+      const r = registrarAcesso(rede, j, hora, quantidade, origem);
+      if (total === null) total = r;
+    }
     registro.tipo = 'acesso';
     registro.hora = Number(hora);
     registro.quantidade = Number(quantidade);

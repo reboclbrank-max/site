@@ -23,10 +23,19 @@ const JOGOS = ['ceifalume', 'prancheta'];
 const REDES = ['instagram', 'x', 'nostr', 'gmail', 'threads', 'bluesky', 'youtube'];
 
 let cache = null;
-function carregar() {
-  if (cache) return cache;
-  try { if (fs.existsSync(ARQ)) cache = JSON.parse(fs.readFileSync(ARQ, 'utf8')); } catch (e) {}
-  cache = {
+
+// 17/11/2026 — O DEFEITO QUE MATAVA O OTIMIZADOR EM SILÊNCIO.
+// A versão anterior era:
+//     try { if (fs.existsSync(ARQ)) cache = JSON.parse(...) } catch (e) {}
+//     cache = { ativo: false, fluxo_acesso: {}, ... }      // ← RODAVA SEMPRE
+// Ou seja: o arquivo era lido e, na linha seguinte, SOBRESCRITO pelo estado vazio padrão.
+// Todo dado real era destruído na primeira leitura de cada processo. O sintoma era cruel:
+// gravar e ler na MESMA execução funcionava (o `cache` em memória tinha o dado); num processo
+// novo, o histórico sumia. Foi por isso que, em produção, `metricas_engajamento` continuava
+// `{}` mesmo com o coletor rodando: o coletor gravava, e o otimizador apagava na leitura.
+// O `try` sem `else` é uma armadilha: parece tratar o erro e na verdade descarta o sucesso.
+function vazio() {
+  return {
     ativo: false,
     fluxo_acesso: {}, // { rede: { jogo: { hora: acessos } } }
     metricas_engajamento: {}, // { rede: { jogo: { curtidas, compartilhamentos, comentarios, cliques } } }
@@ -35,6 +44,24 @@ function carregar() {
     criadoEm: new Date().toISOString(),
     atualizadoEm: new Date().toISOString()
   };
+}
+
+function carregar() {
+  if (cache) return cache;
+  if (fs.existsSync(ARQ)) {
+    try {
+      const lido = JSON.parse(fs.readFileSync(ARQ, 'utf8'));
+      if (lido && typeof lido === 'object') {
+        // completa o que faltar sem apagar o que existe
+        cache = Object.assign(vazio(), lido);
+        return cache;
+      }
+    } catch (e) {
+      // arquivo ilegível: NÃO o apaga em silêncio — guarda ao lado, como o health check faz
+      try { fs.copyFileSync(ARQ, ARQ + '.corrompido-' + Date.now()); } catch (e2) {}
+    }
+  }
+  cache = vazio();
   return cache;
 }
 function salvar() {

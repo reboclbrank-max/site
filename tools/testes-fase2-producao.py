@@ -576,5 +576,190 @@ for _f in sorted(os.listdir(WFS)):
 ok("todo módulo executado por workflow recebe todas as envs que ele lê",
    not _neo, " | ".join(_neo[:4]))
 
+# ══════════════ 14. AUTO-RECUPERAÇÃO COM A CAMADA DOENTE (o que faltava provar)
+# (17/11/2026, pedido do instrutor) O contrato anterior apagava um estado AUSENTE e via o health
+# check recriá-lo. Faltava o caso mais realista: arquivo PRESENTE e CORROMPIDO — escrita
+# interrompida, merge ruim, disco cheio no meio do write. Medido antes do conserto:
+#     status: json_invalido · ativa: false · recuperação: "sem recuperação automática"
+# Ou seja: o sistema tinha um jeito de ficar doente para sempre, e o painel não avisava que
+# dava para consertar. A recuperação só olhava `!existsSync`.
+# Este contrato exige: camada doente → recuperação tentada → camada volta ativa → evidência guardada.
+_RAIZ_DOENTE = tempfile.mkdtemp(prefix="fase2-doente-")
+_sh.copytree(os.path.join(RAIZ, ".github"), os.path.join(_RAIZ_DOENTE, ".github"))
+_sh.copytree(AQUI, os.path.join(_RAIZ_DOENTE, "tools"),
+             ignore=_sh.ignore_patterns("__pycache__", "posts"))
+os.makedirs(os.path.join(_RAIZ_DOENTE, "posts"), exist_ok=True)
+with open(os.path.join(_RAIZ_DOENTE, "posts", "orquestrador.json"), "w", encoding="utf-8") as f:
+    f.write('{ isto nao e json')      # o estado doente
+
+_env_d = {"SITE_RAIZ": _RAIZ_DOENTE, "POSTS_DIR": os.path.join(_RAIZ_DOENTE, "posts"),
+          "GITHUB_ACTIONS": "true"}
+for _k in ("YT_REFRESH_TOKEN", "YT_CLIENT_ID", "IG_TOKEN", "IG_USER_ID",
+           "GMAIL_CHAT_APPPASS", "NOSTR_KEY", "THREADS_TOKEN", "BLUESKY_APPPASS"):
+    _env_d[_k] = "presente"
+_doente, _erro_doente = jnode(HC, env=_env_d)
+_cam = next((d for d in (_doente or {}).get("detalhe", [])
+             if d.get("camada") == "estado-orquestrador"), {})
+_rec_d = (_doente or {}).get("recuperacoes", {}) or {}
+
+ok("camada doente (JSON corrompido) é RECUPERADA e volta ativa",
+   _cam.get("ativa") is True and _cam.get("status") == "recriada",
+   "status=%s ativa=%s rec=%s" % (_cam.get("status"), _cam.get("ativa"),
+                                  str(_cam.get("recuperacao"))[:70]))
+ok("a tentativa de recuperação é REGISTRADA (não é recuperação silenciosa)",
+   _rec_d.get("sucesso", 0) >= 1
+   and any(i.get("camada") == "estado-orquestrador" for i in _rec_d.get("itens", [])),
+   json.dumps(_rec_d)[:200])
+ok("o arquivo doente é PRESERVADO como evidência antes de recriar",
+   any("corrompido" in _n for _n in os.listdir(os.path.join(_RAIZ_DOENTE, "posts"))),
+   os.listdir(os.path.join(_RAIZ_DOENTE, "posts")))
+ok("o run não quebra com a camada doente (código 0 e relatório completo)",
+   isinstance(_doente, dict) and _doente.get("camadas_total", 0) > 0,
+   _erro_doente)
+# ── e o contrário: com a camada SÃ, nenhuma recuperação é tentada ────────────────
+_RAIZ_SA = tempfile.mkdtemp(prefix="fase2-sa-")
+_sh.copytree(os.path.join(RAIZ, ".github"), os.path.join(_RAIZ_SA, ".github"))
+_sh.copytree(AQUI, os.path.join(_RAIZ_SA, "tools"),
+             ignore=_sh.ignore_patterns("__pycache__", "posts"))
+_sh.copytree(os.path.join(RAIZ, "posts"), os.path.join(_RAIZ_SA, "posts"))
+_sa, _ = jnode(HC, env={**_env_d, "SITE_RAIZ": _RAIZ_SA,
+                        "POSTS_DIR": os.path.join(_RAIZ_SA, "posts")})
+ok("com a camada SÃ, nenhuma recuperação é inventada",
+   ((_sa or {}).get("recuperacoes") or {}).get("tentadas", 0) == 0,
+   json.dumps((_sa or {}).get("recuperacoes"))[:160])
+_sh.rmtree(_RAIZ_DOENTE, ignore_errors=True)
+_sh.rmtree(_RAIZ_SA, ignore_errors=True)
+
+# ══════════ 15. AUTO-OTIMIZADOR: NÃO PERDER O DADO, E FECHAR O LOOP (itens 3 e 4)
+# (17/11/2026) Dois defeitos reais, ambos medidos:
+#
+# a) O ESTADO ERA DESTRUÍDO NA LEITURA. `carregar()` fazia
+#        try { if (exists) cache = JSON.parse(...) } catch {}
+#        cache = { estado vazio }          ← rodava SEMPRE, sobrescrevendo o lido
+#    Gravar e ler no MESMO processo funcionava; em processo novo o histórico sumia. Por isso
+#    `metricas_engajamento` ficava `{}` em produção mesmo com o coletor rodando.
+#
+# b) O CÁLCULO NÃO VIRAVA AÇÃO. `calcularCadencia()` devolvia 90/150/300 min e ninguém lia:
+#    o portão do Instagram usava 120 fixo do YAML. O sistema media, concluía e ignorava.
+#
+# Este bloco prova os dois com PROCESSOS SEPARADOS (é o único jeito de provar (a): no mesmo
+# processo o cache em memória esconde o defeito) e prova (b) lendo o intervalo efetivo do
+# portão depois de alimentar o otimizador.
+_OT = tempfile.mkdtemp(prefix="fase2-otim-")
+os.makedirs(os.path.join(_OT, "posts", "marketing"), exist_ok=True)
+_OT_ENV = {"POSTS_DIR": os.path.join(_OT, "posts")}
+
+# (a) grava num processo...
+node(os.path.join(MARKETING, "auto-otimizador-avancado.js"), "-e", "", env=_OT_ENV)  # aquece
+_grava = ("const m=require(process.env.MOD);m.ativarAutoOtimizador();"
+          "m.registrarAcesso('instagram','prancheta','19',700,'contrato');"
+          "m.registrarEngajamento('instagram','prancheta','curtidas',120);")
+node("-e", _grava, env={**_OT_ENV, "MOD": os.path.join(MARKETING, "auto-otimizador-avancado.js")})
+# ...e lê em OUTRO processo
+_le = ("const m=require(process.env.MOD);"
+       "process.stdout.write(JSON.stringify(m.calcularCadencia('instagram','prancheta')))")
+_r1 = node("-e", _le, env={**_OT_ENV, "MOD": os.path.join(MARKETING, "auto-otimizador-avancado.js")})
+_d1 = {}
+try:
+    _d1 = json.loads((_r1.stdout or "{}").strip().splitlines()[-1])
+except Exception:
+    pass
+ok("o otimizador NÃO perde o estado entre processos (defeito do try sem else)",
+   _d1.get("ok") is True and _d1.get("total_acessos") == 700,
+   (r1.stdout or r1.stderr)[:150])
+
+# (b) o portão lê o intervalo do otimizador e ele DIFERE do padrão
+_r2 = node(os.path.join(MARKETING, "instagram-estado.js"), "--resumo", env=_OT_ENV)
+_txt = (_r2.stdout or "")
+_m = _re.search(r"intervalo mínimo \| (\d+) min", _txt)
+ok("o portão do Instagram USA o intervalo do otimizador (cálculo vira ação)",
+   _m is not None and int(_m.group(1)) != 120 and "otimizador" in _txt,
+   "(padrão seria 120) " + _txt.replace("\n", " ")[:170])
+ok("o portão mostra de onde veio o intervalo (dado ou chute)",
+   "origem do intervalo" in _txt, _txt[:120])
+
+# (b2) força explícita continua vencendo o otimizador — quem quer travar a cadência não briga
+_r3 = node(os.path.join(MARKETING, "instagram-estado.js"), "--resumo",
+           env={**_OT_ENV, "IG_INTERVALO_MINUTOS": "45"})
+_m3 = _re.search(r"intervalo mínimo \| (\d+) min", _r3.stdout or "")
+ok("IG_INTERVALO_MINUTOS vence o otimizador (força explícita manda)",
+   _m3 is not None and int(_m3.group(1)) == 45, (_r3.stdout or "")[:120])
+
+# (b3) sem dado nenhum, cai no padrão e DIZ que é padrão
+_OT_VAZIO = tempfile.mkdtemp(prefix="fase2-otim-vazio-")
+os.makedirs(os.path.join(_OT_VAZIO, "posts", "marketing"), exist_ok=True)
+_r4 = node(os.path.join(MARKETING, "instagram-estado.js"), "--resumo",
+           env={"POSTS_DIR": os.path.join(_OT_VAZIO, "posts")})
+ok("sem dado do otimizador, o portão usa 120 e admite que é padrão",
+   "padrão" in (_r4.stdout or "") and "120 min" in (_r4.stdout or ""),
+   (_r4.stdout or "")[:150])
+_sh.rmtree(_OT, ignore_errors=True)
+_sh.rmtree(_OT_VAZIO, ignore_errors=True)
+
+# ══════════════════ 16. O COLETOR DE ENGAJAMENTO (o elo que faltava para o item 3)
+# (17/11/2026) Item 3 do pedido: "não há workflow chamando registrarAcesso/Engajamento com
+# dados reais de engajamento". Era verdade: `metricas_engajamento` ficava `{}` em produção.
+# Este bloco prova que (a) o coletor existe e LÊ as duas redes, (b) ele NUNCA inventa zero
+# quando a credencial falta, e (c) o workflow o executa e versiona o resultado.
+COL = os.path.join(MARKETING, "coletar-engajamento.js")
+ok("existe um coletor de engajamento real", os.path.exists(COL))
+
+# (b) sem credencial: código 3 e nenhum número inventado
+_sem_cred = node(COL, "--json", env={"IG_TOKEN": "", "YT_API_KEY": ""})
+_sd = {}
+try:
+    # o --json imprime o OBJETO INTEIRO (multilinha) — pegar só a última linha devolvia "}".
+    _sd = json.loads(_sem_cred.stdout or "{}")
+except Exception:
+    pass
+ok("coletor sem credencial NÃO inventa zero (diz 'não verificável' e sai 3)",
+   _sem_cred.returncode == 3 and not (_sd.get("por_rede") or {})
+   and any("não verificável" in f for f in (_sd.get("falhas") or [])),
+   "código=%s saida=%s" % (_sem_cred.returncode, (_sem_cred.stdout or "")[:140]))
+
+# (a) com um duplo de HTTP no mesmo processo: lê e ATRIBUI o jogo certo
+_prova = (
+    "const cham=[];"
+    "global.fetch=async(u)=>{const s=String(u);cham.push(s.split('?')[0]);"
+    "let c;"
+    "if(s.includes('/v21.0/111'))c={like_count:7,comments_count:2};"
+    "else if(s.includes('youtube/v3/videos'))c={items:["
+    "{id:'YT1',statistics:{viewCount:'50',likeCount:'5',commentCount:'3'}}]};"
+    "else c={error:{message:'x'}};"
+    "return{ok:!c.error,status:c.error?400:200,json:async()=>c};};"
+    "process.env.IG_TOKEN='t';process.env.YT_API_KEY='k';"
+    "const m=require(process.env.COL);"
+    "(async()=>{await m.coletarInstagram();await m.coletarYouTube();"
+    "process.stdout.write(JSON.stringify({chamadas:cham.length,"
+    "prancheta:m.jogoDaPeca('prancheta-gameplay','PRANCHETA: x'),"
+    "ambos:m.jogoDaPeca('#Prancheta #Ceifalume')}));})();"
+)
+_COL_TMP = tempfile.mkdtemp(prefix="fase2-col-")
+os.makedirs(os.path.join(_COL_TMP, "posts", "marketing"), exist_ok=True)
+with open(os.path.join(_COL_TMP, "posts", "marketing", "instagram-publicados.json"), "w",
+          encoding="utf-8") as f:
+    json.dump({"publicados": [{"media_id": "111", "legenda": "#Prancheta"}]}, f)
+with open(os.path.join(_COL_TMP, "posts", "youtube-publicados.json"), "w", encoding="utf-8") as f:
+    json.dump({"publicados": [{"id": "YT1", "slug": "prancheta-gameplay",
+                               "titulo": "PRANCHETA: x"}]}, f)
+_rc = node("-e", _prova, env={"POSTS_DIR": os.path.join(_COL_TMP, "posts"), "COL": COL})
+_cd = {}
+try:
+    _cd = json.loads((_rc.stdout or "{}").strip().splitlines()[-1])
+except Exception:
+    pass
+ok("o coletor LÊ as duas redes e atribui o jogo pela peça",
+   _cd.get("chamadas", 0) >= 2 and _cd.get("prancheta") == "prancheta"
+   and _cd.get("ambos") == "ambos",
+   (_rc.stdout or _rc.stderr or "")[:160])
+_sh.rmtree(_COL_TMP, ignore_errors=True)
+
+# (c) o workflow executa o coletor
+_ST = ler(os.path.join(WFS, "status-total.yml"))
+ok("o status-total EXECUTA o coletor de engajamento",
+   "coletar-engajamento.js" in _ST, "status-total.yml não chama o coletor")
+ok("o workflow passa ao coletor as credenciais que ele lê",
+   "IG_TOKEN" in _ST and "YT_API_KEY" in _ST)
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)
