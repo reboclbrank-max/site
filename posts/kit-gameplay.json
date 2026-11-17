@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "semente_do_dia",
-   "fato": null,
+   "angulo": "como_funciona:video-QPRgb4ny43s",
+   "fato": "video-QPRgb4ny43s",
    "numeros": {
-    "plantadas": 8,
-    "colhidas": 5,
-    "toques": 793,
+    "plantadas": 13,
+    "colhidas": 9,
+    "toques": 969,
     "minutos": 2,
-    "toques_por_minuto": 396
+    "toques_por_minuto": 484
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4140062,
+   "bytes": 4112545,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Semente do dia: 8 mudas para 5 colheitas em 2 min",
-   "descricao": "🌱 Semente do dia: 8 mudas no chão e 5 colheitas na cesta em 2 minutos de gravação.\n\nO campo é noturno de propósito: enxergar pouco faz parte da escolha de onde apertar.\n\nO relógio de cada canteiro corre mesmo com o aplicativo fechado, e é ele que dá o ritmo.\n\nQuem abrir o jogo no navegador vê a mesma fazenda, com o mesmo relógio.\n\nFonte: posts/cenas.json (partida d8e6d4b45d9d, conferida em 2026-11-16T22:27:07Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #jogobrasileiro",
+   "titulo": "Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é idle farm —",
+   "descricao": "O canal da casa publicou o vídeo \"CEIFALUME é idle farm — e o que isso quer dizer\".\n\nNa gravação desta partida: 13 mudas plantadas e 9 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: posts/youtube-publicados.json (conferido em 2026-11-17).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -81,7 +81,7 @@
     },
     {
      "angulo": "genero:ceifalume-8h",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-8h",
@@ -177,7 +177,7 @@
     },
     {
      "angulo": "genero:ceifalume-tutorial",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-tutorial",
@@ -225,7 +225,7 @@
     },
     {
      "angulo": "genero:ceifalume-apk",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-apk",
@@ -273,7 +273,7 @@
     },
     {
      "angulo": "genero:ceifalume-anuncio",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-anuncio",
@@ -321,7 +321,7 @@
     },
     {
      "angulo": "genero:ceifalume-save",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-save",
@@ -465,7 +465,7 @@
     },
     {
      "angulo": "genero:ceifalume-versao",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:ceifalume-versao",
@@ -513,7 +513,7 @@
     },
     {
      "angulo": "genero:oficio-devlog",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:oficio-devlog",
@@ -561,7 +561,7 @@
     },
     {
      "angulo": "genero:casa-canais",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:casa-canais",
@@ -609,7 +609,7 @@
     },
     {
      "angulo": "genero:casa-newsletter",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:casa-newsletter",
@@ -657,7 +657,7 @@
     },
     {
      "angulo": "genero:casa-telegram",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:casa-telegram",
@@ -849,7 +849,7 @@
     },
     {
      "angulo": "genero:video-cfB5ZBdC-NA",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:video-cfB5ZBdC-NA",
@@ -897,7 +897,7 @@
     },
     {
      "angulo": "genero:video-_ffmjSMsW0Y",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:video-_ffmjSMsW0Y",
@@ -945,7 +945,7 @@
     },
     {
      "angulo": "genero:video-hBvkQhSS-_4",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 9 frases, 0 hashtags): CEIFALUME é idle farm — e o que isso quer dizer"
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
     },
     {
      "angulo": "bastidor_do_dia:video-hBvkQhSS-_4",
@@ -1000,12 +1000,912 @@
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
+     "angulo": "como_funciona:video-a5AVwpewoGE",
+     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-a5AVwpewoGE",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-IYi1JfJFgcU",
+     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-IYi1JfJFgcU",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-4dUlp9uODpw",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-4dUlp9uODpw",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-806i-rPzC9w",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-806i-rPzC9w",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-WewOjNDzEDQ",
+     "motivo": "texto repetido: 0.67 de semelhança com \"Como funciona: são seis culturas no celeiro: abóbora, flor d\""
+    },
+    {
+     "angulo": "onde_jogar:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-WewOjNDzEDQ",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-3fGB7drCbTc",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-3fGB7drCbTc",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-85nRhygguhs",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-85nRhygguhs",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-igf33ZusQs8",
+     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-igf33ZusQs8",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "onde_jogar:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-ihxVpjQoczQ",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-ihxVpjQoczQ",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-FNzW9c45E3M",
+     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-FNzW9c45E3M",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-FRCzgqUlMFY",
+     "motivo": "texto repetido: 0.74 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-FRCzgqUlMFY",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-PRyg0Ncz5U8",
+     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-PRyg0Ncz5U8",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-HmbEdojjhsU",
+     "motivo": "texto repetido: 0.68 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+    },
+    {
+     "angulo": "onde_jogar:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-HmbEdojjhsU",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-L2UIYmofEiE",
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-L2UIYmofEiE",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-03313IcXvEo",
+     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+    },
+    {
+     "angulo": "onde_jogar:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-03313IcXvEo",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "onde_jogar:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-f5kQFOQs0To",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "onde_jogar:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-GuE7af6dYo8",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "onde_jogar:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-2qsSknSyeAs",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "passo_a_passo",
-     "motivo": "título quase igual a um já publicado (0.97)"
+     "motivo": "título quase igual a um já publicado (0.98)"
     },
     {
      "angulo": "medida_por_minuto",
      "motivo": "título quase igual a um já publicado (0.98)"
+    },
+    {
+     "angulo": "semente_do_dia",
+     "motivo": "título quase igual a um já publicado (0.95)"
     },
     {
      "angulo": "numeros",
@@ -1024,8 +1924,8 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 8,
-   "angulos_candidatos": 254
+   "angulos_aprovados": 11,
+   "angulos_candidatos": 482
   },
   {
    "id": "prancheta-gameplay",
