@@ -555,6 +555,31 @@
    "hashtags": 1,
    "nota": 0.846,
    "texto": "Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lançada em 17 de setembro de 2026. Prepare-se para a era da automação! #ceifalume"
+  },
+  {
+   "quando": "2026-11-17T19:01:26Z",
+   "canal": "site",
+   "angulo": "pergunta_ao_publico",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-ficticio",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "voce ja",
+   "tipo_abertura": "voce",
+   "esqueleto": [
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Você já configurou a Prancheta para mudar a tática em tempo real? Com até 5 trocas, é possível otimizar a partida sem perder o controle do jogo. #prancheta"
   }
  ],
  "fatos_de_uma_vez": [
@@ -598,24 +623,29 @@
   "ceifalume-versao"
  ],
  "ultimo": {
-  "quando": "2026-11-17T16:42:50Z",
+  "quando": "2026-11-17T19:01:26Z",
   "canal": "site",
-  "angulo": "marco_com_data",
-  "assunto": "ceifalume",
+  "angulo": "pergunta_ao_publico",
+  "assunto": "prancheta",
   "fatos": [
-   "ceifalume-versao"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-ficticio",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "ceifalume (idle",
-  "tipo_abertura": "frase",
+  "abertura": "voce ja",
+  "tipo_abertura": "voce",
   "esqueleto": [
-   "frase",
-   "frase",
+   "pergunta",
    "frase",
    "frase"
   ],
   "hashtags": 1,
   "nota": 0.846,
-  "texto": "Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lançada em 17 de setembro de 2026. Prepare-se para a era da automação! #ceifalume"
+  "texto": "Você já configurou a Prancheta para mudar a tática em tempo real? Com até 5 trocas, é possível otimizar a partida sem perder o controle do jogo. #prancheta"
  },
  "publicacoes": [
   {
@@ -769,6 +799,17 @@
    "fatos": [],
    "texto": "Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lançada em 17 de setembro de 2026. Prepare-se para a era da automação! #ceifalume",
    "titulo": "Ceifalume (idle night farm, navegador & Android) chega ao mundo!",
+   "nota": 0.846,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-17T19:01:26Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Você já configurou a Prancheta para mudar a tática em tempo real? Com até 5 trocas, é possível otimizar a partida sem perder o controle do jogo. #prancheta",
+   "titulo": "Você já configurou a Prancheta para mudar a tática em tempo real?",
    "nota": 0.846,
    "tipo": "publicacao"
   }
