@@ -159,6 +159,23 @@ function podePublicar({ imagem, legenda, agora } = {}) {
   const d = ler();
   const motivos = [];
 
+  // 17/11/2026 — O ALERTA CRÍTICO PRECISA MANDAR AQUI.
+  // Até hoje, `alertas-proativos-marketing.js` detectava token vencido, gravava um alerta
+  // `critica` num JSON e... a publicação tentava de novo no próximo horário. Alerta que não
+  // impede a ação seguinte não é alerta, é anotação.
+  // `acoes-dos-alertas.js` pausa a rede quando o alerta é acionado; este portão OBEDECE.
+  // Se o módulo não existir (instalação antiga), a publicação não é bloqueada por tabela —
+  // mas a ausência aparece no resumo do portão, porque "não consegui verificar" não pode
+  // parecer "está tudo bem".
+  let pausa = { pausada: false, indisponivel: true };
+  try {
+    pausa = require('./acoes-dos-alertas.js').redePausada('instagram', { agora });
+  } catch (e) { /* módulo ausente: registrado como indisponível abaixo */ }
+  if (pausa.pausada) {
+    motivos.push('rede PAUSADA por alerta acionado: ' + pausa.motivo +
+      ' (faltam ' + pausa.restam_min + ' min, até ' + String(pausa.ate).slice(11, 16) + 'Z)');
+  }
+
   const hora = horaBrasilia(agora);
   if (hora < JANELA[0] || hora >= JANELA[1]) {
     motivos.push('fora da janela: ' + String(hora).padStart(2, '0') +
@@ -239,6 +256,17 @@ function resumo() {
   linhas.push('| intervalo mínimo | ' + INTERVALO_MINIMO_MIN + ' min |');
   // de onde veio o número: sem isso o painel mostra 150 e ninguém sabe se é dado ou chute
   linhas.push('| origem do intervalo | ' + INTERVALO_FONTE + ' |');
+  // 17/11/2026: uma pausa ativa é a informação MAIS importante deste resumo — se o portão
+  // está bloqueando a publicação, o dono tem que ver na primeira linha, não descobrir pela
+  // ausência de posts. Antes de existir, "não publiquei" era indistinguível de "não quis".
+  try {
+    const pausa = require('./acoes-dos-alertas.js').redePausada('instagram');
+    linhas.push('| rede pausada | ' + (pausa.pausada
+      ? 'SIM — ' + pausa.motivo + ', faltam ' + pausa.restam_min + ' min'
+      : 'não') + ' |');
+  } catch (e) {
+    linhas.push('| rede pausada | não verificável (módulo de ações ausente) |');
+  }
   linhas.push('| teto diário | ' + TETO_DIARIO + ' |');
   linhas.push('| janela | ' + JANELA[0] + 'h–' + JANELA[1] + 'h (Brasília) |');
   if (d.publicados.length) {

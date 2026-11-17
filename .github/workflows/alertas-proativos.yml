@@ -84,10 +84,25 @@ jobs:
           set +e
           node tools/marketing/alertas-proativos-marketing.js --ativar-monitorar | tee /tmp/alertas.txt
           codigo=${PIPESTATUS[0]}
+
+          # ── A AÇÃO, NÃO SÓ O AVISO (17/11/2026) ──────────────────────────────────────
+          # Até aqui o workflow DETECTAVA e GRAVAva: token vencido virava um item num JSON,
+          # e a publicação tentava de novo no horário seguinte com a credencial morta. O
+          # briefing pede "≥1 ação automática para alerta crítico". Este passo executa as
+          # ações devidas: pausa a rede afetada (token → 12h, fila parada → 1h) e registra
+          # cada ação com o id do alerta que a causou. O portão de publicação obedece.
+          node tools/marketing/acoes-dos-alertas.js | tee /tmp/acoes.txt
+          codigo_acoes=${PIPESTATUS[0]}
+
           {
             echo "### Alertas proativos"
             echo '```'
             cat /tmp/alertas.txt
+            echo '```'
+            echo ""
+            echo "### Ações executadas pelos alertas"
+            echo '```'
+            cat /tmp/acoes.txt
             echo '```'
             echo ""
             echo "### Estado das métricas que alimentam as regras"
@@ -107,7 +122,11 @@ jobs:
           git config user.name "rebocl"
           git config user.email "reboclbrank@gmail.com"
           [ -e posts/marketing/alertas-proativos-marketing.json ] && \
-            git add posts/marketing/alertas-proativos-marketing.json || true
+            # 17/11/2026: as pausas são ESTADO e precisam acompanhar o alerta no commit —
+            # pausa que não é versionada desaparece no próximo runner e a rede volta a
+            # publicar com a credencial vencida.
+            git add posts/marketing/alertas-proativos-marketing.json \
+                    posts/marketing/redes-pausadas.json || true
           if git diff --cached --quiet; then
             echo "alertas sem mudança"
             exit 0

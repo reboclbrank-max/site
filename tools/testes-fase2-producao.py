@@ -1046,6 +1046,146 @@ _cancelam = [w for w in _ESCREVEM
 ok("nenhum deles cancela execução em andamento (cancelar = perder o estado no meio)",
    not _cancelam, "cancelam: " + str(_cancelam))
 
+# ══════════ 22. ALERTA QUE NÃO AGE NÃO É ALERTA (item 5)
+# (17/11/2026) O sistema DETECTAVA e GRAVAVA. `monitorarMetricas()` fazia `push` num array e
+# a vida seguia: token vencido virava um item no JSON e a publicação tentava de novo no
+# horário seguinte com a credencial morta. O briefing pede explicitamente "≥1 ação automática
+# para alerta crítico, provada em contrato".
+#
+# E a regra de token media a coisa errada: olhava `mtime` de arquivo em `posts/` com "token"
+# no nome, não a credencial. MEDIDO: o token do Instagram em produção respondia
+# "Invalid OAuth access token - Cannot parse access token" (log do status-total #5) e a regra
+# de token não disse nada — nenhum arquivo tinha 7 dias.
+_ACOES = os.path.join(MARKETING, "acoes-dos-alertas.js")
+ok("existe o motor de ações dos alertas", os.path.exists(_ACOES))
+
+def _acoes_tmp(alertas):
+    d = tempfile.mkdtemp(prefix="fase2-acao-")
+    os.makedirs(os.path.join(d, "posts", "marketing"), exist_ok=True)
+    with open(os.path.join(d, "posts", "marketing", "alertas-proativos-marketing.json"),
+              "w", encoding="utf-8") as f:
+        json.dump({"ativo": True, "alertas": alertas, "regras": [], "acoes_tomadas": []}, f)
+    return d, {"POSTS_DIR": os.path.join(d, "posts")}
+
+def _rodar_acoes(env, expr=None):
+    codigo = expr or ("const m=require(process.env.AC);process.stdout.write(JSON.stringify("
+                      "m.executarAcoes({agora:new Date('2026-11-17T15:00:00Z')})))")
+    r = node("-e", codigo, env={**env, "AC": _ACOES})
+    try:
+        return r, json.loads((r.stdout or "{}").strip().splitlines()[-1])
+    except Exception:
+        return r, {}
+
+# (a) token_expirando crítico → PAUSA a rede (12h) e registra a ação
+_d, _e = _acoes_tmp([{"id": "al_tok", "tipo": "token_expirando", "severidade": "critica",
+                      "rede": "instagram", "resolvido": False, "criadoEm": "2026-11-17T14:00:00Z"}])
+_r, _r_acoes = _rodar_acoes(_e)
+_a = (_r_acoes.get("acoes") or [{}])[0]
+ok("token_expirando PAUSA a rede afetada (ação, não aviso)",
+   _r_acoes.get("acionados_agora") == 1 and _a.get("pausou_ate") is not None
+   and _a.get("rede") == "instagram",
+   (_r.stdout or _r.stderr or "")[:140])
+ok("a pausa do token é longa (12h) — credencial ruim não melhora republicando",
+   str(_a.get("pausou_ate") or "")[:10] == "2026-11-18",
+   "pausou_ate=%s" % _a.get("pausou_ate"))
+
+# (b) fila_estagnada → pausa curta (1h): freio de mão, não desligamento
+_d2, _e2 = _acoes_tmp([{"id": "al_fila", "tipo": "fila_estagnada", "severidade": "alta",
+                        "rede": "youtube", "resolvido": False, "criadoEm": "2026-11-17T14:00:00Z"}])
+_r2, _a2 = _rodar_acoes(_e2)
+_p2 = (_a2.get("acoes") or [{}])[0]
+ok("fila_estagnada pausa CURTO (1h) e não desliga a rede",
+   str(_p2.get("pausou_ate") or "")[11:13] == "16",
+   "pausou_ate=%s (esperado 16h UTC, 1h depois das 15h)" % _p2.get("pausou_ate"))
+
+# (c) engajamento_baixo NÃO pausa — o problema é conteúdo, não disponibilidade
+_d3, _e3 = _acoes_tmp([{"id": "al_eng", "tipo": "engajamento_baixo", "severidade": "media",
+                        "rede": "youtube", "resolvido": False, "criadoEm": "2026-11-17T14:00:00Z"}])
+_r3, _a3 = _rodar_acoes(_e3)
+_p3 = (_a3.get("acoes") or [{}])[0]
+ok("engajamento_baixo avisa mas NÃO pausa (conteúdo ≠ indisponibilidade)",
+   _p3.get("pausou_ate") is None and _a3.get("acionados_agora") == 1,
+   "pausou_ate=%s" % _p3.get("pausou_ate"))
+
+# (d) idempotente: rodar duas vezes não pausa duas vezes
+_r4 = node("-e", "const m=require(process.env.AC);"
+                 "const a=m.executarAcoes();const b=m.executarAcoes();"
+                 "process.stdout.write(JSON.stringify({primeira:a.acionados_agora,"
+                 "segunda:b.acionados_agora}))",
+           env={**_e, "AC": _ACOES})
+try:
+    _d4 = json.loads((_r4.stdout or "{}").strip().splitlines()[-1])
+except Exception:
+    _d4 = {}
+ok("acionar é IDEMPOTENTE (2ª execução não repete a pausa)",
+   _d4.get("primeira") == 0 and _d4.get("segunda") == 0,
+   "1ª=%s 2ª=%s (o alerta de (a) já foi acionado)" % (_d4.get("primeira"), _d4.get("segunda")))
+
+# (e) o PORTÃO DE PUBLICAÇÃO obedece à pausa
+_r5 = node("-e",
+           "const m=require(process.env.IG);"
+           "const com=m.podePublicar({agora:new Date('2026-11-17T15:00:00Z')});"
+           "process.stdout.write(JSON.stringify({pode:com.pode,motivos:com.motivos}))",
+           env={**_e, "IG": os.path.join(MARKETING, "instagram-estado.js")})
+try:
+    _d5 = json.loads((_r5.stdout or "{}").strip().splitlines()[-1])
+except Exception:
+    _d5 = {}
+ok("o portão do Instagram RECUSA publicar com a rede pausada",
+   _d5.get("pode") is False
+   and any("PAUSADA" in m for m in (_d5.get("motivos") or [])),
+   (_r5.stdout or _r5.stderr or "")[:160])
+
+# (f) pausa vencida expira sozinha — pausa não é desligamento
+_r6 = node("-e",
+           "const m=require(process.env.AC);"
+           "const depois=new Date('2030-01-01T00:00:00Z');"
+           "process.stdout.write(JSON.stringify(m.redePausada('instagram',{agora:depois})))",
+           env={**_e, "AC": _ACOES})
+ok("pausa EXPIRA sozinha (não desliga a rede para sempre)",
+   '"pausada":false' in (_r6.stdout or ""), (_r6.stdout or "")[:100])
+_sh.rmtree(_d, ignore_errors=True); _sh.rmtree(_d2, ignore_errors=True)
+_sh.rmtree(_d3, ignore_errors=True)
+
+# (g) a regra de token TESTA A CREDENCIAL, não o mtime de arquivo
+_AP2 = os.path.join(MARKETING, "alertas-proativos-marketing.js")
+ok("existe verificação de token NA FONTE (não por idade de arquivo)",
+   "verificarTokenInstagram" in ler(_AP2)
+   and "graph.instagram.com" in ler(_AP2),
+   "regra de token ainda mede mtime")
+
+# (h) token inválido gera alerta crítico; token válido NÃO gera nada
+_TOK = (
+    "const m=require(process.env.AP);"
+    "const ruim=async()=>({ok:false,status:400,"
+    "text:async()=>'Invalid OAuth access token - Cannot parse token'});"
+    "const bom=async()=>({ok:true,status:200,text:async()=>'{\"user_id\":\"1\"}'});"
+    "(async()=>{"
+    " const a=await m.monitorarTokenInstagram({token:'t',fetch:ruim});"
+    " const b=await m.monitorarTokenInstagram({token:'t',fetch:bom});"
+    " process.stdout.write(JSON.stringify({ruim:a.invalido,alerta:!!a.alerta,"
+    "bom:b.invalido,sem_alerta:!b.alerta}));"
+    "})()"
+)
+_d8 = tempfile.mkdtemp(prefix="fase2-tok2-")
+os.makedirs(os.path.join(_d8, "posts", "marketing"), exist_ok=True)
+_r8 = node("-e", _TOK, env={"POSTS_DIR": os.path.join(_d8, "posts"), "AP": _AP2})
+try:
+    _d8d = json.loads((_r8.stdout or "{}").strip().splitlines()[-1])
+except Exception:
+    _d8d = {}
+ok("token INVÁLIDO → alerta crítico · token VÁLIDO → nenhum alerta (sem falso positivo)",
+   _d8d.get("ruim") is True and _d8d.get("alerta") is True
+   and _d8d.get("bom") is False and _d8d.get("sem_alerta") is True,
+   (_r8.stdout or _r8.stderr or "")[:180])
+_sh.rmtree(_d8, ignore_errors=True)
+
+# (i) o workflow executa as ações e versiona as pausas
+_AL = ler(os.path.join(WFS, "alertas-proativos.yml"))
+ok("o alertas-proativos EXECUTA as ações", "acoes-dos-alertas.js" in _AL)
+ok("o alerta de pausa é versionado junto (pausa não versionada desaparece no runner)",
+   "redes-pausadas.json" in _AL, "pausas fora do commit")
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)
 

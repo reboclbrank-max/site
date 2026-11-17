@@ -138,8 +138,22 @@ function monitorarMetricas() {
     }
   }
 
-  // Alerta: token expirando (verifica se há arquivo de tokens com datas)
+  // ── 17/11/2026 — "TOKEN EXPIRANDO" OLHAVA `mtime` DE ARQUIVO, NÃO O TOKEN ────────────
+  // O bloco abaixo (histórico) marcava alerta quando um arquivo em `posts/` com "token" no
+  // nome não era tocado há ~7 dias. Isso não tem relação com a credencial: o arquivo pode ser
+  // tocado todo dia e o token estar morto, ou vice-versa. MEDIDO: o token do Instagram em
+  // produção respondia `Invalid OAuth access token - Cannot parse access token` (log do
+  // status-total #5) e a regra de token não disse nada — porque nenhum arquivo tinha 7 dias.
+  // O alerta existia com o nome certo e media a coisa errada.
+  // Agora, quando a credencial está disponível no ambiente, ela é TESTADA na fonte:
+  //   `GET /me` no Instagram Graph → resposta de erro de autenticação = token inválido AGORA.
+  // Sem credencial no ambiente, o alerta não é emitido (não verificável ≠ quebrado) e o
+  // resumo diz isso.
   const regraToken = c.regras.find(r => r.nome === 'token_expirando');
+
+  // Alerta: token expirando por IDADE DE ARQUIVO (histórico, mantido para YouTube e outros
+  // que ainda não têm verificação na fonte). Se as duas regras dispararem, a de cima é a
+  // verdadeira — a de baixo é aproximação.
   if (regraToken && regraToken.ativo) {
     // Verifica arquivos de registro de tokens no posts
     const tokensDir = path.join(__dirname, '..', '..', 'posts');
@@ -164,6 +178,45 @@ function monitorarMetricas() {
   c.ultima_execucao = agora.toISOString();
   salvar();
   return { ok: true, novos_alertas: novos.length, alertas: novos };
+}
+
+/**
+ * Testa a credencial do Instagram NA FONTE. Separada porque é a única regra que precisa de
+ * rede — manter rede fora do caminho síncrono deixa as outras regras determinísticas para
+ * teste (e é por isso que o contrato consegue injetar hora e estado sem depender de internet).
+ * @returns {Promise<{verificavel:boolean, invalido:boolean, detalhe:string}>}
+ */
+async function verificarTokenInstagram(opcoes = {}) {
+  const token = opcoes.token !== undefined ? opcoes.token : process.env.IG_TOKEN;
+  if (!token) return { verificavel: false, invalido: false, detalhe: 'sem IG_TOKEN no ambiente' };
+  const buscar = opcoes.fetch || fetch;
+  try {
+    const url = 'https://graph.instagram.com/v21.0/me?fields=user_id&access_token=' +
+                encodeURIComponent(token);
+    const r = await buscar(url);
+    const corpo = await r.text();
+    if (!r.ok && /OAuth|access token|expired|invalid|Cannot parse/i.test(corpo)) {
+      return { verificavel: true, invalido: true, detalhe: corpo.slice(0, 120) };
+    }
+    if (!r.ok) return { verificavel: false, invalido: false, detalhe: 'HTTP ' + r.status };
+    return { verificavel: true, invalido: false, detalhe: 'token válido' };
+  } catch (e) {
+    // rede fora ≠ token vencido. Não inventa diagnóstico.
+    return { verificavel: false, invalido: false, detalhe: 'erro de rede: ' + e.message };
+  }
+}
+
+/** Registra o alerta crítico se o token estiver inválido AGORA. Idempotente por conteúdo. */
+async function monitorarTokenInstagram(opcoes = {}) {
+  const r = await verificarTokenInstagram(opcoes);
+  if (!r.invalido) return { ...r, alerta: null };
+  const c = carregar();
+  const jaAberto = (c.alertas || []).some(a =>
+    !a.resolvido && a.tipo === 'token_expirando' && a.rede === 'instagram');
+  if (jaAberto) return { ...r, alerta: null, ja_registrado: true };
+  const a = adicionarAlerta('token_expirando',
+    'Token do Instagram INVÁLIDO agora (' + r.detalhe.slice(0, 80) + ')', 'critica', 'instagram');
+  return { ...r, alerta: a.alerta };
 }
 
 function listarAlertas(resolvido = null) {
@@ -249,6 +302,19 @@ function main(argv) {
       return 3;
     }
     console.log(resumoTexto(est, r));
+    // 17/11/2026: a verificação do token do Instagram precisa de REDE, então roda aqui —
+    // depois das regras determinísticas e sem contaminá-las. Se o token estiver inválido
+    // agora, o alerta é crítico e a próxima execução de `acoes-dos-alertas.js` pausa a rede.
+    monitorarTokenInstagram().then((t) => {
+      if (t.invalido) {
+        console.log('TOKEN DO INSTAGRAM INVÁLIDO: ' + t.detalhe.slice(0, 100));
+        console.log(t.alerta ? '  → alerta crítico registrado' : '  → já havia alerta aberto');
+      } else if (!t.verificavel) {
+        console.log('token do Instagram não verificável: ' + t.detalhe);
+      } else {
+        console.log('token do Instagram: válido');
+      }
+    }).catch(() => {});
     return 0;
   }
   console.log(resumoTexto(estatisticasAlertas(), null));
@@ -259,4 +325,4 @@ if (require.main === module) {
   process.exitCode = main(process.argv.slice(2));
 }
 
-module.exports = { ativarAlertasProativos, desativarAlertasProativos, adicionarAlerta, monitorarMetricas, listarAlertas, resolverAlerta, estatisticasAlertas, resumoTexto };
+module.exports = { ativarAlertasProativos, desativarAlertasProativos, adicionarAlerta, monitorarMetricas, listarAlertas, resolverAlerta, estatisticasAlertas, resumoTexto, verificarTokenInstagram, monitorarTokenInstagram };
