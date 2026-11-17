@@ -1,22 +1,22 @@
 # Pendências do dono
 
-Medido em 2026-11-17T12:19:46Z (o devlog do itch é público: dá para conferir de fora).
+Medido em 2026-11-17T21:00:50Z (o devlog do itch é público: dá para conferir de fora).
 
 ## Estado da casa
 
-- Vídeos publicados: 27 · último: TT6XP5Zs__c (PRANCHETA: a partida inteira em ritmo normal…)
-- Capas da casa: 67 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
+- Vídeos publicados: 28 · último: RksiKWR1QfY (Como o PRANCHETA simula uma partida a partir da…)
+- Capas da casa: 68 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
 - PRANCHETA no itch: build 19604665 (a casa viu em 2026-11-07T05:38) · esse build não sobe por aqui: o dono publica no itch
-- Fila: 5 pendente(s) (pesquisar 3, publicar 2) · a mais velha: pesquisar-20261107T064637Z há 245.6 h · 138 feita(s)
-- Régua de metas: medida há 17.1 h · prazo 2026-11-12 · prazo vencido há 4 dia(s)
-- Pulsos: 392 · última publicação 2026-11-17T12:00:31Z · última medição 2026-11-17T06:20:14Z
+- Fila: 6 pendente(s) (pesquisar 3, publicar 3) · a mais velha: pesquisar-20261107T064637Z há 254.2 h · 143 feita(s)
+- Régua de metas: medida há 8.7 h · prazo 2026-11-12 · prazo vencido há 5 dia(s)
+- Pulsos: 420 · última publicação 2026-11-17T21:00:17Z · última medição 2026-11-17T18:20:17Z
 
-- Agenda: o cron pede **105** disparos/dia e o GitHub entregou **58.01/dia** (janela de 7 dia(s), medido em 2026-11-17). Pior entrega: gravar-prancheta 38.0% (1.14/dia); chamar-video 43.0% (0.86/dia).
-- Corrente: em dia (último pulso 17/11 09:00, há 20 min) · próximo pulso 17/11 09:20 · 1 buraco(s) nas últimas 24h
+- Agenda: o cron pede **105** disparos/dia e o GitHub entregou **60.43/dia** (janela de 7 dia(s), medido em 2026-11-17). Pior entrega: gravar-prancheta 38.0% (1.14/dia); chamar-video 43.0% (0.86/dia).
+- Corrente: em dia (último pulso 17/11 18:00, há 1 min) · próximo pulso 17/11 18:20
 
-- Originalidade: últimos 7 dias: 5 post(s), todos textos diferentes · média 4.27/dia · o último dia com repetição foi 2026-10-25
+- Originalidade: últimos 7 dias: 8 post(s), todos textos diferentes · média 4.37/dia · o último dia com repetição foi 2026-10-25
 
-- Pauta: 10 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
+- Pauta: 8 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
 
 | item | estado | como |
 | --- | --- | --- |
