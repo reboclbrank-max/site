@@ -23,6 +23,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import glob as _g
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
@@ -883,16 +884,65 @@ ok("700 acessos → intervalo de 90 min aplicado pelo portão (≠ 120)",
    _m700 == 90 and _o700.startswith("otimizador"), "700→%s/%s" % (_m700, _o700))
 
 # (d) os dois jogos têm a MESMA leitura do mesmo dado (prioridade igual)
+# ATENÇÃO: `_estado_otim()` cria um diretório por chamada. Antes esta laçada chamava uma vez
+# POR JOGO dentro do `env=` e nunca removia — 2 diretórios por execução, invisíveis até o
+# contrato de temporários existir. Um estado só, lido pelos dois jogos, é também o teste
+# certo: prova que o MESMO dado produz a MESMA cadência (prioridade igual de verdade).
+_d_jogos, _e_jogos = _estado_otim({"instagram": {"ambos": {"17": 300, "19": 400}}})
 for _j in ("ceifalume", "prancheta"):
     _r = node("-e",
               "const m=require(process.env.MOD);process.stdout.write(JSON.stringify("
               "m.calcularCadencia('instagram',%r)))" % _j,
-              env={"POSTS_DIR": os.path.join(_estado_otim({"instagram": {"ambos": {"17": 300, "19": 400}}})[0],
-                                             "posts"),
-                   "MOD": os.path.join(MARKETING, "auto-otimizador-avancado.js")})
+              env={**_e_jogos, "MOD": os.path.join(MARKETING, "auto-otimizador-avancado.js")})
     ok("%s lê o acesso de peça `ambos` e calcula cadência" % _j,
        '"ok":true' in (_r.stdout or "") and '"intervalo_minutos":90' in (_r.stdout or ""),
        (_r.stdout or "")[:100])
+_sh.rmtree(_d_jogos, ignore_errors=True)
+
+# ══════════ 19. O CRON NÃO É GARANTIDO — E ALGUÉM TEM QUE COBRAR
+# (17/11/2026) Item 2 do briefing pede 3 runs por `schedule`. Medido: os 3 workflows ficaram
+# 6h44 no main com ZERO runs agendados, YAML correto, estado `active`. A latência medida neste
+# repositório entre "workflow criado" e "primeiro run por schedule" vai de 5,4h a 458h — e a
+# documentação do GitHub diz que cron de Actions não é garantido (fila, atraso, descarte) e é
+# desligado após 60 dias sem atividade.
+# Contrato: existe um cobrador; ele NÃO inventa sucesso sem credencial; ele diz a verdade
+# quando todos precisam de cobrança (a primeira versão dizia "CRON EM DIA" nesse caso).
+_COBRAR = os.path.join(MARKETING, "cobrar-cron.js")
+ok("existe o cobrador de cron", os.path.exists(_COBRAR))
+_r = node(_COBRAR, env={"GH_TOKEN": "", "GHPAT": ""})
+ok("cobrador sem credencial NÃO finge que o cron está em dia",
+   _r.returncode == 2 and "sem GH_TOKEN" in (_r.stdout or ""),
+   "código=%s %s" % (_r.returncode, (_r.stdout or "")[:110]))
+
+# o resumo tem que refletir a tabela: "todos cobrados" ≠ "cron em dia"
+_SRC = ler(_COBRAR)
+ok("o resumo do cobrador distingue 'cobrado' de 'em dia'",
+   "todos foram cobrados agora" in _SRC and "CRON EM DIA" in _SRC,
+   "resumo não diferencia os dois casos")
+
+# o despertador (que comprovadamente dispara) tem que chamar o cobrador
+_DESP = ler(os.path.join(WFS, "despertador.yml"))
+ok("o despertador executa o cobrador de cron", "cobrar-cron.js" in _DESP)
+ok("o despertador passa a credencial que o cobrador usa", "GHPAT" in _DESP)
+ok("o passo de cron do despertador não derruba o despertador",
+   "continue-on-error: true" in _DESP.split("cobrar-cron.js")[0][-400:],
+   "sem continue-on-error o despertador morre junto")
+
+# ══════════ LIMPEZA FINAL — O CONTRATO QUE FALTAVA SER DE TODOS
+# (17/11/2026) Medido: 38 diretórios `fase2-*` esquecidos em /tmp e o tmpfs de 992 MB CHEIO
+# (100%). Quatro vazavam em TODA execução: TMP_POSTS, TMP_RAIZ, ESPELHO e _RAIZ_REC — criados
+# no topo e nunca removidos. O "repositório intacto" do final não olha /tmp, então a suíte se
+# declarava limpa enquanto o disco enchia. Cada bloco limpava o seu; estes nasceram antes da
+# convenção e ninguém notou.
+for _dir in (TMP_POSTS, TMP_RAIZ, ESPELHO, _RAIZ_REC):
+    try:
+        _sh.rmtree(_dir, ignore_errors=True)
+    except Exception:
+        pass
+_SOBRAS = sorted(_g.glob(os.path.join(tempfile.gettempdir(), "fase2-*")))
+ok("a suíte não deixa temporários no disco (vazamento medido: 38 dirs)",
+   not _SOBRAS, "sobraram %d: %s" % (len(_SOBRAS), _SOBRAS[:3]))
 
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)
+

@@ -25,3 +25,31 @@ jobs:
               -d '{"ref":"main"}' || true
           }
           chamar vigia.yml "vigia do chat"
+
+      # ── REDE DE SEGURANÇA DO CRON (17/11/2026) ────────────────────────────────────────
+      # Medido: health-check, status-total e alertas-proativos ficaram 6h44 no main com ZERO
+      # runs por `schedule`, enquanto ESTE despertador já tinha 99. O YAML deles estava certo
+      # e o estado era `active` — o que falha é o agendador: o GitHub documenta que cron de
+      # Actions não é garantido (fila, atraso em pico, descarte) e desliga workflow sem
+      # atividade em 60 dias. A latência medida neste repo entre "workflow existe" e "primeiro
+      # run agendado" vai de 5,4h a 458h.
+      # Este passo é quem fecha o buraco: como o despertador comprovadamente dispara, é ele
+      # que confere a idade do último `schedule` de cada vigia e dispara quando passou do
+      # limite. `continue-on-error` porque o despertador não pode morrer por causa disto —
+      # o resultado (e o motivo) sai no log e no resumo.
+      - name: Cobra o cron dos 3 vigias (o GitHub não garante schedule)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GHPAT }}
+        run: |
+          set +e
+          node tools/marketing/cobrar-cron.js | tee /tmp/cron.txt
+          codigo=${PIPESTATUS[0]}
+          {
+            echo "### Cron dos 3 vigias"
+            echo '```'
+            cat /tmp/cron.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $codigo
+
