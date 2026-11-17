@@ -500,5 +500,40 @@ ok("o despertador existente também usa dispatch (padrão que já funcionava)",
 for _tmp in (TMP_POSTS, TMP_RAIZ, ESPELHO, _RAIZ_REC):
     _sh.rmtree(_tmp, ignore_errors=True)
 
+# ══════════════════════════════════ 12. QUEM MEDE CREDENCIAL RECEBE A MESMA LISTA
+# (17/11/2026, defeito real e traiçoeiro): o `health-check.yml` passava 21 secrets ao auditor e
+# dizia "44/44 ativas". O `status-total.yml` passava 9 e, executando o MESMO auditor no MESMO
+# repositório, dizia "43/44 — rede-x ausente". Dois números oficiais contraditórios sobre o
+# mesmo fato, e o errado era o que aparecia no painel do dono.
+# A causa não foi bug de código: foram DUAS LISTAS mantidas à mão em arquivos diferentes.
+# Este contrato exige que todo workflow que executa o auditor receba a lista canônica inteira.
+import json as _json
+import yaml as _yaml
+
+# A lista NÃO é mantida à mão aqui: é derivada do próprio auditor (camadas tipo `credencial`).
+# Mantê-la neste arquivo seria repetir o defeito que o contrato existe para impedir.
+from health_check_credenciais import credenciais_auditadas  # noqa: E402  (criado abaixo)
+
+CANON = credenciais_auditadas(os.path.join(MARKETING, "health-check-site.js"))
+
+_faltando = []
+for _f in ("health-check.yml", "status-total.yml", "alertas-proativos.yml"):
+    _d = _yaml.safe_load(ler(os.path.join(WFS, _f)))
+    for _j in (_d.get("jobs") or {}).values():
+        for _st in _j.get("steps", []):
+            # EXECUTA o módulo, não apenas cita: `git add posts/marketing/x.json` não precisa
+            # de credencial nenhuma. Sem esta distinção o contrato cobrava env de um passo de
+            # git — e cobrar o que não é necessário ensina a ignorar o contrato.
+            _run = str(_st.get("run", ""))
+            if any(("node " + os.path.join("tools", "marketing", _m) + ".js") in _run
+                   for _m in ("health-check-site", "status-total-marketing",
+                              "alertas-proativos-marketing")):
+                _tem = {k for k, v in (_st.get("env") or {}).items() if "secrets." in str(v)}
+                _falta = set(CANON) - _tem
+                if _falta:
+                    _faltando.append("%s: %s" % (_f, ", ".join(sorted(_falta)[:5])))
+ok("todo workflow que audita camadas recebe a MESMA lista de credenciais",
+   not _faltando, "; ".join(_faltando))
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)

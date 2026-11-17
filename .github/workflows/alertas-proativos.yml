@@ -47,6 +47,30 @@ jobs:
 
       - name: Ativa e monitora
         shell: bash -o pipefail -e {0}
+        env:
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          GMAIL_CHAT_APPPASS: ${{ secrets.GMAIL_CHAT_APPPASS }}
+          GMAIL_CHAT_PASS: ${{ secrets.GMAIL_CHAT_PASS }}
+          GMAIL_CHAT_ADDRESS: ${{ secrets.GMAIL_CHAT_ADDRESS }}
+          GMAIL_CHAT_ADDR: ${{ secrets.GMAIL_CHAT_ADDR }}
+          NOSTR_KEY: ${{ secrets.NOSTR_KEY }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          GHPAT: ${{ secrets.GHPAT }}
         run: |
           set +e
           node tools/marketing/alertas-proativos-marketing.js --ativar-monitorar | tee /tmp/alertas.txt

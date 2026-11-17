@@ -53,6 +53,20 @@ jobs:
           THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
           BLUESKY_APPPASS: ${{ secrets.BLUESKY_APPPASS }}
           MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          GMAIL_CHAT_PASS: ${{ secrets.GMAIL_CHAT_PASS }}
+          GMAIL_CHAT_ADDRESS: ${{ secrets.GMAIL_CHAT_ADDRESS }}
+          GMAIL_CHAT_ADDR: ${{ secrets.GMAIL_CHAT_ADDR }}
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+          TUMBLR_CONSUMER_KEY: ${{ secrets.TUMBLR_CONSUMER_KEY }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          ITCH_API_KEYS: ${{ secrets.ITCH_API_KEYS }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          GHPAT: ${{ secrets.GHPAT }}
         run: |
           set +e
           node tools/marketing/status-total-marketing.js --resumo | tee /tmp/status.txt
