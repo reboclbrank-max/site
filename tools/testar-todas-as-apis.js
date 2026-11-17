@@ -205,6 +205,20 @@ async function testeNostr() {
 }
 
 async function testeX() {
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 16/11/2026 — ESTE TESTE SEMPRE DAVA 401, COM CREDENCIAL BOA OU RUIM.
+  //
+  // A versão anterior mandava um header OAuth 1.0a escrito à mão com
+  // `oauth_signature_method="HMAC-SHA1"` e SEM `oauth_signature`. O Twitter/X rejeita
+  // qualquer requisição assim — a assinatura é obrigatória e cobre método + URL +
+  // TODOS os parâmetros ordenados. O resultado era um 401 permanente que parecia
+  // "token expirado", e mandava o dono trocar credencial que estava boa.
+  //
+  // Agora a assinatura é calculada de verdade (RFC 5849): base string canônica →
+  // HMAC-SHA1 com "consumer_secret&token_secret" → base64 → header.
+  // E 401 passa a significar só o que deve significar: assinatura correta e o servidor
+  // recusou — aí sim é credencial.
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   try {
     const apiKey = process.env.X_API_KEY;
     const apiSecret = process.env.X_API_SECRET;
@@ -216,20 +230,45 @@ async function testeX() {
       registro('X (Twitter)', false, FORA_DO_REPO);
       return;
     }
-    // Verificar credenciais via verify credentials (GET /2/users/me)
-    const r = await busca('https://api.twitter.com/2/users/me', {
-      headers: {
-        Authorization: `OAuth oauth_consumer_key="${encodeURIComponent(apiKey)}",oauth_token="${encodeURIComponent(accessToken)}",oauth_signature_method="HMAC-SHA1",oauth_timestamp="${Math.floor(Date.now()/1000)}",oauth_nonce="${Math.random().toString(36).substring(2,18)}",oauth_version="1.0"`,
-        'User-Agent': 'rebocl-testar-apis/1',
-      },
+
+    const metodo = 'GET';
+    const url = 'https://api.twitter.com/2/users/me';
+    // percent-encoding do RFC 3986 (o encodeURIComponent não escapa ! ' ( ) *)
+    const enc = (v) => encodeURIComponent(v).replace(/[!'()*]/g,
+      (c) => '%' + c.charCodeAt(0).toString(16).toUpperCase());
+
+    const oauth = {
+      oauth_consumer_key: apiKey,
+      oauth_nonce: require('crypto').randomBytes(16).toString('hex'),
+      oauth_signature_method: 'HMAC-SHA1',
+      oauth_timestamp: String(Math.floor(Date.now() / 1000)),
+      oauth_token: accessToken,
+      oauth_version: '1.0',
+    };
+    // base string: método & url & parâmetros (oauth + query), ordenados e encodados
+    const parametros = Object.keys(oauth).sort()
+      .map((k) => enc(k) + '=' + enc(oauth[k])).join('&');
+    const base = [metodo, enc(url), enc(parametros)].join('&');
+    const chave = enc(apiSecret) + '&' + enc(accessTokenSecret);
+    oauth.oauth_signature = require('crypto')
+      .createHmac('sha1', chave).update(base).digest('base64');
+
+    const header = 'OAuth ' + Object.keys(oauth).sort()
+      .map((k) => enc(k) + '="' + enc(oauth[k]) + '"').join(', ');
+
+    const r = await busca(url, {
+      headers: { Authorization: header, 'User-Agent': 'rebocl-testar-apis/1' },
       signal: AbortSignal.timeout(30000),
     });
-    // Este endpoint precisa de assinatura OAuth completa; se falhar por assinatura, apenas confirmamos que as credenciais existem
     if (r.ok) {
       const j = await r.json();
-      registro('X (Twitter)', true, 'conta verificada', j.data ? j.data.username : 'ok');
+      registro('X (Twitter)', true, 'conta verificada',
+               '@' + (j.data ? j.data.username : 'ok'));
     } else if (r.status === 401) {
-      registro('X (Twitter)', false, 'credenciais inválidas (HTTP 401)');
+      // assinatura correta + recusa do servidor = a credencial é que não vale
+      registro('X (Twitter)', false, 'o X recusou a credencial (assinatura OK, HTTP 401)');
+    } else if (r.status === 403) {
+      registro('X (Twitter)', false, 'acesso negado pelo plano da API (HTTP 403) — credencial válida');
     } else {
       registro('X (Twitter)', true, 'credenciais configuradas (API respondeu)', `HTTP ${r.status}`);
     }
