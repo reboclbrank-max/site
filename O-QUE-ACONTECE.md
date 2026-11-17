@@ -25,7 +25,7 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 
 **105 disparos automáticos por dia**, em 15 workflows com agenda — esse é o que o cron PEDE. O que o GitHub entrega é outra conta (abaixo).
 
-**Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-16): **58.15/dia** de 88 pedidos. O pior caso é `gravar-prancheta`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
+**Entrega medida do agendador** (janela de 7 dia(s), medido em 2026-11-16): **58.86/dia** de 105 pedidos. O pior caso é `gravar-prancheta`. O cron do GitHub é melhor esforço: para um pulso de 20 em 20 minutos ele entrega uma fração, e é por isso que a casa precisa de corrente, não de agenda.
 
 | hora (Brasília) | workflow | o que faz |
 | --- | --- | --- |
@@ -39,9 +39,9 @@ Uma ressalva medida (07/11/2026, run 42340117439): o deploy do Pages pode travar
 | 09h, 16h | `gravar-gameplay` | Grava o jogo rodando de verdade e transforma em arquivo de vídeo. — **entregou 1.14/dia** de 2 pedidos (57.0%) |
 | 09h, 13h, 16h | `gravar-prancheta` | Grava o PRANCHETA rodando (o segundo jogo da casa). — **entregou 1.14/dia** de 3 pedidos (38.0%) |
 | 09h | `ler-comentarios` | Lê comentários públicos só com a API key (sem OAuth, sem consentimento novo). — **entregou 0.86/dia** de 1 pedidos (86.0%) |
-| 09h | `pendencias-do-dono` | Fecha o ciclo do único passo que sobra para o dono (publicar no painel do itch). — **entregou 0.86/dia** de 1 pedidos (86.0%) |
+| 09h | `pendencias-do-dono` | Fecha o ciclo do único passo que sobra para o dono (publicar no painel do itch). — **entregou 1.0/dia** de 1 pedidos (100.0%) |
 | 09h–21h | `publicar-instagram` | Publicação autônoma no Instagram: cria container de mídia, aguarda o processamento ficar FINISHED e chama media_publish para colocar o post no ar. |
-| 09h | `vigia-sessao-itch` | A sessão do itch (segredo ITCH_COOKIE) é o único caminho para escrever na página. — **entregou 0.86/dia** de 1 pedidos (86.0%) |
+| 09h | `vigia-sessao-itch` | A sessão do itch (segredo ITCH_COOKIE) é o único caminho para escrever na página. — **entregou 1.0/dia** de 1 pedidos (100.0%) |
 | 10h, 14h | `chamar-video` | Leva quem já segue a casa até o vídeo que acabou de sair. — **entregou 0.86/dia** de 2 pedidos (43.0%) |
 | 10h | `medir-itch` | Placar do itch pela API (que nao passa pela Cloudflare): downloads, visitas, publicacao. — **entregou 0.86/dia** de 1 pedidos (86.0%) |
 | 10h, 15h, 21h | `status-total` | STATUS TOTAL — o relatório integrado do marketing, gerado em produção. |

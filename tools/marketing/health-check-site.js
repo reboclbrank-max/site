@@ -141,7 +141,12 @@ const CAMADAS = [
   { id: 'rede-bluesky', tipo: 'rede', nome: 'bluesky', critica: false, papel: 'texto' },
   { id: 'rede-mastodon', tipo: 'rede', nome: 'mastodon', critica: false, papel: 'texto' },
   { id: 'rede-x', tipo: 'rede', nome: 'x', critica: false,
-    papel: 'secrets vivem no repo chat (não é falha deste repo)' },
+    // 16/11/2026: as 4 credenciais do X (X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN,
+    // X_ACCESS_TOKEN_SECRET) existem desde 09/11, mas só no repo `chat`. Este repositório
+    // nunca as teve. Não é regressão: é credencial que mora em outro lugar.
+    // Para ativar: copiar os 4 secrets para cá (o workflow `copiar-x-para-site.yml` do chat
+    // faz isso cifrando com a chave pública deste repo).
+    papel: 'secrets vivem no repo chat — copiar para cá ativa esta camada' },
   { id: 'rede-gmail', tipo: 'rede', nome: 'gmail', critica: false, papel: 'chat por e-mail' },
 
   // --- 8. jogos (prioridade IGUAL, por decisão do dono) ---

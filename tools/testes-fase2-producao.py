@@ -321,6 +321,50 @@ _criados = [f for f in ("orquestrador.json", "videos-enviados.json", "fila-taref
 ok("os arquivos de estado voltaram ao disco, com esqueleto válido",
    len(_criados) >= 3, "criados: %s" % _criados)
 
+# ── 10. SELF-RECOVERY PROVADO POR EXECUÇÃO, NÃO POR INSPEÇÃO ────────────────────
+# (16/11/2026) O health check tinha um bug que matou a auto-recuperação em silêncio:
+# `auditar()` devolve `{camada: id, ...}` e NÃO `{nome}`; a função lia `camada.nome`, recebia
+# undefined, e o ramo de recriação nunca executava. Zero tentativas desde que foi escrita, e
+# ninguém viu porque o relatório dizia "0 recuperações" — que parece "nada precisou".
+# Este contrato NÃO lê o código: apaga um estado crítico numa cópia isolada, roda o health
+# check de verdade e exige que a camada volte e a tentativa seja registrada.
+_rec_raiz = tempfile.mkdtemp(prefix="fase2-recovery-")
+_rec_alvo_rel = "posts/orquestrador.json"
+try:
+    _sh.copytree(os.path.join(RAIZ, ".github"), os.path.join(_rec_raiz, ".github"))
+    _sh.copytree(AQUI, os.path.join(_rec_raiz, "tools"),
+                 ignore=_sh.ignore_patterns("__pycache__", "posts"))
+    _sh.copytree(os.path.join(RAIZ, "posts"), os.path.join(_rec_raiz, "posts"))
+    for _dir in ("ceifalume", "prancheta"):
+        _orig = os.path.join(RAIZ, _dir)
+        if os.path.isdir(_orig):
+            _sh.copytree(_orig, os.path.join(_rec_raiz, _dir))
+    os.remove(os.path.join(_rec_raiz, _rec_alvo_rel))
+    _rec_dados, _rec_saida = jnode(
+        os.path.join(_rec_raiz, "tools", "marketing", "health-check-site.js"), "--json",
+        env={"SITE_RAIZ": _rec_raiz, "POSTS_DIR": os.path.join(_rec_raiz, "posts")})
+    _rec = (_rec_dados or {}).get("recuperacoes", {}) if isinstance(_rec_dados, dict) else {}
+    ok("o health check RECRIA um estado crítico apagado (self-recovery executa)",
+       os.path.exists(os.path.join(_rec_raiz, _rec_alvo_rel)) and _rec.get("sucesso", 0) >= 1,
+       "arquivo recriado: %s · recuperações: %s" % (
+           os.path.exists(os.path.join(_rec_raiz, _rec_alvo_rel)), _rec))
+    ok("o health check registra a tentativa de recuperação (não é silenciosa)",
+       _rec.get("tentadas", 0) >= 1 and len(_rec.get("itens", [])) >= 1,
+       _rec)
+    # e o contrário: código quebrado NÃO é reescrito no chute (foi assim que o
+    # entrar-no-main.sh virou base64 em 12/11 e derrubou 6 workflows)
+    _rec2_dados, _ = jnode(
+        os.path.join(_rec_raiz, "tools", "marketing", "health-check-site.js"), "--json",
+        env={"SITE_RAIZ": _rec_raiz, "POSTS_DIR": os.path.join(_rec_raiz, "posts")})
+    _scripts = [c for c in (_rec2_dados or {}).get("camadas", [])
+                if c.get("tipo") == "script" and c.get("status") == "sintaxe_invalida"]
+    ok("o health check NÃO reescreve código com sintaxe quebrada",
+       all(c.get("recuperacao") and "no chute" in str(c.get("recuperacao")) for c in _scripts)
+       if _scripts else True,
+       "scripts quebrados: %d" % len(_scripts))
+finally:
+    _sh.rmtree(_rec_raiz, ignore_errors=True)
+
 # ── 9. PERMISSÃO: workflow que versiona estado precisa de contents: write ────────
 # (16/11/2026, defeito real): o publicar-instagram tinha `contents: read`. O passo de commit
 # rodava, o git commit funcionava e o PUSH era recusado 6 vezes — o log dizia "autenticação/

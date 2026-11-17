@@ -377,8 +377,14 @@ def motor_quebrado(pedido):
 
 r = redator.ciclo(motor_quebrado, fatos=FATOS, repertorio={}, canal="site",
                   publicacoes=[], calendario=CAL, hora_local=12, hoje=HOJE)
+# 16/11/2026: a asserção olhava só `recusas` e cortava em 400 caracteres. Quando o motor
+# quebra ANTES de escolher texto, a explicação vai para `motivo` ("nenhum dos N textos passou:
+# motor falhou: ...") e `recusas` fica com as pautas, não com a frase. O ciclo se comportava
+# certo (publica=False, sem exceção) — o teste é que media o campo errado.
 checar("motor quebrado não derruba o ciclo (vira recusa registrada)",
-      r["publica"] is False and "motor falhou" in str(r["recusas"])[:400])
+      r["publica"] is False
+      and "motor falhou" in (str(r.get("motivo")) + str(r.get("recusas")))[:2000],
+      r.get("motivo"))
 
 
 def motor_repetitivo(pedido):
