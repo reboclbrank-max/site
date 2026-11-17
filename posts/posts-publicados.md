@@ -379,3 +379,6 @@ Trava no mapa? Ceifalume roda em 2 min sem corte de tela: os canais se costuram 
 
 ## 16/11/2026 23:41 UTC
 Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr
+
+## 17/11/2026 12:01 UTC
+Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações crescem e vendem sozinhas por até 8h offline.

@@ -488,6 +488,35 @@
    "hashtags": 2,
    "nota": 0.769,
    "texto": "Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr"
+  },
+  {
+   "quando": "2026-11-17T12:01:12Z",
+   "canal": "site",
+   "angulo": "pergunta_que_ensina",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias",
+    "medido-bicos",
+    "medido-moedas",
+    "medido-plantadas",
+    "medido-tutorial",
+    "medido-itch-downloads-2026-11-17",
+    "medido-itch-visitas-2026-11-17"
+   ],
+   "abertura": "voce sabia",
+   "tipo_abertura": "voce",
+   "esqueleto": [
+    "pergunta",
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.769,
+   "texto": "Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações crescem e vendem sozinhas por até 8h offline."
   }
  ],
  "fatos_de_uma_vez": [
@@ -524,26 +553,38 @@
   "medido-youtube-shorts-2026-11-08",
   "marco-instagram-publicacoes",
   "marco-youtube-shorts",
-  "casa-site-gratis"
+  "casa-site-gratis",
+  "medido-itch-downloads-2026-11-17",
+  "medido-itch-visitas-2026-11-17"
  ],
  "ultimo": {
-  "quando": "2026-11-16T23:40:46Z",
+  "quando": "2026-11-17T12:01:12Z",
   "canal": "site",
-  "angulo": "cena_de_dois_segundos",
-  "assunto": "casa",
+  "angulo": "pergunta_que_ensina",
+  "assunto": "ceifalume",
   "fatos": [
-   "casa-site-gratis"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias",
+   "medido-bicos",
+   "medido-moedas",
+   "medido-plantadas",
+   "medido-tutorial",
+   "medido-itch-downloads-2026-11-17",
+   "medido-itch-visitas-2026-11-17"
   ],
-  "abertura": "prancheta abre",
-  "tipo_abertura": "frase",
+  "abertura": "voce sabia",
+  "tipo_abertura": "voce",
   "esqueleto": [
-   "frase",
-   "frase",
+   "pergunta",
    "frase"
   ],
-  "hashtags": 2,
+  "hashtags": 0,
   "nota": 0.769,
-  "texto": "Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr"
+  "texto": "Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações crescem e vendem sozinhas por até 8h offline."
  },
  "publicacoes": [
   {
@@ -664,6 +705,17 @@
    "fatos": [],
    "texto": "Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadastro, sem compra, só o arquivo puro. #godot #gamedevbr",
    "titulo": "Prancheta abre o navegador, clica no canal e o jogo já roda na tela.",
+   "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-17T12:01:12Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações crescem e vendem sozinhas por até 8h offline.",
+   "titulo": "Você sabia que sua fazenda trabalha enquanto dorme?",
    "nota": 0.769,
    "tipo": "publicacao"
   }
