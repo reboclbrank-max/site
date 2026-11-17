@@ -280,8 +280,16 @@ async function testeGmail() {
     // 16/11/2026: o repositório site guarda GMAIL_CHAT_ADDRESS e GMAIL_CHAT_APPPASS; o chat
     // guarda GMAIL_CHAT_ADDR e GMAIL_CHAT_PASS. Ler só um dos nomes dava "sem credenciais"
     // ou "erro de conexão" com credencial boa. Aqui os dois nomes valem.
-    const addr = process.env.GMAIL_CHAT_ADDR || process.env.GMAIL_CHAT_ADDRESS;
-    const pass = process.env.GMAIL_CHAT_PASS || process.env.GMAIL_CHAT_APPPASS;
+    // 16/11/2026 — A ORDEM ERA A CAUSA DO "Application-specific password required".
+    // O site tem DOIS secrets de senha, e o antigo lê `GMAIL_CHAT_PASS` PRIMEIRO:
+    //   GMAIL_CHAT_APPPASS = senha de app de 16 caracteres → funciona
+    //   GMAIL_CHAT_PASS    = senha comum da conta          → o Google recusa por definição
+    // Ou seja: o teste pegava a senha errada e acusava a conta, enquanto o verificador novo
+    // (que tenta APPPASS primeiro) dizia "LOGIN OK" no mesmo run. Dois testes, mesma
+    // credencial, resultados opostos — vencia o que lia o secret errado.
+    // `_APPPASS` primeiro em TODOS os pontos.
+    const addr = process.env.GMAIL_CHAT_ADDRESS || process.env.GMAIL_CHAT_ADDR;
+    const pass = process.env.GMAIL_CHAT_APPPASS || process.env.GMAIL_CHAT_PASS;
     if (!addr || !pass) {
       registro('Gmail IMAP/SMTP', false,
         'sem credenciais (esperado GMAIL_CHAT_ADDR/ADDRESS + GMAIL_CHAT_PASS/APPPASS)');

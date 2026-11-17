@@ -233,7 +233,11 @@ async function postarNostr() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 async function postarGmail() {
   const addr = process.env.GMAIL_CHAT_ADDR || process.env.GMAIL_CHAT_ADDRESS;
-  const pass = process.env.GMAIL_CHAT_PASS || process.env.GMAIL_CHAT_APPPASS;
+  // 16/11/2026 — mesma inversão do testar-todas-as-apis, aqui no POST. Este repositório tem
+  // os DOIS secrets, e `GMAIL_CHAT_PASS` é a senha comum da conta (o Google recusa por
+  // definição em IMAP/SMTP). A senha de app é `GMAIL_CHAT_APPPASS`. Ler a comum primeiro
+  // significa que o Gmail nunca funcionou para postar, e o erro falava da conta, não do código.
+  const pass = process.env.GMAIL_CHAT_APPPASS || process.env.GMAIL_CHAT_PASS;
   if (!addr || !pass) {
     registro('Gmail', false, 'sem credenciais de Gmail');
     return;

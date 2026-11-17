@@ -73,6 +73,16 @@ function impressao(imagem, legenda) {
   return crypto.createHash('sha256').update(chave, 'utf8').digest('hex');
 }
 
+// IG_AGORA permite aos CONTRATOS fixar o relógio e testar a janela sem esperar as 9h.
+// Em produção a variável não existe e o tempo é o tempo. Sem isso, a suíte que testa o
+// portão fica vermelha toda madrugada — e um teste que depende da hora do dia não mede o
+// que diz medir, mede o relógio.
+function agoraDe(quando) {
+  if (quando) return quando;
+  const fixo = process.env.IG_AGORA;
+  return fixo ? new Date(fixo) : new Date();
+}
+
 function horaBrasilia(agora = new Date()) {
   // Brasília é UTC-3 e hoje não tem horário de verão.
   return (agora.getUTCHours() + 24 - 3) % 24;
@@ -83,7 +93,8 @@ function diaBrasilia(agora = new Date()) {
 }
 
 // ───────────────────────────────────────────────────────────────────────────────
-function podePublicar({ imagem, legenda, agora = new Date() }) {
+function podePublicar({ imagem, legenda, agora } = {}) {
+  agora = agoraDe(agora);
   const d = ler();
   const motivos = [];
 
@@ -133,7 +144,8 @@ function podePublicar({ imagem, legenda, agora = new Date() }) {
   };
 }
 
-function registrar({ mediaId, imagem, legenda, agora = new Date() }) {
+function registrar({ mediaId, imagem, legenda, agora } = {}) {
+  agora = agoraDe(agora);
   if (!mediaId) return { ok: false, erro: 'sem media_id não há o que registrar' };
   const d = ler();
   const imp = impressao(imagem, legenda);

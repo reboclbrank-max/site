@@ -17,6 +17,7 @@ número do run fica no relatório do dia.
 """
 import json
 import os
+import re as _re
 import re
 import shutil
 import subprocess
@@ -240,8 +241,16 @@ with tempfile.TemporaryDirectory() as tmp:
     with open(est, "w", encoding="utf-8") as f:
         json.dump({"publicados": []}, f)
 
+    # RELÓGIO FIXO: quinta 16/11, 19:00 BRT (= 22:00 UTC), dentro da janela 9-22h.
+    # Sem isso a suíte ficava vermelha toda madrugada — um teste que mede o relógio, não o
+    # portão. IG_AGORA existe só para os contratos; em produção é o tempo real.
+    DENTRO = {"IG_AGORA": "2026-11-16T22:00:00Z"}
+
     def ig(*args, env=None):
-        return node(os.path.join(iso, "instagram-estado.js"), *args, env=env)
+        ambiente = dict(DENTRO)
+        if env:
+            ambiente.update(env)
+        return node(os.path.join(iso, "instagram-estado.js"), *args, env=ambiente)
 
     r = ig("--pode", "--imagem", "u1", "--legenda", "L1")
     ok("estado vazio: PODE publicar", r.returncode == 0, r.stdout)
@@ -254,8 +263,17 @@ with tempfile.TemporaryDirectory() as tmp:
     ok("peça nova logo depois é recusada pelo intervalo", r.returncode == 1 and "intervalo" in r.stdout,
        r.stdout)
     # com intervalo zerado e outra peça, passa (prova que o relógio é o critério)
-    r = ig("--pode", "--imagem", "u3", "--legenda", "L3", env={"IG_INTERVALO_MINUTOS": "0"})
+    # intervalo zerado + 3h depois = PODE de verdade (prova que a janela e o intervalo
+    # são os dois critérios, e que passar os dois libera)
+    r = ig("--pode", "--imagem", "u3", "--legenda", "L3",
+           # 19:00 UTC = 16h BRT — bem dentro da janela (a janela é [9,22): 22h já está FORA)
+           env={"IG_INTERVALO_MINUTOS": "0", "IG_AGORA": "2026-11-17T19:00:00Z"})
     ok("passado o intervalo, peça nova PODE", r.returncode == 0, r.stdout)
+    # e a janela continua valendo: 04h BRT (=07 UTC) é fora
+    r = ig("--pode", "--imagem", "u4", "--legenda", "L4",
+           env={"IG_INTERVALO_MINUTOS": "0", "IG_AGORA": "2026-11-17T07:00:00Z"})
+    ok("a janela barra às 4h de Brasília mesmo sem intervalo",
+       r.returncode == 1 and "janela" in r.stdout, r.stdout)
     # fora da janela: 04:00 BRT == 07:00 UTC
     ok("ele conhece a janela de Brasília", "JANELA = [9, 22]" in _source_ig, "")
 
@@ -365,12 +383,39 @@ try:
 finally:
     _sh.rmtree(_rec_raiz, ignore_errors=True)
 
+# ── 8b. PRECEDÊNCIA DO SECRET DO GMAIL: APPPASS antes de PASS, em TODO lugar ─────
+# (16/11/2026, defeito real que durou semanas) O `site` guarda dois secrets de senha:
+# GMAIL_CHAT_APPPASS (senha de app de 16 chars, funciona) e GMAIL_CHAT_PASS (senha comum,
+# o Google recusa por definição). Dois arquivos liam `GMAIL_CHAT_PASS` PRIMEIRO. Resultado:
+# o Gmail aparecia "Application-specific password required" — e a conclusão natural era
+# "a conta precisa de senha de app", quando a senha de app JÁ ESTAVA lá, sendo ignorada.
+# O sintoma apontava para o dono; o defeito era uma ordem de `||`.
+_invertidos = []
+for _base, _dirs, _arqs in os.walk(AQUI):
+    if "marketing" in _base or _base.rstrip("/").endswith("tools"):
+        for _a in _arqs:
+            if not _a.endswith(".js"):
+                continue
+            _caminho = os.path.join(_base, _a)
+            _txt = ler(_caminho)
+            for _l in _txt.splitlines():
+                # só é inversão quando `PASS` aparece LITERALMENTE antes de `APPPASS` na
+                # mesma atribuição. `process.env.GMAIL_CHAT_APPPASS || ...GMAIL_CHAT_PASS`
+                # contém a substring "GMAIL_CHAT_PASS ||"? Não — mas contém "PASS ||" no
+                # fim. A marca inequívoca é a atribuição começando por PASS.
+                # Ancorar no INÍCIO da expressão: `= process.env.GMAIL_CHAT_PASS ||`
+                # significa que PASS é a primeira escolha. Se APPPASS vem antes,
+                # a ocorrência está no meio e não casa.
+                if _re.search(r"=\s*process\.env\.GMAIL_CHAT_PASS\s*\|\|", _l):
+                    _invertidos.append(os.path.relpath(_caminho, RAIZ))
+ok("nenhum arquivo lê GMAIL_CHAT_PASS antes de GMAIL_CHAT_APPPASS",
+   not _invertidos, "invertidos: " + ", ".join(sorted(set(_invertidos))))
+
 # ── 9. PERMISSÃO: workflow que versiona estado precisa de contents: write ────────
 # (16/11/2026, defeito real): o publicar-instagram tinha `contents: read`. O passo de commit
 # rodava, o git commit funcionava e o PUSH era recusado 6 vezes — o log dizia "autenticação/
 # permissão" e o estado nunca chegava ao main. O portão continuava decorativo, agora por
 # permissão em vez de por falta de commit. A regra vale para todo workflow que versiona.
-import re as _re
 _sem_escrita = []
 for _f in sorted(os.listdir(WFS)):
     if not _f.endswith(".yml"):
