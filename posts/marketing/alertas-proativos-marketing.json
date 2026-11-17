@@ -2,30 +2,48 @@
   "ativo": true,
   "alertas": [
     {
-      "id": "al_1794887238033_001",
+      "id": "al_1794917962963_001",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para ceifalume: 13 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-17T03:47:18.033Z",
+      "criadoEm": "2026-11-17T12:19:22.963Z",
       "resolvido": false
     },
     {
-      "id": "al_1794887238033_002",
+      "id": "al_1794917962964_002",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para prancheta: 1 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-17T03:47:18.033Z",
+      "criadoEm": "2026-11-17T12:19:22.964Z",
       "resolvido": false
     },
     {
-      "id": "al_1794887238034_003",
+      "id": "al_1794917962964_003",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ambos há 7h",
+      "mensagem": "Fila estagnada em instagram para ambos há 16h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-17T03:47:18.034Z",
+      "criadoEm": "2026-11-17T12:19:22.964Z",
+      "resolvido": false
+    },
+    {
+      "id": "al_1794917962964_004",
+      "tipo": "fila_estagnada",
+      "mensagem": "Fila estagnada em instagram para ceifalume há 3h",
+      "severidade": "alta",
+      "rede": "instagram",
+      "criadoEm": "2026-11-17T12:19:22.964Z",
+      "resolvido": false
+    },
+    {
+      "id": "al_1794917962964_005",
+      "tipo": "fila_estagnada",
+      "mensagem": "Fila estagnada em instagram para prancheta há 3h",
+      "severidade": "alta",
+      "rede": "instagram",
+      "criadoEm": "2026-11-17T12:19:22.964Z",
       "resolvido": false
     }
   ],
@@ -46,7 +64,7 @@
       "ativo": true
     }
   ],
-  "ultima_execucao": "2026-11-17T03:47:18.033Z",
-  "criadoEm": "2026-11-17T03:47:18.033Z",
-  "atualizadoEm": "2026-11-17T03:47:18.034Z"
+  "ultima_execucao": "2026-11-17T12:19:22.963Z",
+  "criadoEm": "2026-11-17T12:19:22.963Z",
+  "atualizadoEm": "2026-11-17T12:19:22.965Z"
 }
