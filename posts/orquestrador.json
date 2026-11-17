@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-17T12:20:17Z",
  "ultima_pesquisa": "2026-11-17T06:00:22Z",
  "ultima_aprendizagem": "2026-11-17T07:00:21Z",
- "pulsos": 400,
+ "pulsos": 401,
  "historico": [
-  {
-   "quando": "2026-11-12T06:00:15Z",
-   "acao": "pesquisar",
-   "motivo": "fila: [pesquisar-20261110T062023Z] meta parada: Instagram: seguidores: 0 em 25 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
-   "codigo": 0,
-   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
-  },
   {
    "quando": "2026-11-12T06:20:15Z",
    "acao": "dormir",
@@ -284,6 +277,13 @@
    "quando": "2026-11-17T14:40:26Z",
    "acao": "dormir",
    "motivo": "publicou há 20 min (mínimo 2h)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-17T15:00:23Z",
+   "acao": "dormir",
+   "motivo": "publicou há 40 min (mínimo 2h)",
    "codigo": 0,
    "saida": "nada a fazer (dormir)"
   }
