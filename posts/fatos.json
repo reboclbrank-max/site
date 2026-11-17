@@ -586,6 +586,63 @@
    "quando": "2026-11-17",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "video-806i-rPzC9w",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Quanto rende CEIFALUME em 2 minutos\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-youtube-shorts-2026-11-17",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "YouTube — shorts: 9 hoje, medido pela própria casa em 17/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-17",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "video-WewOjNDzEDQ",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Como funciona: são seis culturas no celeiro: abóbora, flor de lume\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-itch-downloads-2026-11-17",
+   "assunto": "ceifalume",
+   "classe": "numero",
+   "afirmacao": "itch — downloads: 49 hoje, medido pela própria casa em 17/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-17",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "video-3fGB7drCbTc",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"O que muda em CEIFALUME depois de 2 minutos\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-itch-visitas-2026-11-17",
+   "assunto": "ceifalume",
+   "classe": "numero",
+   "afirmacao": "itch — visitas: 211 hoje, medido pela própria casa em 17/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-17",
+   "validade_dias": 7,
+   "repetivel": false
   }
  ]
 }
