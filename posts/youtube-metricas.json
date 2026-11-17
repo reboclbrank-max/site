@@ -1,7 +1,23 @@
 {
- "medido_em": "2026-11-17T12:25:30Z",
+ "medido_em": "2026-11-17T23:08:26Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "iy37eWobg7U",
+   "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
+   "publicado_em": "2026-11-17T21:18:09Z",
+   "views": 1,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "NqU3s52x7_Q",
+   "titulo": "Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é idle farm —",
+   "publicado_em": "2026-11-17T21:12:13Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "RksiKWR1QfY",
    "titulo": "Como o PRANCHETA simula uma partida a partir da prancheta",
@@ -30,7 +46,7 @@
    "id": "lvC90MIwQs0",
    "titulo": "O que 6 toques fizeram na partida do PRANCHETA",
    "publicado_em": "2026-11-16T21:12:54Z",
-   "views": 3,
+   "views": 7,
    "likes": 0,
    "comentarios": 0
   },
@@ -212,8 +228,8 @@
   }
  ],
  "totais": {
-  "videos": 26,
-  "views": 19,
+  "videos": 28,
+  "views": 24,
   "likes": 0,
   "comentarios": 0
  }
