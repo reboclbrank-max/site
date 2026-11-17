@@ -1880,10 +1880,12 @@
    "estado": "pendente",
    "tentativas": 0,
    "criada": "2026-11-17T16:40:19Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-17T21:00:17Z",
+   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos) | instagram: vez pedida ao publicar-instagram.yml",
    "motivo": "decisão do relógio",
-   "chave": "publicar-2026111716"
+   "chave": "publicar-2026111716",
+   "adiamentos": 1,
+   "adiada_em": "2026-11-17T21:00:17Z"
   },
   {
    "id": "medir-20261117T182017Z",
@@ -1908,6 +1910,18 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "publicar-2026111719"
+  },
+  {
+   "id": "publicar-20261117T210017Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-17T21:00:17Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026111721"
   }
  ],
  "recusadas": [
