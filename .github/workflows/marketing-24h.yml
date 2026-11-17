@@ -60,8 +60,17 @@ on:
 permissions:
   contents: write
 
+# 17/11/2026 — GRUPO COMPARTILHADO, NÃO GRUPO PRÓPRIO.
+# Cada um destes arquivos declarava `concurrency: group: <o próprio nome>`, o que serializa
+# execuções DO MESMO workflow e não faz nada entre workflows diferentes. Cinco workflows que
+# gravam estado e empurram para o `main` corriam em paralelo e se atropelavam:
+# medido em 17/11 02:53, quando o cobrador disparou os três de uma vez — status-total #6 e #7
+# e alertas-proativos #3 morreram com "push recusado: concorrência/rejeição" seis vezes cada,
+# tendo o commit feito e o dado fora do main.
+# `entrar-no-main.sh` tem retry, mas retry disputando com mais quatro é revezamento, não
+# publicação. Quem escreve no main precisa de UMA fila: o grupo `estado-no-main`.
 concurrency:
-  group: marketing-24h
+  group: estado-no-main
   cancel-in-progress: false
 
 jobs:

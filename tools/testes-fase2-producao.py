@@ -1017,6 +1017,35 @@ _r = subprocess.run([sys.executable, "-c", _EST_DUP], capture_output=True, text=
 ok("lista com id repetido CONTINUA recusada (regra não foi afrouxada)",
    "RECUSOU" in (_r.stdout or ""), (_r.stdout or _r.stderr or "")[:100])
 
+# ══════════ 21. UMA FILA SÓ PARA QUEM ESCREVE NO MAIN
+# (17/11/2026) MEDIDO: em 02:53, quando o cobrador de cron disparou os três vigias de uma vez,
+# status-total #6, status-total #7 e alertas-proativos #3 morreram com "push recusado:
+# concorrência/rejeição" SEIS vezes cada — commit feito, dado fora do main.
+# A causa: cada workflow declarava `concurrency: group: <o próprio nome>`. Isso serializa
+# execuções do MESMO workflow e não faz nada entre workflows DIFERENTES. Cinco workflows que
+# gravam estado empurravam para o mesmo `main` ao mesmo tempo.
+# `entrar-no-main.sh` tem retry, mas retry brigando com mais quatro é revezamento, não
+# publicação. Contrato: quem escreve no main compartilha UM grupo.
+_ESCREVEM = ("status-total.yml", "alertas-proativos.yml", "health-check.yml",
+             "marketing-24h.yml", "publicar-instagram.yml")
+_grupos = {}
+for _wf in _ESCREVEM:
+    _t = ler(os.path.join(WFS, _wf))
+    _m = _re.search(r"concurrency:\s*\n\s*group:\s*(\S+)", _t)
+    _grupos[_wf] = _m.group(1) if _m else None
+ok("todo workflow que escreve no main declara `concurrency`",
+   all(_grupos.values()), str(_grupos))
+ok("os que escrevem no main compartilham O MESMO grupo (uma fila, não cinco)",
+   len(set(_grupos.values())) == 1,
+   "grupos distintos: " + str(sorted(set(v for v in _grupos.values() if v))))
+ok("o grupo compartilhado se chama `estado-no-main`",
+   set(_grupos.values()) == {"estado-no-main"}, str(_grupos))
+# e nenhum deles pode ter voltado a cancelar execução em andamento (perderia o dado a meio caminho)
+_cancelam = [w for w in _ESCREVEM
+             if _re.search(r"cancel-in-progress:\s*true", ler(os.path.join(WFS, w)))]
+ok("nenhum deles cancela execução em andamento (cancelar = perder o estado no meio)",
+   not _cancelam, "cancelam: " + str(_cancelam))
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)
 
