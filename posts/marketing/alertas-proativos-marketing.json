@@ -1,6 +1,34 @@
 {
   "ativo": true,
-  "alertas": [],
+  "alertas": [
+    {
+      "id": "al_1794884026472",
+      "tipo": "engajamento_baixo",
+      "mensagem": "Engajamento baixo no youtube para ceifalume: 13 interações",
+      "severidade": "media",
+      "rede": "youtube",
+      "criadoEm": "2026-11-17T02:53:46.472Z",
+      "resolvido": false
+    },
+    {
+      "id": "al_1794884026473",
+      "tipo": "engajamento_baixo",
+      "mensagem": "Engajamento baixo no youtube para prancheta: 1 interações",
+      "severidade": "media",
+      "rede": "youtube",
+      "criadoEm": "2026-11-17T02:53:46.473Z",
+      "resolvido": false
+    },
+    {
+      "id": "al_1794884026473",
+      "tipo": "fila_estagnada",
+      "mensagem": "Fila estagnada em instagram para ambos há 6h",
+      "severidade": "alta",
+      "rede": "instagram",
+      "criadoEm": "2026-11-17T02:53:46.473Z",
+      "resolvido": false
+    }
+  ],
   "regras": [
     {
       "nome": "engajamento_baixo",
@@ -18,7 +46,7 @@
       "ativo": true
     }
   ],
-  "ultima_execucao": "2026-11-16T20:12:10.865Z",
-  "criadoEm": "2026-11-16T20:12:10.865Z",
-  "atualizadoEm": "2026-11-16T20:12:10.866Z"
+  "ultima_execucao": "2026-11-17T02:53:46.472Z",
+  "criadoEm": "2026-11-17T02:53:46.472Z",
+  "atualizadoEm": "2026-11-17T02:53:46.474Z"
 }
