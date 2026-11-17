@@ -519,6 +519,73 @@
    "quando": "2026-11-16",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "video-C_KjgaipGJg",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"PRANCHETA: sem instrução e velocidade rápida, mostrando a virada\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-instagram-publicacoes-2026-11-17",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Instagram — publicações: 44 hoje, medido pela própria casa em 17/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-17",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-views-ice6o3d-wd0-2026-11-17",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "o vídeo \"Por que CEIFALUME é grátis de verdade\" está com 4 views, medido em 17/11",
+   "origem": "posts/youtube-metricas.json",
+   "quando": "2026-11-17",
+   "validade_dias": 3,
+   "repetivel": false
+  },
+  {
+   "id": "video-IYi1JfJFgcU",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"A conta por minuto em CEIFALUME: 8 colheitas em 2 min\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-bluesky-seguidores-2026-11-17",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Bluesky — seguidores: 30 hoje, medido pela própria casa em 17/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-17",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "video-4dUlp9uODpw",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Passo a passo: 13 mudas e 5 colheitas em 2 min de CEIFALUME\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-17",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-youtube-inscritos-2026-11-17",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "YouTube — inscritos: 24 hoje, medido pela própria casa em 17/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-17",
+   "validade_dias": 7,
+   "repetivel": false
   }
  ]
 }
