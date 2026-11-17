@@ -382,3 +382,6 @@ Prancheta abre o navegador, clica no canal e o jogo já roda na tela. Sem cadast
 
 ## 17/11/2026 12:01 UTC
 Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações crescem e vendem sozinhas por até 8h offline.
+
+## 17/11/2026 14:22 UTC
+O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta

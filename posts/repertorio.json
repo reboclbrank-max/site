@@ -517,6 +517,24 @@
    "hashtags": 0,
    "nota": 0.769,
    "texto": "Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações crescem e vendem sozinhas por até 8h offline."
+  },
+  {
+   "quando": "2026-11-17T14:21:48Z",
+   "canal": "site",
+   "angulo": "bastidor_de_erro",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-som"
+   ],
+   "abertura": "o som",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta"
   }
  ],
  "fatos_de_uma_vez": [
@@ -555,36 +573,26 @@
   "marco-youtube-shorts",
   "casa-site-gratis",
   "medido-itch-downloads-2026-11-17",
-  "medido-itch-visitas-2026-11-17"
+  "medido-itch-visitas-2026-11-17",
+  "prancheta-som"
  ],
  "ultimo": {
-  "quando": "2026-11-17T12:01:12Z",
+  "quando": "2026-11-17T14:21:48Z",
   "canal": "site",
-  "angulo": "pergunta_que_ensina",
-  "assunto": "ceifalume",
+  "angulo": "bastidor_de_erro",
+  "assunto": "prancheta",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias",
-   "medido-bicos",
-   "medido-moedas",
-   "medido-plantadas",
-   "medido-tutorial",
-   "medido-itch-downloads-2026-11-17",
-   "medido-itch-visitas-2026-11-17"
+   "prancheta-som"
   ],
-  "abertura": "voce sabia",
-  "tipo_abertura": "voce",
+  "abertura": "o som",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "pergunta",
+   "rotulo",
    "frase"
   ],
-  "hashtags": 0,
+  "hashtags": 1,
   "nota": 0.769,
-  "texto": "Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações crescem e vendem sozinhas por até 8h offline."
+  "texto": "O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta"
  },
  "publicacoes": [
   {
@@ -716,6 +724,17 @@
    "fatos": [],
    "texto": "Você sabia que sua fazenda trabalha enquanto dorme? Em Ceifalume, plantações crescem e vendem sozinhas por até 8h offline.",
    "titulo": "Você sabia que sua fazenda trabalha enquanto dorme?",
+   "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-17T14:21:48Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "O som só começa após o primeiro toque: política do navegador exige interação do usuário antes de liberar áudio. #prancheta",
+   "titulo": "O som só começa após o primeiro toque: política do navegador exige interação do usuário ",
    "nota": 0.769,
    "tipo": "publicacao"
   }
