@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-16T23:50:02Z",
+ "medido_em": "2026-11-17T12:25:30Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "RksiKWR1QfY",
+   "titulo": "Como o PRANCHETA simula uma partida a partir da prancheta",
+   "publicado_em": "2026-11-17T12:22:33Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "TT6XP5Zs__c",
    "titulo": "PRANCHETA: a partida inteira em ritmo normal, sem mexer no plano",
@@ -22,7 +30,7 @@
    "id": "lvC90MIwQs0",
    "titulo": "O que 6 toques fizeram na partida do PRANCHETA",
    "publicado_em": "2026-11-16T21:12:54Z",
-   "views": 0,
+   "views": 3,
    "likes": 0,
    "comentarios": 0
   },
@@ -94,7 +102,7 @@
    "id": "QPRgb4ny43s",
    "titulo": "CEIFALUME é idle farm — e o que isso quer dizer",
    "publicado_em": "2026-11-10T19:57:40Z",
-   "views": 0,
+   "views": 2,
    "likes": 0,
    "comentarios": 0
   },
@@ -204,8 +212,8 @@
   }
  ],
  "totais": {
-  "videos": 25,
-  "views": 14,
+  "videos": 26,
+  "views": 19,
   "likes": 0,
   "comentarios": 0
  }
