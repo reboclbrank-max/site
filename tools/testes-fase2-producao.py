@@ -63,8 +63,17 @@ _sh.copytree(os.path.join(RAIZ, ".github"), os.path.join(ESPELHO, ".github"))
 _sh.copytree(AQUI, os.path.join(ESPELHO, "tools"),
              ignore=_sh.ignore_patterns("__pycache__", "posts"))
 _sh.copytree(os.path.join(RAIZ, "posts"), os.path.join(ESPELHO, "posts"))
-_sh.copytree(os.path.join(RAIZ, "ceifalume"), os.path.join(ESPELHO, "ceifalume")) \
-    if os.path.isdir(os.path.join(RAIZ, "ceifalume")) else None
+# O jogo Ceifalume tem um index.wasm de 37 MB. O health check só audita `ceifalume/index.html`
+# — copiar o binário do jogo inteiro custava 41 MB POR EXECUÇÃO (medido em 16/11/2026: 235 MB
+# acumulados em 5 rodadas, e /tmp é tmpfs). No runner do Actions isso enche o disco e o CI falha
+# por um motivo que não tem nada a ver com o código. Copia só o que é auditado.
+_DIR_JOGO = os.path.join(ESPELHO, "ceifalume")
+if os.path.isdir(os.path.join(RAIZ, "ceifalume")):
+    os.makedirs(_DIR_JOGO, exist_ok=True)
+    for _item in ("index.html", "index.js"):
+        _origem = os.path.join(RAIZ, "ceifalume", _item)
+        if os.path.exists(_origem):
+            _sh.copy2(_origem, os.path.join(_DIR_JOGO, _item))
 # estado mínimo para o health check poder auditar uma raiz de mentira sem inventar números
 for _arq, _conteudo in (
     ("posts/orquestrador.json", '{"pulsos": 0}'),
@@ -305,13 +314,14 @@ ok("existe um documento com os passos do Gmail",
 # undefined, e pulava a recriação. Quatro estados ausentes viravam quatro camadas críticas
 # caídas e ZERO tentativas de recuperação. Um teste que só chamasse `tentarRecuperacao()` com
 # um objeto "bonitinho" passaria; só apagar os arquivos de verdade expõe o defeito.
+# A raiz da recuperação precisa de: os workflows (para a auditoria ter o que ver), as
+# ferramentas DE VERDADE (o health check confere a sintaxe de cada uma — um diretório vazio
+# mudaria a resposta) e o health check. 2,5 MB por execução, e é o mínimo honesto.
 _RAIZ_REC = tempfile.mkdtemp(prefix="fase2-rec-")
-for _d in (".github", "tools"):
-    _sh.copytree(os.path.join(RAIZ, _d), os.path.join(_RAIZ_REC, _d),
-                 ignore=_sh.ignore_patterns("__pycache__", "marketing"))
-_sh.copy(os.path.join(AQUI, "marketing", "health-check-site.js"),
-         os.path.join(_RAIZ_REC, "tools", "marketing", "health-check-site.js")) \
-    if os.path.isdir(os.path.join(_RAIZ_REC, "tools", "marketing")) else None
+_RAIZ_REC_ALVO = _RAIZ_REC
+_sh.copytree(os.path.join(RAIZ, ".github"), os.path.join(_RAIZ_REC, ".github"))
+_sh.copytree(AQUI, os.path.join(_RAIZ_REC, "tools"),
+             ignore=_sh.ignore_patterns("__pycache__", "posts"))
 os.makedirs(os.path.join(_RAIZ_REC, "posts"), exist_ok=True)
 
 _env_rec = {"SITE_RAIZ": _RAIZ_REC, "POSTS_DIR": os.path.join(_RAIZ_REC, "posts"),
@@ -483,6 +493,12 @@ for _wf in ("gravar-prancheta.yml", "gravar-gameplay.yml"):
 
 ok("o despertador existente também usa dispatch (padrão que já funcionava)",
    "dispatches" in ler(os.path.join(WFS, "despertador.yml")))
+
+# ── LIMPEZA ──────────────────────────────────────────────────────────────────────────────
+# Sem isto cada execução deixa temporários para trás. `/tmp` no runner é tmpfs: em poucas
+# rodadas o `conferir-tudo` começa a falhar por disco cheio, com um erro que não aponta para cá.
+for _tmp in (TMP_POSTS, TMP_RAIZ, ESPELHO, _RAIZ_REC):
+    _sh.rmtree(_tmp, ignore_errors=True)
 
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)
