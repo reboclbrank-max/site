@@ -53,11 +53,24 @@ const ARQ = path.join(DIR, 'instagram-publicados.json');
 // Agora a ordem é: IG_INTERVALO_MINUTOS (força explícita) > otimizador (dado real) > 120.
 // A força explícita continua vencendo de propósito: quem quer testar ou travar a cadência não
 // deve brigar com o histórico.
+// 17/11/2026 — AMOSTRA MÍNIMA, PORQUE 2 ACESSOS NÃO SÃO UM PADRÃO.
+// Com o estado real de produção (`ambos: {17:1, 20:1}`) o cálculo devolvia 240 min — e o
+// portão passaria a esperar 4h entre posts. Isso é pior que 120: é overfitting com o mesmo
+// absurdo de cravar número sem base, só na direção conservadora. Duas visitas não descrevem
+// fluxo de público; descrevem dois cliques.
+// Regra: abaixo de AMOSTRA_MINIMA acessos o otimizador não manda — e o resumo diz por quê,
+// com o número. Dado insuficiente tem que aparecer como dado insuficiente, não como 240.
+const AMOSTRA_MINIMA = 30;
+
 function intervaloDoOtimizador() {
   try {
     const mod = require('./auto-otimizador-avancado.js');
     const cad = mod.calcularCadencia('instagram', 'ambos');
     if (cad && cad.ok && Number(cad.intervalo_minutos) > 0) {
+      if ((cad.total_acessos || 0) < AMOSTRA_MINIMA) {
+        return { minutos: null, fonte: 'otimizador/amostra-insuficiente',
+                 acessos: cad.total_acessos };
+      }
       return { minutos: Number(cad.intervalo_minutos), fonte: 'otimizador', acessos: cad.total_acessos };
     }
     // o otimizador guarda por jogo; 'ambos' pode não existir. Tenta os dois jogos e usa o MAIOR
@@ -67,6 +80,10 @@ function intervaloDoOtimizador() {
       .filter(c => c && c.ok && Number(c.intervalo_minutos) > 0);
     if (porJogo.length) {
       const maior = porJogo.reduce((a, b) => (a.intervalo_minutos >= b.intervalo_minutos ? a : b));
+      if ((maior.total_acessos || 0) < AMOSTRA_MINIMA) {
+        return { minutos: null, fonte: 'otimizador/amostra-insuficiente',
+                 acessos: maior.total_acessos };
+      }
       return { minutos: Number(maior.intervalo_minutos), fonte: 'otimizador/' + maior.jogo,
                acessos: maior.total_acessos };
     }

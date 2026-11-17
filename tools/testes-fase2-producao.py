@@ -828,5 +828,71 @@ for _wf in ("status-total.yml", "publicar-instagram.yml", "health-check.yml",
        and "entrar-no-main.sh" in _t,
        "ainda engole a falha de push")
 
+# ══════════ 18. O ACESSO DE PEÇA `ambos` E A AMOSTRA MÍNIMA (o fecho de loop REAL)
+# (17/11/2026) DOIS buracos que só apareceram com o estado de PRODUÇÃO na mão:
+#
+#  a) `calcularCadencia()` iterava ['ceifalume','prancheta'] e o histórico real estava em
+#     `instagram/ambos`. Em produção: `{instagram: {ambos: {17:1, 20:1}}}` e a função devolvia
+#     `ok:false`. O portão caía nos 120 do YAML e o "fecho de loop" era decorativo.
+#
+#  b) consertado (a), o cálculo devolvia 240 min com **2 acessos**. Cravar 4h entre posts com
+#     base em dois cliques é o mesmo defeito de antes na direção conservadora: número sem base.
+#     Daí a amostra mínima — e o resumo precisa DIZER que a amostra é insuficiente, senão o
+#     dono não distingue "decidi pelo dado" de "não tenho dado".
+#
+# (c) o bug que eu mesmo criei ao consertar (a): pedir 'ambos' somava `ambos` com ele mesmo e
+#     contava 29 acessos como 58. Pego pelo contrato do limite (29 não pode passar de 30).
+def _estado_otim(fluxo):
+    d = tempfile.mkdtemp(prefix="fase2-loop-")
+    os.makedirs(os.path.join(d, "posts", "marketing"), exist_ok=True)
+    with open(os.path.join(d, "posts", "marketing", "auto-otimizador-avancado.json"), "w",
+              encoding="utf-8") as f:
+        json.dump({"ativo": True, "fluxo_acesso": fluxo, "metricas_engajamento": {},
+                   "otimizacoes": [], "proximoId": 1}, f)
+    return d, {"POSTS_DIR": os.path.join(d, "posts")}
+
+def _intervalo(d, env):
+    r = node(os.path.join(MARKETING, "instagram-estado.js"), "--resumo", env=env)
+    m = _re.search(r"intervalo mínimo \| (\d+) min", r.stdout or "")
+    o = _re.search(r"origem do intervalo \| ([^|\n]+)", r.stdout or "")
+    _sh.rmtree(d, ignore_errors=True)
+    return (int(m.group(1)) if m else None, (o.group(1).strip() if o else ""))
+
+# (a) o estado que EXISTE em produção, e que antes não era lido
+_d, _e = _estado_otim({"instagram": {"ambos": {"17": 1, "20": 1}}})
+_min, _org = _intervalo(_d, _e)
+ok("acesso gravado em `ambos` é lido (não fica invisível)",
+   _min is not None and "insuficiente" in _org.replace("amostra-", "amostra-"),
+   "min=%s origem=%s" % (_min, _org))
+ok("com 2 acessos o portão NÃO crava número: diz que a amostra é insuficiente",
+   _min == 120 and "amostra-insuficiente" in _org, "min=%s origem=%s" % (_min, _org))
+
+# (b) a fronteira da amostra: 1 acesso abaixo não manda, 1 acima manda
+_d, _e = _estado_otim({"instagram": {"ambos": {"17": 10, "19": 19}}});  _m29, _o29 = _intervalo(_d, _e)
+_d, _e = _estado_otim({"instagram": {"ambos": {"17": 10, "19": 20}}});  _m30, _o30 = _intervalo(_d, _e)
+ok("29 acessos: amostra insuficiente (padrão 120, e diz por quê)",
+   _m29 == 120 and "insuficiente" in _o29, "29→%s/%s" % (_m29, _o29))
+ok("30 acessos: o dado passa a mandar (240 ≠ 120, origem `otimizador`)",
+   _m30 == 240 and _o30.startswith("otimizador"), "30→%s/%s" % (_m30, _o30))
+ok("29 não é contado como 58 (peça `ambos` não é somada com ela mesma)",
+   _m29 != _m30, "os dois casos deram o mesmo resultado: duplicação voltou")
+
+# (c) volume alto encurta o intervalo — é o fecho de loop na direção que publica mais
+_d, _e = _estado_otim({"instagram": {"ambos": {"17": 300, "19": 400}}}); _m700, _o700 = _intervalo(_d, _e)
+ok("700 acessos → intervalo de 90 min aplicado pelo portão (≠ 120)",
+   _m700 == 90 and _o700.startswith("otimizador"), "700→%s/%s" % (_m700, _o700))
+
+# (d) os dois jogos têm a MESMA leitura do mesmo dado (prioridade igual)
+for _j in ("ceifalume", "prancheta"):
+    _r = node("-e",
+              "const m=require(process.env.MOD);process.stdout.write(JSON.stringify("
+              "m.calcularCadencia('instagram',%r)))" % _j,
+              env={"POSTS_DIR": os.path.join(_estado_otim({"instagram": {"ambos": {"17": 300, "19": 400}}})[0],
+                                             "posts"),
+                   "MOD": os.path.join(MARKETING, "auto-otimizador-avancado.js")})
+    ok("%s lê o acesso de peça `ambos` e calcula cadência" % _j,
+       '"ok":true' in (_r.stdout or "") and '"intervalo_minutos":90' in (_r.stdout or ""),
+       (_r.stdout or "")[:100])
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)

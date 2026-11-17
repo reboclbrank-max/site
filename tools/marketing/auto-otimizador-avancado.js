@@ -124,10 +124,51 @@ function melhorHorario(rede, jogo) {
 }
 
 // Calcula cadência ideal (intervalo em minutos) baseado em engajamento e acesso
+// 17/11/2026 — O SEGUNDO BURACO DO FECHO DE LOOP, achado no estado REAL de produção.
+// `registrar.js` grava peça que serve aos dois jogos sob a chave `ambos` (e agora também em
+// `ceifalume` e `prancheta`). Mas quando o histórico é anterior a essa correção — ou quando a
+// origem só informa `ambos` — o dado existe em `ambos` e esta função, que itera os dois jogos,
+// não via NADA. Resultado medido em produção: `fluxo_acesso: {instagram: {ambos: {17:1, 20:1}}}`
+// e `calcularCadencia()` devolvendo `ok:false`; o portão caía no padrão 120 e o "fecho de loop"
+// era decorativo.
+// Regra: acesso de peça `ambos` é acesso dos DOIS jogos (prioridade igual é regra do dono).
+// Somar `ambos` ao jogo específico é o que dá a este o público real — sem inventar número,
+// sem favorecer um lado.
+function fluxoDoJogo(c, rede, jogo) {
+  const porRede = (c.fluxo_acesso && c.fluxo_acesso[rede]) || {};
+  // quando pedem 'ambos', `proprio` E `ambos` são o MESMO objeto — somar os dois duplicaria
+  // a contagem. (Pego no teste: 29 acessos viravam 58 e passavam do mínimo de amostra.)
+  if (jogo === 'ambos') {
+    const a = porRede.ambos;
+    return a && Object.keys(a).length ? a : null;
+  }
+  const proprio = porRede[jogo] || {};
+  const ambos = porRede.ambos || {};
+  if (!Object.keys(proprio).length && !Object.keys(ambos).length) return null;
+  const soma = {};
+  for (const src of [ambos, proprio]) {
+    for (const [h, v] of Object.entries(src)) soma[h] = (soma[h] || 0) + (Number(v) || 0);
+  }
+  return soma;
+}
+
+function metricasDoJogo(c, rede, jogo) {
+  const porRede = (c.metricas_engajamento && c.metricas_engajamento[rede]) || {};
+  if (jogo === 'ambos') return porRede.ambos || null;
+  const proprio = porRede[jogo];
+  const ambos = porRede.ambos;
+  if (proprio && ambos) {
+    const soma = Object.assign({}, ambos);
+    for (const [k, v] of Object.entries(proprio)) soma[k] = (Number(soma[k]) || 0) + (Number(v) || 0);
+    return soma;
+  }
+  return proprio || ambos || null;
+}
+
 function calcularCadencia(rede, jogo) {
   const c = carregar();
-  const fluxo = c.fluxo_acesso[rede] && c.fluxo_acesso[rede][jogo];
-  const eng = c.metricas_engajamento[rede] && c.metricas_engajamento[rede][jogo];
+  const fluxo = fluxoDoJogo(c, rede, jogo);
+  const eng = metricasDoJogo(c, rede, jogo);
   if (!fluxo) return { ok: false, erro: 'Sem dados de fluxo para ' + rede + '/' + jogo };
   const totalAcessos = Object.values(fluxo).reduce((s, v) => s + v, 0);
   const picos = Object.entries(fluxo).filter(([h, v]) => v > totalAcessos * 0.15).length;
