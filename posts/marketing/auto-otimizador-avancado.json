@@ -8,9 +8,16 @@
    }
   }
  },
- "metricas_engajamento": {},
+ "metricas_engajamento": {
+  "youtube": {
+   "ceifalume": {
+    "visualizacoes": 13
+   }
+  }
+ },
  "otimizacoes": [],
  "proximoId": 1,
  "criadoEm": "2026-11-16T20:24:25.448Z",
- "atualizadoEm": "2026-11-16T23:42:07.485Z"
+ "atualizadoEm": "2026-11-16T23:42:07.485Z",
+ "_run": "A"
 }
