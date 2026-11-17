@@ -57,10 +57,26 @@ function desativarAlertasProativos() {
   return { ok: true };
 }
 
+// 17/11/2026 — O ID ERA `'al_' + Date.now()` E ISSO COLIDE.
+// Medido no arquivo de produção: dois alertas com o MESMO id (`al_1794884026473`), porque
+// as regras rodam em sequência no mesmo milissegundo. A consequência não era cosmética:
+//   1. `conciliar-estado.py` recusa lista com ID duplicado ("IDs duplicados"), então dois
+//      runs concorrentes NUNCA conseguiam conciliar este arquivo — e o alertas-proativos #3
+//      falhou exatamente assim, com "conflito em arquivo que NÃO é gerado";
+//   2. qualquer código que indexe por id (o conciliador faz isso, e é o jeito certo de
+//      mesclar listas) perde um dos dois alertas em silêncio.
+// Um identificador que pode repetir não identifica nada. Agora tem contador de sequência:
+// o timestamp dá a ordenação, o contador garante unicidade dentro do mesmo milissegundo.
+let _seq = 0;
+function idDeAlerta() {
+  _seq = (_seq + 1) % 1000;
+  return 'al_' + Date.now() + '_' + String(_seq).padStart(3, '0');
+}
+
 function adicionarAlerta(tipo, mensagem, severidade, rede) {
   const c = carregar();
   const alerta = {
-    id: 'al_' + Date.now(),
+    id: idDeAlerta(),
     tipo,
     mensagem,
     severidade, // baixa, media, alta, critica

@@ -943,6 +943,80 @@ _SOBRAS = sorted(_g.glob(os.path.join(tempfile.gettempdir(), "fase2-*")))
 ok("a suíte não deixa temporários no disco (vazamento medido: 38 dirs)",
    not _SOBRAS, "sobraram %d: %s" % (len(_SOBRAS), _SOBRAS[:3]))
 
+# ══════════ 20. IDENTIFICADOR QUE REPETE NÃO IDENTIFICA (alertas-proativos #3)
+# (17/11/2026) MEDIDO EM PRODUÇÃO: `posts/marketing/alertas-proativos-marketing.json` no main
+# tinha DOIS alertas com id `al_1794884026473`. Causa: `'al_' + Date.now()` — as regras rodam
+# em sequência e duas caem no mesmo milissegundo.
+# Não é cosmético:
+#   • o sink de alertas perde um dos dois ao indexar por id;
+#   • `conciliar-estado.py` recusa lista com ID repetido, então dois runs concorrentes NUNCA
+#     conseguem conciliar esse arquivo — foi a falha do alertas-proativos #3:
+#     "conflito em arquivo que NÃO é gerado: posts/marketing/alertas-proativos-marketing.json".
+_AP = os.path.join(MARKETING, "alertas-proativos-marketing.js")
+ok("existe o gerador de alertas", os.path.exists(_AP))
+
+# (a) dois alertas no MESMO milissegundo não podem colidir
+_AP_TMP = tempfile.mkdtemp(prefix="fase2-alerta-")
+os.makedirs(os.path.join(_AP_TMP, "posts", "marketing"), exist_ok=True)
+_r = node("-e",
+          "const m=require(process.env.M);"
+          "m.adicionarAlerta('a','x','media','youtube');"
+          "m.adicionarAlerta('b','y','alta','instagram');"
+          "m.adicionarAlerta('c','z','critica','x');"
+          "const d=JSON.parse(require('fs').readFileSync(process.env.F));"
+          "const ids=d.alertas.map(a=>a.id);"
+          "process.stdout.write(JSON.stringify({ids:ids,unicos:new Set(ids).size}))",
+          env={"POSTS_DIR": os.path.join(_AP_TMP, "posts"), "M": _AP,
+               "F": os.path.join(_AP_TMP, "posts", "marketing", "alertas-proativos-marketing.json")})
+_d = {}
+try:
+    _d = json.loads((_r.stdout or "{}").strip().splitlines()[-1])
+except Exception:
+    pass
+ok("3 alertas criados no mesmo instante têm 3 ids DIFERENTES",
+   _d.get("unicos") == 3 and len(_d.get("ids") or []) == 3,
+   "%s → ids %s" % (_d.get("unicos"), _d.get("ids")))
+_sh.rmtree(_AP_TMP, ignore_errors=True)
+
+# (b) o conciliador precisa ACEITAR esse arquivo (é o que falhou no #3)
+_EST_AP = (
+    "import importlib.util,json,copy\n"
+    "spec=importlib.util.spec_from_file_location('ce',r'%s')\n"
+    "ce=importlib.util.module_from_spec(spec);spec.loader.exec_module(ce)\n"
+    "base={'ativo':True,'alertas':[{'id':'al_1','tipo':'x'}],'atualizadoEm':'2026-11-17T03:00:00Z'}\n"
+    "loc=copy.deepcopy(base);loc['alertas'].append({'id':'al_A','tipo':'a'});loc['atualizadoEm']='2026-11-17T03:00:01Z'\n"
+    "rem=copy.deepcopy(base);rem['alertas'].append({'id':'al_B','tipo':'b'});rem['atualizadoEm']='2026-11-17T03:00:03Z'\n"
+    "try:\n"
+    " out=ce.conciliar(base,loc,rem)\n"
+    " print(json.dumps({'ok':True,'n':len(out['alertas'])}))\n"
+    "except ce.Conflito as e:\n"
+    " print(json.dumps({'ok':False,'erro':str(e)}))\n"
+) % os.path.abspath(os.path.join(os.path.dirname(__file__), "conciliar-estado.py"))
+_r = subprocess.run([sys.executable, "-c", _EST_AP], capture_output=True, text=True, timeout=60)
+_d = {}
+try:
+    _d = json.loads((_r.stdout or "{}").strip().splitlines()[-1])
+except Exception:
+    pass
+ok("dois runs conciliam o arquivo de alertas (o caso que falhou no #3)",
+   _d.get("ok") is True and _d.get("n") == 3,
+   (_r.stdout or _r.stderr or "")[:140])
+
+# (c) id repetido CONTINUA sendo recusado — a correção não pode afrouxar a regra
+_EST_DUP = (
+    "import importlib.util,json\n"
+    "spec=importlib.util.spec_from_file_location('ce',r'%s')\n"
+    "ce=importlib.util.module_from_spec(spec);spec.loader.exec_module(ce)\n"
+    "try:\n"
+    " ce.conciliar([{'id':'x'}],[{'id':'x','v':1}],[{'id':'x','v':2}])\n"
+    " print('ACEITOU')\n"
+    "except ce.Conflito:\n"
+    " print('RECUSOU')\n"
+) % os.path.abspath(os.path.join(os.path.dirname(__file__), "conciliar-estado.py"))
+_r = subprocess.run([sys.executable, "-c", _EST_DUP], capture_output=True, text=True, timeout=60)
+ok("lista com id repetido CONTINUA recusada (regra não foi afrouxada)",
+   "RECUSOU" in (_r.stdout or ""), (_r.stdout or _r.stderr or "")[:100])
+
 print("\n%d/%d contratos da Fase 2 em produção passaram" % (len(TOTAL) - len(FALHAS), len(TOTAL)))
 sys.exit(1 if FALHAS else 0)
 
