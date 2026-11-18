@@ -394,3 +394,6 @@ Você já configurou a Prancheta para mudar a tática em tempo real? Com até 5 
 
 ## 18/11/2026 12:01 UTC
 Corrigindo o áudio: agora só toca após o primeiro toque, política do navegador. É a limitação atual da versão web. #prancheta #jogobrasileiro
+
+## 18/11/2026 16:01 UTC
+Quer ver bastidor, protótipo e raciocínio de design? Vem pra **Prancheta**. Todos os canais oficiais tão reunidos na nossa página.

@@ -3320,3 +3320,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=57(api) · itch_downloads=49(api) · itch_visitas=215(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
 
 > Corrigindo o áudio: agora só toca após o primeiro toque, política do navegador. É a limitação atual da versão web. #prancheta #jogobrasileiro
+
+## 18/11/2026 16:01 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.69 |
+| pauta do ciclo | ✅ ponte_de_canal · casa |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ ponte_de_canal · casa |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ❌ portão recusou o reel: estilo: formatação crua de markdown (** não ren |
+| instagram | ❌ portão recusou o instagram: estilo: formatação crua de markdown (** nã |
+| threads | ❌ portão recusou o threads: estilo: formatação crua de markdown (** não  |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=61(api) · itch_downloads=49(api) · itch_visitas=215(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
+
+> Quer ver bastidor, protótipo e raciocínio de design? Vem pra **Prancheta**. Todos os canais oficiais tão reunidos na nossa página.
