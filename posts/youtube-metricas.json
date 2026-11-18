@@ -1,12 +1,12 @@
 {
- "medido_em": "2026-11-17T23:08:26Z",
+ "medido_em": "2026-11-18T12:12:36Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
    "id": "iy37eWobg7U",
    "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
    "publicado_em": "2026-11-17T21:18:09Z",
-   "views": 1,
+   "views": 4,
    "likes": 0,
    "comentarios": 0
   },
@@ -46,7 +46,7 @@
    "id": "lvC90MIwQs0",
    "titulo": "O que 6 toques fizeram na partida do PRANCHETA",
    "publicado_em": "2026-11-16T21:12:54Z",
-   "views": 7,
+   "views": 9,
    "likes": 0,
    "comentarios": 0
   },
@@ -150,7 +150,7 @@
    "id": "iCE6O3d_WD0",
    "titulo": "Por que CEIFALUME é grátis de verdade",
    "publicado_em": "2026-11-07T22:55:20Z",
-   "views": 4,
+   "views": 5,
    "likes": 0,
    "comentarios": 0
   },
@@ -229,7 +229,7 @@
  ],
  "totais": {
   "videos": 28,
-  "views": 24,
+  "views": 30,
   "likes": 0,
   "comentarios": 0
  }
