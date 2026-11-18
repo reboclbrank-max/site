@@ -2539,6 +2539,72 @@
     ],
     "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
    }
+  },
+  {
+   "quando": "2026-11-18T21:24:58Z",
+   "estrategia": "posse_normal",
+   "assinatura": "654f1d66592e",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "posse_normal",
+    "passos": [
+     [
+      "toque em 500,87",
+      15.0
+     ],
+     [
+      "toque em 500,179",
+      20.0
+     ],
+     [
+      "toque em 500,232",
+      25.0
+     ],
+     [
+      "toque em 500,612",
+      29.0
+     ],
+     [
+      "toque em 500,259",
+      33.0
+     ],
+     [
+      "toque em 500,289",
+      40.0
+     ],
+     [
+      "toque em 636,573",
+      44.0
+     ],
+     [
+      "toque em 640,360",
+      49.0
+     ],
+     [
+      "toque em 110,608",
+      53.0
+     ],
+     [
+      "toque em 636,573",
+      58.0
+     ],
+     [
+      "toque em 640,360",
+      62.0
+     ],
+     [
+      "toque em 640,360",
+      67.0
+     ],
+     [
+      "toque em 110,608",
+      71.0
+     ]
+    ],
+    "toques_partida": 6,
+    "passos_confirmados": 11
+   },
+   "jogo": "prancheta"
   }
  ]
 }
