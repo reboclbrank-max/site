@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "DTwau1uBhBs",
+   "url": "https://youtu.be/DTwau1uBhBs",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Ficha da partida: 10 colheitas, 973 toques, 2 min",
+   "descricao": "Ficha da partida: 13 mudas plantadas, 10 colheitas, 973 toques e 2 minutos de tela.\n\nA ficha não tem estimativa: é o que o gravador anotou enquanto o jogo rodava no navegador.\n\nO que muda de uma partida para a outra é a decisão de onde plantar, não a sorte.\n\nJogue você também e compare a sua ficha com esta.\n\nFonte: posts/cenas.json (partida 9de8b874a9f5, conferida em 2026-11-18T20:49:24Z).",
+   "descricao_completa": false,
+   "angulo": "ficha_da_partida",
+   "fato": null,
+   "numeros": {
+    "plantadas": 13,
+    "colhidas": 10,
+    "toques": 973,
+    "minutos": 2,
+    "toques_por_minuto": 486
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-18T20:49:35Z"
+  },
+  {
    "id": "iy37eWobg7U",
    "url": "https://youtu.be/iy37eWobg7U",
    "slug": "prancheta-gameplay",

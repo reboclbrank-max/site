@@ -490,6 +490,13 @@
    "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
    "capa": "media/gameplay/prancheta-capa.png",
    "sha256": "229c48070a60eb90"
+  },
+  {
+   "id": "DTwau1uBhBs",
+   "quando": "2026-11-18T20:49:37Z",
+   "titulo": "Ficha da partida: 10 colheitas, 973 toques, 2 min",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "101ce7d0e5f1b171"
   }
  ]
 }
