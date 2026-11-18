@@ -391,3 +391,6 @@ Ceifalume (idle night farm, navegador & Android) chega ao mundo! Versão 0.1 lan
 
 ## 17/11/2026 19:01 UTC
 Você já configurou a Prancheta para mudar a tática em tempo real? Com até 5 trocas, é possível otimizar a partida sem perder o controle do jogo. #prancheta
+
+## 18/11/2026 12:01 UTC
+Corrigindo o áudio: agora só toca após o primeiro toque, política do navegador. É a limitação atual da versão web. #prancheta #jogobrasileiro

@@ -580,6 +580,31 @@
    "hashtags": 1,
    "nota": 0.846,
    "texto": "Você já configurou a Prancheta para mudar a tática em tempo real? Com até 5 trocas, é possível otimizar a partida sem perder o controle do jogo. #prancheta"
+  },
+  {
+   "quando": "2026-11-18T12:01:10Z",
+   "canal": "site",
+   "angulo": "devlog_aberto",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-acessibilidade",
+    "prancheta-guia",
+    "prancheta-som"
+   ],
+   "abertura": "corrigindo o",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.769,
+   "texto": "Corrigindo o áudio: agora só toca após o primeiro toque, política do navegador. É a limitação atual da versão web. #prancheta #jogobrasileiro"
   }
  ],
  "fatos_de_uma_vez": [
@@ -623,29 +648,29 @@
   "ceifalume-versao"
  ],
  "ultimo": {
-  "quando": "2026-11-17T19:01:26Z",
+  "quando": "2026-11-18T12:01:10Z",
   "canal": "site",
-  "angulo": "pergunta_ao_publico",
+  "angulo": "devlog_aberto",
   "assunto": "prancheta",
   "fatos": [
    "prancheta-trocas",
    "prancheta-narracao",
-   "prancheta-ficticio",
    "prancheta-divisoes",
    "prancheta-mercado",
    "prancheta-acessibilidade",
-   "prancheta-guia"
+   "prancheta-guia",
+   "prancheta-som"
   ],
-  "abertura": "voce ja",
-  "tipo_abertura": "voce",
+  "abertura": "corrigindo o",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "pergunta",
+   "rotulo",
    "frase",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.846,
-  "texto": "Você já configurou a Prancheta para mudar a tática em tempo real? Com até 5 trocas, é possível otimizar a partida sem perder o controle do jogo. #prancheta"
+  "hashtags": 2,
+  "nota": 0.769,
+  "texto": "Corrigindo o áudio: agora só toca após o primeiro toque, política do navegador. É a limitação atual da versão web. #prancheta #jogobrasileiro"
  },
  "publicacoes": [
   {
@@ -811,6 +836,17 @@
    "texto": "Você já configurou a Prancheta para mudar a tática em tempo real? Com até 5 trocas, é possível otimizar a partida sem perder o controle do jogo. #prancheta",
    "titulo": "Você já configurou a Prancheta para mudar a tática em tempo real?",
    "nota": 0.846,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-18T12:01:10Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Corrigindo o áudio: agora só toca após o primeiro toque, política do navegador. É a limitação atual da versão web. #prancheta #jogobrasileiro",
+   "titulo": "Corrigindo o áudio: agora só toca após o primeiro toque, política do navegador.",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]
