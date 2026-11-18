@@ -657,6 +657,30 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "Quer ver bastidor, protótipo e raciocínio de design? Vem pra **Prancheta**. Todos os canais oficiais tão reunidos na nossa página."
+  },
+  {
+   "quando": "2026-11-18T20:21:14Z",
+   "canal": "site",
+   "angulo": "comparacao_honesta",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-offline",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "prancheta roda",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celular. #prancheta"
   }
  ],
  "fatos_de_uma_vez": [
@@ -730,56 +754,28 @@
   "video-NqU3s52x7_Q"
  ],
  "ultimo": {
-  "quando": "2026-11-18T16:01:35Z",
+  "quando": "2026-11-18T20:21:14Z",
   "canal": "site",
-  "angulo": "ponte_de_canal",
-  "assunto": "casa",
+  "angulo": "comparacao_honesta",
+  "assunto": "prancheta",
   "fatos": [
-   "casa-canais",
-   "casa-newsletter",
-   "casa-telegram",
-   "prancheta-trailer",
-   "video-iCE6O3d_WD0",
-   "video-cfB5ZBdC-NA",
-   "video-_ffmjSMsW0Y",
-   "video-hBvkQhSS-_4",
-   "video-O04ajm1t54Q",
-   "video-TT6XP5Zs__c",
-   "video-a5AVwpewoGE",
-   "video-lvC90MIwQs0",
-   "video-C_KjgaipGJg",
-   "video-IYi1JfJFgcU",
-   "video-4dUlp9uODpw",
-   "video-806i-rPzC9w",
-   "video-WewOjNDzEDQ",
-   "video-3fGB7drCbTc",
-   "video-85nRhygguhs",
-   "video-igf33ZusQs8",
-   "video-QPRgb4ny43s",
-   "video-ihxVpjQoczQ",
-   "video-FNzW9c45E3M",
-   "video-FRCzgqUlMFY",
-   "video-PRyg0Ncz5U8",
-   "video-HmbEdojjhsU",
-   "video-L2UIYmofEiE",
-   "video-03313IcXvEo",
-   "video-f5kQFOQs0To",
-   "video-GuE7af6dYo8",
-   "video-2qsSknSyeAs",
-   "video-RksiKWR1QfY",
-   "video-iy37eWobg7U",
-   "video-NqU3s52x7_Q"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-offline",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "quer ver",
+  "abertura": "prancheta roda",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "pergunta",
    "frase",
    "frase"
   ],
-  "hashtags": 0,
+  "hashtags": 1,
   "nota": 0.692,
-  "texto": "Quer ver bastidor, protótipo e raciocínio de design? Vem pra **Prancheta**. Todos os canais oficiais tão reunidos na nossa página."
+  "texto": "Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celular. #prancheta"
  },
  "publicacoes": [
   {
@@ -966,6 +962,17 @@
    "fatos": [],
    "texto": "Quer ver bastidor, protótipo e raciocínio de design? Vem pra **Prancheta**. Todos os canais oficiais tão reunidos na nossa página.",
    "titulo": "Quer ver bastidor, protótipo e raciocínio de design?",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-18T20:21:14Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celular. #prancheta",
+   "titulo": "Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celu",
    "nota": 0.692,
    "tipo": "publicacao"
   }

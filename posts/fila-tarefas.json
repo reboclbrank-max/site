@@ -1917,11 +1917,11 @@
    "id": "publicar-20261117T210017Z",
    "tipo": "publicar",
    "prioridade": 60,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-17T21:00:17Z",
-   "executada": "2026-11-18T18:00:28Z",
-   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos) | instagram: vez pedida ao publicar-instagram.yml",
+   "executada": "2026-11-18T20:20:22Z",
+   "resultado": "582: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  cab = \"\\n## %s\\n\" % datetime.datetime.utcnow().strftime(\"%d/%m/%Y\")\n/home/runner/work/site/site/tools/postador.py:1627: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
    "motivo": "decisão do relógio",
    "chave": "publicar-2026111721",
    "adiamentos": 1,
@@ -2410,6 +2410,18 @@
     "publicar-20261117T190012Z",
     "publicar-20261117T210017Z",
     "publicar-20261118T140025Z"
+   ]
+  },
+  {
+   "tipo": "publicar",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-18T20:20:22Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261117T210017Z",
+    "publicar-20261118T140025Z",
+    "publicar-20261118T180028Z"
    ]
   }
  ]

@@ -397,3 +397,6 @@ Corrigindo o áudio: agora só toca após o primeiro toque, política do navegad
 
 ## 18/11/2026 16:01 UTC
 Quer ver bastidor, protótipo e raciocínio de design? Vem pra **Prancheta**. Todos os canais oficiais tão reunidos na nossa página.
+
+## 18/11/2026 20:21 UTC
+Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celular. #prancheta
