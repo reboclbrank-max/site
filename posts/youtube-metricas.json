@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-18T12:12:36Z",
+ "medido_em": "2026-11-18T22:41:10Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "DTwau1uBhBs",
+   "titulo": "Ficha da partida: 10 colheitas, 973 toques, 2 min",
+   "publicado_em": "2026-11-18T20:49:58Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "iy37eWobg7U",
    "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
@@ -46,7 +54,7 @@
    "id": "lvC90MIwQs0",
    "titulo": "O que 6 toques fizeram na partida do PRANCHETA",
    "publicado_em": "2026-11-16T21:12:54Z",
-   "views": 9,
+   "views": 10,
    "likes": 0,
    "comentarios": 0
   },
@@ -228,8 +236,8 @@
   }
  ],
  "totais": {
-  "videos": 28,
-  "views": 30,
+  "videos": 29,
+  "views": 31,
   "likes": 0,
   "comentarios": 0
  }
