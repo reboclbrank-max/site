@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "como_funciona:video-QPRgb4ny43s",
-   "fato": "video-QPRgb4ny43s",
+   "angulo": "ficha_da_partida",
+   "fato": null,
    "numeros": {
     "plantadas": 13,
-    "colhidas": 9,
-    "toques": 969,
+    "colhidas": 10,
+    "toques": 973,
     "minutos": 2,
-    "toques_por_minuto": 484
+    "toques_por_minuto": 486
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4112545,
+   "bytes": 4598312,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é idle farm —",
-   "descricao": "O canal da casa publicou o vídeo \"CEIFALUME é idle farm — e o que isso quer dizer\".\n\nNa gravação desta partida: 13 mudas plantadas e 9 colheitas em 2 minutos.\n\nO dado não veio de fórum: veio do próprio jogo, medido durante a captura.\n\nFonte: posts/youtube-publicados.json (conferido em 2026-11-17).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
+   "titulo": "Ficha da partida: 10 colheitas, 973 toques, 2 min",
+   "descricao": "Ficha da partida: 13 mudas plantadas, 10 colheitas, 973 toques e 2 minutos de tela.\n\nA ficha não tem estimativa: é o que o gravador anotou enquanto o jogo rodava no navegador.\n\nO que muda de uma partida para a outra é a decisão de onde plantar, não a sorte.\n\nJogue você também e compare a sua ficha com esta.\n\nFonte: posts/cenas.json (partida 9de8b874a9f5, conferida em 2026-11-18T20:49:24Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -713,7 +713,7 @@
     },
     {
      "angulo": "como_funciona:video-iCE6O3d_WD0",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+     "motivo": "título quase igual a um já publicado (0.86)"
     },
     {
      "angulo": "onde_jogar:video-iCE6O3d_WD0",
@@ -761,7 +761,7 @@
     },
     {
      "angulo": "como_funciona:marco-instagram-publicacoes",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:marco-instagram-publicacoes",
@@ -809,7 +809,7 @@
     },
     {
      "angulo": "como_funciona:video-cfB5ZBdC-NA",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.74 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-cfB5ZBdC-NA",
@@ -857,7 +857,7 @@
     },
     {
      "angulo": "como_funciona:video-_ffmjSMsW0Y",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "título quase igual a um já publicado (0.88)"
     },
     {
      "angulo": "onde_jogar:video-_ffmjSMsW0Y",
@@ -905,7 +905,7 @@
     },
     {
      "angulo": "como_funciona:video-hBvkQhSS-_4",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.73 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-hBvkQhSS-_4",
@@ -953,7 +953,7 @@
     },
     {
      "angulo": "como_funciona:marco-youtube-shorts",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.66 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:marco-youtube-shorts",
@@ -1001,7 +1001,7 @@
     },
     {
      "angulo": "como_funciona:video-a5AVwpewoGE",
-     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.72 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-a5AVwpewoGE",
@@ -1049,7 +1049,7 @@
     },
     {
      "angulo": "como_funciona:video-IYi1JfJFgcU",
-     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+     "motivo": "texto repetido: 0.72 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-IYi1JfJFgcU",
@@ -1097,7 +1097,7 @@
     },
     {
      "angulo": "como_funciona:video-4dUlp9uODpw",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.74 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-4dUlp9uODpw",
@@ -1145,7 +1145,7 @@
     },
     {
      "angulo": "como_funciona:video-806i-rPzC9w",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.74 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-806i-rPzC9w",
@@ -1193,7 +1193,7 @@
     },
     {
      "angulo": "como_funciona:video-WewOjNDzEDQ",
-     "motivo": "texto repetido: 0.67 de semelhança com \"Como funciona: são seis culturas no celeiro: abóbora, flor d\""
+     "motivo": "texto repetido: 0.68 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-WewOjNDzEDQ",
@@ -1241,7 +1241,7 @@
     },
     {
      "angulo": "como_funciona:video-3fGB7drCbTc",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.74 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-3fGB7drCbTc",
@@ -1289,7 +1289,7 @@
     },
     {
      "angulo": "como_funciona:video-85nRhygguhs",
-     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+     "motivo": "texto repetido: 0.74 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-85nRhygguhs",
@@ -1337,7 +1337,7 @@
     },
     {
      "angulo": "como_funciona:video-igf33ZusQs8",
-     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+     "motivo": "texto repetido: 0.72 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-igf33ZusQs8",
@@ -1382,6 +1382,10 @@
     {
      "angulo": "bastidor_do_dia:video-igf33ZusQs8",
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-QPRgb4ny43s",
+     "motivo": "título já publicado neste canal: Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é idle farm —"
     },
     {
      "angulo": "onde_jogar:video-QPRgb4ny43s",
@@ -1429,7 +1433,7 @@
     },
     {
      "angulo": "como_funciona:video-ihxVpjQoczQ",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "título quase igual a um já publicado (0.88)"
     },
     {
      "angulo": "onde_jogar:video-ihxVpjQoczQ",
@@ -1477,7 +1481,7 @@
     },
     {
      "angulo": "como_funciona:video-FNzW9c45E3M",
-     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+     "motivo": "texto repetido: 0.72 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-FNzW9c45E3M",
@@ -1573,7 +1577,7 @@
     },
     {
      "angulo": "como_funciona:video-PRyg0Ncz5U8",
-     "motivo": "texto repetido: 0.63 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.72 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-PRyg0Ncz5U8",
@@ -1621,7 +1625,7 @@
     },
     {
      "angulo": "como_funciona:video-HmbEdojjhsU",
-     "motivo": "texto repetido: 0.68 de semelhança com \"Como funciona: as plantações crescem e as vendas acontecem\""
+     "motivo": "texto repetido: 0.70 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-HmbEdojjhsU",
@@ -1669,7 +1673,7 @@
     },
     {
      "angulo": "como_funciona:video-L2UIYmofEiE",
-     "motivo": "texto repetido: 0.64 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.74 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-L2UIYmofEiE",
@@ -1717,7 +1721,7 @@
     },
     {
      "angulo": "como_funciona:video-03313IcXvEo",
-     "motivo": "texto repetido: 0.65 de semelhança com \"Como funciona: a chuva rega de graça: não custa água nem moe\""
+     "motivo": "texto repetido: 0.75 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
     },
     {
      "angulo": "onde_jogar:video-03313IcXvEo",
@@ -1764,6 +1768,10 @@
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
+     "angulo": "como_funciona:video-f5kQFOQs0To",
+     "motivo": "título quase igual a um já publicado (0.87)"
+    },
+    {
      "angulo": "onde_jogar:video-f5kQFOQs0To",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
@@ -1806,6 +1814,10 @@
     {
      "angulo": "bastidor_do_dia:video-f5kQFOQs0To",
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-GuE7af6dYo8",
+     "motivo": "título quase igual a um já publicado (0.87)"
     },
     {
      "angulo": "onde_jogar:video-GuE7af6dYo8",
@@ -1852,6 +1864,10 @@
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
+     "angulo": "como_funciona:video-2qsSknSyeAs",
+     "motivo": "título quase igual a um já publicado (0.87)"
+    },
+    {
      "angulo": "onde_jogar:video-2qsSknSyeAs",
      "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
     },
@@ -1896,36 +1912,80 @@
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
+     "angulo": "como_funciona:video-NqU3s52x7_Q",
+     "motivo": "texto repetido: 0.77 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
+    },
+    {
+     "angulo": "onde_jogar:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-NqU3s52x7_Q",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "passo_a_passo",
-     "motivo": "título quase igual a um já publicado (0.98)"
+     "motivo": "título quase igual a um já publicado (0.97)"
     },
     {
      "angulo": "medida_por_minuto",
-     "motivo": "título quase igual a um já publicado (0.98)"
+     "motivo": "título quase igual a um já publicado (0.97)"
     },
     {
      "angulo": "semente_do_dia",
-     "motivo": "título quase igual a um já publicado (0.95)"
+     "motivo": "título quase igual a um já publicado (0.94)"
     },
     {
      "angulo": "numeros",
-     "motivo": "título quase igual a um já publicado (0.97)"
+     "motivo": "título quase igual a um já publicado (0.96)"
     },
     {
      "angulo": "pergunta",
      "motivo": "título já publicado neste canal: Quantas colheitas cabem em 2 minutos de CEIFALUME?"
     },
     {
-     "angulo": "cultivo",
-     "motivo": "mesma forma de um post recente do canal (abertura frase, 8 frases, 0 hashtags): Quem fez CEIFALUME e por quê"
-    },
-    {
      "angulo": "comparacao",
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 11,
-   "angulos_candidatos": 482
+   "angulos_aprovados": 8,
+   "angulos_candidatos": 494
   },
   {
    "id": "prancheta-gameplay",

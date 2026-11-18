@@ -2497,6 +2497,48 @@
     "passos_confirmados": 13
    },
    "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-18T20:49:24Z",
+   "estrategia": "milho",
+   "assinatura": "9de8b874a9f5",
+   "resumo": {
+    "estrategia": "milho",
+    "plantadas": 13,
+    "colhidas": 10,
+    "bicos": 973,
+    "sementes": [
+     "None",
+     "None"
+    ],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 23,
+      "t": 39.7
+     },
+     {
+      "id": "lanterna",
+      "nome": "Acender Lanterna",
+      "custo": 185,
+      "t": 41.8
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": -4,
+      "t": 62.4
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 46,
+      "t": 64.3
+     }
+    ],
+    "verde_final": "A:0.000 B:0.000 C:0.000 D:0.000 E:0.000"
+   }
   }
  ]
 }
