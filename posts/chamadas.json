@@ -2,6 +2,20 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-18T11:32:23Z",
+   "video_id": "iy37eWobg7U",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"PRANCHETA: instrução de pressão no intervalo e velocidade rápida\". É o PRANCHETA-GAMEPLAY. #prancheta-gameplay\nhttps://youtu.be/iy37eWobg7U",
+   "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
+   "resultado": "recusado",
+   "motivo": "fora da janela (08h local, janela 09-22h)",
+   "numeros": {
+    "video": "iy37eWobg7U",
+    "historico_do_canal": 13,
+    "nota_juizo": 0.538
+   }
+  },
+  {
    "quando": "2026-11-17T21:47:05Z",
    "video_id": "iy37eWobg7U",
    "canal": "bluesky",
