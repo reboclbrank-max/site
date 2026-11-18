@@ -1731,11 +1731,11 @@
    "id": "pesquisar-20261112T062015Z",
    "tipo": "pesquisar",
    "prioridade": 95,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-12T06:20:15Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-18T06:00:17Z",
+   "resultado": "meta em risco: None (falta None · None/dia)\nformatos a evitar: comentário em post alheio\ntema do dia: ⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des\nhorário: sem prova estatística: mantém a janela do calendário\nplano gravado em posts/plano-do-dia.json",
    "motivo": "meta parada: Instagram: seguidores: 0 em 25 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
    "chave": "parada-Instagram: seguidores",
    "origem": "perceber"
@@ -2285,6 +2285,18 @@
     "pesquisar-20261107T064637Z",
     "pesquisar-20261111T062012Z",
     "pesquisar-20261112T062015Z"
+   ]
+  },
+  {
+   "tipo": "pesquisar",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-18T06:00:17Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "pesquisar-20261107T064637Z",
+    "pesquisar-20261112T062015Z",
+    "pesquisar-20261117T062014Z"
    ]
   }
  ]
