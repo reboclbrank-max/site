@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-18T22:41:10Z",
+ "medido_em": "2026-11-19T12:06:32Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -30,7 +30,7 @@
    "id": "RksiKWR1QfY",
    "titulo": "Como o PRANCHETA simula uma partida a partir da prancheta",
    "publicado_em": "2026-11-17T12:22:33Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -62,7 +62,7 @@
    "id": "C_KjgaipGJg",
    "titulo": "PRANCHETA: sem instrução e velocidade rápida, mostrando a virada",
    "publicado_em": "2026-11-16T19:20:34Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -182,7 +182,7 @@
    "id": "O04ajm1t54Q",
    "titulo": "16 passos do menu à prancheta, 13 confirmados por imagem",
    "publicado_em": "2026-11-07T00:04:58Z",
-   "views": 1,
+   "views": 2,
    "likes": 0,
    "comentarios": 0
   },
@@ -230,14 +230,14 @@
    "id": "f5kQFOQs0To",
    "titulo": "CEIFALUME 0.1 — jogo idle de fazenda noturna (jogo indie brasileiro) — gameplay gravado no navegador",
    "publicado_em": "2026-11-04T05:17:56Z",
-   "views": 1,
+   "views": 3,
    "likes": 0,
    "comentarios": 0
   }
  ],
  "totais": {
   "videos": 29,
-  "views": 31,
+  "views": 36,
   "likes": 0,
   "comentarios": 0
  }
