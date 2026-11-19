@@ -726,6 +726,40 @@
    "hashtags": 1,
    "nota": 0.923,
    "texto": "Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No celeiro já tem 6 culturas (abóbora incluso). Topa testar? #ceifalume"
+  },
+  {
+   "quando": "2026-11-19T20:41:44Z",
+   "canal": "site",
+   "angulo": "pergunta_que_ensina",
+   "assunto": "casa",
+   "fatos": [
+    "medido-video",
+    "medido-instagram-publicacoes-2026-11-16",
+    "medido-views-ice6o3d-wd0-2026-11-16",
+    "medido-bluesky-seguidores-2026-11-16",
+    "medido-youtube-inscritos-2026-11-16",
+    "medido-instagram-publicacoes-2026-11-17",
+    "medido-views-ice6o3d-wd0-2026-11-17",
+    "medido-bluesky-seguidores-2026-11-17",
+    "medido-youtube-inscritos-2026-11-17",
+    "medido-youtube-shorts-2026-11-17",
+    "medido-views-lvc90miwqs0-2026-11-17",
+    "medido-instagram-publicacoes-2026-11-18",
+    "medido-views-lvc90miwqs0-2026-11-18",
+    "medido-bluesky-seguidores-2026-11-18",
+    "medido-youtube-inscritos-2026-11-18",
+    "medido-youtube-shorts-2026-11-18"
+   ],
+   "abertura": "voce sabe",
+   "tipo_abertura": "voce",
+   "esqueleto": [
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.769,
+   "texto": "Você sabe por que o Prancheta publicou 12 Shorts hoje? A consistência vence o algoritmo. #gamedevbr #godot"
   }
  ],
  "fatos_de_uma_vez": [
@@ -798,33 +832,56 @@
   "video-iy37eWobg7U",
   "video-NqU3s52x7_Q",
   "oficio-versao-prancheta",
-  "oficio-versao-ceifalume"
+  "oficio-versao-ceifalume",
+  "medido-instagram-publicacoes-2026-11-16",
+  "medido-views-ice6o3d-wd0-2026-11-16",
+  "medido-bluesky-seguidores-2026-11-16",
+  "medido-youtube-inscritos-2026-11-16",
+  "medido-instagram-publicacoes-2026-11-17",
+  "medido-views-ice6o3d-wd0-2026-11-17",
+  "medido-bluesky-seguidores-2026-11-17",
+  "medido-youtube-inscritos-2026-11-17",
+  "medido-youtube-shorts-2026-11-17",
+  "medido-views-lvc90miwqs0-2026-11-17",
+  "medido-instagram-publicacoes-2026-11-18",
+  "medido-views-lvc90miwqs0-2026-11-18",
+  "medido-bluesky-seguidores-2026-11-18",
+  "medido-youtube-inscritos-2026-11-18",
+  "medido-youtube-shorts-2026-11-18"
  ],
  "ultimo": {
-  "quando": "2026-11-19T16:40:43Z",
+  "quando": "2026-11-19T20:41:44Z",
   "canal": "site",
-  "angulo": "convite_a_testar",
-  "assunto": "ceifalume",
+  "angulo": "pergunta_que_ensina",
+  "assunto": "casa",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-apk",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias"
+   "medido-video",
+   "medido-instagram-publicacoes-2026-11-16",
+   "medido-views-ice6o3d-wd0-2026-11-16",
+   "medido-bluesky-seguidores-2026-11-16",
+   "medido-youtube-inscritos-2026-11-16",
+   "medido-instagram-publicacoes-2026-11-17",
+   "medido-views-ice6o3d-wd0-2026-11-17",
+   "medido-bluesky-seguidores-2026-11-17",
+   "medido-youtube-inscritos-2026-11-17",
+   "medido-youtube-shorts-2026-11-17",
+   "medido-views-lvc90miwqs0-2026-11-17",
+   "medido-instagram-publicacoes-2026-11-18",
+   "medido-views-lvc90miwqs0-2026-11-18",
+   "medido-bluesky-seguidores-2026-11-18",
+   "medido-youtube-inscritos-2026-11-18",
+   "medido-youtube-shorts-2026-11-18"
   ],
-  "abertura": "busco testadores",
-  "tipo_abertura": "rotulo",
+  "abertura": "voce sabe",
+  "tipo_abertura": "voce",
   "esqueleto": [
-   "rotulo",
-   "frase",
    "pergunta",
+   "frase",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.923,
-  "texto": "Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No celeiro já tem 6 culturas (abóbora incluso). Topa testar? #ceifalume"
+  "hashtags": 2,
+  "nota": 0.769,
+  "texto": "Você sabe por que o Prancheta publicou 12 Shorts hoje? A consistência vence o algoritmo. #gamedevbr #godot"
  },
  "publicacoes": [
   {
@@ -1045,6 +1102,17 @@
    "texto": "Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No celeiro já tem 6 culturas (abóbora incluso). Topa testar? #ceifalume",
    "titulo": "Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android.",
    "nota": 0.923,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-19T20:41:44Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Você sabe por que o Prancheta publicou 12 Shorts hoje? A consistência vence o algoritmo. #gamedevbr #godot",
+   "titulo": "Você sabe por que o Prancheta publicou 12 Shorts hoje?",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]
