@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "knzucwkh-Vk",
+   "url": "https://youtu.be/knzucwkh-Vk",
+   "slug": "ceifalume-gameplay",
+   "titulo": "CEIFALUME: 968 toques e 8 colheitas na partida de 2 min",
+   "descricao": "Partida de hoje: 15 mudas, 8 colheitas e 968 toques em 2 minutos de tela.\n\nComo se joga: plante, colha e negocie à luz da lanterna; o que sobra da venda fica no celeiro.\n\nO jogo em si: grátis no navegador ou no Android, sem conta, feito com Godot, feito no Brasil.\n\nFonte: posts/cenas.json (partida e1754a41ce5d, conferida em 2026-11-19T18:36:20Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
+   "descricao_completa": false,
+   "angulo": "rotulo",
+   "fato": null,
+   "numeros": {
+    "plantadas": 15,
+    "colhidas": 8,
+    "toques": 968,
+    "minutos": 2,
+    "toques_por_minuto": 484
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-19T18:36:32Z"
+  },
+  {
    "id": "DTwau1uBhBs",
    "url": "https://youtu.be/DTwau1uBhBs",
    "slug": "ceifalume-gameplay",

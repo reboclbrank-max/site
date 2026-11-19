@@ -497,6 +497,13 @@
    "titulo": "Ficha da partida: 10 colheitas, 973 toques, 2 min",
    "capa": "media/gameplay/ceifalume-capa.png",
    "sha256": "101ce7d0e5f1b171"
+  },
+  {
+   "id": "knzucwkh-Vk",
+   "quando": "2026-11-19T18:36:33Z",
+   "titulo": "CEIFALUME: 968 toques e 8 colheitas na partida de 2 min",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "49a245c8dceac646"
   }
  ]
 }
