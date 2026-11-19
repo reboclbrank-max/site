@@ -2004,11 +2004,11 @@
    "id": "publicar-20261118T180028Z",
    "tipo": "publicar",
    "prioridade": 60,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-18T18:00:28Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-19T14:20:32Z",
+   "resultado": "janela: dentro da janela (11h local); ciclos hoje 1/5\nRESUMO: publicacao=RECUSADA (nenhum dos 8 textos passou: nota do juízo abaixo do mínimo (0.39 < 0.65); motor não devolveu texto utilizável; fala de 2 jogos ao mesmo tempo (ceifalume, prancheta): um assunto por )\n/home/runner/work/site/site/tools/postador.py:896: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for remo",
    "motivo": "decisão do relógio",
    "chave": "publicar-2026111818"
   },
@@ -2072,6 +2072,18 @@
    "resultado": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 217,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é dec",
    "motivo": "decisão do relógio",
    "chave": "medir-2026111912"
+  },
+  {
+   "id": "publicar-20261119T142032Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-19T14:20:32Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026111914"
   }
  ],
  "recusadas": [
