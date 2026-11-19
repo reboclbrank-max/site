@@ -700,6 +700,32 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr"
+  },
+  {
+   "quando": "2026-11-19T16:40:43Z",
+   "canal": "site",
+   "angulo": "convite_a_testar",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-apk",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "busco testadores",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase",
+    "pergunta",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.923,
+   "texto": "Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No celeiro já tem 6 culturas (abóbora incluso). Topa testar? #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -775,23 +801,30 @@
   "oficio-versao-ceifalume"
  ],
  "ultimo": {
-  "quando": "2026-11-19T12:01:40Z",
+  "quando": "2026-11-19T16:40:43Z",
   "canal": "site",
-  "angulo": "numero_medido",
-  "assunto": "oficio",
+  "angulo": "convite_a_testar",
+  "assunto": "ceifalume",
   "fatos": [
-   "oficio-versao-prancheta",
-   "oficio-versao-ceifalume"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-apk",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias"
   ],
-  "abertura": "versao 0.1",
+  "abertura": "busco testadores",
   "tipo_abertura": "rotulo",
   "esqueleto": [
    "rotulo",
+   "frase",
+   "pergunta",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.692,
-  "texto": "Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr"
+  "nota": 0.923,
+  "texto": "Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No celeiro já tem 6 culturas (abóbora incluso). Topa testar? #ceifalume"
  },
  "publicacoes": [
   {
@@ -1001,6 +1034,17 @@
    "texto": "Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr",
    "titulo": "Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo.",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-19T16:40:43Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No celeiro já tem 6 culturas (abóbora incluso). Topa testar? #ceifalume",
+   "titulo": "Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android.",
+   "nota": 0.923,
    "tipo": "publicacao"
   }
  ]

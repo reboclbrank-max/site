@@ -403,3 +403,6 @@ Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica
 
 ## 19/11/2026 12:02 UTC
 Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr
+
+## 19/11/2026 16:41 UTC
+Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No celeiro já tem 6 culturas (abóbora incluso). Topa testar? #ceifalume

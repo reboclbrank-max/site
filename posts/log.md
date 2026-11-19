@@ -3398,3 +3398,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=69(api) · itch_downloads=49(api) · itch_visitas=217(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
 
 > Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr
+
+## 19/11/2026 16:41 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.92 |
+| pauta do ciclo | ✅ convite_a_testar · ceifalume |
+| destino editorial | ✅ rota oficial ceifalume |
+| tema do ciclo | ✅ convite_a_testar · ceifalume |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 17925990063450 |
+| threads | ✅ publicado id 181344946126 |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=74(api) · itch_downloads=49(api) · itch_visitas=217(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
+
+> Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No celeiro já tem 6 culturas (abóbora incluso). Topa testar? #ceifalume
