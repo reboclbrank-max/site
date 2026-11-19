@@ -2,30 +2,39 @@
   "ativo": true,
   "alertas": [
     {
-      "id": "al_1795113135889_001",
+      "id": "al_1795120103265_001",
       "tipo": "engajamento_baixo",
-      "mensagem": "Engajamento baixo no youtube para ceifalume: 14 interações",
+      "mensagem": "Engajamento baixo no youtube para ceifalume: 16 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-19T18:32:15.889Z",
+      "criadoEm": "2026-11-19T20:28:23.265Z",
       "resolvido": false
     },
     {
-      "id": "al_1795113135889_002",
+      "id": "al_1795120103266_002",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para prancheta: 2 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-19T18:32:15.889Z",
+      "criadoEm": "2026-11-19T20:28:23.266Z",
       "resolvido": false
     },
     {
-      "id": "al_1795113135890_003",
+      "id": "al_1795120103266_003",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ambos há 22h",
+      "mensagem": "Fila estagnada em instagram para ceifalume há 2h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-19T18:32:15.890Z",
+      "criadoEm": "2026-11-19T20:28:23.266Z",
+      "resolvido": false
+    },
+    {
+      "id": "al_1795120103267_004",
+      "tipo": "fila_estagnada",
+      "mensagem": "Fila estagnada em instagram para prancheta há 2h",
+      "severidade": "alta",
+      "rede": "instagram",
+      "criadoEm": "2026-11-19T20:28:23.267Z",
       "resolvido": false
     }
   ],
@@ -46,7 +55,7 @@
       "ativo": true
     }
   ],
-  "ultima_execucao": "2026-11-19T18:32:15.889Z",
-  "criadoEm": "2026-11-19T18:32:15.888Z",
-  "atualizadoEm": "2026-11-19T18:32:15.890Z"
+  "ultima_execucao": "2026-11-19T20:28:23.265Z",
+  "criadoEm": "2026-11-19T20:28:23.264Z",
+  "atualizadoEm": "2026-11-19T20:28:23.268Z"
 }
