@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "ficha_da_partida",
+   "angulo": "rotulo",
    "fato": null,
    "numeros": {
-    "plantadas": 13,
-    "colhidas": 10,
-    "toques": 973,
+    "plantadas": 15,
+    "colhidas": 8,
+    "toques": 968,
     "minutos": 2,
-    "toques_por_minuto": 486
+    "toques_por_minuto": 484
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4598312,
+   "bytes": 3788034,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Ficha da partida: 10 colheitas, 973 toques, 2 min",
-   "descricao": "Ficha da partida: 13 mudas plantadas, 10 colheitas, 973 toques e 2 minutos de tela.\n\nA ficha não tem estimativa: é o que o gravador anotou enquanto o jogo rodava no navegador.\n\nO que muda de uma partida para a outra é a decisão de onde plantar, não a sorte.\n\nJogue você também e compare a sua ficha com esta.\n\nFonte: posts/cenas.json (partida 9de8b874a9f5, conferida em 2026-11-18T20:49:24Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
+   "titulo": "CEIFALUME: 968 toques e 8 colheitas na partida de 2 min",
+   "descricao": "Partida de hoje: 15 mudas, 8 colheitas e 968 toques em 2 minutos de tela.\n\nComo se joga: plante, colha e negocie à luz da lanterna; o que sobra da venda fica no celeiro.\n\nO jogo em si: grátis no navegador ou no Android, sem conta, feito com Godot, feito no Brasil.\n\nFonte: posts/cenas.json (partida e1754a41ce5d, conferida em 2026-11-19T18:36:20Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -1965,15 +1965,19 @@
     },
     {
      "angulo": "medida_por_minuto",
-     "motivo": "título quase igual a um já publicado (0.97)"
+     "motivo": "título já publicado neste canal: A conta por minuto em CEIFALUME: 8 colheitas em 2 min"
     },
     {
      "angulo": "semente_do_dia",
-     "motivo": "título quase igual a um já publicado (0.94)"
+     "motivo": "título quase igual a um já publicado (0.95)"
+    },
+    {
+     "angulo": "ficha_da_partida",
+     "motivo": "mesmo ângulo do último vídeo publicado (ficha_da_partida) — o ângulo roda"
     },
     {
      "angulo": "numeros",
-     "motivo": "título quase igual a um já publicado (0.96)"
+     "motivo": "título quase igual a um já publicado (0.97)"
     },
     {
      "angulo": "pergunta",
@@ -1984,7 +1988,7 @@
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 8,
+   "angulos_aprovados": 7,
    "angulos_candidatos": 494
   },
   {
