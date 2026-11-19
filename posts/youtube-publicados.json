@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "jfA3I8DHE90",
+   "url": "https://youtu.be/jfA3I8DHE90",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME",
+   "descricao": "Jogue no navegador e plante à luz da lanterna: nesta gravação saíram 10 colheitas de 13 mudas.\n\nNão precisa instalar nada nem criar conta: abre a página, toca no campo e espera a resposta.\n\nCom o jogo fechado, as plantações crescem por até 8 horas mesmo com o jogo fechado.\n\nFonte: posts/cenas.json (partida e9e294751d71, conferida em 2026-11-19T21:08:39Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
+   "descricao_completa": false,
+   "angulo": "convite",
+   "fato": null,
+   "numeros": {
+    "plantadas": 13,
+    "colhidas": 10,
+    "toques": 1043,
+    "minutos": 2,
+    "toques_por_minuto": 522
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-19T21:08:51Z"
+  },
+  {
    "id": "knzucwkh-Vk",
    "url": "https://youtu.be/knzucwkh-Vk",
    "slug": "ceifalume-gameplay",
