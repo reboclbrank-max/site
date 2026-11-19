@@ -1,12 +1,28 @@
 {
- "medido_em": "2026-11-19T12:06:32Z",
+ "medido_em": "2026-11-19T22:45:12Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "jfA3I8DHE90",
+   "titulo": "Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME",
+   "publicado_em": "2026-11-19T21:09:11Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "knzucwkh-Vk",
+   "titulo": "CEIFALUME: 968 toques e 8 colheitas na partida de 2 min",
+   "publicado_em": "2026-11-19T18:36:47Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "DTwau1uBhBs",
    "titulo": "Ficha da partida: 10 colheitas, 973 toques, 2 min",
    "publicado_em": "2026-11-18T20:49:58Z",
-   "views": 0,
+   "views": 2,
    "likes": 0,
    "comentarios": 0
   },
@@ -236,8 +252,8 @@
   }
  ],
  "totais": {
-  "videos": 29,
-  "views": 36,
+  "videos": 31,
+  "views": 38,
   "likes": 0,
   "comentarios": 0
  }
