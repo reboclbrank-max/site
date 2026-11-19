@@ -681,6 +681,25 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celular. #prancheta"
+  },
+  {
+   "quando": "2026-11-19T12:01:40Z",
+   "canal": "site",
+   "angulo": "numero_medido",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-versao-prancheta",
+    "oficio-versao-ceifalume"
+   ],
+   "abertura": "versao 0.1",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr"
   }
  ],
  "fatos_de_uma_vez": [
@@ -751,31 +770,28 @@
   "video-2qsSknSyeAs",
   "video-RksiKWR1QfY",
   "video-iy37eWobg7U",
-  "video-NqU3s52x7_Q"
+  "video-NqU3s52x7_Q",
+  "oficio-versao-prancheta",
+  "oficio-versao-ceifalume"
  ],
  "ultimo": {
-  "quando": "2026-11-18T20:21:14Z",
+  "quando": "2026-11-19T12:01:40Z",
   "canal": "site",
-  "angulo": "comparacao_honesta",
-  "assunto": "prancheta",
+  "angulo": "numero_medido",
+  "assunto": "oficio",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-offline",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "oficio-versao-prancheta",
+   "oficio-versao-ceifalume"
   ],
-  "abertura": "prancheta roda",
-  "tipo_abertura": "frase",
+  "abertura": "versao 0.1",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "frase",
+   "rotulo",
    "frase"
   ],
   "hashtags": 1,
   "nota": 0.692,
-  "texto": "Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celular. #prancheta"
+  "texto": "Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr"
  },
  "publicacoes": [
   {
@@ -973,6 +989,17 @@
    "fatos": [],
    "texto": "Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celular. #prancheta",
    "titulo": "Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celu",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-19T12:01:40Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr",
+   "titulo": "Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo.",
    "nota": 0.692,
    "tipo": "publicacao"
   }

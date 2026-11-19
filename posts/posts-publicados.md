@@ -400,3 +400,6 @@ Quer ver bastidor, protótipo e raciocínio de design? Vem pra **Prancheta**. To
 
 ## 18/11/2026 20:21 UTC
 Prancheta roda no navegador ou APK Android: sem conta nem compra, mas o APK fica no celular. #prancheta
+
+## 19/11/2026 12:02 UTC
+Versão 0.1 do Ceifalume: cada bug corrigido é vitória solo. #gamedevbr
