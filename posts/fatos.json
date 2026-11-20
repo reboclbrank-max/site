@@ -867,6 +867,73 @@
    "quando": "2026-11-18",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "video-jfA3I8DHE90",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-20",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-instagram-publicacoes-2026-11-20",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Instagram — publicações: 85 hoje, medido pela própria casa em 20/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-20",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-views-lvc90miwqs0-2026-11-20",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "o vídeo \"O que 6 toques fizeram na partida do PRANCHETA\" está com 10 views, medido em 20/11",
+   "origem": "posts/youtube-metricas.json",
+   "quando": "2026-11-20",
+   "validade_dias": 3,
+   "repetivel": false
+  },
+  {
+   "id": "video-knzucwkh-Vk",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"CEIFALUME: 968 toques e 8 colheitas na partida de 2 min\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-20",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-bluesky-seguidores-2026-11-20",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Bluesky — seguidores: 29 hoje, medido pela própria casa em 20/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-20",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "video-DTwau1uBhBs",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Ficha da partida: 10 colheitas, 973 toques, 2 min\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-20",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-youtube-inscritos-2026-11-20",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "YouTube — inscritos: 24 hoje, medido pela própria casa em 20/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-20",
+   "validade_dias": 7,
+   "repetivel": false
   }
  ]
 }
