@@ -760,6 +760,25 @@
    "hashtags": 2,
    "nota": 0.769,
    "texto": "Você sabe por que o Prancheta publicou 12 Shorts hoje? A consistência vence o algoritmo. #gamedevbr #godot"
+  },
+  {
+   "quando": "2026-11-20T12:02:02Z",
+   "canal": "site",
+   "angulo": "dica_de_jogador",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-versao-prancheta",
+    "oficio-versao-ceifalume"
+   ],
+   "abertura": "jogando so,",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.692,
+   "texto": "Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando o Ceifalume respirar (em 0.1) com 10% mais lento."
   }
  ],
  "fatos_de_uma_vez": [
@@ -850,38 +869,23 @@
   "medido-youtube-shorts-2026-11-18"
  ],
  "ultimo": {
-  "quando": "2026-11-19T20:41:44Z",
+  "quando": "2026-11-20T12:02:02Z",
   "canal": "site",
-  "angulo": "pergunta_que_ensina",
-  "assunto": "casa",
+  "angulo": "dica_de_jogador",
+  "assunto": "oficio",
   "fatos": [
-   "medido-video",
-   "medido-instagram-publicacoes-2026-11-16",
-   "medido-views-ice6o3d-wd0-2026-11-16",
-   "medido-bluesky-seguidores-2026-11-16",
-   "medido-youtube-inscritos-2026-11-16",
-   "medido-instagram-publicacoes-2026-11-17",
-   "medido-views-ice6o3d-wd0-2026-11-17",
-   "medido-bluesky-seguidores-2026-11-17",
-   "medido-youtube-inscritos-2026-11-17",
-   "medido-youtube-shorts-2026-11-17",
-   "medido-views-lvc90miwqs0-2026-11-17",
-   "medido-instagram-publicacoes-2026-11-18",
-   "medido-views-lvc90miwqs0-2026-11-18",
-   "medido-bluesky-seguidores-2026-11-18",
-   "medido-youtube-inscritos-2026-11-18",
-   "medido-youtube-shorts-2026-11-18"
+   "oficio-versao-prancheta",
+   "oficio-versao-ceifalume"
   ],
-  "abertura": "voce sabe",
-  "tipo_abertura": "voce",
+  "abertura": "jogando so,",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "pergunta",
    "frase",
    "frase"
   ],
-  "hashtags": 2,
-  "nota": 0.769,
-  "texto": "Você sabe por que o Prancheta publicou 12 Shorts hoje? A consistência vence o algoritmo. #gamedevbr #godot"
+  "hashtags": 0,
+  "nota": 0.692,
+  "texto": "Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando o Ceifalume respirar (em 0.1) com 10% mais lento."
  },
  "publicacoes": [
   {
@@ -1113,6 +1117,17 @@
    "texto": "Você sabe por que o Prancheta publicou 12 Shorts hoje? A consistência vence o algoritmo. #gamedevbr #godot",
    "titulo": "Você sabe por que o Prancheta publicou 12 Shorts hoje?",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-20T12:02:02Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando o Ceifalume respirar (em 0.1) com 10% mais lento.",
+   "titulo": "Jogando só, a sensação de perdido no palco fica forte.",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]

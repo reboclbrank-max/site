@@ -409,3 +409,6 @@ Busco testadores pro Ceifalume: idle noturno de fazenda no navegador/Android. No
 
 ## 19/11/2026 20:42 UTC
 Você sabe por que o Prancheta publicou 12 Shorts hoje? A consistência vence o algoritmo. #gamedevbr #godot
+
+## 20/11/2026 12:02 UTC
+Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando o Ceifalume respirar (em 0.1) com 10% mais lento.
