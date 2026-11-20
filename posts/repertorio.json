@@ -828,6 +828,27 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume"
+  },
+  {
+   "quando": "2026-11-20T19:01:52Z",
+   "canal": "site",
+   "angulo": "bastidor_de_erro",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-godot",
+    "oficio-apk-fora-de-loja"
+   ],
+   "abertura": "prancheta nasceu",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, scripting, arte na mesma tela, tudo do mesmo estúdio. #godot"
   }
  ],
  "fatos_de_uma_vez": [
@@ -918,27 +939,25 @@
   "medido-youtube-shorts-2026-11-18"
  ],
  "ultimo": {
-  "quando": "2026-11-20T16:42:01Z",
+  "quando": "2026-11-20T19:01:52Z",
   "canal": "site",
-  "angulo": "mecanica_por_dentro",
-  "assunto": "ceifalume",
+  "angulo": "bastidor_de_erro",
+  "assunto": "oficio",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias"
+   "oficio-godot",
+   "oficio-apk-fora-de-loja"
   ],
-  "abertura": "aproveite os",
+  "abertura": "prancheta nasceu",
   "tipo_abertura": "frase",
   "esqueleto": [
+   "frase",
+   "frase",
    "frase",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.692,
-  "texto": "Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume"
+  "nota": 0.769,
+  "texto": "Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, scripting, arte na mesma tela, tudo do mesmo estúdio. #godot"
  },
  "publicacoes": [
   {
@@ -1203,6 +1222,17 @@
    "texto": "Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume",
    "titulo": "Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar.",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-20T19:01:52Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, scripting, arte na mesma tela, tudo do mesmo estúdio. #godot",
+   "titulo": "Prancheta nasceu na dev do solo.",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]

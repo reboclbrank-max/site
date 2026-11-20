@@ -418,3 +418,6 @@ Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando 
 
 ## 20/11/2026 16:42 UTC
 Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume
+
+## 20/11/2026 19:02 UTC
+Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, scripting, arte na mesma tela, tudo do mesmo estúdio. #godot
