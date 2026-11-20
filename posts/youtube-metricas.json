@@ -1,12 +1,12 @@
 {
- "medido_em": "2026-11-19T22:45:12Z",
+ "medido_em": "2026-11-20T12:08:33Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
    "id": "jfA3I8DHE90",
    "titulo": "Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME",
    "publicado_em": "2026-11-19T21:09:11Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -38,7 +38,7 @@
    "id": "NqU3s52x7_Q",
    "titulo": "Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é idle farm —",
    "publicado_em": "2026-11-17T21:12:13Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -126,7 +126,7 @@
    "id": "85nRhygguhs",
    "titulo": "Quem fez CEIFALUME e por quê",
    "publicado_em": "2026-11-12T20:14:55Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -253,7 +253,7 @@
  ],
  "totais": {
   "videos": 31,
-  "views": 38,
+  "views": 41,
   "likes": 0,
   "comentarios": 0
  }
