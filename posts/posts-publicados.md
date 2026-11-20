@@ -421,3 +421,6 @@ Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. 
 
 ## 20/11/2026 19:02 UTC
 Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, scripting, arte na mesma tela, tudo do mesmo estúdio. #godot
+
+## 20/11/2026 21:21 UTC
+Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra. Qual canal você entra primeiro? #gamedevbr #godot

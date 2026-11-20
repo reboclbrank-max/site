@@ -849,6 +849,25 @@
    "hashtags": 1,
    "nota": 0.769,
    "texto": "Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, scripting, arte na mesma tela, tudo do mesmo estúdio. #godot"
+  },
+  {
+   "quando": "2026-11-20T21:21:10Z",
+   "canal": "site",
+   "angulo": "pergunta_ao_publico",
+   "assunto": "casa",
+   "fatos": [
+    "casa-site-gratis"
+   ],
+   "abertura": "prancheta centraliza",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "convite",
+    "pergunta",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.846,
+   "texto": "Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra. Qual canal você entra primeiro? #gamedevbr #godot"
   }
  ],
  "fatos_de_uma_vez": [
@@ -939,25 +958,23 @@
   "medido-youtube-shorts-2026-11-18"
  ],
  "ultimo": {
-  "quando": "2026-11-20T19:01:52Z",
+  "quando": "2026-11-20T21:21:10Z",
   "canal": "site",
-  "angulo": "bastidor_de_erro",
-  "assunto": "oficio",
+  "angulo": "pergunta_ao_publico",
+  "assunto": "casa",
   "fatos": [
-   "oficio-godot",
-   "oficio-apk-fora-de-loja"
+   "casa-site-gratis"
   ],
-  "abertura": "prancheta nasceu",
+  "abertura": "prancheta centraliza",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "frase",
-   "frase",
-   "frase",
+   "convite",
+   "pergunta",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.769,
-  "texto": "Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, scripting, arte na mesma tela, tudo do mesmo estúdio. #godot"
+  "hashtags": 2,
+  "nota": 0.846,
+  "texto": "Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra. Qual canal você entra primeiro? #gamedevbr #godot"
  },
  "publicacoes": [
   {
@@ -1233,6 +1250,17 @@
    "texto": "Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, scripting, arte na mesma tela, tudo do mesmo estúdio. #godot",
    "titulo": "Prancheta nasceu na dev do solo.",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-20T21:21:10Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra. Qual canal você entra primeiro? #gamedevbr #godot",
+   "titulo": "Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra.",
+   "nota": 0.846,
    "tipo": "publicacao"
   }
  ]
