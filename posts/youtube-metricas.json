@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-20T12:08:33Z",
+ "medido_em": "2026-11-20T22:20:42Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "RGTANLoClF0",
+   "titulo": "Como um agente joga CEIFALUME sozinho: 2 min de gravação",
+   "publicado_em": "2026-11-20T20:39:44Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "jfA3I8DHE90",
    "titulo": "Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME",
@@ -142,7 +150,7 @@
    "id": "QPRgb4ny43s",
    "titulo": "CEIFALUME é idle farm — e o que isso quer dizer",
    "publicado_em": "2026-11-10T19:57:40Z",
-   "views": 2,
+   "views": 3,
    "likes": 0,
    "comentarios": 0
   },
@@ -252,8 +260,8 @@
   }
  ],
  "totais": {
-  "videos": 31,
-  "views": 41,
+  "videos": 32,
+  "views": 42,
   "likes": 0,
   "comentarios": 0
  }
