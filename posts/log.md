@@ -3502,3 +3502,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=85(api) · itch_downloads=49(api) · itch_visitas=217(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
 
 > 1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro
+
+## 20/11/2026 16:42 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.69 |
+| pauta do ciclo | ✅ mecanica_por_dentro · ceifalume |
+| destino editorial | ✅ rota oficial ceifalume |
+| tema do ciclo | ✅ mecanica_por_dentro · ceifalume |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18148073974572 |
+| threads | ✅ publicado id 181130151442 |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=88(api) · itch_downloads=49(api) · itch_visitas=217(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBSE |
+
+> Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume

@@ -415,3 +415,6 @@ Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando 
 
 ## 20/11/2026 14:21 UTC
 1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro
+
+## 20/11/2026 16:42 UTC
+Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume

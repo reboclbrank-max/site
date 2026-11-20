@@ -805,6 +805,29 @@
    "hashtags": 2,
    "nota": 0.692,
    "texto": "1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro"
+  },
+  {
+   "quando": "2026-11-20T16:42:01Z",
+   "canal": "site",
+   "angulo": "mecanica_por_dentro",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "aproveite os",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -895,30 +918,27 @@
   "medido-youtube-shorts-2026-11-18"
  ],
  "ultimo": {
-  "quando": "2026-11-20T14:21:07Z",
+  "quando": "2026-11-20T16:42:01Z",
   "canal": "site",
-  "angulo": "tres_passos",
+  "angulo": "mecanica_por_dentro",
   "assunto": "ceifalume",
   "fatos": [
    "ceifalume-8h",
    "ceifalume-chuva",
    "ceifalume-tutorial",
-   "ceifalume-apk",
    "ceifalume-save",
    "ceifalume-culturas",
    "ceifalume-melhorias"
   ],
-  "abertura": "1. abra",
+  "abertura": "aproveite os",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "passo",
-   "frase",
    "frase",
    "frase"
   ],
-  "hashtags": 2,
+  "hashtags": 1,
   "nota": 0.692,
-  "texto": "1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro"
+  "texto": "Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume"
  },
  "publicacoes": [
   {
@@ -1171,6 +1191,17 @@
    "fatos": [],
    "texto": "1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro",
    "titulo": "Ceifalume — 1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-20T16:42:01Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar. #ceifalume",
+   "titulo": "Aproveite os 3 dias de tutorial para automatizar colheitas noturnas sem clicar.",
    "nota": 0.692,
    "tipo": "publicacao"
   }
