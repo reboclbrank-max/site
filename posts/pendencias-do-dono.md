@@ -1,20 +1,20 @@
 # Pendências do dono
 
-Medido em 2026-11-20T12:20:42Z (o devlog do itch é público: dá para conferir de fora).
+Medido em 2026-11-20T20:28:50Z (o devlog do itch é público: dá para conferir de fora).
 
 ## Estado da casa
 
 - Vídeos publicados: 33 · último: jfA3I8DHE90 (Plante à luz da lanterna: 13 mudas em 2 min de…)
 - Capas da casa: 73 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
 - PRANCHETA no itch: build 19604665 (a casa viu em 2026-11-07T05:38) · esse build não sobe por aqui: o dono publica no itch
-- Fila: 5 pendente(s) (pesquisar 3, publicar 2) · a mais velha: pesquisar-20261107T064637Z há 317.6 h · 166 feita(s)
-- Régua de metas: medida há 0.0 h · prazo 2026-11-12 · prazo vencido há 8 dia(s)
-- Pulsos: 537 · última publicação 2026-11-20T12:00:35Z · última medição 2026-11-20T06:40:25Z
+- Fila: 4 pendente(s) (pesquisar 3, publicar 1) · a mais velha: pesquisar-20261107T064637Z há 325.7 h · 171 feita(s)
+- Régua de metas: medida há 8.1 h · prazo 2026-11-12 · prazo vencido há 8 dia(s)
+- Pulsos: 562 · última publicação 2026-11-20T19:00:26Z · última medição 2026-11-20T19:00:26Z
 
-- Agenda: o cron pede **105** disparos/dia e o GitHub entregou **63.3/dia** (janela de 7 dia(s), medido em 2026-11-20). Pior entrega: publicar-instagram 18.7% (4.86/dia); gravar-prancheta 38.0% (1.14/dia).
-- Corrente: em dia (último pulso 20/11 09:20, há 1 min) · próximo pulso 20/11 09:40
+- Agenda: o cron pede **105** disparos/dia e o GitHub entregou **64.72/dia** (janela de 7 dia(s), medido em 2026-11-20). Pior entrega: publicar-instagram 20.9% (5.43/dia); gravar-prancheta 38.0% (1.14/dia).
+- Corrente: em dia (último pulso 20/11 17:20, há 9 min) · próximo pulso 20/11 17:40
 
-- Originalidade: últimos 7 dias: 13 post(s), todos textos diferentes · média 4.18/dia · o último dia com repetição foi 2026-10-25
+- Originalidade: últimos 7 dias: 16 post(s), todos textos diferentes · média 4.27/dia · o último dia com repetição foi 2026-10-25
 
 - Pauta: 12 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
 
