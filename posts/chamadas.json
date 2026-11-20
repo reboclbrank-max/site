@@ -2,6 +2,23 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-20T16:26:14Z",
+   "video_id": "jfA3I8DHE90",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME\". Na partida gravada: 13 mudas, 10 colheitas, em 2 minutos. É o CEIFALUME-GAMEPLAY. #ceifalume-gameplay\nhttps://youtu.be/jfA3I8DHE90",
+   "titulo": "Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME",
+   "resultado": "recusado",
+   "motivo": "mesma forma de um post recente do canal (abertura rotulo, 4 frases, 1 hashtags): Plante à luz da lanterna: 13 mudas em 2 min de CEI",
+   "numeros": {
+    "video": "jfA3I8DHE90",
+    "historico_do_canal": 18,
+    "nota_juizo": 0.462,
+    "jogos_citados": [
+     "ceifalume"
+    ]
+   }
+  },
+  {
    "quando": "2026-11-19T21:36:11Z",
    "video_id": "jfA3I8DHE90",
    "canal": "bluesky",
