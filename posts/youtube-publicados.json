@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "RGTANLoClF0",
+   "url": "https://youtu.be/RGTANLoClF0",
+   "slug": "ceifalume-gameplay",
+   "titulo": "Como um agente joga CEIFALUME sozinho: 2 min de gravação",
+   "descricao": "A gravação é do jogo rodando no navegador, capturada por um agente que olha o estado da tela e decide o próximo toque.\n\nNa prática: 14 mudas semeadas, 8 colheitas e 1141 toques em 2 minutos de partida.\n\nNada de vídeo editado à mão: a legenda descreve a decisão tomada, e o áudio é sintetizado pela produção.\n\nFonte: posts/cenas.json (partida 0031a4ff4b04, conferida em 2026-11-20T20:39:17Z).",
+   "descricao_completa": false,
+   "angulo": "bastidor",
+   "fato": null,
+   "numeros": {
+    "plantadas": 14,
+    "colhidas": 8,
+    "toques": 1141,
+    "minutos": 2,
+    "toques_por_minuto": 570
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-20T20:39:28Z"
+  },
+  {
    "id": "jfA3I8DHE90",
    "url": "https://youtu.be/jfA3I8DHE90",
    "slug": "ceifalume-gameplay",
