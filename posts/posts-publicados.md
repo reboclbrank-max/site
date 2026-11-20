@@ -412,3 +412,6 @@ Você sabe por que o Prancheta publicou 12 Shorts hoje? A consistência vence o 
 
 ## 20/11/2026 12:02 UTC
 Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando o Ceifalume respirar (em 0.1) com 10% mais lento.
+
+## 20/11/2026 14:21 UTC
+1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro

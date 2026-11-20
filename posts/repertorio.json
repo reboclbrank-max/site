@@ -779,6 +779,32 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando o Ceifalume respirar (em 0.1) com 10% mais lento."
+  },
+  {
+   "quando": "2026-11-20T14:21:07Z",
+   "canal": "site",
+   "angulo": "tres_passos",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-apk",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "1. abra",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "passo",
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.692,
+   "texto": "1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro"
   }
  ],
  "fatos_de_uma_vez": [
@@ -869,23 +895,30 @@
   "medido-youtube-shorts-2026-11-18"
  ],
  "ultimo": {
-  "quando": "2026-11-20T12:02:02Z",
+  "quando": "2026-11-20T14:21:07Z",
   "canal": "site",
-  "angulo": "dica_de_jogador",
-  "assunto": "oficio",
+  "angulo": "tres_passos",
+  "assunto": "ceifalume",
   "fatos": [
-   "oficio-versao-prancheta",
-   "oficio-versao-ceifalume"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-apk",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias"
   ],
-  "abertura": "jogando so,",
+  "abertura": "1. abra",
   "tipo_abertura": "frase",
   "esqueleto": [
+   "passo",
+   "frase",
    "frase",
    "frase"
   ],
-  "hashtags": 0,
+  "hashtags": 2,
   "nota": 0.692,
-  "texto": "Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando o Ceifalume respirar (em 0.1) com 10% mais lento."
+  "texto": "1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro"
  },
  "publicacoes": [
   {
@@ -1127,6 +1160,17 @@
    "fatos": [],
    "texto": "Jogando só, a sensação de perdido no palco fica forte. Descobri que deixando o Ceifalume respirar (em 0.1) com 10% mais lento.",
    "titulo": "Jogando só, a sensação de perdido no palco fica forte.",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-20T14:21:07Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre as 6 melhorias e evolua #ceifalume #jogobrasileiro",
+   "titulo": "Ceifalume — 1. Abra no navegador ou Android 2. Toque na tela para colher almas 3. Compre",
    "nota": 0.692,
    "tipo": "publicacao"
   }
