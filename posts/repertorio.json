@@ -868,6 +868,24 @@
    "hashtags": 2,
    "nota": 0.846,
    "texto": "Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra. Qual canal você entra primeiro? #gamedevbr #godot"
+  },
+  {
+   "quando": "2026-11-21T12:01:37Z",
+   "canal": "site",
+   "angulo": "marco_com_data",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-lancamento-prancheta"
+   ],
+   "abertura": "🚀 em",
+   "tipo_abertura": "emoji",
+   "esqueleto": [
+    "frase",
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.692,
+   "texto": "🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do Brasil agora está no ar! O futuro de devs está aqui."
   }
  ],
  "fatos_de_uma_vez": [
@@ -955,26 +973,26 @@
   "medido-views-lvc90miwqs0-2026-11-18",
   "medido-bluesky-seguidores-2026-11-18",
   "medido-youtube-inscritos-2026-11-18",
-  "medido-youtube-shorts-2026-11-18"
+  "medido-youtube-shorts-2026-11-18",
+  "oficio-lancamento-prancheta"
  ],
  "ultimo": {
-  "quando": "2026-11-20T21:21:10Z",
+  "quando": "2026-11-21T12:01:37Z",
   "canal": "site",
-  "angulo": "pergunta_ao_publico",
-  "assunto": "casa",
+  "angulo": "marco_com_data",
+  "assunto": "oficio",
   "fatos": [
-   "casa-site-gratis"
+   "oficio-lancamento-prancheta"
   ],
-  "abertura": "prancheta centraliza",
-  "tipo_abertura": "frase",
+  "abertura": "🚀 em",
+  "tipo_abertura": "emoji",
   "esqueleto": [
-   "convite",
-   "pergunta",
+   "frase",
    "frase"
   ],
-  "hashtags": 2,
-  "nota": 0.846,
-  "texto": "Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra. Qual canal você entra primeiro? #gamedevbr #godot"
+  "hashtags": 0,
+  "nota": 0.692,
+  "texto": "🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do Brasil agora está no ar! O futuro de devs está aqui."
  },
  "publicacoes": [
   {
@@ -1261,6 +1279,17 @@
    "texto": "Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra. Qual canal você entra primeiro? #gamedevbr #godot",
    "titulo": "Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra.",
    "nota": 0.846,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-21T12:01:37Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do Brasil agora está no ar! O futuro de devs está aqui.",
+   "titulo": "🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]

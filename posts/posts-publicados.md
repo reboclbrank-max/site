@@ -424,3 +424,6 @@ Prancheta nasceu na dev do solo. 2 jogos, 1 Godot, 1 desenvolvedor. Controle, sc
 
 ## 20/11/2026 21:21 UTC
 Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem compra. Qual canal você entra primeiro? #gamedevbr #godot
+
+## 21/11/2026 12:01 UTC
+🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do Brasil agora está no ar! O futuro de devs está aqui.
