@@ -2,48 +2,48 @@
   "ativo": true,
   "alertas": [
     {
-      "id": "al_1795285072955_001",
+      "id": "al_1795287984103_001",
       "tipo": "engajamento_baixo",
-      "mensagem": "Engajamento baixo no youtube para ceifalume: 18 interações",
+      "mensagem": "Engajamento baixo no youtube para ceifalume: 19 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-21T18:17:52.955Z",
+      "criadoEm": "2026-11-21T19:06:24.103Z",
       "resolvido": false
     },
     {
-      "id": "al_1795285072955_002",
+      "id": "al_1795287984103_002",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para prancheta: 2 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-21T18:17:52.955Z",
+      "criadoEm": "2026-11-21T19:06:24.103Z",
       "resolvido": false
     },
     {
-      "id": "al_1795285072955_003",
+      "id": "al_1795287984103_003",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ambos há 22h",
+      "mensagem": "Fila estagnada em instagram para ambos há 23h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-21T18:17:52.955Z",
+      "criadoEm": "2026-11-21T19:06:24.103Z",
       "resolvido": false
     },
     {
-      "id": "al_1795285072956_004",
+      "id": "al_1795287984103_004",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ceifalume há 21h",
+      "mensagem": "Fila estagnada em instagram para ceifalume há 22h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-21T18:17:52.956Z",
+      "criadoEm": "2026-11-21T19:06:24.103Z",
       "resolvido": false
     },
     {
-      "id": "al_1795285072956_005",
+      "id": "al_1795287984103_005",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para prancheta há 21h",
+      "mensagem": "Fila estagnada em instagram para prancheta há 22h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-21T18:17:52.956Z",
+      "criadoEm": "2026-11-21T19:06:24.104Z",
       "resolvido": false
     }
   ],
@@ -64,7 +64,7 @@
       "ativo": true
     }
   ],
-  "ultima_execucao": "2026-11-21T18:17:52.955Z",
-  "criadoEm": "2026-11-21T18:17:52.954Z",
-  "atualizadoEm": "2026-11-21T18:17:52.956Z"
+  "ultima_execucao": "2026-11-21T19:06:24.103Z",
+  "criadoEm": "2026-11-21T19:06:24.103Z",
+  "atualizadoEm": "2026-11-21T19:06:24.104Z"
 }
