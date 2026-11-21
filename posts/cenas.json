@@ -3012,6 +3012,45 @@
     "passos_confirmados": 11
    },
    "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-21T19:37:09Z",
+   "estrategia": "nabo",
+   "assinatura": "3b6cd3bb9d5b",
+   "resumo": {
+    "estrategia": "nabo",
+    "plantadas": 17,
+    "colhidas": 9,
+    "bicos": 1142,
+    "sementes": [],
+    "melhorias": [
+     {
+      "id": "poco",
+      "nome": "Cavar Poço",
+      "custo": 40,
+      "t": 23
+     },
+     {
+      "id": "lanterna",
+      "nome": "Acender Lanterna",
+      "custo": 100,
+      "t": 25.1
+     },
+     {
+      "id": "composteira",
+      "nome": "Composteira",
+      "custo": -15,
+      "t": 45
+     },
+     {
+      "id": "campo",
+      "nome": "Comprar campo",
+      "custo": 108,
+      "t": 47
+     }
+    ],
+    "verde_final": "A:0.101 B:0.092 C:0.094 D:0.122 E:0.078"
+   }
   }
  ]
 }
