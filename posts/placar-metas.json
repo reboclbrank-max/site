@@ -3,12 +3,12 @@
   {
    "meta": "Instagram: publicações",
    "alvo": 30,
-   "observado": 85,
+   "observado": 103,
    "falta": 0,
    "status": "ATINGIDO",
    "fonte": "graph.instagram.com",
    "partida": 2,
-   "delta": 83,
+   "delta": 101,
    "por_dia": null
   },
   {
@@ -23,8 +23,8 @@
    "por_dia": null,
    "ritmo_medido": 0.0,
    "no_prazo": false,
-   "dias_sem_ritmo": 38,
-   "motivo": "38 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
+   "dias_sem_ritmo": 39,
+   "motivo": "39 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
   },
   {
    "meta": "Bluesky: seguidores",
@@ -36,11 +36,11 @@
    "partida": 13,
    "delta": 16,
    "por_dia": null,
-   "ritmo_medido": 0.421,
-   "previsao_dias": 50,
-   "prazo_estimado": "2027-01-09",
+   "ritmo_medido": 0.41,
+   "previsao_dias": 52,
+   "prazo_estimado": "2027-01-12",
    "no_prazo": false,
-   "motivo": "não fecha no prazo no ritmo medido (0.421/dia): prazo renovado para a data que o ritmo entrega (2027-01-09)"
+   "motivo": "não fecha no prazo no ritmo medido (0.41/dia): prazo renovado para a data que o ritmo entrega (2027-01-12)"
   },
   {
    "meta": "YouTube: inscritos",
@@ -54,8 +54,8 @@
    "por_dia": null,
    "ritmo_medido": 0.0,
    "no_prazo": false,
-   "dias_sem_ritmo": 38,
-   "motivo": "38 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
+   "dias_sem_ritmo": 39,
+   "motivo": "39 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
   },
   {
    "meta": "YouTube: shorts",
@@ -78,11 +78,11 @@
    "partida": 44,
    "delta": 5,
    "por_dia": null,
-   "ritmo_medido": 0.132,
-   "previsao_dias": 387,
-   "prazo_estimado": "2027-12-12",
+   "ritmo_medido": 0.128,
+   "previsao_dias": 399,
+   "prazo_estimado": "2027-12-25",
    "no_prazo": false,
-   "motivo": "não fecha no prazo no ritmo medido (0.132/dia): prazo renovado para a data que o ritmo entrega (2027-12-12)"
+   "motivo": "não fecha no prazo no ritmo medido (0.128/dia): prazo renovado para a data que o ritmo entrega (2027-12-25)"
   },
   {
    "meta": "itch: seguidores (aposentada)",
@@ -110,9 +110,9 @@
   }
  ],
  "placar_contexto": {
-  "dias_restantes": -8,
+  "dias_restantes": -9,
   "prazo": "2026-11-12",
-  "dias_decorridos": 38,
+  "dias_decorridos": 39,
   "metas_com_leitura": 7,
   "metas_sem_leitura": 0,
   "metas_aposentadas": 1
