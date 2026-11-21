@@ -3,17 +3,10 @@
  "versao": 1,
  "ultima_publicacao": "2026-11-20T21:20:15Z",
  "ultima_medicao": "2026-11-21T03:17:44Z",
- "ultima_pesquisa": "2026-11-20T06:00:26Z",
+ "ultima_pesquisa": "2026-11-21T06:00:22Z",
  "ultima_aprendizagem": "2026-11-20T07:00:15Z",
- "pulsos": 577,
+ "pulsos": 578,
  "historico": [
-  {
-   "quando": "2026-11-20T12:40:28Z",
-   "acao": "medir",
-   "motivo": "fila: [medir-20261120T124028Z] decisão do relógio",
-   "codigo": 0,
-   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
-  },
   {
    "quando": "2026-11-20T13:00:22Z",
    "acao": "dormir",
@@ -284,6 +277,13 @@
    "quando": "2026-11-21T03:17:44Z",
    "acao": "medir",
    "motivo": "fila: [medir-20261121T031744Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-21T06:00:22Z",
+   "acao": "pesquisar",
+   "motivo": "fila: [pesquisar-20261119T062028Z] meta parada: YouTube: inscritos: 24 em 36 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
    "codigo": 0,
    "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
   }
