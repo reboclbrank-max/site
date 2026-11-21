@@ -922,6 +922,31 @@
    "hashtags": 2,
    "nota": 0.692,
    "texto": "9 Shorts do Ceifalume no ar hoje (17/11). O canal da casa tá fervendo. #gamedevbr #godot"
+  },
+  {
+   "quando": "2026-11-21T16:41:49Z",
+   "canal": "site",
+   "angulo": "cena_de_dois_segundos",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-ficticio",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "tela acende",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.692,
+   "texto": "Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1018,40 +1043,29 @@
   "medido-youtube-shorts-2026-11-20"
  ],
  "ultimo": {
-  "quando": "2026-11-21T14:21:37Z",
+  "quando": "2026-11-21T16:41:49Z",
   "canal": "site",
-  "angulo": "numero_medido",
-  "assunto": "casa",
+  "angulo": "cena_de_dois_segundos",
+  "assunto": "prancheta",
   "fatos": [
-   "medido-video",
-   "medido-instagram-publicacoes-2026-11-16",
-   "medido-bluesky-seguidores-2026-11-16",
-   "medido-youtube-inscritos-2026-11-16",
-   "medido-instagram-publicacoes-2026-11-17",
-   "medido-bluesky-seguidores-2026-11-17",
-   "medido-youtube-inscritos-2026-11-17",
-   "medido-youtube-shorts-2026-11-17",
-   "medido-instagram-publicacoes-2026-11-18",
-   "medido-views-lvc90miwqs0-2026-11-18",
-   "medido-bluesky-seguidores-2026-11-18",
-   "medido-youtube-inscritos-2026-11-18",
-   "medido-youtube-shorts-2026-11-18",
-   "medido-instagram-publicacoes-2026-11-20",
-   "medido-views-lvc90miwqs0-2026-11-20",
-   "medido-bluesky-seguidores-2026-11-20",
-   "medido-youtube-inscritos-2026-11-20",
-   "medido-youtube-shorts-2026-11-20"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-ficticio",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "9 shorts",
-  "tipo_abertura": "frase",
+  "abertura": "tela acende",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "frase",
+   "rotulo",
    "frase",
    "frase"
   ],
   "hashtags": 2,
   "nota": 0.692,
-  "texto": "9 Shorts do Ceifalume no ar hoje (17/11). O canal da casa tá fervendo. #gamedevbr #godot"
+  "texto": "Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro"
  },
  "publicacoes": [
   {
@@ -1359,6 +1373,17 @@
    "fatos": [],
    "texto": "9 Shorts do Ceifalume no ar hoje (17/11). O canal da casa tá fervendo. #gamedevbr #godot",
    "titulo": "9 Shorts do Ceifalume no ar hoje (17/11).",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-21T16:41:49Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro",
+   "titulo": "Tela acende na Data FIFA: elenco na copa, reserva na segundona.",
    "nota": 0.692,
    "tipo": "publicacao"
   }

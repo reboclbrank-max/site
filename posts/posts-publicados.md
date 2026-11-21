@@ -430,3 +430,6 @@ Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem c
 
 ## 21/11/2026 14:22 UTC
 9 Shorts do Ceifalume no ar hoje (17/11). O canal da casa tá fervendo. #gamedevbr #godot
+
+## 21/11/2026 16:41 UTC
+Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro
