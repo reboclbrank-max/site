@@ -2,48 +2,48 @@
   "ativo": true,
   "alertas": [
     {
-      "id": "al_1795214762106_001",
+      "id": "al_1795224361104_001",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para ceifalume: 18 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-20T22:46:02.106Z",
+      "criadoEm": "2026-11-21T01:26:01.104Z",
       "resolvido": false
     },
     {
-      "id": "al_1795214762106_002",
+      "id": "al_1795224361104_002",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para prancheta: 2 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-20T22:46:02.106Z",
+      "criadoEm": "2026-11-21T01:26:01.104Z",
       "resolvido": false
     },
     {
-      "id": "al_1795214762107_003",
+      "id": "al_1795224361104_003",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ambos há 2h",
+      "mensagem": "Fila estagnada em instagram para ambos há 5h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-20T22:46:02.107Z",
+      "criadoEm": "2026-11-21T01:26:01.104Z",
       "resolvido": false
     },
     {
-      "id": "al_1795214762107_004",
+      "id": "al_1795224361104_004",
       "tipo": "fila_estagnada",
       "mensagem": "Fila estagnada em instagram para ceifalume há 4h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-20T22:46:02.107Z",
+      "criadoEm": "2026-11-21T01:26:01.104Z",
       "resolvido": false
     },
     {
-      "id": "al_1795214762107_005",
+      "id": "al_1795224361104_005",
       "tipo": "fila_estagnada",
       "mensagem": "Fila estagnada em instagram para prancheta há 4h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-20T22:46:02.107Z",
+      "criadoEm": "2026-11-21T01:26:01.104Z",
       "resolvido": false
     }
   ],
@@ -64,7 +64,7 @@
       "ativo": true
     }
   ],
-  "ultima_execucao": "2026-11-20T22:46:02.106Z",
-  "criadoEm": "2026-11-20T22:46:02.106Z",
-  "atualizadoEm": "2026-11-20T22:46:02.107Z"
+  "ultima_execucao": "2026-11-21T01:26:01.104Z",
+  "criadoEm": "2026-11-21T01:26:01.103Z",
+  "atualizadoEm": "2026-11-21T01:26:01.105Z"
 }
