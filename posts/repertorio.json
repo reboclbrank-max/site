@@ -886,6 +886,42 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do Brasil agora está no ar! O futuro de devs está aqui."
+  },
+  {
+   "quando": "2026-11-21T14:21:37Z",
+   "canal": "site",
+   "angulo": "numero_medido",
+   "assunto": "casa",
+   "fatos": [
+    "medido-video",
+    "medido-instagram-publicacoes-2026-11-16",
+    "medido-bluesky-seguidores-2026-11-16",
+    "medido-youtube-inscritos-2026-11-16",
+    "medido-instagram-publicacoes-2026-11-17",
+    "medido-bluesky-seguidores-2026-11-17",
+    "medido-youtube-inscritos-2026-11-17",
+    "medido-youtube-shorts-2026-11-17",
+    "medido-instagram-publicacoes-2026-11-18",
+    "medido-views-lvc90miwqs0-2026-11-18",
+    "medido-bluesky-seguidores-2026-11-18",
+    "medido-youtube-inscritos-2026-11-18",
+    "medido-youtube-shorts-2026-11-18",
+    "medido-instagram-publicacoes-2026-11-20",
+    "medido-views-lvc90miwqs0-2026-11-20",
+    "medido-bluesky-seguidores-2026-11-20",
+    "medido-youtube-inscritos-2026-11-20",
+    "medido-youtube-shorts-2026-11-20"
+   ],
+   "abertura": "9 shorts",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.692,
+   "texto": "9 Shorts do Ceifalume no ar hoje (17/11). O canal da casa tá fervendo. #gamedevbr #godot"
   }
  ],
  "fatos_de_uma_vez": [
@@ -974,25 +1010,48 @@
   "medido-bluesky-seguidores-2026-11-18",
   "medido-youtube-inscritos-2026-11-18",
   "medido-youtube-shorts-2026-11-18",
-  "oficio-lancamento-prancheta"
+  "oficio-lancamento-prancheta",
+  "medido-instagram-publicacoes-2026-11-20",
+  "medido-views-lvc90miwqs0-2026-11-20",
+  "medido-bluesky-seguidores-2026-11-20",
+  "medido-youtube-inscritos-2026-11-20",
+  "medido-youtube-shorts-2026-11-20"
  ],
  "ultimo": {
-  "quando": "2026-11-21T12:01:37Z",
+  "quando": "2026-11-21T14:21:37Z",
   "canal": "site",
-  "angulo": "marco_com_data",
-  "assunto": "oficio",
+  "angulo": "numero_medido",
+  "assunto": "casa",
   "fatos": [
-   "oficio-lancamento-prancheta"
+   "medido-video",
+   "medido-instagram-publicacoes-2026-11-16",
+   "medido-bluesky-seguidores-2026-11-16",
+   "medido-youtube-inscritos-2026-11-16",
+   "medido-instagram-publicacoes-2026-11-17",
+   "medido-bluesky-seguidores-2026-11-17",
+   "medido-youtube-inscritos-2026-11-17",
+   "medido-youtube-shorts-2026-11-17",
+   "medido-instagram-publicacoes-2026-11-18",
+   "medido-views-lvc90miwqs0-2026-11-18",
+   "medido-bluesky-seguidores-2026-11-18",
+   "medido-youtube-inscritos-2026-11-18",
+   "medido-youtube-shorts-2026-11-18",
+   "medido-instagram-publicacoes-2026-11-20",
+   "medido-views-lvc90miwqs0-2026-11-20",
+   "medido-bluesky-seguidores-2026-11-20",
+   "medido-youtube-inscritos-2026-11-20",
+   "medido-youtube-shorts-2026-11-20"
   ],
-  "abertura": "🚀 em",
-  "tipo_abertura": "emoji",
+  "abertura": "9 shorts",
+  "tipo_abertura": "frase",
   "esqueleto": [
+   "frase",
    "frase",
    "frase"
   ],
-  "hashtags": 0,
+  "hashtags": 2,
   "nota": 0.692,
-  "texto": "🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do Brasil agora está no ar! O futuro de devs está aqui."
+  "texto": "9 Shorts do Ceifalume no ar hoje (17/11). O canal da casa tá fervendo. #gamedevbr #godot"
  },
  "publicacoes": [
   {
@@ -1289,6 +1348,17 @@
    "fatos": [],
    "texto": "🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do Brasil agora está no ar! O futuro de devs está aqui.",
    "titulo": "🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-21T14:21:37Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "9 Shorts do Ceifalume no ar hoje (17/11). O canal da casa tá fervendo. #gamedevbr #godot",
+   "titulo": "9 Shorts do Ceifalume no ar hoje (17/11).",
    "nota": 0.692,
    "tipo": "publicacao"
   }

@@ -427,3 +427,6 @@ Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem c
 
 ## 21/11/2026 12:01 UTC
 🚀 Em 06 de outubro de 2026, o Prancheta saiu para o mundo: o primeiro game feito solo do Brasil agora está no ar! O futuro de devs está aqui.
+
+## 21/11/2026 14:22 UTC
+9 Shorts do Ceifalume no ar hoje (17/11). O canal da casa tá fervendo. #gamedevbr #godot
