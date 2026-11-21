@@ -2152,12 +2152,12 @@
    "slug": "prancheta",
    "angulo": null,
    "origem_do_texto": "molde (o redator recusou todos os ângulos)",
-   "estrategia": "pressao_rapida",
-   "vinheta": "64abde7044a6",
+   "estrategia": "posse_normal",
+   "vinheta": "3dc54b12e695",
    "numeros": {
-    "passos": 15,
+    "passos": 14,
     "passos_confirmados": 12,
-    "toques_partida": 6
+    "toques_partida": 7
    },
    "arquivo": "media/gameplay/prancheta-gameplay.mp4",
    "capa": "media/gameplay/prancheta-capa.png",
@@ -2166,8 +2166,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "PRANCHETA: pressão na instrução e a partida até o fim · 6 toques",
-   "descricao": "Gravação automática do PRANCHETA: o agente atravessou menu, carreira, escolha de clube e staff até a prancheta tática, e jogou a partida com o plano recomendado.\n\nA cena desta vez foi \"pressao_rapida\": 15 passos, 12 confirmados por mudança de tela.\n\nNa partida foram 6 toques registrados pelo gravador.\n\nFonte: posts/cenas.json (partida 64abde7044a6, conferida em 2026-11-20).\n\nJogo: PRANCHETA — simulador de gestão de futebol 100% fictício, Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#prancheta #godot",
+   "titulo": "PRANCHETA: a partida inteira sem mexer no plano do staff · 7 toques",
+   "descricao": "Gravação automática do PRANCHETA: o agente atravessou menu, carreira, escolha de clube e staff até a prancheta tática, e jogou a partida com o plano recomendado.\n\nA cena desta vez foi \"posse_normal\": 14 passos, 12 confirmados por mudança de tela.\n\nNa partida foram 7 toques registrados pelo gravador.\n\nFonte: posts/cenas.json (partida 3dc54b12e695, conferida em 2026-11-21).\n\nJogo: PRANCHETA — simulador de gestão de futebol 100% fictício, Godot, feito no Brasil.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/prancheta/\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\n#prancheta #godot",
    "tags": [
     "prancheta",
     "manager de futebol",
@@ -2183,7 +2183,7 @@
    "feito_para_criancas": "não",
    "origem": "Gameplay: gravado automaticamente do PRANCHETA rodando no build web do itch.io. A trilha é sintetizada pelo script de produção e as legendas descrevem o que o agente fez na partida.",
    "arquivo_existe": true,
-   "bytes": 1128370,
+   "bytes": 1108976,
    "capa_existe": true
   }
  ],
