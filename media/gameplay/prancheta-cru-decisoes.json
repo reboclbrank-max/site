@@ -1,7 +1,7 @@
 {
  "jogo": "prancheta",
- "estrategia": "posse_normal",
- "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920",
+ "estrategia": "contra_ataque",
+ "endereco": "https://html-classic.itch.zone/html/19604665/index.html?v=1791321920&quot;&gt;&lt;/iframe&gt;",
  "decisoes": [
   {
    "t": 15.1,
@@ -19,61 +19,66 @@
    "acao": "toque em 500,232"
   },
   {
-   "t": 28.4,
+   "t": 28.5,
    "motivo": "aplicar o microciclo da semana",
    "acao": "toque em 500,612"
   },
   {
-   "t": 33,
+   "t": 33.3,
    "motivo": "abrir a prancheta",
    "acao": "toque em 500,259"
   },
   {
-   "t": 39.4,
+   "t": 39.8,
    "motivo": "jogar com o plano recomendado",
    "acao": "toque em 500,289"
   },
   {
-   "t": 43.2,
+   "t": 43.8,
    "motivo": "seguir sem mexer (sem instrução)",
    "acao": "toque em 636,573"
   },
   {
    "t": 47.7,
+   "motivo": "acelerar a partida",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 52.1,
+   "motivo": "partida em andamento",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 56.5,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 52.3,
+   "t": 60.8,
    "motivo": "partida em andamento",
    "acao": "toque em 110,608"
   },
   {
-   "t": 56.6,
+   "t": 65.3,
    "motivo": "partida em andamento",
    "acao": "toque em 636,573"
   },
   {
-   "t": 61.2,
+   "t": 69.7,
+   "motivo": "partida em andamento",
+   "acao": "toque em 700,685"
+  },
+  {
+   "t": 74,
    "motivo": "partida em andamento",
    "acao": "toque em 640,360"
   },
   {
-   "t": 65.8,
-   "motivo": "partida em andamento",
-   "acao": "toque em 640,360"
-  },
-  {
-   "t": 70.4,
-   "motivo": "partida em andamento",
-   "acao": "toque em 110,608"
-  },
-  {
-   "t": 74.9,
-   "motivo": "partida em andamento",
-   "acao": "toque em 636,573"
+   "t": 79,
+   "motivo": "pular para o fim da partida",
+   "acao": "toque em 900,705"
   }
  ],
- "passos_confirmados": 12,
- "toques_partida": 7
+ "passos_confirmados": 11,
+ "toques_partida": 6
 }
