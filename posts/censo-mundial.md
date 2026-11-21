@@ -70,3 +70,6 @@
 
 ## 20/11/2026
 - mundo medido: redes-ativas=52 · redes-mortas=35 (metodo: catalogo Wikipedia, contagem por tabela)
+
+## 21/11/2026
+- mundo medido: redes-ativas=52 · redes-mortas=35 (metodo: catalogo Wikipedia, contagem por tabela)
