@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "kbIZYGerREs",
+   "url": "https://youtu.be/kbIZYGerREs",
+   "slug": "ceifalume-gameplay",
+   "titulo": "De 25 a 662 moedas em 2 min de CEIFALUME",
+   "descricao": "A fazenda começou com 25 moedas e terminou a gravação com 662 no bolso.\n\nO bolso não enche sozinho: cada moeda veio de colheita vendida, e cada compra saiu dele.\n\nÉ a diferença entre fazenda idle e passatempo de espera — o número mede decisão, não sorte.\n\nFonte: posts/cenas.json (partida 3b6cd3bb9d5b, conferida em 2026-11-21T19:37:09Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.",
+   "descricao_completa": false,
+   "angulo": "moedas",
+   "fato": null,
+   "numeros": {
+    "plantadas": 17,
+    "colhidas": 9,
+    "toques": 1142,
+    "minutos": 2,
+    "toques_por_minuto": 571
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-21T19:37:20Z"
+  },
+  {
    "id": "RGTANLoClF0",
    "url": "https://youtu.be/RGTANLoClF0",
    "slug": "ceifalume-gameplay",
