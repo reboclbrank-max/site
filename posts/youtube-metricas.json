@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-21T11:44:50Z",
+ "medido_em": "2026-11-21T21:06:33Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "kbIZYGerREs",
+   "titulo": "De 25 a 662 moedas em 2 min de CEIFALUME",
+   "publicado_em": "2026-11-21T19:37:41Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "RGTANLoClF0",
    "titulo": "Como um agente joga CEIFALUME sozinho: 2 min de gravação",
@@ -260,7 +268,7 @@
   }
  ],
  "totais": {
-  "videos": 32,
+  "videos": 33,
   "views": 44,
   "likes": 0,
   "comentarios": 0
