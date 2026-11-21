@@ -2,6 +2,23 @@
  "_o_que_e": "chamadas de vídeo publicadas nos canais da casa — é isto que impede chamar o mesmo vídeo duas vezes",
  "chamadas": [
   {
+   "quando": "2026-11-21T18:17:35Z",
+   "video_id": "RGTANLoClF0",
+   "canal": "bluesky",
+   "texto": "Vídeo novo no canal: \"Como um agente joga CEIFALUME sozinho: 2 min de gravação\". Na partida gravada: 14 mudas, 8 colheitas, em 2 minutos. É o CEIFALUME-GAMEPLAY. #ceifalume-gameplay\nhttps://youtu.be/RGTANLoClF0",
+   "titulo": "Como um agente joga CEIFALUME sozinho: 2 min de gravação",
+   "resultado": "recusado",
+   "motivo": "mesma forma de um post recente do canal (abertura rotulo, 4 frases, 1 hashtags): Como um agente joga CEIFALUME sozinho: 2 min de gr",
+   "numeros": {
+    "video": "RGTANLoClF0",
+    "historico_do_canal": 21,
+    "nota_juizo": 0.462,
+    "jogos_citados": [
+     "ceifalume"
+    ]
+   }
+  },
+  {
    "quando": "2026-11-21T11:50:26Z",
    "video_id": "RGTANLoClF0",
    "canal": "bluesky",
