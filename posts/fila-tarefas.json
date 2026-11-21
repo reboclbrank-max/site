@@ -2267,6 +2267,19 @@
    "resultado": "ada em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 217,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é dec",
    "motivo": "decisão do relógio",
    "chave": "medir-2026112103"
+  },
+  {
+   "id": "pesquisar-20261121T062027Z",
+   "tipo": "pesquisar",
+   "prioridade": 95,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-21T06:20:27Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "meta parada: YouTube: inscritos: 24 em 38 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "chave": "parada-YouTube: inscritos",
+   "origem": "perceber"
   }
  ],
  "recusadas": [
