@@ -3658,3 +3658,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=107(api) · itch_downloads=49(api) · itch_visitas=217(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
 
 > Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro
+
+## 21/11/2026 21:03 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.69 |
+| pauta do ciclo | ✅ comparacao_honesta · ceifalume |
+| destino editorial | ✅ rota oficial ceifalume |
+| tema do ciclo | ✅ comparacao_honesta · ceifalume |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ❌ HTTP Error 400: Bad Request |
+| instagram | ✅ postado id 18052154231628 |
+| threads | ✅ publicado id 179966905591 |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=114(api) · itch_downloads=49(api) · itch_visitas=219(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
+
+> Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store.

@@ -433,3 +433,6 @@ Prancheta centraliza avisos, builds e conversa: tudo grátis, sem cadastro nem c
 
 ## 21/11/2026 16:41 UTC
 Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro
+
+## 21/11/2026 21:03 UTC
+Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store.

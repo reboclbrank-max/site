@@ -947,6 +947,29 @@
    "hashtags": 2,
    "nota": 0.692,
    "texto": "Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro"
+  },
+  {
+   "quando": "2026-11-21T21:02:33Z",
+   "canal": "site",
+   "angulo": "comparacao_honesta",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-apk",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "ceifalume roda",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.692,
+   "texto": "Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store."
   }
  ],
  "fatos_de_uma_vez": [
@@ -1043,29 +1066,27 @@
   "medido-youtube-shorts-2026-11-20"
  ],
  "ultimo": {
-  "quando": "2026-11-21T16:41:49Z",
+  "quando": "2026-11-21T21:02:33Z",
   "canal": "site",
-  "angulo": "cena_de_dois_segundos",
-  "assunto": "prancheta",
+  "angulo": "comparacao_honesta",
+  "assunto": "ceifalume",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-ficticio",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-apk",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias"
   ],
-  "abertura": "tela acende",
-  "tipo_abertura": "rotulo",
+  "abertura": "ceifalume roda",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "rotulo",
-   "frase",
    "frase"
   ],
-  "hashtags": 2,
+  "hashtags": 0,
   "nota": 0.692,
-  "texto": "Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro"
+  "texto": "Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store."
  },
  "publicacoes": [
   {
@@ -1384,6 +1405,17 @@
    "fatos": [],
    "texto": "Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, clica na escalação e o apito soa. #prancheta #jogobrasileiro",
    "titulo": "Tela acende na Data FIFA: elenco na copa, reserva na segundona.",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-21T21:02:33Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store.",
+   "titulo": "Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store.",
    "nota": 0.692,
    "tipo": "publicacao"
   }
