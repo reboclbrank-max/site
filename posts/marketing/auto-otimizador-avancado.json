@@ -1,52 +1,52 @@
 {
- "ativo": true,
- "fluxo_acesso": {
-  "instagram": {
-   "ambos": {
-    "17": 1,
-    "20": 1
-   },
-   "ceifalume": {
-    "9": 5,
-    "11": 5,
-    "13": 5,
-    "15": 4,
-    "16": 5,
-    "17": 3,
-    "18": 3,
-    "20": 1,
-    "21": 1
-   },
-   "prancheta": {
-    "9": 5,
-    "11": 5,
-    "13": 5,
-    "15": 4,
-    "16": 5,
-    "17": 3,
-    "18": 3,
-    "20": 1,
-    "21": 1
-   }
-  }
- },
- "metricas_engajamento": {
-  "youtube": {
-   "ceifalume": {
-    "visualizacoes": 19,
-    "curtidas": 0,
-    "comentarios": 0
-   },
-   "prancheta": {
-    "visualizacoes": 2,
-    "curtidas": 0,
-    "comentarios": 0
-   }
-  }
- },
- "otimizacoes": [],
- "proximoId": 1,
- "criadoEm": "2026-11-16T20:24:25.448Z",
- "atualizadoEm": "2026-11-21T23:29:51.996Z",
- "_run": "A"
+  "ativo": true,
+  "fluxo_acesso": {
+    "instagram": {
+      "ambos": {
+        "17": 1,
+        "20": 1
+      },
+      "ceifalume": {
+        "9": 5,
+        "11": 5,
+        "13": 5,
+        "15": 4,
+        "16": 5,
+        "17": 3,
+        "18": 3,
+        "20": 1,
+        "21": 1
+      },
+      "prancheta": {
+        "9": 5,
+        "11": 5,
+        "13": 5,
+        "15": 4,
+        "16": 5,
+        "17": 3,
+        "18": 3,
+        "20": 1,
+        "21": 1
+      }
+    }
+  },
+  "metricas_engajamento": {
+    "youtube": {
+      "ceifalume": {
+        "visualizacoes": 19,
+        "curtidas": 0,
+        "comentarios": 0
+      },
+      "prancheta": {
+        "visualizacoes": 2,
+        "curtidas": 0,
+        "comentarios": 0
+      }
+    }
+  },
+  "otimizacoes": [],
+  "proximoId": 1,
+  "criadoEm": "2026-11-16T20:24:25.448Z",
+  "atualizadoEm": "2026-11-22T04:26:08.948Z",
+  "_run": "A"
 }
