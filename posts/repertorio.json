@@ -991,6 +991,24 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "Focando no Ceifalume agora: refino de IA e level design sozinho no Godot. O limite? Não tenho equipe pra testar todas as builds. Lanço, erro, corrijo."
+  },
+  {
+   "quando": "2026-11-22T14:22:30Z",
+   "canal": "site",
+   "angulo": "o_que_nao_tem",
+   "assunto": "casa",
+   "fatos": [
+    "casa-site-gratis"
+   ],
+   "abertura": "nao tem",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "convite",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso. #Prancheta acelera a criação."
   }
  ],
  "fatos_de_uma_vez": [
@@ -1087,25 +1105,22 @@
   "medido-youtube-shorts-2026-11-20"
  ],
  "ultimo": {
-  "quando": "2026-11-22T12:01:49Z",
+  "quando": "2026-11-22T14:22:30Z",
   "canal": "site",
-  "angulo": "devlog_aberto",
-  "assunto": "oficio",
+  "angulo": "o_que_nao_tem",
+  "assunto": "casa",
   "fatos": [
-   "oficio-godot",
-   "oficio-apk-fora-de-loja"
+   "casa-site-gratis"
   ],
-  "abertura": "focando no",
-  "tipo_abertura": "rotulo",
+  "abertura": "nao tem",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "rotulo",
-   "pergunta",
-   "frase",
+   "convite",
    "frase"
   ],
-  "hashtags": 0,
+  "hashtags": 1,
   "nota": 0.692,
-  "texto": "Focando no Ceifalume agora: refino de IA e level design sozinho no Godot. O limite? Não tenho equipe pra testar todas as builds. Lanço, erro, corrijo."
+  "texto": "Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso. #Prancheta acelera a criação."
  },
  "publicacoes": [
   {
@@ -1446,6 +1461,17 @@
    "fatos": [],
    "texto": "Focando no Ceifalume agora: refino de IA e level design sozinho no Godot. O limite? Não tenho equipe pra testar todas as builds. Lanço, erro, corrijo.",
    "titulo": "Focando no Ceifalume agora: refino de IA e level design sozinho no Godot.",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-22T14:22:30Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso. #Prancheta acelera a criação.",
+   "titulo": "Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso.",
    "nota": 0.692,
    "tipo": "publicacao"
   }
