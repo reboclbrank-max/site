@@ -1009,6 +1009,30 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso. #Prancheta acelera a criação."
+  },
+  {
+   "quando": "2026-11-22T18:41:14Z",
+   "canal": "site",
+   "angulo": "convite_a_testar",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-offline",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "procurando testadores",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.769,
+   "texto": "Procurando testadores para Prancheta: gestão de futebol no navegador e Android. Tamanho do texto em 16, 18 ou 20 e modo escuro/claro."
   }
  ],
  "fatos_de_uma_vez": [
@@ -1105,22 +1129,28 @@
   "medido-youtube-shorts-2026-11-20"
  ],
  "ultimo": {
-  "quando": "2026-11-22T14:22:30Z",
+  "quando": "2026-11-22T18:41:14Z",
   "canal": "site",
-  "angulo": "o_que_nao_tem",
-  "assunto": "casa",
+  "angulo": "convite_a_testar",
+  "assunto": "prancheta",
   "fatos": [
-   "casa-site-gratis"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-offline",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "nao tem",
-  "tipo_abertura": "frase",
+  "abertura": "procurando testadores",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "convite",
+   "rotulo",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.692,
-  "texto": "Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso. #Prancheta acelera a criação."
+  "hashtags": 0,
+  "nota": 0.769,
+  "texto": "Procurando testadores para Prancheta: gestão de futebol no navegador e Android. Tamanho do texto em 16, 18 ou 20 e modo escuro/claro."
  },
  "publicacoes": [
   {
@@ -1473,6 +1503,17 @@
    "texto": "Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso. #Prancheta acelera a criação.",
    "titulo": "Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso.",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-22T18:41:14Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Procurando testadores para Prancheta: gestão de futebol no navegador e Android. Tamanho do texto em 16, 18 ou 20 e modo escuro/claro.",
+   "titulo": "Procurando testadores para Prancheta: gestão de futebol no navegador e Android.",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]

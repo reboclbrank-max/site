@@ -442,3 +442,6 @@ Focando no Ceifalume agora: refino de IA e level design sozinho no Godot. O limi
 
 ## 22/11/2026 14:22 UTC
 Não tem dinheiro nem cadastro, só diversão: joga grátis, sem custo, sem ficar preso. #Prancheta acelera a criação.
+
+## 22/11/2026 18:41 UTC
+Procurando testadores para Prancheta: gestão de futebol no navegador e Android. Tamanho do texto em 16, 18 ou 20 e modo escuro/claro.
