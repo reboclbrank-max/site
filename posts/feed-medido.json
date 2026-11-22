@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-21T12:20Z",
+ "medido_em": "2026-11-22T12:20Z",
  "fonte": "API pública do Bluesky",
  "posts": [
   {
@@ -76,7 +76,7 @@
   },
   {
    "texto": "Dois mundos, um dev brasileiro 🇧🇷❤️ PRANCHETA: tática pura no Godot. Desenhe jog",
-   "engajamento": 0,
+   "engajamento": 1,
    "quando": "2026-10-29T23:30:09Z",
    "classe": "promo"
   },
@@ -214,13 +214,13 @@
   },
   {
    "texto": "Duas paixões, um dev brasileiro 🇧🇷❤️ PRANCHETA: seu tático de bolso (Godot, grát",
-   "engajamento": 0,
+   "engajamento": 1,
    "quando": "2026-10-26T04:51:42Z",
    "classe": "promo"
   },
   {
    "texto": "⚽ Sou TÉCNICO, não jogador.\nPRANCHETA é um manager de futebol 100% fictício: des",
-   "engajamento": 2,
+   "engajamento": 3,
    "quando": "2026-10-25T23:17:57Z",
    "classe": "promo"
   },
