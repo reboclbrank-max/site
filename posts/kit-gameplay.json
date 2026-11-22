@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "moedas",
+   "angulo": "cultivo",
    "fato": null,
    "numeros": {
-    "plantadas": 17,
-    "colhidas": 9,
-    "toques": 1142,
+    "plantadas": 12,
+    "colhidas": 5,
+    "toques": 717,
     "minutos": 2,
-    "toques_por_minuto": 571
+    "toques_por_minuto": 358
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 3938073,
+   "bytes": 4323014,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "De 25 a 662 moedas em 2 min de CEIFALUME",
-   "descricao": "A fazenda começou com 25 moedas e terminou a gravação com 662 no bolso.\n\nO bolso não enche sozinho: cada moeda veio de colheita vendida, e cada compra saiu dele.\n\nÉ a diferença entre fazenda idle e passatempo de espera — o número mede decisão, não sorte.\n\nFonte: posts/cenas.json (partida 3b6cd3bb9d5b, conferida em 2026-11-21T19:37:09Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#jogobrasileiro",
+   "titulo": "0 células com milho pronto no fim da partida",
+   "descricao": "No fim da gravação, 0 das 5 células do terreno estavam com planta pronta.\n\nO cultivo da partida foi milho e nabo.\n\nNenhuma célula anda junto com a outra: cada uma tem o seu relógio de crescimento.\n\nFonte: posts/cenas.json (partida c770dffdfa71, conferida em 2026-11-22T19:57:16Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -2104,8 +2104,104 @@
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
+     "angulo": "como_funciona:video-kbIZYGerREs",
+     "motivo": "texto repetido: 0.73 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
+    },
+    {
+     "angulo": "onde_jogar:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-kbIZYGerREs",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
+     "angulo": "como_funciona:video-RGTANLoClF0",
+     "motivo": "texto repetido: 0.72 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
+    },
+    {
+     "angulo": "onde_jogar:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-RGTANLoClF0",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "passo_a_passo",
-     "motivo": "título quase igual a um já publicado (0.97)"
+     "motivo": "título quase igual a um já publicado (0.98)"
     },
     {
      "angulo": "medida_por_minuto",
@@ -2113,11 +2209,11 @@
     },
     {
      "angulo": "semente_do_dia",
-     "motivo": "título quase igual a um já publicado (0.95)"
+     "motivo": "título quase igual a um já publicado (0.97)"
     },
     {
      "angulo": "ficha_da_partida",
-     "motivo": "título quase igual a um já publicado (0.90)"
+     "motivo": "título quase igual a um já publicado (0.93)"
     },
     {
      "angulo": "numeros",
@@ -2129,7 +2225,7 @@
     },
     {
      "angulo": "rotulo",
-     "motivo": "título quase igual a um já publicado (0.92)"
+     "motivo": "título quase igual a um já publicado (0.93)"
     },
     {
      "angulo": "convite",
@@ -2137,15 +2233,19 @@
     },
     {
      "angulo": "bastidor",
-     "motivo": "mesmo ângulo do último vídeo publicado (bastidor) — o ângulo roda"
+     "motivo": "título já publicado neste canal: Como um agente joga CEIFALUME sozinho: 2 min de gravação"
+    },
+    {
+     "angulo": "moedas",
+     "motivo": "mesmo ângulo do último vídeo publicado (moedas) — o ângulo roda"
     },
     {
      "angulo": "comparacao",
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 4,
-   "angulos_candidatos": 530
+   "angulos_aprovados": 3,
+   "angulos_candidatos": 554
   },
   {
    "id": "prancheta-gameplay",
