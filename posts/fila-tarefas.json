@@ -2366,6 +2366,18 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "publicar-2026112121"
+  },
+  {
+   "id": "medir-20261122T000025Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-22T00:00:25Z",
+   "executada": "2026-11-22T00:00:25Z",
+   "resultado": "da em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 220,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é deci",
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026112200"
   }
  ],
  "recusadas": [
