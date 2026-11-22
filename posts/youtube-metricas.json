@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-22T01:33:18Z",
+ "medido_em": "2026-11-22T11:57:42Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -62,7 +62,7 @@
    "id": "RksiKWR1QfY",
    "titulo": "Como o PRANCHETA simula uma partida a partir da prancheta",
    "publicado_em": "2026-11-17T12:22:33Z",
-   "views": 3,
+   "views": 4,
    "likes": 0,
    "comentarios": 0
   },
@@ -118,7 +118,7 @@
    "id": "806i-rPzC9w",
    "titulo": "Quanto rende CEIFALUME em 2 minutos",
    "publicado_em": "2026-11-14T23:15:07Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -269,7 +269,7 @@
  ],
  "totais": {
   "videos": 33,
-  "views": 46,
+  "views": 48,
   "likes": 0,
   "comentarios": 0
  }
