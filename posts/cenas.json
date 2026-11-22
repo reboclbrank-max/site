@@ -3113,6 +3113,68 @@
     "passos_confirmados": 10
    },
    "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-22T11:52:52Z",
+   "estrategia": "posse_normal",
+   "assinatura": "2898b8b57644",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "posse_normal",
+    "passos": [
+     [
+      "toque em 500,87",
+      16.0
+     ],
+     [
+      "toque em 500,179",
+      22.0
+     ],
+     [
+      "toque em 500,232",
+      28.0
+     ],
+     [
+      "toque em 500,612",
+      32.0
+     ],
+     [
+      "toque em 500,259",
+      38.0
+     ],
+     [
+      "toque em 500,289",
+      45.0
+     ],
+     [
+      "toque em 636,573",
+      50.0
+     ],
+     [
+      "toque em 640,360",
+      55.0
+     ],
+     [
+      "toque em 110,608",
+      60.0
+     ],
+     [
+      "toque em 636,573",
+      66.0
+     ],
+     [
+      "toque em 640,360",
+      71.0
+     ],
+     [
+      "toque em 640,360",
+      76.0
+     ]
+    ],
+    "toques_partida": 5,
+    "passos_confirmados": 10
+   },
+   "jogo": "prancheta"
   }
  ]
 }
