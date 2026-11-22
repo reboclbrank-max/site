@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "eWFQbKZ141U",
+   "url": "https://youtu.be/eWFQbKZ141U",
+   "slug": "ceifalume-gameplay",
+   "titulo": "0 células com milho pronto no fim da partida",
+   "descricao": "No fim da gravação, 0 das 5 células do terreno estavam com planta pronta.\n\nO cultivo da partida foi milho e nabo.\n\nNenhuma célula anda junto com a outra: cada uma tem o seu relógio de crescimento.\n\nFonte: posts/cenas.json (partida c770dffdfa71, conferida em 2026-11-22T19:57:16Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.",
+   "descricao_completa": false,
+   "angulo": "cultivo",
+   "fato": null,
+   "numeros": {
+    "plantadas": 12,
+    "colhidas": 5,
+    "toques": 717,
+    "minutos": 2,
+    "toques_por_minuto": 358
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-22T19:57:29Z"
+  },
+  {
    "id": "kbIZYGerREs",
    "url": "https://youtu.be/kbIZYGerREs",
    "slug": "ceifalume-gameplay",
