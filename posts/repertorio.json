@@ -1033,6 +1033,25 @@
    "hashtags": 0,
    "nota": 0.769,
    "texto": "Procurando testadores para Prancheta: gestão de futebol no navegador e Android. Tamanho do texto em 16, 18 ou 20 e modo escuro/claro."
+  },
+  {
+   "quando": "2026-11-22T20:51:17Z",
+   "canal": "site",
+   "angulo": "ponte_de_canal",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-devlog",
+    "oficio-discord"
+   ],
+   "abertura": "desenvolver sozinho",
+   "tipo_abertura": "pergunta",
+   "esqueleto": [
+    "frase",
+    "pergunta"
+   ],
+   "hashtags": 0,
+   "nota": 0.692,
+   "texto": "Desenvolver sozinho é desafio e prazer, Ceifalume. Precisa de ajuda?"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1126,31 +1145,28 @@
   "medido-views-lvc90miwqs0-2026-11-20",
   "medido-bluesky-seguidores-2026-11-20",
   "medido-youtube-inscritos-2026-11-20",
-  "medido-youtube-shorts-2026-11-20"
+  "medido-youtube-shorts-2026-11-20",
+  "oficio-devlog",
+  "oficio-discord"
  ],
  "ultimo": {
-  "quando": "2026-11-22T18:41:14Z",
+  "quando": "2026-11-22T20:51:17Z",
   "canal": "site",
-  "angulo": "convite_a_testar",
-  "assunto": "prancheta",
+  "angulo": "ponte_de_canal",
+  "assunto": "oficio",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-offline",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "oficio-devlog",
+   "oficio-discord"
   ],
-  "abertura": "procurando testadores",
-  "tipo_abertura": "rotulo",
+  "abertura": "desenvolver sozinho",
+  "tipo_abertura": "pergunta",
   "esqueleto": [
-   "rotulo",
-   "frase"
+   "frase",
+   "pergunta"
   ],
   "hashtags": 0,
-  "nota": 0.769,
-  "texto": "Procurando testadores para Prancheta: gestão de futebol no navegador e Android. Tamanho do texto em 16, 18 ou 20 e modo escuro/claro."
+  "nota": 0.692,
+  "texto": "Desenvolver sozinho é desafio e prazer, Ceifalume. Precisa de ajuda?"
  },
  "publicacoes": [
   {
@@ -1514,6 +1530,17 @@
    "texto": "Procurando testadores para Prancheta: gestão de futebol no navegador e Android. Tamanho do texto em 16, 18 ou 20 e modo escuro/claro.",
    "titulo": "Procurando testadores para Prancheta: gestão de futebol no navegador e Android.",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-22T20:51:17Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Desenvolver sozinho é desafio e prazer, Ceifalume. Precisa de ajuda?",
+   "titulo": "Desenvolver sozinho é desafio e prazer, Ceifalume.",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]
