@@ -964,6 +964,64 @@
    "quando": "2026-11-20",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "video-kbIZYGerREs",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"De 25 a 662 moedas em 2 min de CEIFALUME\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-22",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-instagram-publicacoes-2026-11-22",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Instagram — publicações: 121 hoje, medido pela própria casa em 22/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-22",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-views-lvc90miwqs0-2026-11-22",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "o vídeo \"O que 6 toques fizeram na partida do PRANCHETA\" está com 11 views, medido em 22/11",
+   "origem": "posts/youtube-metricas.json",
+   "quando": "2026-11-22",
+   "validade_dias": 3,
+   "repetivel": false
+  },
+  {
+   "id": "video-RGTANLoClF0",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Como um agente joga CEIFALUME sozinho: 2 min de gravação\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-22",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-bluesky-seguidores-2026-11-22",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Bluesky — seguidores: 30 hoje, medido pela própria casa em 22/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-22",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-youtube-inscritos-2026-11-22",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "YouTube — inscritos: 24 hoje, medido pela própria casa em 22/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-22",
+   "validade_dias": 7,
+   "repetivel": false
   }
  ]
 }
