@@ -1,7 +1,15 @@
 {
- "medido_em": "2026-11-22T11:57:42Z",
+ "medido_em": "2026-11-22T21:14:09Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "eWFQbKZ141U",
+   "titulo": "0 células com milho pronto no fim da partida",
+   "publicado_em": "2026-11-22T19:57:49Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "kbIZYGerREs",
    "titulo": "De 25 a 662 moedas em 2 min de CEIFALUME",
@@ -46,7 +54,7 @@
    "id": "iy37eWobg7U",
    "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
    "publicado_em": "2026-11-17T21:18:09Z",
-   "views": 4,
+   "views": 5,
    "likes": 0,
    "comentarios": 0
   },
@@ -268,8 +276,8 @@
   }
  ],
  "totais": {
-  "videos": 33,
-  "views": 48,
+  "videos": 34,
+  "views": 49,
   "likes": 0,
   "comentarios": 0
  }
