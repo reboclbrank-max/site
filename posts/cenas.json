@@ -3283,6 +3283,80 @@
     ],
     "verde_final": "A:0.000 B:0.000 C:0.036 D:0.000 E:0.078"
    }
+  },
+  {
+   "quando": "2026-11-22T20:02:26Z",
+   "estrategia": "pressao_rapida",
+   "assinatura": "0a3b9b0bacb2",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "pressao_rapida",
+    "passos": [
+     [
+      "toque em 500,87",
+      15.0
+     ],
+     [
+      "toque em 500,179",
+      20.0
+     ],
+     [
+      "toque em 500,232",
+      24.0
+     ],
+     [
+      "toque em 500,612",
+      29.0
+     ],
+     [
+      "toque em 500,259",
+      33.0
+     ],
+     [
+      "toque em 500,289",
+      40.0
+     ],
+     [
+      "toque em 110,608",
+      44.0
+     ],
+     [
+      "toque em 700,685",
+      48.0
+     ],
+     [
+      "toque em 700,685",
+      52.0
+     ],
+     [
+      "toque em 640,360",
+      57.0
+     ],
+     [
+      "toque em 110,608",
+      61.0
+     ],
+     [
+      "toque em 636,573",
+      65.0
+     ],
+     [
+      "toque em 700,685",
+      70.0
+     ],
+     [
+      "toque em 640,360",
+      74.0
+     ],
+     [
+      "toque em 900,705",
+      79.0
+     ]
+    ],
+    "toques_partida": 6,
+    "passos_confirmados": 12
+   },
+   "jogo": "prancheta"
   }
  ]
 }
