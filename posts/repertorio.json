@@ -970,6 +970,27 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store."
+  },
+  {
+   "quando": "2026-11-22T12:01:49Z",
+   "canal": "site",
+   "angulo": "devlog_aberto",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-godot",
+    "oficio-apk-fora-de-loja"
+   ],
+   "abertura": "focando no",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.692,
+   "texto": "Focando no Ceifalume agora: refino de IA e level design sozinho no Godot. O limite? Não tenho equipe pra testar todas as builds. Lanço, erro, corrijo."
   }
  ],
  "fatos_de_uma_vez": [
@@ -1066,27 +1087,25 @@
   "medido-youtube-shorts-2026-11-20"
  ],
  "ultimo": {
-  "quando": "2026-11-21T21:02:33Z",
+  "quando": "2026-11-22T12:01:49Z",
   "canal": "site",
-  "angulo": "comparacao_honesta",
-  "assunto": "ceifalume",
+  "angulo": "devlog_aberto",
+  "assunto": "oficio",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-apk",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias"
+   "oficio-godot",
+   "oficio-apk-fora-de-loja"
   ],
-  "abertura": "ceifalume roda",
-  "tipo_abertura": "frase",
+  "abertura": "focando no",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
+   "rotulo",
+   "pergunta",
+   "frase",
    "frase"
   ],
   "hashtags": 0,
   "nota": 0.692,
-  "texto": "Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store."
+  "texto": "Focando no Ceifalume agora: refino de IA e level design sozinho no Godot. O limite? Não tenho equipe pra testar todas as builds. Lanço, erro, corrijo."
  },
  "publicacoes": [
   {
@@ -1416,6 +1435,17 @@
    "fatos": [],
    "texto": "Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store.",
    "titulo": "Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store.",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-22T12:01:49Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Focando no Ceifalume agora: refino de IA e level design sozinho no Godot. O limite? Não tenho equipe pra testar todas as builds. Lanço, erro, corrijo.",
+   "titulo": "Focando no Ceifalume agora: refino de IA e level design sozinho no Godot.",
    "nota": 0.692,
    "tipo": "publicacao"
   }

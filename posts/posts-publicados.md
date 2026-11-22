@@ -436,3 +436,6 @@ Tela acende na Data FIFA: elenco na copa, reserva na segundona. Você respira, c
 
 ## 21/11/2026 21:03 UTC
 Ceifalume roda no navegador, mas o APK de 79 MB instala fora da Play Store.
+
+## 22/11/2026 12:02 UTC
+Focando no Ceifalume agora: refino de IA e level design sozinho no Godot. O limite? Não tenho equipe pra testar todas as builds. Lanço, erro, corrijo.
