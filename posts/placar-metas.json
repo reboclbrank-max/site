@@ -3,12 +3,12 @@
   {
    "meta": "Instagram: publicações",
    "alvo": 30,
-   "observado": 103,
+   "observado": 121,
    "falta": 0,
    "status": "ATINGIDO",
    "fonte": "graph.instagram.com",
    "partida": 2,
-   "delta": 101,
+   "delta": 119,
    "por_dia": null
   },
   {
@@ -23,24 +23,24 @@
    "por_dia": null,
    "ritmo_medido": 0.0,
    "no_prazo": false,
-   "dias_sem_ritmo": 39,
-   "motivo": "39 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
+   "dias_sem_ritmo": 40,
+   "motivo": "40 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
   },
   {
    "meta": "Bluesky: seguidores",
    "alvo": 50,
-   "observado": 29,
-   "falta": 21,
+   "observado": 30,
+   "falta": 20,
    "status": "RENOVADA",
    "fonte": "API pública do Bluesky",
    "partida": 13,
-   "delta": 16,
+   "delta": 17,
    "por_dia": null,
-   "ritmo_medido": 0.41,
-   "previsao_dias": 52,
-   "prazo_estimado": "2027-01-12",
+   "ritmo_medido": 0.425,
+   "previsao_dias": 48,
+   "prazo_estimado": "2027-01-09",
    "no_prazo": false,
-   "motivo": "não fecha no prazo no ritmo medido (0.41/dia): prazo renovado para a data que o ritmo entrega (2027-01-12)"
+   "motivo": "não fecha no prazo no ritmo medido (0.425/dia): prazo renovado para a data que o ritmo entrega (2027-01-09)"
   },
   {
    "meta": "YouTube: inscritos",
@@ -54,8 +54,8 @@
    "por_dia": null,
    "ritmo_medido": 0.0,
    "no_prazo": false,
-   "dias_sem_ritmo": 39,
-   "motivo": "39 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
+   "dias_sem_ritmo": 40,
+   "motivo": "40 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir"
   },
   {
    "meta": "YouTube: shorts",
@@ -78,11 +78,11 @@
    "partida": 44,
    "delta": 5,
    "por_dia": null,
-   "ritmo_medido": 0.128,
-   "previsao_dias": 399,
-   "prazo_estimado": "2027-12-25",
+   "ritmo_medido": 0.125,
+   "previsao_dias": 408,
+   "prazo_estimado": "2028-01-04",
    "no_prazo": false,
-   "motivo": "não fecha no prazo no ritmo medido (0.128/dia): prazo renovado para a data que o ritmo entrega (2027-12-25)"
+   "motivo": "não fecha no prazo no ritmo medido (0.125/dia): prazo renovado para a data que o ritmo entrega (2028-01-04)"
   },
   {
    "meta": "itch: seguidores (aposentada)",
@@ -99,7 +99,7 @@
   {
    "meta": "itch: visitas",
    "alvo": "—",
-   "observado": 217,
+   "observado": 220,
    "falta": null,
    "status": "ACOMPANHADA",
    "fonte": "api.itch.io/profile/games (chave no runner)",
@@ -110,9 +110,9 @@
   }
  ],
  "placar_contexto": {
-  "dias_restantes": -9,
+  "dias_restantes": -10,
   "prazo": "2026-11-12",
-  "dias_decorridos": 39,
+  "dias_decorridos": 40,
   "metas_com_leitura": 7,
   "metas_sem_leitura": 0,
   "metas_aposentadas": 1
