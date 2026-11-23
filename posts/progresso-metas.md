@@ -81,3 +81,6 @@
 
 ## 22/11/2026
 - bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=119(api) · itch_downloads=49(api) · itch_visitas=220(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL
+
+## 23/11/2026
+- bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=135(api) · itch_downloads=50(api) · itch_visitas=222(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBSERVAVEL · engajamento=NAO_OBSERVAVEL · conversao=NAO_OBSERVAVEL
