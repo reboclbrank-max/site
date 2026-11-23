@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-23T06:00:14Z",
+ "quando": "2026-11-23T06:20:22Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -41,10 +41,12 @@
    "chave": "dono-segredo-nostr"
   }
  ],
- "enfileiradas": [],
+ "enfileiradas": [
+  "pesquisar-20261123T062022Z"
+ ],
  "contagem": {
   "robo": 2,
   "dono": 2,
-  "enfileiradas": 0
+  "enfileiradas": 1
  }
 }
