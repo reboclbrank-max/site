@@ -1146,6 +1146,25 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue leve e com i"
+  },
+  {
+   "quando": "2026-11-23T20:41:03Z",
+   "canal": "site",
+   "angulo": "marco_com_data",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-versao"
+   ],
+   "abertura": "ceifalume 0.1",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito no Godot 4, sua fazenda noturna idle roda no navegador e Android. #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1255,22 +1274,23 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-23T16:41:37Z",
+  "quando": "2026-11-23T20:41:03Z",
   "canal": "site",
-  "angulo": "bastidor_de_erro",
-  "assunto": "prancheta",
+  "angulo": "marco_com_data",
+  "assunto": "ceifalume",
   "fatos": [
-   "prancheta-som"
+   "ceifalume-versao"
   ],
-  "abertura": "no prancheta",
+  "abertura": "ceifalume 0.1",
   "tipo_abertura": "frase",
   "esqueleto": [
    "frase",
-   "convite"
+   "frase",
+   "frase"
   ],
-  "hashtags": 0,
-  "nota": 0.692,
-  "texto": "No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue leve e com i"
+  "hashtags": 1,
+  "nota": 0.846,
+  "texto": "Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito no Godot 4, sua fazenda noturna idle roda no navegador e Android. #ceifalume"
  },
  "publicacoes": [
   {
@@ -1678,6 +1698,17 @@
    "texto": "No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue leve e com impacto imediato.",
    "titulo": "No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo nav",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-23T20:41:03Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito no Godot 4, sua fazenda noturna idle roda no navegador e Android. #ceifalume",
+   "titulo": "Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis!",
+   "nota": 0.846,
    "tipo": "publicacao"
   }
  ]

@@ -457,3 +457,6 @@ Você sabe por que alocar recursos seletivamente acelera suas plantações em Ce
 
 ## 23/11/2026 16:41 UTC
 No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue leve e com impacto imediato.
+
+## 23/11/2026 20:41 UTC
+Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito no Godot 4, sua fazenda noturna idle roda no navegador e Android. #ceifalume
