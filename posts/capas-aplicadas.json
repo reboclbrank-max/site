@@ -532,6 +532,13 @@
    "titulo": "0 células com milho pronto no fim da partida",
    "capa": "media/gameplay/ceifalume-capa.png",
    "sha256": "d369c187b3927849"
+  },
+  {
+   "id": "FdUxBGe5XFo",
+   "quando": "2026-11-23T19:31:50Z",
+   "titulo": "Tutorial de CEIFALUME resolvido em 1,9 segundo",
+   "capa": "media/gameplay/ceifalume-capa.png",
+   "sha256": "f2331308329b15fc"
   }
  ]
 }
