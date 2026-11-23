@@ -454,3 +454,6 @@ Travou no Ceifalume? A dica que o jogo não diz: ouça o chiado do rádio static
 
 ## 23/11/2026 14:21 UTC
 Você sabe por que alocar recursos seletivamente acelera suas plantações em Ceifalume? #ceifalume
+
+## 23/11/2026 16:41 UTC
+No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue leve e com impacto imediato.

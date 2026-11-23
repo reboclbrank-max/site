@@ -1128,6 +1128,24 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "Você sabe por que alocar recursos seletivamente acelera suas plantações em Ceifalume? #ceifalume"
+  },
+  {
+   "quando": "2026-11-23T16:41:37Z",
+   "canal": "site",
+   "angulo": "bastidor_de_erro",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-som"
+   ],
+   "abertura": "no prancheta",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "convite"
+   ],
+   "hashtags": 0,
+   "nota": 0.692,
+   "texto": "No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue leve e com i"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1237,39 +1255,22 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-23T14:21:15Z",
+  "quando": "2026-11-23T16:41:37Z",
   "canal": "site",
-  "angulo": "pergunta_que_ensina",
-  "assunto": "ceifalume",
+  "angulo": "bastidor_de_erro",
+  "assunto": "prancheta",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias",
-   "medido-bicos",
-   "medido-moedas",
-   "medido-plantadas",
-   "medido-tutorial",
-   "medido-itch-downloads-2026-11-17",
-   "medido-itch-visitas-2026-11-17",
-   "medido-itch-downloads-2026-11-18",
-   "medido-itch-visitas-2026-11-18",
-   "medido-itch-downloads-2026-11-20",
-   "medido-itch-visitas-2026-11-20",
-   "medido-itch-downloads-2026-11-22",
-   "medido-itch-visitas-2026-11-22"
+   "prancheta-som"
   ],
-  "abertura": "voce sabe",
-  "tipo_abertura": "voce",
+  "abertura": "no prancheta",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "pergunta",
-   "frase"
+   "frase",
+   "convite"
   ],
-  "hashtags": 1,
+  "hashtags": 0,
   "nota": 0.692,
-  "texto": "Você sabe por que alocar recursos seletivamente acelera suas plantações em Ceifalume? #ceifalume"
+  "texto": "No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue leve e com i"
  },
  "publicacoes": [
   {
@@ -1665,6 +1666,17 @@
    "fatos": [],
    "texto": "Você sabe por que alocar recursos seletivamente acelera suas plantações em Ceifalume? #ceifalume",
    "titulo": "Você sabe por que alocar recursos seletivamente acelera suas plantações em Ceifalume?",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-23T16:41:37Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue leve e com impacto imediato.",
+   "titulo": "No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo nav",
    "nota": 0.692,
    "tipo": "publicacao"
   }

@@ -3840,3 +3840,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=138(api) · itch_downloads=50(api) · itch_visitas=222(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
 
 > Você sabe por que alocar recursos seletivamente acelera suas plantações em Ceifalume? #ceifalume
+
+## 23/11/2026 16:41 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.69 |
+| pauta do ciclo | ✅ bastidor_de_erro · prancheta |
+| destino editorial | ✅ rota oficial prancheta |
+| tema do ciclo | ✅ bastidor_de_erro · prancheta |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ❌ portão recusou o reel: nota do juízo abaixo do mínimo (0.54 < 0.65) |
+| instagram | ❌ portão recusou o instagram: nota do juízo abaixo do mínimo (0.54 < 0.6 |
+| threads | ❌ portão recusou o threads: nota do juízo abaixo do mínimo (0.54 < 0.65) |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=141(api) · itch_downloads=51(api) · itch_visitas=223(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
+
+> No Prancheta o som só começa depois do primeiro toque, pois o áudio é carregado pelo navegador para otimizar sessões sem dados móveis. Assim, jogue le
