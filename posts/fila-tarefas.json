@@ -2582,10 +2582,24 @@
    "estado": "pendente",
    "tentativas": 0,
    "criada": "2026-11-23T16:40:18Z",
+   "executada": "2026-11-23T18:40:22Z",
+   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos) | instagram: vez pedida ao publicar-instagram.yml",
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026112316",
+   "adiamentos": 1,
+   "adiada_em": "2026-11-23T18:40:22Z"
+  },
+  {
+   "id": "publicar-20261123T184022Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-23T18:40:22Z",
    "executada": null,
    "resultado": null,
    "motivo": "decisão do relógio",
-   "chave": "publicar-2026112316"
+   "chave": "publicar-2026112318"
   }
  ],
  "recusadas": [
