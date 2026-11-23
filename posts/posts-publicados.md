@@ -448,3 +448,6 @@ Procurando testadores para Prancheta: gestão de futebol no navegador e Android.
 
 ## 22/11/2026 20:51 UTC
 Desenvolver sozinho é desafio e prazer, Ceifalume. Precisa de ajuda?
+
+## 23/11/2026 12:01 UTC
+Travou no Ceifalume? A dica que o jogo não diz: ouça o chiado do rádio static. Segue a gente no Bluesky (29 seguidores) pra mais segredos. #gamedevbr

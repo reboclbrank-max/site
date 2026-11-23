@@ -1052,6 +1052,47 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "Desenvolver sozinho é desafio e prazer, Ceifalume. Precisa de ajuda?"
+  },
+  {
+   "quando": "2026-11-23T12:01:03Z",
+   "canal": "site",
+   "angulo": "dica_de_jogador",
+   "assunto": "casa",
+   "fatos": [
+    "medido-video",
+    "medido-instagram-publicacoes-2026-11-16",
+    "medido-bluesky-seguidores-2026-11-16",
+    "medido-youtube-inscritos-2026-11-16",
+    "medido-instagram-publicacoes-2026-11-17",
+    "medido-bluesky-seguidores-2026-11-17",
+    "medido-youtube-inscritos-2026-11-17",
+    "medido-youtube-shorts-2026-11-17",
+    "medido-instagram-publicacoes-2026-11-18",
+    "medido-bluesky-seguidores-2026-11-18",
+    "medido-youtube-inscritos-2026-11-18",
+    "medido-youtube-shorts-2026-11-18",
+    "medido-instagram-publicacoes-2026-11-20",
+    "medido-views-lvc90miwqs0-2026-11-20",
+    "medido-bluesky-seguidores-2026-11-20",
+    "medido-youtube-inscritos-2026-11-20",
+    "medido-youtube-shorts-2026-11-20",
+    "medido-instagram-publicacoes-2026-11-22",
+    "medido-views-lvc90miwqs0-2026-11-22",
+    "medido-bluesky-seguidores-2026-11-22",
+    "medido-youtube-inscritos-2026-11-22",
+    "medido-youtube-shorts-2026-11-22"
+   ],
+   "abertura": "travou no",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "pergunta",
+    "rotulo",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Travou no Ceifalume? A dica que o jogo não diz: ouça o chiado do rádio static. Segue a gente no Bluesky (29 seguidores) pra mais segredos. #gamedevbr"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1147,26 +1188,53 @@
   "medido-youtube-inscritos-2026-11-20",
   "medido-youtube-shorts-2026-11-20",
   "oficio-devlog",
-  "oficio-discord"
+  "oficio-discord",
+  "medido-instagram-publicacoes-2026-11-22",
+  "medido-views-lvc90miwqs0-2026-11-22",
+  "medido-bluesky-seguidores-2026-11-22",
+  "medido-youtube-inscritos-2026-11-22",
+  "medido-youtube-shorts-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-22T20:51:17Z",
+  "quando": "2026-11-23T12:01:03Z",
   "canal": "site",
-  "angulo": "ponte_de_canal",
-  "assunto": "oficio",
+  "angulo": "dica_de_jogador",
+  "assunto": "casa",
   "fatos": [
-   "oficio-devlog",
-   "oficio-discord"
+   "medido-video",
+   "medido-instagram-publicacoes-2026-11-16",
+   "medido-bluesky-seguidores-2026-11-16",
+   "medido-youtube-inscritos-2026-11-16",
+   "medido-instagram-publicacoes-2026-11-17",
+   "medido-bluesky-seguidores-2026-11-17",
+   "medido-youtube-inscritos-2026-11-17",
+   "medido-youtube-shorts-2026-11-17",
+   "medido-instagram-publicacoes-2026-11-18",
+   "medido-bluesky-seguidores-2026-11-18",
+   "medido-youtube-inscritos-2026-11-18",
+   "medido-youtube-shorts-2026-11-18",
+   "medido-instagram-publicacoes-2026-11-20",
+   "medido-views-lvc90miwqs0-2026-11-20",
+   "medido-bluesky-seguidores-2026-11-20",
+   "medido-youtube-inscritos-2026-11-20",
+   "medido-youtube-shorts-2026-11-20",
+   "medido-instagram-publicacoes-2026-11-22",
+   "medido-views-lvc90miwqs0-2026-11-22",
+   "medido-bluesky-seguidores-2026-11-22",
+   "medido-youtube-inscritos-2026-11-22",
+   "medido-youtube-shorts-2026-11-22"
   ],
-  "abertura": "desenvolver sozinho",
-  "tipo_abertura": "pergunta",
+  "abertura": "travou no",
+  "tipo_abertura": "frase",
   "esqueleto": [
+   "pergunta",
+   "rotulo",
    "frase",
-   "pergunta"
+   "frase"
   ],
-  "hashtags": 0,
-  "nota": 0.692,
-  "texto": "Desenvolver sozinho é desafio e prazer, Ceifalume. Precisa de ajuda?"
+  "hashtags": 1,
+  "nota": 0.846,
+  "texto": "Travou no Ceifalume? A dica que o jogo não diz: ouça o chiado do rádio static. Segue a gente no Bluesky (29 seguidores) pra mais segredos. #gamedevbr"
  },
  "publicacoes": [
   {
@@ -1541,6 +1609,17 @@
    "texto": "Desenvolver sozinho é desafio e prazer, Ceifalume. Precisa de ajuda?",
    "titulo": "Desenvolver sozinho é desafio e prazer, Ceifalume.",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-23T12:01:03Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Travou no Ceifalume? A dica que o jogo não diz: ouça o chiado do rádio static. Segue a gente no Bluesky (29 seguidores) pra mais segredos. #gamedevbr",
+   "titulo": "Travou no Ceifalume?",
+   "nota": 0.846,
    "tipo": "publicacao"
   }
  ]

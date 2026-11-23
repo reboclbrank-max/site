@@ -2482,11 +2482,11 @@
    "id": "publicar-20261122T205040Z",
    "tipo": "publicar",
    "prioridade": 60,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-22T20:50:40Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-23T12:00:22Z",
+   "resultado": "582: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  cab = \"\\n## %s\\n\" % datetime.datetime.utcnow().strftime(\"%d/%m/%Y\")\n/home/runner/work/site/site/tools/postador.py:1627: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
    "motivo": "decisão do relógio",
    "chave": "publicar-2026112220"
   },
@@ -2538,6 +2538,18 @@
    "resultado": "da em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 222,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é deci",
    "motivo": "decisão do relógio",
    "chave": "medir-2026112307"
+  },
+  {
+   "id": "publicar-20261123T120022Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-23T12:00:22Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026112312"
   }
  ],
  "recusadas": [
