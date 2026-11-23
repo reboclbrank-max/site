@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-22T21:14:09Z",
+ "medido_em": "2026-11-23T01:57:23Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -126,7 +126,7 @@
    "id": "806i-rPzC9w",
    "titulo": "Quanto rende CEIFALUME em 2 minutos",
    "publicado_em": "2026-11-14T23:15:07Z",
-   "views": 1,
+   "views": 3,
    "likes": 0,
    "comentarios": 0
   },
@@ -277,7 +277,7 @@
  ],
  "totais": {
   "videos": 34,
-  "views": 49,
+  "views": 51,
   "likes": 0,
   "comentarios": 0
  }
