@@ -1052,6 +1052,55 @@
    "quando": "2026-11-22",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "video-eWFQbKZ141U",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"0 células com milho pronto no fim da partida\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-23",
+   "usa_uma_vez": true
+  },
+  {
+   "id": "medido-instagram-publicacoes-2026-11-23",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Instagram — publicações: 137 hoje, medido pela própria casa em 23/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-23",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-views-lvc90miwqs0-2026-11-23",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "o vídeo \"O que 6 toques fizeram na partida do PRANCHETA\" está com 11 views, medido em 23/11",
+   "origem": "posts/youtube-metricas.json",
+   "quando": "2026-11-23",
+   "validade_dias": 3,
+   "repetivel": false
+  },
+  {
+   "id": "medido-bluesky-seguidores-2026-11-23",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Bluesky — seguidores: 30 hoje, medido pela própria casa em 23/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-23",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-youtube-inscritos-2026-11-23",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "YouTube — inscritos: 24 hoje, medido pela própria casa em 23/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-23",
+   "validade_dias": 7,
+   "repetivel": false
   }
  ]
 }
