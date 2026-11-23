@@ -1131,6 +1131,15 @@
    "quando": "2026-11-23",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "video-FdUxBGe5XFo",
+   "assunto": "casa",
+   "classe": "canal",
+   "afirmacao": "o canal da casa publicou o vídeo \"Tutorial de CEIFALUME resolvido em 1,9 segundo\"",
+   "origem": "posts/youtube-publicados.json",
+   "quando": "2026-11-23",
+   "usa_uma_vez": true
   }
  ]
 }
