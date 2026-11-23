@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "cultivo",
+   "angulo": "tutorial",
    "fato": null,
    "numeros": {
-    "plantadas": 12,
-    "colhidas": 5,
-    "toques": 717,
+    "plantadas": 13,
+    "colhidas": 8,
+    "toques": 799,
     "minutos": 2,
-    "toques_por_minuto": 358
+    "toques_por_minuto": 400
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 4323014,
+   "bytes": 3873712,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "0 células com milho pronto no fim da partida",
-   "descricao": "No fim da gravação, 0 das 5 células do terreno estavam com planta pronta.\n\nO cultivo da partida foi milho e nabo.\n\nNenhuma célula anda junto com a outra: cada uma tem o seu relógio de crescimento.\n\nFonte: posts/cenas.json (partida c770dffdfa71, conferida em 2026-11-22T19:57:16Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html",
+   "titulo": "Tutorial de CEIFALUME resolvido em 1,9 segundo",
+   "descricao": "O tutorial do jogo abriu e fechou em 1,9 segundo, com 1 toque.\n\nDepois disso ninguém digita nada: um agente olha a tela e escolhe onde tocar.\n\nA captura atravessou 7 telas diferentes antes do campo ficar cheio.\n\nFonte: posts/cenas.json (partida ca9d5d159d26, conferida em 2026-11-23T19:30:34Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #gamedevbr",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -2200,16 +2200,64 @@
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
+     "angulo": "como_funciona:video-eWFQbKZ141U",
+     "motivo": "texto repetido: 0.71 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
+    },
+    {
+     "angulo": "onde_jogar:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-eWFQbKZ141U",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "passo_a_passo",
      "motivo": "título quase igual a um já publicado (0.98)"
     },
     {
      "angulo": "medida_por_minuto",
-     "motivo": "título quase igual a um já publicado (0.98)"
+     "motivo": "título já publicado neste canal: A conta por minuto em CEIFALUME: 8 colheitas em 2 min"
     },
     {
      "angulo": "semente_do_dia",
-     "motivo": "título quase igual a um já publicado (0.97)"
+     "motivo": "título quase igual a um já publicado (0.95)"
     },
     {
      "angulo": "ficha_da_partida",
@@ -2225,11 +2273,11 @@
     },
     {
      "angulo": "rotulo",
-     "motivo": "título quase igual a um já publicado (0.93)"
+     "motivo": "título quase igual a um já publicado (0.96)"
     },
     {
      "angulo": "convite",
-     "motivo": "título quase igual a um já publicado (0.98)"
+     "motivo": "título já publicado neste canal: Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME"
     },
     {
      "angulo": "bastidor",
@@ -2237,15 +2285,19 @@
     },
     {
      "angulo": "moedas",
-     "motivo": "mesmo ângulo do último vídeo publicado (moedas) — o ângulo roda"
+     "motivo": "título quase igual a um já publicado (0.93)"
+    },
+    {
+     "angulo": "cultivo",
+     "motivo": "mesmo ângulo do último vídeo publicado (cultivo) — o ângulo roda"
     },
     {
      "angulo": "comparacao",
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 3,
-   "angulos_candidatos": 554
+   "angulos_aprovados": 2,
+   "angulos_candidatos": 566
   },
   {
    "id": "prancheta-gameplay",
