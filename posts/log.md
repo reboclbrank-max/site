@@ -3814,3 +3814,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=135(api) · itch_downloads=50(api) · itch_visitas=222(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
 
 > Travou no Ceifalume? A dica que o jogo não diz: ouça o chiado do rádio static. Segue a gente no Bluesky (29 seguidores) pra mais segredos. #gamedevbr
+
+## 23/11/2026 14:21 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.69 |
+| pauta do ciclo | ✅ pergunta_que_ensina · ceifalume |
+| destino editorial | ✅ rota oficial ceifalume |
+| tema do ciclo | ✅ pergunta_que_ensina · ceifalume |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18138715739498 |
+| threads | ❌ HTTP Error 400: Bad Request |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=138(api) · itch_downloads=50(api) · itch_visitas=222(api) · youtube_inscritos=24(api) · youtube_shorts=14(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
+
+> Você sabe por que alocar recursos seletivamente acelera suas plantações em Ceifalume? #ceifalume

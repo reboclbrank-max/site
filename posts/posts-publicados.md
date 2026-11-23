@@ -451,3 +451,6 @@ Desenvolver sozinho é desafio e prazer, Ceifalume. Precisa de ajuda?
 
 ## 23/11/2026 12:01 UTC
 Travou no Ceifalume? A dica que o jogo não diz: ouça o chiado do rádio static. Segue a gente no Bluesky (29 seguidores) pra mais segredos. #gamedevbr
+
+## 23/11/2026 14:21 UTC
+Você sabe por que alocar recursos seletivamente acelera suas plantações em Ceifalume? #ceifalume
