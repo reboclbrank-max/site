@@ -2,18 +2,11 @@
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
  "ultima_publicacao": "2026-11-23T12:00:22Z",
- "ultima_medicao": "2026-11-23T07:40:22Z",
+ "ultima_medicao": "2026-11-23T13:40:23Z",
  "ultima_pesquisa": "2026-11-23T06:00:14Z",
  "ultima_aprendizagem": "2026-11-23T07:00:22Z",
- "pulsos": 683,
+ "pulsos": 684,
  "historico": [
-  {
-   "quando": "2026-11-22T16:00:22Z",
-   "acao": "dormir",
-   "motivo": "publicou há 100 min (mínimo 2h)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-22T16:20:27Z",
    "acao": "publicar",
@@ -286,6 +279,13 @@
    "motivo": "publicou há 80 min (mínimo 2h)",
    "codigo": 0,
    "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-23T13:40:23Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261123T134023Z] decisão do relógio",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
   }
  ]
 }
