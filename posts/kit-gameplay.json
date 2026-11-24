@@ -2,19 +2,19 @@
  "pacotes": [
   {
    "id": "ceifalume-gameplay",
-   "angulo": "tutorial",
+   "angulo": "compra",
    "fato": null,
    "numeros": {
-    "plantadas": 13,
-    "colhidas": 8,
-    "toques": 799,
+    "plantadas": 11,
+    "colhidas": 4,
+    "toques": 1080,
     "minutos": 2,
-    "toques_por_minuto": 400
+    "toques_por_minuto": 540
    },
    "slug": "ceifalume",
    "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
    "arquivo_existe": true,
-   "bytes": 3873712,
+   "bytes": 3673357,
    "capa": "media/gameplay/ceifalume-capa.png",
    "capa_existe": true,
    "dimensoes": [
@@ -22,8 +22,8 @@
     720
    ],
    "formato": "vídeo normal (16:9)",
-   "titulo": "Tutorial de CEIFALUME resolvido em 1,9 segundo",
-   "descricao": "O tutorial do jogo abriu e fechou em 1,9 segundo, com 1 toque.\n\nDepois disso ninguém digita nada: um agente olha a tela e escolhe onde tocar.\n\nA captura atravessou 7 telas diferentes antes do campo ficar cheio.\n\nFonte: posts/cenas.json (partida ca9d5d159d26, conferida em 2026-11-23T19:30:34Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #gamedevbr",
+   "titulo": "O que o agente comprou jogando CEIFALUME: Cavar Poço",
+   "descricao": "As 4 melhorias compradas nesta gravação: Cavar Poço, Acender Lanterna, Composteira, Comprar campo.\n\nCada uma saiu de moeda economizada colheita a colheita, dentro da mesma partida: as moedas foram de 25 para 551 em 2 minutos.\n\nO jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no Android, sem conta.\n\nFonte: posts/cenas.json (partida 60b9e5aacc9e, conferida em 2026-11-24T00:11:05Z).\n\nGameplay: gravado automaticamente do próprio jogo rodando no navegador (build web do repositório). A trilha é sintetizada pelo próprio script de produção e as legendas descrevem o que o agente fez na partida.\n\nCanal de dev solo: bastidores, versões e o que quebrou no caminho.\n\nJogar: https://reboclbrank-max.github.io/site/jogos/ceifalume/\nTodos os canais da casa: https://reboclbrank-max.github.io/site/canais.html\n\n#godot #jogobrasileiro",
    "tags": [
     "ceifalume",
     "jogo de fazenda",
@@ -2248,12 +2248,60 @@
      "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
     },
     {
+     "angulo": "como_funciona:video-FdUxBGe5XFo",
+     "motivo": "texto repetido: 0.73 de semelhança com \"Como funciona: o canal da casa publicou o vídeo \"CEIFALUME é\""
+    },
+    {
+     "angulo": "onde_jogar:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: Onde jogar CEIFALUME sem instalar loja"
+    },
+    {
+     "angulo": "quanto_rende:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: Quanto rende CEIFALUME em 2 minutos"
+    },
+    {
+     "angulo": "quem_fe_z:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: Quem fez CEIFALUME e por quê"
+    },
+    {
+     "angulo": "o_que_tem_dentro:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: O que tem dentro de CEIFALUME"
+    },
+    {
+     "angulo": "por_que_gratis:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: Por que CEIFALUME é grátis de verdade"
+    },
+    {
+     "angulo": "como_foi_gravado:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: Como este vídeo de CEIFALUME foi gravado"
+    },
+    {
+     "angulo": "o_que_muda_depois:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: O que muda em CEIFALUME depois de 2 minutos"
+    },
+    {
+     "angulo": "onde_esta_a_comunidade:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: Onde falar com quem fez CEIFALUME"
+    },
+    {
+     "angulo": "requisito:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: O que CEIFALUME pede para rodar"
+    },
+    {
+     "angulo": "genero:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: CEIFALUME é idle farm — e o que isso quer dizer"
+    },
+    {
+     "angulo": "bastidor_do_dia:video-FdUxBGe5XFo",
+     "motivo": "título já publicado neste canal: Bastidor de CEIFALUME: o que está por trás da partida"
+    },
+    {
      "angulo": "passo_a_passo",
-     "motivo": "título quase igual a um já publicado (0.98)"
+     "motivo": "título quase igual a um já publicado (0.97)"
     },
     {
      "angulo": "medida_por_minuto",
-     "motivo": "título já publicado neste canal: A conta por minuto em CEIFALUME: 8 colheitas em 2 min"
+     "motivo": "título quase igual a um já publicado (0.98)"
     },
     {
      "angulo": "semente_do_dia",
@@ -2261,7 +2309,7 @@
     },
     {
      "angulo": "ficha_da_partida",
-     "motivo": "título quase igual a um já publicado (0.93)"
+     "motivo": "título quase igual a um já publicado (0.90)"
     },
     {
      "angulo": "numeros",
@@ -2273,11 +2321,11 @@
     },
     {
      "angulo": "rotulo",
-     "motivo": "título quase igual a um já publicado (0.96)"
+     "motivo": "título quase igual a um já publicado (0.94)"
     },
     {
      "angulo": "convite",
-     "motivo": "título já publicado neste canal: Plante à luz da lanterna: 13 mudas em 2 min de CEIFALUME"
+     "motivo": "título quase igual a um já publicado (0.98)"
     },
     {
      "angulo": "bastidor",
@@ -2289,15 +2337,19 @@
     },
     {
      "angulo": "cultivo",
-     "motivo": "mesmo ângulo do último vídeo publicado (cultivo) — o ângulo roda"
+     "motivo": "título já publicado neste canal: 0 células com milho pronto no fim da partida"
+    },
+    {
+     "angulo": "tutorial",
+     "motivo": "mesmo ângulo do último vídeo publicado (tutorial) — o ângulo roda"
     },
     {
      "angulo": "comparacao",
      "motivo": "fato ausente no relatório desta partida: _anterior"
     }
    ],
-   "angulos_aprovados": 2,
-   "angulos_candidatos": 566
+   "angulos_aprovados": 1,
+   "angulos_candidatos": 578
   },
   {
    "id": "prancheta-gameplay",
