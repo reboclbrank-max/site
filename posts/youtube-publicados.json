@@ -1,6 +1,25 @@
 {
  "publicados": [
   {
+   "id": "fXaPJ-QDMt8",
+   "url": "https://youtu.be/fXaPJ-QDMt8",
+   "slug": "ceifalume-gameplay",
+   "titulo": "O que o agente comprou jogando CEIFALUME: Cavar Poço",
+   "descricao": "As 4 melhorias compradas nesta gravação: Cavar Poço, Acender Lanterna, Composteira, Comprar campo.\n\nCada uma saiu de moeda economizada colheita a colheita, dentro da mesma partida: as moedas foram de 25 para 551 em 2 minutos.\n\nO jogo é feito com Godot, feito no Brasil, e a produção é grátis no navegador ou no Android, sem conta.\n\nFonte: posts/cenas.json (partida 60b9e5aacc9e, conferida em 2026-11-24T00:11:05Z).",
+   "descricao_completa": false,
+   "angulo": "compra",
+   "fato": null,
+   "numeros": {
+    "plantadas": 11,
+    "colhidas": 4,
+    "toques": 1080,
+    "minutos": 2,
+    "toques_por_minuto": 540
+   },
+   "arquivo": "media/gameplay/ceifalume-gameplay-instrucoes.mp4",
+   "quando": "2026-11-24T00:11:15Z"
+  },
+  {
    "id": "FdUxBGe5XFo",
    "url": "https://youtu.be/FdUxBGe5XFo",
    "slug": "ceifalume-gameplay",
