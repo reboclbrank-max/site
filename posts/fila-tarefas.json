@@ -2593,11 +2593,11 @@
    "id": "publicar-20261123T184022Z",
    "tipo": "publicar",
    "prioridade": 60,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-23T18:40:22Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-24T12:00:27Z",
+   "resultado": "janela: dentro da janela (09h local); ciclos hoje 0/5\nRESUMO: publicacao=RECUSADA (nenhum dos 8 textos passou: nota do juízo abaixo do mínimo (0.61 < 0.65); padrao visual repetido (assunto ceifalume, abertura frase, 3 frases, 1; nota do juízo abaixo do mínimo (0.46 < 0.65))\n/home/runner/work/site/site/tools/postador.py:896: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled",
    "motivo": "decisão do relógio",
    "chave": "publicar-2026112318"
   },
@@ -2661,6 +2661,18 @@
    "resultado": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.25) vs mediana 1.25, desvio 0.49\ngravado em posts/aprendizado.json",
    "motivo": "decisão do relógio",
    "chave": "aprender-2026112407"
+  },
+  {
+   "id": "medir-20261124T120027Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-24T12:00:27Z",
+   "executada": "2026-11-24T12:00:27Z",
+   "resultado": "da em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 223,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é deci",
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026112412"
   }
  ],
  "recusadas": [
