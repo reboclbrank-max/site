@@ -463,3 +463,6 @@ Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito 
 
 ## 24/11/2026 14:21 UTC
 Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time reorganiza tática na hora. #prancheta #jogobrasileiro
+
+## 24/11/2026 16:42 UTC
+O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cabeça: código, arte, design, café e dúvidas.

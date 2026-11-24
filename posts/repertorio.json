@@ -1188,6 +1188,25 @@
    "hashtags": 2,
    "nota": 0.769,
    "texto": "Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time reorganiza tática na hora. #prancheta #jogobrasileiro"
+  },
+  {
+   "quando": "2026-11-24T16:42:02Z",
+   "canal": "site",
+   "angulo": "numero_medido",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-versao-prancheta",
+    "oficio-versao-ceifalume"
+   ],
+   "abertura": "o 0.1",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.692,
+   "texto": "O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cabeça: código, arte, design, café e dúvidas."
   }
  ],
  "fatos_de_uma_vez": [
@@ -1297,27 +1316,23 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-24T14:21:10Z",
+  "quando": "2026-11-24T16:42:02Z",
   "canal": "site",
-  "angulo": "mecanica_por_dentro",
-  "assunto": "prancheta",
+  "angulo": "numero_medido",
+  "assunto": "oficio",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "oficio-versao-prancheta",
+   "oficio-versao-ceifalume"
   ],
-  "abertura": "faca ate",
-  "tipo_abertura": "rotulo",
+  "abertura": "o 0.1",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "rotulo",
+   "frase",
    "frase"
   ],
-  "hashtags": 2,
-  "nota": 0.769,
-  "texto": "Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time reorganiza tática na hora. #prancheta #jogobrasileiro"
+  "hashtags": 0,
+  "nota": 0.692,
+  "texto": "O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cabeça: código, arte, design, café e dúvidas."
  },
  "publicacoes": [
   {
@@ -1747,6 +1762,17 @@
    "texto": "Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time reorganiza tática na hora. #prancheta #jogobrasileiro",
    "titulo": "Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time r",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-24T16:42:02Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cabeça: código, arte, design, café e dúvidas.",
+   "titulo": "O 0.1 do Ceifalume saiu.",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]
