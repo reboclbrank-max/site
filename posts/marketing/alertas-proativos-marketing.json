@@ -2,48 +2,30 @@
   "ativo": true,
   "alertas": [
     {
-      "id": "al_1795533001550_001",
+      "id": "al_1795558793250_001",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para ceifalume: 19 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-24T15:10:01.550Z",
+      "criadoEm": "2026-11-24T22:19:53.250Z",
       "resolvido": false
     },
     {
-      "id": "al_1795533001550_002",
+      "id": "al_1795558793251_002",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para prancheta: 2 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-24T15:10:01.550Z",
+      "criadoEm": "2026-11-24T22:19:53.251Z",
       "resolvido": false
     },
     {
-      "id": "al_1795533001550_003",
+      "id": "al_1795558793251_003",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ambos há 19h",
+      "mensagem": "Fila estagnada em instagram para ambos há 2h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-24T15:10:01.550Z",
-      "resolvido": false
-    },
-    {
-      "id": "al_1795533001551_004",
-      "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ceifalume há 18h",
-      "severidade": "alta",
-      "rede": "instagram",
-      "criadoEm": "2026-11-24T15:10:01.551Z",
-      "resolvido": false
-    },
-    {
-      "id": "al_1795533001551_005",
-      "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para prancheta há 18h",
-      "severidade": "alta",
-      "rede": "instagram",
-      "criadoEm": "2026-11-24T15:10:01.551Z",
+      "criadoEm": "2026-11-24T22:19:53.251Z",
       "resolvido": false
     }
   ],
@@ -64,7 +46,7 @@
       "ativo": true
     }
   ],
-  "ultima_execucao": "2026-11-24T15:10:01.550Z",
-  "criadoEm": "2026-11-24T15:10:01.549Z",
-  "atualizadoEm": "2026-11-24T15:10:01.552Z"
+  "ultima_execucao": "2026-11-24T22:19:53.250Z",
+  "criadoEm": "2026-11-24T22:19:53.250Z",
+  "atualizadoEm": "2026-11-24T22:19:53.251Z"
 }
