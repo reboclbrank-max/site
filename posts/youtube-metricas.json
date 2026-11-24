@@ -1,7 +1,23 @@
 {
- "medido_em": "2026-11-23T13:37:21Z",
+ "medido_em": "2026-11-24T02:34:00Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
+  {
+   "id": "fXaPJ-QDMt8",
+   "titulo": "O que o agente comprou jogando CEIFALUME: Cavar Poço",
+   "publicado_em": "2026-11-24T00:11:30Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
+  {
+   "id": "FdUxBGe5XFo",
+   "titulo": "Tutorial de CEIFALUME resolvido em 1,9 segundo",
+   "publicado_em": "2026-11-23T19:31:03Z",
+   "views": 0,
+   "likes": 0,
+   "comentarios": 0
+  },
   {
    "id": "eWFQbKZ141U",
    "titulo": "0 células com milho pronto no fim da partida",
@@ -126,7 +142,7 @@
    "id": "806i-rPzC9w",
    "titulo": "Quanto rende CEIFALUME em 2 minutos",
    "publicado_em": "2026-11-14T23:15:07Z",
-   "views": 3,
+   "views": 4,
    "likes": 0,
    "comentarios": 0
   },
@@ -276,8 +292,8 @@
   }
  ],
  "totais": {
-  "videos": 34,
-  "views": 51,
+  "videos": 36,
+  "views": 52,
   "likes": 0,
   "comentarios": 0
  }
