@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-24T18:20:18Z",
  "ultima_pesquisa": "2026-11-24T06:00:18Z",
  "ultima_aprendizagem": "2026-11-24T07:00:23Z",
- "pulsos": 754,
+ "pulsos": 755,
  "historico": [
-  {
-   "quando": "2026-11-23T23:40:20Z",
-   "acao": "dormir",
-   "motivo": "teto diario atingido (5 de 5)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-24T00:00:15Z",
    "acao": "dormir",
@@ -282,6 +275,13 @@
   },
   {
    "quando": "2026-11-24T21:00:17Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-24T21:20:29Z",
    "acao": "dormir",
    "motivo": "teto diario atingido (5 de 5)",
    "codigo": 0,
