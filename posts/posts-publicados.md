@@ -466,3 +466,6 @@ Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme 
 
 ## 24/11/2026 16:42 UTC
 O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cabeça: código, arte, design, café e dúvidas.
+
+## 24/11/2026 20:42 UTC
+Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habilidades, desbloqueie áreas e conquiste recursos.

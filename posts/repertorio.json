@@ -1207,6 +1207,28 @@
    "hashtags": 0,
    "nota": 0.692,
    "texto": "O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cabeça: código, arte, design, café e dúvidas."
+  },
+  {
+   "quando": "2026-11-24T20:42:00Z",
+   "canal": "site",
+   "angulo": "devlog_aberto",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "nos tres",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habilidades, desbloqueie áreas e conquiste recursos."
   }
  ],
  "fatos_de_uma_vez": [
@@ -1316,23 +1338,26 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-24T16:42:02Z",
+  "quando": "2026-11-24T20:42:00Z",
   "canal": "site",
-  "angulo": "numero_medido",
-  "assunto": "oficio",
+  "angulo": "devlog_aberto",
+  "assunto": "ceifalume",
   "fatos": [
-   "oficio-versao-prancheta",
-   "oficio-versao-ceifalume"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias"
   ],
-  "abertura": "o 0.1",
+  "abertura": "nos tres",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "frase",
    "frase"
   ],
-  "hashtags": 0,
+  "hashtags": 1,
   "nota": 0.692,
-  "texto": "O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cabeça: código, arte, design, café e dúvidas."
+  "texto": "Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habilidades, desbloqueie áreas e conquiste recursos."
  },
  "publicacoes": [
   {
@@ -1772,6 +1797,17 @@
    "fatos": [],
    "texto": "O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cabeça: código, arte, design, café e dúvidas.",
    "titulo": "O 0.1 do Ceifalume saiu.",
+   "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-24T20:42:00Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habilidades, desbloqueie áreas e conquiste recursos.",
+   "titulo": "Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habili",
    "nota": 0.692,
    "tipo": "publicacao"
   }
