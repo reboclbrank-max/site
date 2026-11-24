@@ -460,3 +460,6 @@ No Prancheta o som só começa depois do primeiro toque, pois o áudio é carreg
 
 ## 23/11/2026 20:41 UTC
 Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito no Godot 4, sua fazenda noturna idle roda no navegador e Android. #ceifalume
+
+## 24/11/2026 14:21 UTC
+Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time reorganiza tática na hora. #prancheta #jogobrasileiro

@@ -1165,6 +1165,29 @@
    "hashtags": 1,
    "nota": 0.846,
    "texto": "Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito no Godot 4, sua fazenda noturna idle roda no navegador e Android. #ceifalume"
+  },
+  {
+   "quando": "2026-11-24T14:21:10Z",
+   "canal": "site",
+   "angulo": "mecanica_por_dentro",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "faca ate",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.769,
+   "texto": "Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time reorganiza tática na hora. #prancheta #jogobrasileiro"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1274,23 +1297,27 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-23T20:41:03Z",
+  "quando": "2026-11-24T14:21:10Z",
   "canal": "site",
-  "angulo": "marco_com_data",
-  "assunto": "ceifalume",
+  "angulo": "mecanica_por_dentro",
+  "assunto": "prancheta",
   "fatos": [
-   "ceifalume-versao"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "ceifalume 0.1",
-  "tipo_abertura": "frase",
+  "abertura": "faca ate",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "frase",
-   "frase",
+   "rotulo",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.846,
-  "texto": "Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito no Godot 4, sua fazenda noturna idle roda no navegador e Android. #ceifalume"
+  "hashtags": 2,
+  "nota": 0.769,
+  "texto": "Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time reorganiza tática na hora. #prancheta #jogobrasileiro"
  },
  "publicacoes": [
   {
@@ -1709,6 +1736,17 @@
    "texto": "Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis! Feito no Godot 4, sua fazenda noturna idle roda no navegador e Android. #ceifalume",
    "titulo": "Ceifalume 0.1 chegou em dezessete de setembro de dois mil e vinte e seis!",
    "nota": 0.846,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-24T14:21:10Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time reorganiza tática na hora. #prancheta #jogobrasileiro",
+   "titulo": "Faça até 5 trocas pausando a partida: arraste o reserva pro titular, confirme e o time r",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]
