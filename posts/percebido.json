@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-24T19:40:25Z",
+ "quando": "2026-11-24T20:00:33Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -39,12 +39,21 @@
    "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
    "tipo_fila": null,
    "chave": "dono-segredo-nostr"
+  },
+  {
+   "o_que": "destravar: publicar o devlog do gameplay no itch",
+   "porque": "parado há 2 dia(s) esperando o dono (sem caminho automático)",
+   "quem": "dono",
+   "como": "ver posts/pendencias-do-dono.md",
+   "verifica": "o item vira 'feito' em posts/pendencias-do-dono.json",
+   "tipo_fila": null,
+   "chave": "pendencia-itch-devlog-gameplay"
   }
  ],
  "enfileiradas": [],
  "contagem": {
   "robo": 2,
-  "dono": 2,
+  "dono": 3,
   "enfileiradas": 0
  }
 }
