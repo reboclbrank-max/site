@@ -3996,3 +3996,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=163(api) · itch_downloads=51(api) · itch_visitas=223(api) · youtube_inscritos=24(api) · youtube_shorts=13(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
 
 > Não precisa de login, microtransações ou DLCs. O jogo roda direto no navegador e no APK Android, prometendo liberdade total e foco no bom futebol. #pr
+
+## 25/11/2026 17:00 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.85 |
+| pauta do ciclo | ✅ dica_de_jogador · oficio |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ dica_de_jogador · oficio |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ➖ fora da janela do instagram (dia 13h-16h / noite 21h-02h UTC |
+| threads | ❌ HTTP Error 400: Bad Request |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=167(api) · itch_downloads=51(api) · itch_visitas=223(api) · youtube_inscritos=24(api) · youtube_shorts=13(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
+
+> Seu save corrompeu e o Prancheta não voltou? Em 0.1, teste *toda* borda de mapa antes de buildar. O jogador acha buraco onde você viu parede. #gamedev

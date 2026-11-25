@@ -472,3 +472,6 @@ Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimo
 
 ## 25/11/2026 12:03 UTC
 Não precisa de login, microtransações ou DLCs. O jogo roda direto no navegador e no APK Android, prometendo liberdade total e foco no bom futebol. #prancheta
+
+## 25/11/2026 17:00 UTC
+Seu save corrompeu e o Prancheta não voltou? Em 0.1, teste *toda* borda de mapa antes de buildar. O jogador acha buraco onde você viu parede. #gamedevbr #godot
