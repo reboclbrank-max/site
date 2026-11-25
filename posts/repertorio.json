@@ -1296,6 +1296,26 @@
    "hashtags": 1,
    "nota": 0.769,
    "texto": "Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle faz a noite brilhar. Últimas moedas em 02h00. #ceifalume"
+  },
+  {
+   "quando": "2026-11-25T21:21:06Z",
+   "canal": "site",
+   "angulo": "pergunta_que_ensina",
+   "assunto": "oficio",
+   "fatos": [
+    "oficio-versao-prancheta",
+    "oficio-versao-ceifalume"
+   ],
+   "abertura": "voce sabe",
+   "tipo_abertura": "voce",
+   "esqueleto": [
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 2,
+   "nota": 0.846,
+   "texto": "Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, cortar features ensinou mais que adicionar. #gamedevbr #godot"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1405,30 +1425,24 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-25T19:03:30Z",
+  "quando": "2026-11-25T21:21:06Z",
   "canal": "site",
-  "angulo": "convite_a_testar",
-  "assunto": "ceifalume",
+  "angulo": "pergunta_que_ensina",
+  "assunto": "oficio",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-apk",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias"
+   "oficio-versao-prancheta",
+   "oficio-versao-ceifalume"
   ],
-  "abertura": "testador foi:",
-  "tipo_abertura": "rotulo",
+  "abertura": "voce sabe",
+  "tipo_abertura": "voce",
   "esqueleto": [
-   "rotulo",
-   "frase",
+   "pergunta",
    "frase",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.769,
-  "texto": "Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle faz a noite brilhar. Últimas moedas em 02h00. #ceifalume"
+  "hashtags": 2,
+  "nota": 0.846,
+  "texto": "Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, cortar features ensinou mais que adicionar. #gamedevbr #godot"
  },
  "publicacoes": [
   {
@@ -1913,6 +1927,17 @@
    "texto": "Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle faz a noite brilhar. Últimas moedas em 02h00. #ceifalume",
    "titulo": "Testador foi: “Ceifalume é puro queijo!",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-25T21:21:06Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, cortar features ensinou mais que adicionar. #gamedevbr #godot",
+   "titulo": "Você sabe quais sistemas priorizar quando o escopo aperta?",
+   "nota": 0.846,
    "tipo": "publicacao"
   }
  ]

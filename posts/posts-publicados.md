@@ -478,3 +478,6 @@ Seu save corrompeu e o Prancheta não voltou? Em 0.1, teste *toda* borda de mapa
 
 ## 25/11/2026 19:03 UTC
 Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle faz a noite brilhar. Últimas moedas em 02h00. #ceifalume
+
+## 25/11/2026 21:21 UTC
+Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, cortar features ensinou mais que adicionar. #gamedevbr #godot
