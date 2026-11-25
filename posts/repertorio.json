@@ -1229,6 +1229,26 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habilidades, desbloqueie áreas e conquiste recursos."
+  },
+  {
+   "quando": "2026-11-25T12:02:08Z",
+   "canal": "site",
+   "angulo": "o_que_nao_tem",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-ficticio",
+    "prancheta-offline"
+   ],
+   "abertura": "nao precisa",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Não precisa de login, microtransações ou DLCs. O jogo roda direto no navegador e no APK Android, prometendo liberdade total e foco no bom futebol. #prancheta"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1338,26 +1358,24 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-24T20:42:00Z",
+  "quando": "2026-11-25T12:02:08Z",
   "canal": "site",
-  "angulo": "devlog_aberto",
-  "assunto": "ceifalume",
+  "angulo": "o_que_nao_tem",
+  "assunto": "prancheta",
   "fatos": [
-   "ceifalume-8h",
-   "ceifalume-chuva",
-   "ceifalume-tutorial",
-   "ceifalume-save",
-   "ceifalume-culturas",
-   "ceifalume-melhorias"
+   "prancheta-ficticio",
+   "prancheta-offline"
   ],
-  "abertura": "nos tres",
+  "abertura": "nao precisa",
   "tipo_abertura": "frase",
   "esqueleto": [
+   "frase",
+   "frase",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.692,
-  "texto": "Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habilidades, desbloqueie áreas e conquiste recursos."
+  "nota": 0.769,
+  "texto": "Não precisa de login, microtransações ou DLCs. O jogo roda direto no navegador e no APK Android, prometendo liberdade total e foco no bom futebol. #prancheta"
  },
  "publicacoes": [
   {
@@ -1809,6 +1827,17 @@
    "texto": "Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habilidades, desbloqueie áreas e conquiste recursos.",
    "titulo": "Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habili",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-25T12:02:08Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Não precisa de login, microtransações ou DLCs. O jogo roda direto no navegador e no APK Android, prometendo liberdade total e foco no bom futebol. #prancheta",
+   "titulo": "Não precisa de login, microtransações ou DLCs.",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]

@@ -469,3 +469,6 @@ O 0.1 do Ceifalume saiu. Fazer jogo sozinho é carregar o projeto inteiro na cab
 
 ## 24/11/2026 20:42 UTC
 Nos três primeiros dias de #Ceifalume o jogo funciona como seu tutorial: aprimore habilidades, desbloqueie áreas e conquiste recursos.
+
+## 25/11/2026 12:03 UTC
+Não precisa de login, microtransações ou DLCs. O jogo roda direto no navegador e no APK Android, prometendo liberdade total e foco no bom futebol. #prancheta
