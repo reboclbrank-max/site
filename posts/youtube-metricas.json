@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-25T13:27:59Z",
+ "medido_em": "2026-11-25T23:46:15Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -86,7 +86,7 @@
    "id": "RksiKWR1QfY",
    "titulo": "Como o PRANCHETA simula uma partida a partir da prancheta",
    "publicado_em": "2026-11-17T12:22:33Z",
-   "views": 5,
+   "views": 6,
    "likes": 0,
    "comentarios": 0
   },
@@ -94,7 +94,7 @@
    "id": "TT6XP5Zs__c",
    "titulo": "PRANCHETA: a partida inteira em ritmo normal, sem mexer no plano",
    "publicado_em": "2026-11-16T22:37:49Z",
-   "views": 1,
+   "views": 2,
    "likes": 0,
    "comentarios": 0
   },
@@ -293,7 +293,7 @@
  ],
  "totais": {
   "videos": 36,
-  "views": 56,
+  "views": 58,
   "likes": 0,
   "comentarios": 0
  }
