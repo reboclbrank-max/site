@@ -1,6 +1,6 @@
 # O que precisa ser feito
 
-Gerado em 2026-11-25T12:00:28Z pelo próprio ciclo, olhando o estado medido (não o relógio).
+Gerado em 2026-11-25T12:40:24Z pelo próprio ciclo, olhando o estado medido (não o relógio).
 
 > necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.
 
@@ -8,8 +8,8 @@ Gerado em 2026-11-25T12:00:28Z pelo próprio ciclo, olhando o estado medido (nã
 
 | o que | por quê (medido) | como | verifica |
 | --- | --- | --- | --- |
-| meta parada: Instagram: seguidores | 0 em 42 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou | procurar outra abordagem antes de publicar de novo sobre esta meta | o número observado se move, ou o dono aposenta a meta (posts/metas.json) |
-| meta parada: YouTube: inscritos | 24 em 42 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou | procurar outra abordagem antes de publicar de novo sobre esta meta | o número observado se move, ou o dono aposenta a meta (posts/metas.json) |
+| meta parada: Instagram: seguidores | 0 em 43 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou | procurar outra abordagem antes de publicar de novo sobre esta meta | o número observado se move, ou o dono aposenta a meta (posts/metas.json) |
+| meta parada: YouTube: inscritos | 24 em 43 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou | procurar outra abordagem antes de publicar de novo sobre esta meta | o número observado se move, ou o dono aposenta a meta (posts/metas.json) |
 
 ## Espera o dono (3)
 
