@@ -1,14 +1,14 @@
 {
- "quando": "2026-11-24T06:00:18Z",
+ "quando": "2026-11-25T06:00:25Z",
  "meta_em_risco": null,
  "metas_paradas": [],
  "ranking_de_risco": [],
  "formatos_a_evitar": [
   {
    "formato": "comentário em post alheio",
-   "zeros": 85,
+   "zeros": 84,
    "total": 210,
-   "pct": 40.5
+   "pct": 40.0
   }
  ],
  "tema_do_dia": {
