@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-25T00:05:42Z",
+ "quando": "2026-11-25T13:27:59Z",
  "regra": {
   "janela_horas": 72,
   "criterio": "views do vídeo novo > mediana de views dos vídeos que o canal já tinha antes dele e inscritos ganhos >= 1 na mesma janela",
@@ -29,7 +29,7 @@
   "views": [
    230,
    134,
-   24,
+   26,
    23,
    18,
    14,
@@ -42,7 +42,7 @@
    5,
    5,
    5,
-   4,
+   5,
    4,
    3,
    3,
@@ -55,17 +55,17 @@
   "views_novo": 0,
   "mediana_base": 2.0,
   "inscritos_ganhos": null,
-  "horas_no_ar": 23.9,
+  "horas_no_ar": 37.3,
   "janela_horas": 72
  },
  "video_novo_veredito": {
   "veredito": "AINDA_MEDINDO",
-  "motivo": "23.9 horas no ar de 72 — a régua só fecha no fim da janela",
+  "motivo": "37.3 horas no ar de 72 — a régua só fecha no fim da janela",
   "numeros": {
    "views_novo": 0,
    "mediana_base": 2.0,
    "inscritos_ganhos": null,
-   "horas_no_ar": 23.9,
+   "horas_no_ar": 37.3,
    "janela_horas": 72
   }
  },
@@ -83,12 +83,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 2.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "23.9 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "37.3 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 23.9,
+    "horas_no_ar": 37.3,
     "janela_horas": 72
    }
   },
@@ -105,12 +105,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 2.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "28.6 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "42.0 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 28.6,
+    "horas_no_ar": 42.0,
     "janela_horas": 72
    }
   },
@@ -127,12 +127,12 @@
    "inscritos_ganhos": 0,
    "mediana_base": 2.0,
    "veredito": "AINDA_MEDINDO",
-   "motivo": "52.1 horas no ar de 72 — a régua só fecha no fim da janela",
+   "motivo": "65.5 horas no ar de 72 — a régua só fecha no fim da janela",
    "numeros": {
     "views_novo": 0,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 52.1,
+    "horas_no_ar": 65.5,
     "janela_horas": 72
    }
   },
@@ -154,7 +154,7 @@
     "views_novo": 0,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 76.5,
+    "horas_no_ar": 89.8,
     "janela_horas": 72
    }
   },
@@ -176,7 +176,7 @@
     "views_novo": 0,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 99.4,
+    "horas_no_ar": 112.8,
     "janela_horas": 72
    }
   },
@@ -198,7 +198,7 @@
     "views_novo": 1,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 122.9,
+    "horas_no_ar": 136.3,
     "janela_horas": 72
    }
   },
@@ -220,7 +220,7 @@
     "views_novo": 0,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 125.5,
+    "horas_no_ar": 138.9,
     "janela_horas": 72
    }
   },
@@ -242,7 +242,7 @@
     "views_novo": 2,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 147.3,
+    "horas_no_ar": 160.6,
     "janela_horas": 72
    }
   },
@@ -264,7 +264,7 @@
     "views_novo": 5,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 170.8,
+    "horas_no_ar": 184.2,
     "janela_horas": 72
    }
   },
@@ -286,7 +286,7 @@
     "views_novo": 1,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 170.9,
+    "horas_no_ar": 184.3,
     "janela_horas": 72
    }
   },
@@ -297,7 +297,7 @@
    "fato": null,
    "quando": "2026-11-17T12:21:54Z",
    "fecha_em": "2026-11-20T12:21:54Z",
-   "views": 4,
+   "views": 5,
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
@@ -305,10 +305,10 @@
    "veredito": "NAO_PROVADO",
    "motivo": "nenhum inscrito ganho na janela",
    "numeros": {
-    "views_novo": 4,
+    "views_novo": 5,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 179.7,
+    "horas_no_ar": 193.1,
     "janela_horas": 72
    }
   },
@@ -319,18 +319,18 @@
    "fato": null,
    "quando": "2026-11-16T22:37:35Z",
    "fecha_em": "2026-11-19T22:37:35Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0,
    "inscritos_ganhos": 0,
    "mediana_base": 2.0,
    "veredito": "NAO_PROVADO",
-   "motivo": "0 views não passaram a mediana de 2.0; nenhum inscrito ganho na janela",
+   "motivo": "1 views não passaram a mediana de 2.0; nenhum inscrito ganho na janela",
    "numeros": {
-    "views_novo": 0,
+    "views_novo": 1,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 193.5,
+    "horas_no_ar": 206.8,
     "janela_horas": 72
    }
   },
@@ -352,7 +352,7 @@
     "views_novo": 0,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 193.6,
+    "horas_no_ar": 207.0,
     "janela_horas": 72
    }
   },
@@ -374,7 +374,7 @@
     "views_novo": 11,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 194.9,
+    "horas_no_ar": 208.3,
     "janela_horas": 72
    }
   },
@@ -396,7 +396,7 @@
     "views_novo": 1,
     "mediana_base": 2.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 196.8,
+    "horas_no_ar": 210.1,
     "janela_horas": 72
    }
   },
@@ -418,7 +418,7 @@
     "views_novo": 1,
     "mediana_base": 2.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 216.6,
+    "horas_no_ar": 230.0,
     "janela_horas": 72
    }
   },
@@ -440,7 +440,7 @@
     "views_novo": 2,
     "mediana_base": 3.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 221.0,
+    "horas_no_ar": 234.4,
     "janela_horas": 72
    }
   },
@@ -462,7 +462,7 @@
     "views_novo": 4,
     "mediana_base": 2.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 240.8,
+    "horas_no_ar": 254.2,
     "janela_horas": 72
    }
   },
@@ -484,7 +484,7 @@
     "views_novo": 1,
     "mediana_base": 3.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 245.7,
+    "horas_no_ar": 259.1,
     "janela_horas": 72
    }
   },
@@ -506,7 +506,7 @@
     "views_novo": 0,
     "mediana_base": 3.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 268.1,
+    "horas_no_ar": 281.5,
     "janela_horas": 72
    }
   },
@@ -528,7 +528,7 @@
     "views_novo": 2,
     "mediana_base": 3.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 291.9,
+    "horas_no_ar": 305.2,
     "janela_horas": 72
    }
   },
@@ -550,7 +550,7 @@
     "views_novo": 2,
     "mediana_base": 3.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 316.3,
+    "horas_no_ar": 329.7,
     "janela_horas": 72
    }
   },
@@ -572,7 +572,7 @@
     "views_novo": 3,
     "mediana_base": 3.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 340.1,
+    "horas_no_ar": 353.5,
     "janela_horas": 72
    }
   },
@@ -594,7 +594,7 @@
     "views_novo": 0,
     "mediana_base": 4.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 361.5,
+    "horas_no_ar": 374.8,
     "janela_horas": 72
    }
   },
@@ -616,7 +616,7 @@
     "views_novo": 0,
     "mediana_base": 5.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 385.0,
+    "horas_no_ar": 398.4,
     "janela_horas": 72
    }
   },
@@ -638,7 +638,7 @@
     "views_novo": 0,
     "mediana_base": 6.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 390.0,
+    "horas_no_ar": 403.4,
     "janela_horas": 72
    }
   },
@@ -660,7 +660,7 @@
     "views_novo": 5,
     "mediana_base": 8.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 409.2,
+    "horas_no_ar": 422.6,
     "janela_horas": 72
    }
   },
@@ -682,7 +682,7 @@
     "views_novo": 2,
     "mediana_base": 8.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 414.2,
+    "horas_no_ar": 427.6,
     "janela_horas": 72
    }
   },
@@ -704,7 +704,7 @@
     "views_novo": 0,
     "mediana_base": 9.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 430.2,
+    "horas_no_ar": 443.5,
     "janela_horas": 72
    }
   },
@@ -726,7 +726,7 @@
     "views_novo": 2,
     "mediana_base": 10.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 432.0,
+    "horas_no_ar": 445.4,
     "janela_horas": 72
    }
   },
@@ -748,7 +748,7 @@
     "views_novo": 0,
     "mediana_base": 11.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 436.0,
+    "horas_no_ar": 449.4,
     "janela_horas": 72
    }
   },
@@ -770,7 +770,7 @@
     "views_novo": 2,
     "mediana_base": 12.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 437.7,
+    "horas_no_ar": 451.1,
     "janela_horas": 72
    }
   },
@@ -792,7 +792,7 @@
     "views_novo": 0,
     "mediana_base": 13.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 439.6,
+    "horas_no_ar": 453.0,
     "janela_horas": 72
    }
   },
@@ -814,7 +814,7 @@
     "views_novo": 0,
     "mediana_base": 13.5,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 439.8,
+    "horas_no_ar": 453.2,
     "janela_horas": 72
    }
   },
@@ -836,7 +836,7 @@
     "views_novo": 0,
     "mediana_base": 14.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 440.0,
+    "horas_no_ar": 453.3,
     "janela_horas": 72
    }
   },
@@ -858,7 +858,7 @@
     "views_novo": 3,
     "mediana_base": 14.0,
     "inscritos_ganhos": 0,
-    "horas_no_ar": 498.8,
+    "horas_no_ar": 512.2,
     "janela_horas": 72
    }
   }
@@ -975,14 +975,14 @@
   {
    "id": "RksiKWR1QfY",
    "publicado_em": "2026-11-17T12:22:33Z",
-   "views": 4,
+   "views": 5,
    "likes": 0,
    "comentarios": 0
   },
   {
    "id": "TT6XP5Zs__c",
    "publicado_em": "2026-11-16T22:37:49Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
