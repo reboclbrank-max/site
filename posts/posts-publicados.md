@@ -475,3 +475,6 @@ Não precisa de login, microtransações ou DLCs. O jogo roda direto no navegado
 
 ## 25/11/2026 17:00 UTC
 Seu save corrompeu e o Prancheta não voltou? Em 0.1, teste *toda* borda de mapa antes de buildar. O jogador acha buraco onde você viu parede. #gamedevbr #godot
+
+## 25/11/2026 19:03 UTC
+Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle faz a noite brilhar. Últimas moedas em 02h00. #ceifalume

@@ -1270,6 +1270,32 @@
    "hashtags": 2,
    "nota": 0.846,
    "texto": "Seu save corrompeu e o Prancheta não voltou? Em 0.1, teste *toda* borda de mapa antes de buildar. O jogador acha buraco onde você viu parede. #gamedevbr #godot"
+  },
+  {
+   "quando": "2026-11-25T19:03:30Z",
+   "canal": "site",
+   "angulo": "convite_a_testar",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-apk",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "testador foi:",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.769,
+   "texto": "Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle faz a noite brilhar. Últimas moedas em 02h00. #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1379,25 +1405,30 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-25T17:00:03Z",
+  "quando": "2026-11-25T19:03:30Z",
   "canal": "site",
-  "angulo": "dica_de_jogador",
-  "assunto": "oficio",
+  "angulo": "convite_a_testar",
+  "assunto": "ceifalume",
   "fatos": [
-   "oficio-versao-prancheta",
-   "oficio-versao-ceifalume"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-apk",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias"
   ],
-  "abertura": "seu save",
-  "tipo_abertura": "frase",
+  "abertura": "testador foi:",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "pergunta",
+   "rotulo",
    "frase",
    "frase",
    "frase"
   ],
-  "hashtags": 2,
-  "nota": 0.846,
-  "texto": "Seu save corrompeu e o Prancheta não voltou? Em 0.1, teste *toda* borda de mapa antes de buildar. O jogador acha buraco onde você viu parede. #gamedevbr #godot"
+  "hashtags": 1,
+  "nota": 0.769,
+  "texto": "Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle faz a noite brilhar. Últimas moedas em 02h00. #ceifalume"
  },
  "publicacoes": [
   {
@@ -1871,6 +1902,17 @@
    "texto": "Seu save corrompeu e o Prancheta não voltou? Em 0.1, teste *toda* borda de mapa antes de buildar. O jogador acha buraco onde você viu parede. #gamedevbr #godot",
    "titulo": "Seu save corrompeu e o Prancheta não voltou?",
    "nota": 0.846,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-25T19:03:30Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle faz a noite brilhar. Últimas moedas em 02h00. #ceifalume",
+   "titulo": "Testador foi: “Ceifalume é puro queijo!",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]
