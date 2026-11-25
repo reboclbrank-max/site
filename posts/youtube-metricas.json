@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-24T14:14:25Z",
+ "medido_em": "2026-11-25T00:05:41Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -126,7 +126,7 @@
    "id": "IYi1JfJFgcU",
    "titulo": "A conta por minuto em CEIFALUME: 8 colheitas em 2 min",
    "publicado_em": "2026-11-15T23:30:49Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -150,7 +150,7 @@
    "id": "WewOjNDzEDQ",
    "titulo": "Como funciona: são seis culturas no celeiro: abóbora, flor de lume",
    "publicado_em": "2026-11-14T18:24:42Z",
-   "views": 0,
+   "views": 1,
    "likes": 0,
    "comentarios": 0
   },
@@ -293,7 +293,7 @@
  ],
  "totais": {
   "videos": 36,
-  "views": 52,
+  "views": 54,
   "likes": 0,
   "comentarios": 0
  }
