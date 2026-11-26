@@ -3709,6 +3709,84 @@
     "passos_confirmados": 11
    },
    "jogo": "prancheta"
+  },
+  {
+   "quando": "2026-11-26T19:16:02Z",
+   "estrategia": "contra_ataque",
+   "assinatura": "3547ed176e78",
+   "resumo": {
+    "jogo": "prancheta",
+    "estrategia": "contra_ataque",
+    "passos": [
+     [
+      "toque em 500,87",
+      15.0
+     ],
+     [
+      "toque em 500,179",
+      20.0
+     ],
+     [
+      "toque em 500,232",
+      24.0
+     ],
+     [
+      "toque em 500,612",
+      27.0
+     ],
+     [
+      "toque em 500,259",
+      32.0
+     ],
+     [
+      "toque em 500,289",
+      38.0
+     ],
+     [
+      "toque em 636,573",
+      42.0
+     ],
+     [
+      "toque em 700,685",
+      45.0
+     ],
+     [
+      "toque em 700,685",
+      49.0
+     ],
+     [
+      "toque em 640,360",
+      53.0
+     ],
+     [
+      "toque em 110,608",
+      57.0
+     ],
+     [
+      "toque em 636,573",
+      61.0
+     ],
+     [
+      "toque em 700,685",
+      65.0
+     ],
+     [
+      "toque em 640,360",
+      69.0
+     ],
+     [
+      "toque em 110,608",
+      73.0
+     ],
+     [
+      "toque em 900,705",
+      78.0
+     ]
+    ],
+    "toques_partida": 7,
+    "passos_confirmados": 13
+   },
+   "jogo": "prancheta"
   }
  ]
 }
