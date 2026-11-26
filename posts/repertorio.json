@@ -1362,6 +1362,37 @@
    "hashtags": 0,
    "nota": 0.769,
    "texto": "Prancheta: você já tentou nossos jogos gratos? São 100% gratuitos, sem cadastro, sem compra. Você experimentou?"
+  },
+  {
+   "quando": "2026-11-26T18:41:54Z",
+   "canal": "site",
+   "angulo": "ponte_de_canal",
+   "assunto": "casa",
+   "fatos": [
+    "casa-canais",
+    "casa-newsletter",
+    "casa-telegram",
+    "prancheta-trailer",
+    "video-jfA3I8DHE90",
+    "video-knzucwkh-Vk",
+    "video-DTwau1uBhBs",
+    "video-kbIZYGerREs",
+    "video-RGTANLoClF0",
+    "video-eWFQbKZ141U",
+    "video-FdUxBGe5XFo",
+    "video-fXaPJ-QDMt8"
+   ],
+   "abertura": "saiu \"0",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "pergunta",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "Saiu \"0 células com milho\" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia no **Prancheta** sobre o desenvolvimento. 🧪🎮 #godot"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1468,26 +1499,46 @@
   "medido-itch-downloads-2026-11-20",
   "medido-itch-visitas-2026-11-20",
   "medido-itch-downloads-2026-11-22",
-  "medido-itch-visitas-2026-11-22"
+  "medido-itch-visitas-2026-11-22",
+  "video-jfA3I8DHE90",
+  "video-knzucwkh-Vk",
+  "video-DTwau1uBhBs",
+  "video-kbIZYGerREs",
+  "video-RGTANLoClF0",
+  "video-eWFQbKZ141U",
+  "video-FdUxBGe5XFo",
+  "video-fXaPJ-QDMt8"
  ],
  "ultimo": {
-  "quando": "2026-11-26T14:21:50Z",
+  "quando": "2026-11-26T18:41:54Z",
   "canal": "site",
-  "angulo": "pergunta_ao_publico",
+  "angulo": "ponte_de_canal",
   "assunto": "casa",
   "fatos": [
-   "casa-site-gratis"
+   "casa-canais",
+   "casa-newsletter",
+   "casa-telegram",
+   "prancheta-trailer",
+   "video-jfA3I8DHE90",
+   "video-knzucwkh-Vk",
+   "video-DTwau1uBhBs",
+   "video-kbIZYGerREs",
+   "video-RGTANLoClF0",
+   "video-eWFQbKZ141U",
+   "video-FdUxBGe5XFo",
+   "video-fXaPJ-QDMt8"
   ],
-  "abertura": "prancheta: voce",
-  "tipo_abertura": "rotulo",
+  "abertura": "saiu \"0",
+  "tipo_abertura": "frase",
   "esqueleto": [
+   "frase",
    "pergunta",
    "frase",
-   "pergunta"
+   "frase"
   ],
-  "hashtags": 0,
-  "nota": 0.769,
-  "texto": "Prancheta: você já tentou nossos jogos gratos? São 100% gratuitos, sem cadastro, sem compra. Você experimentou?"
+  "hashtags": 1,
+  "nota": 0.692,
+  "texto": "Saiu \"0 células com milho\" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia no **Prancheta** sobre o desenvolvimento. 🧪🎮 #godot"
  },
  "publicacoes": [
   {
@@ -2005,6 +2056,17 @@
    "texto": "Prancheta: você já tentou nossos jogos gratos? São 100% gratuitos, sem cadastro, sem compra. Você experimentou?",
    "titulo": "Prancheta: você já tentou nossos jogos gratos?",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-26T18:41:54Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Saiu \"0 células com milho\" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia no **Prancheta** sobre o desenvolvimento. 🧪🎮 #godot",
+   "titulo": "Saiu \"0 células com milho\" no **REBOCL BRANK**!",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]
