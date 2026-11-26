@@ -1,22 +1,22 @@
 # Pendências do dono
 
-Medido em 2026-11-22T19:47:16Z (o devlog do itch é público: dá para conferir de fora).
+Medido em 2026-11-26T12:20:56Z (o devlog do itch é público: dá para conferir de fora).
 
 ## Estado da casa
 
-- Vídeos publicados: 35 · último: kbIZYGerREs (De 25 a 662 moedas em 2 min de CEIFALUME)
-- Capas da casa: 75 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
+- Vídeos publicados: 38 · último: fXaPJ-QDMt8 (O que o agente comprou jogando CEIFALUME: Cavar…)
+- Capas da casa: 78 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
 - PRANCHETA no itch: build 19604665 (a casa viu em 2026-11-07T05:38) · esse build não sobe por aqui: o dono publica no itch
-- Fila: 4 pendente(s) (pesquisar 3, publicar 1) · a mais velha: pesquisar-20261107T064637Z há 373.0 h · 190 feita(s)
-- Régua de metas: medida há 7.4 h · prazo 2026-11-12 · prazo vencido há 10 dia(s)
-- Pulsos: 655 · última publicação 2026-11-22T18:40:27Z · última medição 2026-11-22T18:40:27Z
+- Fila: 5 pendente(s) (pesquisar 3, publicar 2) · a mais velha: pesquisar-20261107T064637Z há 461.6 h · 225 feita(s)
+- Régua de metas: medida há 0.0 h · prazo 2026-11-12 · prazo vencido há 14 dia(s)
+- Pulsos: 817 · última publicação 2026-11-26T12:00:25Z · última medição 2026-11-26T07:20:15Z
 
-- Agenda: o cron pede **105** disparos/dia e o GitHub entregou **66.72/dia** (janela de 7 dia(s), medido em 2026-11-22). Pior entrega: alertas-proativos 13.2% (1.71/dia); publicar-instagram 25.8% (6.71/dia).
-- Corrente: em dia (último pulso 22/11 16:40, há 7 min) · próximo pulso 22/11 17:00
+- Agenda: o cron pede **105** disparos/dia e o GitHub entregou **65.59/dia** (janela de 7 dia(s), medido em 2026-11-26). Pior entrega: alertas-proativos 14.3% (1.86/dia); publicar-instagram 25.8% (6.71/dia).
+- Corrente: em dia (último pulso 26/11 09:20, há 1 min) · próximo pulso 26/11 09:40 · 1 buraco(s) nas últimas 24h
 
-- Originalidade: últimos 7 dias: 24 post(s), todos textos diferentes · média 4.26/dia · o último dia com repetição foi 2026-10-25
+- Originalidade: últimos 7 dias: 25 post(s), todos textos diferentes · média 4.15/dia · o último dia com repetição foi 2026-10-25
 
-- Pauta: 12 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
+- Pauta: 11 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
 
 | item | estado | como |
 | --- | --- | --- |
