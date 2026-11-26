@@ -2,48 +2,48 @@
   "ativo": true,
   "alertas": [
     {
-      "id": "al_1795665988684_001",
+      "id": "al_1795720475887_001",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para ceifalume: 20 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-26T04:06:28.684Z",
+      "criadoEm": "2026-11-26T19:14:35.887Z",
       "resolvido": false
     },
     {
-      "id": "al_1795665988684_002",
+      "id": "al_1795720475887_002",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para prancheta: 2 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-26T04:06:28.684Z",
+      "criadoEm": "2026-11-26T19:14:35.887Z",
       "resolvido": false
     },
     {
-      "id": "al_1795665988684_003",
+      "id": "al_1795720475887_003",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ambos há 8h",
+      "mensagem": "Fila estagnada em instagram para ambos há 23h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-26T04:06:28.684Z",
+      "criadoEm": "2026-11-26T19:14:35.887Z",
       "resolvido": false
     },
     {
-      "id": "al_1795665988684_004",
+      "id": "al_1795720475887_004",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ceifalume há 7h",
+      "mensagem": "Fila estagnada em instagram para ceifalume há 22h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-26T04:06:28.684Z",
+      "criadoEm": "2026-11-26T19:14:35.887Z",
       "resolvido": false
     },
     {
-      "id": "al_1795665988684_005",
+      "id": "al_1795720475887_005",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para prancheta há 7h",
+      "mensagem": "Fila estagnada em instagram para prancheta há 22h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-26T04:06:28.684Z",
+      "criadoEm": "2026-11-26T19:14:35.887Z",
       "resolvido": false
     }
   ],
@@ -64,7 +64,7 @@
       "ativo": true
     }
   ],
-  "ultima_execucao": "2026-11-26T04:06:28.684Z",
-  "criadoEm": "2026-11-26T04:06:28.683Z",
-  "atualizadoEm": "2026-11-26T04:06:28.685Z"
+  "ultima_execucao": "2026-11-26T19:14:35.887Z",
+  "criadoEm": "2026-11-26T19:14:35.886Z",
+  "atualizadoEm": "2026-11-26T19:14:35.888Z"
 }
