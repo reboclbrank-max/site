@@ -1343,6 +1343,25 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. Sincronize com data FIFA. #prancheta"
+  },
+  {
+   "quando": "2026-11-26T14:21:50Z",
+   "canal": "site",
+   "angulo": "pergunta_ao_publico",
+   "assunto": "casa",
+   "fatos": [
+    "casa-site-gratis"
+   ],
+   "abertura": "prancheta: voce",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "pergunta",
+    "frase",
+    "pergunta"
+   ],
+   "hashtags": 0,
+   "nota": 0.769,
+   "texto": "Prancheta: você já tentou nossos jogos gratos? São 100% gratuitos, sem cadastro, sem compra. Você experimentou?"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1452,31 +1471,23 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-26T12:01:43Z",
+  "quando": "2026-11-26T14:21:50Z",
   "canal": "site",
-  "angulo": "tres_passos",
-  "assunto": "prancheta",
+  "angulo": "pergunta_ao_publico",
+  "assunto": "casa",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-offline",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "casa-site-gratis"
   ],
-  "abertura": "1. cadastre",
-  "tipo_abertura": "frase",
+  "abertura": "prancheta: voce",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "passo",
+   "pergunta",
    "frase",
-   "frase",
-   "frase",
-   "frase"
+   "pergunta"
   ],
-  "hashtags": 1,
-  "nota": 0.692,
-  "texto": "1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. Sincronize com data FIFA. #prancheta"
+  "hashtags": 0,
+  "nota": 0.769,
+  "texto": "Prancheta: você já tentou nossos jogos gratos? São 100% gratuitos, sem cadastro, sem compra. Você experimentou?"
  },
  "publicacoes": [
   {
@@ -1983,6 +1994,17 @@
    "texto": "1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. Sincronize com data FIFA. #prancheta",
    "titulo": "Prancheta — 1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. S",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-26T14:21:50Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Prancheta: você já tentou nossos jogos gratos? São 100% gratuitos, sem cadastro, sem compra. Você experimentou?",
+   "titulo": "Prancheta: você já tentou nossos jogos gratos?",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]

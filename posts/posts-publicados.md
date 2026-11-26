@@ -484,3 +484,6 @@ Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, co
 
 ## 26/11/2026 12:02 UTC
 1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. Sincronize com data FIFA. #prancheta
+
+## 26/11/2026 14:22 UTC
+Prancheta: você já tentou nossos jogos gratos? São 100% gratuitos, sem cadastro, sem compra. Você experimentou?
