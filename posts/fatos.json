@@ -1259,6 +1259,36 @@
    "quando": "2026-11-26",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "medido-youtube-shorts-2026-11-26",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "YouTube — shorts: 13 hoje, medido pela própria casa em 26/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-26",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-itch-downloads-2026-11-26",
+   "assunto": "ceifalume",
+   "classe": "numero",
+   "afirmacao": "itch — downloads: 51 hoje, medido pela própria casa em 26/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-26",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-itch-visitas-2026-11-26",
+   "assunto": "ceifalume",
+   "classe": "numero",
+   "afirmacao": "itch — visitas: 223 hoje, medido pela própria casa em 26/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-26",
+   "validade_dias": 7,
+   "repetivel": false
   }
  ]
 }
