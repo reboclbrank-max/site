@@ -1,10 +1,10 @@
 {
- "quando": "2026-11-26T12:20:15Z",
+ "quando": "2026-11-26T12:40:24Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
    "o_que": "meta parada: Instagram: seguidores",
-   "porque": "0 em 43 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "porque": "0 em 44 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
    "quem": "robô",
    "como": "procurar outra abordagem antes de publicar de novo sobre esta meta",
    "verifica": "o número observado se move, ou o dono aposenta a meta (posts/metas.json)",
@@ -13,7 +13,7 @@
   },
   {
    "o_que": "meta parada: YouTube: inscritos",
-   "porque": "24 em 43 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "porque": "24 em 44 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
    "quem": "robô",
    "como": "procurar outra abordagem antes de publicar de novo sobre esta meta",
    "verifica": "o número observado se move, ou o dono aposenta a meta (posts/metas.json)",
@@ -39,21 +39,12 @@
    "verifica": "o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html)",
    "tipo_fila": null,
    "chave": "dono-segredo-nostr"
-  },
-  {
-   "o_que": "destravar: publicar o devlog do gameplay no itch",
-   "porque": "parado há 4 dia(s) esperando o dono (sem caminho automático)",
-   "quem": "dono",
-   "como": "ver posts/pendencias-do-dono.md",
-   "verifica": "o item vira 'feito' em posts/pendencias-do-dono.json",
-   "tipo_fila": null,
-   "chave": "pendencia-itch-devlog-gameplay"
   }
  ],
  "enfileiradas": [],
  "contagem": {
   "robo": 2,
-  "dono": 3,
+  "dono": 2,
   "enfileiradas": 0
  }
 }
