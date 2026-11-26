@@ -1,6 +1,6 @@
 # O que precisa ser feito
 
-Gerado em 2026-11-26T07:40:24Z pelo próprio ciclo, olhando o estado medido (não o relógio).
+Gerado em 2026-11-26T12:00:25Z pelo próprio ciclo, olhando o estado medido (não o relógio).
 
 > necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.
 
@@ -17,4 +17,4 @@ Gerado em 2026-11-26T07:40:24Z pelo próprio ciclo, olhando o estado medido (nã
 | --- | --- | --- | --- |
 | ligar o canal bluesky | nunca publicou em 20 ciclos: falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS | criar o segredo BLUESKY_HANDLE + BLUESKY_APPPASS em Settings → Secrets → Actions | o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html) |
 | ligar o canal nostr | nunca publicou em 20 ciclos: falta o segredo NOSTR_KEY | criar o segredo NOSTR_KEY em Settings → Secrets → Actions | o canal sai de ⚪ para ✅ no próximo ciclo e no painel (marketing.html) |
-| destravar: publicar o devlog do gameplay no itch | parado há 3 dia(s) esperando o dono (sem caminho automático) | ver posts/pendencias-do-dono.md | o item vira 'feito' em posts/pendencias-do-dono.json |
+| destravar: publicar o devlog do gameplay no itch | parado há 4 dia(s) esperando o dono (sem caminho automático) | ver posts/pendencias-do-dono.md | o item vira 'feito' em posts/pendencias-do-dono.json |

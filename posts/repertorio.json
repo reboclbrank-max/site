@@ -1316,6 +1316,33 @@
    "hashtags": 2,
    "nota": 0.846,
    "texto": "Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, cortar features ensinou mais que adicionar. #gamedevbr #godot"
+  },
+  {
+   "quando": "2026-11-26T12:01:43Z",
+   "canal": "site",
+   "angulo": "tres_passos",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-offline",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "1. cadastre",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "passo",
+    "frase",
+    "frase",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. Sincronize com data FIFA. #prancheta"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1425,24 +1452,31 @@
   "medido-itch-visitas-2026-11-22"
  ],
  "ultimo": {
-  "quando": "2026-11-25T21:21:06Z",
+  "quando": "2026-11-26T12:01:43Z",
   "canal": "site",
-  "angulo": "pergunta_que_ensina",
-  "assunto": "oficio",
+  "angulo": "tres_passos",
+  "assunto": "prancheta",
   "fatos": [
-   "oficio-versao-prancheta",
-   "oficio-versao-ceifalume"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-offline",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "voce sabe",
-  "tipo_abertura": "voce",
+  "abertura": "1. cadastre",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "pergunta",
+   "passo",
+   "frase",
+   "frase",
    "frase",
    "frase"
   ],
-  "hashtags": 2,
-  "nota": 0.846,
-  "texto": "Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, cortar features ensinou mais que adicionar. #gamedevbr #godot"
+  "hashtags": 1,
+  "nota": 0.692,
+  "texto": "1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. Sincronize com data FIFA. #prancheta"
  },
  "publicacoes": [
   {
@@ -1938,6 +1972,17 @@
    "texto": "Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, cortar features ensinou mais que adicionar. #gamedevbr #godot",
    "titulo": "Você sabe quais sistemas priorizar quando o escopo aperta?",
    "nota": 0.846,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-26T12:01:43Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. Sincronize com data FIFA. #prancheta",
+   "titulo": "Prancheta — 1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. S",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]

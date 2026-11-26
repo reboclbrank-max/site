@@ -481,3 +481,6 @@ Testador foi: “Ceifalume é puro queijo! Saque de abóboras na fazenda idle fa
 
 ## 25/11/2026 21:21 UTC
 Você sabe quais sistemas priorizar quando o escopo aperta? No Prancheta 0.1, cortar features ensinou mais que adicionar. #gamedevbr #godot
+
+## 26/11/2026 12:02 UTC
+1. Cadastre sua equipe na Prancheta; 2. Configure tabela Copa Nacional; 3. Sincronize com data FIFA. #prancheta
