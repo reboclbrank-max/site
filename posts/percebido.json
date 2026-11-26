@@ -1,5 +1,5 @@
 {
- "quando": "2026-11-26T06:20:14Z",
+ "quando": "2026-11-26T06:40:22Z",
  "_lei": "necessidade sem número não entra; o robô enfileira o que pode fazer e entrega ao dono o que só ele pode decidir.",
  "robo": [
   {
@@ -50,12 +50,10 @@
    "chave": "pendencia-itch-devlog-gameplay"
   }
  ],
- "enfileiradas": [
-  "pesquisar-20261126T062014Z"
- ],
+ "enfileiradas": [],
  "contagem": {
   "robo": 2,
   "dono": 3,
-  "enfileiradas": 1
+  "enfileiradas": 0
  }
 }
