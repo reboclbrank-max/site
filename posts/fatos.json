@@ -1289,6 +1289,46 @@
    "quando": "2026-11-26",
    "validade_dias": 7,
    "repetivel": false
+  },
+  {
+   "id": "medido-instagram-publicacoes-2026-11-27",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Instagram — publicações: 179 hoje, medido pela própria casa em 27/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-27",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-views-lvc90miwqs0-2026-11-27",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "o vídeo \"O que 6 toques fizeram na partida do PRANCHETA\" está com 11 views, medido em 27/11",
+   "origem": "posts/youtube-metricas.json",
+   "quando": "2026-11-27",
+   "validade_dias": 3,
+   "repetivel": false
+  },
+  {
+   "id": "medido-bluesky-seguidores-2026-11-27",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "Bluesky — seguidores: 30 hoje, medido pela própria casa em 27/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-27",
+   "validade_dias": 7,
+   "repetivel": false
+  },
+  {
+   "id": "medido-youtube-inscritos-2026-11-27",
+   "assunto": "casa",
+   "classe": "numero",
+   "afirmacao": "YouTube — inscritos: 24 hoje, medido pela própria casa em 27/11",
+   "origem": "posts/placar-metas.json",
+   "quando": "2026-11-27",
+   "validade_dias": 7,
+   "repetivel": false
   }
  ]
 }
