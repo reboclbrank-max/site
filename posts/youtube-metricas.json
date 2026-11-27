@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-26T23:58:48Z",
+ "medido_em": "2026-11-27T13:05:01Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -86,7 +86,7 @@
    "id": "RksiKWR1QfY",
    "titulo": "Como o PRANCHETA simula uma partida a partir da prancheta",
    "publicado_em": "2026-11-17T12:22:33Z",
-   "views": 8,
+   "views": 9,
    "likes": 0,
    "comentarios": 0
   },
@@ -293,7 +293,7 @@
  ],
  "totais": {
   "videos": 36,
-  "views": 60,
+  "views": 61,
   "likes": 0,
   "comentarios": 0
  }
