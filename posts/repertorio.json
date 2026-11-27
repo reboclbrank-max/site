@@ -1393,6 +1393,24 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "Saiu \"0 células com milho\" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia no **Prancheta** sobre o desenvolvimento. 🧪🎮 #godot"
+  },
+  {
+   "quando": "2026-11-27T14:21:30Z",
+   "canal": "site",
+   "angulo": "cena_de_dois_segundos",
+   "assunto": "casa",
+   "fatos": [
+    "casa-site-gratis"
+   ],
+   "abertura": "por 2",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "convite",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.846,
+   "texto": "Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1510,35 +1528,22 @@
   "video-fXaPJ-QDMt8"
  ],
  "ultimo": {
-  "quando": "2026-11-26T18:41:54Z",
+  "quando": "2026-11-27T14:21:30Z",
   "canal": "site",
-  "angulo": "ponte_de_canal",
+  "angulo": "cena_de_dois_segundos",
   "assunto": "casa",
   "fatos": [
-   "casa-canais",
-   "casa-newsletter",
-   "casa-telegram",
-   "prancheta-trailer",
-   "video-jfA3I8DHE90",
-   "video-knzucwkh-Vk",
-   "video-DTwau1uBhBs",
-   "video-kbIZYGerREs",
-   "video-RGTANLoClF0",
-   "video-eWFQbKZ141U",
-   "video-FdUxBGe5XFo",
-   "video-fXaPJ-QDMt8"
+   "casa-site-gratis"
   ],
-  "abertura": "saiu \"0",
+  "abertura": "por 2",
   "tipo_abertura": "frase",
   "esqueleto": [
-   "frase",
-   "pergunta",
-   "frase",
+   "convite",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.692,
-  "texto": "Saiu \"0 células com milho\" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia no **Prancheta** sobre o desenvolvimento. 🧪🎮 #godot"
+  "nota": 0.846,
+  "texto": "Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr"
  },
  "publicacoes": [
   {
@@ -2067,6 +2072,17 @@
    "texto": "Saiu \"0 células com milho\" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia no **Prancheta** sobre o desenvolvimento. 🧪🎮 #godot",
    "titulo": "Saiu \"0 células com milho\" no **REBOCL BRANK**!",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-27T14:21:30Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr",
+   "titulo": "Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos gráti",
+   "nota": 0.846,
    "tipo": "publicacao"
   }
  ]

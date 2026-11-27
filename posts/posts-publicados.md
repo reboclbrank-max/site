@@ -490,3 +490,6 @@ Prancheta: você já tentou nossos jogos gratos? São 100% gratuitos, sem cadast
 
 ## 26/11/2026 18:41 UTC
 Saiu "0 células com milho" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia no **Prancheta** sobre o desenvolvimento. 🧪🎮 #godot
+
+## 27/11/2026 14:21 UTC
+Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr

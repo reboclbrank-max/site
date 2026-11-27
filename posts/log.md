@@ -4152,3 +4152,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=185(api) · itch_downloads=51(api) · itch_visitas=226(api) · youtube_inscritos=24(api) · youtube_shorts=13(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
 
 > Saiu "0 células com milho" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia no **Prancheta** sobre o desenvolvimento. 🧪🎮 #godot
+
+## 27/11/2026 14:21 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.85 |
+| pauta do ciclo | ✅ cena_de_dois_segundos · casa |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ cena_de_dois_segundos · casa |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ➖ reel sai no sabado a noite BRT (um por semana — qualidade >  |
+| instagram | ✅ postado id 18122640751956 |
+| threads | ❌ HTTP Error 400: Bad Request |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisei 12 redes → 5 livre(s): meta.discourse, tilvids-pee |
+| censo mundial | ✅ mundo medido: redes-ativas=52 · redes-mortas=35 |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=194(api) · itch_downloads=51(api) · itch_visitas=226(api) · youtube_inscritos=24(api) · youtube_shorts=13(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
+
+> Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr
