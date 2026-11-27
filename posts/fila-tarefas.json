@@ -2938,11 +2938,11 @@
    "id": "publicar-20261126T142017Z",
    "tipo": "publicar",
    "prioridade": 60,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-26T14:20:17Z",
-   "executada": "2026-11-26T20:40:22Z",
-   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos) | instagram: vez pedida ao publicar-instagram.yml",
+   "executada": "2026-11-27T12:00:23Z",
+   "resultado": "janela: dentro da janela (09h local); ciclos hoje 0/5\nRESUMO: publicacao=RECUSADA (nenhum dos 9 textos passou: nota do juízo abaixo do mínimo (0.54 < 0.65); nota do juízo abaixo do mínimo (0.54 < 0.65); motor não devolveu texto utilizável)\n/home/runner/work/site/site/tools/postador.py:896: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. U",
    "motivo": "decisão do relógio",
    "chave": "publicar-2026112614",
    "adiamentos": 1,
@@ -3551,6 +3551,18 @@
     "pesquisar-20261107T064637Z",
     "pesquisar-20261125T062025Z",
     "pesquisar-20261126T062014Z"
+   ]
+  },
+  {
+   "tipo": "publicar",
+   "motivo": "decisão do relógio",
+   "quando": "2026-11-27T12:00:23Z",
+   "teto": 3,
+   "ja_pendentes": 3,
+   "esperando": [
+    "publicar-20261126T142017Z",
+    "publicar-20261126T162027Z",
+    "publicar-20261126T204022Z"
    ]
   }
  ]
