@@ -3020,6 +3020,18 @@
    "resultado": "decisão: MANTER · diferença dentro do ruído: melhor 01h (1.25) vs mediana 1.25, desvio 0.49\ngravado em posts/aprendizado.json",
    "motivo": "decisão do relógio",
    "chave": "aprender-2026112707"
+  },
+  {
+   "id": "medir-20261127T124026Z",
+   "tipo": "medir",
+   "prioridade": 90,
+   "estado": "feito",
+   "tentativas": 0,
+   "criada": "2026-11-27T12:40:26Z",
+   "executada": "2026-11-27T12:40:26Z",
+   "resultado": "da em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 226,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é deci",
+   "motivo": "decisão do relógio",
+   "chave": "medir-2026112712"
   }
  ],
  "recusadas": [
