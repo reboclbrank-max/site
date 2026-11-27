@@ -493,3 +493,6 @@ Saiu "0 células com milho" no **REBOCL BRANK**! Curtiu o caos? Vem trocar ideia
 
 ## 27/11/2026 14:21 UTC
 Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr
+
+## 27/11/2026 18:40 UTC
+No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras. #prancheta

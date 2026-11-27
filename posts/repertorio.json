@@ -1411,6 +1411,30 @@
    "hashtags": 1,
    "nota": 0.846,
    "texto": "Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr"
+  },
+  {
+   "quando": "2026-11-27T18:40:51Z",
+   "canal": "site",
+   "angulo": "comparacao_honesta",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-trocas",
+    "prancheta-narracao",
+    "prancheta-divisoes",
+    "prancheta-mercado",
+    "prancheta-offline",
+    "prancheta-acessibilidade",
+    "prancheta-guia"
+   ],
+   "abertura": "no navegador",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras. #prancheta"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1528,22 +1552,28 @@
   "video-fXaPJ-QDMt8"
  ],
  "ultimo": {
-  "quando": "2026-11-27T14:21:30Z",
+  "quando": "2026-11-27T18:40:51Z",
   "canal": "site",
-  "angulo": "cena_de_dois_segundos",
-  "assunto": "casa",
+  "angulo": "comparacao_honesta",
+  "assunto": "prancheta",
   "fatos": [
-   "casa-site-gratis"
+   "prancheta-trocas",
+   "prancheta-narracao",
+   "prancheta-divisoes",
+   "prancheta-mercado",
+   "prancheta-offline",
+   "prancheta-acessibilidade",
+   "prancheta-guia"
   ],
-  "abertura": "por 2",
-  "tipo_abertura": "frase",
+  "abertura": "no navegador",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
-   "convite",
+   "rotulo",
    "frase"
   ],
   "hashtags": 1,
-  "nota": 0.846,
-  "texto": "Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr"
+  "nota": 0.692,
+  "texto": "No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras. #prancheta"
  },
  "publicacoes": [
   {
@@ -2083,6 +2113,17 @@
    "texto": "Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos grátis, sem cadastro nem compra. #gamedevbr",
    "titulo": "Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jogos gráti",
    "nota": 0.846,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-27T18:40:51Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras. #prancheta",
+   "titulo": "No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras.",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]
