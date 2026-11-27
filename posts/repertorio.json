@@ -1435,6 +1435,25 @@
    "hashtags": 1,
    "nota": 0.692,
    "texto": "No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras. #prancheta"
+  },
+  {
+   "quando": "2026-11-27T20:41:30Z",
+   "canal": "site",
+   "angulo": "marco_com_data",
+   "assunto": "prancheta",
+   "fatos": [
+    "prancheta-versao",
+    "marco-prancheta-build-19604665"
+   ],
+   "abertura": "build 19604665",
+   "tipo_abertura": "frase",
+   "esqueleto": [
+    "frase",
+    "frase"
+   ],
+   "hashtags": 0,
+   "nota": 0.769,
+   "texto": "Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestão de futebol direto no navegador e Android."
   }
  ],
  "fatos_de_uma_vez": [
@@ -1549,31 +1568,28 @@
   "video-RGTANLoClF0",
   "video-eWFQbKZ141U",
   "video-FdUxBGe5XFo",
-  "video-fXaPJ-QDMt8"
+  "video-fXaPJ-QDMt8",
+  "prancheta-versao",
+  "marco-prancheta-build-19604665"
  ],
  "ultimo": {
-  "quando": "2026-11-27T18:40:51Z",
+  "quando": "2026-11-27T20:41:30Z",
   "canal": "site",
-  "angulo": "comparacao_honesta",
+  "angulo": "marco_com_data",
   "assunto": "prancheta",
   "fatos": [
-   "prancheta-trocas",
-   "prancheta-narracao",
-   "prancheta-divisoes",
-   "prancheta-mercado",
-   "prancheta-offline",
-   "prancheta-acessibilidade",
-   "prancheta-guia"
+   "prancheta-versao",
+   "marco-prancheta-build-19604665"
   ],
-  "abertura": "no navegador",
-  "tipo_abertura": "rotulo",
+  "abertura": "build 19604665",
+  "tipo_abertura": "frase",
   "esqueleto": [
-   "rotulo",
+   "frase",
    "frase"
   ],
-  "hashtags": 1,
-  "nota": 0.692,
-  "texto": "No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras. #prancheta"
+  "hashtags": 0,
+  "nota": 0.769,
+  "texto": "Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestão de futebol direto no navegador e Android."
  },
  "publicacoes": [
   {
@@ -2124,6 +2140,17 @@
    "texto": "No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras. #prancheta",
    "titulo": "No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras.",
    "nota": 0.692,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-27T20:41:30Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestão de futebol direto no navegador e Android.",
+   "titulo": "Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO].",
+   "nota": 0.769,
    "tipo": "publicacao"
   }
  ]

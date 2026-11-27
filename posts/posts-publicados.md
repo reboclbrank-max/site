@@ -496,3 +496,6 @@ Por 2 segundos, uma aba dos canais da REBOCL BRANK fica aberta no Prancheta: jog
 
 ## 27/11/2026 18:40 UTC
 No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compras. #prancheta
+
+## 27/11/2026 20:41 UTC
+Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestão de futebol direto no navegador e Android.
