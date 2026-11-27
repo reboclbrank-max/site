@@ -5,15 +5,8 @@
  "ultima_medicao": "2026-11-27T19:00:25Z",
  "ultima_pesquisa": "2026-11-27T06:00:20Z",
  "ultima_aprendizagem": "2026-11-27T07:00:22Z",
- "pulsos": 895,
+ "pulsos": 896,
  "historico": [
-  {
-   "quando": "2026-11-27T06:00:20Z",
-   "acao": "pesquisar",
-   "motivo": "fila: [pesquisar-20261125T062025Z] meta parada: YouTube: inscritos: 24 em 42 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
-   "codigo": 0,
-   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
-  },
   {
    "quando": "2026-11-27T06:20:27Z",
    "acao": "medir",
@@ -282,6 +275,13 @@
   },
   {
    "quando": "2026-11-27T22:40:23Z",
+   "acao": "dormir",
+   "motivo": "teto diario atingido (5 de 5)",
+   "codigo": 0,
+   "saida": "nada a fazer (dormir)"
+  },
+  {
+   "quando": "2026-11-27T23:00:16Z",
    "acao": "dormir",
    "motivo": "teto diario atingido (5 de 5)",
    "codigo": 0,
