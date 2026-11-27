@@ -2,18 +2,11 @@
  "_o_que_e": "memoria do orquestrador 24h: o que ja foi feito e quando",
  "versao": 1,
  "ultima_publicacao": "2026-11-26T20:40:22Z",
- "ultima_medicao": "2026-11-26T19:40:26Z",
+ "ultima_medicao": "2026-11-27T06:20:27Z",
  "ultima_pesquisa": "2026-11-27T06:00:20Z",
  "ultima_aprendizagem": "2026-11-26T07:00:23Z",
- "pulsos": 856,
+ "pulsos": 857,
  "historico": [
-  {
-   "quando": "2026-11-26T12:20:15Z",
-   "acao": "dormir",
-   "motivo": "publicou há 20 min (mínimo 2h)",
-   "codigo": 0,
-   "saida": "nada a fazer (dormir)"
-  },
   {
    "quando": "2026-11-26T12:40:24Z",
    "acao": "dormir",
@@ -284,6 +277,13 @@
    "quando": "2026-11-27T06:00:20Z",
    "acao": "pesquisar",
    "motivo": "fila: [pesquisar-20261125T062025Z] meta parada: YouTube: inscritos: 24 em 42 dias — o ritmo medido é 0,0/dia; empurrar de novo é repetir o que não funcionou",
+   "codigo": 0,
+   "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
+  },
+  {
+   "quando": "2026-11-27T06:20:27Z",
+   "acao": "medir",
+   "motivo": "fila: [medir-20261127T062027Z] decisão do relógio",
    "codigo": 0,
    "saida": "fila: 1 de 1 tarefa(s) feita(s) neste pulso"
   }
