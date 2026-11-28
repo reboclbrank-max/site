@@ -4,28 +4,28 @@
 
 | meta | alvo | observado | falta | por dia | status | desde a partida |
 |---|---|---|---|---|---|---|
-| Instagram: publicações | 30 | 193 | 0 | — | ATINGIDO | +191 |
+| Instagram: publicações | 30 | 207 | 0 | — | ATINGIDO | +205 |
 | Instagram: seguidores | 50 | 0 | 50 | — | PARADA | 0 |
 | Bluesky: seguidores | 50 | 30 | 20 | — | RENOVADA | +17 |
 | YouTube: inscritos | 40 | 24 | 16 | — | PARADA | 0 |
 | YouTube: shorts | 4 | 13 | 0 | — | ATINGIDO | — |
-| itch: downloads | 100 | 51 | 49 | — | RENOVADA | +7 |
+| itch: downloads | 100 | 52 | 48 | — | RENOVADA | +8 |
 | itch: seguidores (aposentada) | 10 | NAO_OBSERVAVEL | — | — | SEM_LEITURA | — |
-| itch: visitas | — | 226 | — | — | ACOMPANHADA | — |
+| itch: visitas | — | 227 | — | — | ACOMPANHADA | — |
 
-Prazo **vencido** em **2026-11-12** (há 15 dia(s)). Fecharam 2 de 6 meta(s) com alvo. Não fecharam: Instagram: seguidores (observado 0 de 50, faltaram 50); Bluesky: seguidores (observado 30 de 50, faltaram 20); YouTube: inscritos (observado 24 de 40, faltaram 16); itch: downloads (observado 51 de 100, faltaram 49). 1 meta(s) aposentada(s) ficam fora do veredito, sem leitura possível: itch: seguidores (aposentada). O prazo era do dono, não do robô: renovar, aposentar ou manter o alvo escrito é decisão dele, com este número na mão.
+Prazo **vencido** em **2026-11-12** (há 16 dia(s)). Fecharam 2 de 6 meta(s) com alvo. Não fecharam: Instagram: seguidores (observado 0 de 50, faltaram 50); Bluesky: seguidores (observado 30 de 50, faltaram 20); YouTube: inscritos (observado 24 de 40, faltaram 16); itch: downloads (observado 52 de 100, faltaram 48). 1 meta(s) aposentada(s) ficam fora do veredito, sem leitura possível: itch: seguidores (aposentada). O prazo era do dono, não do robô: renovar, aposentar ou manter o alvo escrito é decisão dele, com este número na mão.
 
 `por_dia` fica vazio a partir daqui: não há prazo para dividir a falta por dia.
 
 **Pelo ritmo medido** (delta desde 13/10 ÷ dias decorridos):
 
-- **Instagram: seguidores** — PARADA: 45 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir (alvo 50 segue escrito; alvo é decisão do dono)
-- **Bluesky: seguidores** — RENOVADA: 0.378/dia → falta 20 → 53 dia(s), em 2027-01-19
-- **YouTube: inscritos** — PARADA: 45 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir (alvo 40 segue escrito; alvo é decisão do dono)
-- **itch: downloads** — RENOVADA: 0.156/dia → falta 49 → 315 dia(s), em 2027-10-08
+- **Instagram: seguidores** — PARADA: 46 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir (alvo 50 segue escrito; alvo é decisão do dono)
+- **Bluesky: seguidores** — RENOVADA: 0.37/dia → falta 20 → 55 dia(s), em 2027-01-22
+- **YouTube: inscritos** — PARADA: 46 dias sem mover um número (ritmo 0,0/dia): prazo sem ritmo é encenação — a meta continua medida, sem data para cumprir (alvo 40 segue escrito; alvo é decisão do dono)
+- **itch: downloads** — RENOVADA: 0.174/dia → falta 48 → 276 dia(s), em 2027-08-31
 
 > Nenhuma das metas em curso fecha o prazo com o ritmo medido. O prazo oficial continua escrito acima; as datas desta lista são o que o ritmo entrega de fato.
 
-> **Sem retorno em 45 dias:** Instagram: seguidores (0 medido(s), nada a mais desde 13/10), YouTube: inscritos (24 medido(s), nada a mais desde 13/10). O esforço não voltou número nenhum. Manter o canal ou aposentá-lo é decisão do dono, com este número na mão — o robô não decide isso e não vai fingir que decide.
+> **Sem retorno em 46 dias:** Instagram: seguidores (0 medido(s), nada a mais desde 13/10), YouTube: inscritos (24 medido(s), nada a mais desde 13/10). O esforço não voltou número nenhum. Manter o canal ou aposentá-lo é decisão do dono, com este número na mão — o robô não decide isso e não vai fingir que decide.
 
 > **Sem API, não sem robô:** itch: seguidores (aposentada). O itch não publica contagem de seguidores em API nem em página pública (5 caminhos conferidos em 25/10/2026). Essa meta está **aposentada** — o registro com o motivo ficou em `posts/metas.json` — e o que o itch mede de audiência (**itch: visitas**) entrou no placar como medida acompanhada, com número e sem alvo inventado.
