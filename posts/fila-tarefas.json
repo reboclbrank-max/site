@@ -3126,11 +3126,11 @@
    "id": "publicar-20261128T120015Z",
    "tipo": "publicar",
    "prioridade": 60,
-   "estado": "pendente",
+   "estado": "feito",
    "tentativas": 0,
    "criada": "2026-11-28T12:00:15Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-28T18:20:18Z",
+   "resultado": "582: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).\n  cab = \"\\n## %s\\n\" % datetime.datetime.utcnow().strftime(\"%d/%m/%Y\")\n/home/runner/work/site/site/tools/postador.py:1627: DeprecationWarning: datetime.datetime.utcnow() is deprecated and sched",
    "motivo": "decisão do relógio",
    "chave": "publicar-2026112812"
   },
@@ -3157,6 +3157,18 @@
    "resultado": null,
    "motivo": "decisão do relógio",
    "chave": "publicar-2026112814"
+  },
+  {
+   "id": "publicar-20261128T182018Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-28T18:20:18Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026112818"
   }
  ],
  "recusadas": [

@@ -505,3 +505,6 @@ Aproveite os três primeiros dias: eles são o tutorial guiado. Toque, plante e 
 
 ## 28/11/2026 16:01 UTC
 Som só toca após o 1º toque: política do navegador, não bug. Aceitei essa limitação do Prancheta e foquei no que importa: a tática.
+
+## 28/11/2026 18:21 UTC
+137 posts no Instagram hoje: o feed do Ceifalume não para. #gamedevbr

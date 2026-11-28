@@ -4282,3 +4282,29 @@
 | regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=210(api) · itch_downloads=52(api) · itch_visitas=227(api) · youtube_inscritos=24(api) · youtube_shorts=13(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
 
 > Som só toca após o 1º toque: política do navegador, não bug. Aceitei essa limitação do Prancheta e foquei no que importa: a tática.
+
+## 28/11/2026 18:21 UTC
+
+| canal | resultado |
+|---|---|
+| cerebro | ✅ redator: passou: janela ok, título próprio, um assunto, forma nova, texto novo · nota 0.69 |
+| pauta do ciclo | ✅ numero_medido · casa |
+| destino editorial | ✅ rota oficial catalogo |
+| tema do ciclo | ✅ numero_medido · casa |
+| ntfy (push do dono) | ✅ push 200 |
+| telegram | ⚪ falta o segredo TELEGRAM_TOKEN + TELEGRAM_CHAT |
+| bluesky | ⚪ falta o segredo BLUESKY_HANDLE + BLUESKY_APPPASS |
+| mastodon | ⚪ falta o segredo MASTODON_URL + MASTODON_TOKEN |
+| reel semanal | ❌ portão recusou o reel: nota do juízo abaixo do mínimo (0.61 < 0.65) |
+| instagram | ❌ portão recusou o instagram: nota do juízo abaixo do mínimo (0.61 < 0.6 |
+| threads | ❌ portão recusou o threads: nota do juízo abaixo do mínimo (0.61 < 0.65) |
+| nostr | ⚪ falta o segredo NOSTR_KEY |
+| discord | ⚪ falta o segredo DISCORD_WEBHOOK |
+| cacador de oportunidades | ⚪ configuracao do canal ausente |
+| aula do cerebro | ✅ licao gravada (6 perguntas no ciclo) |
+| descobridor de redes | ✅ pesquisa de hoje ja registrada (1 ciclo por dia) |
+| censo mundial | ✅ censo de hoje ja registrado (1 por dia) |
+| vigia da caixa (auto-recovery) | ✅ sem link de recovery hoje (vigia volta no proximo ciclo) |
+| regua de metas (medicao) | ✅ bsky_seguidores=NAO_CONFIGURADO · ig_seguidores=0(api) · ig_posts=213(api) · itch_downloads=52(api) · itch_visitas=227(api) · youtube_inscritos=24(api) · youtube_shorts=13(api) · itch_seguidores=SEM_API · alcance=NAO_OBS |
+
+> 137 posts no Instagram hoje: o feed do Ceifalume não para. #gamedevbr
