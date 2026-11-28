@@ -502,3 +502,6 @@ Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestã
 
 ## 28/11/2026 12:02 UTC
 Aproveite os três primeiros dias: eles são o tutorial guiado. Toque, plante e colha sem pressão para aprender o ciclo noturno. #ceifalume
+
+## 28/11/2026 16:01 UTC
+Som só toca após o 1º toque: política do navegador, não bug. Aceitei essa limitação do Prancheta e foquei no que importa: a tática.
