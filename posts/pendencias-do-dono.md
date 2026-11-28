@@ -1,22 +1,22 @@
 # Pendências do dono
 
-Medido em 2026-11-28T10:57:03Z (o devlog do itch é público: dá para conferir de fora).
+Medido em 2026-11-28T20:14:07Z (o devlog do itch é público: dá para conferir de fora).
 
 ## Estado da casa
 
 - Vídeos publicados: 38 · último: fXaPJ-QDMt8 (O que o agente comprou jogando CEIFALUME: Cavar…)
 - Capas da casa: 78 aplicada(s) · canal com 169 vídeos, 51 com capa da casa, 11 citam jogo da casa no título · nenhum da casa sem capa (medido em 2026-11-07T04:43)
 - PRANCHETA no itch: build 19604665 (a casa viu em 2026-11-07T05:38) · esse build não sobe por aqui: o dono publica no itch
-- Fila: 5 pendente(s) (pesquisar 3, publicar 2) · a mais velha: pesquisar-20261107T064637Z há 508.2 h · 241 feita(s)
-- Régua de metas: medida há 22.6 h · prazo 2026-11-12 · prazo vencido há 15 dia(s)
-- Pulsos: 909 · última publicação 2026-11-27T20:40:25Z · última medição 2026-11-28T06:20:19Z
+- Fila: 5 pendente(s) (pesquisar 3, publicar 2) · a mais velha: pesquisar-20261107T064637Z há 517.5 h · 246 feita(s)
+- Régua de metas: medida há 7.9 h · prazo 2026-11-12 · prazo vencido há 16 dia(s)
+- Pulsos: 935 · última publicação 2026-11-28T18:20:18Z · última medição 2026-11-28T18:40:15Z
 
-- Agenda: o cron pede **105** disparos/dia e o GitHub entregou **64.6/dia** (janela de 7 dia(s), medido em 2026-11-28). Pior entrega: alertas-proativos 14.3% (1.86/dia); publicar-instagram 24.7% (6.43/dia).
-- Corrente: em dia (último pulso 28/11 05:04, há 173 min) · próximo pulso 28/11 09:00
+- Agenda: o cron pede **105** disparos/dia e o GitHub entregou **67.44/dia** (janela de 7 dia(s), medido em 2026-11-28). Pior entrega: alertas-proativos 15.4% (2.0/dia); publicar-instagram 27.5% (7.14/dia).
+- Corrente: em dia (último pulso 28/11 17:00, há 14 min) · próximo pulso 28/11 17:20
 
-- Originalidade: últimos 7 dias: 21 post(s), todos textos diferentes · média 4.17/dia · o último dia com repetição foi 2026-10-25
+- Originalidade: últimos 7 dias: 24 post(s), todos textos diferentes · média 4.15/dia · o último dia com repetição foi 2026-10-25
 
-- Pauta: 11 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
+- Pauta: 12 par(es) assunto+ângulo livre(s) agora · o redator monta pauta: sim · a rotação volta a partir do 20º uso (medido: 40 escolhas seguidas sem ficar sem pauta)
 
 | item | estado | como |
 | --- | --- | --- |
