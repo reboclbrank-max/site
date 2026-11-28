@@ -37,7 +37,7 @@
   "metricas_engajamento": {
     "youtube": {
       "ceifalume": {
-        "visualizacoes": 20,
+        "visualizacoes": 21,
         "curtidas": 0,
         "comentarios": 0
       },
@@ -51,6 +51,6 @@
   "otimizacoes": [],
   "proximoId": 1,
   "criadoEm": "2026-11-16T20:24:25.448Z",
-  "atualizadoEm": "2026-11-27T21:45:52.736Z",
+  "atualizadoEm": "2026-11-28T05:45:14.407Z",
   "_run": "A"
 }
