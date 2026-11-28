@@ -1454,6 +1454,30 @@
    "hashtags": 0,
    "nota": 0.769,
    "texto": "Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestão de futebol direto no navegador e Android."
+  },
+  {
+   "quando": "2026-11-28T12:02:31Z",
+   "canal": "site",
+   "angulo": "mecanica_por_dentro",
+   "assunto": "ceifalume",
+   "fatos": [
+    "ceifalume-8h",
+    "ceifalume-chuva",
+    "ceifalume-tutorial",
+    "ceifalume-save",
+    "ceifalume-culturas",
+    "ceifalume-melhorias"
+   ],
+   "abertura": "aproveite os",
+   "tipo_abertura": "rotulo",
+   "esqueleto": [
+    "rotulo",
+    "frase",
+    "frase"
+   ],
+   "hashtags": 1,
+   "nota": 0.692,
+   "texto": "Aproveite os três primeiros dias: eles são o tutorial guiado. Toque, plante e colha sem pressão para aprender o ciclo noturno. #ceifalume"
   }
  ],
  "fatos_de_uma_vez": [
@@ -1573,23 +1597,28 @@
   "marco-prancheta-build-19604665"
  ],
  "ultimo": {
-  "quando": "2026-11-27T20:41:30Z",
+  "quando": "2026-11-28T12:02:31Z",
   "canal": "site",
-  "angulo": "marco_com_data",
-  "assunto": "prancheta",
+  "angulo": "mecanica_por_dentro",
+  "assunto": "ceifalume",
   "fatos": [
-   "prancheta-versao",
-   "marco-prancheta-build-19604665"
+   "ceifalume-8h",
+   "ceifalume-chuva",
+   "ceifalume-tutorial",
+   "ceifalume-save",
+   "ceifalume-culturas",
+   "ceifalume-melhorias"
   ],
-  "abertura": "build 19604665",
-  "tipo_abertura": "frase",
+  "abertura": "aproveite os",
+  "tipo_abertura": "rotulo",
   "esqueleto": [
+   "rotulo",
    "frase",
    "frase"
   ],
-  "hashtags": 0,
-  "nota": 0.769,
-  "texto": "Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestão de futebol direto no navegador e Android."
+  "hashtags": 1,
+  "nota": 0.692,
+  "texto": "Aproveite os três primeiros dias: eles são o tutorial guiado. Toque, plante e colha sem pressão para aprender o ciclo noturno. #ceifalume"
  },
  "publicacoes": [
   {
@@ -2151,6 +2180,17 @@
    "texto": "Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestão de futebol direto no navegador e Android.",
    "titulo": "Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO].",
    "nota": 0.769,
+   "tipo": "publicacao"
+  },
+  {
+   "quando": "2026-11-28T12:02:31Z",
+   "canal": "site",
+   "angulo": null,
+   "assunto": null,
+   "fatos": [],
+   "texto": "Aproveite os três primeiros dias: eles são o tutorial guiado. Toque, plante e colha sem pressão para aprender o ciclo noturno. #ceifalume",
+   "titulo": "Aproveite os três primeiros dias: eles são o tutorial guiado.",
+   "nota": 0.692,
    "tipo": "publicacao"
   }
  ]

@@ -499,3 +499,6 @@ No navegador ou em APK Android: jogue Prancheta sem conta; é grátis, sem compr
 
 ## 27/11/2026 20:41 UTC
 Build 19604665 do PRANCHETA no ar no itch desde [DIA] de [MÊS] de [ANO]. Gestão de futebol direto no navegador e Android.
+
+## 28/11/2026 12:02 UTC
+Aproveite os três primeiros dias: eles são o tutorial guiado. Toque, plante e colha sem pressão para aprender o ciclo noturno. #ceifalume
