@@ -2,48 +2,48 @@
   "ativo": true,
   "alertas": [
     {
-      "id": "al_1795892038401_001",
+      "id": "al_1795895726768_001",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para ceifalume: 21 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-28T18:53:58.401Z",
+      "criadoEm": "2026-11-28T19:55:26.768Z",
       "resolvido": false
     },
     {
-      "id": "al_1795892038401_002",
+      "id": "al_1795895726769_002",
       "tipo": "engajamento_baixo",
       "mensagem": "Engajamento baixo no youtube para prancheta: 2 interações",
       "severidade": "media",
       "rede": "youtube",
-      "criadoEm": "2026-11-28T18:53:58.401Z",
+      "criadoEm": "2026-11-28T19:55:26.769Z",
       "resolvido": false
     },
     {
-      "id": "al_1795892038401_003",
+      "id": "al_1795895726769_003",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ambos há 22h",
+      "mensagem": "Fila estagnada em instagram para ambos há 23h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-28T18:53:58.401Z",
+      "criadoEm": "2026-11-28T19:55:26.769Z",
       "resolvido": false
     },
     {
-      "id": "al_1795892038401_004",
+      "id": "al_1795895726769_004",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para ceifalume há 21h",
+      "mensagem": "Fila estagnada em instagram para ceifalume há 22h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-28T18:53:58.401Z",
+      "criadoEm": "2026-11-28T19:55:26.769Z",
       "resolvido": false
     },
     {
-      "id": "al_1795892038402_005",
+      "id": "al_1795895726769_005",
       "tipo": "fila_estagnada",
-      "mensagem": "Fila estagnada em instagram para prancheta há 21h",
+      "mensagem": "Fila estagnada em instagram para prancheta há 22h",
       "severidade": "alta",
       "rede": "instagram",
-      "criadoEm": "2026-11-28T18:53:58.402Z",
+      "criadoEm": "2026-11-28T19:55:26.769Z",
       "resolvido": false
     }
   ],
@@ -64,7 +64,7 @@
       "ativo": true
     }
   ],
-  "ultima_execucao": "2026-11-28T18:53:58.400Z",
-  "criadoEm": "2026-11-28T18:53:58.400Z",
-  "atualizadoEm": "2026-11-28T18:53:58.402Z"
+  "ultima_execucao": "2026-11-28T19:55:26.768Z",
+  "criadoEm": "2026-11-28T19:55:26.768Z",
+  "atualizadoEm": "2026-11-28T19:55:26.770Z"
 }
