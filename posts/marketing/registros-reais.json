@@ -912,6 +912,18 @@
    "hora": 16,
    "quantidade": 1,
    "acumulado_na_hora": 7
+  },
+  {
+   "quando": "2026-11-28T20:20:52.818Z",
+   "evento": "publicacao",
+   "rede": "instagram",
+   "jogo": "ambos",
+   "origem": "cron",
+   "fonte": "",
+   "tipo": "acesso",
+   "hora": 17,
+   "quantidade": 1,
+   "acumulado_na_hora": 12
   }
  ]
 }
