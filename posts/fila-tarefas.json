@@ -3153,10 +3153,12 @@
    "estado": "pendente",
    "tentativas": 0,
    "criada": "2026-11-28T14:00:22Z",
-   "executada": null,
-   "resultado": null,
+   "executada": "2026-11-28T20:20:23Z",
+   "resultado": "adiada: RESUMO: cadencia=PULADO (intervalo minimo entre ciclos) | instagram: vez pedida ao publicar-instagram.yml",
    "motivo": "decisão do relógio",
-   "chave": "publicar-2026112814"
+   "chave": "publicar-2026112814",
+   "adiamentos": 1,
+   "adiada_em": "2026-11-28T20:20:23Z"
   },
   {
    "id": "publicar-20261128T182018Z",
@@ -3181,6 +3183,18 @@
    "resultado": "da em 25/10/2026 — o itch não publica contagem de seguidores em API nem em página pública\"\n  },\n  {\n   \"meta\": \"itch: visitas\",\n   \"alvo\": \"—\",\n   \"observado\": 227,\n   \"falta\": null,\n   \"status\": \"ACOMPANHADA\",\n   \"fonte\": \"api.itch.io/profile/games (chave no runner)\",\n   \"partida\": null,\n   \"delta\": null,\n   \"por_dia\": null,\n   \"motivo\": \"medida no lugar de itch: seguidores, sem alvo (alvo é deci",
    "motivo": "decisão do relógio",
    "chave": "medir-2026112818"
+  },
+  {
+   "id": "publicar-20261128T202023Z",
+   "tipo": "publicar",
+   "prioridade": 60,
+   "estado": "pendente",
+   "tentativas": 0,
+   "criada": "2026-11-28T20:20:23Z",
+   "executada": null,
+   "resultado": null,
+   "motivo": "decisão do relógio",
+   "chave": "publicar-2026112820"
   }
  ],
  "recusadas": [
