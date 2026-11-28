@@ -1,5 +1,5 @@
 {
- "medido_em": "2026-11-27T23:43:05Z",
+ "medido_em": "2026-11-28T12:17:54Z",
  "fonte": "YouTube Data API v3 · videos.list (part=snippet,statistics)",
  "videos": [
   {
@@ -70,7 +70,7 @@
    "id": "iy37eWobg7U",
    "titulo": "PRANCHETA: instrução de pressão no intervalo e velocidade rápida",
    "publicado_em": "2026-11-17T21:18:09Z",
-   "views": 5,
+   "views": 6,
    "likes": 0,
    "comentarios": 0
   },
@@ -293,7 +293,7 @@
  ],
  "totais": {
   "videos": 36,
-  "views": 62,
+  "views": 63,
   "likes": 0,
   "comentarios": 0
  }
